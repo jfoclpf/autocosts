@@ -1,0 +1,320 @@
+﻿<?php
+
+// COUNTRY: PORTUGAL
+// LANGAUAGE: PORTUGUESE
+
+//***********************************************
+//											   **
+//      Translation for AUTOCOSTS.ORG          **
+//      the automobile costs simulator		   **
+// 											   **
+//      made by João Pimentel Ferreira         **
+//       under Creative Commons BY-SA          **
+//	  										   **
+//***********************************************
+
+// IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
+
+//Fuel efficiency for car engine standard
+$fuel_efficiency_std_option = 1;
+//1 - l/100km - litres per 100 kilometres
+//2 - km/l - kilometres per litre
+//3 - mpg(imp) - miles per imperial gallon
+//4 - mpg(US) - miles per US gallon
+
+//Standard distance
+$distance_std_option = 1;
+//1 - kilometres
+//2 - miles
+
+//Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
+$fuel_price_volume_std = 1;
+//1 - litres
+//2 - imperial gallons
+//3 - US gallons
+
+//standards TEXT VERSION
+//IMPORTANT: BE COHERENT with the above standards
+$CURR_NAME = 'Euro';
+$CURR_NAME_PLURAL = 'Euro';
+$CURR_NAME_BIG_PLURAL = 'EURO';
+$CURR_SYMBOL = '&euro;';
+$STD_DIST = 'km'; //short text version you'd like to apply
+$STD_DIST_FULL = 'Kilometer';
+$STD_FUEL_CALC = 'l/100km'; //text version you'd like to apply
+$STD_VOLUME_SHORT = 'ltr'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+
+//simple words
+$WORD_PER = 'pro';     //ex: 4 km _per_ day
+$WORDS_PER_EACH = 'für jede';   //ex: 4 miles _ per each_ two months
+$WORD_TIMES = 'mal'; //ex: 4 times per week
+$DURING = 'an';   //spent in tolls 3€ per day _during_ 22 days per month
+$WORD_PEOPLE = 'Personen';   //plural, 3 _people_ 
+$YES = 'Ja';
+$NO = 'Nein';
+
+$BUTTON_RUN = 'Berechnen'; //run simulator button 
+$BUTTON_RERUN = 'Neu berechnen'; //run simulator button 
+
+//WEB PAGE
+$WEB_PAGE_TITLE = 'KFZ-Kostenrechner';
+$MAIN_TITLE = 'KFZ-KOSTENRECHNER';
+$INITIAL_TEXT = 
+"Mit diesem Kostenrechner haben Sie die Möglichkeit zu erfahren, wieviel Sie <b>tatsächlich</b> ausgeben müssen als Autobesitzer in <b>Deutschland</b>. Sie erhalten einen umfassenden Überblick über alle laufenden und versteckten Kosten, damit Sie besser beurteilen können, welche Ausgaben Sie haben oder auf Sie zukommen.
+Da die KFZ-Rechnungen zu unterschiedlichen Zeiten im Jahr bezahlt werden müssen, ist es oftmals schwer abzuschätzen, wie viel Sie tatsächlich für Ihr Auto ausgeben müssen.
+<br>
+<br>
+Seien Sie realistisch mit Ihren Angaben! Bei unerwarteten Rechnungen wie z.B. der Reparatur von Unfallschäden oder Strafzetteln, denken Sie bitte daran, wie viel Sie in den letzten Jahren dafür ausgegeben haben. Standardmäßig werden die monatlichen Kosten ermittelt. Bei Dezimalschreibweise geben Sie bitte einen Punkt anstatt eines Kommas ein z.B. <span style=\"color:rgb(255,0,0);\">8.7</span> Kilometer für die Entfernung zwischen Ihrem Zuhause und Ihrem Arbeitsplatz.<br>";
+
+$HELP_PROJECT = 'Unterstützen Sie dieses Projekt!' ;
+$AC_MOBILE = 'KFZ-RECHNER<br>für Mobilgeräte';
+$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>KFZ-KOSTENRECHNER</b>';
+
+
+//time words
+$DAYLY = 'Täglich';
+$WEEKLY = 'Pro Woche';
+$MONTHLY = 'Pro Monat';
+$TRIMESTERLY = 'Vierteljahr';
+$SEMESTERLY = 'Halbjahr';
+$YEARLY = 'Jahr';
+
+$DAY = 'Tag';
+$DAYS = 'Tage';
+$WEEK = 'Woche';
+$MONTH = 'Monat';
+$MONTHS = 'Monate';
+$TWO_MONTHS = 'Zwei Monate';
+$DIST_EACH_TWO_MONTHS = 'Meilen in zwei Monaten';
+$TRIMESTER = 'Vierteljahr';
+$SEMESTER = 'Halbjahr';
+$YEAR = 'Jahr';
+
+$DAYS_PER_WEEK_SHORT= 'Tage/Woche';
+
+//simulator words
+$COSTS= "Kosten";
+$FIXED_COSTS = 'Standkosten';
+$FIXED_COSTS_HEADER_1= 'STANDKOSTEN'; //capital letters
+$FIXED_COSTS_HEADER_2= "Diese Kosten sind unabhängig von den gefahrenen Kilometern. Sie sind notwendig um das Fahrzeug in einem betriebsbereiten Zustand zu halten"; 
+$DAYS_PER = "tagen pro";
+
+$RUNNING_COSTS = 'Laufende Kosten';
+$RUNNING_COSTS_HEADER_1 = 'LAUFENDE KOSTEN'; //capital letters
+$RUNNING_COSTS_HEADER_2 = 'Kosten, abhängig von gefahrenen Kilometern';
+
+$PRIVATE_COSTS = 'Private Kosten';
+$MONTHLY_AMOUNT = 'Monatlicher Betrag';
+$RUN_CP_DIST = 'Laufende Kosten pro Kilometer'; //running costs per unit distance
+$TOTAL_CP_DIST = 'Gesamtkosten pro Kilometer'; //total costs per unit distance
+$PUBL_TRA_EQUIV= "So viel müssten Sie für öffentliche Verkehrsmittel bezahlen, wenn Sie kein Auto besitzen würden";
+$WORD_TOTAL_CAP = 'GESAMT'; //capital word for total
+
+//depreciation
+$DEPRECIATION = 'Preisverlust des Fahrzeugs';
+$AQ_DATE = 'Kaufdatum des Fahrzeugs';
+$COM_VALUE = 'Wert des Fahrzeugs am Tag des Erwerbs<br><i>Falls das Auto neu ist - Neuwagenpreis einfügen<br> Falls das Auto gebraucht ist, Gebrauchtwagenpreis einfügen</i>';
+$COM_VALUE_TODAY = 'Aktueller Wert des Autos<br><i>Wenn Sie es heute verkaufen würden, wie viel Geld würden Sie dafür bekommen?</i>';
+$PERIOD_OWN = 'Zeitraum in Ihrem Besitz';
+$FINAL_VALUE = 'Endwert';
+$AQ_VALUE = 'Anschaffungswert';
+
+//insurance
+$INSURANCE = 'KFZ-Versicherung und Schutzbrief';
+$INSURANCE_SHORT = 'Versicherung und Schutzbrief';
+
+//credit
+$CREDIT = 'Fahrzeugfinanzierung';
+$CREDIT_PERIOD = 'Laufzeit';
+$CREDIT_INTERESTS = 'Darlehenszinsen';
+$CREDIT_INTERESTS_MONTH = 'Monatliche Zinsen';
+$CREDIT_TOTAL_INTERESTS = 'Gesamtsumme Zinsen';
+$CREDIT_QUESTION = 'Finanzieren Sie Ihr Auto mit Hilfe eines Autokredites?';
+$CREDIT_LOAN = 'Finanzierungssumme:<br><i>Wieviel haben Sie sich geliehen?</i>';
+$CREDIT_LOAN2 = 'Finanzierungsbetrag';
+$CREDIT_PERIOD = 'Kreditlaufzeit / Anzahl der Raten';
+$CREDIT_AVERAGE_VALUE = 'Durchschnittsbetrag pro Rate';
+$CREDIT_RESIDUAL_VALUE = 'Schlussrate:<br><i>Am Ende der Laufzeit - wie viel müssten Sie noch bezahlen oder haben Sie bezahlt?</i>';
+$CREDIT_RESIDUAL_VALUE1 = 'Schlussrate';
+$CREDIT_INSTALMENT = 'Durchschnittliche Monatsrate';
+
+//inspection
+$INSPECTION = 'Inspektionen bzw. TÜV-Kosten';
+$INSPECTION_SHORT = 'Inspektion';
+$INSPECTION_NBMR_TIMES = 'Wie viele Male habe Sie Ihr Fahrzeug zur Inspektion gebracht?';
+$INSPECTION_PRICE =  'Durchschnittliche Inspektionskosten';
+$EACH_ONE_DURING = 'im Zeitraum von'; //5 times costing 15€ *each one during* 20 months (inspection)
+$TIMES_COSTING = 'mal Kosten jeweils';     //5 *times costing* 15€ each one during 20 months (inspection)
+
+//road taxes
+$ROAD_TAXES = 'KFZ-Steuer';
+$ROAD_TAXES_SHORT = 'KFZ-Steuer';
+$ROAD_TAXES_VALUE = 'KFZ-Steuer für Ihr Fahrzeug:<br><i>Steurn, Abgaben, Plaketten</i>';
+
+//fuel
+$FUEL = 'Kraftstoff';
+$FUEL_DESC = 'Benzin, Diesel, LPG, Strom';
+$FUEL_CALC = 'Berechnung basiert auf';
+$FUEL_JOB_CALC = 'Arbeitsweg einkalkulieren?';
+$FUEL_JOB_CALC1 = 'Tag(e) pro Woche, an denen Sie zur Arbeit fahren';
+$FUEL_DAYS = 'Tag(e) pro Woche, an denen Sie zur Arbeit fahren';
+$FUEL_DIST_HOME_JOB = 'Fahrtweg zur Arbeit (einfache Fahrt)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB1 = 'Fahrtweg zur Arbeit'; //you do 7 km between home and job
+$FUEL_DIST_NO_JOB = "Anzahl gefahrener Kilometer an arbeitsfreien Tagen:<br><i>z.B. pro Wochenende</i>";
+$FUEL_DIST_NO_JOB1 = "Anzahl gefahrener Kilometer an arbeitsfreien Tagen"; // you do 5 km per week....
+$FUEL_DIST = 'Gefahrene Kilometer';
+$FUEL_CAR_EFF = 'Kraftstoffverbrauch Ihres Fahrzeugs';
+$FUEL_PRICE = 'Durchschnittlicher Preis, den Sie für Kraftstoff bezahlen';
+$FUEL_PRICE1 = 'Durchschnittlicher Kraftstoffpreis';
+$YOU_DRIVE_TOTTALY_AVG = 'Sie fahren insgesamt durchschnittlich'; //__You drive totally on average of__ 5 km per day
+$YOU_DRIVE = 'Sie fahren'; //__You drive__ 5 km per day
+
+//MAINTENANCE
+$MAINTENANCE = 'Wartungskosten';
+$MAINTENANCE_DESC = 'Durchschnittliche Wartungskosten:<br><i>Ölwechsel, Filter, Leuchtmittel, Reifen, Bremsen, Klimaanlage, Lenkung einstellen, etc.</i>';
+
+//REPAIRS AND IMPROVEMENTS
+$REP_IMPROV = 'Reparaturen und Verbesserungen';
+$REP_IMPROV_DESC = 'Durchschnittliche Kosten für Reparaturen und Verbesserungen:<br><i>Autoteile, Modifikationen, Reparaturen fehlerhafter Teile, Dellen, Unfälle, Tuning, etc.</i>';
+
+//PARKING
+$PARKING = 'Parkgebühren';
+$PARKING_DESC = 'Durschnittliche Kosten für Parkgebühren:<br><i>Parkuhren, Parkplatzmiete, Parkgebühren in öffentlichen Gebäuden, Einkaufszentren, Flughäfen, Bus- oder Zugbahnhofparkplätze oder jegliche andere Parkgebühren.</i>';
+
+//TOLLS
+$TOLLS = 'Mautgebühren';
+$TOLLS_DESC = 'Durchschnittliche Kosten für Mautgebühren<br><i>Brücken, Tunnel, Autobahnen, City-Maut etc.</i>';
+$TOLLS_DAY_CALC = 'Berechnung anhand von bestimmter Anzahl von Tagen durchführen?';
+$TOLLS_DAY_CALC1 = 'Tägliche Mautgebühren';
+$TOLLS_DAY_CALC_DESC = 'Denken Sie auch an Reisen ins Ausland bzw. jegliche elektronische Mautgebührenerhebung';
+
+//FINES
+$FINES = 'Strafzettel';
+$FINES_DESC = 'Durchschnittliche Kosten für Strafzettel:<br><i>Wie viel Geld haben Sie in den letzten Jahren für Strafzettel ausgegeben? (Falschparken, Geschwindigkeitsüberschreitungen, Handy am Steuer, etc.)</i>';
+
+//WASHING
+$WASHING = 'Waschen und Pflege';
+$WASHING_DESC = 'Durchschnittliche Kosten für Waschen und andere Servicedienstleistungen:<br><i>z.B. in Waschanlagen/ Tankstellen etc.</i>';
+
+//TOTAL
+$TOTAL_FIXED = 'GESAMT - Standkosten';
+$TOTAL_FIXED_DESCR = "Kosten, die nicht auf gefahrenen Kilometer basieren und auch bezahlt werden müssen wenn das Fahrzeug steht";
+$TOTAL_FIXED_DESCR2 = 'Wertminderung, Versicherung, Finanzierungen, Steuern, Inspektion und 50% der Park- und Reparaturgebühren';
+
+$TOTAL_VARIABLE = 'GESAMT - Laufende Kosten';
+$TOTAL_VARIABLE_DESCR = 'Kosten, basierend auf gefahrenen Kilometern';
+$TOTAL_VARIABLE_DESCR2 = 'Treibstoffe, Reparaturen und Modifikationen, Parkplatzkosten (ausgehend von der Tatsache, dass diese Kosten nur enstehen, wenn Sie das Auto nutzen), Maut, Strafzettel, Waschen und 50% der Wartungsgebühren';
+
+
+//EXTRA DATA
+$EXTRA_DATA = 'Zusätzliche Angaben';
+$EXTRA_DATA1 = 'Zusätzliche Angaben';
+$EXTRA_DATA_FAMILY_NBR = 'Wie viele Personen, die älter als 4 Jahre sind, leben in Ihrem Haushalt?  (Sie eingeschlossen)';
+$EXTRA_DATA_PRICE_PASS = "Was kostet Sie eine Monatskarte für öffentliche Verkehrsmittel?<br><i>Falls öffentliche Verkehrsmittel für Sie keine Option sind, geben Sie bitte 0</i> ein";
+
+//PUBLIC TRANSPORTS
+$PUB_TRANS_TEXT = 'Öffentliche Verkehrsmittel für Sie bzw. Ihre Familie';
+$FAM_NBR = 'Anzahl der Familienmitglieder, die älter als 4 Jahre sind';
+$PERSON_OR_PEOPLE = 'Person(en)';
+$PASS_MONTH_AVG = 'Durchschnittlicher Preis für eine Monatskarte pro Person';
+$OTHER_PUB_TRANS = 'Andere öffentliche Verkehrsmittel';
+$OTHER_PUB_TRANS_DESC = "Kosten für öffentliche Verkehrsmittel außerhalb Ihres üblichen Wohngebiets z.B. für längere Zug- oder Busreisen";
+$TAXI_DESL = "Kosten für Taxen";
+$ON_TAXI_PAYING = "Taxifahrt kosten"; //ex: 4 km __on taxi paying__ 5€ per km
+
+
+//**************************************************
+//GRAPHICS
+$PARCEL = 'Bereich';
+$COSTS = 'Kosten';
+
+
+//****************************************************
+//ERROR MESSAGES
+$ERROR_INVALID_INSU_VALUE = 'Versicherungssumme ungültig';
+$ERROR_INSU_PERIOD = 'Häufigkeit der Versicherungsraten einfügen';
+
+$ERROR_FUEL_CURR_DIST = 'Bitte geben Sie an, ob Ihre Berechnung auf Euro oder Kilometern basieren soll';
+$ERROR_FUEL_CAR_EFF = 'Angabe zur Kraftstoffeffizienz ungültig';
+$ERROR_FUEL_PRICE = 'Kraftstoffpreis ungültig';
+$ERROR_CAR_JOB = 'Bitte geben Sie an, ob Sie mit Ihrem Auto zur Arbeit fahren';
+$ERROR_FUEL_DIST = 'Anzahl an, pro Monat gefahrenen, Kilometern ungültig';
+$ERROR_DAYS_PER_WEEK = 'Anzahl an Kilometern pro Woche ungültig';
+$ERROR_DIST_HOME_WORK = 'Anzahl an Kilometern zwischen Wohnort und Arbeitsstelle ungültig';
+$ERROR_DIST_NO_JOB = "Anzahl an gefahrenen Kilometern an arbeitsfreien Tagen ungültig";
+$ERROR_CURRENCY = 'Eurobetrag pro Monat ungültig';
+
+$ERROR_DEPRECIATION_MONTH = 'Monatsangabe ungültig';
+$ERROR_DEPRECIATION_YEAR = 'Jahresangabe ungültig';
+$ERROR_DEPRECIATION_VALUE = 'Kaufpreis ungültig';
+$ERROR_DEPRECIATION_VALUE_TODAY = 'Heutiger Fahrzeugwert ungültig';
+$ERROR_DEPRECIATION_DATE = 'Erwerbsdatum ungültig';
+$ERROR_DEPRECIATION_NEW_CAR =  'Wertverlust wird nicht miteinberechnet, da Fahrzeug neu ist';
+
+$ERROR_CREDIT_QUESTION = 'Bitte geben Sie an, ob Sie eine Fahrzeugfinanzierung in Anspruch genommen haben';
+$ERROR_CREDIT_LOAN_VALUE = 'Finanzierungssumme ungültig';
+$ERROR_CREDIT_PERIOD = 'Kreditlaufzeit, Anzahl der Raten ungültig';
+$ERROR_CREDIT_INSTALMENT = 'Monatsrate ungültig';
+$ERROR_CREDIT_RESIDUAL_VALUE = 'Schlussrate ungültig';
+
+$ERROR_INSPECTION_NTIMES = 'Anzahl ungültig';
+$ERROR_INSPECTION_COSTS = 'Inspektionskosten ungültig';
+
+$INVALID_AMOUNT = 'Menge ungültig';
+
+$INVALID_NBR_PP = 'Personenanzahl ungültig';
+$ERROR_PASS_AMOUNT= 'Betrag der monatlichen Strafzettel ungültig';
+
+//FINAL RESULT
+$YOUR_CAR_COSTS_YOU = 'Ihr Auto kostet Sie';
+$WITH_THIS_LEVEL_OF_COSTS = 'Zum gegenwärtigen Stand, hat Ihr Auto, während der'; //ex: __"With this level of costs, you car during the"__ 15 months of possession....
+$MONTHS_POSS = 'Monate in Ihrem Besitz, Kosten verursacht in Höhe von';   //ex: With this level of costs, you car during the 15 ___"months of possession has already costed"___ 14000 Euros
+
+
+$TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen unit distance
+
+//*****************************************
+//STANDARD COMMON AVERAGE DEFAULT values that apear on the start page
+//these values are to be changed by the user but you shall put values that are reasonable
+//keep in mind your chosen standard Currency and your volume and fuel efficiency standards
+
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2005'; //year of acquisition 
+$STD_PRICE_PAID = '15000'; //price paid for the car
+$STD_PRICE_TODAY = '3000'; //the price the car has today
+
+$STD_INSURANCE_SEM = '100'; //price paid for insurance by semester
+
+$STD_LOAN = '20000'; //amount asked for credit
+$STD_PERIOD_OF_CREDIT = '48'; //period of the credit in months
+$STD_MONTHLY_PAY = '400'; //monthly payment
+$STD_RESIDUAL_VALUE = '5000'; //residual value must be paid after credit
+
+$STD_NBR_INSPECTION = '1'; //number of times car went to inspection
+$STD_INSPECTION_PRICE = '100'; //normal inspection price
+
+$STD_ROAD_TAX = '0'; //price paid for road taxes per year
+
+$STD_FUEL_PAID_PER_MONTH = '200'; //money spent per month on fuels
+$STD_DAYS_PER_WEEK = '5'; //days per week one takes their car to work
+$STD_JORNEY_2WORK = '10'; //(standard distance, km or miles) made from home to work (just one way) 
+$STD_JORNEY_WEEKEND = '10'; //(standard distance, km or miles) during the other days, for example weekends
+$STD_KM_PER_MONTH = '400'; //(standard distance, km or miles) made per month
+$STD_CAR_FUEL_EFFICIENCY = '7'; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
+$STD_FUEL_PRICE = '1.61'; //price paid for fuel on chosen currency
+
+$STD_MAINTENANCE_PER_YEAR = '350'; //amount paid for maintenance per year
+
+$STD_REPAIRS = '150'; //repairs and improvements paid per year on average
+
+$STD_PARKING = '50'; //parking paid per month
+
+$STD_TOLLS = '50'; //amount paid in tolls per trimestre 
+$STD_TOLLS_DAY = '1.6'; //amount paid in tolls per day
+$STD_TOLLS_DAYS_PER_MONTH = '22'; //number of days per month the car crosses a tolled way
+
+$STD_FINES = '20'; //fines paid on average per trimestre
+
+$STD_WASHING = '10'; //amount paid in washings per trimestre
+
+?>
