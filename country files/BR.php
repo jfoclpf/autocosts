@@ -66,7 +66,7 @@ $INITIAL_TEXT =
 Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: <span style="color:rgb(255,0,0);">8.7</span> km entre casa e trabalho.<br>
 ';
 
-$HELP_PROJECT = 'Ajude este projeto' ;
+$HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
 $AC_HEADER = '<big><u>WWW.AUTOCUSTOS.COM</u></big><br><b>CALCULADORA DOS CUSTOS DO AUTOMÓVEL</b>';
 
@@ -278,50 +278,42 @@ $TAXI_PRICE_PER_DIST=3;
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = '01'; //month of acquisition 
-$STD_ACQ_YEAR = '2010'; //year of acquisition 
+$STD_ACQ_MONTH = ''; //month of acquisition 
+$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_PRICE_PAID = ''; //price paid for the car
+$STD_PRICE_TODAY = ''; //the price the car has today
 
-$STD_PRICE_PAID = '35000'; //price paid for the car
-$STD_PRICE_TODAY = '22000'; //the price the car has today
+$STD_INSURANCE_SEM = ''; //price paid for insurance by semester
 
-$STD_INSURANCE_SEM = '400'; //price paid for insurance by semester
+$STD_LOAN = ''; //amount asked for credit
+$STD_PERIOD_OF_CREDIT = ''; //period of the credit in months
+$STD_MONTHLY_PAY = ''; //monthly payment
+$STD_RESIDUAL_VALUE = ''; //residual value must be paid after credit
 
+$STD_NBR_INSPECTION = ''; //number of times car went to inspection
+$STD_INSPECTION_PRICE = ''; //normal inspection price
 
-$STD_LOAN = '20000'; //amount asked for credit
-$STD_PERIOD_OF_CREDIT = '48'; //period of the credit in months
-$STD_MONTHLY_PAY = '400'; //monthly payment
-$STD_RESIDUAL_VALUE = '5000'; //residual value must be paid after credit
+$STD_ROAD_TAX = ''; //price paid for road taxes per year
 
-$STD_NBR_INSPECTION = '2'; //number of times car went to inspection
-$STD_INSPECTION_PRICE = '150'; //normal inspection price
+$STD_FUEL_PAID_PER_MONTH = ''; //money spent per month on fuels
+$STD_DAYS_PER_WEEK = ''; //days per week one takes their car to work
+$STD_JORNEY_2WORK = ''; //(standard distance, km or miles) made from home to work (just one way) 
+$STD_JORNEY_WEEKEND = ''; //(standard distance, km or miles) during the other days, for example weekends
+$STD_KM_PER_MONTH = ''; //(standard distance, km or miles) made per month
+$STD_CAR_FUEL_EFFICIENCY = ''; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
+$STD_FUEL_PRICE = ''; //price paid for fuel on chosen currency
 
-$STD_ROAD_TAX = '400'; //price paid for road taxes per year
+$STD_MAINTENANCE_PER_YEAR = ''; //amount paid for maintenance per year
 
+$STD_REPAIRS = ''; //repairs and improvements paid per year on average
 
-$STD_FUEL_PAID_PER_MONTH = '350'; //money spent per month on fuels
-$STD_DAYS_PER_WEEK = '5'; //days per week one takes their car to work
-$STD_JORNEY_2WORK = '50'; //(standard distance, km or miles) made from home to work (just one way)
- 
+$STD_PARKING = ''; //parking paid per month
 
-$STD_JORNEY_WEEKEND = '200'; //(standard distance, km or miles) during the other days, for example weekends
-$STD_KM_PER_MONTH = '1000'; //(standard distance, km or miles) made per month
-$STD_CAR_FUEL_EFFICIENCY = '10'; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
-$STD_FUEL_PRICE = '2.8'; //price paid for fuel on chosen currency
+$STD_TOLLS = ''; //amount paid in tolls per trimestre 
+$STD_TOLLS_DAY = ''; //amount paid in tolls per day
+$STD_TOLLS_DAYS_PER_MONTH = ''; //number of days per month the car crosses a tolled way
 
-$STD_MAINTENANCE_PER_YEAR = '300'; //amount paid for maintenance per year
+$STD_FINES = ''; //fines paid on average per trimestre
 
-
-$STD_REPAIRS = '1000'; //repairs and improvements paid per year on average
-
-$STD_PARKING = '100'; //parking paid per month
-
-$STD_TOLLS = '100'; //amount paid in tolls per trimestre 
-
-$STD_TOLLS_DAY = '6'; //amount paid in tolls per day
-$STD_TOLLS_DAYS_PER_MONTH = '22'; //number of days per month the car crosses a tolled way
-
-$STD_FINES = '200'; //fines paid on average per trimestre
-
-$STD_WASHING = '150'; //amount paid in washings per trimestre 
-
+$STD_WASHING = ''; //amount paid in washings per trimestre
 ?>

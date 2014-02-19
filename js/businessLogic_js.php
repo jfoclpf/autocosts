@@ -509,7 +509,7 @@ if(tipo_calc_portagens=="nao") {
     }
 
     portagens_por_mes=document.custo.preco_portagens_por_dia.value*document.custo.dias_portagens_por_mes.value;
-    portagens_text+=document.custo.preco_portagens_por_dia.value + " <?echo $CURR_NAME_PLURAL?> <?echo $DURING?> " + document.custo.dias_portagens_por_mes.value + " <?echo $DAYS_PER_WEEK_SHORT?> <?echo $MONTH?>";
+    portagens_text+=document.custo.preco_portagens_por_dia.value + " <?echo $CURR_NAME_PLURAL?> <?echo $DURING?> " + document.custo.dias_portagens_por_mes.value + " <?echo $MONTH?>";
 }
 
 portagens_text+="<\/span>";

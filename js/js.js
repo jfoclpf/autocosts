@@ -130,7 +130,7 @@ function initialize() {
     reload();
 }
 function reload () {
-    timer = 0;
+    TimeCounter.resetStopwatch();
     input_object.style.display = 'block';
     result_object.style.display = 'none';
     submit_object.style.display = 'block';
@@ -176,7 +176,8 @@ function getCheckedValue(radioObj) {
     return "";
 }
 
-function test_submit_data(country) {
+
+function submit_data(country) {
 
     var objectToDb = {};
 

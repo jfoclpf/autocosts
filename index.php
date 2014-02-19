@@ -75,6 +75,16 @@
     <script type="text/javascript" src="js/js.js"></script>
     <script type="text/javascript" src="js/businessLogic_js.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/charts_js.php?country=<?php echo $def_cty ?>"></script>
+	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-3421546-6', 'autocosts.org');
+	  ga('send', 'pageview');
+	</script>
 </head>
 
 
@@ -1011,11 +1021,7 @@
                 <div id="submit_div">
                     <input type="submit"
                            style=" border-color: rgb(150, 150, 150); background-color: rgb(178, 178, 178); border-style: groove;"
-                           onclick="calcula_custos_auto(); " value="<? echo $BUTTON_RUN; ?>">
-
-                    <input type="submit"
-                           style=" border-color: rgb(150, 150, 150); background-color: rgb(178, 178, 178); border-style: groove;"
-                           onclick="test_submit_data('<?php echo $def_cty ?>'); " value="Test submit data">
+                           onclick="submit_data('<?php echo $def_cty ?>'); calcula_custos_auto(); " value="<? echo $BUTTON_RUN; ?>">
                 </div>
 
                 <div id="text_div">
@@ -1047,24 +1053,19 @@
 				
 				<?  $is_logo=false;
 					if ($def_cty == "PT"){ $is_logo=true; ?>
-						<a href="images/autocustos_euro.png" imageanchor="1">
-							<img src="images/autocustos_euro.png" style="text-align: center; width: 98%; padding: 0px; margin: 0px;">
-						</a>
+						<img src="images/autocustos_euro.png" id="ac_logo">
 						<br>
+				<? }elseif ( $def_cty == "RU" )  { $is_logo=true;?>
+						<img src="images/autocosts_ruble.png" id="ac_logo">
+						<br>						
 				<? }elseif ( $CURR_SYMBOL == "&euro;" )  { $is_logo=true;?>
-						<a href="images/autocosts_euro.png" imageanchor="1">
-							<img src="images/autocosts_euro.png" style="text-align: center; width: 98%; padding: 0px; margin: 0px;">
-						</a>
+						<img src="images/autocosts_euro.png" id="ac_logo">
 						<br>			
 				<? }elseif ( strpos($CURR_SYMBOL, '&#36;') !== FALSE ) { $is_logo=true;?>
-						<a href="images/autocosts_dollar.png" imageanchor="1">
-							<img src="images/autocosts_dollar.png" style="text-align: center; width: 98%; padding: 0px; margin: 0px;">
-						</a>
+						<img src="images/autocosts_dollar.png" id="ac_logo">
 						<br>			
 				<? }elseif (strpos($CURR_SYMBOL, '&pound;') !== FALSE){ $is_logo=true;?>
-						<a href="images/autocosts_pound.png" imageanchor="1">
-							<img src="images/autocosts_pound.png" style="text-align: center; width: 98%; padding: 0px; margin: 0px;">
-						</a>
+						<img src="images/autocosts_pound.png" id="ac_logo">
 						<br>			
 				<?} ?>
 					

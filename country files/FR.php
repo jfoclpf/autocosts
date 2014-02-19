@@ -52,13 +52,13 @@ $BUTTON_RUN = 'Lancez'; //run simulator button
 $BUTTON_RERUN = 'Relancez'; //run simulator button 
 
 //WEB PAGE
-$WEB_PAGE_TITLE = 'Simulateur des coûts automobiles';
-$MAIN_TITLE = "SIMULATEUR DES COÛTS AUTOMOBILES";
-$INITIAL_TEXT = "Ce simulateur vous permettra de trouver <b>le vrai coût de revient</b> de votre voiture au <b>France</b>. Il vous donnera normalement une estimation correcte de ce qu’il faut réellement dépenser pour se permettre d’avoir une voiture. Comme les factures liées à votre automobile arrivent à différents moments de l’année, il est souvent difficile d’évaluer la somme totale dépensée.<br><br> Soyez réaliste avec les valeurs que vous entrez. Pour des factures inattendues telles que des frais de réparations après un accident ou des amendes, pensez à combien vous avez dépensé sur ces postes les années précédentes. Les calculs sont faits par défaut sur une base mensuelle. Utilisez le symbole du point pour la notation décimale, par exemple <span style=\"color:rgb(255,0,0);\">8.7</span> kilomètres entre la maison et le lieu de travail.<br>";
+$WEB_PAGE_TITLE = 'Calculatrice des coûts automobiles';
+$MAIN_TITLE = "CALCULATRICE DES COÛTS AUTOMOBILES";
+$INITIAL_TEXT = "Cette calculatrice vous permettra de trouver <b>le vrai coût de revient</b> de votre voiture au <b>France</b>. Il vous donnera normalement une estimation correcte de ce qu’il faut réellement dépenser pour se permettre d’avoir une voiture. Comme les factures liées à votre automobile arrivent à différents moments de l’année, il est souvent difficile d’évaluer la somme totale dépensée.<br><br> Soyez réaliste avec les valeurs que vous entrez. Pour des factures inattendues telles que des frais de réparations après un accident ou des amendes, pensez à combien vous avez dépensé sur ces postes les années précédentes. Les calculs sont faits par défaut sur une base mensuelle. Utilisez le symbole du point pour la notation décimale, par exemple <span style=\"color:rgb(255,0,0);\">8.7</span> kilomètres entre la maison et le lieu de travail.<br>";
 
-$HELP_PROJECT = 'Aidez ce projet';
+$HELP_PROJECT = 'Ce service est gratuit, sans publicité!';
 $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>SIMULATEUR DES COÛTS AUTOMOBILES </b>';
+$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>CALCULATRICE DES COÛTS AUTOMOBILES </b>';
 
 
 //time words
@@ -268,43 +268,43 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = '01'; //month of acquisition 
-$STD_ACQ_YEAR = '2005'; //year of acquisition 
-$STD_PRICE_PAID = '15000'; //price paid for the car
-$STD_PRICE_TODAY = '2000'; //the price the car has today
+$STD_ACQ_MONTH = ''; //month of acquisition 
+$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_PRICE_PAID = ''; //price paid for the car
+$STD_PRICE_TODAY = ''; //the price the car has today
 
-$STD_INSURANCE_SEM = '78.5'; //price paid for insurance by semester
+$STD_INSURANCE_SEM = ''; //price paid for insurance by semester
 
-$STD_LOAN = '20000'; //amount asked for credit
-$STD_PERIOD_OF_CREDIT = '48'; //period of the credit in months
-$STD_MONTHLY_PAY = '400'; //monthly payment
-$STD_RESIDUAL_VALUE = '5000'; //residual value must be paid after credit
+$STD_LOAN = ''; //amount asked for credit
+$STD_PERIOD_OF_CREDIT = ''; //period of the credit in months
+$STD_MONTHLY_PAY = ''; //monthly payment
+$STD_RESIDUAL_VALUE = ''; //residual value must be paid after credit
 
-$STD_NBR_INSPECTION = '5'; //number of times car went to inspection
-$STD_INSPECTION_PRICE = '55'; //normal inspection price
+$STD_NBR_INSPECTION = ''; //number of times car went to inspection
+$STD_INSPECTION_PRICE = ''; //normal inspection price
 
-$STD_ROAD_TAX = '80'; //price paid for road taxes per year
+$STD_ROAD_TAX = ''; //price paid for road taxes per year
 
-$STD_FUEL_PAID_PER_MONTH = '200'; //money spent per month on fuels
-$STD_DAYS_PER_WEEK = '5'; //days per week one takes their car to work
-$STD_JORNEY_2WORK = '20'; //(standard distance, km or miles) made from home to work (just one way) 
-$STD_JORNEY_WEEKEND = '15'; //(standard distance, km or miles) during the other days, for example weekends
-$STD_KM_PER_MONTH = '300'; //(standard distance, km or miles) made per month
-$STD_CAR_FUEL_EFFICIENCY = '7'; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
-$STD_FUEL_PRICE = '1.39'; //price paid for fuel on chosen currency
+$STD_FUEL_PAID_PER_MONTH = ''; //money spent per month on fuels
+$STD_DAYS_PER_WEEK = ''; //days per week one takes their car to work
+$STD_JORNEY_2WORK = ''; //(standard distance, km or miles) made from home to work (just one way) 
+$STD_JORNEY_WEEKEND = ''; //(standard distance, km or miles) during the other days, for example weekends
+$STD_KM_PER_MONTH = ''; //(standard distance, km or miles) made per month
+$STD_CAR_FUEL_EFFICIENCY = ''; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
+$STD_FUEL_PRICE = ''; //price paid for fuel on chosen currency
 
-$STD_MAINTENANCE_PER_YEAR = '350'; //amount paid for maintenance per year
+$STD_MAINTENANCE_PER_YEAR = ''; //amount paid for maintenance per year
 
-$STD_REPAIRS = '150'; //repairs and improvements paid per year on average
+$STD_REPAIRS = ''; //repairs and improvements paid per year on average
 
-$STD_PARKING = '50'; //parking paid per month
+$STD_PARKING = ''; //parking paid per month
 
-$STD_TOLLS = '50'; //amount paid in tolls per trimestre 
-$STD_TOLLS_DAY = '1.6'; //amount paid in tolls per day
-$STD_TOLLS_DAYS_PER_MONTH = '22'; //number of days per month the car crosses a tolled way
+$STD_TOLLS = ''; //amount paid in tolls per trimestre 
+$STD_TOLLS_DAY = ''; //amount paid in tolls per day
+$STD_TOLLS_DAYS_PER_MONTH = ''; //number of days per month the car crosses a tolled way
 
-$STD_FINES = '20'; //fines paid on average per trimestre
+$STD_FINES = ''; //fines paid on average per trimestre
 
-$STD_WASHING = '10'; //amount paid in washings per trimestre
+$STD_WASHING = ''; //amount paid in washings per trimestre
 
 ?>

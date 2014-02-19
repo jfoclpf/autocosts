@@ -240,6 +240,13 @@ input {
 	margin: 0 auto;
 }
 
+#ac_logo{
+	text-align: center; 
+	width: 90%; 
+	padding: 3px 0 7px 0; 
+	margin: 0px;
+}
+
 #br_btween_divs {
     display: none;
 }
