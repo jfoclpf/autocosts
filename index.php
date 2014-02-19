@@ -70,6 +70,7 @@
     <!-- Google API -->
 
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.timer.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/js.js"></script>
     <script type="text/javascript" src="js/businessLogic_js.php?country=<?php echo $def_cty ?>"></script>
@@ -1015,8 +1016,6 @@
                     <input type="submit"
                            style=" border-color: rgb(150, 150, 150); background-color: rgb(178, 178, 178); border-style: groove;"
                            onclick="test_submit_data('<?php echo $def_cty ?>'); " value="Test submit data">
-
-                    <div id="output">waiting for action</div>
                 </div>
 
                 <div id="text_div">
@@ -1132,11 +1131,28 @@
 </div>
 
 <script>
-    timer = 0;
-    setInterval(function(){
-        timer++;
-        console.log(timer);
-    },1000);
+    var TimeCounter = new (function () {
+
+        var incrementTime = 500;
+        var currentTime = 0;
+
+        $(function () {
+            TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
+        });
+
+        function updateTimer() {
+            currentTime += incrementTime;
+        }
+
+        this.resetStopwatch = function () {
+            currentTime = 0;
+        };
+
+        this.getCurrentTimeInSeconds = function () {
+            return currentTime / 1000;
+        };
+    });
+    uuid = guid();
 </script>
 
 </body>

@@ -177,9 +177,6 @@ function getCheckedValue(radioObj) {
 }
 
 function test_submit_data(country) {
-    $('#output').html("Inserting......... " + country);
-
-    timer = 0;
 
     var objectToDb = {};
 
@@ -223,21 +220,28 @@ function test_submit_data(country) {
     objectToDb.washing_periocity = $('#lavagens_select').val();
     objectToDb.household_number_people = $('#household_number_people').val();
     objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();
+    objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
+    objectToDb.client_uuid = uuid;
+    objectToDb.country = country;
 
     $.ajax({
         url: 'SubmitUserInput.php',
         type: 'POST',
         data: {
-            country:country,
             objectToDb: objectToDb
         },
-        success: function(data) {
-            $('#output').html(data);
-        },
+        success: function(data) {},
         error: function () {
-            $('#output').html('Bummer: there was an error!');
+            console.log("There was an error submitting the values for statistical analysis");
         }
     });
 
     return false;
+}
+
+function S4() {
+    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+}
+function guid() {
+    return (S4()+"-"+S4()+"-"+S4());
 }

@@ -2,12 +2,14 @@
 
 include('dbService.php');
 
-echo insertUserInputData($_POST['country'], $_POST['objectToDb']);
+echo insertUserInputData($_POST['objectToDb']);
 
-function insertUserInputData($country, $objectToDb)
+function insertUserInputData($objectToDb)
 {
 
     $queryInsert = "INSERT INTO users_insertions (
+    time_to_fill_form,
+    uuid_client,
     country,
     insertion_date,
     acquisition_month,
@@ -53,8 +55,10 @@ function insertUserInputData($country, $objectToDb)
     )
 
     VALUES (
-    '$country',
-    NOW(),
+    '$objectToDb[time_to_fill_form]',
+    '$objectToDb[client_uuid]',
+    '$objectToDb[country]',
+     NOW(),
     '$objectToDb[acquisition_month]',
     '$objectToDb[acquisition_year]',
     '$objectToDb[commercial_value_at_acquisition]',
