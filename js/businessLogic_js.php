@@ -170,7 +170,7 @@ alert("<?echo $FUEL?> - <?echo $ERROR_CAR_JOB?>!");
 return;
 }
 
-if (leva_auto_job=="nao"){
+if (leva_auto_job=="false"){
 
 var temp=document.custo.combustivel_period_km;
 var fuel_period_km = temp.options[temp.selectedIndex].value;
@@ -467,7 +467,7 @@ var portagens_text="<b><span class=\"p3\"><?echo $TOLLS?><\/span><\/b><br><span 
 
 var tipo_calc_portagens=getCheckedValue(document.custo.portagens_ao_dia);
 
-if(tipo_calc_portagens=="nao") {
+if(tipo_calc_portagens=="false") {
     if(!isNumber(document.custo.portagens.value)) {
         alert("<?echo $TOLLS?> - <?echo $INVALID_AMOUNT?>!");
         return;

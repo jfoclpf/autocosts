@@ -521,12 +521,12 @@
                                             <? echo $FUEL_CALC ?>
                                         </td>
                                         <td width="12%">
-                                            <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="onclick_km(); ">
+                                            <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance'); ">
                                             <span class="p2">
                                                 <? echo $STD_DIST ?>&nbsp;
                                             </span>
                                         </td>
-                                        <td width="18%"><input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="onclick_euro(); ">
+                                        <td width="18%"><input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency'); ">
                                            <span class="p2">
                                                <? echo $CURR_NAME_PLURAL ?>
                                            </span>
@@ -534,7 +534,7 @@
 
                                         <td align="right" width="60%">
                                             <div id="eurosDiv">
-                                                <input type="text" size="5" maxlength="9" id="fuel_corrency_value" value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>"
+                                                <input type="text" size="5" maxlength="9" id="fuel_currency_value" value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>"
                                                        name="combustiveis_euro"
                                                        style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
                                                 <span class="p2">
@@ -561,14 +561,14 @@
                                             <td width="20%">
                                                 <div style="white-space:nowrap;">
                                                     <input type="radio" name="carro_emprego" id="carro_emprego_sim"
-                                                            value="sim" onclick="onclick_carroempregosim();">
+                                                            value="true" onclick="carToJob(true);">
                                                     <span class="p2">
                                                         <? echo $YES ?>
                                                     </span>
                                                 </div>
                                                 <div style="white-space:nowrap;">
                                                     <input type="radio" name="carro_emprego" id="carro_emprego_nao"
-                                                           value="nao" onclick="onclick_carroempregonao();">
+                                                           value="false" onclick="carToJob(false);">
                                                     <span class="p2">
                                                         <? echo $NO ?>
                                                     </span>
@@ -668,7 +668,7 @@
                                                 <? echo $FUEL_CAR_EFF ?> &nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" id="fuel_effeciency" name="consumo_auto" size="5" maxlength="5"
+                                                <input type="text" id="fuel_efficiency" name="consumo_auto" size="5" maxlength="5"
                                                        value="<? echo $STD_CAR_FUEL_EFFICIENCY; ?>"
                                                        style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
                                                 <span class="p2">
@@ -810,11 +810,11 @@
                                             <? echo $TOLLS_DAY_CALC ?>
                                         </td>
                                         <td align="right">
-                                            <input type="radio" name="portagens_ao_dia" value="sim" onclick="onclick_dia_sim_portag(); ">
+                                            <input type="radio" name="portagens_ao_dia" value="true" onclick="tolls_daily(true); ">
                                             <span class="p2">
                                                 <? echo $YES ?>
                                             </span>
-                                            <input type="radio" name="portagens_ao_dia" value="nao" onclick="onclick_dia_nao_portag();"
+                                            <input type="radio" name="portagens_ao_dia" value="false" onclick="tolls_daily(false);"
                                                          checked="checked">
                                             <span class="p2">
                                                 <? echo $NO ?>

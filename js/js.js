@@ -14,44 +14,31 @@ function valueselect(myval) {
 /*jslint browser:true */
 /*jslint white: false */
 
-function onclick_euro() {
-    "use strict";
-    var temp1, temp2;
-    temp1 = document.getElementById('eurosDiv');
-    temp2 = document.getElementById('kmDiv');
-    temp1.style.display = 'block';
-    temp2.style.display = 'none';
+function fuelCalculationMethodChange(fuelCalculationMethod) {
+    if (fuelCalculationMethod === 'currency') {
+        $('#eurosDiv').css("display", "block");
+        $('#kmDiv').css("display", "none");
+    } else if (fuelCalculationMethod === 'distance') {
+        $('#eurosDiv').css("display", "none");
+        $('#kmDiv').css("display", "block");
+
+        var temp3;
+        temp3 = document.getElementById('carro_emprego_nao');
+        temp3.checked = true;
+        carToJob(false);
+    } else {
+        console.log("wtf just happened? Either is distance or currency... make up your mind developer");
+    }
 }
 
-function onclick_carroempregosim() {
-    var temp1, temp2;
-    temp1 = document.getElementById('carro_emprego_sim_Div');
-    temp2 = document.getElementById('carro_emprego_nao_Div');
-    temp1.style.display = 'block';
-    temp2.style.display = 'none';
-}
-
-
-function onclick_carroempregonao() {
-    "use strict";
-    var temp1, temp2;
-    temp1 = document.getElementById('carro_emprego_sim_Div');
-    temp2 = document.getElementById('carro_emprego_nao_Div');
-    temp1.style.display = 'none';
-    temp2.style.display = 'block';
-}
-
-function onclick_km() {
-    "use strict";
-    var temp1, temp2, temp3;
-    temp1 = document.getElementById('eurosDiv');
-    temp2 = document.getElementById('kmDiv');
-    temp1.style.display = 'none';
-    temp2.style.display = 'block';
-
-    temp3 = document.getElementById('carro_emprego_nao');
-    temp3.checked = true;
-    onclick_carroempregonao();
+function carToJob(carToJobFlag) {
+    if (carToJobFlag) {
+        $('#carro_emprego_sim_Div').css("display", "block");
+        $('#carro_emprego_nao_Div').css("display", "none");
+    } else {
+        $('#carro_emprego_sim_Div').css("display", "none");
+        $('#carro_emprego_nao_Div').css("display", "block");
+    }
 }
 
 function onclick_credit(flag) {
@@ -62,22 +49,15 @@ function onclick_credit(flag) {
     }
 }
 
-function onclick_dia_nao_portag() { //doesn't make tolls calculation by day
-    var temp1, temp2;
-    temp1 = document.getElementById('dia_nao_portag_DIV');
-    temp2 = document.getElementById('dia_sim_portag_DIV');
-    temp1.style.display = 'block';
-    temp2.style.display = 'none';
+function tolls_daily(tollsDailyFlag) {
+    if (tollsDailyFlag) {
+        $('#dia_nao_portag_DIV').css("display", "none");
+        $('#dia_sim_portag_DIV').css("display", "block");
+    } else {
+        $('#dia_nao_portag_DIV').css("display", "block");
+        $('#dia_sim_portag_DIV').css("display", "none");
+    }
 }
-
-function onclick_dia_sim_portag() { //tolls calculated by day
-    var temp1, temp2;
-    temp1 = document.getElementById('dia_nao_portag_DIV');
-    temp2 = document.getElementById('dia_sim_portag_DIV');
-    temp1.style.display = 'none';
-    temp2.style.display = 'block';
-}
-
 
 function isNumber(n) {
     return (!isNaN(parseFloat(n)) && isFinite(n) && n >= 0);
@@ -125,9 +105,19 @@ function initialize() {
 
 
     reload_object.style.display = 'none';
-    onclick_dia_nao_portag();
+    tolls_daily(false);
 
     reload();
+
+    var temp1, temp2;
+
+    document.getElementById("radio_fuel_euros").checked = true;
+    $('#eurosDiv').css("display", "block");
+    $('#kmDiv').css("display", "none");
+
+    document.getElementById("radio_cred_nao").checked = true;
+    $('#sim_credDiv').css("display", "none");
+
 }
 function reload () {
     TimeCounter.resetStopwatch();
@@ -139,17 +129,6 @@ function reload () {
     graph_object.style.display = 'none';
     text_object.style.display = 'none';
 
-    var temp1, temp2;
-
-    document.getElementById("radio_fuel_euros").checked = true;
-    temp1 = document.getElementById('eurosDiv');
-    temp1.style.display = 'block';
-    temp2 = document.getElementById('kmDiv');
-    temp2.style.display = 'none';
-
-    document.getElementById("radio_cred_nao").checked = true;
-    temp2 = document.getElementById('sim_credDiv');
-    temp2.style.display = 'none';
     window.scroll(0, 1);
 }
 
@@ -188,42 +167,43 @@ function submit_data(country) {
     objectToDb.insure_type = $('input[name="tipo_seguro"]:checked', '#main_form').val();
     objectToDb.insurance_value = $('#insuranceValue').val();
     objectToDb.credit = $('input[name="cred_auto"]:checked', '#main_form').val();
-    objectToDb.borrowed_amount = $('#borrowedAmount').val();
-    objectToDb.number_installments = $('#numberInstallments').val();
-    objectToDb.amount_installment = $('#amountInstallment').val();
-    objectToDb.residual_value = $('#residualValue').val();
-    objectToDb.number_inspections = $('#numberInspections').val();
-    objectToDb.average_inspection_cost = $('#averageInspectionCost').val();
+    objectToDb.credit_borrowed_amount = $('#borrowedAmount').val();
+    objectToDb.credit_number_installments = $('#numberInstallments').val();
+    objectToDb.credit_amount_installment = $('#amountInstallment').val();
+    objectToDb.credit_residual_value = $('#residualValue').val();
+    objectToDb.inspection_number_inspections = $('#numberInspections').val();
+    objectToDb.inspection_average_inspection_cost = $('#averageInspectionCost').val();
     objectToDb.vehicle_excise_tax = $('#vehicleExciseTax').val();
     objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#main_form').val();
-    objectToDb.fuel_corrency_value = $('#fuel_corrency_value').val();
-    objectToDb.fuel_periocity = $('#combustiveis_periodo_euro').val();
-    objectToDb.car_to_job = $('input[name="carro_emprego"]:checked', '#main_form').val();
-    objectToDb.car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
-    objectToDb.car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
-    objectToDb.car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
-    objectToDb.fuel_efficiency = $('#fuel_efficiency').val();
-    objectToDb.no_car_to_work_distance = $('#no_car_to_work_distance').val();
-    objectToDb.fuel_period_distance = $('#combustivel_period_km').val();
-    objectToDb.fuel_effeciency = $('#fuel_effeciency').val();
-    objectToDb.fuel_price = $('#fuel_price').val();
+    objectToDb.fuel_currency_based_currency_value = $('#fuel_currency_value').val();
+    objectToDb.fuel_currency_based_periodicity = $('#combustiveis_periodo_euro').val();
+    objectToDb.fuel_distance_based_car_to_work = $('input[name="carro_emprego"]:checked', '#main_form').val();
+    objectToDb.fuel_distance_based_car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
+    objectToDb.fuel_distance_based_car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
+    objectToDb.fuel_distance_based_car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
+    objectToDb.fuel_distance_based_no_car_to_work_distance = $('#no_car_to_work_distance').val();
+    objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = $('#combustivel_period_km').val();
+    objectToDb.fuel_distance_based_fuel_efficiency = $('#fuel_efficiency').val();
+    objectToDb.fuel_distance_based_fuel_price = $('#fuel_price').val();
     objectToDb.maintenance = $('#maintenance').val();
     objectToDb.repairs = $('#repairs').val();
     objectToDb.parking = $('#parking').val();
     objectToDb.tolls_daily = $('input[name="portagens_ao_dia"]:checked', '#main_form').val();
-    objectToDb.no_daily_tolls_value = $('#no_daily_tolls_value').val();
-    objectToDb.tolls_period = $('#portagens_select').val();
-    objectToDb.daily_expense_tolls = $('#daily_expense_tolls').val();
-    objectToDb.number_days_tolls = $('#number_days_tolls').val();
+    objectToDb.tolls_no_daily_value = $('#no_daily_tolls_value').val();
+    objectToDb.tolls_no_daily_period = $('#portagens_select').val();
+    objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
+    objectToDb.tolls_daily_number_days = $('#number_days_tolls').val();
     objectToDb.tickets_value = $('#tickets_value').val();
-    objectToDb.tickes_periocity = $('#multas_select').val();
+    objectToDb.tickets_periodicity = $('#multas_select').val();
     objectToDb.washing_value = $('#washing_value').val();
-    objectToDb.washing_periocity = $('#lavagens_select').val();
+    objectToDb.washing_periodicity = $('#lavagens_select').val();
     objectToDb.household_number_people = $('#household_number_people').val();
     objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();
     objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
     objectToDb.client_uuid = uuid;
     objectToDb.country = country;
+
+    sanityChecks(objectToDb);
 
     $.ajax({
         url: 'SubmitUserInput.php',
@@ -238,6 +218,45 @@ function submit_data(country) {
     });
 
     return false;
+}
+
+function sanityChecks(objectToDb) {
+    if (objectToDb.credit === 'false') {
+        objectToDb.credit_borrowed_amount = null;
+        objectToDb.credit_number_installments = null;
+        objectToDb.credit_amount_installment = null;
+        objectToDb.credit_residual_value = null;
+    }
+
+    if (objectToDb.fuel_calculation === 'euros') {
+        objectToDb.fuel_distance_based_fuel_efficiency = null;
+        objectToDb.fuel_distance_based_fuel_price = null;
+        objectToDb.fuel_distance_based_car_to_work = null;
+        objectToDb.fuel_distance_based_car_to_work_number_days_week = null;
+        objectToDb.fuel_distance_based_car_to_work_distance_home_work = null;
+        objectToDb.fuel_distance_based_car_to_work_distance_weekend = null;
+        objectToDb.fuel_distance_based_no_car_to_work_distance = null;
+        objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = null;
+    } else {
+        objectToDb.fuel_currency_based_currency_value = null;
+        objectToDb.fuel_currency_based_periodicity = null;
+        if (objectToDb.fuel_distance_based_car_to_work === 'true') {
+            objectToDb.fuel_distance_based_no_car_to_work_distance = null;
+            objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = null;
+        } else {
+            objectToDb.fuel_distance_based_car_to_work_number_days_week = null;
+            objectToDb.fuel_distance_based_car_to_work_distance_home_work = null;
+            objectToDb.fuel_distance_based_car_to_work_distance_weekend = null;
+        }
+    }
+
+    if (objectToDb.tolls_daily === 'true') {
+        objectToDb.tolls_no_daily_value = null;
+        objectToDb.tolls_no_daily_period = null;
+    } else {
+        objectToDb.tolls_daily_expense = null;
+        objectToDb.tolls_daily_number_days = null;
+    }
 }
 
 function S4() {
