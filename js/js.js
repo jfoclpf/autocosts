@@ -109,15 +109,12 @@ function initialize() {
 
     reload();
 
-    var temp1, temp2;
-
     document.getElementById("radio_fuel_euros").checked = true;
     $('#eurosDiv').css("display", "block");
     $('#kmDiv').css("display", "none");
 
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
-
 }
 function reload () {
     TimeCounter.resetStopwatch();

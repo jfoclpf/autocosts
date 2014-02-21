@@ -101,6 +101,5 @@ function insertUserInputData($objectToDb)
 
     $result = executeQueryInDB($queryInsert);
 
-
     return $result;
 }

@@ -1,10 +1,7 @@
 <?php
 
-
-
 function executeQueryInDB($query)
 {
-
     include('Globals.php');
 
     $isDBConnectionSane = true;
