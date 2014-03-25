@@ -1021,7 +1021,7 @@
                 <div id="submit_div">
                     <input type="submit"
                            style=" border-color: rgb(150, 150, 150); background-color: rgb(178, 178, 178); border-style: groove;"
-                           onclick="submit_data('<?php echo $def_cty ?>'); calcula_custos_auto(); " value="<? echo $BUTTON_RUN; ?>">
+                           onclick="if(calcula_custos_auto()){submit_data('<?php echo $def_cty ?>');} " value="<? echo $BUTTON_RUN; ?>">
                 </div>
 
                 <div id="text_div">

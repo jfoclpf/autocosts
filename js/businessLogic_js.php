@@ -819,4 +819,5 @@ if (temp_width>500) {
         text_object.innerHTML=text_msg;
         text_object.style.display='block';
     }
+return true;
 }
