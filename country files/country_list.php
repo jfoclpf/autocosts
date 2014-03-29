@@ -19,7 +19,10 @@ NOTE: JUST ADD A COUNTRY HERE if you add the correspondent translation file
 $avail_CT = array(
     "PT" => "Portugal",
     "BR" => "Brasil",
+    "GR" => "Ελλάδα",
+    "DK" => "Danmark",
     "NO" => "Norge",
+    "TR" => "Türkiye",
     "CZ" => "Česká",
     "FI" => "Suomessa",
     "ES" => "España",
