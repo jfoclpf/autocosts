@@ -5,6 +5,7 @@
 //      the automobile costs simulator         **
 //                                             **
 //      made by João Pimentel Ferreira         **
+//          and Pedro Gonçalves                **
 //       under Creative Commons BY-SA          **
 //                                             **
 //***********************************************
