@@ -90,13 +90,23 @@ function numberWithSpaces(x) {
     return parts.join(".");
 }
 
+function openForm_part(part_name, part_number) {
+  for (var p = null, i = 1;
+	p = document.getElementById(part_name+i); ++i) {
+	if (i == part_number) p.style.display = "";
+	else p.style.display = "none";
+  }
+}
+
 function initialize() {
+
+	openForm_part("form_part", 1); //shows just part 1 of input form
+
     input_object = document.getElementById('input_div'); //tabela de entrada
     result_object = document.getElementById('result_div'); //resultados
     frame_witdh = document.getElementById('result_div').offsetWidth;
 
-    submit_object = document.getElementById('submit_div'); //botÃ£o de calcular
-    reload_object = document.getElementById('reload_div'); //botÃ£o de carregar
+    reload_object = document.getElementById('reload_div'); //reload button
 
     chart_object = document.getElementById('chart_div'); //pie chart
     graph_object = document.getElementById('graph_div'); //columns chart
@@ -115,18 +125,21 @@ function initialize() {
 
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
+	
 }
 function reload () {
+
     TimeCounter.resetStopwatch();
     input_object.style.display = 'block';
     result_object.style.display = 'none';
-    submit_object.style.display = 'block';
     reload_object.style.display = 'none';
     chart_object.style.display = 'none';
     graph_object.style.display = 'none';
     text_object.style.display = 'none';
 
     window.scroll(0, 1);
+	
+	openForm_part('form_part', 1);
 }
 
 function getCheckedValue(radioObj) {

@@ -1,5 +1,5 @@
 /*
-div {
+div, table, .table, .td, .tr, tr, td  {
     border: 1px solid #000000;
 }
 */
@@ -8,9 +8,12 @@ div {
     display: table;
     width: 100%;
 }
+
 .row {
     display: table-row;
+	width:100%;
 }
+
 .cell {
     display: table-cell;
     padding-left: 5px;
@@ -54,6 +57,17 @@ input {
     left: 0;
     right: 0;
     border-bottom: 1px solid;
+}
+
+.form_sub_header {
+	width: 100%; 
+	text-align: center; 
+	border-top: 1px solid black; 
+	border-bottom: 1px solid black; 
+	color: white; 
+	background-color: rgb(173, 166, 146);
+	border-top-left-radius: 9px;
+	border-top-right-radius: 9px;
 }
 
 .description {
@@ -101,6 +115,12 @@ input {
     vertical-align: middle;
 }
 
+.button {
+	border-color: rgb(150, 150, 150); 
+	background-color: rgb(178, 178, 178); 
+	border-style: groove;
+}
+
 .p5 {
     font-size: 170%;
 }
@@ -145,7 +165,6 @@ input {
 	margin: 0 auto;
     width: 70%;
     display: inline;
-	margin:0 auto;
 }
 
 .banner_right {
@@ -171,12 +190,12 @@ input {
     border: solid 2px;
 }
 
-#main_table {
+.main_table {
     margin: 0 auto;
     width: 98%;
-    display: block;
+    display: table;
     overflow: auto;
-    border: solid 2px ;
+    border: solid 2px;
 }
 
 #main_div {
@@ -354,7 +373,7 @@ input {
         max-width: 620px;
     }
 
-    #main_table {
+    .main_table {
         border: solid 1px black;
         margin: 1px;
         width: 98%;
@@ -588,7 +607,7 @@ input {
         padding: 5% 0 5% 0;
     }
 
-    #main_table {
+    .main_table {
         border: none;
     }
 
@@ -682,7 +701,7 @@ input {
         font-size: 45%;
     }
 
-    #main_table, #banner_left, #facebook_btn, #div11, #div12, #br0, #br1, #br2, #br3 {
+    .main_table, #banner_left, #facebook_btn, #div11, #div12, #br0, #br1, #br2, #br3 {
         border: none;
     }
 

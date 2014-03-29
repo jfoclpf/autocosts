@@ -492,7 +492,7 @@
 						
 						<br>
 						<p2>1/3&nbsp;&nbsp;</p2>
-						<input class="button" type="submit" onclick="openForm_part('form_part', 2)" value="&#10145;" />
+						<input class="button" type="submit" onclick="openForm_part('form_part', 2)" value="&raquo;" />
 						
 					</div> <!-- end of form_part1-->
 
@@ -965,9 +965,9 @@
 						</table>
 						
 						<br>
-						<input class="button" type="submit" onclick="openForm_part('form_part', 1)" value="&#8678;" />
+						<input class="button" type="submit" onclick="openForm_part('form_part', 1)" value="&laquo;" />
 						<p2>&nbsp;&nbsp;2/3&nbsp;&nbsp;</p2>
-						<input class="button" type="submit" onclick="openForm_part('form_part', 3)" value="&#10145;" />
+						<input class="button" type="submit" onclick="openForm_part('form_part', 3)" value="&raquo;" />
 						
 					</div> <!-- end of form_part2-->
 
@@ -1030,7 +1030,7 @@
 						</table>
 						
 						<br>
-						<input class="button" type="submit" onclick="openForm_part('form_part', 2)" value="&#8678;" />
+						<input class="button" type="submit" onclick="openForm_part('form_part', 2)" value="&laquo;" />
 						
 						<input class="button" type="submit"
 							   	   onclick="if(calcula_custos_auto()){submit_data('<?php echo $def_cty ?>');} " value="<? echo $BUTTON_RUN; ?>" />
