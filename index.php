@@ -120,11 +120,11 @@
 					</div>
 					<div style="display: table-cell; vertical-align: bottom;">
 						<select name="country_select" id="country_select" onchange="valueselect(this.value);"">
-							<?php foreach ($avail_CT as $key => $value) { ?>
+							<?php foreach ($avail_CT as $key => $value) { if ($key!="XX"){?>
 								<option value="<?php echo $key ?>" <? if ($key == $def_cty) {
 									echo "selected=\"selected\"";
 								} ?>> <?php echo $value ?></option>
-							<?php } ?>
+							<?php }} ?>
 						</select>
 					</div>
 				</div>

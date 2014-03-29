@@ -1,12 +1,13 @@
 ﻿<!--
 //***********************************************
-//											   **
+                                               **
 //              AUTOCOSTS.ORG                  **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Jo«ªo Pimentel Ferreira         **
+//      the automobile costs simulator         **
+//                                             **
+//      made by João Pimentel Ferreira         **
+//           and Pedro Gonçalves               **
 //       under Creative Commons BY-SA          **
-//	  										   **
+//                                             **
 //***********************************************
 
 List of available countries
@@ -17,6 +18,7 @@ NOTE: JUST ADD A COUNTRY HERE if you add the correspondent translation file
 <?
 
 $avail_CT = array(
+    "XX" => "test",
     "PT" => "Portugal",
     "BR" => "Brasil",
     "GR" => "Ελλάδα",
