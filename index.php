@@ -993,7 +993,7 @@
 												<? echo $EXTRA_DATA_FAMILY_NBR ?>
 											</td>
 											<td width="20%" align="right">
-												<input type="text" id="household_number_people" name="pessoas_agregado" size="6" maxlength="2" value=""
+												<input type="text" id="household_number_people" name="pessoas_agregado" size="6" maxlength="2" value="<? echo $STD_NR_PPL_FAMILY ?>"
 													   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
 											</td>
 											<td align="left">
@@ -1014,7 +1014,7 @@
 												<? echo $EXTRA_DATA_PRICE_PASS ?>
 											</td>
 											<td align="right">
-												<input type="text" id="public_transportation_month_expense" name="preco_passe" size="6" maxlength="9" value=""
+												<input type="text" id="public_transportation_month_expense" name="preco_passe" size="6" maxlength="9" value="<? echo $STD_PASS_PRICE ?>"
 															 style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
 											</td>
 											<td>

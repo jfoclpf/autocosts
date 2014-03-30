@@ -317,4 +317,6 @@ $STD_FINES = '10'; //fines paid on average per trimestre
 
 $STD_WASHING = '10'; //amount paid in washings per trimestre
 
+$STD_NR_PPL_FAMILY = '4'; //number of people in the family
+$STD_PASS_PRICE = '40'; //price of the monthly pass
 ?>
