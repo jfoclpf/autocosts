@@ -90,17 +90,44 @@ function numberWithSpaces(x) {
     return parts.join(".");
 }
 
-function openForm_part(part_name, part_number) {
-  for (var p = null, i = 1;
-	p = document.getElementById(part_name+i); ++i) {
-	if (i == part_number) p.style.display = "";
-	else p.style.display = "none";
-  }
+function removeHash () { 
+    var scrollV, scrollH, loc = window.location;
+    if ("pushState" in history)
+        history.pushState("", document.title, loc.pathname + loc.search);
+    else {
+        // Prevent scrolling by storing the page's current scroll offset
+        scrollV = document.body.scrollTop;
+        scrollH = document.body.scrollLeft;
+
+        loc.hash = "";
+
+        // Restore the scroll offset, should be flicker free
+        document.body.scrollTop = scrollV;
+        document.body.scrollLeft = scrollH;
+    }
+}
+
+function openForm_part(part_name, part_number, bool_go2form) {
+
+	if (bool_go2form){
+		window.location.hash = "div2"; 
+		window.scrollBy(0,32);
+	}
+	else{
+		window.location.hash = "";
+	}
+	removeHash();
+
+    for (var p = null, i = 1;
+		p = document.getElementById(part_name+i); ++i) {
+		if (i == part_number) p.style.display = "";
+		else p.style.display = "none";
+    }
 }
 
 function initialize() {
 
-	openForm_part("form_part", 1); //shows just part 1 of input form
+	openForm_part("form_part", 1, false); //shows just part 1 of input form
 
     input_object = document.getElementById('input_div'); //tabela de entrada
     result_object = document.getElementById('result_div'); //resultados
@@ -139,7 +166,7 @@ function reload () {
 
     window.scroll(0, 1);
 	
-	openForm_part('form_part', 1);
+	openForm_part('form_part', 1, false);
 }
 
 function getCheckedValue(radioObj) {
