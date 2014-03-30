@@ -1033,7 +1033,7 @@
 						<input class="button" type="submit" onclick="openForm_part('form_part', 2, true)" value="&laquo;" />
 						
 						<input class="button" type="submit"
-							   	   onclick="if(calcula_custos_auto()){submit_data('<?php echo $def_cty ?>');} " value="<? echo $BUTTON_RUN; ?>" />
+							   	   onclick="if(calcula_custos_auto() <?if ($def_cty=="XX") echo "&& false"?> ){submit_data('<?php echo $def_cty ?>');} " value="<? echo $BUTTON_RUN; ?>" />
 						
 						
 					</div> <!-- end of form_part3-->
