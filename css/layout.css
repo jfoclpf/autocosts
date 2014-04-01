@@ -151,7 +151,11 @@ input {
 #container {
     width: 100%;
     display: block;
-    overflow: auto;
+    overflow: hidden;
+}
+
+.form_part{
+	overflow: hidden;
 }
 
 #banner_left {
@@ -185,21 +189,26 @@ input {
     width: 95%;
     padding: 2%;
     display: block;
-    overflow: auto;
+    overflow: hidden;
     max-width: 620px;
     border: solid 2px;
+}
+#input_div{
+	margin: 0 auto;
+	display:visible; 
+	overflow:hidden;
 }
 
 .main_table {
     margin: 0 auto;
     width: 98%;
     display: table;
-    overflow: auto;
+    overflow: hidden;
     border: solid 2px;
 }
 
 #main_div {
-    overflow: visible;
+    overflow: hidden;
     padding: 0;
     margin: 0 auto;
 }

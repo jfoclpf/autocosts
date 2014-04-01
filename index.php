@@ -211,7 +211,7 @@
         </div>
 
         <!--#######################################################################################-->
-        <!--#####################################  SIMULATOR  #####################################-->
+        <!--#####################################  CALCULATOR #####################################-->
         <!--#######################################################################################-->
 
         <div id="div2">
@@ -225,9 +225,9 @@
                         <br>
                     </div>
 
-                <div id="input_div" style="margin: 0 auto;display:block;overflow:auto;">
+                <div id="input_div">
 
-					<div id="form_part1">
+					<div class="form_part" id="form_part1">
 						
 						<table class="roundCorner main_table" cellpadding="5%">
 						
@@ -496,7 +496,7 @@
 						
 					</div> <!-- end of form_part1-->
 
-					<div id="form_part2">
+					<div class="form_part" id="form_part2">
 					
 						<table class="roundCorner main_table" cellpadding="5%">
 						
@@ -972,7 +972,7 @@
 					</div> <!-- end of form_part2-->
 
 						<!--************************** DADOS ADICIONAIS ***************************************************-->
-					<div id="form_part3">
+					<div class="form_part" id="form_part3">
 						
 						<table class="roundCorner main_table" cellpadding="5%">
 						
@@ -1034,8 +1034,7 @@
 						
 						<input class="button" type="submit"
 							   	   onclick="if(calcula_custos_auto() <?if ($def_cty=="XX"){echo "&& false";}?> ){submit_data('<?php echo $def_cty ?>');} " value="<? echo $BUTTON_RUN; ?>" />
-						
-						
+					
 					</div> <!-- end of form_part3-->
 					                    
                 </div>
