@@ -22,15 +22,22 @@ function PrintElem(elem1, elem2, elem3, elem4, title)
 
 function Popup(data1, data2, data3, data4, title) 
 {
-	var mywindow = window.open('', title, 'height=400,width=600');
+	var mywindow = window.open('', title, 'height=600,width=600');
 	mywindow.document.write('<html><head><title>'+title+'</title>');
-	/*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-	mywindow.document.write('</head><body><center>');
-	mywindow.document.write('<h1>'+title+'</h1>');
+	//mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
+	mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif;"><center>');
+	mywindow.document.write('<h3>AUTOCOSTS.ORG</h3><h1>'+title+'</h1>');
+	
 	mywindow.document.write(data1);
-	mywindow.document.write('<br><br>');
+	mywindow.document.write('<br>');
+	mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
+		
 	mywindow.document.write(data2);
+	mywindow.document.write('<br><br>');
+	
 	mywindow.document.write(data3);
+	mywindow.document.write('<br><br>');
+	
 	mywindow.document.write(data4);
 	mywindow.document.write('</center>');
 	mywindow.document.write('</body></html>');
