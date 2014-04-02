@@ -14,6 +14,34 @@ function valueselect(myval) {
 /*jslint browser:true */
 /*jslint white: false */
 
+/*printing functions*/
+function PrintElem(elem1, elem2, elem3, elem4, title)
+{
+	Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
+}
+
+function Popup(data1, data2, data3, data4, title) 
+{
+	var mywindow = window.open('', title, 'height=400,width=600');
+	mywindow.document.write('<html><head><title>'+title+'</title>');
+	/*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+	mywindow.document.write('</head><body><center>');
+	mywindow.document.write('<h1>'+title+'</h1>');
+	mywindow.document.write(data1);
+	mywindow.document.write('<br><br>');
+	mywindow.document.write(data2);
+	mywindow.document.write(data3);
+	mywindow.document.write(data4);
+	mywindow.document.write('</center>');
+	mywindow.document.write('</body></html>');
+
+	mywindow.print();
+	mywindow.close();
+
+	return true;
+}
+/*end of printing functions*/
+
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
         $('#eurosDiv').css("display", "block");
