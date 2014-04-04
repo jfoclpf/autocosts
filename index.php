@@ -67,7 +67,8 @@
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/flags24.css">
-    <!-- Google API -->
+	
+	<!-- Google API -->
 
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery.timer.js"></script>
@@ -1085,18 +1086,23 @@
 				<?  $is_logo=false;
 					if ($def_cty == "PT"){ $is_logo=true; ?>
 						<img src="images/autocustos_euro.png" id="ac_logo">
+						<link rel="shortcut icon" href="/images/favicons/favicon_eur.ico" />
 						<br>
 				<? }elseif ( $def_cty == "RU" )  { $is_logo=true;?>
 						<img src="images/autocosts_ruble.png" id="ac_logo">
+						<link rel="shortcut icon" href="/images/favicons/favicon_rub.ico" />
 						<br>						
 				<? }elseif ( $CURR_SYMBOL == "&euro;" )  { $is_logo=true;?>
 						<img src="images/autocosts_euro.png" id="ac_logo">
+						<link rel="shortcut icon" href="/images/favicons/favicon_eur.ico" />
 						<br>			
 				<? }elseif ( strpos($CURR_SYMBOL, '&#36;') !== FALSE ) { $is_logo=true;?>
 						<img src="images/autocosts_dollar.png" id="ac_logo">
+						<link rel="shortcut icon" href="/images/favicons/favicon_usd.ico" />
 						<br>			
 				<? }elseif (strpos($CURR_SYMBOL, '&pound;') !== FALSE){ $is_logo=true;?>
 						<img src="images/autocosts_pound.png" id="ac_logo">
+						<link rel="shortcut icon" href="/images/favicons/favicon_gbp.ico" />
 						<br>			
 				<?} ?>
 					
