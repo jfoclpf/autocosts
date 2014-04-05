@@ -36,6 +36,34 @@ input {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+	
+	font-size: 80%;
+    height: 22px;
+    vertical-align: middle;
+	border: 2px;
+	border-color: rgb(180, 180, 180);
+	border-style: solid;	
+}
+
+input.button {
+	border-color: rgb(150, 150, 150); 
+	background-color: rgb(178, 178, 178); 
+	border-style: solid;
+	height: 28px !important;
+}
+
+select{
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+	height: 28px !important;
+		
+	margin: 0;
+    padding: 2px 0 0 0;
+	
+	border: 2px; 
+	border-color: rgb(180, 180, 180); 
+	border-style: solid;
 }
 
 .roundCornerSlight {
@@ -109,17 +137,6 @@ select {
     vertical-align: middle;
 }
 
-input {
-    font-size: 80%;
-    height: 20pt;
-    vertical-align: middle;
-}
-
-.button {
-	border-color: rgb(150, 150, 150); 
-	background-color: rgb(178, 178, 178); 
-	border-style: groove;
-}
 
 .p5 {
     font-size: 170%;
