@@ -130,6 +130,7 @@ $CREDIT_INTERESTS_MONTH = 'Månedlig interessebeløp';
 $CREDIT_TOTAL_INTERESTS = 'Totalt interessebeløp';
 $CREDIT_QUESTION = 'Tok du opp lån for anskaffelsen av kjøretøyet?';
 $CREDIT_LOAN = 'Lånesum:<br><i>Hvor mye lånte du?</i>';
+$CREDIT_LOAN2 = 'Lånesum';
 $CREDIT_PERIOD = 'Kredittperiode / Antall avdrag';
 $CREDIT_AVERAGE_VALUE = 'Gjennomsnittlig beløp per betaling';
 $CREDIT_RESIDUAL_VALUE = 'Restverdi:<br><i>Hvor mye har du betalt, eller har igjen å betale, ved slutten av låneperioden? </i>';
