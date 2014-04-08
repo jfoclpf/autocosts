@@ -24,6 +24,7 @@
                         <? echo $FUEL ?>
                     </b>
                 </div>
+				<br>
                 <div class="p2">
                     <? echo $FUEL_DESC ?>
                 </div>
@@ -49,14 +50,11 @@
                         <td align="right" width="60%">
                             <div id="eurosDiv">
                                 <input type="text" size="5" maxlength="9" id="fuel_currency_value"
-                                       value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>"
-                                       name="combustiveis_euro"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                       value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                                 <span class="p2">
                                     <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
                                 </span>
-                                <select id="combustiveis_periodo_euro"
-                                        style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                <select id="combustiveis_periodo_euro">
                                     <option value="1"><? echo $MONTH ?></option>
                                     <option value="2"><? echo $TWO_MONTHS ?></option>
                                     <option value="3"><? echo $TRIMESTER ?></option>
@@ -100,10 +98,7 @@
                                             </td>
                                             <td style="text-align:left;width:20%" valign="middle">
                                                 <input id="car_to_work_number_days_week" type="text"
-                                                       name="dias_por_semana" size="5"
-                                                       maxlength="1"
-                                                       value="<? echo $STD_DAYS_PER_WEEK; ?>"
-                                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+													name="dias_por_semana" size="5" maxlength="1" value="<? echo $STD_DAYS_PER_WEEK; ?>">
                                                 <span class="p2">
                                                     <? echo $DAYS_PER_WEEK_SHORT; ?>
                                                 </span>
@@ -118,8 +113,7 @@
                                                        id="car_to_work_distance_home_work"
                                                        name="km_entre_casa_trabalho"
                                                        size="5" maxlength="4"
-                                                       value="<? echo $STD_JORNEY_2WORK; ?>"
-                                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                                       value="<? echo $STD_JORNEY_2WORK; ?>">
                                                 <span class="p2">
                                                     <? echo $STD_DIST ?>
                                                 </span>
@@ -132,11 +126,8 @@
                                                 <? echo $FUEL_DIST_NO_JOB ?>&nbsp;
                                             </td>
                                             <td style="text-align:left;" valign="middle">
-                                                <input type="text" name="km_fds"
-                                                       id="car_to_work_distance_weekend"
-                                                       size="5" maxlength="4"
-                                                       value="<? echo $STD_JORNEY_WEEKEND; ?>"
-                                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                                <input type="text" name="km_fds" id="car_to_work_distance_weekend"
+                                                       size="5" maxlength="4" value="<? echo $STD_JORNEY_WEEKEND; ?>">
                                                 <span class="p2">
                                                     <? echo $STD_DIST ?>
                                                 </span>
@@ -158,14 +149,12 @@
                                             <td width="50%" align="right">
                                                 <input type="text" name="km_por_mes" size="4" maxlength="9"
                                                        id="no_car_to_work_distance"
-                                                       value="<? echo $STD_KM_PER_MONTH; ?>"
-                                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                                       value="<? echo $STD_KM_PER_MONTH; ?>">
                                                 <span class="p2">
                                                     <? echo $STD_DIST ?>&nbsp;<? echo $WORD_PER ?>
                                                     &nbsp;
                                                 </span>
                                                 <select
-                                                    style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;"
                                                     id="combustivel_period_km">
                                                     <option value="1"><? echo $MONTH ?></option>
                                                     <option value="2"><? echo $TWO_MONTHS ?></option>
@@ -185,8 +174,7 @@
                             </td>
                             <td>
                                 <input type="text" id="fuel_efficiency" name="consumo_auto" size="5" maxlength="5"
-                                       value="<? echo $STD_CAR_FUEL_EFFICIENCY; ?>"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                       value="<? echo $STD_CAR_FUEL_EFFICIENCY; ?>">
                                 <span class="p2">
                                     <? echo $STD_FUEL_CALC ?>
                                 </span>
@@ -199,8 +187,7 @@
                             </td>
                             <td>
                                 <input type="text" id="fuel_price" name="fuel_price" size="5" maxlength="9"
-                                       value="<? echo $STD_FUEL_PRICE; ?>"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                       value="<? echo $STD_FUEL_PRICE; ?>">
                                 <span class="p2">
                                     <? echo $CURR_SYMBOL ?>/<? echo $STD_VOLUME_SHORT ?>
                                 </span>
@@ -230,8 +217,7 @@
                             <input type="text" name="revisoes" size="6"
                                    maxlength="9"
                                    id="maintenance"
-                                   value="<? echo $STD_MAINTENANCE_PER_YEAR; ?>"
-                                   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                   value="<? echo $STD_MAINTENANCE_PER_YEAR; ?>">
                             <span class="p2">
                                 <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                             </span>
@@ -249,7 +235,6 @@
                     </b>
                 </div>
                 <br>
-                <br>
                 <table width="100%" border="0">
                     <tr>
                         <td width="470" class="p2">
@@ -258,8 +243,7 @@
                         <td style="vertical-align:middle;" valign="middle">
                             <input type="text" name="reparacoes" size="6"
                                    id="repairs"
-                                   maxlength="9" value="<? echo $STD_REPAIRS; ?>"
-                                   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                   maxlength="9" value="<? echo $STD_REPAIRS; ?>">
                             <span class="p2">
                                 <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                             </span>
@@ -285,8 +269,7 @@
                         <td style="vertical-align:middle;" valign="middle">
                             <input type="text" name="parqueamento" size="6"
                                    id="parking"
-                                   maxlength="9" value="<? echo $STD_PARKING; ?>"
-                                   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                   maxlength="9" value="<? echo $STD_PARKING; ?>">
                             <span class="p2">
                                 <? echo $CURR_SYMBOL ?>/<? echo $MONTH ?>
                             </span>
@@ -341,13 +324,11 @@
                             </td>
                             <td align="right" style="vertical-align:middle;" valign="middle">
                                 <input type="text" id="no_daily_tolls_value" name="portagens" size="6" maxlength="9"
-                                       value="<? echo $STD_TOLLS; ?>"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                       value="<? echo $STD_TOLLS; ?>">
                                 <span class="p2">
                                     <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
                                 </span>
-                                <select id="portagens_select"
-                                        style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                <select id="portagens_select">
                                     <option value="1"><? echo $MONTH ?></option>
                                     <option value="2"><? echo $TWO_MONTHS ?></option>
                                     <option value="3" selected="selected"><? echo $TRIMESTER ?></option>
@@ -367,14 +348,12 @@
                             <td align="right">
                                 <input type="text" id="daily_expense_tolls" name="preco_portagens_por_dia" size="6"
                                        maxlength="9"
-                                       value="<? echo $STD_TOLLS_DAY; ?>"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                       value="<? echo $STD_TOLLS_DAY; ?>">
                                 <span class="p2">
                                     <? echo $CURR_SYMBOL ?> <? echo $DURING ?>
                                 </span>
-                                <input type="text" id="number_days_tolls" name="dias_portagens_por_mes" size="9" maxlength="2"
-                                       value="<? echo $STD_TOLLS_DAYS_PER_MONTH; ?>"
-                                       style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                <input type="text" id="number_days_tolls" name="dias_portagens_por_mes" size="3" maxlength="2"
+                                       value="<? echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
                                 <span class="p2">
                                     <? echo $DAYS ?> <? echo $WORD_PER ?> <? echo $MONTH ?>
                                 </span>
@@ -401,13 +380,11 @@
                         </td>
                         <td align="right" style="vertical-align:middle;" valign="middle">
                             <input type="text" id="tickets_value" name="multas" size="6" maxlength="9"
-                                   value="<? echo $STD_FINES; ?>"
-                                   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                   value="<? echo $STD_FINES; ?>">
                             <span class="p2">
                                 <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
                             </span>
-                            <select id="multas_select"
-                                    style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                            <select id="multas_select">
                                 <option value="1"><? echo $MONTH ?></option>
                                 <option value="2"><? echo $TWO_MONTHS ?></option>
                                 <option value="3"><? echo $TRIMESTER ?></option>
@@ -435,13 +412,11 @@
                         </td>
                         <td align="right" style="vertical-align:middle;" valign="middle">
                             <input type="text" id="washing_value" name="lavagens" size="6" maxlength="9"
-                                   value="<? echo $STD_WASHING; ?>"
-                                   style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                                   value="<? echo $STD_WASHING; ?>">
                             <span class="p2">
                                 <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
                             </span>
-                            <select id="lavagens_select"
-                                    style="border: 2%; border-color: rgb(180, 180, 180); border-style: groove;">
+                            <select id="lavagens_select">
                                 <option value="1"><? echo $MONTH ?></option>
                                 <option value="2"><? echo $TWO_MONTHS ?></option>
                                 <option value="3" selected="selected"><? echo $TRIMESTER ?></option>

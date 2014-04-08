@@ -103,11 +103,11 @@
 
     <div id="main_div" style=" top: 0; background: none repeat scroll 0px 0px transparent; display: block; font-family: Verdana; overflow: auto;">
 
-        <?php include 'header.php'; ?>
+        <?php include './layout/header.php'; ?>
 
         <div id="container" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:0px;">
 
-            <?php include 'leftColumn.php'; ?>
+            <?php include './layout/leftColumn.php'; ?>
 
             <div id="br_btween_divs">
                 <br>
@@ -129,9 +129,9 @@
                         </div>
 
                     <div id="input_div">
-                        <?php include 'formPartOne.php'; ?>
-                        <?php include 'formPartTwo.php'; ?>
-                        <?php include 'formPartThree.php'; ?>
+                        <?php include './layout/formPartOne.php'; ?>
+                        <?php include './layout/formPartTwo.php'; ?>
+                        <?php include './layout/formPartThree.php'; ?>
                     </div>
 
                     <!-- ************* divs para impresao *************
@@ -169,7 +169,7 @@
             </div>
 
             <div id="div3" style="text-align:center">
-                <?php include 'rightColumn.php'; ?>
+                <?php include './layout/rightColumn.php'; ?>
             </div>
         </div>
     <br>
