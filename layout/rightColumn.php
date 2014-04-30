@@ -5,27 +5,27 @@
     if ($def_cty == "PT") {
         $is_logo = true; ?>
         <img src="images/autocustos_euro.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico"/>
+        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico?v=2"/>
         <br>
     <? } elseif ($def_cty == "RU") {
         $is_logo = true; ?>
         <img src="images/autocosts_ruble.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_rub.ico"/>
+        <link rel="shortcut icon" href="/images/favicons/favicon_rub.ico?v=2"/>
         <br>
     <? } elseif ($CURR_SYMBOL == "&euro;") {
         $is_logo = true; ?>
         <img src="images/autocosts_euro.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico"/>
+        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico?v=2"/>
         <br>
     <? } elseif (strpos($CURR_SYMBOL, '&#36;') !== FALSE) {
         $is_logo = true; ?>
         <img src="images/autocosts_dollar.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_usd.ico"/>
+        <link rel="shortcut icon" href="/images/favicons/favicon_usd.ico?v=2"/>
         <br>
     <? } elseif (strpos($CURR_SYMBOL, '&pound;') !== FALSE) {
         $is_logo = true; ?>
         <img src="images/autocosts_pound.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_gbp.ico"/>
+        <link rel="shortcut icon" href="/images/favicons/favicon_gbp.ico?v=2"/>
         <br>
     <? } ?>
 
