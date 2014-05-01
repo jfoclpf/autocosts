@@ -54,37 +54,28 @@
     <? } ?>
 
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
-        <br>
-        <b>
-        <span class="p4">
-            Please contribute!
-        </span>
-        </b>
-        <br>
-        <a href="./country files/UK.zip">
-            <span class="p2">
-                Translate and adapt this simulator to your country!
-            </span>
-        </a>
-        <br>
-        <br>
-        <a href="https://sourceforge.net/projects/custos-auto/" target="_blank">
-            <span style="color:rgb(0,0,0)" class="p4">
-                Download source code
-            </span>
-        </a>
-        <br>
-        <br>
-        <a href="mailto:joao.pimentel.ferreira@gmail.com">
-            <span class="p4">
-                Suggestions and errors!
-            </span>
-        </a>
-        <br>
-        <br>
-
-        <div>
+        <div style="padding:7px 0 7px 0">
             <?php include "counter.php"; ?>
         </div>
+		<b>
+        <span class="p2">
+            Open and Free project<br>
+        </span>
+        </b>
+		
+		<div style="padding:4px 0 7px 0">
+        <span class="p2">
+		<a href="https://github.com/jfoclpf/autocosts">
+            autocosts.org @ GitHub<br>
+		</a>	
+        </span>
+		
+        <span class="p2">
+		<a href="http://sourceforge.net/projects/custos-auto/">
+            autocosts.org @ sourceforge
+		</a>
+        </span>
+		</div>
+        		
     </div>
 </div>
