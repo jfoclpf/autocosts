@@ -66,13 +66,13 @@
 		<div style="padding:4px 0 7px 0">
         <span class="p2">
 		<a href="https://github.com/jfoclpf/autocosts">
-            autocosts.org @ GitHub<br>
+            autocosts@GitHub<br>
 		</a>	
         </span>
 		
         <span class="p2">
 		<a href="http://sourceforge.net/projects/custos-auto/">
-            autocosts.org @ sourceforge
+            autocosts@sourceforge
 		</a>
         </span>
 		</div>
