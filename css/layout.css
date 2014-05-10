@@ -101,16 +101,15 @@ select{
 .description {
     text-align: justify;
     margin-bottom: 25px;
-    padding: 0 30px 0;
+    padding: 0 30px 0 30px;
     border-width: 2px medium;
     border-bottom-style: solid;
 	margin-top:2px;
 }
 
 .donate {
-    width: 150px;
+    width: 100px;
     position:relative;
-    display: block;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -368,11 +367,6 @@ select {
 	.description{
 		margin-top:5%;
 	}
-	
-	#div12 {
-		display:none;
-	}
-
 }
 
 @media screen and (max-width: 700px)  and (min-width: 500px) {
@@ -392,7 +386,6 @@ select {
     }
 
     #main_form {
-        border: solid 1px black;
         margin: 0;
         width: 95%;
         padding: 2%;
@@ -400,7 +393,6 @@ select {
     }
 
     .main_table {
-        border: solid 1px black;
         margin: 1px;
         width: 98%;
     }
@@ -427,18 +419,19 @@ select {
 	.description{
 		margin-top:12%;
 	}
+
+    #div12 {
+        border: none;
+    }
 	
     #div1 {
+        padding: 2px;
         float: none;
         width: auto;
         text-align: center;
     }
 
     #div11 {
-        display: none;
-    }
-
-    #div12 {
         display: none;
     }
 
@@ -494,13 +487,12 @@ select {
 @media screen and (max-width: 500px) and (min-width: 400px) {
 
     #country_select {
-        border: 1px;
         float: none;
         vertical-align: top;
         text-align: center;
     }
 
-    #br0, #br1, #br2, #br3, #div11, #div12, #banner_left, #facebook_btn {
+    #br0, #br1, #br2, #br3, #div11, #banner_left, #facebook_btn {
         display: none;
     }
 
@@ -524,7 +516,6 @@ select {
     }
 
     #main_form {
-        border: solid 1px black;
         width: 99%;
         margin: 0;
         padding: 5% 0 5% 0;
@@ -550,9 +541,14 @@ select {
 	}
 	
     #div1 {
+        padding: 2px;
         float: none;
         width: auto;
         text-align: center;
+    }
+
+    #div12 {
+        border: none;
     }
 
     #div13 {
@@ -595,6 +591,10 @@ select {
         vertical-align: middle;
     }
 
+    .donate {
+        font-size: 10px;
+    }
+
     .p5 {
         font-size: 100%;
     }
@@ -611,13 +611,17 @@ select {
         font-size: 60%;
     }
 
-    #div11, #div12, #banner_left, #facebook_btn {
+    #div11, #banner_left, #facebook_btn {
         display: none;
     }
 
     #main_div {
         border: none;
         padding: 0;
+    }
+
+    #div12 {
+        border: none;
     }
 
     #container {
@@ -627,7 +631,6 @@ select {
     }
 
     #main_form {
-        border: solid 1px black;
         width: 99%;
         margin: 0;
         padding: 5% 0 5% 0;
@@ -657,6 +660,7 @@ select {
 	}
 	
     #div1 {
+        padding: 2px;
         float: none;
         width: auto;
         text-align: center;
@@ -704,6 +708,10 @@ select {
 
 @media screen and (max-width: 260px) {
 
+    .donate {
+        font-size: 10px;
+    }
+
     input, select {
         font-size: 45%;
         height: 20%;
@@ -731,7 +739,7 @@ select {
         border: none;
     }
 
-    #div11, #div12, #banner_left, #facebook_btn {
+    #div11, #banner_left, #facebook_btn {
         display: none;
     }
 	
@@ -747,7 +755,6 @@ select {
     }
 
     #main_form {
-        border: solid 1px;
         width: 99%;
         margin: 0;
         padding: 5% 0 5% 0;
@@ -773,6 +780,7 @@ select {
 	}
 	
     #div1 {
+        padding: 2px;
         float: none;
         width: auto;
         text-align: center;

@@ -14,6 +14,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
     <?
     include("./country files/country_list.php");
 
@@ -105,12 +106,10 @@
 
         <?php include './layout/header.php'; ?>
 
-        <div id="container" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:0px;">
+        <div id="container" style="border-collapse:collapse; border-color:rgb(136,136,136); border-width:0px;">
 
-            <?php include './layout/leftColumn.php'; ?>
-
-            <div id="br_btween_divs">
-                <br>
+            <div id="div1" class="roundCornerSlight">
+                <?php include './layout/leftColumn.php'; ?>
             </div>
 
             <!--#######################################################################################-->
@@ -163,10 +162,6 @@
             <!--#######################################################################################-->
             <!--#######################################################################################-->
             <!--#######################################################################################-->
-
-            <div id="br_btween_divs">
-                <br>
-            </div>
 
             <div id="div3" style="text-align:center">
                 <?php include './layout/rightColumn.php'; ?>

@@ -97,13 +97,9 @@ body {
         background: #ffffff; /* Old browsers */
     }
 
-
-    #main_form {
-        border-color:black;
-    }
-
-    .main_table {
-        border-color: black;
+    #div2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }
 
@@ -113,8 +109,9 @@ body {
         background: #ffffff; /* Old browsers */
     }
 
-    #main_form {
-        border-color:black;
+    #div2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }
 
@@ -123,8 +120,9 @@ body {
         background: #ffffff; /* Old browsers */
     }
 
-    #main_form {
-        border-color:black;
+    #div2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }
 
@@ -133,8 +131,9 @@ body {
         background: #ffffff;
     }
 
-    #main_form {
-        border-color:black;
+    #div2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }
 
