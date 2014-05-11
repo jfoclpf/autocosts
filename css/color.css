@@ -96,11 +96,6 @@ body {
     body {
         background: #ffffff; /* Old browsers */
     }
-
-    #div2 {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
 }
 
 @media screen and (max-width: 500px) and (min-width: 400px) {
@@ -108,32 +103,17 @@ body {
     body {
         background: #ffffff; /* Old browsers */
     }
-
-    #div2 {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
 }
 
 @media screen and (max-width: 400px) and (min-width: 260px) {
     body {
         background: #ffffff; /* Old browsers */
     }
-
-    #div2 {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
 }
 
 @media screen and (max-width: 260px) {
     body {
         background: #ffffff;
-    }
-
-    #div2 {
-        margin-top: 5px;
-        margin-bottom: 5px;
     }
 }
 

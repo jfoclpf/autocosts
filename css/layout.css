@@ -367,6 +367,11 @@ select {
 	.description{
 		margin-top:5%;
 	}
+
+    #div2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 }
 
 @media screen and (max-width: 700px)  and (min-width: 500px) {
@@ -474,6 +479,8 @@ select {
         text-align: center;
         display: block;
         overflow: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     #div3 {
@@ -569,6 +576,8 @@ select {
         text-align: center;
         display: block;
         overflow: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     #div3 {
@@ -692,6 +701,8 @@ select {
         text-align: center;
         display: block;
         overflow: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     #div3 {
@@ -808,6 +819,8 @@ select {
         text-align: center;
         display: block;
         overflow: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     #div3 {
