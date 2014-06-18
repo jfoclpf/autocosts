@@ -172,7 +172,6 @@ case "euros":
 //******************* DEPRECIATION ************************
 //*********************************************************
 
-var cred_desva_auto_por_mes;
 var desva_text;
 var auto_mes = document.custo.auto_mes.value;
 var auto_ano = document.custo.auto_ano.value;
@@ -186,10 +185,10 @@ var date_auto = new Date(auto_ano, auto_mes - 1);
 var meses = date_diff(date_auto,today);
 
 if (meses == 0) {
-    cred_desva_auto_por_mes = 0;
+    depreciation_per_month = 0;
     desva_text = "<?echo $ERROR_DEPRECIATION_NEW_CAR?>&nbsp;&nbsp;";
 } else {
-    cred_desva_auto_por_mes = calculateMonthlyDepreciation(auto_initial_cost, auto_final_cost, meses);
+    depreciation_per_month = calculateMonthlyDepreciation(auto_initial_cost, auto_final_cost, meses);
 
     desva_text = "<b><span class=\"p3\"><?echo $DEPRECIATION?><\/span><\/b>&nbsp;&nbsp;<br><span class=\"p2\"><?echo $AQ_VALUE?>: "
     + auto_initial_cost + "<?echo $CURR_SYMBOL?><br><?echo $FINAL_VALUE?>: "
