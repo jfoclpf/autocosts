@@ -75,6 +75,7 @@
     <script type="text/javascript" src="js/jquery.timer.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/js.js"></script>
+    <script type="text/javascript" src="js/autocostsCore.js"></script>
     <script type="text/javascript" src="js/businessLogic_js.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/charts_js.php?country=<?php echo $def_cty ?>"></script>
 	
