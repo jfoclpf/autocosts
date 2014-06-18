@@ -1,3 +1,9 @@
+<? Header("content-type: application/x-javascript");
+
+include('../country files/' . $_GET['country'] . '.php');
+
+?>
+
 (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -17,35 +23,35 @@ function valueselect(myval) {
 /*printing functions*/
 function PrintElem(elem1, elem2, elem3, elem4, title)
 {
-	Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
+    Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
 }
 
 function Popup(data1, data2, data3, data4, title) 
 {
-	var mywindow = window.open('', title, 'height=600,width=600');
-	mywindow.document.write('<html><head><title>'+title+'</title>');
-	//mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
-	mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif;"><center>');
-	mywindow.document.write('<h3>AUTOCOSTS.ORG</h3><h1>'+title+'</h1>');
-	
-	mywindow.document.write(data1);
-	mywindow.document.write('<br>');
-	mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
-		
-	mywindow.document.write(data2);
-	mywindow.document.write('<br><br>');
-	
-	mywindow.document.write(data3);
-	mywindow.document.write('<br><br>');
-	
-	mywindow.document.write(data4);
-	mywindow.document.write('</center>');
-	mywindow.document.write('</body></html>');
+    var mywindow = window.open('', title, 'height=600,width=600');
+    mywindow.document.write('<html><head><title>'+title+'</title>');
+    //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
+    mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif;"><center>');
+    mywindow.document.write('<h3>AUTOCOSTS.ORG</h3><h1>'+title+'</h1>');
+    
+    mywindow.document.write(data1);
+    mywindow.document.write('<br>');
+    mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
+        
+    mywindow.document.write(data2);
+    mywindow.document.write('<br><br>');
+    
+    mywindow.document.write(data3);
+    mywindow.document.write('<br><br>');
+    
+    mywindow.document.write(data4);
+    mywindow.document.write('</center>');
+    mywindow.document.write('</body></html>');
 
-	mywindow.print();
-	mywindow.close();
+    mywindow.print();
+    mywindow.close();
 
-	return true;
+    return true;
 }
 /*end of printing functions*/
 
@@ -98,6 +104,10 @@ function isNumber(n) {
     return (!isNaN(parseFloat(n)) && isFinite(n) && n >= 0);
 }
 
+function isInteger(n) {
+    return (parseFloat(n) == parseInt(n, 10));
+}
+
 function date_diff(date1, date2) {//return the difference in months between two dates date2-date1
     var m2, y2, m1, y1;
     m2 = date2.getUTCMonth() + 1;
@@ -142,27 +152,297 @@ function removeHash () {
     }
 }
 
-function openForm_part(part_name, part_number, bool_go2form) {
+//**** CHECK FORM PART 1 ******
+//check if data from form 1 (standing costs) is correctly filled 
+function is_userdata_formpart1_ok(){
 
-	if (bool_go2form){
-		window.location.hash = "div2"; 
-		window.scrollBy(0,32);
-	}
-	else{
-		window.location.hash = "";
-	}
-	removeHash();
+    //insurance
+    var tipo_seguro_auto=getCheckedValue(custo.tipo_seguro);
+
+    if(!isNumber(document.custo.seguro_val.value)){
+        alert("<?echo $INSURANCE?> - <?echo $ERROR_INVALID_INSU_VALUE?>!");
+        return false;
+    }
+
+    if(tipo_seguro_auto == ""){
+        alert("<?echo $INSURANCE?> - <?echo $ERROR_INSU_PERIOD?>!");
+        return false;
+    }
+    
+    //depreciation
+    var auto_mes=document.custo.auto_mes.value; //car acquisition month
+    var auto_ano=document.custo.auto_ano.value; //car acquisition year
+
+    if(!isNumber(auto_mes) || !isInteger(auto_mes) || auto_mes>12 || auto_mes<=0){
+        alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_MONTH?>!");
+        return false;
+    }
+    if(!isNumber(document.custo.auto_ano.value) || !isInteger(document.custo.auto_ano.value)){
+        alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_YEAR?>!");
+        return false;
+    }
+    if(!isNumber(document.custo.auto_val_inicial.value)){
+        alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_VALUE?>!");
+        return false;
+    }
+    if(!isNumber(document.custo.auto_val_final.value)){
+        alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_VALUE_TODAY?>!");
+        return false;
+    }
+
+    var today = new Date();
+    var date_auto= new Date(document.custo.auto_ano.value,document.custo.auto_mes.value-1);
+
+    var meses=date_diff(date_auto,today);
+
+    if(!meses){
+        alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_DATE?>!");
+        return false;
+    }
+    
+    //car finance
+    var cred_auto_s_n=getCheckedValue(custo.cred_auto);
+
+    if(cred_auto_s_n == ""){
+        alert("<?echo $ERROR_CREDIT_QUESTION?>!");
+        return false;
+    }
+
+    if(cred_auto_s_n == "true") {
+        if(!isNumber(document.custo.cred_auto_montante.value)) {
+            alert("<?echo $CREDIT?> - <?echo $ERROR_CREDIT_LOAN_VALUE?>!");
+            return false;
+        }
+        if(!isNumber(document.custo.cred_auto_period.value)) {
+            alert("<?echo $CREDIT?> - <?echo $ERROR_CREDIT_PERIOD?>!");
+            return false;
+        }
+        if(!isNumber(document.custo.cred_auto_val_mes.value)) {
+            alert("<?echo $CREDIT?> - <?echo $ERROR_CREDIT_INSTALMENT?>!");
+            return false;
+        }
+        if(!isNumber(document.custo.cred_auto_valresidual.value)) {
+            alert("<?echo $CREDIT?> - <?echo $ERROR_CREDIT_RESIDUAL_VALUE?>!");
+            return false;
+        }
+    }
+
+
+    //inspection
+    var nmr_times_inspec=document.custo.nr_vezes_inspecao.value;
+    
+    if(!isNumber(nmr_times_inspec) || !isInteger(nmr_times_inspec)) {
+        alert("<?echo $INSPECTION?> - <?echo $ERROR_INSPECTION_NTIMES?>!");
+        return false;
+    }
+
+    if(!isNumber(document.custo.preco_inspecao.value) && nmr_times_inspec!=0) {
+        alert("<?echo $INSPECTION?> - <?echo $ERROR_INSPECTION_COSTS?>!");
+        return false;
+    }
+    
+    //taxes
+    if(!isNumber(document.custo.IUC.value)) {
+        alert("<?echo $ROAD_TAXES?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+
+    return true;
+}
+
+
+//**** CHECK FORM PART 2 ******
+//check if data from form 2 (running costs) is correctly filled 
+function is_userdata_formpart2_ok(){
+
+    //fuel
+    var tipo_calc_combustiveis=getCheckedValue(custo.calc_combustiveis);
+
+    if(tipo_calc_combustiveis == ""){
+        alert("<?echo $FUEL?> - <?echo $ERROR_FUEL_CURR_DIST?>!");
+        return false;
+    }
+
+    switch(tipo_calc_combustiveis)
+    {
+    case "km": //fuel calculations made considering distance travelled by month
+
+        if(!isNumber(document.custo.consumo_auto.value)){
+            alert("<?echo $FUEL?> - <?echo $ERROR_FUEL_CAR_EFF?>!");
+            return false;
+        }
+        if(!isNumber(document.custo.fuel_price.value)){
+            alert("<?echo $FUEL?> - <?echo $ERROR_FUEL_PRICE?>!");
+            return false;
+        }
+
+        leva_auto_job=getCheckedValue(document.custo.carro_emprego);
+
+        if(leva_auto_job == ""){
+            alert("<?echo $FUEL?> - <?echo $ERROR_CAR_JOB?>!");
+            return false;
+        }
+
+        if (leva_auto_job=="false"){
+
+            if(!isNumber(document.custo.km_por_mes.value)){
+                alert("<?echo $FUEL?> - <?echo $ERROR_FUEL_DIST?>!");
+                return false;
+            }
+
+        }
+        else{//make calculation considering the user takes his car to work on a daily basis
+
+            if(!isNumber(document.custo.dias_por_semana.value) || (document.custo.dias_por_semana.value)>7){
+                alert("<?echo $FUEL?> - <?echo $ERROR_DAYS_PER_WEEK?>!");
+                return false;
+            }
+            if(!isNumber(document.custo.km_entre_casa_trabalho.value)){
+                alert("<?echo $FUEL?> - <?echo $ERROR_DIST_HOME_WORK?>!");
+                return false;
+            }
+            if(!isNumber(document.custo.km_fds.value)){
+                alert("<?echo $FUEL?> - <?echo $ERROR_DIST_NO_JOB?>!");
+                return false;
+            }
+
+        }
+        break;
+
+    case "euros"://fuel costs based on data input money per period of time
+
+        if(!isNumber(document.custo.combustiveis_euro.value)){
+            alert("<?echo $FUEL?> - <?echo $ERROR_CURRENCY?>!");
+            return false;
+        }
+        break;
+    }
+
+    //maintenance
+    if(!isNumber(document.custo.revisoes.value)) {
+        alert("<?echo $MAINTENANCE?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+
+    //repairs
+    if(!isNumber(document.custo.reparacoes.value)) {
+        alert("<?echo $REP_IMPROV?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+    
+    //parking
+    if(!isNumber(document.custo.parqueamento.value)){
+        alert("<?echo $PARKING?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+
+    //***** tolls ******
+    var tipo_calc_portagens=getCheckedValue(document.custo.portagens_ao_dia);
+
+    //if tolls costs are calculated on a daily basis
+    if(tipo_calc_portagens=="false") {//monthly basis
+        if(!isNumber(document.custo.portagens.value)) {
+            alert("<?echo $TOLLS?> - <?echo $INVALID_AMOUNT?>!");
+            return false;
+        }
+
+    } else {//daily basis
+        if(!isNumber(document.custo.preco_portagens_por_dia.value)) {
+            alert("<?echo $TOLLS?> - <?echo $TOLLS_DAY_CALC1?> - <?echo $INVALID_AMOUNT?>!");
+            return false;
+        }
+        var toll_days_pmonth=document.custo.dias_portagens_por_mes.value;
+        if(!isNumber(toll_days_pmonth) || !isInteger(toll_days_pmonth) || toll_days_pmonth>31) {
+            alert("<?echo $TOLLS?> - <?echo $DAYS?> - <?echo $INVALID_AMOUNT?>!");
+            return false;
+        }
+
+    }
+    
+    //fines
+    if(!isNumber(document.custo.multas.value)){
+        alert("<?echo $FINES?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+    
+    //washing
+    if(!isNumber(document.custo.lavagens.value)){
+        alert("<?echo $WASHING?> - <?echo $INVALID_AMOUNT?>!");
+        return false;
+    }
+    
+    return true;
+}
+
+//**** CHECK FORM PART 3 ******
+function is_userdata_formpart3_ok(){
+
+    var n_pess_familia=document.custo.pessoas_agregado.value;
+    var pmpmpc=document.custo.preco_passe.value;
+
+    if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
+        alert("<?echo $EXTRA_DATA1?> - <?echo $INVALID_NBR_PP?>!");
+        return false;
+    }
+
+    if(!isNumber(pmpmpc) || pmpmpc<0){
+        alert("<?echo $EXTRA_DATA1?> - <?echo $ERROR_PASS_AMOUNT?>!");
+        return false;
+    }
+
+    return true;
+}
+
+function openForm_part(part_name, part_number_origin, part_number_destiny, bool_go2form) {
+
+    //alert("from "+part_number_origin+" to "+part_number_destiny);
+
+    //is form part 1 correctly filled?
+    if (part_number_origin==1){
+        if (!is_userdata_formpart1_ok())
+            return;
+    }
+    
+    //is form part 2 correctly filled?
+    if (part_number_origin==2 && part_number_destiny==3){
+        if (!is_userdata_formpart2_ok())
+            return;
+    }
+    
+    if (bool_go2form){
+        window.location.hash = "div2"; 
+        window.scrollBy(0,32);
+    }
+    else{
+        window.location.hash = "";
+    }
+    removeHash();
 
     for (var p = null, i = 1;
-		p = document.getElementById(part_name+i); ++i) {
-		if (i == part_number) p.style.display = "";
-		else p.style.display = "none";
+        p = document.getElementById(part_name+i); ++i) {
+        if (i == part_number_destiny) p.style.display = "";
+        else p.style.display = "none";
     }
+}
+
+function reload () {
+
+    TimeCounter.resetStopwatch();
+    input_object.style.display = 'block';
+    result_object.style.display = 'none';
+    reload_object.style.display = 'none';
+    chart_object.style.display = 'none';
+    graph_object.style.display = 'none';
+    text_object.style.display = 'none';
+
+    window.scroll(0, 1);
+    
+    openForm_part('form_part', 0, 1, false);
 }
 
 function initialize() {
 
-	openForm_part("form_part", 1, false); //shows just part 1 of input form
+    openForm_part("form_part", 0, 1, false); //shows just part 1 of input form
 
     input_object = document.getElementById('input_div'); //tabela de entrada
     result_object = document.getElementById('result_div'); //resultados
@@ -175,7 +455,6 @@ function initialize() {
 
     text_object = document.getElementById('text_div'); //msg text
 
-
     reload_object.style.display = 'none';
     tolls_daily(false);
 
@@ -187,21 +466,7 @@ function initialize() {
 
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
-	
-}
-function reload () {
-
-    TimeCounter.resetStopwatch();
-    input_object.style.display = 'block';
-    result_object.style.display = 'none';
-    reload_object.style.display = 'none';
-    chart_object.style.display = 'none';
-    graph_object.style.display = 'none';
-    text_object.style.display = 'none';
-
-    window.scroll(0, 1);
-	
-	openForm_part('form_part', 1, false);
+    
 }
 
 function getCheckedValue(radioObj) {

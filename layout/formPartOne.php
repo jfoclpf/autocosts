@@ -261,6 +261,6 @@
 
 <br>
 <p2>1/3&nbsp;&nbsp;</p2>
-<input class="button" type="submit" onclick="openForm_part('form_part', 2, true)" value="&raquo;"/>
+<input class="button" type="submit" onclick="openForm_part('form_part', 1, 2, true)" value="&raquo;"/>
 
 </div> <!-- end of form_part1-->

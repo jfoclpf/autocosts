@@ -208,9 +208,9 @@ if ($counter_connected == true)
         Visitor Statistics
     </div>
    <div style="padding:2px;width:100%;font-size:80%;">
-      &raquo; <?php echo $online; ?> Online<br />
-      &raquo; <?php echo $month_value; ?> Month<br />
-      &raquo; <?php echo $all_value; ?> Total
+      &raquo; <?php echo $online; ?> online<br />
+      &raquo; <?php echo $month_value; ?> this month<br />
+      &raquo; <?php echo $all_value; ?> in total
    </div>
 <?php
 }
