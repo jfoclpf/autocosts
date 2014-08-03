@@ -57,6 +57,26 @@
         <div style="padding:7px 0 7px 0">
             <?php include "counter.php"; ?>
         </div>
+		<div style="padding:0;width:100%;font-size:80%;">
+			&raquo;
+	         <?php include "dbService.php";
+				$query = "SELECT * FROM users_insertions";
+				$res = executeQueryInDB($query);
+				echo mysqli_num_rows($res);
+			?> filled forms <br />
+			&raquo;
+			<?php
+				$filled_by_cty = 0;
+				while($row = mysqli_fetch_array($res))
+				{
+					if($row['country'] == $def_cty)
+					{
+						$filled_by_cty++;
+					}
+				}
+				echo $filled_by_cty;
+			?> filled by country
+		</div>	
 		<b>
         <span class="p2">
             Open and Free project<br>
