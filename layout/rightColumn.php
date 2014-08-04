@@ -75,7 +75,7 @@
 			&raquo;
 			<?php
 				echo mysqli_num_rows($res);
-			?> visitors filled in tottaly
+			?> visitors filled in totally
 		</div>		
 		<b>
         <span class="p2">
