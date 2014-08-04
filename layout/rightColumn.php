@@ -54,18 +54,14 @@
     <? } ?>
 
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
-        <div style="padding:7px 0 7px 0">
-            <?php include "counter.php"; ?>
+        <div style="padding:7px 0 0 0">
+            <?php include "counter.php"; ?>			
         </div>
-		<div style="padding:0;width:100%;font-size:80%;">
+        <div style="padding:0;width:100%;font-size:80%;">
 			&raquo;
 	         <?php include "dbService.php";
-				$query = "SELECT * FROM users_insertions";
+				$query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
 				$res = executeQueryInDB($query);
-				echo mysqli_num_rows($res);
-			?> filled forms <br />
-			&raquo;
-			<?php
 				$filled_by_cty = 0;
 				while($row = mysqli_fetch_array($res))
 				{
@@ -74,9 +70,13 @@
 						$filled_by_cty++;
 					}
 				}
-				echo $filled_by_cty;
-			?> filled by country
-		</div>	
+				echo $filled_by_cty;	
+			?> visitors filled in for <?php echo $def_cty?> <br />
+			&raquo;
+			<?php
+				echo mysqli_num_rows($res);
+			?> visitors filled in tottaly
+		</div>		
 		<b>
         <span class="p2">
             Open and Free project<br>
@@ -99,3 +99,4 @@
         		
     </div>
 </div>
+
