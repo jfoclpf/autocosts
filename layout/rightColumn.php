@@ -31,12 +31,6 @@
 
     <div
         style="text-align:center;font-size:110%; <? if ($is_logo) { ?> padding-top: 20px; border-top: solid 2px rgb(180, 180, 180); <? } ?>">
-        <div id="facebook_btn" style="padding:0;margin:0">
-            <div class="fb-like-box" data-href="https://www.facebook.com/autocosts" data-width="232" data-height="400"
-                 data-show-faces="true" data-header="false" data-stream="false" data-show-border="false">
-            </div>
-            <hr>
-        </div>
     </div>
 
     <? if ($def_cty == "PT") { ?>
