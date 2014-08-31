@@ -3,7 +3,8 @@
 include('../country files/' . $_GET['country'] . '.php');
 
 ?>
-
+var income = 'year';
+var isDistanceSet = false;
 (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -57,9 +58,16 @@ function Popup(data1, data2, data3, data4, title)
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
+		isDistanceSet = false;
+		$('.distance_part').each(function(){ $(this).show(); });
         $('#eurosDiv').css("display", "block");
         $('#kmDiv').css("display", "none");
+		$('.time_spent_part_1').each(function(){ $(this).hide(); });
+		$('.time_spent_part_2').show();
+		$('#drive_to_work_no').prop('checked', true);
     } else if (fuelCalculationMethod === 'distance') {
+		isDistanceSet = true;
+		$('.distance_part').each(function(){ $(this).hide(); });
         $('#eurosDiv').css("display", "none");
         $('#kmDiv').css("display", "block");
 
@@ -76,10 +84,29 @@ function carToJob(carToJobFlag) {
     if (carToJobFlag) {
         $('#carro_emprego_sim_Div').css("display", "block");
         $('#carro_emprego_nao_Div').css("display", "none");
+		$('.time_spent_part_1').each(function(){ $(this).show(); });
+		$('.time_spent_part_2').hide();
     } else {
         $('#carro_emprego_sim_Div').css("display", "none");
         $('#carro_emprego_nao_Div').css("display", "block");
+		$('.time_spent_part_1').each(function(){ $(this).hide(); });
+		$('.time_spent_part_2').show();
     }
+}
+
+function driveToJob(flag){
+	if(flag){
+		$('.car_to_job_part').each(function(){ $(this).show(); });
+		$('.time_spent_part_1').each(function(){ $(this).show(); });
+		$('.time_spent_part_2').hide();
+		$('#car_no_job_part').hide();
+	}
+	else{
+		$('.car_to_job_part').each(function(){ $(this).hide(); });
+		$('.time_spent_part_1').each(function(){ $(this).hide(); });
+		$('.time_spent_part_2').show();
+		$('#car_no_job_part').show();
+	}
 }
 
 function onclick_credit(flag) {
@@ -150,6 +177,35 @@ function removeHash () {
         document.body.scrollTop = scrollV;
         document.body.scrollLeft = scrollH;
     }
+}
+
+function income_toggle(value){
+	switch(value){
+		case 'year':
+			$('#div_income_per_year, #working_time_part').removeClass('hidden').show();
+			$('#div_income_per_month, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+			income='year';
+			break;
+		case 'month':
+			$('#div_income_per_month, #working_time_part').removeClass('hidden').show();
+			$('#div_income_per_year, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+			income='month';
+			break;
+		case 'week':
+			$('#div_income_per_week, #working_time_part').removeClass('hidden').show();
+			$('#div_income_per_year, #div_income_per_month, #div_income_per_hour').addClass('hidden');
+			income='week';
+			break;
+		case 'hour':
+			$('#div_income_per_hour').removeClass('hidden').show();
+			$('#div_income_per_year, #div_income_per_week, #div_income_per_month, #working_time_part').addClass('hidden');
+			income='hour';
+			break;
+	}	
+}
+
+function working_time_toogle(value){
+	value ? $('#job_working_time').show() : $('#job_working_time').hide();	
 }
 
 //**** CHECK FORM PART 1 ******
@@ -389,7 +445,99 @@ function is_userdata_formpart3_ok(){
         alert("<?echo $EXTRA_DATA1?> - <?echo $ERROR_PASS_AMOUNT?>!");
         return false;
     }
-
+	
+	//income
+	var income_type = getCheckedValue(custo.radio_income);
+	switch(income_type){
+	case 'year':
+		if(!isNumber(document.custo.income_per_year.value)){
+			alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
+			return false;
+		}			
+		break;
+	case 'month':
+		if(!isNumber(document.custo.income_per_month.value)){
+			alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
+			return false;
+		}
+		if(!isNumber(document.custo.income_months_per_year.value)){
+			alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
+			return false;
+		}			
+		break;
+	case 'week':
+		if(!isNumber(document.custo.income_per_week.value)){
+			alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
+			return false;
+		}
+		if(!isNumber(document.custo.income_weeks_per_year.value)){
+			alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_WEEKS_PER_YEAR?>!");
+			return false;
+		}			
+		break;
+	}
+	//working time
+	var is_working_time = getCheckedValue(custo.radio_work_time);
+	if(is_working_time == 'true'){
+		if(!isNumber(document.custo.time_hours_per_week.value)){
+			alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_HOURS_PER_WEEK?>!");
+			return false;
+		}
+		if(!isNumber(document.custo.time_month_per_year.value)){
+			alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
+			return false;
+		}
+	}
+	
+	//distance
+	if($('.distance_part').css('display')!='none'){
+		var drive_to_work = getCheckedValue(custo.drive_to_work);
+		if(drive_to_work == 'true'){
+			if(!isNumber(document.custo.drive_to_work_days_per_week.value)){
+				alert("<?echo $DISTANCE?> - <?echo $ERROR_DAYS_PER_WEEK?>!");
+				return false;
+			}
+			if(!isNumber(document.custo.dist_home_job.value)){
+				alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_HOME_WORK?>!");
+				return false;
+			}
+			if(!isNumber(document.custo.journey_weekend.value)){
+				alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_NO_JOB?>!");
+				return false;
+			}
+		}
+		else{
+			if(!isNumber(document.custo.km_per_month.value)){
+				alert("<?echo $DISTANCE?> - <?echo $ERROR_FUEL_DIST?>!");
+				return false;
+			}
+		}
+	}
+	
+	//time spent in driving
+	if($('.distance_part').css('display')!='none'){
+		var drive_to_work = getCheckedValue(custo.drive_to_work);
+		if(drive_to_work == 'true'){
+			if(!isNumber(document.custo.time_home_job.value)){
+				alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
+				return false;
+			}
+			if(!isNumber(document.custo.time_weekend.value)){
+				alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
+				return false;
+			}
+		}
+		else{
+			if(!isNumber(document.custo.min_drive_per_day.value)){
+				alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE?>!");
+				return false;
+			}
+			if(!isNumber(document.custo.days_drive_per_month.value)){
+				alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
+				return false;
+			}
+		}
+	}	
     return true;
 }
 
@@ -599,6 +747,7 @@ function sanityChecks(objectToDb) {
 function S4() {
     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }
+
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }

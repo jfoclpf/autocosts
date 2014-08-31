@@ -79,9 +79,14 @@ $TRIMESTERLY = 'quarterly';
 $SEMESTERLY = 'half-yearly';
 $YEARLY = 'yearly';
 
+$MIN = 'min';
+$MINUTES = 'minutes';
+$HOUR = 'hour';
+$HOURS = 'hours';
 $DAY = 'day';
 $DAYS = 'days';
 $WEEK = 'week';
+$WEEKS = 'weeks';
 $MONTH = 'month';
 $MONTHS = 'months';
 $TWO_MONTHS = 'two months';
@@ -91,6 +96,9 @@ $SEMESTER = 'semester';
 $YEAR = 'year';
 
 $DAYS_PER_WEEK_SHORT= 'days/week';
+
+//distance
+$DISTANCE = "Distance";
 
 //simulator words
 $COSTS= "Costs";
@@ -211,6 +219,14 @@ $EXTRA_DATA = 'ADDITIONAL DATA';
 $EXTRA_DATA1 = 'Additional data';
 $EXTRA_DATA_FAMILY_NBR = 'How many people older than 4 years old you have in your family (including you)';
 $EXTRA_DATA_PRICE_PASS = "What is the average price per person of the public transports monthly season ticket, for your normal daily life<br><i>if public transport isn't an option for you, insert 0</i>";
+$EXTRA_DATA_INCOME = "Income";
+$EXTRA_DATA_INCOME_QUESTION = 'What is your net income?';
+$EXTRA_DATA_WORKING_TIME = 'Working time';
+$EXTRA_DATA_WORKING_TIME_QUESTION = 'Do you have a job or a worthy occupation?';
+$EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Time spent in driving';
+$EXTRA_DATA_TIME_QUESTION1 = 'How many minutes you drive from home to workplace? (just one way)';
+$EXTRA_DATA_TIME_QUESTION2 = 'How many minutes you drive in the days you don\'t take the car to workplace?';
+$EXTRA_DATA_TIME_QUESTION3 = 'How many minutes you drive?';
 
 //PUBLIC TRANSPORTS
 $PUB_TRANS_TEXT = 'Public transports for your family daily life';
@@ -222,6 +238,28 @@ $OTHER_PUB_TRANS_DESC = "Amount that was still left to other public transports, 
 $TAXI_DESL = "Taxi transportation";
 $ON_TAXI_PAYING = "by taxi paying"; //ex: 4 km __on taxi paying__ 5€ per km
 
+//VIRTUAL SPEED
+$VIRTUAL_SPEED = 'Virtual speed';
+$NET_INCOME_PER = 'Net income per';
+$AVERAGE_NET_INCOME_PER = 'Average net income per';
+$NUMBER_OF_MONTHS = 'Number of months per year of income';
+$NUMBER_OF_WEEKS = 'Number of weeks per year of income';
+$HOURS_PER = 'Hours per';
+$MONTHS_PER = 'Months per';
+$AVERAGE_WORKING_HOURS_PER = 'Average working hours per';
+$WORKING_HOURS_PER = 'Working hours per';
+$DIST_HOME_JOB = 'You drive from home to work';
+$DAYS_DRIVE_JOB = 'Days per week you drive to work';
+$DIST_JORNEY_WEEKEND = 'You drive during the days you don\'t take the car to workplace';
+$AVERAGE_DIST_PER_WEEK = 'You drive on average per week';
+$YOU_DRIVE_PER = 'You drive per';
+$MINUTES_HOME_JOB = 'Minutes you drive from home to workplace';
+$DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
+$TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
+$MINUTES_DRIVE_PER = 'Minutes you drive per';
+$DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
+$HOURS_DRIVE_PER = ' Hours you drive per';
+$KINETIC_SPEED = 'Kinetic speed';
 
 //**************************************************
 //GRAPHICS
@@ -322,4 +360,15 @@ $STD_PASS_PRICE = ''; //price of the monthly pass
 
 $STD_NR_PPL_FAMILY = ''; //number of people in the family
 $STD_PASS_PRICE = ''; //price of the monthly pass
+
+$STD_INCOME_YEAR = ''; // net income per year
+$STD_INCOME_MONTH = ''; // net income per month
+$STD_INCOME_WEEK = ''; // net income per week
+$STD_MONTHS_YEAR = ''; // months per year
+$STD_WEEKS_YEAR = ''; // weeks per year
+$STD_HOURS_WEEK = ''; // work hours per week
+$STD_TIME_HOME_JOB = ''; // minutes you drive from home to workplace
+$STD_TIME_WEEKEND = '';// minutes you drive in the days you don't take the car to workplace
+$STD_TIME_IN_DRIVING = ''; // time spent in driving (minutes/day)
+$STD_DAYS_MONTH = ''; // days per month
 ?>

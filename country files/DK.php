@@ -73,9 +73,15 @@ $TRIMESTERLY = 'månedligt';
 $SEMESTERLY = 'hvert kvartal'; 
 $YEARLY = 'årligt';
 
+$MIN = 'min';
+$MINUTES = 'minutes';
+$HOUR = 'hour';
+$HOURS = 'hours';
+$HOUR_ABBR = 'h';
 $DAY = 'dag'; 
 $DAYS = 'dage'; 
 $WEEK = 'uge'; 
+$WEEKS = 'weeks'; 
 $MONTH = 'måned'; 
 $MONTHS = 'måneder'; 
 $TWO_MONTHS = 'to måneder'; 
@@ -85,6 +91,9 @@ $SEMESTER = 'hvert halve år';
 $YEAR = 'år';
 
 $DAYS_PER_WEEK_SHORT= 'dage/måneder';
+
+//distance
+$DISTANCE = "Distance";
 
 //simulator words 
 $COSTS= "Udgifter"; 
@@ -205,8 +214,17 @@ $TOTAL_VARIABLE_DESCR2 = 'Brændstof, reparationer og forbedringer, parkering (d
 //EXTRA DATA 
 $EXTRA_DATA = 'YDERLIGERE OPLYSNINGER'; 
 $EXTRA_DATA1 = 'Yderligere oplysninger'; 
+$EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
 $EXTRA_DATA_FAMILY_NBR = 'Hvor mange medlemmer over fire år findes i din husstand (inklusive dig selv)'; 
 $EXTRA_DATA_PRICE_PASS = "Hvad er den gennemsnitlige udgift til offentlig transport per måned for hver person i din husstand<br><i>hvis I ikke bruger offentlig transport, så indtast 0</i>";
+$EXTRA_DATA_INCOME = "Income";
+$EXTRA_DATA_INCOME_QUESTION = 'What is your net income?';
+$EXTRA_DATA_WORKING_TIME = 'Working time';
+$EXTRA_DATA_WORKING_TIME_QUESTION = 'Do you have a job or a worthy occupation?';
+$EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Time spent in driving';
+$EXTRA_DATA_TIME_QUESTION1 = 'How many minutes you drive from home to workplace? (just one way)';
+$EXTRA_DATA_TIME_QUESTION2 = 'How many minutes you drive in the days you don\'t take the car to workplace?';
+$EXTRA_DATA_TIME_QUESTION3 = 'How many minutes you drive?';
 
 //PUBLIC TRANSPORTS 
 $PUB_TRANS_TEXT = 'Offentlig transport for hele husstanden'; 
@@ -218,6 +236,36 @@ $OTHER_PUB_TRANS_DESC = "Beløb, der ikke er anført ved anden offentlig transpo
 $TAXI_DESL = "Taxa"; 
 $ON_TAXI_PAYING = "med taxa ved pris af"; //ex: 4 miles__on taxi paying__ 5€ per mile
 
+//VIRTUAL SPEED
+$FINANCIAL_EFFORT = 'Financial effort';
+$NET_INCOME_PER = 'Net income per';
+$AVERAGE_NET_INCOME_PER = 'Average net income per';
+$NUMBER_OF_MONTHS = 'Number of months per year of income';
+$NUMBER_OF_WEEKS = 'Number of weeks per year of income';
+$NUMBER_OF_HOURS= 'Number of hours per week of income';
+$HOURS_PER = 'Hours per';
+$MONTHS_PER = 'Months per';
+$AVERAGE_WORKING_HOURS_PER = 'Average working hours per';
+$WORKING_HOURS_PER = 'Working hours per';
+$DIST_HOME_JOB = 'You drive from home to work';
+$DAYS_DRIVE_JOB = 'Days per week you drive to work';
+$DIST_JORNEY_WEEKEND = 'You drive during the days you don\'t take the car to workplace';
+$AVERAGE_DIST_PER_WEEK = 'You drive on average per week';
+$YOU_DRIVE_PER = 'You drive per';
+$MINUTES_HOME_JOB = 'Minutes you drive from home to workplace';
+$DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
+$TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
+$MINUTES_DRIVE_PER = 'Minutes you drive per';
+$DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
+$HOURS_DRIVE_PER = ' Hours you drive per';
+$VIRTUAL_SPEED = 'virtual speed';
+$KINETIC_SPEED = 'kinetic speed';
+$AVER_YEARLY = 'Average yearly';
+$WORKING_TIME_MESSAGE = 'It was considered for calculations an average working time of 36 hours per week and 11 months per year';
+$HOURS_TO_AFFORD_CAR = 'Hours per year you need to work to afford your car';
+$MONTHS_TO_AFFORD_CAR = 'Months per year you need to work to afford your car';
+$TOTAL_COSTS_PER_YEAR = 'Total costs per year for automobile';
+$DAYS_CAR_PAID = 'For how many days, after the 1st of January, the car is paid';
 
 //************************************************** 
 //GRAPHICS 
@@ -259,6 +307,15 @@ $INVALID_AMOUNT = 'Ugyldigt beløb';
 
 $INVALID_NBR_PP = 'Ugyldigt antal personer'; 
 $ERROR_PASS_AMOUNT= 'Ugyldigt bødebeløb';
+
+$ERROR_INCOME = 'Invalid net income';
+$ERROR_WEEKS_PER_YEAR = 'Invalid number of weeks per year';
+$ERROR_MONTHS_PER_YEAR = 'Invalid number of months per year';
+$ERROR_HOURS_PER_WEEK = 'Invalid number of hours per week';
+$ERROR_MIN_DRIVE_HOME_JOB = 'Invalid number of minutes you drive from home to workplace';
+$ERROR_MIN_DRIVE_WEEKEND = 'Invalid number of minutes you drive in the days you don\'t take the car to workplace';
+$ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
+$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month';
 
 $YOUR_CAR_COSTS_YOU = 'Dine biludgifter'; 
 $WITH_THIS_LEVEL_OF_COSTS = 'Udgifterne til din bil gennem'; //ex: __"With this level of costs for your car during the"__ 15 months of possession.... 
@@ -313,4 +370,17 @@ $STD_WASHING = ''; //amount paid in washings per trimestre
 
 $STD_NR_PPL_FAMILY = ''; //number of people in the family
 $STD_PASS_PRICE = ''; //price of the monthly pass
+
+$STD_INCOME_YEAR = ''; // net income per year
+$STD_INCOME_MONTH = ''; // net income per month
+$STD_INCOME_WEEK = ''; // net income per week
+$STD_INCOME_HOUR = ''; // net income per hour
+$STD_HOURS_WEEK = ''; // hours per week
+$STD_MONTHS_YEAR = ''; // months per year
+$STD_WEEKS_YEAR = ''; // weeks per year
+$STD_HOURS_WEEK = ''; // work hours per week
+$STD_TIME_HOME_JOB = ''; // minutes you drive from home to workplace
+$STD_TIME_WEEKEND = '';// minutes you drive in the days you don't take the car to workplace
+$STD_TIME_IN_DRIVING = ''; // time spent in driving (minutes/day)
+$STD_DAYS_MONTH = ''; // days per month
 ?>

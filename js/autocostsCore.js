@@ -13,7 +13,7 @@ var conversionConstants = {
 function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
 
     var fuel_eff_temp = parseFloat(fuel_eff);
-
+    
     switch (fuel_efficiency_std_option) {
         case 1:
             return fuel_eff_temp;
@@ -97,4 +97,57 @@ function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
 
 function calculateMonthlyDepreciation(initialCost, finalCost, months) {
        return (initialCost - finalCost) / months;
+}
+
+function getNetIncomePerHour(){
+
+	var typeIncome = $('#income_div').find('input[type=radio]:checked').val();
+	var isJob = $('#working_time_div').find('input[type=radio]:checked').val();
+	var a = 11;
+	var b = 36;
+	var T, x, y, n;
+	if(isJob=='true'){
+		a = parseInt($('#time_month_per_year').val());
+		b = parseInt($('#time_hours_per_week').val());
+	}
+	T = 365.25/7 * a/12 * b;
+	switch(typeIncome){
+		case 'year':
+			x = parseInt($('#income_per_year').val());
+			n = x/T;
+			break;
+		case 'month':
+			x = parseInt($('#income_per_month').val());
+			y = parseInt($('#income_months_per_year').val());
+			n = (x*y)/T;
+			break;
+		case 'week':
+			x = parseInt($('#income_per_week').val());
+			y = parseInt($('#income_weeks_per_year').val())
+			n = (x*y)/T;
+			break;
+		case 'hour':
+			n = parseInt($('#income_per_hour').val());
+	}
+	return n;
+}
+
+function getHoursOfWorkToAffordCar(period, totalCosts){
+	var hw = 0;
+	var netIncome = getNetIncomePerHour();
+	switch(period){
+		case 'year':
+			hw = totalCosts * 12 / netIncome;
+			break;
+		case 'month':
+			hw = totalCosts / netIncome;
+			break;
+		case 'week':
+			hw = totalCosts * 12 / 365.25 * 7 * 1 / netIncome;
+			break;
+		case 'day':
+			hw = totalCosts * 12 / 365.25 * 1 / netIncome;
+			break;
+	}
+	return hw;
 }

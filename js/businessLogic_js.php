@@ -401,7 +401,7 @@ var total =     val_seguro_por_mes +
 //CUSTOS EXTERNOS
 
 //caso se saiba o número de km calcula os custos externos (apenas para o caso de Portugal por enquanto)
-
+var total_costs;
 if(<?if ($def_cty=="PT") echo 'tipo_calc_combustiveis=="km"'; else echo "false";?>) {
 
     var handbook_extern_URL="http:\/\/ec.europa.eu\/transport\/themes\/sustainable\/doc\/2008_costs_handbook.pdf"; //anteceder uma barra '/' por uma barra '\'
@@ -421,6 +421,7 @@ if(<?if ($def_cty=="PT") echo 'tipo_calc_combustiveis=="km"'; else echo "false";
     var ifr_estr_text="<b><span class=\"p3\">Desgaste das infraestruturas rodoviárias<\/span><\/b><br><span class=\"p2\">Valor aproximado: " + ifr_estr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?><\/span>";
     var fonte_text="<b><span class=\"p2\">Fonte dos dados:<\/span><\/b><br><span class=\"p2\"><i><a href=\"" + handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector<\/a>, <\/i>Comissão Europeia<\/span>";
     var total_exter=(epa+egee+ruido+sr+cgstn+ifr_estr)*km_por_mes;
+	total_costs = total_exter;
 }
 
 //*************** EXTRA DATA - PUBLIC TRANSPORTS ************
@@ -477,8 +478,152 @@ if(display_tp) {
 
         outros_tp_text="<b><span class=\"p3\"><?echo $OTHER_PUB_TRANS?><\/span><\/b><br><span class=\"p2\"><?echo $OTHER_PUB_TRANS_DESC?> <\/span>";
     }
-
+		total_costs = total_altern;
         taxi_text="<b><span class=\"p3\"><?echo $TAXI_DESL?><\/span><\/b><br><span class=\"p2\">" + n_km_taxi.toFixed(1) + " <?echo $STD_DIST?> <?echo $ON_TAXI_PAYING?> " + taxi_price_per_km.toFixed(1) + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?><\/span>";
+
+//*************** EXTRA DATA - VIRTUAL SPEED ************
+//***********************************************************
+
+//income
+
+var income_type = getCheckedValue(custo.radio_income);
+var income;
+var income_per_type;
+var income_hours_per_week
+var aver_income_per_year;
+var aver_income_per_month;
+var is_working_time;
+switch(income_type){
+	case 'year':
+		income = document.custo.income_per_year.value;
+		aver_income_per_year = income;		
+		break;
+	case 'month':
+		income = document.custo.income_per_month.value;
+		income_per_type = document.custo.income_months_per_year.value;
+		aver_income_per_year = income*income_per_type;		
+		break;
+	case 'week':
+		income = document.custo.income_per_week.value;
+		income_per_type = document.custo.income_weeks_per_year.value;
+		aver_income_per_year = income*income_per_type;	
+		break;
+	case 'hour':
+		income = document.custo.income_per_hour.value;
+		income_hours_per_week = document.custo.income_hours_per_week.value;
+		income_per_type = document.custo.income_hour_weeks_per_year.value;
+		aver_income_per_year = income * income_hours_per_week * income_per_type;
+}
+aver_income_per_month = aver_income_per_year/12;
+var aver_income_per_hour = getNetIncomePerHour();
+
+//working time
+if(income_type != 'hour'){
+	is_working_time = getCheckedValue(custo.radio_work_time);
+	var time_hours_per_week = 36;
+	var time_month_per_year = 11;
+
+	if(is_working_time == 'true'){
+		time_hours_per_week = document.custo.time_hours_per_week.value;
+		time_month_per_year = document.custo.time_month_per_year.value;
+	}
+
+	var aver_work_time_per_m = 365.25/7*time_hours_per_week*time_month_per_year/12/12;
+	var work_hours_per_y = 365.25/7*time_hours_per_week*time_month_per_year/12;
+}
+
+
+//time spent in driving
+
+var drive_to_work = getCheckedValue(custo.drive_to_work);
+var drive_to_work_days_per_week;
+var dist_home_job;
+var journey_weekend;
+var aver_drive_per_week;
+
+var drive_per_month, drive_per_year;
+
+var time_home_job, time_weekend, min_drive_per_week, min_drive_per_day, days_drive_per_month, hours_drive_per_month, hours_drive_per_year;
+
+if(tipo_calc_combustiveis != 'km'){
+	if(drive_to_work == 'true'){
+		drive_to_work_days_per_week = document.custo.drive_to_work_days_per_week.value;
+		dist_home_job =  parseInt(document.custo.dist_home_job.value);
+		journey_weekend = parseInt(document.custo.journey_weekend.value);
+		aver_drive_per_week = 2 * drive_to_work_days_per_week * dist_home_job + journey_weekend;
+		
+		drive_per_month = 365.25/7 * aver_drive_per_week / 12;
+		drive_per_year = 365.25/7 * aver_drive_per_week;	
+		
+	}
+	else{
+		var temp = document.custo.period_km;
+		var fuel_period_km = temp.options[temp.selectedIndex].value;
+
+		switch(fuel_period_km)
+		{
+			case "1":
+				drive_per_month = parseInt(document.custo.km_per_month.value);				
+				break;
+			case "2":
+				drive_per_month = document.custo.km_per_month.value / 2;
+				break;
+			case "3":
+				drive_per_month = document.custo.km_per_month.value / 3;				
+				break;
+			case "4":
+				drive_per_month = document.custo.km_per_month.value / 6;				
+				break;
+			case "5":
+				drive_per_month = document.custo.km_per_month.value / 12;			
+				break;
+		}
+		drive_per_year = drive_per_month * 12;			
+	}	
+}
+else{
+	if(leva_auto_job == 'true'){
+		drive_to_work_days_per_week = document.custo.dias_por_semana.value;
+		dist_home_job = parseInt(document.custo.km_entre_casa_trabalho.value);
+		journey_weekend = parseInt(document.custo.km_fds.value);
+		aver_drive_per_week = 2 * drive_to_work_days_per_week * dist_home_job + journey_weekend;	
+
+		drive_per_month = 365.25/7 * aver_drive_per_week / 12;
+		drive_per_year = 365.25/7 * aver_drive_per_week;
+	}	
+	else{	
+		drive_per_month = parseInt(document.custo.km_por_mes.value);
+		drive_per_year = drive_per_month * 12;	
+	}	
+}
+
+ km_por_mes = document.custo.km_por_mes.value
+
+if(drive_to_work == 'true' || leva_auto_job == 'true'){
+	time_home_job = parseInt(document.custo.time_home_job.value);
+	time_weekend = parseInt(document.custo.time_weekend.value);
+	min_drive_per_week = 2 * time_home_job * drive_to_work_days_per_week + time_weekend;
+	hours_drive_per_month = 365.25 / 7 / 12 * min_drive_per_week / 60;	
+}
+else{
+	min_drive_per_day = parseInt(document.custo.min_drive_per_day.value);
+	days_drive_per_month = parseInt(document.custo.days_drive_per_month.value);
+	hours_drive_per_month = min_drive_per_day * days_drive_per_month / 60;
+}
+hours_drive_per_year = hours_drive_per_month * 12;
+
+//financial effort
+debugger
+var total_per_year = total_costs * 12;
+var hours_per_year_to_afford_car = total_costs * 12 / aver_income_per_hour;
+var month_per_year_to_afford_car = (total_costs * 12) / aver_income_per_year * 12;
+var days_car_paid = ((total_costs * 12) / aver_income_per_year) * 365.25;
+
+var kinetic_speed = drive_per_year / hours_drive_per_year;
+
+var virtual_speed = drive_per_year / (hours_drive_per_year + (total_costs * 12 / aver_income_per_hour))
+		
+		
 }
 
 
@@ -533,7 +678,6 @@ if(<?if ($def_cty=="PT") echo 'tipo_calc_combustiveis=="km"'; else echo "false";
     varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\" colspan=\"2\">"+ fonte_text +"<\/td><\/tr><\/table><\/center>";
 }
 
-
 //mostra alternativas com TP caso se justifique
 if(display_tp) {
     varResult+="<br><center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);margin:1;width:98%border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
@@ -548,6 +692,88 @@ if(display_tp) {
 
     varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total_altern.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr><\/table><\/center>";
 }
+
+varResult+="<br><center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);width:100%;border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
+varResult+="<tr><td align=\"center\" colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b></td></tr>";
+
+//income
+varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b><br>";
+switch(income_type){
+	case 'year':
+		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td><td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span></td></tr>"
+		break;
+	case 'month':
+		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
+					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"</span></td></tr>";
+		break;
+	case 'week':
+		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span><br><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
+					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+		break;	
+	case 'hour':
+		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span><br><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span><br><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
+					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_hours_per_week+" <?echo $HOUR_ABBR?></span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+}
+
+//working time
+if(income_type != 'hour'){
+	varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_WORKING_TIME?></span></b><br>";
+	if(is_working_time == 'true'){
+		varResult+="<span class=\"p2\"><?echo $HOURS_PER?> <?echo $WEEK?></span><br><span class=\"p2\"><?echo $MONTHS_PER?> <?echo $YEAR?></span><br>"+
+			   "<span class=\"p2\"><?echo $AVERAGE_WORKING_HOURS_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $WORKING_HOURS_PER?> <?echo $YEAR?></span></td>"+
+			   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><br><span class=\"p2 td_values\">"+time_hours_per_week+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+time_month_per_year+"</span><br>"+
+			   "<span class=\"p2 td_values\">"+aver_work_time_per_m.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+work_hours_per_y.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";	
+	}
+	else{
+		varResult+="<span class=\"p2\"><?echo $WORKING_TIME_MESSAGE?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"></td></tr>";
+	}
+}			
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_hour.toFixed(1)+"</span></td></tr>";
+
+//distance
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b><br>";
+if((tipo_calc_combustiveis != 'km' && drive_to_work == 'true') || (tipo_calc_combustiveis == 'km' && leva_auto_job == 'true')){	
+	varResult+="<span class=\"p2\"><?echo $DIST_HOME_JOB?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_JOB?></span><br><span class=\"p2\"><?echo $DIST_JORNEY_WEEKEND?></span><br><span class=\"p2\"><?echo $AVERAGE_DIST_PER_WEEK?></span><br>";					
+}
+varResult+="<span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $YEAR?></span></td>"+
+			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">";
+if((tipo_calc_combustiveis != 'km' && drive_to_work == 'true') || (tipo_calc_combustiveis == 'km' && leva_auto_job == 'true')){
+	varResult+="<br><span class=\"p2 td_values\">"+dist_home_job.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span><br>"+
+			   "<span class=\"p2 td_values\">"+journey_weekend.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+aver_drive_per_week.toFixed(1)+" <?echo $STD_DIST?></span>";
+}
+varResult+="<br><span class=\"p2 td_values\">"+drive_per_month.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+drive_per_year.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>";
+
+//time spent in driving
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b><br>";
+if(drive_to_work == 'true' || leva_auto_job == 'true'){
+	varResult+="<span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span><br>"+
+				"<span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span><br><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $WEEK?></span><br>";
+}
+else{
+	varResult+="<span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $DAY?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_PER_MONTH?></span><br>";
+}
+varResult+="<span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $YEAR?></span></td>";
+varResult+="<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">";
+if(drive_to_work == 'true' || leva_auto_job == 'true'){
+	varResult+="<br><span class=\"p2 td_values\">"+time_home_job+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span><br><span class=\"p2 td_values\">"+time_weekend+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+min_drive_per_week+" <?echo $MIN?></span>";
+}
+else{
+	varResult+="<br><span class=\"p2 td_values\">"+min_drive_per_day+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+days_drive_per_month+" <?echo $DAYS?></span>";
+}
+varResult+="<br><span class=\"p2 td_values\">"+hours_drive_per_month.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+hours_drive_per_year.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";
+
+//financial effort
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b><br>"+
+           "<span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span><br><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span><br><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span><br><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>"+
+		   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">"+
+		   "<br><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+total_per_year.toFixed(1)+"</span><br><span class=\"p2 td_values\">"+hours_per_year_to_afford_car.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+month_per_year_to_afford_car.toFixed(2)+"</span><br><span class=\"p2 td_values\">"+Math.ceil(days_car_paid)+" <?echo $DAYS?></span></td></tr>"
+
+//speed
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
+			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+kinetic_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"http://en.wikipedia.org/wiki/Car_costs#Virtual_Speed\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
+			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+virtual_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+varResult+="</table></center>"
 
 result_object.innerHTML=varResult;
 result_object.style.display='block';

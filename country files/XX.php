@@ -39,7 +39,7 @@ $CURR_NAME = 'Pound';
 $CURR_NAME_PLURAL = 'Pounds';
 $CURR_NAME_BIG_PLURAL = 'POUNDS';
 $CURR_SYMBOL = '&pound;';
-$STD_DIST = 'mi.'; //short text version you'd like to apply
+$STD_DIST = 'mi'; //short text version you'd like to apply
 $STD_DIST_FULL = 'miles';
 $STD_FUEL_CALC = 'mpg(imp)'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'ltr'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
@@ -79,9 +79,15 @@ $TRIMESTERLY = 'quarterly';
 $SEMESTERLY = 'half-yearly';
 $YEARLY = 'yearly';
 
+$MIN = 'min';
+$MINUTES = 'minutes';
+$HOUR = 'hour';
+$HOURS = 'hours';
+$HOUR_ABBR = 'h';
 $DAY = 'day';
 $DAYS = 'days';
 $WEEK = 'week';
+$WEEKS = 'weeks';
 $MONTH = 'month';
 $MONTHS = 'months';
 $TWO_MONTHS = 'two months';
@@ -91,6 +97,9 @@ $SEMESTER = 'semester';
 $YEAR = 'year';
 
 $DAYS_PER_WEEK_SHORT= 'days/week';
+
+//distance
+$DISTANCE = "Distance";
 
 //simulator words
 $COSTS= "Costs";
@@ -209,8 +218,17 @@ $TOTAL_VARIABLE_DESCR2 = 'Fuels, Repairing and improvements, Parking (considerin
 //EXTRA DATA
 $EXTRA_DATA = 'ADDITIONAL DATA';
 $EXTRA_DATA1 = 'Additional data';
+$EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
 $EXTRA_DATA_FAMILY_NBR = 'How many people older than 4 years old you have in your family (including you)';
 $EXTRA_DATA_PRICE_PASS = "What is the average price per person of the public transports monthly season ticket, for your normal daily life<br><i>if public transport isn't an option for you, insert 0</i>";
+$EXTRA_DATA_INCOME = 'Income';
+$EXTRA_DATA_INCOME_QUESTION = 'What is your net income?';
+$EXTRA_DATA_WORKING_TIME = 'Working time';
+$EXTRA_DATA_WORKING_TIME_QUESTION = 'Do you have a job or a worthy occupation?';
+$EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Time spent in driving';
+$EXTRA_DATA_TIME_QUESTION1 = 'How many minutes you drive from home to workplace? (just one way)';
+$EXTRA_DATA_TIME_QUESTION2 = 'How many minutes you drive in the days you don\'t take the car to workplace?';
+$EXTRA_DATA_TIME_QUESTION3 = 'How many minutes you drive?';
 
 //PUBLIC TRANSPORTS
 $PUB_TRANS_TEXT = 'Public transports for your family daily life';
@@ -222,6 +240,36 @@ $OTHER_PUB_TRANS_DESC = "Amount that was still left to other public transports, 
 $TAXI_DESL = "Taxi transportation";
 $ON_TAXI_PAYING = "by taxi paying"; //ex: 4 km __on taxi paying__ 5€ per km
 
+//VIRTUAL SPEED
+$FINANCIAL_EFFORT = 'Financial effort';
+$NET_INCOME_PER = 'Net income per';
+$AVERAGE_NET_INCOME_PER = 'Average net income per';
+$NUMBER_OF_MONTHS = 'Number of months per year of income';
+$NUMBER_OF_WEEKS = 'Number of weeks per year of income';
+$NUMBER_OF_HOURS= 'Number of hours per week of income';
+$HOURS_PER = 'Hours per';
+$MONTHS_PER = 'Months per';
+$AVERAGE_WORKING_HOURS_PER = 'Average working hours per';
+$WORKING_HOURS_PER = 'Working hours per';
+$DIST_HOME_JOB = 'You drive from home to work';
+$DAYS_DRIVE_JOB = 'Days per week you drive to work';
+$DIST_JORNEY_WEEKEND = 'You drive during the days you don\'t take the car to workplace';
+$AVERAGE_DIST_PER_WEEK = 'You drive on average per week';
+$YOU_DRIVE_PER = 'You drive per';
+$MINUTES_HOME_JOB = 'Minutes you drive from home to workplace';
+$DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
+$TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
+$MINUTES_DRIVE_PER = 'Minutes you drive per';
+$DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
+$HOURS_DRIVE_PER = ' Hours you drive per';
+$VIRTUAL_SPEED = 'virtual speed';
+$KINETIC_SPEED = 'kinetic speed';
+$AVER_YEARLY = 'Average yearly';
+$WORKING_TIME_MESSAGE = 'It was considered for calculations an average working time of 36 hours per week and 11 months per year';
+$HOURS_TO_AFFORD_CAR = 'Hours per year you need to work to afford your car';
+$MONTHS_TO_AFFORD_CAR = 'Months per year you need to work to afford your car';
+$TOTAL_COSTS_PER_YEAR = 'Total costs per year for automobile';
+$DAYS_CAR_PAID = 'For how many days, after the 1st of January, the car is paid';
 
 //**************************************************
 //GRAPHICS
@@ -264,6 +312,17 @@ $INVALID_AMOUNT = 'Invalid amount';
 
 $INVALID_NBR_PP = 'Invalid number of people';
 $ERROR_PASS_AMOUNT= 'Invalid monthly ticket amount';
+
+$ERROR_INCOME = 'Invalid net income';
+$ERROR_WEEKS_PER_YEAR = 'Invalid number of weeks per year';
+$ERROR_MONTHS_PER_YEAR = 'Invalid number of months per year';
+$ERROR_HOURS_PER_WEEK = 'Invalid number of hours per week';
+$ERROR_MIN_DRIVE_HOME_JOB = 'Invalid number of minutes you drive from home to workplace';
+$ERROR_MIN_DRIVE_WEEKEND = 'Invalid number of minutes you drive in the days you don\'t take the car to workplace';
+$ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
+$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month';
+
+
 
 //FINAL RESULT
 $YOUR_CAR_COSTS_YOU = 'Your car costs';
@@ -319,4 +378,17 @@ $STD_WASHING = '10'; //amount paid in washings per trimestre
 
 $STD_NR_PPL_FAMILY = '4'; //number of people in the family
 $STD_PASS_PRICE = '40'; //price of the monthly pass
+
+$STD_INCOME_YEAR = '22000'; // net income per year
+$STD_INCOME_MONTH = '2000'; // net income per month
+$STD_INCOME_WEEK = '500'; // net income per week
+$STD_INCOME_HOUR = '20'; // net income per hour
+$STD_MONTHS_YEAR = '11'; // months per year
+$STD_HOURS_WEEK = '30'; // hours per week
+$STD_WEEKS_YEAR = '48'; // weeks per year
+$STD_HOURS_WEEK = '36'; // work hours per week
+$STD_TIME_HOME_JOB = '20'; // minutes you drive from home to workplace
+$STD_TIME_WEEKEND = '20';// minutes you drive in the days you don't take the car to workplace
+$STD_TIME_IN_DRIVING = '60'; // time spent in driving (minutes/day)
+$STD_DAYS_MONTH = '22'; // days per month
 ?>

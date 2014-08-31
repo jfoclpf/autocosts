@@ -32,13 +32,17 @@ div, table, .table, .td, .tr, tr, td  {
     overflow: auto;
 }
 
+.td_values{
+	padding-left: 6px;
+}
+
 input {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 	
 	font-size: 80%;
-    height: 22px;
+    height: 28px;
     vertical-align: middle;
 	border: 2px;
 	border-color: rgb(180, 180, 180);
@@ -136,6 +140,9 @@ select {
     vertical-align: middle;
 }
 
+.hidden{
+	display: none;
+}
 
 .p5 {
     font-size: 170%;
@@ -157,6 +164,12 @@ select {
     font-size: 40%;
 }
 
+#facebook_btn {
+    text-align: left;
+    width: 90%;
+    padding-left: 2%;
+    display: inline;
+}
 
 #container {
     width: 100%;
@@ -187,6 +200,39 @@ select {
     text-align: right;
     vertical-align: top;
     display: inline;
+}
+
+.div_element{
+padding-left:20px;
+}
+
+.div_element ul{
+	padding:0;
+	margin:0;
+}
+
+	.div_element ul li{		
+		list-style:none;
+		margin-bottom:5px;
+	}
+
+.div_empty{
+	height:15px;
+}	
+
+.list_gorizont{
+	padding:0;
+	margin:0;
+}
+
+	.list_gorizont li{
+		list-style:none;
+		display: inline-block;	
+	}
+
+.car_to_job_part,
+.time_spent_part_1{
+	display:none;
 }
 
 #country_select {
@@ -335,6 +381,9 @@ select {
 }
 
 @media screen and (max-width: 920px)  and (min-width: 700px) {
+    #facebook_btn {
+        display: none;
+    }
 
     #banner_left {
         display: none;
@@ -393,7 +442,7 @@ select {
         width: 98%;
     }
 
-    #banner_left {
+    #facebook_btn, #banner_left {
         display: none;
     }
 
@@ -490,7 +539,7 @@ select {
         text-align: center;
     }
 
-    #br0, #br1, #br2, #br3, #div11, #banner_left {
+    #br0, #br1, #br2, #br3, #div11, #banner_left, #facebook_btn {
         display: none;
     }
 
@@ -611,7 +660,7 @@ select {
         font-size: 60%;
     }
 
-    #div11, #banner_left {
+    #div11, #banner_left, #facebook_btn {
         display: none;
     }
 
@@ -737,11 +786,11 @@ select {
         font-size: 45%;
     }
 
-    .main_table, #banner_left, #div11, #div12, #br0, #br1, #br2, #br3 {
+    .main_table, #banner_left, #facebook_btn, #div11, #div12, #br0, #br1, #br2, #br3 {
         border: none;
     }
 
-    #div11, #banner_left {
+    #div11, #banner_left, #facebook_btn {
         display: none;
     }
 	
