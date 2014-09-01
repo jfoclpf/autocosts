@@ -164,13 +164,6 @@ select {
     font-size: 40%;
 }
 
-#facebook_btn {
-    text-align: left;
-    width: 90%;
-    padding-left: 2%;
-    display: inline;
-}
-
 #container {
     width: 100%;
     display: block;
@@ -381,9 +374,6 @@ padding-left:20px;
 }
 
 @media screen and (max-width: 920px)  and (min-width: 700px) {
-    #facebook_btn {
-        display: none;
-    }
 
     #banner_left {
         display: none;
@@ -442,7 +432,7 @@ padding-left:20px;
         width: 98%;
     }
 
-    #facebook_btn, #banner_left {
+    #banner_left {
         display: none;
     }
 
@@ -539,7 +529,7 @@ padding-left:20px;
         text-align: center;
     }
 
-    #br0, #br1, #br2, #br3, #div11, #banner_left, #facebook_btn {
+    #br0, #br1, #br2, #br3, #div11, #banner_left {
         display: none;
     }
 
@@ -660,7 +650,7 @@ padding-left:20px;
         font-size: 60%;
     }
 
-    #div11, #banner_left, #facebook_btn {
+    #div11, #banner_left {
         display: none;
     }
 
@@ -786,11 +776,11 @@ padding-left:20px;
         font-size: 45%;
     }
 
-    .main_table, #banner_left, #facebook_btn, #div11, #div12, #br0, #br1, #br2, #br3 {
+    .main_table, #banner_left, #div11, #div12, #br0, #br1, #br2, #br3 {
         border: none;
     }
 
-    #div11, #banner_left, #facebook_btn {
+    #div11, #banner_left {
         display: none;
     }
 	
