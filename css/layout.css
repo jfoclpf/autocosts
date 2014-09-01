@@ -9,6 +9,15 @@ div, table, .table, .td, .tr, tr, td  {
     width: 100%;
 }
 
+.result_table{
+	background:rgb(250, 250, 250);
+	border:solid 1px rgb(180, 180, 180);
+	margin:1;
+	width:98%;
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
 .row {
     display: table-row;
 	width:100%;
@@ -68,6 +77,17 @@ select{
 	border: 2px; 
 	border-color: rgb(180, 180, 180); 
 	border-style: solid;
+}
+
+td.top_b{
+	border-top-width:2px;
+	border-top-style:solid;
+	border-top-color:black;
+}
+
+.hidden_tp{
+	border-top-style:none;
+	border-bottom-style:none;
 }
 
 .roundCornerSlight {

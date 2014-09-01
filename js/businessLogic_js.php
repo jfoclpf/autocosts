@@ -627,161 +627,192 @@ var virtual_speed = drive_per_year / (hours_drive_per_year + (total_costs * 12 /
 }
 
 
-//imprime
+//print tables; each code line or instruction --> one HTML table row, <tr>line here</tr>
 
 input_object.style.display='none';
 
 var varResult="";
-varResult+="<center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);margin:1;width:98%border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
-
+//main table
+varResult+="<center><table class=\"result_table\" border=\"1\" cellpadding=\"4\">";
+//header
 varResult+="<tr><td align=\"center\"><b><span class=\"p3\"><?echo $PRIVATE_COSTS?><\/span><\/b><br><\/td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?><\/span><\/b><\/td><\/tr>";
-
-varResult+="<tr><td align=\"left\">"+desva_text+"&nbsp;<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+depreciation_per_month.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $INSURANCE?><\/span><\/b><br><span class=\"p2\">"+seguro_text+"<\/span><\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+val_seguro_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+juros_text+"&nbsp;<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+interests_per_month.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+inspecao_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+inspecao_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+IUC_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+IUC_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-
-varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $FUEL?><\/span><\/b><br><span class=\"p2\">"+combustiveis_text+"<\/span><\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+val_combustiveis_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+revisoes_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+revisoes_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+reparacoes_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+reparacoes_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $PARKING?><\/span><\/b><\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+parqueamento_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+portagens_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+portagens_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+multas_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+multas_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+lavagens_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+lavagens_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
-
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\">"+custos_fixos_text+"<\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custos_fixos.toFixed(1)+"<\/span><\/td><\/tr>";
-varResult+="<tr><td align=\"left\">"+custos_variav_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custos_variav.toFixed(1)+"<\/span><\/td><\/tr>";
-
+//cost items
+varResult+="<tr><td align=\"left\">"+desva_text+"&nbsp;<\/td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+depreciation_per_month.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $INSURANCE?><\/span><\/b><br><span class=\"p2\">"+seguro_text+"<\/span><\/td>"+
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+val_seguro_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+juros_text+"&nbsp;<\/td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+interests_per_month.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+inspecao_text+"<\/td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+inspecao_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+IUC_text+"<\/td>"                        +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+IUC_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $FUEL?><\/span><\/b><br><span class=\"p2\">"+combustiveis_text+"<\/span><\/td>"+
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+val_combustiveis_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+revisoes_text+"<\/td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+revisoes_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+reparacoes_text+"<\/td>"                 +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+reparacoes_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $PARKING?><\/span><\/b><\/td>"+
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+parqueamento_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+portagens_text+"<\/td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+portagens_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+multas_text+"<\/td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+multas_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+varResult+="<tr><td align=\"left\">"+lavagens_text+"<\/td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+lavagens_por_mes.toFixed(1)+"<\/span><\/td><\/tr>";
+//fixed costs
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\">"+custos_fixos_text+"<\/td>"+
+                                                                                  "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custos_fixos.toFixed(1)+"<\/span><\/td><\/tr>";
+//variable costs
+varResult+="<tr><td align=\"left\">"+custos_variav_text+"<\/td>"              +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custos_variav.toFixed(1)+"<\/span><\/td><\/tr>";
 if(tipo_calc_combustiveis=="km" && (km_por_mes!=0)){
-    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\"><b><span class=\"p3\"><?echo $RUN_CP_DIST?><\/span><\/b><\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(custos_variav/km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> <\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $TOTAL_CP_DIST?><\/span><\/b><\/td><td><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(total/km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> <\/span><\/td><\/tr>";
+    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\"><b><span class=\"p3\"><?echo $RUN_CP_DIST?><\/span><\/b><\/td>"+
+	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(custos_variav/km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> <\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $TOTAL_CP_DIST?><\/span><\/b><\/td>"+
+	                                                                              "<td><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(total/km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> <\/span><\/td><\/tr>";
 }
 
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr><\/table><\/center>";
+varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td>"+
+                                                                                  "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">"+
+                                                                                       "<center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr>";
+varResult+="<\/table><\/center>";
 
-//MOSTRA CUSTOS EXTERNOS
+//show external costs Table
 if(<?if ($def_cty=="PT") echo 'tipo_calc_combustiveis=="km"'; else echo "false";?>){
-    varResult+="<br><center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);margin:1;width:98%border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
-
+    varResult+="<br><center><table class=\"result_table\" border=\"1\" cellpadding=\"4\">";
+    //header
     varResult+="<tr><td align=\"center\"><b><span class=\"p3\">Custos externos para o país<\/span><\/b><br><span class=\"p2\">Percorre "+(1*km_por_mes).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?><\/span><\/td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?><\/span><\/b><\/td><\/tr>";
-
-    varResult+="<tr><td align=\"left\">"+epa_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(epa*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+egee_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(egee*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+ruido_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(ruido*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+sr_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(sr*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+cgstn_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(cgstn*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+ifr_estr_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(ifr_estr*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
-
-    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total_exter.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr>";
-
-    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\" colspan=\"2\">"+ fonte_text +"<\/td><\/tr><\/table><\/center>";
+    //external costs items
+    varResult+="<tr><td align=\"left\">"+epa_text+"<\/td>"                    +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(epa*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+egee_text+"<\/td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(egee*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+ruido_text+"<\/td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(ruido*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+sr_text+"<\/td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(sr*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+cgstn_text+"<\/td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(cgstn*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+ifr_estr_text+"<\/td>"               +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(ifr_estr*km_por_mes).toFixed(1)+"<\/span><\/td><\/tr>";
+    //total
+    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td>"+
+	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total_exter.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr>";
+    //reference to source
+	varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\" colspan=\"2\">"+ fonte_text +"<\/td><\/tr>";
+	varResult+="<\/table><\/center>";
 }
 
-//mostra alternativas com TP caso se justifique
+//show alternative public transports Table
 if(display_tp) {
-    varResult+="<br><center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);margin:1;width:98%border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
-
-    varResult+="<tr><td align=\"center\"><b><span class=\"p3\"><?echo $PUBL_TRA_EQUIV?><\/span><\/b><br><\/td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?><\/span><\/b><\/td><\/tr>";
-
-    varResult+="<tr><td align=\"left\">"+tp_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+preco_total_tp.toFixed(1)+"<\/span><\/td><\/tr>";
-    varResult+="<tr><td align=\"left\">"+taxi_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custo_taxi.toFixed(1)+"<\/span><\/td><\/tr>";
-    if(display_outros_tp) {
-        varResult+="<tr><td align=\"left\">"+outros_tp_text+"<\/td><td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+outros_tp.toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<br><center><table class=\"result_table\" border=\"1\" cellpadding=\"4\">";
+    //header
+    varResult+="<tr><td align=\"center\"><b><span class=\"p3\"><?echo $PUBL_TRA_EQUIV?><\/span><\/b><br><\/td>"+
+	                                                                              "<td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?><\/span><\/b><\/td><\/tr>";
+	//items
+    varResult+="<tr><td align=\"left\">"+tp_text+"<\/td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+preco_total_tp.toFixed(1)+"<\/span><\/td><\/tr>";
+    varResult+="<tr><td align=\"left\">"+taxi_text+"<\/td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+custo_taxi.toFixed(1)+"<\/span><\/td><\/tr>";
+    //in case other means of transport are shown besides taxi and urban public transports
+	if(display_outros_tp) {
+        varResult+="<tr><td align=\"left\">"+outros_tp_text+"<\/td>"          +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+outros_tp.toFixed(1)+"<\/span><\/td><\/tr>";
     }
-
-    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total_altern.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr><\/table><\/center>";
+    varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?><\/span><\/b><\/td>"+
+	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+total_altern.toFixed(0)+"/<?echo $MONTH?><\/span><\/b><\/center><\/td><\/tr>";
+	varResult+="<\/table><\/center>";
 }
 
-varResult+="<br><center><table style=\"background:rgb(250, 250, 250);border:solid 1px rgb(180, 180, 180);width:100%;border-spacing:0px;border-collapse:collapse;\" border=\"1\" cellpadding=\"4\">";
+//FINANCIAL EFFORT
+varResult+="<br><center><table class=\"result_table\" border=\"1\" cellpadding=\"4\">";
 varResult+="<tr><td align=\"center\" colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b></td></tr>";
 
 //income
-varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b><br>";
+varResult+="<tr><td colspan=\"2\" align=\"left\" class=\"top_b\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b></tr>";
 switch(income_type){
-	case 'year':
-		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td><td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span></td></tr>"
+	case 'year':    
+		varResult+= "<tr><td class=\"hidden_tp\"><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span></td>"             +  "<td class=\"hidden_tp\" style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>";
 		break;
 	case 'month':
-		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
-					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"</span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span></td>"            +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span></td>"                          +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"</span></td></tr>";
 		break;
 	case 'week':
-		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span><br><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
-					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
 		break;	
 	case 'hour':
-		varResult+="<span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span><br><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span><br><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"+
-					"<td style=\"width:20%\"><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span><br>&nbsp;<span class=\"p2\">"+income_hours_per_week+" <?echo $HOUR_ABBR?></span><br>&nbsp;<span class=\"p2\">"+income_per_type+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span><br>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span></td>"                           +  "<td><span class=\"p2\">"+income_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
 }
+
 
 //working time
 if(income_type != 'hour'){
-	varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_WORKING_TIME?></span></b><br>";
+	varResult+=     "<tr><td colspan=\"2\" align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_WORKING_TIME?></span></b></tr>";
 	if(is_working_time == 'true'){
-		varResult+="<span class=\"p2\"><?echo $HOURS_PER?> <?echo $WEEK?></span><br><span class=\"p2\"><?echo $MONTHS_PER?> <?echo $YEAR?></span><br>"+
-			   "<span class=\"p2\"><?echo $AVERAGE_WORKING_HOURS_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $WORKING_HOURS_PER?> <?echo $YEAR?></span></td>"+
-			   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><br><span class=\"p2 td_values\">"+time_hours_per_week+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+time_month_per_year+"</span><br>"+
-			   "<span class=\"p2 td_values\">"+aver_work_time_per_m.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+work_hours_per_y.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";	
-	}
+		varResult+= "<tr><td><span class=\"p2\"><?echo $HOURS_PER?> <?echo $WEEK?></span></td>"                  +  "<td><span class=\"p2 td_values\">"+time_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $MONTHS_PER?> <?echo $YEAR?></span></td>"                 +  "<td><span class=\"p2 td_values\">"+time_month_per_year+"</span></td></tr>"+
+			        "<tr><td><span class=\"p2\"><?echo $AVERAGE_WORKING_HOURS_PER?> <?echo $MONTH?></span></td>" +  "<td><span class=\"p2 td_values\">"+aver_work_time_per_m.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>"+
+			        "<tr><td><span class=\"p2\"><?echo $WORKING_HOURS_PER?> <?echo $YEAR?></span></td>"          +  "<td><span class=\"p2 td_values\">"+work_hours_per_y.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";
+}
 	else{
-		varResult+="<span class=\"p2\"><?echo $WORKING_TIME_MESSAGE?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"></td></tr>";
+		varResult+= "<tr><td colspan=\"2\"><span class=\"p2\"><?echo $WORKING_TIME_MESSAGE?></span></td></tr>";
 	}
 }			
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_hour.toFixed(1)+"</span></td></tr>";
+varResult+=         "<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_hour.toFixed(1)+"</span></td></tr>";
+
 
 //distance
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b><br>";
+varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b></td></tr>";
 if((tipo_calc_combustiveis != 'km' && drive_to_work == 'true') || (tipo_calc_combustiveis == 'km' && leva_auto_job == 'true')){	
-	varResult+="<span class=\"p2\"><?echo $DIST_HOME_JOB?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_JOB?></span><br><span class=\"p2\"><?echo $DIST_JORNEY_WEEKEND?></span><br><span class=\"p2\"><?echo $AVERAGE_DIST_PER_WEEK?></span><br>";					
+	varResult+=     "<tr><td><span class=\"p2\"><?echo $DIST_HOME_JOB?></span></td>"                             +  "<td><span class=\"p2 td_values\">"+dist_home_job.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>"+
+	                "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_JOB?></span></td>"                            +  "<td><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span></td></tr>"+
+	                "<tr><td><span class=\"p2\"><?echo $DIST_JORNEY_WEEKEND?></span></td>"                       +  "<td><span class=\"p2 td_values\">"+journey_weekend.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>"+
+	                "<tr><td><span class=\"p2\"><?echo $AVERAGE_DIST_PER_WEEK?></span></td>"                     +  "<td><span class=\"p2 td_values\">"+aver_drive_per_week.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>";					
 }
-varResult+="<span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $YEAR?></span></td>"+
-			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">";
-if((tipo_calc_combustiveis != 'km' && drive_to_work == 'true') || (tipo_calc_combustiveis == 'km' && leva_auto_job == 'true')){
-	varResult+="<br><span class=\"p2 td_values\">"+dist_home_job.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span><br>"+
-			   "<span class=\"p2 td_values\">"+journey_weekend.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+aver_drive_per_week.toFixed(1)+" <?echo $STD_DIST?></span>";
-}
-varResult+="<br><span class=\"p2 td_values\">"+drive_per_month.toFixed(1)+" <?echo $STD_DIST?></span><br><span class=\"p2 td_values\">"+drive_per_year.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>";
 
+varResult+=         "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span></td>"             +  "<td><span class=\"p2 td_values\">"+drive_per_month.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>"+
+                    "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $YEAR?></span></td>"              +  "<td><span class=\"p2 td_values\">"+drive_per_year.toFixed(1)+" <?echo $STD_DIST?></span></td></tr>";  
+
+
+
+					
 //time spent in driving
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b><br>";
-if(drive_to_work == 'true' || leva_auto_job == 'true'){
-	varResult+="<span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span><br>"+
-				"<span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span><br><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $WEEK?></span><br>";
-}
-else{
-	varResult+="<span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $DAY?></span><br><span class=\"p2\"><?echo $DAYS_DRIVE_PER_MONTH?></span><br>";
-}
-varResult+="<span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $MONTH?></span><br><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $YEAR?></span></td>";
-varResult+="<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">";
-if(drive_to_work == 'true' || leva_auto_job == 'true'){
-	varResult+="<br><span class=\"p2 td_values\">"+time_home_job+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span><br><span class=\"p2 td_values\">"+time_weekend+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+min_drive_per_week+" <?echo $MIN?></span>";
-}
-else{
-	varResult+="<br><span class=\"p2 td_values\">"+min_drive_per_day+" <?echo $MIN?></span><br><span class=\"p2 td_values\">"+days_drive_per_month+" <?echo $DAYS?></span>";
-}
-varResult+="<br><span class=\"p2 td_values\">"+hours_drive_per_month.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+hours_drive_per_year.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";
+varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b></td></tr>";
 
+if(drive_to_work == 'true' || leva_auto_job == 'true'){
+	varResult+=     "<tr><td><span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span></td>"                          +  "<span class=\"p2 td_values\">"+time_home_job+" <?echo $MIN?></span></td></tr>"+
+	                "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span></td>"                         +  "<td><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span></td>"                        +  "<td><span class=\"p2 td_values\">"+time_weekend+" <?echo $MIN?></span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $WEEK?></span></td>"          +  "<td><span class=\"p2 td_values\">"+min_drive_per_week+" <?echo $MIN?></span></td></tr>";
+}
+else{
+	varResult+=     "<tr><td><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $DAY?></span></td>"           +  "<td><span class=\"p2 td_values\">"+min_drive_per_day+" <?echo $MIN?></span></td></tr>"+
+	                "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_PER_MONTH?></span></td>"                      +  "<td><span class=\"p2 td_values\">"+days_drive_per_month+" <?echo $DAYS?></span></td></tr>";;
+}
+
+varResult+=         "<tr><td><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $MONTH?></span></td>"           +  "<td><span class=\"p2 td_values\">"+hours_drive_per_month.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>"+
+                    "<tr><td><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $YEAR?></span></td>"            +  "<td><span class=\"p2 td_values\">"+hours_drive_per_year.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";;
+
+					
 //financial effort
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b><br>"+
-           "<span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span><br><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span><br><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span><br><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>"+
-		   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">"+
-		   "<br><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+total_per_year.toFixed(1)+"</span><br><span class=\"p2 td_values\">"+hours_per_year_to_afford_car.toFixed(1)+" <?echo $HOUR_ABBR?></span><br><span class=\"p2 td_values\">"+month_per_year_to_afford_car.toFixed(2)+"</span><br><span class=\"p2 td_values\">"+Math.ceil(days_car_paid)+" <?echo $DAYS?></span></td></tr>"
+varResult+=         "<tr><td align=\"left\" colspan=\"2\" class=\"top_b\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b>"+
+                    "<tr><td><span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span></td>"                       +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+total_per_year.toFixed(1)+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span></td>"                        +  "<td><span class=\"p2 td_values\">"+hours_per_year_to_afford_car.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span></td>"                       +  "<td><span class=\"p2 td_values\">"+month_per_year_to_afford_car.toFixed(2)+"</span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>"                              +  "<td><span class=\"p2 td_values\">"+Math.ceil(days_car_paid)+" <?echo $DAYS?></span></td></tr>";
+		   
 
 //speed
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
-			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+kinetic_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
-varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"http://en.wikipedia.org/wiki/Car_costs#Virtual_Speed\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
-			"<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+virtual_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
-varResult+="</table></center>"
+varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
+                                                                                                                    "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
+																													kinetic_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"http://en.wikipedia.org/wiki/Car_costs#Virtual_Speed\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
+			                                                                                                        "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
+																													virtual_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+
+varResult+="</table></center>";
 
 result_object.innerHTML=varResult;
 result_object.style.display='block';
 
-//evita impressão de gráficos em dispositivos móveis
+//avoid printing the charts in mobile devices
 var temp_width=document.documentElement.clientWidth;
 if (temp_width>500) {
-    //verifica que a desvalorização é maior ou igual que zero, para imprimir gráfico
+	//checks if depreciation is greater or equal to zero, to print chart with no error
     var desvalor_temp;
     if(depreciation_per_month<0) {
         desvalor_temp=0;
