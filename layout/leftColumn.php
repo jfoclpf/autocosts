@@ -4,8 +4,6 @@
              style="border-style: solid; border-width: 2px; margin-left: -12px; padding: 10px; width: 97%; border-color: rgb(180, 180, 180);"
              src="images/img2.jpg">
     </a>
-    <br>
-    <br>
 </div>
 
 <div id="br1">
