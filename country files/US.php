@@ -66,7 +66,8 @@ $HELP_PROJECT = 'This is a free service with no advertisements!';
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
 $AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>AUTOMOBILE COSTS CALCULATOR</b>';
 
-//time words $DAYLY = 'daily'; 
+//time words 
+$DAYLY = 'daily'; 
 $WEEKLY = 'weekly'; 
 $MONTHLY = 'monthly'; 
 $TRIMESTERLY = 'quarterly'; 
@@ -95,7 +96,8 @@ $DAYS_PER_WEEK_SHORT= 'days/week';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words $COSTS= "Costs"; 
+//simulator words 
+$COSTS= "Costs"; 
 $FIXED_COSTS = 'Standing costs'; 
 $FIXED_COSTS_HEADER_1= 'STANDING COSTS'; //capital letters 
 $FIXED_COSTS_HEADER_2= "Those that don't depend on the traveled distance, and one must pay to have the car available for use"; 

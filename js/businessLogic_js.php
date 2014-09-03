@@ -480,6 +480,8 @@ if(display_tp) {
     }
 		total_costs = total_altern;
         taxi_text="<b><span class=\"p3\"><?echo $TAXI_DESL?><\/span><\/b><br><span class=\"p2\">" + n_km_taxi.toFixed(1) + " <?echo $STD_DIST?> <?echo $ON_TAXI_PAYING?> " + taxi_price_per_km.toFixed(1) + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?><\/span>";
+			
+ }
 
 //*************** EXTRA DATA - VIRTUAL SPEED ************
 //***********************************************************
@@ -514,6 +516,7 @@ switch(income_type){
 		income_per_type = document.custo.income_hour_weeks_per_year.value;
 		aver_income_per_year = income * income_hours_per_week * income_per_type;
 }
+
 aver_income_per_month = aver_income_per_year/12;
 var aver_income_per_hour = getNetIncomePerHour();
 
@@ -613,18 +616,15 @@ else{
 hours_drive_per_year = hours_drive_per_month * 12;
 
 //financial effort
-debugger
-var total_per_year = total_costs * 12;
-var hours_per_year_to_afford_car = total_costs * 12 / aver_income_per_hour;
-var month_per_year_to_afford_car = (total_costs * 12) / aver_income_per_year * 12;
-var days_car_paid = ((total_costs * 12) / aver_income_per_year) * 365.25;
+
+var total_per_year = total * 12;
+var hours_per_year_to_afford_car = total * 12 / aver_income_per_hour;
+var month_per_year_to_afford_car = (total * 12) / aver_income_per_year * 12;
+var days_car_paid = ((total * 12) / aver_income_per_year) * 365.25;
 
 var kinetic_speed = drive_per_year / hours_drive_per_year;
 
-var virtual_speed = drive_per_year / (hours_drive_per_year + (total_costs * 12 / aver_income_per_hour))
-		
-		
-}
+var virtual_speed = drive_per_year / (hours_drive_per_year + (total * 12 / aver_income_per_hour))
 
 
 //print tables; each code line or instruction --> one HTML table row, <tr>line here</tr>
@@ -715,27 +715,27 @@ varResult+="<tr><td align=\"center\" colspan=\"2\"><b><span class=\"p3\"><?echo 
 varResult+="<tr><td colspan=\"2\" align=\"left\" class=\"top_b\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b></tr>";
 switch(income_type){
 	case 'year':    
-		varResult+= "<tr><td class=\"hidden_tp\"><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span></td>"             +  "<td class=\"hidden_tp\" style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
-		            "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>";
+		varResult+= "<tr><td class=\"hidden_tp\"><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span></td>"             +  "<td class=\"hidden_tp\" style=\"width:20%\"><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>";
 		break;
 	case 'month':
-		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span></td>"            +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
-				    "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span></td>"                          +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
-				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
-				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"</span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span></td>"            +  "<td style=\"width:20%\"><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span></td>"                          +  "<td><span class=\"p2 td_values\">"+income_per_type+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"</span></td></tr>";
 		break;
 	case 'week':
-		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
-		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
-				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"
-				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2 td_values\">"+income_per_type+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
+				    "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?>&nbsp;"+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
 		break;	
 	case 'hour':
-		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2\"><?echo $CURR_SYMBOL?> "+income+"</span></td></tr>"+
-		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span></td>"                           +  "<td><span class=\"p2\">"+income_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>"+
-					"<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2\">"+income_per_type+"</span></td></tr>"+
-					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
-					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
+		varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span></td>"             +  "<td style=\"width:20%\"><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+income+"</span></td></tr>"+
+		            "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span></td>"                           +  "<td><span class=\"p2 td_values\">"+income_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>"                           +  "<td><span class=\"p2 td_values\">"+income_per_type+"</span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>"    +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+aver_income_per_month.toFixed(1)+"</span></td></tr>"+
+					"<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>"     +  "<td><span class=\"p2 td_values\"><?echo $CURR_SYMBOL?> "+aver_income_per_year.toFixed(1)+"<\/span></td></tr>";
 }
 
 
@@ -774,7 +774,7 @@ varResult+=         "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $
 varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b></td></tr>";
 
 if(drive_to_work == 'true' || leva_auto_job == 'true'){
-	varResult+=     "<tr><td><span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span></td>"                          +  "<span class=\"p2 td_values\">"+time_home_job+" <?echo $MIN?></span></td></tr>"+
+	varResult+=     "<tr><td><span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span></td>"                          +  "<td><span class=\"p2 td_values\">"+time_home_job+" <?echo $MIN?></span></td></tr>"+
 	                "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span></td>"                         +  "<td><span class=\"p2 td_values\">"+drive_to_work_days_per_week+" <?echo $DAYS?></span></td></tr>"+
 				    "<tr><td><span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span></td>"                        +  "<td><span class=\"p2 td_values\">"+time_weekend+" <?echo $MIN?></span></td></tr>"+
 				    "<tr><td><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $WEEK?></span></td>"          +  "<td><span class=\"p2 td_values\">"+min_drive_per_week+" <?echo $MIN?></span></td></tr>";

@@ -83,16 +83,17 @@ $MIN = 'min';
 $MINUTES = 'minutes';
 $HOUR = 'hour';
 $HOURS = 'hours';
-$DAY = 'day';
-$DAYS = 'days';
-$WEEK = 'week';
-$WEEKS = 'weeks';
-$MONTH = 'month';
-$MONTHS = 'months';
-$TWO_MONTHS = 'two months';
-$DIST_EACH_TWO_MONTHS = 'miles for every two months';
-$TRIMESTER = 'trimester';
-$SEMESTER = 'semester';
+$HOUR_ABBR = 'h';
+$DAY = 'day'; 
+$DAYS = 'days'; 
+$WEEK = 'week'; 
+$WEEKS = 'weeks'; 
+$MONTH = 'month'; 
+$MONTHS = 'months'; 
+$TWO_MONTHS = 'two months'; 
+$DIST_EACH_TWO_MONTHS = 'miles for every two months'; 
+$TRIMESTER = 'trimester'; 
+$SEMESTER = 'semester'; 
 $YEAR = 'year';
 
 $DAYS_PER_WEEK_SHORT= 'days/week';
@@ -217,6 +218,7 @@ $TOTAL_VARIABLE_DESCR2 = 'Fuels, Repairing and improvements, Parking (considerin
 //EXTRA DATA
 $EXTRA_DATA = 'ADDITIONAL DATA';
 $EXTRA_DATA1 = 'Additional data';
+$EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
 $EXTRA_DATA_FAMILY_NBR = 'How many people older than 4 years old you have in your family (including you)';
 $EXTRA_DATA_PRICE_PASS = "What is the average price per person of the public transports monthly season ticket, for your normal daily life<br><i>if public transport isn't an option for you, insert 0</i>";
 $EXTRA_DATA_INCOME = "Income";
@@ -239,11 +241,12 @@ $TAXI_DESL = "Taxi transportation";
 $ON_TAXI_PAYING = "by taxi paying"; //ex: 4 km __on taxi paying__ 5€ per km
 
 //VIRTUAL SPEED
-$VIRTUAL_SPEED = 'Virtual speed';
+$FINANCIAL_EFFORT = 'Financial effort';
 $NET_INCOME_PER = 'Net income per';
 $AVERAGE_NET_INCOME_PER = 'Average net income per';
 $NUMBER_OF_MONTHS = 'Number of months per year of income';
 $NUMBER_OF_WEEKS = 'Number of weeks per year of income';
+$NUMBER_OF_HOURS= 'Number of hours per week of income';
 $HOURS_PER = 'Hours per';
 $MONTHS_PER = 'Months per';
 $AVERAGE_WORKING_HOURS_PER = 'Average working hours per';
@@ -259,7 +262,14 @@ $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to 
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
 $HOURS_DRIVE_PER = ' Hours you drive per';
-$KINETIC_SPEED = 'Kinetic speed';
+$VIRTUAL_SPEED = 'virtual speed';
+$KINETIC_SPEED = 'kinetic speed';
+$AVER_YEARLY = 'Average yearly';
+$WORKING_TIME_MESSAGE = 'It was considered for calculations an average working time of 36 hours per week and 11 months per year';
+$HOURS_TO_AFFORD_CAR = 'Hours per year you need to work to afford your car';
+$MONTHS_TO_AFFORD_CAR = 'Months per year you need to work to afford your car';
+$TOTAL_COSTS_PER_YEAR = 'Total costs per year for automobile';
+$DAYS_CAR_PAID = 'For how many days, after the 1st of January, the car is paid';
 
 //**************************************************
 //GRAPHICS
@@ -267,8 +277,7 @@ $PARCEL = 'Parcel';
 $COSTS = 'Costs';
 
 
-//****************************************************
-//ERROR MESSAGES
+//****************************************************//ERROR MESSAGES
 $ERROR_INVALID_INSU_VALUE = 'Invalid insurance amount';
 $ERROR_INSU_PERIOD = 'Insert periodicity of insurance';
 
@@ -302,6 +311,15 @@ $INVALID_AMOUNT = 'Invalid amount';
 
 $INVALID_NBR_PP = 'Invalid number of people';
 $ERROR_PASS_AMOUNT= 'Invalid monthly ticket amount';
+
+$ERROR_INCOME = 'Invalid net income';
+$ERROR_WEEKS_PER_YEAR = 'Invalid number of weeks per year';
+$ERROR_MONTHS_PER_YEAR = 'Invalid number of months per year';
+$ERROR_HOURS_PER_WEEK = 'Invalid number of hours per week';
+$ERROR_MIN_DRIVE_HOME_JOB = 'Invalid number of minutes you drive from home to workplace';
+$ERROR_MIN_DRIVE_WEEKEND = 'Invalid number of minutes you drive in the days you don\'t take the car to workplace';
+$ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
+$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month';
 
 //FINAL RESULT
 $YOUR_CAR_COSTS_YOU = 'Your car costs';
@@ -358,12 +376,11 @@ $STD_WASHING = ''; //amount paid in washings per trimestre
 $STD_NR_PPL_FAMILY = ''; //number of people in the family
 $STD_PASS_PRICE = ''; //price of the monthly pass
 
-$STD_NR_PPL_FAMILY = ''; //number of people in the family
-$STD_PASS_PRICE = ''; //price of the monthly pass
-
 $STD_INCOME_YEAR = ''; // net income per year
 $STD_INCOME_MONTH = ''; // net income per month
 $STD_INCOME_WEEK = ''; // net income per week
+$STD_INCOME_HOUR = ''; // net income per hour
+$STD_HOURS_WEEK = ''; // hours per week
 $STD_MONTHS_YEAR = ''; // months per year
 $STD_WEEKS_YEAR = ''; // weeks per year
 $STD_HOURS_WEEK = ''; // work hours per week
