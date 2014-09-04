@@ -96,7 +96,7 @@ $DAYS_PER_WEEK_SHORT= 'gün/hafta';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words 
+//calculator words 
 $COSTS= "Masraflar"; 
 $FIXED_COSTS = 'Sabit masraflar'; 
 $FIXED_COSTS_HEADER_1= 'SABİT MASRAFLAR'; //capital letters  
@@ -112,6 +112,9 @@ $RUN_CP_DIST = 'Kilometre başına kullanım masrafı'; //running costs per unit
 $TOTAL_CP_DIST = 'Kilometre başına toplam masraf'; //total costs per unit distance  
 $PUBL_TRA_EQUIV= "Aracınızın olmadığı düşünüldüğünde harcayacağınız ulaşım masrafları"; 
 $WORD_TOTAL_CAP = 'TOPLAM'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation 
 $DEPRECIATION = 'Aracın amortismanı'; 

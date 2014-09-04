@@ -95,7 +95,7 @@ $DAYS_PER_WEEK_SHORT= 'ημέρες/εβδομάδα';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words $COSTS= "'Εξοδα"; 
+//calculator words $COSTS= "'Εξοδα"; 
 $FIXED_COSTS = 'Πάγια έξοδα'; 
 $FIXED_COSTS_HEADER_1= 'ΠΑΓΙΑ ΕΞΟΔΑ'; //capital letters 
 $FIXED_COSTS_HEADER_2= "Όσα δεν σχετίζονται με τις αποστάσεις που διανύει το αυτοκίνητο και πρέπει να τα πληρώνει ο ιδιοκτήτης για να έχει αυτοκίνητο στη διάθεσή του"; 
@@ -110,6 +110,9 @@ $RUN_CP_DIST = 'Λειτουργικά έξοδα ανά χιλιόμετρο'; 
 $TOTAL_CP_DIST = 'Συνολικά έξοδα ανά χιλιόμετρο'; //total costs per unit distance 
 $PUBL_TRA_EQUIV= "Αντίστοιχα ποσά μετακίνησης σε περίπτωση που δεν διαθέτετε αυτοκίνητο."; 
 $WORD_TOTAL_CAP = 'ΣΥΝΟΛΟ'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation 
 $DEPRECIATION = 'Υποτίμηση της αξίας του οχήματος'; 
@@ -256,7 +259,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';

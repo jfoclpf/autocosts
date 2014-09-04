@@ -95,7 +95,7 @@ $DAYS_PER_WEEK_SHORT= 'days/week';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words $COSTS= "Costs"; 
+//calculator words $COSTS= "Costs"; 
 $FIXED_COSTS = 'Standing costs'; 
 $FIXED_COSTS_HEADER_1= 'STANDING COSTS'; //capital letters 
 $FIXED_COSTS_HEADER_2= "Those that don't depend on the traveled distance, and one must pay to have the car available for use"; 
@@ -110,6 +110,9 @@ $RUN_CP_DIST = 'Running costs per kilometre'; //running costs per unit distance
 $TOTAL_CP_DIST = 'Total costs per kilometre'; //total costs per unit distance 
 $PUBL_TRA_EQUIV= "Equivalent transport costs, considering you don't own a car"; 
 $WORD_TOTAL_CAP = 'TOTAL'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation 
 $DEPRECIATION = 'Depreciation of the vehicle'; 
@@ -256,7 +259,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';

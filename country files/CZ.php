@@ -118,6 +118,9 @@ $TOTAL_CP_DIST = 'Celkové náklady na kilometr'; //total costs per unit distanc
 $PUBL_TRA_EQUIV= "Ekvivalentní náklady na dopravu, za předpokladu, že nevlastníte auto";
 $WORD_TOTAL_CAP = 'CELKEM'; //capital word for total
 
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
+
 //depreciation
 $DEPRECIATION = 'Opotřebení vozidla';
 $AQ_DATE = 'Datum pořízení auta';
@@ -260,7 +263,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';

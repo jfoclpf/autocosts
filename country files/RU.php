@@ -100,7 +100,7 @@ $DAYS_PER_WEEK_SHORT= 'дней/недели';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words
+//calculator words
 $COSTS= "Расходы";
 $FIXED_COSTS = 'Постоянные расходы';
 $FIXED_COSTS_HEADER_1= 'ПOCTOЯННЫE PACXOДЫ'; //capital letters
@@ -116,6 +116,9 @@ $RUN_CP_DIST = 'Эксплуатационные расходы на 1 км'; //
 $TOTAL_CP_DIST = 'Итого расходы на 1 км'; //total costs per unit distance
 $PUBL_TRA_EQUIV= "Эквивалентные расходы на транспорт при отсутствии у Вас собственной машины";
 $WORD_TOTAL_CAP = 'ИТОГО'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation
 $DEPRECIATION = 'Уменьшение продажной стоимости автомобиля';
@@ -259,7 +262,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';

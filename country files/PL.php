@@ -95,7 +95,7 @@ $DAYS_PER_WEEK_SHORT= ' dni / tydzień ';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words
+//calculator words
 $COSTS= "Koszty";
 $FIXED_COSTS = 'Koszty stałe';
 $FIXED_COSTS_HEADER_1= 'KOSZTY STAŁE'; //capital letters
@@ -112,6 +112,9 @@ $RUN_CP_DIST = 'Koszty bieżące na kilometr'; //running costs per unit distance
 $TOTAL_CP_DIST = 'Całkowity koszt na kilometr'; //total costs per unit distance
 $PUBL_TRA_EQUIV= "Równoważne koszty transportu, zakładając, że nie posiadasz samochodu";
 $WORD_TOTAL_CAP = 'RAZEM'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation
 $DEPRECIATION = 'Utrata wartości pojazdu';
@@ -255,7 +258,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';

@@ -81,8 +81,8 @@ $YEARLY = 'anual';
 
 $MIN = 'min';
 $MINUTES = 'minutes';
-$HOUR = 'hour';
-$HOURS = 'hours';
+$HOUR = 'hora';
+$HOURS = 'horas';
 $HOUR_ABBR = 'h';
 $DAY = 'dia';
 $DAYS = 'dias';
@@ -101,7 +101,7 @@ $DAYS_PER_WEEK_SHORT= 'dias/sem';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words
+//calculator words
 $COSTS= "Custos";
 $FIXED_COSTS = 'Custos fixos';
 $FIXED_COSTS_HEADER_1= 'CUSTOS FIXOS';
@@ -118,6 +118,9 @@ $RUN_CP_DIST = 'Custos variáveis por km'; //running costs per unit distance
 $TOTAL_CP_DIST = 'Custos totais por km'; //total costs per unit distance
 $PUBL_TRA_EQUIV= 'Custos equivalentes de deslocação, abdicando da posse de um carro';
 $WORD_TOTAL_CAP = 'TOTAL';
+
+$WORD_PRINT = 'Imprimir';
+$WORD_DOWNLOAD_PDF = 'Descarregar relatório em PDF';
 
 //depreciation
 $DEPRECIATION = 'Depreciação do veículo';
@@ -221,14 +224,14 @@ $EXTRA_DATA1 = 'Dados adicionais';
 $EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
 $EXTRA_DATA_FAMILY_NBR = 'Quantas pessoas, com mais de 4 anos de idade, tem a sua família (com você inclusive)';
 $EXTRA_DATA_PRICE_PASS = 'Qual o preço médio por pessoa, que gastaria por mês em transportes públicos caso abdicasse do carro<br><i>caso não se aplique, coloque 0</i>';
-$EXTRA_DATA_INCOME = "Income";
-$EXTRA_DATA_INCOME_QUESTION = 'What is your net income?';
-$EXTRA_DATA_WORKING_TIME = 'Working time';
-$EXTRA_DATA_WORKING_TIME_QUESTION = 'Do you have a job or a worthy occupation?';
-$EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Time spent in driving';
-$EXTRA_DATA_TIME_QUESTION1 = 'How many minutes you drive from home to workplace? (just one way)';
-$EXTRA_DATA_TIME_QUESTION2 = 'How many minutes you drive in the days you don\'t take the car to workplace?';
-$EXTRA_DATA_TIME_QUESTION3 = 'How many minutes you drive?';
+$EXTRA_DATA_INCOME = "Rendimentos";
+$EXTRA_DATA_INCOME_QUESTION = 'Qual o seu rendimento líquido?';
+$EXTRA_DATA_WORKING_TIME = 'Horário de trabalho';
+$EXTRA_DATA_WORKING_TIME_QUESTION = 'Tem um emprego ou uma ocupação remunerada?';
+$EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Tempo despendido a conduzir';
+$EXTRA_DATA_TIME_QUESTION1 = 'Quantos minutos conduz de casa até ao trabalho? (só ida)';
+$EXTRA_DATA_TIME_QUESTION2 = 'Quantos minutos conduz nos dias que não leva o carro para o trabalho? (por exemplo a cada fim-de-semana)';
+$EXTRA_DATA_TIME_QUESTION3 = 'Quantos minutos conduz?';
 
 //PUBLIC TRANSPORTS
 $PUB_TRANS_TEXT = 'Transportes públicos na sua área de residência';
@@ -241,35 +244,35 @@ $TAXI_DESL = "Deslocações de táxi";
 $ON_TAXI_PAYING = "de táxi a"; //ex: 4 km __on taxi paying__ 5€ per km
 
 //VIRTUAL SPEED
-$FINANCIAL_EFFORT = 'Financial effort';
-$NET_INCOME_PER = 'Net income per';
-$AVERAGE_NET_INCOME_PER = 'Average net income per';
-$NUMBER_OF_MONTHS = 'Number of months per year of income';
-$NUMBER_OF_WEEKS = 'Number of weeks per year of income';
-$NUMBER_OF_HOURS= 'Number of hours per week of income';
-$HOURS_PER = 'Hours per';
-$MONTHS_PER = 'Months per';
-$AVERAGE_WORKING_HOURS_PER = 'Average working hours per';
-$WORKING_HOURS_PER = 'Working hours per';
-$DIST_HOME_JOB = 'You drive from home to work';
-$DAYS_DRIVE_JOB = 'Days per week you drive to work';
-$DIST_JORNEY_WEEKEND = 'You drive during the days you don\'t take the car to workplace';
-$AVERAGE_DIST_PER_WEEK = 'You drive on average per week';
-$YOU_DRIVE_PER = 'You drive per';
-$MINUTES_HOME_JOB = 'Minutes you drive from home to workplace';
-$DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
-$TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
-$MINUTES_DRIVE_PER = 'Minutes you drive per';
-$DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
-$VIRTUAL_SPEED = 'virtual speed';
-$KINETIC_SPEED = 'kinetic speed';
-$AVER_YEARLY = 'Average yearly';
-$WORKING_TIME_MESSAGE = 'It was considered for calculations an average working time of 36 hours per week and 11 months per year';
-$HOURS_TO_AFFORD_CAR = 'Hours per year you need to work to afford your car';
-$MONTHS_TO_AFFORD_CAR = 'Months per year you need to work to afford your car';
-$TOTAL_COSTS_PER_YEAR = 'Total costs per year for automobile';
-$DAYS_CAR_PAID = 'For how many days, after the 1st of January, the car is paid';
+$FINANCIAL_EFFORT = 'Esforço financeiro';
+$NET_INCOME_PER = 'Rendimento líquido por';
+$AVERAGE_NET_INCOME_PER = 'Rendimento médio líquido por';
+$NUMBER_OF_MONTHS = 'Número de meses por ano, de rendimento';
+$NUMBER_OF_WEEKS = 'Número de semanas por ano, de rendimento';
+$NUMBER_OF_HOURS= 'Número de horas por semana, de rendimento';
+$HOURS_PER = 'Horas por';
+$MONTHS_PER = 'Meses por';
+$AVERAGE_WORKING_HOURS_PER = 'Horas médias de trabalho por';
+$WORKING_HOURS_PER = 'Horas de trabalho por';
+$DIST_HOME_JOB = 'Conduz de casa para o trabalho';
+$DAYS_DRIVE_JOB = 'Dias por semana que conduz para o trabalho';
+$DIST_JORNEY_WEEKEND = 'Conduz durante os dias que não leva o carro para o trabalho';
+$AVERAGE_DIST_PER_WEEK = 'Conduz em média por semana';
+$YOU_DRIVE_PER = 'Conduz por';
+$MINUTES_HOME_JOB = 'Minutos que conduz de casa para o trabalho';
+$DAYS_DRIVE_TO_JOB = 'Dias por semana que conduz para o trabalho';
+$TIME_DRIVE_WEEKEND = 'Minutos que conduz nos dias que não leva o carro para o trabalho';
+$MINUTES_DRIVE_PER = 'Minutos que conduz por';
+$DAYS_DRIVE_PER_MONTH = 'Dias que conduz por mês';
+$HOURS_DRIVE_PER = 'Horas que conduz por';
+$VIRTUAL_SPEED = 'velocidade virtual';
+$KINETIC_SPEED = 'velocidade cinética';
+$AVER_YEARLY = 'Média anual da sua'; 
+$WORKING_TIME_MESSAGE = 'Foi considerado para o cálculo uma média de horário de trabalho de 36 horas por semana e 11 meses por ano';
+$HOURS_TO_AFFORD_CAR = 'Horas por ano que precisa de trabalhar para suster o seu carro';
+$MONTHS_TO_AFFORD_CAR = 'Meses que precisa de trabalhar para suster o seu carro';
+$TOTAL_COSTS_PER_YEAR = 'Custo total por ano do seu automóvel';
+$DAYS_CAR_PAID = 'Depois de quantos dias, após o dia 1 de janeiro, o seu carro fica pago';
 
 //**************************************************
 //GRAPHICS
@@ -313,14 +316,14 @@ $INVALID_AMOUNT = 'Montante inválido';
 $INVALID_NBR_PP = 'Número de pessoas inválido';
 $ERROR_PASS_AMOUNT= 'Valor do passe inválido';
 
-$ERROR_INCOME = 'Invalid net income';
-$ERROR_WEEKS_PER_YEAR = 'Invalid number of weeks per year';
-$ERROR_MONTHS_PER_YEAR = 'Invalid number of months per year';
-$ERROR_HOURS_PER_WEEK = 'Invalid number of hours per week';
-$ERROR_MIN_DRIVE_HOME_JOB = 'Invalid number of minutes you drive from home to workplace';
-$ERROR_MIN_DRIVE_WEEKEND = 'Invalid number of minutes you drive in the days you don\'t take the car to workplace';
+$ERROR_INCOME = 'Rendimento líquido inválido';
+$ERROR_WEEKS_PER_YEAR = 'Número de semanas por ano, inválido';
+$ERROR_MONTHS_PER_YEAR = 'Número de meses por ano, inválido';
+$ERROR_HOURS_PER_WEEK = 'Número de horas por semana, inválido';
+$ERROR_MIN_DRIVE_HOME_JOB = 'Número de minutos que conduz de casa para o trabalho, inválido';
+$ERROR_MIN_DRIVE_WEEKEND = 'Número de minutos que conduz nos dias que não leva o carro para o trabalho, inválido';
 $ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
-$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month';
+$ERROR_DAYS_PER_MONTH = 'Número de dias por mês, inválido';
 
 //FINAL RESULT
 $YOUR_CAR_COSTS_YOU = 'O seu carro custa-lhe ';

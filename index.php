@@ -154,7 +154,7 @@
 
                     <div id="reload_div">
                         <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload();"/>&nbsp;
-                        <form><input type="button" class="button" value="Print"
+                        <form><input type="button" class="button" value="<? echo $WORD_PRINT; ?>"
                             onclick="PrintElem('#result_div','#chart_div','#graph_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>
                     </div>
                     <!-- ************* ********* ************* -->

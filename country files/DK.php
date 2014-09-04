@@ -95,7 +95,7 @@ $DAYS_PER_WEEK_SHORT= 'dage/måneder';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words 
+//calculator words 
 $COSTS= "Udgifter"; 
 $FIXED_COSTS = 'Faste udgifter'; 
 $FIXED_COSTS_HEADER_1= 'FASTE UDGIFTER'; //capital letters 
@@ -111,6 +111,9 @@ $RUN_CP_DIST = 'Løbende udgifter per km'; //running costs per unit distance
 $TOTAL_CP_DIST = 'Totale udgifter per km'; //total costs per unit distance 
 $PUBL_TRA_EQUIV= "Tilsvarende transportudgifter hvis du ikke ejer en bil."; 
 $WORD_TOTAL_CAP = 'TOTAL'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation 
 $DEPRECIATION = 'Bilens værdiforringelse'; 
@@ -257,7 +260,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';
@@ -315,7 +318,7 @@ $ERROR_HOURS_PER_WEEK = 'Invalid number of hours per week';
 $ERROR_MIN_DRIVE_HOME_JOB = 'Invalid number of minutes you drive from home to workplace';
 $ERROR_MIN_DRIVE_WEEKEND = 'Invalid number of minutes you drive in the days you don\'t take the car to workplace';
 $ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
-$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month';
+$ERROR_DAYS_PER_MONTH = 'Invalid number of days per month'; 
 
 $YOUR_CAR_COSTS_YOU = 'Dine biludgifter'; 
 $WITH_THIS_LEVEL_OF_COSTS = 'Udgifterne til din bil gennem'; //ex: __"With this level of costs for your car during the"__ 15 months of possession.... 

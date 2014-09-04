@@ -101,7 +101,7 @@ $DAYS_PER_WEEK_SHORT= 'nap/hét';
 //distance
 $DISTANCE = "Distance";
 
-//simulator words
+//calculator words
 $COSTS= "költségek";
 $FIXED_COSTS = 'Készenléti költségek';
 $FIXED_COSTS_HEADER_1= 'KÉSZENLÉTI KÖLTSÉGEK'; //capital letters
@@ -117,6 +117,9 @@ $RUN_CP_DIST = 'Kilométerenkénti üzemeltetési költség'; //running costs pe
 $TOTAL_CP_DIST = 'Kilométerenkénti teljes költség'; //total costs per unit distance
 $PUBL_TRA_EQUIV= "Megfelelő közlekedési kiadások, amennyiben nincs autója";
 $WORD_TOTAL_CAP = 'ÖSSZESEN'; //capital word for total
+
+$WORD_PRINT = 'Print';
+$WORD_DOWNLOAD_PDF = 'Download PDF report';
 
 //depreciation
 $DEPRECIATION = 'Gépjármű értékcsökkenése';
@@ -259,7 +262,7 @@ $DAYS_DRIVE_TO_JOB = 'Days per week you drive to work';
 $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to workplace';
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
-$HOURS_DRIVE_PER = ' Hours you drive per';
+$HOURS_DRIVE_PER = 'Hours you drive per';
 $VIRTUAL_SPEED = 'virtual speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';
