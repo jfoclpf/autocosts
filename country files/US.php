@@ -35,6 +35,7 @@ $fuel_price_volume_std = 3;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'USD';
 $CURR_NAME = 'Dollar';
 $CURR_NAME_PLURAL = 'Dollars';
 $CURR_NAME_BIG_PLURAL = 'DOLLARS';

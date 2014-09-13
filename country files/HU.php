@@ -35,6 +35,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'HUF';
 $CURR_NAME = 'Forint';
 $CURR_NAME_PLURAL = 'Forint';
 $CURR_NAME_BIG_PLURAL = 'HUF';

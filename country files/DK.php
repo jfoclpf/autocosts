@@ -35,6 +35,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'DKK';
 $CURR_NAME = 'Krone';
 $CURR_NAME_PLURAL = 'Kroner';
 $CURR_NAME_BIG_PLURAL = 'KRONER';

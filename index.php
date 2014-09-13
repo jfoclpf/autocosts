@@ -76,8 +76,9 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/js_functions.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/autocostsCore.js"></script>   
-	<script type="text/javascript" src="js/get_print_data_js.php?country=<?php echo $def_cty ?>"></script>
-    <script type="text/javascript" src="js/businessLogic_js.php?country=<?php echo $def_cty ?>"></script>	
+	<script type="text/javascript" src="js/get_data.js"></script>
+    <script type="text/javascript" src="js/businessLogic.js"></script>	
+	<script type="text/javascript" src="js/print_data.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/charts_js.php?country=<?php echo $def_cty ?>"></script>
 	
 	<script>

@@ -34,6 +34,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'CZK';
 $CURR_NAME = 'Koruna česká';
 $CURR_NAME_PLURAL = 'Koruny české';
 $CURR_NAME_BIG_PLURAL = 'KORUNY ČESKÈ';
@@ -69,7 +70,6 @@ $HELP_PROJECT = 'Podpořte tento projekt' ;
 
 $AC_MOBILE = 'AUTONAKLADY<br>pro mobilní zařízení';
 $AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>KALKULÁTOR VÝDAJŮ NA AUTO</b>';
-
 
 //time words
 $DAYLY = 'za den';

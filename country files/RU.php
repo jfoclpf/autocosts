@@ -34,6 +34,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'RUB';
 $CURR_NAME = 'Pуб.';
 $CURR_NAME_PLURAL = 'Pуб.';
 $CURR_NAME_BIG_PLURAL = 'PYб.';

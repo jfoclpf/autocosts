@@ -6,119 +6,37 @@ $def_cty = $_GET['country'];
 
 ?>
 
-function get_form_part1(){
-	var data = {
-		auto_mes: document.custo.auto_mes.value,
-		auto_ano: document.custo.auto_ano.value,
-		auto_initial_cost: document.custo.auto_val_inicial.value,
-		auto_final_cost: document.custo.auto_val_final.value,		
-		tipo_seguro_auto: getCheckedValue(custo.tipo_seguro),
-		seguro_val: document.custo.seguro_val.value,
-		cred_auto_s_n: getCheckedValue(custo.cred_auto),
-		cred_auto_montante: document.custo.cred_auto_montante.value,
-		cred_auto_period: document.custo.cred_auto_period.value,
-		cred_auto_val_mes: document.custo.cred_auto_val_mes.value,
-		cred_auto_valresidual: document.custo.cred_auto_valresidual.value,
-		nmr_times_inspec: document.custo.nr_vezes_inspecao.value,
-		inspec_price: document.custo.preco_inspecao.value,
-		IUC: document.custo.IUC.value
-	};
-	return data;
-}
-
-function get_form_part2(){
-
-	var data = {
-		tipo_calc_combustiveis: getCheckedValue(custo.calc_combustiveis),
-		fuel_eff_l100km: document.custo.consumo_auto.value,
-		fuel_price_CURRpLitre: document.custo.fuel_price.value,
-		leva_auto_job: getCheckedValue(document.custo.carro_emprego),
-		combustivel_period_km: document.custo.combustivel_period_km,		
-		km_por_mes: document.custo.km_por_mes.value,
-		consumo_auto: document.custo.consumo_auto.value,
-		fuel_price: document.custo.fuel_price.value,
-		km_entre_casa_trabalho: document.custo.km_entre_casa_trabalho.value,
-		km_fds: document.custo.km_fds.value,
-		dias_por_semana: document.custo.dias_por_semana.value,
-		combustiveis_periodo_euro: document.custo.combustiveis_periodo_euro,
-		combustiveis_euro: document.custo.combustiveis_euro.value,
-		revisoes: document.custo.revisoes.value,
-		reparacoes: document.custo.reparacoes.value,
-		parqueamento: document.custo.parqueamento.value,
-		tipo_calc_portagens: getCheckedValue(document.custo.portagens_ao_dia),
-		portagens_select: document.custo.portagens_select,
-		portagens: document.custo.portagens.value,
-		preco_portagens_por_dia: document.custo.preco_portagens_por_dia.value,
-		dias_portagens_por_mes: document.custo.dias_portagens_por_mes.value,
-		multas: document.custo.multas.value,
-		multas_select: document.custo.multas_select,
-		lavagens: document.custo.lavagens.value,
-		lavagens_select: document.custo.lavagens_select		
-	};
-	return data;
-}
-
-function get_form_part3(){
-	var data = {
-		n_pess_familia: document.custo.pessoas_agregado.value,
-		pmpmpc: document.custo.preco_passe.value,
-		income_type: getCheckedValue(custo.radio_income),
-		income_per_year: document.custo.income_per_year.value,
-		income_per_month: document.custo.income_per_month.value,
-		income_months_per_year: document.custo.income_months_per_year.value,
-		income_per_week: document.custo.income_per_week.value,
-		income_weeks_per_year: document.custo.income_weeks_per_year.value,
-		income_per_hour: document.custo.income_per_hour.value,
-		income_hours_per_week: document.custo.income_hours_per_week.value,
-		income_hour_weeks_per_year: document.custo.income_hour_weeks_per_year.value,
-		is_working_time: getCheckedValue(custo.radio_work_time),
-		time_hours_per_week: document.custo.time_hours_per_week.value,
-		time_month_per_year: document.custo.time_month_per_year.value,
-		drive_to_work: getCheckedValue(custo.drive_to_work),
-		drive_to_work_days_per_week: document.custo.drive_to_work_days_per_week.value,
-		dist_home_job: document.custo.dist_home_job.value,
-		journey_weekend: document.custo.journey_weekend.value,
-		period_km: document.custo.period_km,
-		km_per_month: document.custo.km_per_month.value,
-		time_home_job: document.custo.time_home_job.value,
-		time_weekend: document.custo.time_weekend.value,
-		min_drive_per_day: document.custo.min_drive_per_day.value,
-		days_drive_per_month: document.custo.days_drive_per_month.value
-	};
-	return data;
-}
-
 function print_costs_table(f1, f2, f3, costs) {
 	
 	//Depreciation
 	var desva_text;
-	if (costs.meses() == 0) {    
+	if (costs.age_months() == 0) {    
 		desva_text = "<?echo $ERROR_DEPRECIATION_NEW_CAR?>&nbsp;&nbsp;";
 	} else {
 		desva_text = "<b><span class=\"p3\"><?echo $DEPRECIATION?><\/span></b>&nbsp;&nbsp;<br><span class=\"p2\"><?echo $AQ_VALUE?>: "
 		+ f1.auto_initial_cost + "<?echo $CURR_SYMBOL?><br><?echo $FINAL_VALUE?>: "
 		+ f1.auto_final_cost + "<?echo $CURR_SYMBOL?><br><?echo $PERIOD_OWN?>: "
-		+ costs.meses() + " <?echo $MONTHS?><br>("
+		+ costs.age_months() + " <?echo $MONTHS?><br>("
 		+ f1.auto_initial_cost + "<?echo $CURR_SYMBOL?>-"
 		+ f1.auto_final_cost + "<?echo $CURR_SYMBOL?>)/"
-		+ costs.meses() + " <?echo $MONTHS?></span>";
+		+ costs.age_months() + " <?echo $MONTHS?></span>";
 	}
 	
 	//Insurance
 	var seguro_text;
-	switch(f1.tipo_seguro_auto)
+	switch(f1.insurance_type)
 	{
 		case "semestral":
-			seguro_text = f1.seguro_val + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+			seguro_text = f1.insurance_value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 			break;
 		case "anual":
-			seguro_text = f1.seguro_val + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+			seguro_text = f1.insurance_value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
 			break;
 		case "mensal":
-			seguro_text = costs.val_seguro_por_mes() + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
+			seguro_text = costs.insurance() + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
 			break;
 		case "trimestral":
-			seguro_text = f1.seguro_val + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+			seguro_text = f1.insurance_value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 			break;
 	}
 	
@@ -128,19 +46,19 @@ function print_costs_table(f1, f2, f3, costs) {
 	if(f1.cred_auto_s_n == "true") {
 
 		juros_text = "<b><span class=\"p3\"><?echo $CREDIT_INTERESTS?></span></b>&nbsp;&nbsp;<br><span class=\"p2\"><?echo $CREDIT_LOAN2?>: "
-					+ f1.cred_auto_montante
+					+ f1.credit_amount
 					+ "<?echo $CURR_SYMBOL?><br><?echo $CREDIT_PERIOD?>: "
-					+ f1.cred_auto_period
+					+ f1.credit_period
 					+ " <?echo $MONTHS?><br><?echo $CREDIT_INSTALMENT?>: "
-					+ f1.cred_auto_val_mes
+					+ f1.credit_value_p_month
 					+ "<?echo $CURR_SYMBOL?><br><?echo $CREDIT_RESIDUAL_VALUE1?>: "
-					+ f1.cred_auto_valresidual
+					+ f1.credit_residual_value
 					+ "<?echo $CURR_SYMBOL?><br>";    
 
-		juros_text += "<?echo $CREDIT_TOTAL_INTERESTS?>: "+costs.juros_totais()+"<?echo $CURR_SYMBOL?><br>(" + costs.meses_cred() + "*"+ f1.cred_auto_val_mes + ")+" + f1.cred_auto_valresidual + "-" + f1.cred_auto_montante;
+		juros_text += "<?echo $CREDIT_TOTAL_INTERESTS?>: "+costs.juros_totais()+"<?echo $CURR_SYMBOL?><br>(" + costs.meses_cred() + "*"+ f1.credit_value_p_month + ")+" + f1.credit_residual_value + "-" + f1.credit_amount;
 
-		if(costs.meses() >= costs.meses_cred())
-			juros_text += "<br><?echo $CREDIT_INTERESTS_MONTH?>: "+costs.interests_per_month().toFixed(2)+"<?echo $CURR_SYMBOL?>";
+		if(costs.age_months() >= costs.meses_cred())
+			juros_text += "<br><?echo $CREDIT_INTERESTS_MONTH?>: "+costs.credit().toFixed(2)+"<?echo $CURR_SYMBOL?>";
 		juros_text += "</span>";
 	} 
 	
@@ -152,47 +70,47 @@ function print_costs_table(f1, f2, f3, costs) {
 		              + " <?echo $TIMES_COSTING?> "
 					  + f1.inspec_price
 					  + " <?echo $CURR_SYMBOL?> <?echo $EACH_ONE_DURING?> "
-					  + costs.meses() + " <?echo $MONTHS?>&nbsp;</span>";
+					  + costs.age_months() + " <?echo $MONTHS?>&nbsp;</span>";
 	}
 	else		
 		inspecao_text = "<b><span class=\"p3\"><?echo $INSPECTION?></span></b><br>";
 	
 	//Taxes
 	var IUC_text = "<b><span class=\"p3\"><?echo $ROAD_TAXES?></span></b><br><span class=\"p2\">"
-				 + f1.IUC + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
+				 + f1.car_tax + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
 	
 	//Fuel
 	var combustiveis_text;
-	switch(f2.tipo_calc_combustiveis){
+	switch(f2.type_calc_fuel){
 		case "km":                     
-			if (f2.leva_auto_job == "false"){
+			if (f2.take_car_to_job == "false"){
 				switch(costs.fuel_period_km)
 				{
 					case "1":
-						combustiveis_text = f2.km_por_mes + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?>";
+						combustiveis_text = f2.distance + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?>";
 						break;
 					case "2":					
-						combustiveis_text = f2.km_por_mes + " <?echo $DIST_EACH_TWO_MONTHS?>";
+						combustiveis_text = f2.distance + " <?echo $DIST_EACH_TWO_MONTHS?>";
 						break;
 					case "3":					
-						combustiveis_text = f2.km_por_mes + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+						combustiveis_text = f2.distance + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 						break;
 					case "4":					
-						combustiveis_text = f2.km_por_mes + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+						combustiveis_text = f2.distance + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 						break;
 					case "5":					
-						combustiveis_text = f2.km_por_mes + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $YEAR?>";
+						combustiveis_text = f2.distance + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $YEAR?>";
 						break;
 				}
-				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_CAR_EFF?>: " + f2.consumo_auto + " <?echo $STD_FUEL_CALC?>&nbsp;";
+				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_CAR_EFF?>: " + f2.car_consumption + " <?echo $STD_FUEL_CALC?>&nbsp;";
 				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_PRICE1?>: " + f2.fuel_price + " <?echo $CURR_SYMBOL?>/<?echo $STD_VOLUME_SHORT?>&nbsp;&nbsp;";
 			}
 			else{
-				combustiveis_text = f2.dias_por_semana + " <?echo $FUEL_JOB_CALC1?> <br>";
-				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.km_entre_casa_trabalho + " <?echo $FUEL_DIST_HOME_JOB1?> <br>";
-				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.km_fds + " <?echo $FUEL_DIST_NO_JOB1?>&nbsp;<br>";
-				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + costs.km_totais_converted().toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
-				combustiveis_text = combustiveis_text + "<?echo $FUEL_CAR_EFF?>: " + f2.consumo_auto + " <?echo $STD_FUEL_CALC?>";
+				combustiveis_text = f2.days_p_week + " <?echo $FUEL_JOB_CALC1?> <br>";
+				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_home2job + " <?echo $FUEL_DIST_HOME_JOB1?> <br>";
+				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_weekend + " <?echo $FUEL_DIST_NO_JOB1?>&nbsp;<br>";
+				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + costs.km_total_converted.toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
+				combustiveis_text = combustiveis_text + "<?echo $FUEL_CAR_EFF?>: " + f2.car_consumption + " <?echo $STD_FUEL_CALC?>";
 				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_PRICE?>: " + f2.fuel_price + " <?echo $CURR_SYMBOL?>/<?echo $STD_VOLUME_SHORT?>";
 			}
 			break;
@@ -200,19 +118,19 @@ function print_costs_table(f1, f2, f3, costs) {
 			switch(costs.fuel_cost_period)
 			{
 				case "1":
-					combustiveis_text = f2.combustiveis_euro + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
+					combustiveis_text = f2.fuel_money + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
 					break;
 				case "2":					
-					combustiveis_text = f2.combustiveis_euro + " <?echo $DIST_EACH_TWO_MONTHS?>";
+					combustiveis_text = f2.fuel_money + " <?echo $DIST_EACH_TWO_MONTHS?>";
 					break;
 				case "3":					
-					combustiveis_text = f2.combustiveis_euro + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+					combustiveis_text = f2.fuel_money + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 					break;
 				case "4":					
-					combustiveis_text = f2.combustiveis_euro + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+					combustiveis_text = f2.fuel_money + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 					break;
 				case "5":					
-					combustiveis_text = document.custo.combustiveis_euro.value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+					combustiveis_text = document.custo.fuel_money.value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
 					break;
 			}
 			break;
@@ -220,75 +138,75 @@ function print_costs_table(f1, f2, f3, costs) {
 	
 	//Maintenance
 	var revisoes_text = "<b><span class=\"p3\"><?echo $MAINTENANCE?></span></b><br><span class=\"p2\">"
-					  + f2.revisoes + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
+					  + f2.maintenance + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
 	
 	//Repairs
 	var reparacoes_text = "<b><span class=\"p3\"><?echo $REP_IMPROV?><\/span></b><span class=\"p2\"><br>"
-	                    + f2.reparacoes + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
+	                    + f2.repairs + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?></span>";
 	
 	//Tolls
 	var portagens_text="<b><span class=\"p3\"><?echo $TOLLS?></span></b><br><span class=\"p2\">";
-	if(f2.tipo_calc_portagens == "false") {
+	if(f2.type_calc_tolls == "false") {
 		switch(costs.portagens_period) {
 			case "1":
-				portagens_text += f2.portagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
+				portagens_text += f2.tolls + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
 				break;
 			case "2":
-				portagens_text += f2.portagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
+				portagens_text += f2.tolls + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
 				break;
 			case "3":
-				portagens_text += f2.portagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+				portagens_text += f2.tolls + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 				break;
 			case "4":
-				portagens_text += f2.portagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+				portagens_text += f2.tolls + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 				break;
 			case "5":
-				portagens_text += f2.portagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+				portagens_text += f2.tolls + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
 				break;
 		}
 	}
 	else 
-		portagens_text+=f2.preco_portagens_por_dia + " <?echo $CURR_NAME_PLURAL?> <?echo $DURING?> " + f2.dias_portagens_por_mes + " <?echo $MONTH?>";
+		portagens_text+=f2.price_tolls_p_day + " <?echo $CURR_NAME_PLURAL?> <?echo $DURING?> " + f2.tolls_days_p_month + " <?echo $MONTH?>";
 	portagens_text += "</span>";
 	
 	//Fines
 	var multas_text="<b><span class=\"p3\"><?echo $FINES?></span></b><br><span class=\"p2\">";
 	switch(costs.multas_period) {
 		case "1":			
-			multas_text += f2.multas + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
+			multas_text += f2.fines + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
 			break;
 		case "2":			
-			multas_text += f2.multas + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
+			multas_text += f2.fines + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
 			break;
 		case "3":			
-			multas_text += f2.multas+" <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+			multas_text += f2.fines+" <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 			break;
 		case "4":			
-			multas_text += f2.multas + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+			multas_text += f2.fines + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 			break;
 		case "5":			
-			multas_text += f2.multas + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+			multas_text += f2.fines + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
 			break;
 		}
 	multas_text+="</span>";
 	
 	//washing
 	var lavagens_text="<b><span class=\"p3\"><?echo $WASHING?></span></b><br><span class=\"p2\">";
-	switch(costs.lavagens_period) {
+	switch(costs.washing_period) {
 		case "1":
-			lavagens_text += f2.lavagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
+			lavagens_text += f2.washing + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $MONTH?>";
 			break;
 		case "2":
-			lavagens_text += f2.lavagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
+			lavagens_text += f2.washing + " <?echo $CURR_NAME_PLURAL?> <?echo $WORDS_PER_EACH?> <?echo $TWO_MONTHS?>";
 			break;
 		case "3":
-			lavagens_text += f2.lavagens +" <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
+			lavagens_text += f2.washing +" <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $TRIMESTER?>";
 			break;
 		case "4":
-			lavagens_text += f2.lavagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
+			lavagens_text += f2.washing + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
 			break;
 		case "5":
-			lavagens_text += f2.lavagens + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+			lavagens_text += f2.washing + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
 			break;
 		}
 	lavagens_text+="</span>";
@@ -303,36 +221,36 @@ function print_costs_table(f1, f2, f3, costs) {
 	//header
 	varResult+="<tr><td align=\"center\"><b><span class=\"p3\"><?echo $PRIVATE_COSTS?></span></b><br></td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
 	//cost items
-	varResult+="<tr><td align=\"left\">" + desva_text + "&nbsp;</td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.depreciation_per_month().toFixed(1)+"</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + desva_text + "&nbsp;</td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.depreciation().toFixed(1)+"</span></td></tr>";
 	varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $INSURANCE?></span></b><br><span class=\"p2\">" + seguro_text + "</span></td>" +
-                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.val_seguro_por_mes().toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + juros_text + "&nbsp;</td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.interests_per_month().toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + inspecao_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.inspecao_por_mes().toFixed(1)+"</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + IUC_text + "</td>"                        +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.IUC_por_mes().toFixed(1)+"</span></td></tr>";
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.insurance().toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + juros_text + "&nbsp;</td>"                +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.credit().toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + inspecao_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.inspection().toFixed(1)+"</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + IUC_text + "</td>"                        +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.car_tax().toFixed(1)+"</span></td></tr>";
 	varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $FUEL?></span></b><br><span class=\"p2\">" + combustiveis_text + "</span></td>" +
-                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.val_combustiveis_por_mes.toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + revisoes_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.revisoes_por_mes().toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + reparacoes_text + "</td>"                 +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.reparacoes_por_mes().toFixed(1) + "</span></td></tr>";
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.fuel.toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + revisoes_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.maintenance().toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + reparacoes_text + "</td>"                 +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.repairs_improv().toFixed(1) + "</span></td></tr>";
 	varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $PARKING?><\/span></b></td>"+
-                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.parqueamento_por_mes.toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + portagens_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.portagens_por_mes.toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + multas_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.multas_por_mes.toFixed(1) + "</span></td></tr>";
-	varResult+="<tr><td align=\"left\">" + lavagens_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.lavagens_por_mes.toFixed(1) + "</span></td></tr>";
+                                                                                  "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.parking.toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + portagens_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.tolls.toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + multas_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.fines.toFixed(1) + "</span></td></tr>";
+	varResult+="<tr><td align=\"left\">" + lavagens_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.washing.toFixed(1) + "</span></td></tr>";
 	//fixed costs
 	varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\">" + custos_fixos_text + "</td>"+
-                                                                                  "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.custos_fixos().toFixed(1) + "</span></td></tr>";
+                                                                                  "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + costs.total_standing_costs_month().toFixed(1) + "</span></td></tr>";
 	//variable costs
-	varResult+="<tr><td align=\"left\">" + custos_variav_text + "<\/td>"              +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.custos_variav().toFixed(1)+"</span></td></tr>";
-	if(f2.tipo_calc_combustiveis == "km" && (costs.km_por_mes != 0)){
+	varResult+="<tr><td align=\"left\">" + custos_variav_text + "<\/td>"              +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+costs.total_running_costs_month().toFixed(1)+"</span></td></tr>";
+	if(f2.type_calc_fuel == "km" && (costs.distance != 0)){
 		varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\"><b><span class=\"p3\"><?echo $RUN_CP_DIST?></span></b></td>"+
-	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(costs.custos_variav() / costs.km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> </span></td></tr>";
+	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(costs.total_running_costs_month() / costs.distance).toFixed(2)+"/<?echo $STD_DIST?> </span></td></tr>";
 		varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $TOTAL_CP_DIST?></span></b></td>"+
-	                                                                              "<td><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(costs.total() / costs.km_por_mes).toFixed(2)+"/<?echo $STD_DIST?> </span></td></tr>";
+	                                                                              "<td><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+(costs.total_costs_month() / costs.distance).toFixed(2)+"/<?echo $STD_DIST?> </span></td></tr>";
 	}
 
 	varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>"+
                                                                                   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">"+
-                                                                                       "<center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;" + costs.total().toFixed(0) + "/<?echo $MONTH?></span></b></center></td></tr>";
+                                                                                       "<center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;" + costs.total_costs_month().toFixed(0) + "/<?echo $MONTH?></span></b></center></td></tr>";
 	varResult+="</table></center>";
 		
 	return varResult;
@@ -348,17 +266,17 @@ function print_extern_table(f1, f2, f3, costs){
     var ifr_estr_text="<b><span class=\"p3\">Desgaste das infraestruturas rodoviárias</span></b><br><span class=\"p2\">Valor aproximado: " + costs.ifr_estr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
     var fonte_text="<b><span class=\"p2\">Fonte dos dados:</span></b><br><span class=\"p2\"><i><a href=\"" + costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia</span>";
 	var varResult="";
-	if(<?if ($def_cty=="PT") echo 'f2.tipo_calc_combustiveis=="km"'; else echo "false";?>){
+	if(<?if ($def_cty=="PT") echo 'f2.type_calc_fuel=="km"'; else echo "false";?>){
 		varResult+="<br><center><table class=\"result_table\" border=\"1\" cellpadding=\"4\">";
 		//header
-		varResult+="<tr><td align=\"center\"><b><span class=\"p3\">Custos externos para o país</span></b><br><span class=\"p2\">Percorre " +(1 * f2.km_por_mes).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?></span></td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
+		varResult+="<tr><td align=\"center\"><b><span class=\"p3\">Custos externos para o país</span></b><br><span class=\"p2\">Percorre " +(1 * f2.distance).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?></span></td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
 		//external costs items
-		varResult+="<tr><td align=\"left\">" + epa_text + "</td>"                    +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.epa * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + egee_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.egee * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + ruido_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.ruido * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + sr_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.sr * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + cgstn_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.cgstn * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + ifr_estr_text + "</td>"               +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.ifr_estr * f2.km_por_mes).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + epa_text + "</td>"                    +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.epa * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + egee_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.egee * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + ruido_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.ruido * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + sr_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.sr * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + cgstn_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.cgstn * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + ifr_estr_text + "</td>"               +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(costs.ifr_estr * f2.distance).toFixed(1)+"</span></td></tr>";
 		//total
 		varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>"+
 	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></center></td></tr>";
@@ -451,7 +369,7 @@ function print_feffort_table(f1, f2, f3, feffort){
 	
 	//distance
 	varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b></td></tr>";
-	if((f2.tipo_calc_combustiveis != 'km' && f3.drive_to_work == 'true') || (f2.tipo_calc_combustiveis != 'km' && f2.leva_auto_job == 'true')){	
+	if((f2.type_calc_fuel != 'km' && f3.drive_to_work == 'true') || (f2.type_calc_fuel != 'km' && f2.take_car_to_job == 'true')){	
 		varResult+=     "<tr><td><span class=\"p2\"><?echo $DIST_HOME_JOB?></span></td>"                             +  "<td><span class=\"p2 td_values\">" + parseInt(f3.dist_home_job).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
 						"<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_JOB?></span></td>"                            +  "<td><span class=\"p2 td_values\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>"+
 						"<tr><td><span class=\"p2\"><?echo $DIST_JORNEY_WEEKEND?></span></td>"                       +  "<td><span class=\"p2 td_values\">" + parseInt(f3.journey_weekend).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
@@ -464,7 +382,7 @@ function print_feffort_table(f1, f2, f3, feffort){
 	//time spent in driving
 	varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b></td></tr>";
 
-	if(f3.drive_to_work == 'true' || f2.leva_auto_job == 'true'){
+	if(f3.drive_to_work == 'true' || f2.take_car_to_job == 'true'){
 		varResult+=     "<tr><td><span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span></td>"                          +  "<td><span class=\"p2 td_values\">" + f3.time_home_job + " <?echo $MIN?></span></td></tr>"+
 						"<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span></td>"                         +  "<td><span class=\"p2 td_values\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>"+
 						"<tr><td><span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span></td>"                        +  "<td><span class=\"p2 td_values\">" + f3.time_weekend + " <?echo $MIN?></span></td></tr>"+
@@ -498,16 +416,52 @@ function print_feffort_table(f1, f2, f3, feffort){
 	return varResult;
 }
 
+function drawChartResult(frame_witdh, costs){
+	
+	//avoid printing the charts in mobile devices
+	var temp_width=document.documentElement.clientWidth;
+	if (temp_width>500) {
+		//checks if depreciation is greater or equal to zero, to print chart with no error
+		var desvalor_temp;
+		if(costs.depreciation()<0) {
+			desvalor_temp=0;
+		} else {
+			desvalor_temp=costs.depreciation(); }
 
+			chart_width=parseInt(frame_witdh*0.85);
+			chart_height=parseInt(chart_width*4/6);
 
+			drawChart(parseFloat(costs.insurance().toFixed(1)),
+			parseFloat(costs.fuel.toFixed(1)),
+			parseFloat(desvalor_temp.toFixed(1)),
+			parseFloat(costs.credit().toFixed(1)),
+			parseFloat(costs.inspection().toFixed(1)),
+			parseFloat(costs.maintenance().toFixed(1)),
+			parseFloat(costs.repairs_improv().toFixed(1)),
+			parseFloat(costs.car_tax().toFixed(1)),
+			parseFloat(costs.parking.toFixed(1)),
+			parseFloat(costs.tolls.toFixed(1)),
+			parseFloat(costs.fines.toFixed(1)),
+			parseFloat(costs.washing.toFixed(1)),
+			chart_width,
+			chart_height
+			);
 
+			chart_width=parseInt(frame_witdh*0.8);
+			chart_height=parseInt(chart_width*22/50);
 
+			drawVisualization(parseFloat(costs.total_standing_costs_month().toFixed(1)), parseFloat(costs.total_running_costs_month().toFixed(1)),chart_width,chart_height);
 
-
-
-
-
-
-
-
-
+			graph_object.style.display='block';
+			chart_object.style.display='block';
+	}
+	
+    reload_object.style.display='block';
+    
+    if(costs.total_costs_month() >= 150 && costs.age_months() > 6) {
+        var text_msg="<div style=\"border-top:rgb(180, 180, 180) 3px solid;\"><br><span class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"+(costs.total_costs_month() * 12 / 100).toFixed(0)*100 + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
+        text_msg+="<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + costs.age_months() + " <?echo $MONTHS_POSS?><br><br><center><div style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((costs.age_months() * costs.total_costs_month() / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div><\/center><\/span><\/div><br>";
+        text_object.innerHTML=text_msg;
+        text_object.style.display='block';
+    }	
+}

@@ -617,6 +617,45 @@ function initialize() {
     
 }
 
+function formsInit(){	
+
+	frame_witdh = document.getElementById('input_div').offsetWidth;
+	
+	if (!is_userdata_formpart1_ok()) return;
+	if (!is_userdata_formpart2_ok()) return;
+	if (!is_userdata_formpart3_ok()) return;
+
+	var f1 = get_form_part1();
+	var f2 = get_form_part2();
+	var f3 = get_form_part3();
+	
+	var country = {
+		//currency: <? echo $CURR_CODE ?>,
+		distance_std: <? echo $distance_std_option; ?>,
+		fuel_efficiency_std: <? echo $fuel_efficiency_std_option; ?>,
+		fuel_price_volume_std: <? echo $fuel_price_volume_std; ?>,
+		taxi_price: <?echo $TAXI_PRICE_PER_DIST?>
+	};
+	
+	var data = calculate_costs(f1, f2, f3, country);
+
+	result_object = document.getElementById('result_div');
+	input_object.style.display='none';
+	
+	var tables_HTML = "";    
+	tables_HTML += print_costs_table(f1, f2, f3, data.monthly_costs);
+	tables_HTML += print_extern_table(f1, f2, f3, data.external_costs);
+	tables_HTML += print_publict_table(f1, f2, f3, data.public_transports);
+	tables_HTML += print_feffort_table(f1, f2, f3, data.fin_effort);
+		
+	drawChartResult(frame_witdh, data.monthly_costs)
+	
+	result_object.innerHTML = tables_HTML;
+	result_object.style.display='block';
+	
+	return true;
+}
+
 function getCheckedValue(radioObj) {
     var i;
 

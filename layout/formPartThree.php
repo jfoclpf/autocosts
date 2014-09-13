@@ -33,12 +33,7 @@
                                 &nbsp;<? echo $WORD_PEOPLE ?>
                             </span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <br>
-                        </td>
-                    </tr>
+                    </tr>                 
 				</table>
 			</td>
 		</tr>

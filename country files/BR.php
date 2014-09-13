@@ -35,6 +35,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'BRL';
 $CURR_NAME = 'Real';
 $CURR_NAME_PLURAL = 'Reais';
 $CURR_NAME_BIG_PLURAL = 'REAIS';
@@ -69,7 +70,6 @@ Seja realista nos montantes introduzidos. Para valores que considera imprevisív
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
 $AC_HEADER = '<big><u>WWW.AUTOCUSTOS.COM</u></big><br><b>CALCULADORA DOS CUSTOS DO AUTOMÓVEL</b>';
-
 
 //time words
 $DAYLY = 'diário';
