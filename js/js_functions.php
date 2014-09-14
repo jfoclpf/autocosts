@@ -643,12 +643,12 @@ function formsInit(){
 	input_object.style.display='none';
 	
 	var tables_HTML = "";    
-	tables_HTML += print_costs_table(f1, f2, f3, data.monthly_costs);
-	tables_HTML += print_extern_table(f1, f2, f3, data.external_costs);
-	tables_HTML += print_publict_table(f1, f2, f3, data.public_transports);
-	tables_HTML += print_feffort_table(f1, f2, f3, data.fin_effort);
+	tables_HTML += print_costs_table(f1, f2, f3, data);
+	tables_HTML += print_extern_table(f1, f2, f3, data);
+	tables_HTML += print_publict_table(f1, f2, f3, data);
+	tables_HTML += print_feffort_table(f1, f2, f3, data);
 		
-	drawChartResult(frame_witdh, data.monthly_costs)
+	drawChartResult(frame_witdh, data)
 	
 	result_object.innerHTML = tables_HTML;
 	result_object.style.display='block';
