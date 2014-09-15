@@ -241,7 +241,7 @@ function print_costs_table(f1, f2, f3, data) {
                                                                                   "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> " + data.total_standing_costs_month.toFixed(1) + "</span></td></tr>";
 	//variable costs
 	varResult+="<tr><td align=\"left\">" + custos_variav_text + "<\/td>"              +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+data.total_running_costs_month.toFixed(1)+"</span></td></tr>";
-	if(f2.type_calc_fuel == "km" && (data.monthly_costs.distance != 0)){
+	if(f2.type_calc_fuel == "km" && (data.distance_per_month != 0)){
 		varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"left\"><b><span class=\"p3\"><?echo $RUN_CP_DIST?></span></b></td>"+
 	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\">&nbsp;<?echo $CURR_SYMBOL?>&nbsp;"+data.running_costs_p_unit_distance.toFixed(2)+"/<?echo $STD_DIST?> </span></td></tr>";
 		varResult+="<tr><td align=\"left\"><b><span class=\"p3\"><?echo $TOTAL_CP_DIST?></span></b></td>"+
@@ -376,7 +376,7 @@ function print_feffort_table(f1, f2, f3, data){
 						"<tr><td><span class=\"p2\"><?echo $AVERAGE_DIST_PER_WEEK?></span></td>"                     +  "<td><span class=\"p2 td_values\">" + data.fin_effort.aver_drive_per_week.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";					
 	}
 
-	varResult+=         "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span></td>"             +  "<td><span class=\"p2 td_values\">" + data.fin_effort.drive_per_month.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
+	varResult+=         "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span></td>"             +  "<td><span class=\"p2 td_values\">" + data.distance_per_month.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
 						"<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $YEAR?></span></td>"              +  "<td><span class=\"p2 td_values\">" + data.fin_effort.drive_per_year.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";  
 
 	//time spent in driving

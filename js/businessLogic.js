@@ -8,7 +8,6 @@ function calculate_costs(f1, f2, f3, country){
 		credit: 0,
 		inspection: 0,
 		car_tax: 0,			
-		distance: 0,
 		fuel: 0,		
 		maintenance: 0,
 		repairs_improv: 0,
@@ -56,6 +55,7 @@ function calculate_costs(f1, f2, f3, country){
 	//fuel
 	var fuel_period_km, fuel_cost_period;
 	var km_total_converted = 0;
+	var distance = 0;
 	switch(f2.type_calc_fuel){
 		case "km":
 			var fuel_eff_l100km = convert_to_fuel_eff_l100km(f2.fuel_eff_l100km, country.fuel_efficiency_std);
@@ -64,24 +64,24 @@ function calculate_costs(f1, f2, f3, country){
 				fuel_period_km = f2.fuel_period_distance.options[f2.fuel_period_distance.selectedIndex].value;
 				switch(fuel_period_km){
 					case "1":
-						monthly_costs.distance = f2.distance;				
+						distance = parseInt(f2.distance);				
 						break;
 					case "2":
-						monthly_costs.distance = f2.distance / 2;				
+						distance = f2.distance / 2;				
 						break;
 					case "3":
-						monthly_costs.distance = f2.distance / 3;				
+						distance = f2.distance / 3;				
 						break;
 					case "4":
-						monthly_costs.distance = f2.distance / 6;				
+						distance = f2.distance / 6;				
 						break;
 					case "5":
-						monthly_costs.distance = f2.distance / 12;				
+						distance = f2.distance / 12;				
 						break;
 				}
-				//if miles were chosen must convert input to kilometres
-				monthly_costs.distance = convert_std_dist_to_km(monthly_costs.distance, country.distance_std);
-				monthly_costs.fuel = fuel_eff_l100km * monthly_costs.distance * fuel_price_CURRpLitre / 100;
+				//if miles were chosen must convert input to kilometres						
+				var distance_converted = convert_std_dist_to_km(distance, country.distance_std);
+				monthly_costs.fuel = fuel_eff_l100km * distance_converted * fuel_price_CURRpLitre / 100;
 			}
 			else{   //make calculation considering the user takes his car to work on a daily basis
 			
@@ -91,7 +91,7 @@ function calculate_costs(f1, f2, f3, country){
 				var km_totais = ((2 * distance_home2job * parseInt(f2.days_p_week, 10)) + km_fds_value) * (30.4375 / 7);
 				km_total_converted = convert_km_to_std_dist(km_totais, country.distance_std);
 				monthly_costs.fuel = fuel_eff_l100km * km_totais * fuel_price_CURRpLitre / 100;
-				monthly_costs.distance = km_totais;
+				distance = km_totais;
 			}
 			break;  
 		case "euros":
@@ -210,10 +210,10 @@ function calculate_costs(f1, f2, f3, country){
 	var total_costs_year = total_costs_month * 12;
 	
 	//running costs per unit dist.
-	var running_costs_p_unit_distance = total_running_costs_month / monthly_costs.distance;
+	var running_costs_p_unit_distance = total_running_costs_month / distance;
 	
 	//total costs per unit dist.
-	var total_costs_p_unit_distance = total_costs_month / monthly_costs.distance;
+	var total_costs_p_unit_distance = total_costs_month / distance;
 	
 	//*************** CUSTOS EXTERNOS ************
 	
@@ -226,7 +226,7 @@ function calculate_costs(f1, f2, f3, country){
 		cgstn: 0.1,       //congestionamento em €/km
 		ifr_estr: 0.001,  //custos externos de desgaste da infra-estrutura em €/km
 		total_exter: function(){		
-			return (this.epa + this.egee + this.ruido + this.sr + this.cgstn + this.ifr_estr) * monthly_costs.distance;
+			return (this.epa + this.egee + this.ruido + this.sr + this.cgstn + this.ifr_estr) * distance;
 		},
 		total_costs: function(){ return this.total_exter(); }
 	};
@@ -288,8 +288,7 @@ function calculate_costs(f1, f2, f3, country){
 		drive_to_work_days_per_week: 0,
 		dist_home_job: 0,
 		journey_weekend: 0,
-		aver_drive_per_week: 0,
-		drive_per_month: 0,
+		aver_drive_per_week: 0,		
 		drive_per_year:0,
 		time_home_job: 0,
 		time_weekend: 0,
@@ -344,6 +343,7 @@ function calculate_costs(f1, f2, f3, country){
 	}
 	
 	//time spent in driving
+	var drive_per_month = 0;
 	if(f2.type_calc_fuel != 'km'){
 		if(f3.drive_to_work == 'true'){
 			fin_effort.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
@@ -351,7 +351,7 @@ function calculate_costs(f1, f2, f3, country){
 			fin_effort.journey_weekend = parseInt(f3.journey_weekend);
 			fin_effort.aver_drive_per_week = 2 * fin_effort.drive_to_work_days_per_week * fin_effort.dist_home_job + fin_effort.journey_weekend;
 		
-			fin_effort.drive_per_month = 365.25 / 7 * fin_effort.aver_drive_per_week / 12;
+			drive_per_month = 365.25 / 7 * fin_effort.aver_drive_per_week / 12;
 			fin_effort.drive_per_year = 365.25 / 7 * fin_effort.aver_drive_per_week;	
 		
 		}
@@ -359,22 +359,22 @@ function calculate_costs(f1, f2, f3, country){
 			switch(fin_effort.fuel_period_km)
 			{
 				case "1":
-					fin_effort.drive_per_month = parseInt(f3.km_per_month);				
+					drive_per_month = parseInt(f3.km_per_month);				
 					break;
 				case "2":
-					fin_effort.drive_per_month = f3.km_per_month / 2;
+					drive_per_month = f3.km_per_month / 2;
 					break;
 				case "3":
-					fin_effort.drive_per_month = f3.km_per_month / 3;				
+					drive_per_month = f3.km_per_month / 3;				
 					break;
 				case "4":
-					fin_effort.drive_per_month = f3.km_per_month / 6;				
+					drive_per_month = f3.km_per_month / 6;				
 					break;
 				case "5":
-					fin_effort.drive_per_month = f3.km_per_month / 12;			
+					drive_per_month = f3.km_per_month / 12;			
 					break;
 			}
-			fin_effort.drive_per_year = fin_effort.drive_per_month * 12;			
+			fin_effort.drive_per_year = drive_per_month * 12;			
 		}	
 	}
 	else{
@@ -384,12 +384,12 @@ function calculate_costs(f1, f2, f3, country){
 			fin_effort.journey_weekend = parseInt(f2.distance_weekend);
 			fin_effort.aver_drive_per_week = 2 * fin_effort.drive_to_work_days_per_week * fin_effort.dist_home_job + fin_effort.journey_weekend;	
 
-			fin_effort.drive_per_month = 365.25 / 7 * fin_effort.aver_drive_per_week / 12;
+			drive_per_month = 365.25 / 7 * fin_effort.aver_drive_per_week / 12;
 			fin_effort.drive_per_year = 365.25 / 7 * fin_effort.aver_drive_per_week;
 		}	
 		else{	
-			fin_effort.drive_per_month = parseInt(f2.distance);
-			fin_effort.drive_per_year = fin_effort.drive_per_month * 12;	
+			drive_per_month = parseInt(f2.distance);
+			fin_effort.drive_per_year = drive_per_month * 12;	
 		}
 	}
 	
@@ -405,6 +405,8 @@ function calculate_costs(f1, f2, f3, country){
 		fin_effort.hours_drive_per_month = fin_effort.min_drive_per_day * fin_effort.days_drive_per_month / 60;
 	}
 	fin_effort.hours_drive_per_year = fin_effort.hours_drive_per_month * 12;	
+	
+	var distance_per_month = distance != 0 ? distance : drive_per_month;
 	
 	var output = {
 		monthly_costs: monthly_costs,
@@ -425,7 +427,8 @@ function calculate_costs(f1, f2, f3, country){
 		total_costs_month: total_costs_month,
 		total_costs_year: total_costs_year,
 		running_costs_p_unit_distance: running_costs_p_unit_distance,
-		total_costs_p_unit_distance: total_costs_p_unit_distance
+		total_costs_p_unit_distance: total_costs_p_unit_distance,
+		distance_per_month: distance_per_month
 	};
 	
 	return output;
