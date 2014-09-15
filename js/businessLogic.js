@@ -54,7 +54,7 @@ function calculate_costs(f1, f2, f3, country){
 	
 	//fuel
 	var fuel_period_km, fuel_cost_period;
-	var km_total_converted = 0;
+	var distance_std = 0;  
 	var distance = 0;
 	switch(f2.type_calc_fuel){
 		case "km":
@@ -87,11 +87,11 @@ function calculate_costs(f1, f2, f3, country){
 			
 				//if miles were chosen must convert input to kilometres
 				var distance_home2job = convert_std_dist_to_km(f2.distance_home2job, country.distance_std);
-				var km_fds_value = convert_std_dist_to_km(f2.distance_weekend, country.distance_std);
-				var km_totais = ((2 * distance_home2job * parseInt(f2.days_p_week, 10)) + km_fds_value) * (30.4375 / 7);
-				km_total_converted = convert_km_to_std_dist(km_totais, country.distance_std);
-				monthly_costs.fuel = fuel_eff_l100km * km_totais * fuel_price_CURRpLitre / 100;
-				distance = km_totais;
+				var km_weekend_value = convert_std_dist_to_km(f2.distance_weekend, country.distance_std);
+				var total_km = ((2 * distance_home2job * parseInt(f2.days_p_week, 10)) + km_weekend_value) * (30.4375 / 7);
+				distance_std = convert_km_to_std_dist(total_km, country.distance_std);
+				monthly_costs.fuel = fuel_eff_l100km * total_km * fuel_price_CURRpLitre / 100;
+				distance = total_km;
 			}
 			break;  
 		case "euros":
@@ -209,13 +209,7 @@ function calculate_costs(f1, f2, f3, country){
 				  
 	var total_costs_year = total_costs_month * 12;
 	
-	//running costs per unit dist.
-	var running_costs_p_unit_distance = total_running_costs_month / distance;
-	
-	//total costs per unit dist.
-	var total_costs_p_unit_distance = total_costs_month / distance;
-	
-	//*************** CUSTOS EXTERNOS ************
+	//*************** EXTERNAL COSTS ************
 	
 	var external_costs = {
 		handbook_extern_URL: 'http:\/\/ec.europa.eu\/transport\/themes\/sustainable\/doc\/2008_costs_handbook.pdf',
@@ -406,14 +400,24 @@ function calculate_costs(f1, f2, f3, country){
 	}
 	fin_effort.hours_drive_per_year = fin_effort.hours_drive_per_month * 12;	
 	
-	var distance_per_month = distance != 0 ? distance : drive_per_month;
+	//distance driven per month might come from form part 2 or part 3
+	if (f2.type_calc_fuel == "km")
+		distance_per_month = distance;
+	else
+		distance_per_month = drive_per_month;
+		
+	//running costs per unit dist.
+	var running_costs_p_unit_distance = total_running_costs_month / distance_per_month;
+	
+	//total costs per unit dist.
+	var total_costs_p_unit_distance = total_costs_month / distance_per_month;
 	
 	var output = {
 		monthly_costs: monthly_costs,
 		external_costs: external_costs,
 		public_transports: public_transports,
 		fin_effort: fin_effort,
-		distance_std: km_total_converted,
+		distance_std: distance_std,
 		age_months: age_months,
 		month_cred: month_cred,
 		total_interests: total_interests,
