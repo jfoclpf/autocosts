@@ -84,7 +84,7 @@ $SEMESTER = 'semestre';
 $YEAR = 'ano';
 $DAYS_PER_WEEK_SHORT= 'dias/sem';
 //distance
-$DISTANCE = "Distance";
+$DISTANCE = "Distância";
 //calculator words
 $COSTS= "Custos";
 $FIXED_COSTS = 'Custos fixos';

@@ -145,7 +145,7 @@
 
                     <div id="chart_div" style="padding:0 0 0 10%;margin:0 auto;">
                     </div>
-
+					<br>
                     <div id="graph_div" style="border-style:none; padding:0 0 0 20%;">
                     </div>
 
