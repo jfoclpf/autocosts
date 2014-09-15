@@ -109,7 +109,7 @@ function print_costs_table(f1, f2, f3, data) {
 				combustiveis_text = f2.days_p_week + " <?echo $FUEL_JOB_CALC1?> <br>";
 				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_home2job + " <?echo $FUEL_DIST_HOME_JOB1?> <br>";
 				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_weekend + " <?echo $FUEL_DIST_NO_JOB1?>&nbsp;<br>";
-				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + data.km_total_converted.toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
+				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + data.distance_std.toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
 				combustiveis_text = combustiveis_text + "<?echo $FUEL_CAR_EFF?>: " + f2.car_consumption + " <?echo $STD_FUEL_CALC?>";
 				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_PRICE?>: " + f2.fuel_price + " <?echo $CURR_SYMBOL?>/<?echo $STD_VOLUME_SHORT?>";
 			}

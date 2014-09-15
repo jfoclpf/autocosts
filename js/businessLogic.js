@@ -413,7 +413,7 @@ function calculate_costs(f1, f2, f3, country){
 		external_costs: external_costs,
 		public_transports: public_transports,
 		fin_effort: fin_effort,
-		km_total_converted: km_total_converted,
+		distance_std: km_total_converted,
 		age_months: age_months,
 		month_cred: month_cred,
 		total_interests: total_interests,
