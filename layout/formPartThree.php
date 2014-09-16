@@ -228,7 +228,7 @@
 											<? echo $FUEL_DAYS ?>&nbsp;
                                         </td>
                                         <td style="text-align:left;width:20%" valign="middle">
-                                            <input id="" type="text"
+                                            <input id="drive_to_work_days_per_week" type="text"
 												name="drive_to_work_days_per_week" size="5" maxlength="1" value="<? echo $STD_DAYS_PER_WEEK; ?>">
                                                 <span class="p2">
                                                     <? echo $DAYS_PER_WEEK_SHORT; ?>
@@ -241,7 +241,7 @@
                                         </td>
                                         <td style="text-align:left;" valign="middle">
 											<input type="text"
-												id=""
+												id="dist_home_job"
 												name="dist_home_job"
                                                 size="5" maxlength="4"
                                                 value="<? echo $STD_JORNEY_2WORK; ?>">
@@ -257,7 +257,7 @@
 												<? echo $FUEL_DIST_NO_JOB ?>&nbsp;
 										</td>
 										<td style="text-align:left;" valign="middle">
-											<input type="text" name="journey_weekend" id=""
+											<input type="text" name="journey_weekend" id="journey_weekend"
 												size="5" maxlength="4" value="<? echo $STD_JORNEY_WEEKEND; ?>">
                                             <span class="p2">
 												<? echo $STD_DIST ?>
@@ -276,7 +276,7 @@
 						<td>
 							<ul class="list_gorizont">
 								<li>
-									<input type="text" name="km_per_month" size="4" maxlength="9" id="distance" value="<? echo $STD_KM_PER_MONTH; ?>">
+									<input type="text" id="dist_per_month" name="km_per_month" size="4" maxlength="9" id="distance" value="<? echo $STD_KM_PER_MONTH; ?>">
 								</li>
 								<li>
 									<span class="p2">
@@ -312,7 +312,7 @@
 							<? echo $EXTRA_DATA_TIME_QUESTION1 ?>
 						</td>
 						<td>
-							<input type="text" size="6" name="time_home_job" value="<?echo $STD_TIME_HOME_JOB?>" />
+							<input type="text" size="6" id="time_home_job" name="time_home_job" value="<?echo $STD_TIME_HOME_JOB?>" />
 							<span class="p2">
 								<? echo $MIN ?>
 							</span>
@@ -323,7 +323,7 @@
 							<? echo $EXTRA_DATA_TIME_QUESTION2 ?>
 						</td>
 						<td>
-							<input type="text" size="6" name="time_weekend" value="<?echo $STD_TIME_WEEKEND?>" />
+							<input type="text" size="6" id="time_weekend" name="time_weekend" value="<?echo $STD_TIME_WEEKEND?>" />
 							<span class="p2">
 								<?php echo $MIN ?>
 							</span>
@@ -337,13 +337,13 @@
 							<div class="div_element">
 								<ul>
 									<li>
-										<input type="text" size="6" name="min_drive_per_day" value="<?echo $STD_TIME_IN_DRIVING?>" />
+										<input type="text" size="6" id="min_drive_per_day" name="min_drive_per_day" value="<?echo $STD_TIME_IN_DRIVING?>" />
 										<span class="p2">
 											<? echo $MINUTES ?>/<?php echo $DAY?>
 										</span>
 									</li>
 									<li>
-										<input type="text" size="6" name="days_drive_per_month" value="<?echo $STD_DAYS_MONTH?>" />
+										<input type="text" size="6" id="days_drive_per_month" name="days_drive_per_month" value="<?echo $STD_DAYS_MONTH?>" />
 										<span class="p2">
 											<? echo $DAYS?>/<?php echo $MONTH?>
 										</span>

@@ -50,7 +50,29 @@ function insertUserInputData($objectToDb)
     washing_value,
     washing_periodicity,
     household_number_people,
-    public_transportation_month_expense
+    public_transportation_month_expense,
+	income_type,
+	income_per_year,
+	income_per_month,
+	income_months_per_year,
+	income_per_week,
+	income_weeks_per_year,
+	income_per_hour,
+	income_hours_per_week,
+	income_hour_weeks_per_year,
+	work_time,
+	work_time_month_per_year,
+	work_time_hours_per_week,
+	distance_drive_to_work,
+	distance_days_per_week,
+	distance_home_job,
+	distance_journey_weekend,
+	distance_per_month,
+	distance_period,
+	time_spent_home_job,
+	time_spent_weekend,
+	time_spent_min_drive_per_day,
+	time_spent_days_drive_per_month
     )
 
     VALUES (
@@ -96,7 +118,29 @@ function insertUserInputData($objectToDb)
     '$objectToDb[washing_value]',
     '$objectToDb[washing_periodicity]',
     '$objectToDb[household_number_people]',
-    '$objectToDb[public_transportation_month_expense]'
+    '$objectToDb[public_transportation_month_expense]',
+    '$objectToDb[income_type]',
+    '$objectToDb[income_per_year]',
+    '$objectToDb[income_per_month]',
+    '$objectToDb[income_months_per_year]',
+    '$objectToDb[income_per_week]',
+    '$objectToDb[income_weeks_per_year]',
+    '$objectToDb[income_per_hour]',
+    '$objectToDb[income_hours_per_week]',
+    '$objectToDb[income_hour_weeks_per_year]',
+    '$objectToDb[work_time]',
+    '$objectToDb[work_time_month_per_year]',
+    '$objectToDb[work_time_hours_per_week]',
+    '$objectToDb[distance_drive_to_work]',
+    '$objectToDb[distance_days_per_week]',
+    '$objectToDb[distance_home_job]',
+    '$objectToDb[distance_journey_weekend]',
+    '$objectToDb[distance_per_month]',
+    '$objectToDb[distance_period]',
+    '$objectToDb[time_spent_home_job]',
+    '$objectToDb[time_spent_weekend]',
+    '$objectToDb[time_spent_min_drive_per_day]',
+    '$objectToDb[time_spent_days_drive_per_month]'
     )";
 
     $result = executeQueryInDB($queryInsert);
