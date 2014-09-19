@@ -1,33 +1,23 @@
 <div id="div3a" class="roundCornerSlight">
 
 
-    <?  $is_logo = false;
-    if ($def_cty == "PT") {
-        $is_logo = true; ?>
-        <img src="images/autocustos_euro.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico?v=2" type="image/x-icon"/>
-        <br>
-    <? } elseif ($def_cty == "RU") {
-        $is_logo = true; ?>
-        <img src="images/autocosts_ruble.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_rub.ico?v=2" type="image/x-icon"/>
-        <br>
-    <? } elseif ($CURR_SYMBOL == "&euro;") {
-        $is_logo = true; ?>
-        <img src="images/autocosts_euro.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_eur.ico?v=2" type="image/x-icon"/>
-        <br>
-    <? } elseif (strpos($CURR_SYMBOL, '&#36;') !== FALSE) {
-        $is_logo = true; ?>
-        <img src="images/autocosts_dollar.png" id="ac_logo">
-        <link rel="shortcut icon" href="/images/favicons/favicon_usd.ico?v=2" type="image/x-icon"/>
-        <br>
-    <? } elseif (strpos($CURR_SYMBOL, '&pound;') !== FALSE) {
-        $is_logo = true; ?>
-        <img src="images/autocosts_pound.png" id="ac_logo">
-		<link href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAvr6+AD09PQDQ0NAArq6uAE9PTwDi4uIAg4ODAIyMjAACAgIA9PT0AJ6engD9/f0AFBQUALCwsADk5OQA9vb2AMvLywBsbGwA////ABYWFgAfHx8A3d3dAPj4+ACioqIA1tbWAHd3dwCAgIAA39/fACoqKgC9vb0AXl5eAAgICACbm5sA2NjYAE5OTgAjIyMAi4uLAOrq6gAsLCwAAQEBAL+/vwBpaWkAyMjIANHR0QBQUFAAAwMDAMrKygD+/v4AFRUVAIaGhgDMzMwAqqqqAN7e3gAyMjIAZmZmAMXFxQD5+fkAmpqaANfX1wAZGRkAgYGBACIiIgC1tbUAVlZWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAExMTExMTORMTExMcMBMTExMTExMTGxgeExM0JQAwExMTExMTMCMBPQgHBhI2FxETExMTEzsANhIAKCgqAgAAJhMTExMTCSgAACgAACgnChMTExMTEwsbABQbGg0kExMTEwwMMBMTExUfMBMTExMTExM1IgMvMBM3MRMTExMTExMZMyspExMMLQAOBAQTExMTExMTExMwHEAuIEBAEBMTExMTGSwrARMTPgUTExMTExMTExMTExMTEzoAMBMTExMTExMTExMTExMMABYTExMTExMTExMTExMTEzIuIT8aDxMTExMTExMTExMTOB08NhMTExMTExMTExMTExMTExMTEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" rel="icon" type="image/x-icon" />
-        <br>
-    <? } ?>
+    <?  switch ($currency_logo){
+			case "EUR":
+				echo '<img src="images/autocosts_euro.png" id="ac_logo">';
+				break;
+			case "DOL":
+				echo '<img src="images/autocosts_dollar.png" id="ac_logo">';
+				break;
+			case "GBP":
+				echo '<img src="images/autocosts_pound.png" id="ac_logo">';
+				break;
+			case "RUB":
+				echo '<img src="images/autocosts_ruble.png" id="ac_logo">';
+				break;
+		}
+		
+		if(!$is_logo) echo '<br>'; //in case there no currency logo applies gives a break line
+	?>
 
     <div
         style="text-align:center;font-size:110%; <? if ($is_logo) { ?> padding-top: 20px; border-top: solid 2px rgb(180, 180, 180); <? } ?>">
