@@ -1,15 +1,13 @@
-DirectoryIndex i.php index.html index.htm 
+AddDefaultCharset utf-8
+
+DirectoryIndex index.php index.html index.htm 
 ErrorDocument 404 /i.php
 
+RewriteEngine On
 <IfModule mod_rewrite.c>
-RewriteEngine on
 RewriteCond %{HTTP_HOST} ^(.*)\.autocosts\.org$ [NC]
-RewriteRule (.*)  http://autocosts.org/i.php?c=%1 [L,QSA]
+RewriteRule (.*)  /%1 [QSA]
 </IfModule>
-RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
-RewriteRule ^/?$ "http\:\/\/autocosts\.org\/" [R=301,L]
 
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^([a-z]+)/?$    index.php?c=$1 [NC]

@@ -15,7 +15,7 @@ var isDistanceSet = false;
 }(document, 'script', 'facebook-jssdk'));
 
 function valueselect(myval) {
-    window.location.href = "i?c=" + myval;
+    window.location.href = "" + myval;
 }
 
 /*jslint browser:true */
