@@ -34,17 +34,17 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_NAME = 'руб.';
-$CURR_NAME_PLURAL = 'руб.';
-$CURR_NAME_BIG_PLURAL = 'рyб.';
-$CURR_SYMBOL = 'руб.';
+$CURR_NAME = ' руб.';
+$CURR_NAME_PLURAL = ' руб.';
+$CURR_NAME_BIG_PLURAL = ' рyб.';
+$CURR_SYMBOL = ' руб.';
 $STD_DIST = 'км'; //short text version you'd like to apply
 $STD_DIST_FULL = 'километр';
 $STD_FUEL_CALC = 'л/100 км'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'л'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 
 //simple words
-$WORD_PER = ' / ';     //ex: 4 km _per_ day
+$WORD_PER = '/';     //ex: 4 km _per_ day
 $WORDS_PER_EACH = 'в каждом';   //ex: 4 miles _ per each_ two months
 $WORD_TIMES = 'раз'; //ex: 4 times per week
 $DURING = 'во время';   //spent in tolls 3x per day _during_ 22 days per month
@@ -125,7 +125,7 @@ $DEPRECIATION = 'Уменьшение продажной стоимости ав
 $AQ_DATE = 'Дата приобретения автомобиля';
 $COM_VALUE = 'Рыночная стоимость машины в момент покупки <br><i>Если машина новая, укажите цену, которую Вы за нее заплатили; <br>если машина подержанная, укажите рыночную стоимость машины на момент приобретения </i>';
 $COM_VALUE_TODAY = 'Рыночная стоимость машины на сегодняшний день <br><i>Если Вы сейчас продадите машину, сколько Вам за нее дадут?</i>';
-$PERIOD_OWN = 'период владения';
+$PERIOD_OWN = 'Период владения';
 $FINAL_VALUE = 'Конечная стоимость';
 $AQ_VALUE = 'Стоимость приобретения';
 
@@ -243,8 +243,8 @@ $ON_TAXI_PAYING = "при поездке на такси из расчета"; /
 
 //VIRTUAL SPEED
 $FINANCIAL_EFFORT = 'Финансовое усилие';
-$NET_INCOME_PER = 'Чистый доход на';
-$AVERAGE_NET_INCOME_PER = 'Средний чистый доход на';
+$NET_INCOME_PER = 'Чистый доход в';
+$AVERAGE_NET_INCOME_PER = 'Средний чистый доход в';
 $NUMBER_OF_MONTHS = 'Количество месяцев в году получения дохода';
 $NUMBER_OF_WEEKS = 'Количество недель в году получения дохода';
 $NUMBER_OF_HOURS= 'Количество часов в неделю получения дохода';
@@ -324,7 +324,7 @@ $ERROR_MIN_DRIVE = 'Неверное количество минут за рул
 $ERROR_DAYS_PER_MONTH = 'Неверное количество дней в месяц';
 
 //FINAL RESULT
-$YOUR_CAR_COSTS_YOU = 'Расходы на Ваш автомобиль';
+$YOUR_CAR_COSTS_YOU = 'Расходы на Ваш автомобиль:';
 $WITH_THIS_LEVEL_OF_COSTS = 'С таким уровнем расходов стоимость содержания Вашего автомобиля в течение'; //ex: __"With this level of costs, you car during the"__ 15 months of possession....
 $MONTHS_POSS = 'мес. уже составила';   //ex: With this level of costs, you car during the 15 ___"months of possession has already costed"___ 14000 Euros
 

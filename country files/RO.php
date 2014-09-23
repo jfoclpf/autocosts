@@ -165,7 +165,7 @@ $ROAD_TAXES_VALUE = 'Taxe auto pentru vehiculul dumneavoastră:<br><i> plată ef
 $FUEL = 'Combustibil';
 $FUEL_DESC = 'Benzină, motorină, LPG, electricitate';
 $FUEL_CALC = 'Calculations based on';
-$FUEL_JOB_CALC = 'Considerând câ circulaţi cu maşina la servici?';
+$FUEL_JOB_CALC = 'Circulaţi cu maşina la servici?';
 $FUEL_JOB_CALC1 = 'Zi(le) pe săptămână  când conduceţi pentru a merge la servici';
 $FUEL_DAYS = 'Zi(le) pe săptămână  când conduceţi pentru a merge la servici';
 $FUEL_DIST_HOME_JOB = 'Kilometri parcurşi între casă şi locul de muncă (doar dus)'; //$CURR_DIST=km, miles, etc.

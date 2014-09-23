@@ -205,7 +205,7 @@ $WASHING_DESC = 'Gemiddelde was- en dienstrekening:<br><i>in tankstations en and
 
 //TOTAL
 $TOTAL_FIXED = 'TOTAAL – Vaste kosten';
-$TOTAL_FIXED_DESCR = "Kosten die niet afhankelijk zijn van de afgelegde afstand en waar men ook moet betalen als de auto niet rijdt";
+$TOTAL_FIXED_DESCR = "Kosten die niet afhankelijk zijn van de afgelegde afstand en die men ook moet betalen als de auto niet rijdt";
 $TOTAL_FIXED_DESCR2 = 'Afschrijvingen, verzekering, financiële rente, belastingen, keuring en 50% voor het parkeren en het onderhoud';
 
 $TOTAL_VARIABLE = 'TOTAAL - Exploitatiekosten';
@@ -258,7 +258,7 @@ $MINUTES_HOME_JOB = 'Minuten die u van uw huis naar uw werk rijdt';
 $DAYS_DRIVE_TO_JOB = 'Dagen per week die u naar uw werk rijdt';
 $TIME_DRIVE_WEEKEND = 'Minuten die u rijdt op de dagen waarop u niet met de auto naar uw werk gaat';
 $MINUTES_DRIVE_PER = 'Minuten die u rijdt per';
-$DAYS_DRIVE_PER_MONTH = 'Dagen die u per maand rijdt';
+$DAYS_DRIVE_PER_MONTH = 'Dagen die u rijdt per maand';
 $HOURS_DRIVE_PER = 'Uren die u rijdt per';
 $VIRTUAL_SPEED = 'virtuele snelheid';
 $KINETIC_SPEED = 'kinetische snelheid';

@@ -162,7 +162,7 @@ $ROAD_TAXES_VALUE = 'Bollo auto per la vostra auto:<br><i>pagamento effettuato a
 $FUEL = 'Carburante';
 $FUEL_DESC = 'Benzina, diesel, LPG, energia elettrica';
 $FUEL_CALC = 'Calcolo basato su';
-$FUEL_JOB_CALC = 'Nel caso in cui prendete la macchina per andare al lavoro?';
+$FUEL_JOB_CALC = 'Prendete la macchina per andare al lavoro?';
 $FUEL_JOB_CALC1 = 'giorno/i a settimana in cui prendete la macchina per andare al lavoro';
 $FUEL_DAYS = 'Giorno/i a settimana in cui prendete la macchina per andare al lavoro ';
 $FUEL_DIST_HOME_JOB = 'Chilometri di tragitto in macchina tra casa e lavoro (in una direzione solo)'; //$CURR_DIST= km, miles, etc.
@@ -217,7 +217,7 @@ $TOTAL_VARIABLE_DESCR2 = 'Carburante, Riparazioni e miglioramenti, Parcheggio (n
 $EXTRA_DATA = 'DATI INTEGRATIVI';
 $EXTRA_DATA1 = 'Dati integrativi';
 $EXTRA_DATA_PUBLIC_TRANSP = 'Trasporti pubblici';
-$EXTRA_DATA_FAMILY_NBR = 'Quante persone di età maggiore di 4 anni fanno parte della vostra famiglia  you have in your family (Lei incluso)';
+$EXTRA_DATA_FAMILY_NBR = 'Quante persone di età maggiore di 4 anni fanno parte della vostra famiglia (Lei incluso)';
 $EXTRA_DATA_PRICE_PASS = "Qual è il prezzo medio dell’abbonamento mensile di trasporto pubblico per persona, nella vostra normale vita quotidiana<br><i>Se il trasporto pubblico non è un’alternativa par voi, inserire 0</i>";
 $EXTRA_DATA_INCOME = "Reddito";
 $EXTRA_DATA_INCOME_QUESTION = 'Qual è il vostro reddito netto?';
