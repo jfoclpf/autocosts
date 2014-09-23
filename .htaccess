@@ -1,7 +1,5 @@
 AddDefaultCharset utf-8
 
-#DirectoryIndex index.php index.html index.htm
-#ErrorDocument 404 /i.php
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
@@ -12,7 +10,6 @@ RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
 RewriteCond %{HTTP_HOST} ^(.*)\.autocosts\.org$ [NC]
 RewriteRule (.*) /%1 [QSA,L,R=301]
-#RewriteRule ^([a-z]+)/?$ index.php?c=$1 [NC]
 </IfModule>
 
 
