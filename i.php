@@ -15,15 +15,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width" />
-    <?
-    include("./country files/country_list.php");
-	include('./js/HTML_head.php');
-	?>
 
+	<?include("./country files/country_list.php");?>
+	<?include('./js/country_selector.php');?>
+	
     <title><? echo $WEB_PAGE_TITLE ?></title>
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/flags24.css">
+	
+    <?include('./js/logos_selector.php');?>
 	
 	<!-- Google API -->
 
