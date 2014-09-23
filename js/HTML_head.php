@@ -36,7 +36,7 @@ $lang_cty=strtoupper($lang_cty);
 	} else {
 		$def_cty = "GB";
 	}
-	echo '<script type="text/javascript"> window.location.href = "' . $def_cty . '" </script>';
+	echo "<script type=\"text/javascript\"> window.location.href = \"i.php?c=" . $def_cty . "\" </script>";
 } else {
 	$def_cty = $url_cc;
 }
