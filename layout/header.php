@@ -1,4 +1,4 @@
-<div class="banner topFixed">
+<div class="banner topFixed" id="banner_top">
 
     <div id="banner_left">&nbsp;</div>
 

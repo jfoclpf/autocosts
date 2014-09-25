@@ -2,6 +2,8 @@
 
 include('../country files/' . $_GET['country'] . '.php');
 
+$def_cty = $_GET['country'];
+
 ?>
 var income = 'year';
 var isDistanceSet = false;
@@ -650,10 +652,10 @@ function formsInit(){
 	tables_HTML += print_feffort_table(f1, f2, f3, data);
 		
 	drawChartResult(frame_witdh, data)
-	
+		
 	result_object.innerHTML = tables_HTML;
 	result_object.style.display='block';
-	
+
 	return true;
 }
 
@@ -813,3 +815,186 @@ function S4() {
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
+
+function generatePDF(){
+
+	var body1, body2, body3, body4, data;
+	var f2 = get_form_part2();	
+	data = $('#result_table1 td');	
+	body1 = getBody(data);	
+	data = $('#result_table2 td');
+	body2 = getBody(data);
+	data = $('#result_table3 td');
+	body4 = getBodyFinEffort(data);		
+	
+	var chartContainer = document.getElementById('chart_div');   
+    var chartDoc = chartContainer.ownerDocument;
+    var img1 = chartDoc.createElement('img');
+    img1.src = getImgData(chartContainer);
+	var imageData1 = img1.src;
+	
+	chartContainer = document.getElementById('graph_div');   
+    chartDoc = chartContainer.ownerDocument;
+    var img2 = chartDoc.createElement('img');
+    img2.src = getImgData(chartContainer);
+	var imageData2 = img2.src;
+	
+	var imageDataFinalText = $('#img1').attr('src');
+	
+	var docDefinition = {
+		header:	{text:'<?echo $MAIN_TITLE ?>', style: 'title'},
+		content:[			
+			{
+				style: 'tableMarging',
+				table:{
+					headerRows: 1,
+					widths: [ 390, '*' ],
+					body: body1
+				},
+				pageBreak: 'after'
+			},			
+			{
+				style:'tableMarging',
+				table:{
+					headerRows: 1,
+					widths: [ 390, '*' ],
+					body: body2
+				},
+				pageBreak: 'after'
+			},			
+			{
+				style:'tableMarging',
+				table:{
+					headerRows: 1,
+					widths: [ 390, '*' ],
+					body: body4
+				},
+				pageBreak: 'after'
+			},
+			{
+				image: imageData1,
+				width: 500,
+				height: 325
+			},
+			{
+				image: imageData2,
+				width: 500,
+				height: 200
+			},
+			{
+				image: imageDataFinalText,
+				width: 500,
+				height: 200
+			}
+		],
+		styles: {
+			title:{
+				fontSize: 16,
+				alignment:	'center',
+				margin: [0, 10, 0, 10],
+				bold: true
+			},
+			header: {
+				fontSize: 14,
+				bold: true,
+				alignment:	'center',
+				color: '#000'
+			},
+			header2: {
+				fontSize: 14,
+				bold: true,
+				alignment:	'left',
+				color: '#000'
+			},
+			
+			tableMarging: {
+				margin: [0, 0, 0, 20],
+				color: '#1C1C1C'
+			}			
+		}
+	}
+	if("<? echo $def_cty?>"=="PT" && f2.type_calc_fuel=="km"){
+		data = $('#result_table4 td');
+		body3 = getBody(data);	
+		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }, pageBreak: 'after'})
+	}	
+	pdfMake.createPdf(docDefinition).download('<?echo $MAIN_TITLE ?>.pdf');
+}
+
+function getBody(data){
+	var body = [];
+	for(var i=0; i<data.length; i+=2){
+		var string1 = $(data[i]).html();
+		var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+		str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+		var el;
+		if(i<2){
+			var str2 = $(data[i+1]).text().trim();
+			var el2 = {text: str2, style: 'header'};
+			el = {text: str, style: 'header'};			
+			body.push([el, el2]);
+		}
+		else
+			body.push([str,$(data[i+1]).text()]);
+	}
+	return body;
+}
+
+function getBodyFinEffort(data){
+	var body = [];
+	for(var i=0; i<data.length; i++){
+		var string1 = $(data[i]).html();
+		var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+		str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+		var el;
+		if($(data[i]).find('b').length > 0){
+			var el2 = {};
+			el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
+			body.push([el, {}]);
+		}
+		else{
+			body.push([str,$(data[i+1]).text()]);
+			i++;
+		}		
+	}
+	return body;
+}
+
+function downloadPDF(){	
+	var el = document.getElementById('final-text');
+	$(el).css({'background-color': '#f0f0f0', 'border-width':'1px', 'height':'270px'});
+			
+	html2canvas(el,{
+		background:'#ffffff',			
+		onrendered: function(canvas){	
+			var imageData = canvas.toDataURL("image/jpeg"); 
+			document.getElementById('img1').src=imageData;				
+			$(el).css({'background-color': '#f0f0f0', 'border-top-width':'3px', 'height':'220px'});
+			generatePDF();			
+		}						
+	});	
+}
+
+function getImgData(chartContainer) {
+	var doc = new jsPDF();
+	var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
+    var svg = chartArea.innerHTML;
+    var chartDoc = chartContainer.ownerDocument;
+    var canvas = chartDoc.createElement('canvas');
+    canvas.setAttribute('width', chartArea.offsetWidth);
+    canvas.setAttribute('height', chartArea.offsetHeight);        
+        
+    canvas.setAttribute(
+        'style',
+        'position: absolute; ' +
+        'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+        'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
+    chartDoc.body.appendChild(canvas);
+    canvg(canvas, svg);
+    var imgData = canvas.toDataURL('image/JPEG');
+    doc.addImage(imgData, "JPEG", 10,10); 
+    doc.addImage(imgData, "JPEG", 10,100); 
+    canvas.parentNode.removeChild(canvas);
+    return imgData;
+}
+

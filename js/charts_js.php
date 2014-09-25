@@ -25,12 +25,12 @@ function drawVisualization(fixos, variav, char_width, char_height) {
 
 //draw Pie Chart
 function drawChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_height) {
-
+		
     var data, char_data, options, chart;
-
+	
     chart_data = [
     ['<? echo $PARCEL; ?>', '<? echo $COSTS; ?>' ],
-    ['<? echo $INSURANCE_SHORT; ?>', a],
+    ['<?echo $def_cty ?>'=='RU' || '<?echo $def_cty?>'=='UA' ? '<? echo $INSURANCE_CHART; ?>' : '<? echo $INSURANCE_SHORT; ?>', a],
     ['<? echo $FUEL; ?>', b],
     ['<? echo $DEPRECIATION; ?>', c],
     ['<? echo $CREDIT_INTERESTS; ?>', d],
@@ -40,16 +40,19 @@ function drawChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_height) 
     ['<? echo $ROAD_TAXES_SHORT; ?>', h],
     ['<? echo $PARKING; ?>', i],
     ['<? echo $TOLLS; ?>', j],
-    ['<? echo $FINES; ?>', k],
+    ['<?echo $FINES; ?>', k],
     ['<? echo $WASHING; ?>', l]
     ];
 
+	if('<?echo $def_cty ?>'=='RU'){
+		$('#chart_div').css('padding','0 0 0 2%');
+	}
     data = google.visualization.arrayToDataTable(chart_data);
 
     options = {
         title: 'Gráfico dos custos',
         backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
-        chartArea: {left: 0, top: 10, width: "100%", height: "100%"},
+        chartArea: {left: 0, top: 10, width: "90%", height: "90%"},
         width: char_width,
         height: char_height
         };

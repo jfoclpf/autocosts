@@ -34,6 +34,7 @@ $avail_CT = array(
     "NL" => "Nederland",
     "FR" => "France",
     "RU" => "Россия",
+    "UA" => "Україна",
     "HU" => "Magyarország",
     "SE" => "Sverige",
     "AU" => "Australia",
