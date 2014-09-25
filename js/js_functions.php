@@ -815,7 +815,6 @@ function S4() {
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
-<<<<<<< HEAD
 
 function generatePDF(){
 
@@ -999,5 +998,4 @@ function getImgData(chartContainer) {
     return imgData;
 }
 
-=======
->>>>>>> origin/master
+

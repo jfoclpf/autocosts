@@ -15,7 +15,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width" />
-<<<<<<< HEAD:index.php
+
     <?
     include("./country files/country_list.php");
 
@@ -64,8 +64,7 @@
 
     ?>
 
-=======
->>>>>>> origin/master:i.php
+
 
 	<?include("./country files/country_list.php");?>
 	<?include('./js/country_selector.php');?>
