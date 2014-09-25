@@ -47,8 +47,13 @@ $STD_VOLUME_SHORT = 'л'; //short text version you'd like to apply for fuel pric
 //simple words
 $WORD_PER = 'на';     //ex: 4 km _per_ day
 $WORDS_PER_EACH = 'за';   //ex: 4 miles _ per each_ two months
+<<<<<<< HEAD
 $WORD_TIMES = 'рази(-ів)'; //ex: 4 times per week
 $DURING = 'за';   //spent in tolls 3€ per day _during_ 22 days per month
+=======
+$WORD_TIMES = 'рази'; //ex: 4 times per week
+$DURING = 'під час';   //spent in tolls 3€ per day _during_ 22 days per month
+>>>>>>> origin/master
 $WORD_PEOPLE = 'людини';   //plural, 3 _people_ 
 $YES = 'так';
 $NO = 'ні';
@@ -81,9 +86,15 @@ $YEARLY = 'у рік';
 
 $MIN = 'хв';
 $MINUTES = 'хвилин(и)';
+<<<<<<< HEAD
 $HOUR = 'годину';
 $HOURS = 'годин(и)';
 $HOUR_ABBR = 'год';
+=======
+$HOUR = 'година';
+$HOURS = 'годин(и)';
+$HOUR_ABBR = 'г';
+>>>>>>> origin/master
 $DAY = 'день'; 
 $DAYS = 'дні(в)'; 
 $WEEK = 'тиждень'; 
@@ -133,7 +144,10 @@ $AQ_VALUE = 'Вартість на момент придбання';
 
 //insurance
 $INSURANCE = 'Страхування автомобіля і страхове покриття на випадок пошкоджень у дорозі';
+<<<<<<< HEAD
 $INSURANCE_CHART = 'Страхування автомобіля';
+=======
+>>>>>>> origin/master
 $INSURANCE_SHORT = 'Страхування і страхове покриття на випадок пошкоджень у дорозі';
 
 //credit
@@ -180,7 +194,11 @@ $FUEL_CAR_EFF = 'Рівень споживання пального вашого
 $FUEL_PRICE = 'Середня ціна, за якою ви купляєте пальне';
 $FUEL_PRICE1 = 'Середня ціна на пальне';
 $YOU_DRIVE_TOTTALY_AVG = 'Усього ви проїздите автомобілем у середньому'; //__You drive totally on average of__ 5 km per day
+<<<<<<< HEAD
 $YOU_DRIVE = 'Ви проїздите автомобілем у середньому'; //__You drive__ 5 km per day
+=======
+$YOU_DRIVE = 'Ви проїздите автомобілем'; //__You drive__ 5 km per day
+>>>>>>> origin/master
 
 //MAINTENANCE
 $MAINTENANCE = 'Технічне обслуговування';
@@ -326,7 +344,11 @@ $ERROR_MIN_DRIVE = 'Недійсна кількість хвилин, які в�
 $ERROR_DAYS_PER_MONTH = 'Недійсна кількість днів на місяць';
 
 //FINAL RESULT
+<<<<<<< HEAD
 $YOUR_CAR_COSTS_YOU = 'Витрати на ваш автомобіль:';
+=======
+$YOUR_CAR_COSTS_YOU = 'Витрати на ваш автомобіль';
+>>>>>>> origin/master
 $WITH_THIS_LEVEL_OF_COSTS = 'З таким рівнем витрат вартість утримання вашого автомобіля за'; //ex: __"With this level of costs, you car during the"__ 15 months of possession....
 $MONTHS_POSS = 'місяці(в) уже склала';   //ex: With this level of costs, you car during the 15 ___"months of possession has already costed"___ 14000 Euros
 

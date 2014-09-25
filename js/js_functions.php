@@ -17,7 +17,7 @@ var isDistanceSet = false;
 }(document, 'script', 'facebook-jssdk'));
 
 function valueselect(myval) {
-    window.location.href = "index.php?c=" + myval;
+    window.location.href = "" + myval;
 }
 
 /*jslint browser:true */
@@ -815,6 +815,7 @@ function S4() {
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
+<<<<<<< HEAD
 
 function generatePDF(){
 
@@ -998,3 +999,5 @@ function getImgData(chartContainer) {
     return imgData;
 }
 
+=======
+>>>>>>> origin/master
