@@ -69,12 +69,13 @@
     <!--facebook script-->
     <div id="fb-root"></div>
 
-    <div id="main_div" style=" top: 0; background: none repeat scroll 0px 0px transparent; display: block; font-family: Verdana; overflow: auto;">
+	<div id="main_div" style=" top: 0; background: none repeat scroll 0px 0px transparent; display: block; font-family: Verdana; overflow: auto;">
 
         <?php include './layout/header.php'; ?>
 
         <div id="container" style="border-collapse:collapse; border-color:rgb(136,136,136); border-width:0px;">
 
+			<!-- div1 = LEFT layout column-->
             <div id="div1" class="roundCornerSlight">
                 <?php include './layout/leftColumn.php'; ?>
             </div>
@@ -83,6 +84,7 @@
             <!--#####################################  CALCULATOR #####################################-->
             <!--#######################################################################################-->
 
+			<!-- div2 = CENTRE layout column-->
             <div id="div2">
                 <form class="roundCorner" style="display:block; max-width:620px;" id="main_form" enctype="application/x-www-form-urlencoded"
                     action="javascript:void(0);" name="custo" method="get">
@@ -100,21 +102,23 @@
                         <?php include './layout/formPartThree.php'; ?>
                     </div>
 
-                    <!-- ************* divs para impresao *************
+                    <!-- ************* PRINTING divs ***********************
                     ******************************************************-->
 
+					<!-- results tables -->
                     <div id="result_div">
                     </div>
                     <br>
 
+					<!-- first top (pie) chart -->
                     <div id="chart_div" style="padding:0 0 0 6%;margin:0 auto;">
                     </div>
 					<br>
+					<!-- second (bars) chart -->
                     <div id="graph_div" style="border-style:none; padding:0 0 0 16%;">
                     </div>
-
                     <br>
-
+					<!-- bottom text with total costs -->
                     <div id="text_div">
                     </div>
 
@@ -134,6 +138,7 @@
             <!--#######################################################################################-->
             <!--#######################################################################################-->
 
+			<!-- div3 = RIGHT layout column-->
             <div id="div3" style="text-align:center">
                 <?php include './layout/rightColumn.php'; ?>
             </div>
@@ -142,6 +147,7 @@
     <br>
 
     <script>
+
         var TimeCounter = new (function () {
 
             var incrementTime = 500;
@@ -165,6 +171,7 @@
         });
         uuid = guid();
     </script>
-
+	
+	</div>
 </body>
 </html>
