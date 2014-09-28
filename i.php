@@ -29,7 +29,7 @@
 	<!-- Google API -->
 
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="js/jquery.timer.js"></script> 
+    <script type="text/javascript" src="js/jquery.timer.js"></script> 	
 	<script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
 	<script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/canvg.js"></script>	
     <script type="text/javascript" src="js/pdf/html2canvas.js"></script>  	
@@ -126,12 +126,9 @@
                         <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload();"/>&nbsp;
                         <form><input type="button" class="button" value="<? echo $WORD_PRINT; ?>"
                             onclick="PrintElem('#result_div','#chart_div','#graph_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>&nbsp;
-						<input type="button" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="downloadPDF()" />
+						<input type="button" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF()" />
                     </div>
-																
-					<img id="img1" class="img_hidden"/>								
-					
-                    <!-- ************* ********* ************* -->
+					<!-- ************* ********* ************* -->
                 </form>
             </div>
             <!--#######################################################################################-->
@@ -145,9 +142,8 @@
         </div>
     <br>
     <br>
-
+	
     <script>
-
         var TimeCounter = new (function () {
 
             var incrementTime = 500;

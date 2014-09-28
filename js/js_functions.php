@@ -655,7 +655,7 @@ function formsInit(){
 		
 	result_object.innerHTML = tables_HTML;
 	result_object.style.display='block';
-
+	
 	return true;
 }
 
@@ -825,8 +825,8 @@ function generatePDF(){
 	data = $('#result_table2 td');
 	body2 = getBody(data);
 	data = $('#result_table3 td');
-	body4 = getBodyFinEffort(data);		
-	
+	body4 = getBodyFinEffort(data);
+		
 	var chartContainer = document.getElementById('chart_div');   
     var chartDoc = chartContainer.ownerDocument;
     var img1 = chartDoc.createElement('img');
@@ -838,8 +838,13 @@ function generatePDF(){
     var img2 = chartDoc.createElement('img');
     img2.src = getImgData(chartContainer);
 	var imageData2 = img2.src;
-	
-	var imageDataFinalText = $('#img1').attr('src');
+			
+    var txt1 = $('#final-text1').html();	
+	var txt2 = $('#final-text2').text();
+	var part1 = txt1.split('<b>')[0] + ' ';
+	var part2 = $('#final-text1').find('b').text() + ' ';
+	var part3 = txt1.split('<br>')[0].split('</b>')[1] + '\n';
+	var part4 = txt1.split('<br>')[1];
 	
 	var docDefinition = {
 		header:	{text:'<?echo $MAIN_TITLE ?>', style: 'title'},
@@ -880,12 +885,14 @@ function generatePDF(){
 				image: imageData2,
 				width: 500,
 				height: 200
-			},
-			{
-				image: imageDataFinalText,
-				width: 500,
-				height: 200
-			}
+			},			
+			{ text:[
+				{ text: part1, alignment: 'center' },
+				{ text: part2, bold:true, fontSize: 16 },
+				{ text: part3 },
+				{ text: part4 }
+			], margin: [0, 10, 0, 0] },
+			{text: txt2, style:"finalText"}			
 		],
 		styles: {
 			title:{
@@ -906,7 +913,12 @@ function generatePDF(){
 				alignment:	'left',
 				color: '#000'
 			},
-			
+			finalText:{
+				color:'red',
+				fontSize:48,
+				alignment:	'center',
+				bold:true
+			},
 			tableMarging: {
 				margin: [0, 0, 0, 20],
 				color: '#1C1C1C'
@@ -958,21 +970,6 @@ function getBodyFinEffort(data){
 		}		
 	}
 	return body;
-}
-
-function downloadPDF(){	
-	var el = document.getElementById('final-text');
-	$(el).css({'background-color': '#f0f0f0', 'border-width':'1px', 'height':'270px'});
-			
-	html2canvas(el,{
-		background:'#ffffff',			
-		onrendered: function(canvas){	
-			var imageData = canvas.toDataURL("image/jpeg"); 
-			document.getElementById('img1').src=imageData;				
-			$(el).css({'background-color': '#f0f0f0', 'border-top-width':'3px', 'height':'220px'});
-			generatePDF();			
-		}						
-	});	
 }
 
 function getImgData(chartContainer) {

@@ -265,12 +265,6 @@ padding-left:20px;
 	display:none;
 }
 
-.img_hidden{
-	display: none;
-	width:200px;
-	height:200px;
-}
-
 #country_select {
     border: 2px groove;
     margin: 0;

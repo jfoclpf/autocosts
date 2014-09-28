@@ -466,8 +466,8 @@ function drawChartResult(frame_witdh, data){
     reload_object.style.display='block';
     
     if(data.total_costs_month >= 150 && data.age_months > 6) {
-        var text_msg="<div id=\"final-text\" style=\"border-top:rgb(180, 180, 180) 3px solid;height:220px;\"><br><span class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"+(data.total_costs_year / 100).toFixed(0)*100 + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
-        text_msg+="<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + data.age_months + " <?echo $MONTHS_POSS?><br><br><center><div style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div><\/center><\/span><\/div><br>";
+        var text_msg="<div style=\"border-top:rgb(180, 180, 180) 3px solid;\"><br><div id=\"final-text1\" class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"+(data.total_costs_year / 100).toFixed(0)*100 + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
+        text_msg+="<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + data.age_months + " <?echo $MONTHS_POSS?></div><br><center><div id=\"final-text2\" style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div></center><\/div><br>";
         text_object.innerHTML=text_msg;
         text_object.style.display='block';
     }	
