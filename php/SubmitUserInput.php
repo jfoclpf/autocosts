@@ -1,12 +1,11 @@
 <?php
 
-include('dbService.php');
+include('./php/dbService.php');
 
 echo insertUserInputData($_POST['objectToDb']);
 
 function insertUserInputData($objectToDb)
 {
-
     $queryInsert = "INSERT INTO users_insertions (
     time_to_fill_form,
     uuid_client,

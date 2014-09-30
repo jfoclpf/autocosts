@@ -17,14 +17,14 @@
     <meta name="viewport" content="width=device-width" />
 
 	<?include("./country files/country_list.php");?>
-	<?include('./js/country_selector.php');?>
+	<?include('./php/country_selector.php');?>
 	
     <title><? echo $WEB_PAGE_TITLE ?></title>
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/flags24.css">
 	
-    <?include('./js/logos_selector.php');?>
+    <?include('./php/logos_selector.php');?>
 	
 	<!-- Google API -->
 
@@ -38,12 +38,12 @@
 	<script type="text/javascript" src="js/pdf/pdfmake.js"></script>
 	<script type="text/javascript" src="js/pdf/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="js/js_functions.php?country=<?php echo $def_cty ?>"></script>
+    <script type="text/javascript" src="php/js_functions.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/autocostsCore.js"></script>   
 	<script type="text/javascript" src="js/get_data.js"></script>
     <script type="text/javascript" src="js/businessLogic.js"></script>	
-	<script type="text/javascript" src="js/print_data.php?country=<?php echo $def_cty ?>"></script>
-    <script type="text/javascript" src="js/charts_js.php?country=<?php echo $def_cty ?>"></script>
+	<script type="text/javascript" src="php/print_data.php?country=<?php echo $def_cty ?>"></script>
+    <script type="text/javascript" src="php/charts_js.php?country=<?php echo $def_cty ?>"></script>
 	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -65,9 +65,6 @@
         /*jslint white: false */
         google.load('visualization', '1', {packages: ['corechart']});
     </script>
-
-    <!--facebook script-->
-    <div id="fb-root"></div>
 
 	<div id="main_div" style=" top: 0; background: none repeat scroll 0px 0px transparent; display: block; font-family: Verdana; overflow: auto;">
 

@@ -682,7 +682,6 @@ function getCheckedValue(radioObj) {
     return "";
 }
 
-
 function submit_data(country) {
 
     var objectToDb = {};
@@ -753,15 +752,15 @@ function submit_data(country) {
     objectToDb.country = country;
 
     sanityChecks(objectToDb);
-
+	
     $.ajax({
-        url: 'SubmitUserInput.php',
+        url: 'php/SubmitUserInput.php',
         type: 'POST',
         data: {
             objectToDb: objectToDb
         },
         success: function(data) {},
-        error: function () {
+        error: function () {		
             console.log("There was an error submitting the values for statistical analysis");
         }
     });

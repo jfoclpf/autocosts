@@ -11,3 +11,4 @@ $autocosts_host = "localhost";
 $autocosts_user = "root";
 $autocosts_password = "root";
 $autocosts_database = "autocosts";
+?>

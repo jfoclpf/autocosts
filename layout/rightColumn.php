@@ -39,7 +39,7 @@
 
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
         <div style="padding:7px 0 8px 0">
-            <?php include "counter.php"; ?>			
+            <?php include "./php/counter.php"; ?>			
         </div>
 				<b>
         <span class="p2">
@@ -48,7 +48,7 @@
         </b>
         <div style="padding:4px 0 8px 0;width:100%;font-size:80%;">
 			&raquo;
-	         <?php include "dbService.php";
+	         <?php include "./php/dbService.php";
 				$query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
 				$res = executeQueryInDB($query);
 				$filled_by_cty = 0;

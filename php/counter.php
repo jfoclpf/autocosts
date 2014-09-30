@@ -1,7 +1,7 @@
 <?php
 
 
-include('Globals.php');
+include('./php/Globals.php');
 
 /*
 Text Counter by http://www.free-php-counter.com
