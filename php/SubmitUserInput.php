@@ -1,6 +1,6 @@
 <?php
 
-include('./php/dbService.php');
+include('dbService.php');
 
 echo insertUserInputData($_POST['objectToDb']);
 
