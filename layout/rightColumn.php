@@ -75,7 +75,7 @@
 		
 		<div style="padding:4px 0 7px 0">
         <span class="p2">
-		<a href="https://github.com/jfoclpf/autocosts">
+		<a href="http://github.com/jfoclpf/autocosts/wiki">
             autocosts@GitHub<br>
 		</a>	
         </span>
