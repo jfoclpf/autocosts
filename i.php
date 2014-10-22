@@ -105,17 +105,14 @@
 					<!-- results tables -->
                     <div id="result_div">
                     </div>
-                    <br>
-
-					<!-- first top (pie) chart -->
+                    			<!-- first top (pie) chart -->
                     <div id="chart_div" style="padding:0 0 0 6%;margin:0 auto;">
                     </div>
 					<br>
 					<!-- second (bars) chart -->
                     <div id="graph_div" style="border-style:none; padding:0 0 0 16%;">
                     </div>
-                    <br>
-					<!-- bottom text with total costs -->
+                    			<!-- bottom text with total costs -->
                     <div id="text_div">
                     </div>
 
@@ -127,6 +124,7 @@
                     </div>
 					<!-- ************* ********* ************* -->
                 </form>
+                <br>
             </div>
             <!--#######################################################################################-->
             <!--#######################################################################################-->
