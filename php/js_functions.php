@@ -816,7 +816,6 @@ function guid() {
 }
 
 function generatePDF(){
-
 	var body1, body2, body3, body4, data;
 	var f2 = get_form_part2();	
 	data = $('#result_table1 td');	
@@ -824,20 +823,11 @@ function generatePDF(){
 	data = $('#result_table2 td');
 	body2 = getBody(data);
 	data = $('#result_table3 td');
-	body4 = getBodyFinEffort(data);
-		
-	var chartContainer = document.getElementById('chart_div');   
-    var chartDoc = chartContainer.ownerDocument;
-    var img1 = chartDoc.createElement('img');
-    img1.src = getImgData(chartContainer);
-	var imageData1 = img1.src;
+	body4 = getBodyFinEffort(data);	
 	
-	chartContainer = document.getElementById('graph_div');   
-    chartDoc = chartContainer.ownerDocument;
-    var img2 = chartDoc.createElement('img');
-    img2.src = getImgData(chartContainer);
-	var imageData2 = img2.src;
-			
+	var imageData1 = $('#img1').find('img').attr('src');
+	var imageData2 = $('#img2').find('img').attr('src');
+				
     var txt1 = $('#final-text1').html();	
 	var txt2 = $('#final-text2').text();
 	var part1 = txt1.split('<b>')[0] + ' ';
@@ -876,21 +866,23 @@ function generatePDF(){
 				pageBreak: 'after'
 			},
 			{
-				image: imageData1,
-				width: 500,
-				height: 325
+				image: imageData1,				
+				width: 450,
+				height: 300,
+				margin: [35, 0, 0, 0]				
 			},
 			{
 				image: imageData2,
-				width: 500,
-				height: 200
-			},			
+				width: 450,
+				height: 200,
+				margin: [35, 0, 0, 0]
+			},	
 			{ text:[
 				{ text: part1, alignment: 'center' },
 				{ text: part2, bold:true, fontSize: 16 },
 				{ text: part3 },
 				{ text: part4 }
-			], margin: [0, 10, 0, 0] },
+			], margin: [0, 20, 0, 0] },
 			{text: txt2, style:"finalText"}			
 		],
 		styles: {
@@ -905,6 +897,9 @@ function generatePDF(){
 				bold: true,
 				alignment:	'center',
 				color: '#000'
+			},
+			cell: {
+				fontSize: 12				
 			},
 			header2: {
 				fontSize: 14,
@@ -945,8 +940,12 @@ function getBody(data){
 			el = {text: str, style: 'header'};			
 			body.push([el, el2]);
 		}
-		else
-			body.push([str,$(data[i+1]).text()]);
+		else{
+			var str2 = $(data[i+1]).text();
+			var el2 = {text: str2, style: 'cell'};
+			el = {text: str, style: 'cell'};
+			body.push([el, el2]);
+		}			
 	}
 	return body;
 }
@@ -964,34 +963,13 @@ function getBodyFinEffort(data){
 			body.push([el, {}]);
 		}
 		else{
-			body.push([str,$(data[i+1]).text()]);
+			var str2 = $(data[i+1]).text();
+			var el2 = {text: str2, style: 'cell'};
+			el = {text: str, style: 'cell'};
+			body.push([el,el2]);
 			i++;
 		}		
 	}
 	return body;
 }
-
-function getImgData(chartContainer) {
-	var doc = new jsPDF();
-	var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
-    var svg = chartArea.innerHTML;
-    var chartDoc = chartContainer.ownerDocument;
-    var canvas = chartDoc.createElement('canvas');
-    canvas.setAttribute('width', chartArea.offsetWidth);
-    canvas.setAttribute('height', chartArea.offsetHeight);        
-        
-    canvas.setAttribute(
-        'style',
-        'position: absolute; ' +
-        'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
-        'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
-    chartDoc.body.appendChild(canvas);
-    canvg(canvas, svg);
-    var imgData = canvas.toDataURL('image/JPEG');
-    doc.addImage(imgData, "JPEG", 10,10); 
-    doc.addImage(imgData, "JPEG", 10,100); 
-    canvas.parentNode.removeChild(canvas);
-    return imgData;
-}
-
 

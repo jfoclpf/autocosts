@@ -122,6 +122,9 @@
                             onclick="PrintElem('#result_div','#chart_div','#graph_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>&nbsp;
 						<input type="button" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF()" />
                     </div>
+					<div id="img1" style="display:none"></div>
+					<div id="img2" style="display:none"></div>
+					
 					<!-- ************* ********* ************* -->
                 </form>
                 <br>
