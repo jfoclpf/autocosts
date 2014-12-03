@@ -59,7 +59,9 @@ $INITIAL_TEXT =
 Oppgi realistiske verdier. For uventede regninger som bøter eller reparasjoner på skader, tenk på hvor mye du har brukt i løpet av de siste årene. Kalkulasjonene tar som utgangspunkt en periodisitet som er månedlig basert. Bruk punktum for desimalnotering, for eksempel <span style=\"color:rgb(255,0,0);\">1.7</span> mil mellom hjem og arbeidsplass (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";
 $HELP_PROJECT = 'Støtt dette prosjektet' ;
 $AC_MOBILE = 'AUTOCOSTS<br> for mobile produkter';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>KOSTNADSKALKULATOR FOR BIL</b>';
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'KOSTNADSKALKULATOR FOR BIL';
+
 //time words
 $DAYLY = 'daglig';
 $WEEKLY = 'ukentlig';

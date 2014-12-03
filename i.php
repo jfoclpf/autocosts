@@ -88,7 +88,8 @@
 
                         <div class="p4" style="text-align:center;"  id="title-div">
                             <br>
-                            <? echo $AC_HEADER ?>
+                            <big><u><? echo $AC_DOMAIN ?></u></big><br>
+                            <b><? echo $AC_SUB_HEADER ?></b>							
                             <br>
                             <br>
                         </div>

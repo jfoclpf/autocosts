@@ -64,7 +64,8 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Η υπηρεσία παρέχεται δωρεάν, χωρίς διαφημίσεις!'; 
 $AC_MOBILE = 'ΕΞΟΔΑ ΑΥΤΟΚΙΝΗΤΟΥ<br>για φορητές συσκευές'; 
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>ΥΠΟΛΟΓΙΣΤΗΣ ΕΞΟΔΩΝ ΑΥΤΟΚΙΝΗΤΟΥ</b>';
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'ΥΠΟΛΟΓΙΣΤΗΣ ΕΞΟΔΩΝ ΑΥΤΟΚΙΝΗΤΟΥ';
 
 //time words $DAYLY = 'ημερησίως'; 
 $WEEKLY = 'εβδομαδιαίως'; 

@@ -63,8 +63,8 @@ Wees realistisch met de ingevoerde waarden. Voor onverwachte rekeningen, zoals o
 
 $HELP_PROJECT = 'Help dit project' ;
 $AC_MOBILE = 'AUTOKOSTEN<br>voor mobiele apparaten';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>AUTOKOSTENSIMULATOR</b>';
-
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'AUTOKOSTENSIMULATOR';
 
 //time words
 $DAYLY = 'dagelijks';

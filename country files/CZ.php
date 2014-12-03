@@ -68,8 +68,8 @@ Zadávejte skutečné vstupné hodnoty. Co se týče nečekaných výdajů, jako
 $HELP_PROJECT = 'Podpořte tento projekt' ;
 
 $AC_MOBILE = 'AUTONAKLADY<br>pro mobilní zařízení';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>KALKULÁTOR VÝDAJŮ NA AUTO</b>';
-
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'KALKULÁTOR VÝDAJŮ NA AUTO';
 
 //time words
 $DAYLY = 'za den';

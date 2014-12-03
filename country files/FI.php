@@ -67,8 +67,8 @@ Ole realistinen syöttämistäsi arvoista. Ajattele kuinka paljon yleensä olet 
 
 $HELP_PROJECT = 'Auta tätä projektia' ;
 $AC_MOBILE = 'AUTOKULUT<br> mobiililaitteille';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>AUTON KUSTANNUSLASKURI</b>';
-
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'AUTON KUSTANNUSLASKURI';
 
 //time words
 $DAYLY = 'päivittäin';

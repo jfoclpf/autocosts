@@ -64,7 +64,8 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Dette er en gratis tjeneste uden reklamer!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobilvisning'; 
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>BEREGN DINE BILUDGIFTER</b>';
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'BEREGN DINE BILUDGIFTER';
 
 //time words $DAYLY = 'ημερησίως'; 
 $WEEKLY = 'dagligt'; 

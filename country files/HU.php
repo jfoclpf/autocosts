@@ -68,8 +68,8 @@ Legyen pontos az adatok bevitelénél. Váratlan kiadások - mint például a ba
 
 $HELP_PROJECT = 'Támogassa projektünket' ;
 $AC_MOBILE = 'AUTÓKÖLTSÉGEK<br>mobileszközökhöz';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR</b>';
-
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR';
 
 //time words
 $DAYLY = 'napi';

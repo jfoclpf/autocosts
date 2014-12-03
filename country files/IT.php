@@ -63,8 +63,8 @@ Siate realistici con i dati inseriti. Per le spese inaspettate,come per esempio 
 
 $HELP_PROJECT = 'Questo servizio è gratuito, senza pubblicità!' ;
 $AC_MOBILE = 'COSTI AUTO<br>per dispositivi mobili';
-$AC_HEADER = '<big><u>AUTOCOSTI.IT</u></big><br><b>CALCOLATRICE DEI COSTI DI AUTO</b>';
-
+$AC_DOMAIN = 'AUTOCOSTI.IT';
+$AC_SUB_HEADER = 'CALCOLATRICE DEI COSTI DI AUTO';
 
 //time words
 $DAYLY = 'al giorno';

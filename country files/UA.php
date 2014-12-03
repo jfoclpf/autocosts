@@ -68,8 +68,8 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Це - безкоштовна послуга без реклами!' ;
 $AC_MOBILE = 'АВТОВИТРАТИ<br>для мобільних пристроїв';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>КАЛЬКУЛЯТОР ВИТРАТ НА АВТОМОБІЛЬ</b>';
-
+$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_SUB_HEADER = 'КАЛЬКУЛЯТОР ВИТРАТ НА АВТОМОБІЛЬ';
 
 //time words
 $DAYLY = 'у день';
