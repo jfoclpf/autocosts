@@ -68,7 +68,7 @@ Seien Sie realistisch mit Ihren Angaben! Bei unerwarteten Rechnungen wie z.B. de
 
 $HELP_PROJECT = 'Unterstützen Sie dieses Projekt!' ;
 $AC_MOBILE = 'KFZ-RECHNER<br>für Mobilgeräte';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOAUSGABEN.DE';
 $AC_SUB_HEADER = 'KFZ-KOSTENRECHNER';
 
 //time words

@@ -1,14 +1,37 @@
 AddDefaultCharset utf-8
 DirectoryIndex i.php index.php index.html index.htm
-#ErrorDocument 404 /i.php
-<IfModule mod_rewrite.c>
+
 RewriteEngine On
 
 RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
-
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
-RewriteCond %{HTTP_HOST} ^(.*)\.autocosts\.org$ [NC]
-RewriteRule (.*) http://autocosts.org/%1 [QSA,L,R=301]
-</IfModule>
+RewriteCond %{HTTP_HOST} ^autogastos\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autogastos\.es$
+RewriteRule ^/?$ "http\:\/\/autogastos\.es\/ES" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
+RewriteRule ^/?$ "http\:\/\/autocustos\.pt\/PT" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocouts\.fr$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocouts\.fr$
+RewriteRule ^/?$ "http\:\/\/autocouts\.fr\/FR" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocosti\.it$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocosti\.it$
+RewriteRule ^/?$ "http\:\/\/autocosti\.it\/IT" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^automobilecosts\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.automobilecosts\.co\.uk$
+RewriteRule ^/?$ "http\:\/\/automobilecosts\.co\.uk\/GB" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autoausgaben\.de$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autoausgaben\.de$
+RewriteRule ^/?$ "http\:\/\/autoausgaben\.de\/DE" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^\*\.autocost\.org$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.\*\.autocost\.org$
+RewriteRule ^/?$ "http\:\/\/autocost\.org" [R=301,L]
+
