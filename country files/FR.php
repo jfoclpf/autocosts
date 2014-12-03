@@ -58,7 +58,7 @@ $INITIAL_TEXT = "Cette calculatrice vous permettra de trouver <b>le vrai coût d
 
 $HELP_PROJECT = 'Ce service est gratuit, sans publicité!';
 $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>CALCULATRICE DES COÛTS AUTOMOBILES </b>';
+$AC_HEADER = '<big><u>AUTOCOUTS.FR</u></big><br><b>CALCULATRICE DES COÛTS AUTOMOBILES </b>';
 
 
 //time words

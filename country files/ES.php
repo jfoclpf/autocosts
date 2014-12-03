@@ -62,7 +62,7 @@ Sé realista acerca del precio que pagas. Piensa en los gastos inesperados como 
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';
-$AC_HEADER = '<big><u>WWW.AUTOCOSTS.ORG</u></big><br><b>CALCULADORA DE GASTOS DE COCHE</b>';
+$AC_HEADER = '<big><u>AUTOGASTOS.ES</u></big><br><b>CALCULADORA DE GASTOS DE COCHE</b>';
 
 
 //time words

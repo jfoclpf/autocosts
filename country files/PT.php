@@ -58,7 +58,7 @@ Seja realista nos montantes introduzidos. Para valores que considera imprevisív
 ';
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
-$AC_HEADER = '<big><u>WWW.AUTOCUSTOS.COM</u></big><br><b>CALCULADORA DOS CUSTOS DO AUTOMÓVEL</b>';
+$AC_HEADER = '<big><u>AUTOCUSTOS.PT</u></big><br><b>CALCULADORA DOS CUSTOS DO AUTOMÓVEL</b>';
 //time words
 $DAYLY = 'diário';
 $WEEKLY = 'semanal';
