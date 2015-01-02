@@ -88,7 +88,10 @@
 
                         <div class="p4" style="text-align:center;"  id="title-div">
                             <br>
-                            <big><u><? echo $AC_DOMAIN ?></u></big><br>
+                            <big>
+-								<a href="http://<? echo strtolower($AC_DOMAIN);?>"><span class="AC_url"><? echo $AC_DOMAIN ?></span></a>
+-							</big>
+-							<br>
                             <b><? echo $AC_SUB_HEADER ?></b>							
                             <br>
                             <br>
