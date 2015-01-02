@@ -24,25 +24,25 @@
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/flags24.css">
 	
-    <?include('./php/logos_selector.php');?>
+    <?include('./php/favicon_selector.php');?>
 	
 	<!-- Google API -->
 
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery.timer.js"></script> 	
-	<script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
-	<script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/canvg.js"></script>	
+    <script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+    <script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/canvg.js"></script>	
     <script type="text/javascript" src="js/pdf/html2canvas.js"></script>  	
-	<script type="text/javascript" src="js/pdf/jspdf.js"></script>
-	<script type="text/javascript" src="js/pdf/jspdf.plugin.addimage.js"></script>
-	<script type="text/javascript" src="js/pdf/pdfmake.js"></script>
-	<script type="text/javascript" src="js/pdf/vfs_fonts.js"></script>
+    <script type="text/javascript" src="js/pdf/jspdf.js"></script>
+    <script type="text/javascript" src="js/pdf/jspdf.plugin.addimage.js"></script>
+    <script type="text/javascript" src="js/pdf/pdfmake.js"></script>
+    <script type="text/javascript" src="js/pdf/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="php/js_functions.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="js/autocostsCore.js"></script>   
-	<script type="text/javascript" src="js/get_data.js"></script>
+    <script type="text/javascript" src="js/get_data.js"></script>
     <script type="text/javascript" src="js/businessLogic.js"></script>	
-	<script type="text/javascript" src="php/print_data.php?country=<?php echo $def_cty ?>"></script>
+    <script type="text/javascript" src="php/print_data.php?country=<?php echo $def_cty ?>"></script>
     <script type="text/javascript" src="php/charts_js.php?country=<?php echo $def_cty ?>"></script>
 	
 	<script>
@@ -88,10 +88,7 @@
 
                         <div class="p4" style="text-align:center;"  id="title-div">
                             <br>
-                            <big>
-								<a href="http://<? echo strtolower($AC_DOMAIN);?>"><span class="AC_url"><? echo $AC_DOMAIN ?></span></a>
-							</big>
-							<br>
+                            <big><u><? echo $AC_DOMAIN ?></u></big><br>
                             <b><? echo $AC_SUB_HEADER ?></b>							
                             <br>
                             <br>
