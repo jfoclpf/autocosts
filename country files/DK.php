@@ -96,6 +96,17 @@ $DAYS_PER_WEEK_SHORT= 'dage/måneder';
 //distance
 $DISTANCE = "Distance";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Gennemsnitligt månedligt pris pr typen';
+$COUNTRY_NAME = 'Danmark';
+$STATISTIC_TITLE = 'Automobile omkostninger for';
+$DEPRECIATION_ST = 'Afskrivninger';
+$INSURANCE_ST = 'Forsikring';
+$REP_ST = 'Reparationer';
+$WASHING_ST = 'Vask';
+$VIRTUAL_SPEED_TITLE = 'Virtuel hastighed';
+$KINETIC_SPEED_TITLE = 'Kinetisk hastighed';
+
 //calculator words 
 $COSTS= "Udgifter"; 
 $FIXED_COSTS = 'Faste udgifter'; 
@@ -333,8 +344,8 @@ $TAXI_PRICE_PER_DIST=2.5; //amount paid for taxi in chosen currency per chosen u
 //these values are to be changed by the user but you must insert values that are reasonable 
 //keep in mind your chosen standard currency as well as your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

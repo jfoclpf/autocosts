@@ -91,6 +91,17 @@ $DAYS_PER_WEEK_SHORT= 'jours/semaine';
 //distance
 $DISTANCE = "Distance";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Coût mensuel moyen par type';
+$COUNTRY_NAME = 'France';
+$STATISTIC_TITLE = 'Coûts d\'automobile pour la';
+$DEPRECIATION_ST = 'Dépréciation';
+$INSURANCE_ST = 'Assurance';
+$REP_ST = 'Réparations';
+$WASHING_ST = 'Lavage';
+$VIRTUAL_SPEED_TITLE = 'Vitesse virtuelle';
+$KINETIC_SPEED_TITLE = 'Vitesse cinétique';
+
 //calculator words
 $COSTS= "Coûts";
 $FIXED_COSTS = 'Frais permanents';
@@ -104,8 +115,8 @@ $RUNNING_COSTS_HEADER_2 = 'Ceux qui dépendent de la distance parcourue';
 
 $PRIVATE_COSTS = 'Coûts privés';
 $MONTHLY_AMOUNT = 'Somme mensuelle';
-$RUN_CP_DIST = 'Frais courants par kilomètro'; //running costs per unit distance
-$TOTAL_CP_DIST = 'Coût total par kilomètro'; //total costs per unit distance
+$RUN_CP_DIST = 'Frais courants par kilomètre'; //running costs per unit distance
+$TOTAL_CP_DIST = 'Coût total par kilomètre'; //total costs per unit distance
 $PUBL_TRA_EQUIV= "Coûts équivalent de transport, si vous ne possédez pas de voiture";
 $WORD_TOTAL_CAP = 'TOTAL'; //capital word for total
 
@@ -328,8 +339,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

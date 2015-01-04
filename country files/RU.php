@@ -100,6 +100,17 @@ $DAYS_PER_WEEK_SHORT= 'дней/недели';
 //distance
 $DISTANCE = "Расстояние";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Среднемесячная стоимость типа';
+$COUNTRY_NAME = 'России';
+$STATISTIC_TITLE = 'Автомобильные затраты для';
+$DEPRECIATION_ST = 'Амортизация';
+$INSURANCE_ST = 'Страхование';
+$REP_ST = 'Ремонт';
+$WASHING_ST = 'Мойка';
+$VIRTUAL_SPEED_TITLE = 'Виртуальная скорость';
+$KINETIC_SPEED_TITLE = 'Кинетическая скорость';
+
 //calculator words
 $COSTS= "Расходы";
 $FIXED_COSTS = 'Постоянные расходы';
@@ -336,8 +347,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

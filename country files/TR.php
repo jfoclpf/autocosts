@@ -83,6 +83,18 @@ $YEAR = 'yıl';
 $DAYS_PER_WEEK_SHORT= 'gün/hafta';
 //distance
 $DISTANCE = "Mesafe";
+
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Cinsine bağlı olan ortalama aylık maliyeti';
+$COUNTRY_NAME = 'Türkiye';
+$STATISTIC_TITLE = 'otomobil maliyetleri';
+$DEPRECIATION_ST = 'Amortisman';
+$INSURANCE_ST = 'Sigorta';
+$REP_ST = 'Tamirat';
+$WASHING_ST = 'Yıkama';
+$VIRTUAL_SPEED_TITLE = 'Fiili hız';
+$KINETIC_SPEED_TITLE = 'Kinetik hız';
+
 //calculator words 
 $COSTS= "Masraflar"; 
 $FIXED_COSTS = 'Sabit masraflar'; 
@@ -283,8 +295,8 @@ $TAXI_PRICE_PER_DIST=2.5; //amount paid for taxi in chosen currency per chosen u
 //STANDARD COMMON AVERAGE DEFAULT values that appear on the start page 
 //these values are to be changed by the user but you must insert values that are reasonable 
 //keep in mind your chosen standard currency as well as your volume and fuel efficiency standards
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 $STD_INSURANCE_SEM = ''; //price paid for insurance by semester

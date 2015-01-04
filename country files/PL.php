@@ -96,6 +96,17 @@ $DAYS_PER_WEEK_SHORT= ' dni / tydzień ';
 //distance
 $DISTANCE = "Dystans";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Średni miesięczny koszt od rodzaju';
+$COUNTRY_NAME = 'Polski';
+$STATISTIC_TITLE = 'Koszty samochodowe dla';
+$DEPRECIATION_ST = 'Amortyzacja';
+$INSURANCE_ST = 'Ubezpieczenie';
+$REP_ST = 'Naprawy';
+$WASHING_ST = 'Mycie';
+$VIRTUAL_SPEED_TITLE = 'Prędkość wirtualna';
+$KINETIC_SPEED_TITLE = 'Prędkość kinetyczna';
+
 //calculator words
 $COSTS= "Koszty";
 $FIXED_COSTS = 'Koszty stałe';
@@ -333,8 +344,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

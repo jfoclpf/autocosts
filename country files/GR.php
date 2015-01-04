@@ -96,6 +96,17 @@ $DAYS_PER_WEEK_SHORT= 'ημέρες/εβδομάδα';
 //distance
 $DISTANCE = "Απόσταση";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Μέσο μηνιαίο κόστος ανά τύπο';
+$COUNTRY_NAME = 'Ελλάδα';
+$STATISTIC_TITLE = 'Δαπάνες αυτοκινήτων για την';
+$DEPRECIATION_ST = 'Απόσβεση';
+$INSURANCE_ST = 'Ασφάλιση';
+$REP_ST = 'Επισκευές';
+$WASHING_ST = 'Пλύσιμο';
+$VIRTUAL_SPEED_TITLE = 'Eικονική ταχύτητα';
+$KINETIC_SPEED_TITLE = 'Tαχύτητα κίνησης';
+
 //calculator words $COSTS= "'Εξοδα"; 
 $FIXED_COSTS = 'Πάγια έξοδα'; 
 $FIXED_COSTS_HEADER_1= 'ΠΑΓΙΑ ΕΞΟΔΑ'; //capital letters 
@@ -332,8 +343,8 @@ $TAXI_PRICE_PER_DIST=2.5; //amount paid for taxi in chosen currency per chosen u
 //these values are to be changed by the user but you must insert values that are reasonable 
 //keep in mind your chosen standard currency as well as your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

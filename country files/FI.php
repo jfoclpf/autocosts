@@ -100,6 +100,17 @@ $DAYS_PER_WEEK_SHORT= 'päivää/viikko';
 //distance
 $DISTANCE = "Etäisyys";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Keskimääräinen kuukausittainen kustannus per tyyppi';
+$COUNTRY_NAME = 'Suomessa';
+$STATISTIC_TITLE = 'Automobile kustannukset';
+$DEPRECIATION_ST = 'Arvonalennus';
+$INSURANCE_ST = 'Vakuutus';
+$REP_ST = 'Korjaus';
+$WASHING_ST = 'Pesu';
+$VIRTUAL_SPEED_TITLE = 'Virtuaalinopeus';
+$KINETIC_SPEED_TITLE = 'Kineettinen nopeus';
+
 //calculator words
 $COSTS= "Kulut";
 $FIXED_COSTS = 'Seisontakulut';
@@ -336,8 +347,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

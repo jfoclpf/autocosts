@@ -100,6 +100,17 @@ $DAYS_PER_WEEK_SHORT= 'zile/săptămâni';
 //distance
 $DISTANCE = "Distance";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Costul mediu lunar pe tip';
+$COUNTRY_NAME = 'România';
+$STATISTIC_TITLE = 'Costurile de automobile pentru';
+$DEPRECIATION_ST = 'Deprecierea';
+$INSURANCE_ST = 'Asigurare';
+$REP_ST = 'Reparatii';
+$WASHING_ST = 'Spălat';
+$VIRTUAL_SPEED_TITLE = 'Viteză virtuală';
+$KINETIC_SPEED_TITLE = 'Viteză kinetică';
+
 //calculator words
 $COSTS= "Costuri";
 $FIXED_COSTS = 'Costuri fixe';
@@ -336,8 +347,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

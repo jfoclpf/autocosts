@@ -95,6 +95,17 @@ $DAYS_PER_WEEK_SHORT= 'días/semana';
 //distance
 $DISTANCE = "Distancia";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
+$COUNTRY_NAME = 'España';
+$STATISTIC_TITLE = 'Costos de Automóviles de';
+$DEPRECIATION_ST = 'Depreciación';
+$INSURANCE_ST = 'Seguro';
+$REP_ST = 'Reparaciones';
+$WASHING_ST = 'Lavado';
+$VIRTUAL_SPEED_TITLE = 'Velocidad virtual';
+$KINETIC_SPEED_TITLE = 'Velocidad cinética';
+
 //calculator words
 $COSTS= "Gastos";
 $FIXED_COSTS = 'Gastos fijos';
@@ -132,7 +143,7 @@ $INSURANCE_SHORT = 'Seguro y la cobertura de averías';
 //credit
 $CREDIT = 'Financiación del coche';
 $CREDIT_PERIOD = 'Periodo';
-$CREDIT_INTERESTS = 'Intereses préstamo';
+$CREDIT_INTERESTS = 'Intereses del préstamo';
 $CREDIT_INTERESTS_MONTH = 'Cuota mensual de intereses';
 $CREDIT_TOTAL_INTERESTS = 'Importe total de intereses';
 $CREDIT_QUESTION = '¿Has financiado la compra del vehículo?';
@@ -332,8 +343,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

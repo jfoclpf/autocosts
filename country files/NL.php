@@ -96,6 +96,17 @@ $DAYS_PER_WEEK_SHORT= 'dagen/week';
 //distance
 $DISTANCE = "Afstand";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Gemiddelde maandelijkse kosten per soort';
+$COUNTRY_NAME = 'Netherland';
+$STATISTIC_TITLE = 'Autokosten voor';
+$DEPRECIATION_ST = 'Afschrijving';
+$INSURANCE_ST = 'Verzekering';
+$REP_ST = 'Reparaties';
+$WASHING_ST = 'Wassen';
+$VIRTUAL_SPEED_TITLE = 'Virtuele snelheid';
+$KINETIC_SPEED_TITLE = 'Kinetische snelheid';
+
 //calculator words
 $COSTS= "Kosten";
 $FIXED_COSTS = 'Vaste kosten';
@@ -333,8 +344,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

@@ -81,6 +81,18 @@ $YEAR = 'year';
 $DAYS_PER_WEEK_SHORT= 'days/week';
 //distance
 $DISTANCE = "Distance";
+
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Average monthly cost per type';
+$COUNTRY_NAME = 'Canada';
+$STATISTIC_TITLE = 'Automobile costs for';
+$DEPRECIATION_ST = 'Depreciation';
+$INSURANCE_ST = 'Insurance';
+$REP_ST = 'Repairs';
+$WASHING_ST = 'Washing';
+$VIRTUAL_SPEED_TITLE = 'Virtual speed';
+$KINETIC_SPEED_TITLE = 'Kinetic speed';
+
 //calculator words $COSTS= "Costs"; 
 $FIXED_COSTS = 'Standing costs'; 
 $FIXED_COSTS_HEADER_1= 'STANDING COSTS'; //capital letters 
@@ -280,8 +292,8 @@ $TAXI_PRICE_PER_DIST=2.5; //amount paid for taxi in chosen currency per chosen u
 //STANDARD COMMON AVERAGE DEFAULT values that appear on the start page 
 //these values are to be changed by the user but you must insert values that are reasonable 
 //keep in mind your chosen standard currency as well as your volume and fuel efficiency standards
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 $STD_INSURANCE_SEM = ''; //price paid for insurance by semester

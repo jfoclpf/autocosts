@@ -96,6 +96,17 @@ $DAYS_PER_WEEK_SHORT= 'giorni/settimana';
 //distance
 $DISTANCE = "Distanza";
 
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Il costo medio mensile per tipo';
+$COUNTRY_NAME = 'l\'Italia';
+$STATISTIC_TITLE = 'Costi automobili per';
+$DEPRECIATION_ST = 'Ammortamento';
+$INSURANCE_ST = 'Assicurazione';
+$REP_ST = 'Riparazione';
+$WASHING_ST = 'Lavaggio';
+$VIRTUAL_SPEED_TITLE = 'Velocità virtuale';
+$KINETIC_SPEED_TITLE = 'Velocità cinetica';
+
 //calculator words
 $COSTS= "Costi";
 $FIXED_COSTS = 'Costi fissi';
@@ -333,8 +344,8 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
 
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 

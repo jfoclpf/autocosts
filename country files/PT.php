@@ -87,6 +87,18 @@ $YEAR = 'ano';
 $DAYS_PER_WEEK_SHORT= 'dias/sem';
 //distance
 $DISTANCE = "Distância";
+
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Custo médio mensal por tipo';
+$COUNTRY_NAME = 'Portugal';
+$STATISTIC_TITLE = 'Custos de automóveis para';
+$DEPRECIATION_ST = 'Desvalorização';
+$INSURANCE_ST = 'Seguro';
+$REP_ST = 'Reparações';
+$WASHING_ST = 'Lavagens';
+$VIRTUAL_SPEED_TITLE = 'Velocidade virtual';
+$KINETIC_SPEED_TITLE = 'Velocidade cinética';
+
 //calculator words
 $COSTS= "Custos";
 $FIXED_COSTS = 'Custos fixos';
@@ -288,8 +300,8 @@ $TAXI_PRICE_PER_DIST=1.5;
 //STANDARD COMMON AVERAGE DEFAULT values that apear on the start page
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
-$STD_ACQ_MONTH = ''; //month of acquisition 
-$STD_ACQ_YEAR = ''; //year of acquisition 
+$STD_ACQ_MONTH = '01'; //month of acquisition 
+$STD_ACQ_YEAR = '2000'; //year of acquisition 
 $STD_PRICE_PAID = ''; //price paid for the car
 $STD_PRICE_TODAY = ''; //the price the car has today
 $STD_INSURANCE_SEM = ''; //price paid for insurance by semester
