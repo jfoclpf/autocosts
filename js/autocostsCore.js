@@ -467,7 +467,7 @@ function setStatisticValues(userIds, data, cntr){
 					//inspection
 					var inspection = getInspection(data[j]);						
 					//car tax
-					var car_tax = Number(data[j].vehicle_excise_tax);
+					var car_tax = Number(data[j].vehicle_excise_tax) / 12;
 					//fuel
 					var fuelObj = getFuel(data[j], cntr);				
 					//maintenance
