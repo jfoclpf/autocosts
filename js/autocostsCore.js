@@ -614,10 +614,10 @@ function setStatisticValues(userIds, data, cntr){
 		$('#txt_wash').html(washAverage.toFixed(1));
 		$('#txt_running_costs').html(total_running_costs_month.toFixed(1));
 		$('#txt_total_overal').html(total_costs_month.toFixed(0));
-		$('#txt_running_costs_dist').html(running_costs_p_unit_distance.toFixed(1));
-		$('#txt_total_costs_p_unit').html(total_costs_p_unit_distance.toFixed(1));
-		$('#txt_kinetic_speed').html(kineticAverage.toFixed(1));
-		$('#txt_virtual_speed').html(virtualAverage.toFixed(1));
+		$('#txt_running_costs_dist').html(running_costs_p_unit_distance.toFixed(2));
+		$('#txt_total_costs_p_unit').html(total_costs_p_unit_distance.toFixed(2));
+		$('#txt_kinetic_speed').html(kineticAverage.toFixed(0));
+		$('#txt_virtual_speed').html(virtualAverage.toFixed(0));
 		$('#txt_total_costs_year').html(((total_costs_per_year/100).toFixed(0))*100);
 		$('#users_counter').html(temp.length);
 	}
