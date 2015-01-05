@@ -272,7 +272,7 @@ $AVER_YEARLY = 'moyenne annuelle';
 $WORKING_TIME_MESSAGE = 'Il a été considéré pour les calculs une durée moyenne de travail de 36 heures par semaine et de 11 mois par année';
 $HOURS_TO_AFFORD_CAR = 'Heures par an que vous avez besoin de travailler pour payer votre voiture';
 $MONTHS_TO_AFFORD_CAR = 'Mois par an que vous avez besoin de travailler pour payer votre voiture';
-$TOTAL_COSTS_PER_YEAR = 'Total des coûts par an pour une voiture';
+$TOTAL_COSTS_PER_YEAR = 'Total des coûts par an pour la voiture';
 $DAYS_CAR_PAID = 'Pendant combien de jours, après le 1er Janvier, la voiture est payée';
 
 //**************************************************
