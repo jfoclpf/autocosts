@@ -248,7 +248,7 @@ $AVER_YEARLY = 'Média anual da sua';
 $WORKING_TIME_MESSAGE = 'Foi considerado para o cálculo uma média de horário de trabalho de 36 horas por semana e 11 meses por ano';
 $HOURS_TO_AFFORD_CAR = 'Horas por ano que precisa de trabalhar para suster o seu carro';
 $MONTHS_TO_AFFORD_CAR = 'Meses que precisa de trabalhar para suster o seu carro';
-$TOTAL_COSTS_PER_YEAR = 'Custo total por ano do seu automóvel';
+$TOTAL_COSTS_PER_YEAR = 'Custo total por ano do automóvel';
 $DAYS_CAR_PAID = 'Depois de quantos dias, após o dia 1 de janeiro, o seu carro fica pago';
 //*************************************
 //GRAPHICS
