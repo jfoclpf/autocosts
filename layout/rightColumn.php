@@ -19,10 +19,11 @@
 			<tr><td class="left"><span><?echo $CREDIT_INTERESTS?></span></td><td class="right"><span id="txt_cred" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr><td class="left"><span><?echo $INSPECTION_SHORT?></span></td><td class="right"><span id="txt_insp" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr><td class="left"><span><?echo $ROAD_TAXES_SHORT?></span></td><td class="right"><span id="txt_tax" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
+			<tr><td class="left"><span><?echo $MAINTENANCE?></span></td><td class="right"><span id="txt_maint1" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr class="tr-result"><td class="right"><span><?echo $TOTAL_FIXED?></span></td><td class="right"><span id="txt_standing_costs" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr class="tr-sub-title"><td colspan="2" class="center"><span><?echo $RUNNING_COSTS?><span></td></tr>
 			<tr><td class="left"><span><?echo $FUEL?></span></td><td class="right"><span id="txt_fuel" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
-			<tr><td class="left"><span><?echo $MAINTENANCE?></span></td><td class="right"><span id="txt_maint" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
+			<tr><td class="left"><span><?echo $MAINTENANCE?></span></td><td class="right"><span id="txt_maint2" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr><td class="left"><span><?echo $REP_ST?></span></td><td class="right"><span id="txt_rep" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr><td class="left"><span><?echo $PARKING?></span></td><td class="right"><span id="txt_park" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 			<tr><td class="left"><span><?echo $TOLLS?></span></td><td class="right"><span id="txt_tolls" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>

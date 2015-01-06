@@ -606,7 +606,7 @@ function setStatisticValues(userIds, data, cntr){
 		$('#txt_tax').html(carTaxAverage.toFixed(1));
 		$('#txt_standing_costs').html(total_standing_costs_month.toFixed(1));
 		$('#txt_fuel').html(fuelAverage.toFixed(1));
-		$('#txt_maint').html(maintAverage.toFixed(1));
+		$('#txt_maint1, #txt_maint2').html((maintAverage/2).toFixed(1));
 		$('#txt_rep').html(repAverage.toFixed(1));
 		$('#txt_park').html(parkAverage.toFixed(1));
 		$('#txt_tolls').html(tollsAverage.toFixed(1));
