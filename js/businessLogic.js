@@ -61,7 +61,7 @@ function calculate_costs(f1, f2, f3, country){
 			var fuel_eff_l100km = convert_to_fuel_eff_l100km(f2.fuel_eff_l100km, country.fuel_efficiency_std);
 			var fuel_price_CURRpLitre = convert_to_fuel_price_CURRpLitre(f2.fuel_price_CURRpLitre, country.fuel_price_volume_std);
 			if (f2.take_car_to_job == "false"){
-				fuel_period_km = f2.fuel_period_distance.options[f2.fuel_period_distance.selectedIndex].value;
+				fuel_period_km = f2.fuel_period_distance;
 				switch(fuel_period_km){
 					case "1":
 						distance = parseInt(f2.distance);				
@@ -96,7 +96,7 @@ function calculate_costs(f1, f2, f3, country){
 			break;  
 		case "euros":
 			var price_mes;
-			fuel_cost_period = f2.fuel_period_money.options[f2.fuel_period_money.selectedIndex].value;
+			fuel_cost_period = f2.fuel_period_money;
 			switch(fuel_cost_period){
 				case "1":
 					price_mes = parseFloat(f2.fuel_money);
@@ -130,7 +130,7 @@ function calculate_costs(f1, f2, f3, country){
 	
 	
 	//tolls
-	var tolls_period = f2.tolls_select.options[f2.tolls_select.selectedIndex].value;
+	var tolls_period = f2.tolls_select;
 	if(f2.type_calc_tolls == "false"){
 		switch(tolls_period){
 			case "1":
@@ -154,7 +154,7 @@ function calculate_costs(f1, f2, f3, country){
 		monthly_costs.tolls = f2.price_tolls_p_day * f2.tolls_days_p_month;
 		
 	//fines
-	var fines_period = f2.fines_select.options[f2.fines_select.selectedIndex].value;
+	var fines_period = f2.fines_select;
 	switch(fines_period) {
 		case "1":
 			monthly_costs.fines = parseFloat(f2.fines);        
@@ -174,7 +174,7 @@ function calculate_costs(f1, f2, f3, country){
     }
 	
 	//washing
-	washing_period = f2.washing_select.options[f2.washing_select.selectedIndex].value;
+	washing_period = f2.washing_select;
 	switch(washing_period) {
 		case "1":
 			monthly_costs.washing = parseFloat(f2.washing);        
@@ -274,7 +274,7 @@ function calculate_costs(f1, f2, f3, country){
 		income_per_type: 0,
 		income_hours_per_week: 0,
 		aver_income_per_month:0,
-		aver_income_per_hour: function(){ return getNetIncomePerHour();},
+		aver_income_per_hour: 0,
 		time_hours_per_week: 36,
 		time_month_per_year: 11,
 		aver_work_time_per_m: 0,
@@ -291,15 +291,15 @@ function calculate_costs(f1, f2, f3, country){
 		days_drive_per_month: 0,
 		hours_drive_per_month: 0,
 		hours_drive_per_year: 0,
-		fuel_period_km: f3.period_km.options[f3.period_km.selectedIndex].value,
+		fuel_period_km: f3.period_km,
 		total_per_year: total_costs_year,
-		hours_per_year_to_afford_car: function(){ return total_costs_year / this.aver_income_per_hour(); },
-		month_per_year_to_afford_car: function(){ return total_costs_year / this.aver_income_per_year * 12; },
-		days_car_paid: function(){ return (total_costs_year / this.aver_income_per_year) * 365.25; },
-		kinetic_speed: function(){ return this.drive_per_year / this.hours_drive_per_year; },
-		virtual_speed: function(){ return this.drive_per_year / (this.hours_drive_per_year + (total_costs_year / this.aver_income_per_hour())); }
+		hours_per_year_to_afford_car: 0,
+		month_per_year_to_afford_car: 0,
+		days_car_paid: 0,
+		kinetic_speed: 0,
+		virtual_speed: 0
 	};
-	
+		
 	//income
 	switch(f3.income_type){
 		case 'year':
@@ -412,11 +412,62 @@ function calculate_costs(f1, f2, f3, country){
 	//total costs per unit dist.
 	var total_costs_p_unit_distance = total_costs_month / distance_per_month;
 	
+	//find Net Income per Hour
+
+	var typeIncome = $('#income_div').find('input[type=radio]:checked').val();
+	var isJob = $('#working_time_div').find('input[type=radio]:checked').val();
+	var a = 11; //months per year of work
+	var b = 36; //hours per week of normal working week
+	var T, x, y, n;
+	if(isJob=='true'){
+		a = parseInt($('#time_month_per_year').val());
+		b = parseInt($('#time_hours_per_week').val());
+	}
+	T = 365.25/7 * a/12 * b;
+	alert("T:"+T);
+	switch(typeIncome){
+		case 'year':
+			x = parseInt($('#income_per_year').val());
+			n = x/T;
+			break;
+		case 'month':
+			x = parseInt($('#income_per_month').val());
+			y = parseInt($('#income_months_per_year').val());
+			n = (x*y)/T;
+			break;
+		case 'week':
+			x = parseInt($('#income_per_week').val());
+			y = parseInt($('#income_weeks_per_year').val())
+			n = (x*y)/T;
+			break;
+		case 'hour':
+			n = parseInt($('#income_per_hour').val());
+	}
+	alert("n:"+n);
+	fin_effort.aver_income_per_hour = n;
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//extra financial effort variables
+	fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
+	fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_year * 12;
+	fin_effort.days_car_paid = total_costs_year / fin_effort.aver_income_per_year * 365.25;
+	fin_effort.kinetic_speed = fin_effort.drive_per_year / fin_effort.hours_drive_per_year;
+	fin_effort.virtual_speed = fin_effort.drive_per_year / (fin_effort.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
+	
 	var output = {
-		monthly_costs: monthly_costs,
+		monthly_costs: monthly_costs, //object with all the monthly costs
 		external_costs: external_costs,
 		public_transports: public_transports,
-		fin_effort: fin_effort,
+		fin_effort: fin_effort, //object with financial effort variables
 		distance_std: distance_std,
 		age_months: age_months,
 		month_cred: month_cred,
