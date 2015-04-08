@@ -123,7 +123,6 @@ function getHoursOfWorkToAffordCar(netIncomePerHour, period, totalCosts){
 // *.*
 function setStatisticValues(userIds, data, country){
 	
-	window.alert("1");
 	var temp = [];
 	for(var i=0; i<userIds.length;i++){
 		for(var j=0; j<data.length;j++){
