@@ -1,20 +1,60 @@
 function calculate_costs(f1, f2, f3, country){
-		
-	//*************** MONTHLY COSTS ************
+	//f1, f2 and f3 are input objects (each for each form)
+	//country is an input object with country information
+	//calculate_costs returns the object "output"
+	//object "monthly_costs" is a field of object "output"
 	
+	//Monthly Costs object, is a field of object "output"
 	var monthly_costs = {			
-		depreciation: 0,
-		insurance: 0,		
-		credit: 0,
-		inspection: 0,
-		car_tax: 0,			
-		fuel: 0,		
-		maintenance: 0,
-		repairs_improv: 0,
-		parking: 0,		
-		tolls: 0,		
-		fines: 0,	    
-		washing: 0				
+		depreciation: 0,                   //depreciation monthly cost
+		insurance: 0,                      //insurance monthly cost
+		credit: 0,                         //interests of credit monthly cost
+		inspection: 0,                     //inspection monthly costs
+		car_tax: 0,                        //car tax monthly cost			
+		fuel: 0,                           //fuel monthly cost		
+		maintenance: 0,                    //maintenance monthly costs
+		repairs_improv: 0,                 //repairs and improvements monthly cost
+		parking: 0,                        //parking monthly cost		
+		tolls: 0,                          //tolls monthly cost		
+		fines: 0,                          //fines monthly cost	    
+		washing: 0                         //washing monthly cost				
+	};
+	//financial effort object
+	var fin_effort = {
+		//income
+		income: 0,                         //income amount the user has inserted     
+		aver_income_per_year: 0,           //average income per year
+		income_per_type: 0,                //number of income time-periods (number of months/year or weeks/year)
+		income_hours_per_week: 0,          //number of hours per week  
+		aver_income_per_month:0,           //average income per month
+		aver_income_per_hour: 0,           //average income per hour
+		time_hours_per_week: 36,           //default hours per week
+		time_month_per_year: 11,           //default months per year
+		aver_work_time_per_m: 0,           //average working time per month        
+		work_hours_per_y: 0,               //total working hours per year
+		//driving distance
+		drive_per_year:0,                  //total distance driven per year
+		drive_to_work_days_per_week: 0,    //number of days per week, the user drives to job 
+		dist_home_job: 0,                  //distance between home and job (one-way)
+		journey_weekend: 0,                //distance the user drives during weekend
+		aver_drive_per_week: 0,		       //average distance driven per week
+		fuel_period_km: f3.period_km,      //time-period for distance calculation 
+		//driving time
+		time_home_job: 0,                  //time (in minutes) driven between home and job
+		time_weekend: 0,                   //time (in minutes) driven during weekends
+		min_drive_per_week: 0,             //time (in minutes) driven per week
+		min_drive_per_day: 0,              //time (in minutes) driven per day
+		days_drive_per_month: 0,           //number of days driven per month	
+		hours_drive_per_month: 0,          //number of hours driven per month
+		hours_drive_per_year: 0,           //number of hours driven per year
+		//costs
+		total_per_year: total_costs_year,  //total costs per year
+		hours_per_year_to_afford_car: 0,   //hours per year to afford the car
+		month_per_year_to_afford_car: 0,   //months per year to afford the car
+		days_car_paid: 0,                  //number of days till the car is paid
+		//speed
+		kinetic_speed: 0,                  //average kinetic speed
+		virtual_speed: 0                   //average virtual speed
 	};
 	
 	//depreciation
@@ -126,8 +166,6 @@ function calculate_costs(f1, f2, f3, country){
 	
 	//parking
 	monthly_costs.parking = parseFloat(f2.parking);
-	
-	
 	
 	//tolls
 	var tolls_period = f2.tolls_select;
@@ -266,40 +304,7 @@ function calculate_costs(f1, f2, f3, country){
 		external_costs.total_costs = public_transports.total_altern;
 	}
 	
-	//*************** EXTRA DATA - VIRTUAL SPEED ************
-	
-	var fin_effort = {
-		income: 0,
-		aver_income_per_year: 0,
-		income_per_type: 0,
-		income_hours_per_week: 0,
-		aver_income_per_month:0,
-		aver_income_per_hour: 0,
-		time_hours_per_week: 36,
-		time_month_per_year: 11,
-		aver_work_time_per_m: 0,
-		work_hours_per_y: 0,
-		drive_to_work_days_per_week: 0,
-		dist_home_job: 0,
-		journey_weekend: 0,
-		aver_drive_per_week: 0,		
-		drive_per_year:0,
-		time_home_job: 0,
-		time_weekend: 0,
-		min_drive_per_week: 0,
-		min_drive_per_day: 0,
-		days_drive_per_month: 0,
-		hours_drive_per_month: 0,
-		hours_drive_per_year: 0,
-		fuel_period_km: f3.period_km,
-		total_per_year: total_costs_year,
-		hours_per_year_to_afford_car: 0,
-		month_per_year_to_afford_car: 0,
-		days_car_paid: 0,
-		kinetic_speed: 0,
-		virtual_speed: 0
-	};
-		
+	//*** financial effort
 	//income
 	switch(f3.income_type){
 		case 'year':
@@ -337,7 +342,7 @@ function calculate_costs(f1, f2, f3, country){
 	}
 	
 	//time spent in driving
-	var drive_per_month = 0;
+	var drive_per_month = 0; //distance driven per month
 	if(f2.type_calc_fuel != 'km'){
 		if(f3.drive_to_work == 'true'){
 			fin_effort.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
@@ -412,49 +417,42 @@ function calculate_costs(f1, f2, f3, country){
 	//total costs per unit dist.
 	var total_costs_p_unit_distance = total_costs_month / distance_per_month;
 	
-	//find Net Income per Hour
-
-	var typeIncome = $('#income_div').find('input[type=radio]:checked').val();
-	var isJob = $('#working_time_div').find('input[type=radio]:checked').val();
-	var a = 11; //months per year of work
-	var b = 36; //hours per week of normal working week
+	
+	//****find Net Income per Hour
+	var typeIncome = f3.income_type;
+	//alert("typeIncome:"+typeIncome);
+	var isJob = f3.is_working_time;
+	//alert("isJob:"+isJob);
+	var a = 11; //default months per year of work
+	var b = 36; //default hours per week of normal working week
 	var T, x, y, n;
-	if(isJob=='true'){
-		a = parseInt($('#time_month_per_year').val());
-		b = parseInt($('#time_hours_per_week').val());
+	//if has a job, find a=months per year of work, b=hours per week of work
+	if(isJob=='true'){ 
+		a = parseInt(f3.time_month_per_year);
+		b = parseInt(f3.time_hours_per_week);
 	}
-	T = 365.25/7 * a/12 * b;
-	alert("T:"+T);
+	T = 365.25/7 * a/12 * b; //T=number of working hours per year
+	//alert("T:"+T);
 	switch(typeIncome){
 		case 'year':
-			x = parseInt($('#income_per_year').val());
+			x = parseInt(f3.income_per_year);
 			n = x/T;
 			break;
 		case 'month':
-			x = parseInt($('#income_per_month').val());
-			y = parseInt($('#income_months_per_year').val());
+			x = parseInt(f3.income_per_month);
+			y = parseInt(f3.income_months_per_year);
 			n = (x*y)/T;
 			break;
 		case 'week':
-			x = parseInt($('#income_per_week').val());
-			y = parseInt($('#income_weeks_per_year').val())
+			x = parseInt(f3.income_per_week);
+			y = parseInt(f3.income_weeks_per_year)
 			n = (x*y)/T;
 			break;
 		case 'hour':
-			n = parseInt($('#income_per_hour').val());
+			n = parseInt(f3.income_per_hour);
 	}
-	alert("n:"+n);
 	fin_effort.aver_income_per_hour = n;
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//alert("aver_income_per_hour:"+n);
 	
 	//extra financial effort variables
 	fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
@@ -463,12 +461,13 @@ function calculate_costs(f1, f2, f3, country){
 	fin_effort.kinetic_speed = fin_effort.drive_per_year / fin_effort.hours_drive_per_year;
 	fin_effort.virtual_speed = fin_effort.drive_per_year / (fin_effort.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
 	
+	//object to be returned by the function
 	var output = {
-		monthly_costs: monthly_costs, //object with all the monthly costs
-		external_costs: external_costs,
-		public_transports: public_transports,
-		fin_effort: fin_effort, //object with financial effort variables
-		distance_std: distance_std,
+		monthly_costs: monthly_costs,            //object with the calculated monthly costs
+		external_costs: external_costs,          //object with the external costs
+		public_transports: public_transports,    //object with the car-alternative public transports costs
+		fin_effort: fin_effort,                  //object with financial effort variables
+		distance_std: distance_std,              //distance travelled
 		age_months: age_months,
 		month_cred: month_cred,
 		total_interests: total_interests,

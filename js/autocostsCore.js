@@ -98,21 +98,20 @@ function calculateMonthlyDepreciation(initialCost, finalCost, months) {
        return (initialCost - finalCost) / months;
 }
 
-function getHoursOfWorkToAffordCar(period, totalCosts){
+function getHoursOfWorkToAffordCar(netIncomePerHour, period, totalCosts){
 	var hw = 0;
-	var netIncome = getNetIncomePerHour();
 	switch(period){
 		case 'year':
-			hw = totalCosts * 12 / netIncome;
+			hw = totalCosts * 12 / netIncomePerHour;
 			break;
 		case 'month':
-			hw = totalCosts / netIncome;
+			hw = totalCosts / netIncomePerHour;
 			break;
 		case 'week':
-			hw = totalCosts * 12 / 365.25 * 7 * 1 / netIncome;
+			hw = totalCosts * 12 / 365.25 * 7 * 1 / netIncomePerHour;
 			break;
 		case 'day':
-			hw = totalCosts * 12 / 365.25 * 1 / netIncome;
+			hw = totalCosts * 12 / 365.25 * 1 / netIncomePerHour;
 			break;
 	}
 	return hw;
@@ -130,49 +129,41 @@ function setStatisticValues(userIds, data, country){
 		for(var j=0; j<data.length;j++){
 		    if(data[j].uuid_client==userIds[i].uuid_client){			
 				if(is_DBentry_ok(data[j])){
-				    //window.alert("i=" + i + ";" + "j=" + j);
-					//window.alert("f1");
 					var f1 = get_DB_part1(data[j]);
-					//window.alert("f2");
 					var f2 = get_DB_part2(data[j]);
-					//window.alert("f3");
 					var f3 = get_DB_part3(data[j]);
-					//window.alert("4");
 
 					var result = calculate_costs(f1, f2, f3, country);
-					//window.alert("5");
-					alert(JSON.stringify(result.fin_effort, null, 4));
-					//alert("drive_per_year:"+result.fin_effort.drive_per_year);
-					//alert("hours_drive_per_year:"+result.fin_effort.hours_drive_per_year);
-					//alert("kinetic_speed:"+result.fin_effort.kinetic_speed);
+					//alert(JSON.stringify(result, null, 4));
 					
-					temp.push({
-						dep: result.monthly_costs.depreciation, 
-						ins: result.monthly_costs.insurance, 
-						cred: result.monthly_costs.credit, 
-						insp: result.monthly_costs.inspection, 
-						carTax: result.monthly_costs.car_tax, 
-						fuel: result.monthly_costs.fuel,
-						maint: result.monthly_costs.maintenance,
-						rep: result.monthly_costs.repairs_improv,
-						park: result.monthly_costs.parking,
-						tolls: result.monthly_costs.tolls,
-						fines: result.monthly_costs.fines,
-						wash: result.monthly_costs.washing,
-						dist: result.distance_per_month,
-						kinetic: result.fin_effort.kinetic_speed,
-						virtual: result.fin_effort.virtual_speed
-					});
-					//alert(JSON.stringify(temp, null, 4));
-					//window.alert("6");
+					if (isFinite(result.fin_effort.kinetic_speed)
+					 && result.fin_effort.kinetic_speed<120
+					 && isFinite(result.fin_effort.virtual_speed)
+                     &&	result.fin_effort.virtual_speed>0 ){ //if has information regarding average kinetic and virtual speed
+						temp.push({
+							dep: result.monthly_costs.depreciation, 
+							ins: result.monthly_costs.insurance, 
+							cred: result.monthly_costs.credit, 
+							insp: result.monthly_costs.inspection, 
+							carTax: result.monthly_costs.car_tax, 
+							fuel: result.monthly_costs.fuel,
+							maint: result.monthly_costs.maintenance,
+							rep: result.monthly_costs.repairs_improv,
+							park: result.monthly_costs.parking,
+							tolls: result.monthly_costs.tolls,
+							fines: result.monthly_costs.fines,
+							wash: result.monthly_costs.washing,
+							dist: result.distance_per_month,
+							kinetic: result.fin_effort.kinetic_speed,
+							virtual: result.fin_effort.virtual_speed
+						});
+					}
 					break;
 				}				
 			}			
 		}		
 	}
-	
-	//window.alert("7");
-	alert(JSON.stringify(temp, null, 4));
+
 	//compute average
 	if(temp.length){
 		var depTotal = 0;
@@ -204,10 +195,9 @@ function setStatisticValues(userIds, data, country){
 			finesTotal += temp[i].fines;
 			washTotal += temp[i].wash;
 			distTotal += temp[i].dist;			
-			kineticTotal += temp[i].kinetic;			
+			kineticTotal += temp[i].kinetic;		
 			virtualTotal += temp[i].virtual;			
 		}
-		
 		var depAverage = depTotal/temp.length;
 		var insAverage = insTotal/temp.length;
 		var credAverage = credTotal/temp.length;
