@@ -1,94 +1,96 @@
 // get from form
 function get_form_part1(){
+    var d = document.custo; //main form document variable
 	var data = {
 		//depreciation
-		auto_mes:               document.custo.auto_mes.value,
-		auto_ano:               document.custo.auto_ano.value,
-		auto_initial_cost:      document.custo.auto_val_inicial.value,
-		auto_final_cost:        document.custo.auto_val_final.value,		
+		auto_mes:               d.auto_mes.value,
+		auto_ano:               d.auto_ano.value,
+		auto_initial_cost:      d.auto_val_inicial.value,
+		auto_final_cost:        d.auto_val_final.value,		
 		//insurance
-		insurance_type:         getCheckedValue(custo.tipo_seguro),
-		insurance_value:        document.custo.seguro_val.value,
+		insurance_type:         getCheckedValue(d.tipo_seguro),
+		insurance_value:        d.seguro_val.value,
 		//finance
-		cred_auto_s_n:          getCheckedValue(custo.cred_auto),
-		credit_amount:          document.custo.cred_auto_montante.value,
-		credit_period:          document.custo.cred_auto_period.value,
-		credit_value_p_month:   document.custo.cred_auto_val_mes.value,
-		credit_residual_value:  document.custo.cred_auto_valresidual.value,
+		cred_auto_s_n:          getCheckedValue(d.cred_auto),
+		credit_amount:          d.cred_auto_montante.value,
+		credit_period:          d.cred_auto_period.value,
+		credit_value_p_month:   d.cred_auto_val_mes.value,
+		credit_residual_value:  d.cred_auto_valresidual.value,
 		//inspection
-		nmr_times_inspec:       document.custo.nr_vezes_inspecao.value,
-		inspec_price:           document.custo.preco_inspecao.value,
+		nmr_times_inspec:       d.nr_vezes_inspecao.value,
+		inspec_price:           d.preco_inspecao.value,
 		//car tax
-		car_tax:                document.custo.IUC.value
+		car_tax:                d.IUC.value
 	};
 	return data;
 }
 
 function get_form_part2(){
-
+    var d = document.custo; //main form document variable
 	var data = {
 		//fuel
-		type_calc_fuel:         getCheckedValue(custo.calc_combustiveis),
-		fuel_eff_l100km:        document.custo.consumo_auto.value,
-		fuel_price_CURRpLitre:  document.custo.fuel_price.value,
-		take_car_to_job:        getCheckedValue(document.custo.carro_emprego),
-		fuel_period_distance:   document.custo.combustivel_period_km.value,		
-		distance:               document.custo.km_por_mes.value,
-		car_consumption:        document.custo.consumo_auto.value,
-		fuel_price:             document.custo.fuel_price.value,
-		distance_home2job:      document.custo.km_entre_casa_trabalho.value,
-		distance_weekend:       document.custo.km_fds.value,
-		days_p_week:            document.custo.dias_por_semana.value,
-		fuel_period_money:      document.custo.combustiveis_periodo_euro.value,
-		fuel_money:             document.custo.combustiveis_euro.value,
+		type_calc_fuel:         getCheckedValue(d.calc_combustiveis),
+		fuel_eff_l100km:        d.consumo_auto.value,
+		fuel_price_CURRpLitre:  d.fuel_price.value,
+		take_car_to_job:        getCheckedValue(d.carro_emprego),
+		fuel_period_distance:   d.combustivel_period_km.value,		
+		distance:               d.km_por_mes.value,
+		car_consumption:        d.consumo_auto.value,
+		fuel_price:             d.fuel_price.value,
+		distance_home2job:      d.km_entre_casa_trabalho.value,
+		distance_weekend:       d.km_fds.value,
+		days_p_week:            d.dias_por_semana.value,
+		fuel_period_money:      d.combustiveis_periodo_euro.value,
+		fuel_money:             d.combustiveis_euro.value,
 		//maintenance
-		maintenance:            document.custo.revisoes.value,
+		maintenance:            d.revisoes.value,
 		//repairs
-		repairs:                document.custo.reparacoes.value,
+		repairs:                d.reparacoes.value,
 		//parking
-		parking:                document.custo.parqueamento.value,
+		parking:                d.parqueamento.value,
 		//tolls
-		type_calc_tolls:        getCheckedValue(document.custo.portagens_ao_dia),
-		tolls_select:           document.custo.portagens_select.value,
-		tolls:                  document.custo.portagens.value,
-		price_tolls_p_day:      document.custo.preco_portagens_por_dia.value,
-		tolls_days_p_month:     document.custo.dias_portagens_por_mes.value,
+		type_calc_tolls:        getCheckedValue(d.portagens_ao_dia),
+		tolls_select:           d.portagens_select.value,
+		tolls:                  d.portagens.value,
+		price_tolls_p_day:      d.preco_portagens_por_dia.value,
+		tolls_days_p_month:     d.dias_portagens_por_mes.value,
 		//fines
-		fines:                  document.custo.multas.value,
-		fines_select:           document.custo.multas_select.value,
+		fines:                  d.multas.value,
+		fines_select:           d.multas_select.value,
 		//washing
-		washing:                document.custo.lavagens.value,
-		washing_select:         document.custo.lavagens_select.value		
+		washing:                d.lavagens.value,
+		washing_select:         d.lavagens_select.value		
 	};
 	return data;
 }
 
 function get_form_part3(){
+    var d = document.custo; //main form document variable
 	var data = {
-		n_pess_familia:              document.custo.pessoas_agregado.value,
-		pmpmpc:                      document.custo.preco_passe.value,
-		income_type:                 getCheckedValue(custo.radio_income),
-		income_per_year:             document.custo.income_per_year.value,
-		income_per_month:            document.custo.income_per_month.value,
-		income_months_per_year:      document.custo.income_months_per_year.value,
-		income_per_week:             document.custo.income_per_week.value,
-		income_weeks_per_year:       document.custo.income_weeks_per_year.value,
-		income_per_hour:             document.custo.income_per_hour.value,
-		income_hours_per_week:       document.custo.income_hours_per_week.value,
-		income_hour_weeks_per_year:  document.custo.income_hour_weeks_per_year.value,
-		is_working_time:             getCheckedValue(custo.radio_work_time),
-		time_hours_per_week:         document.custo.time_hours_per_week.value,
-		time_month_per_year:         document.custo.time_month_per_year.value,
-		drive_to_work:               getCheckedValue(custo.drive_to_work),
-		drive_to_work_days_per_week: document.custo.drive_to_work_days_per_week.value,
-		dist_home_job:               document.custo.dist_home_job.value,
-		journey_weekend:             document.custo.journey_weekend.value,
-		period_km:                   document.custo.period_km.value,
-		km_per_month:                document.custo.km_per_month.value,
-		time_home_job:               document.custo.time_home_job.value,
-		time_weekend:                document.custo.time_weekend.value,
-		min_drive_per_day:           document.custo.min_drive_per_day.value,
-		days_drive_per_month:        document.custo.days_drive_per_month.value
+		n_pess_familia:              d.pessoas_agregado.value,
+		pmpmpc:                      d.preco_passe.value,
+		income_type:                 getCheckedValue(d.radio_income),
+		income_per_year:             d.income_per_year.value,
+		income_per_month:            d.income_per_month.value,
+		income_months_per_year:      d.income_months_per_year.value,
+		income_per_week:             d.income_per_week.value,
+		income_weeks_per_year:       d.income_weeks_per_year.value,
+		income_per_hour:             d.income_per_hour.value,
+		income_hours_per_week:       d.income_hours_per_week.value,
+		income_hour_weeks_per_year:  d.income_hour_weeks_per_year.value,
+		is_working_time:             getCheckedValue(d.radio_work_time),
+		time_hours_per_week:         d.time_hours_per_week.value,
+		time_month_per_year:         d.time_month_per_year.value,
+		drive_to_work:               getCheckedValue(d.drive_to_work),
+		drive_to_work_days_per_week: d.drive_to_work_days_per_week.value,
+		dist_home_job:               d.dist_home_job.value,
+		journey_weekend:             d.journey_weekend.value,
+		period_km:                   d.period_km.value,
+		dist_per_time_period:        d.km_per_month.value,
+		time_home_job:               d.time_home_job.value,
+		time_weekend:                d.time_weekend.value,
+		min_drive_per_day:           d.min_drive_per_day.value,
+		days_drive_per_month:        d.days_drive_per_month.value
 	};
 	return data;
 }
@@ -183,7 +185,7 @@ function get_DB_part3(datab){
 		dist_home_job:               datab.distance_home_job,		
 		journey_weekend:             datab.distance_journey_weekend,
 		period_km:                   datab.distance_period,
-		km_per_month:                datab.distance_per_month,
+		dist_per_time_period:        datab.distance_per_month,
 		time_home_job:               datab.time_spent_home_job,		
 		time_weekend:                datab.time_spent_weekend,
 		min_drive_per_day:           datab.time_spent_min_drive_per_day,
