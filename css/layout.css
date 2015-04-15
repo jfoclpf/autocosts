@@ -136,23 +136,6 @@ td.top_b{
 	margin-top:2px;
 }
 
-.donate {
-    width: 100px;
-    position:relative;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-    padding: 5px;
-    outline: 0px;
-    text-decoration:none;
-    vertical-align: middle;
-}
-
 body {
     font-family: Verdana, Geneva, sans-serif;
     padding-top: 10px;
@@ -773,10 +756,6 @@ padding-left:20px;
         vertical-align: middle;
     }
 
-    .donate {
-        font-size: 10px;
-    }
-
     .p5 {
         font-size: 100%;
     }
@@ -800,10 +779,6 @@ padding-left:20px;
     #main_div {
         border: none;
         padding: 0;
-    }
-
-    #div12 {
-        border: none;
     }
 
     #container {
@@ -891,10 +866,6 @@ padding-left:20px;
 }
 
 @media screen and (max-width: 260px) {
-
-    .donate {
-        font-size: 10px;
-    }
 
     input, select {
         font-size: 45%;
