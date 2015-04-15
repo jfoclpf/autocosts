@@ -306,7 +306,7 @@ padding-left:20px;
 
 #div1 {
     border: solid 2px;
-    float: left;
+    float: right;
     padding-top: 24px;
     text-align: center;
     width: 20%;
@@ -343,7 +343,7 @@ padding-left:20px;
 
 #div3 {
     display: block;
-    float: right;
+    float: left;
     overflow: visible;
 	padding: 0;
 	margin: 0 auto;
@@ -605,7 +605,8 @@ padding-left:20px;
         padding: 2px;
         float: none;
         width: auto;
-        text-align: center;
+        text-align: 
+        ;
     }
 
     #div11 {

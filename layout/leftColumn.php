@@ -1,12 +1,10 @@
 <div id="div3a" class="roundCornerSlight">
 
-
-	<?php include "./php/logo_selector.php"; ?>
+    <?php include "./php/logo_selector.php"; ?>
 
     <div
         style="text-align:center;font-size:110%; <? if ($is_logo) { ?> padding-top: 20px; border-top: solid 2px rgb(180, 180, 180); <? } ?>">
     </div>
-
     
 	<div id="div11" style="text-align:center;margin-right:auto;margin-left:auto;">
 		<a href="images/img2.jpg">
