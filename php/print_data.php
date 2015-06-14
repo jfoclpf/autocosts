@@ -109,7 +109,7 @@ function print_costs_table(f1, f2, f3, data) {
 				combustiveis_text = f2.days_p_week + " <?echo $FUEL_JOB_CALC1?> <br>";
 				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_home2job + " <?echo $FUEL_DIST_HOME_JOB1?> <br>";
 				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE?> " + f2.distance_weekend + " <?echo $FUEL_DIST_NO_JOB1?>&nbsp;<br>";
-				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + data.distance_std.toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
+				combustiveis_text = combustiveis_text + "<?echo $YOU_DRIVE_TOTTALY_AVG?> " + data.distance_per_month.toFixed(1) + " <?echo $STD_DIST?> <?echo $WORD_PER?> <?echo $MONTH?> (~30.5 <?echo $DAYS?>) <br>";
 				combustiveis_text = combustiveis_text + "<?echo $FUEL_CAR_EFF?>: " + f2.car_consumption + " <?echo $STD_FUEL_CALC?>";
 				combustiveis_text = combustiveis_text + "<br>" + "<?echo $FUEL_PRICE?>: " + f2.fuel_price + " <?echo $CURR_SYMBOL?>/<?echo $STD_VOLUME_SHORT?>";
 			}
@@ -259,12 +259,12 @@ function print_costs_table(f1, f2, f3, data) {
 
 function print_extern_table(f1, f2, f3, data){
 
-	var epa_text="<b><span class=\"p3\">Emissões de poluentes atmosféricos</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.epa + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
-    var egee_text="<b><span class=\"p3\">Emissões de gases de efeito de estufa</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.egee + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
-    var ruido_text="<b><span class=\"p3\">Poluição sonora</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.ruido + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
-    var sr_text="<b><span class=\"p3\">Sinistralidade rodoviária</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.sr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
-    var cgstn_text="<b><span class=\"p3\">Congestionamento<\/span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.cgstn + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
-    var ifr_estr_text="<b><span class=\"p3\">Desgaste das infraestruturas rodoviárias</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.ifr_estr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+	var epa_text="<b><span class=\"p3\">Emissões de poluentes atmosféricos</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.polution + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+    var egee_text="<b><span class=\"p3\">Emissões de gases de efeito de estufa</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.ghg + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+    var ruido_text="<b><span class=\"p3\">Poluição sonora</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.noise + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+    var sr_text="<b><span class=\"p3\">Sinistralidade rodoviária</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.fatalities + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+    var cgstn_text="<b><span class=\"p3\">Congestionamento<\/span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.congestion + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
+    var ifr_estr_text="<b><span class=\"p3\">Desgaste das infraestruturas rodoviárias</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.infrastr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
     var fonte_text="<b><span class=\"p2\">Fonte dos dados:</span></b><br><span class=\"p2\"><i><a href=\"" + data.external_costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia</span>";
 	var varResult="";
 	if(<?if ($def_cty=="PT") echo 'f2.type_calc_fuel=="km"'; else echo "false";?>){
@@ -272,12 +272,12 @@ function print_extern_table(f1, f2, f3, data){
 		//header
 		varResult+="<tr><td align=\"center\"><b><span class=\"p3\">Custos externos para o país</span></b><br><span class=\"p2\">Percorre " +(1 * f2.distance).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?></span></td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
 		//external costs items
-		varResult+="<tr><td align=\"left\">" + epa_text + "</td>"                    +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.epa * f2.distance).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + egee_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.egee * f2.distance).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + ruido_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.ruido * f2.distance).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + sr_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.sr * f2.distance).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + cgstn_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.cgstn * f2.distance).toFixed(1)+"</span></td></tr>";
-		varResult+="<tr><td align=\"left\">" + ifr_estr_text + "</td>"               +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.ifr_estr * f2.distance).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + epa_text + "</td>"                    +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.polution * data.distance_per_month).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + egee_text + "</td>"                   +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.ghg * data.distance_per_month).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + ruido_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.noise * data.distance_per_month).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + sr_text + "</td>"                     +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.fatalities * data.distance_per_month).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + cgstn_text + "</td>"                  +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.congestion * data.distance_per_month).toFixed(1)+"</span></td></tr>";
+		varResult+="<tr><td align=\"left\">" + ifr_estr_text + "</td>"               +   "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?> "+(data.external_costs.infrastr * data.distance_per_month).toFixed(1)+"</span></td></tr>";
 		//total
 		varResult+="<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>"+
 	                                                                              "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><center><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></center></td></tr>";
@@ -364,7 +364,7 @@ function print_feffort_table(f1, f2, f3, data){
 			varResult+= "<tr><td colspan=\"2\"><span class=\"p2\"><?echo $WORKING_TIME_MESSAGE?></span></td></tr>";
 		}
 	}			
-	varResult+=         "<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_hour().toFixed(1)) + "</span></td></tr>";
+	varResult+=         "<tr><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td><td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\">&nbsp;<span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</span></td></tr>";
 	
 	//distance
 	varResult+=         "<tr><td align=\"left\" colspan=\"2\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b></td></tr>";
@@ -397,19 +397,19 @@ function print_feffort_table(f1, f2, f3, data){
 
 	//financial effort
 	varResult+=         "<tr><td align=\"left\" colspan=\"2\" class=\"top_b\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b>"+
-						"<tr><td><span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span></td>"                       +  "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.total_per_year.toFixed(1)) + "</span></td></tr>"+
-						"<tr><td><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span></td>"                        +  "<td><span class=\"p2 td_values\">"+data.fin_effort.hours_per_year_to_afford_car().toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>"+
-						"<tr><td><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span></td>"                       +  "<td><span class=\"p2 td_values\">"+data.fin_effort.month_per_year_to_afford_car().toFixed(2)+"</span></td></tr>"+
-						"<tr><td><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>"                              +  "<td><span class=\"p2 td_values\">"+Math.ceil(data.fin_effort.days_car_paid())+" <?echo $DAYS?></span></td></tr>";
+						"<tr><td><span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span></td>"                       +  "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.total_costs_year.toFixed(1)) + "</span></td></tr>"+
+						"<tr><td><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span></td>"                        +  "<td><span class=\"p2 td_values\">"+data.fin_effort.hours_per_year_to_afford_car.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>"+
+						"<tr><td><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span></td>"                       +  "<td><span class=\"p2 td_values\">"+data.fin_effort.month_per_year_to_afford_car.toFixed(2)+"</span></td></tr>"+
+						"<tr><td><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>"                              +  "<td><span class=\"p2 td_values\">"+Math.ceil(data.fin_effort.days_car_paid)+" <?echo $DAYS?></span></td></tr>";
 		   
 
 	//speed
 	varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
                                                                                                                     "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
-																													data.fin_effort.kinetic_speed().toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+																													data.fin_effort.kinetic_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
 	varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"http://en.wikipedia.org/wiki/Car_costs#Virtual_Speed\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
 			                                                                                                        "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
-																													data.fin_effort.virtual_speed().toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
+																													data.fin_effort.virtual_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
 	varResult+="</table></center>";		
 	
 	return varResult;

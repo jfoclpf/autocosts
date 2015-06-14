@@ -72,8 +72,8 @@
 
         <div id="container" style="border-collapse:collapse; border-color:rgb(136,136,136); border-width:0px;">
 
-			<!-- div1 = LEFT layout column-->
-            <div id="div1" class="roundCornerSlight">
+			<!-- div3 = LEFT layout column-->
+            <div id="div3" style="text-align:center">
                 <?php include './layout/leftColumn.php'; ?>
             </div>
 
@@ -138,8 +138,8 @@
             <!--#######################################################################################-->
             <!--#######################################################################################-->
 
-			<!-- div3 = RIGHT layout column-->
-            <div id="div3" style="text-align:center">
+			<!-- div1 = RIGHT layout column-->            
+			<div id="div1" class="roundCornerSlight">
                 <?php include './layout/rightColumn.php'; ?>
             </div>
         </div>
