@@ -78,7 +78,7 @@
         <table  style="text-align:center" align="center">
         <tr style="text-align:center" align="center">
         <td>
-            <a href="http://build.phonegap.com/apps/359804/install" imageanchor="1">
+            <a href="http://play.google.com/store/apps/details?id=autocustos.com" imageanchor="1">
                 <img class="roundCorner" alt="mobile version" src="images/mobile1.png"
                      style="text-align: center; border-style: solid; border-width: 2px; padding: 5px; width: 70%; border-color: rgb(180, 180, 180);">
             </a>
