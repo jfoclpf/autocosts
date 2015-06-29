@@ -90,7 +90,7 @@ $DEPRECIATION_ST = 'Depreciation';
 $INSURANCE_ST = 'Insurance';
 $REP_ST = 'Repairs';
 $WASHING_ST = 'Washing';
-$VIRTUAL_SPEED_TITLE = 'Virtual speed';
+$VIRTUAL_SPEED_TITLE = 'Consumer speed';
 $KINETIC_SPEED_TITLE = 'Kinetic speed';
 
 //calculator words $COSTS= "Costs"; 
@@ -236,7 +236,7 @@ $TIME_DRIVE_WEEKEND = 'Minutes you drive in the days you don\'t take the car to 
 $MINUTES_DRIVE_PER = 'Minutes you drive per';
 $DAYS_DRIVE_PER_MONTH = 'Days you drive per month';
 $HOURS_DRIVE_PER = 'Hours you drive per';
-$VIRTUAL_SPEED = 'virtual speed';
+$VIRTUAL_SPEED = 'consumer speed';
 $KINETIC_SPEED = 'kinetic speed';
 $AVER_YEARLY = 'Average yearly';
 $WORKING_TIME_MESSAGE = 'It was considered for calculations an average working time of 36 hours per week and 11 months per year';

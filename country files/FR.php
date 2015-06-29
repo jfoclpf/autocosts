@@ -99,7 +99,7 @@ $DEPRECIATION_ST = 'Dépréciation';
 $INSURANCE_ST = 'Assurance';
 $REP_ST = 'Réparations';
 $WASHING_ST = 'Lavage';
-$VIRTUAL_SPEED_TITLE = 'Vitesse virtuelle';
+$VIRTUAL_SPEED_TITLE = 'Vitesse de consommateur';
 $KINETIC_SPEED_TITLE = 'Vitesse cinétique';
 
 //calculator words
@@ -266,7 +266,7 @@ $TIME_DRIVE_WEEKEND = 'Minutes que vous conduisez dans les jours où vous ne pre
 $MINUTES_DRIVE_PER = 'Minutes que vous conduisez par';
 $DAYS_DRIVE_PER_MONTH = 'Jours que vous conduisez par mois';
 $HOURS_DRIVE_PER = 'Heures que vous conduisez par';
-$VIRTUAL_SPEED = 'vitesse virtuelle';
+$VIRTUAL_SPEED = 'vitesse de consommateur';
 $KINETIC_SPEED = 'vitesse cinétique';
 $AVER_YEARLY = 'moyenne annuelle';
 $WORKING_TIME_MESSAGE = 'Il a été considéré pour les calculs une durée moyenne de travail de 36 heures par semaine et de 11 mois par année';

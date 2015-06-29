@@ -109,7 +109,7 @@ $DEPRECIATION_ST = 'Abschreibung';
 $INSURANCE_ST = 'Versicherung';
 $REP_ST = 'Reparaturen';
 $WASHING_ST = 'Waschen';
-$VIRTUAL_SPEED_TITLE = 'Virtuelle Geschwindigkeit';
+$VIRTUAL_SPEED_TITLE = 'Verbrauchende Geschwindigkeit';
 $KINETIC_SPEED_TITLE = 'Kinetische Geschwindigkeit';
 
 //calculator words
@@ -276,7 +276,7 @@ $TIME_DRIVE_WEEKEND = 'Fahrminuten an den Tagen, wenn Sie nicht mit dem Auto zum
 $MINUTES_DRIVE_PER = 'Fahrminuten pro';
 $DAYS_DRIVE_PER_MONTH = 'Fahrtage pro';
 $HOURS_DRIVE_PER = 'Fahrstunden pro';
-$VIRTUAL_SPEED = 'virtuelle Geschwindigkeit';
+$VIRTUAL_SPEED = 'verbrauchende Geschwindigkeit';
 $KINETIC_SPEED = 'kinetische Geschwindigkeit';
 $AVER_YEARLY = 'jährlicher Durchschnitt';
 $WORKING_TIME_MESSAGE = 'Für die Berechnungen wurde eine durchschnittliche Arbeitszeit von 36 Stunden pro Woche und 11 Monate pro Jahr vorausgesetzt';

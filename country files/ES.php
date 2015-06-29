@@ -103,7 +103,7 @@ $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';
 $REP_ST = 'Reparaciones';
 $WASHING_ST = 'Lavado';
-$VIRTUAL_SPEED_TITLE = 'Velocidad virtual';
+$VIRTUAL_SPEED_TITLE = 'Velocidad de consumidor';
 $KINETIC_SPEED_TITLE = 'Velocidad cinética';
 
 //calculator words
@@ -270,7 +270,7 @@ $TIME_DRIVE_WEEKEND = 'Número de minutos empleados en conducción los días que
 $MINUTES_DRIVE_PER = 'Número de minutos que conduces por';
 $DAYS_DRIVE_PER_MONTH = 'Número de días mensuales que conduces';
 $HOURS_DRIVE_PER = 'Número de horas por';
-$VIRTUAL_SPEED = 'velocidad virtual';
+$VIRTUAL_SPEED = 'velocidad de consumidor';
 $KINETIC_SPEED = 'velocidad cinética';
 $AVER_YEARLY = 'Promedio anual';
 $WORKING_TIME_MESSAGE = 'Se consideró para el cálculo una duración media de 36 horas semanales y de 11 meses anuales';
