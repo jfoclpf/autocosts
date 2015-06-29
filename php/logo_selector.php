@@ -4,8 +4,17 @@
 				case "PT":
 					echo '<img src="images/autocustos_euro.png" id="ac_logo">';
 					break;
+				case "ES":
+					echo '<img src="images/autogastos_euro.png" id="ac_logo">';
+					break;
+				case "IT":
+					echo '<img src="images/autocosti_euro.png" id="ac_logo">';
+					break;
+				case "DE":
+					echo '<img src="images/autoausgaben_euro.png" id="ac_logo">';
+					break;				
 				default:
-				echo '<img src="images/autocosts_euro.png" id="ac_logo">';
+					echo '<img src="images/autocosts_euro.png" id="ac_logo">';
 			}
 			break;
 		case "DOL":
