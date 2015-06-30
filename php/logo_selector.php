@@ -12,7 +12,10 @@
 					break;
 				case "DE":
 					echo '<img src="images/autoausgaben_euro.png" id="ac_logo">';
-					break;				
+					break;
+				case "FR":
+					echo '<img src="images/autocouts_euro.png" id="ac_logo">';
+					break;
 				default:
 					echo '<img src="images/autocosts_euro.png" id="ac_logo">';
 			}
