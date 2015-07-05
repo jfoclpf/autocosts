@@ -56,7 +56,9 @@
 			var country = '<? echo $def_cty?>';
 			var userIds = [];
 			var data = [];				
-			var cntr = {
+			var country_object = {
+				code: '<? echo $def_cty; ?>',
+				currency: '<? echo $CURR_CODE; ?>',
 				distance_std: <? echo $distance_std_option; ?>,
 				fuel_efficiency_std: <? echo $fuel_efficiency_std_option; ?>,
 				fuel_price_volume_std: <? echo $fuel_price_volume_std; ?>							
@@ -71,11 +73,11 @@
 					data.push(item);
 				}
 			})					
-			setStatisticValues(userIds, data, cntr);	
+			CalculateStatistics(userIds, data, country_object);
 			$('#blocker').hide();
 		},
         error: function () {					
-            console.log("There was an error submitting the values for statistical analysis");
+			console.log("There was an error submitting the values for statistical analysis");
         }
     });
  });  

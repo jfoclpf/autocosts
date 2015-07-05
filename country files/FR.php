@@ -30,6 +30,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'EUR';
 $CURR_NAME = 'Euro';
 $CURR_NAME_PLURAL = 'Euros';
 $CURR_NAME_BIG_PLURAL = 'EUROS';

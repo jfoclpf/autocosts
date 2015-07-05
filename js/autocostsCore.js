@@ -8,6 +8,59 @@ var conversionConstants = {
     GALLON_US_TO_LITER: 3.78541178
 };
 
+var statsConstants = {
+	//fuel maximum
+    MAX_EUR_PER_LITRE_FUEL:    10,
+    MAX_GBP_PER_LITRE_FUEL:    10,
+    MAX_USD_PER_USGALLON_FUEL: 40,
+	MAX_BRL_PER_LITRE_FUEL:    35,
+	//maximum fuel efficiency 
+    MAX_FUEL_EFF_L100KM: 50,
+    //maximum distances
+    MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK: 150,
+    MAX_KM_DRIVEN_WEEKEND:               400,
+    MAX_KM_DRIVEN_PER_MONTH:           10000,
+	//depreciation
+	MAX_CAR_AGE_MONTHS:     600,
+	MAX_EUR_CAR_VALUE:   100000,
+	//insurance
+	MAX_EUR_INSURANCE_PER_MONTH: 500
+};
+
+//currency converters
+//not for exact currency conversions, only for outliers removal
+//just the order of magnitude is needed
+var currencyConverterStats = {
+	EUR_TO_USD: 1,
+	EUR_TO_GBP: 1,
+	EUR_TO_BRL: 4	
+};
+
+//function that converts an input value to euro
+//value    -> input value
+//currency -> output currency
+//currencyConverter -> Currency Converter Object
+//returns value in EUR | -1 if currency not found
+function convert_to_EUR(value, currency, currencyConverter){
+	
+	value_t = parseFloat(value);
+	switch(currency){
+		case "EUR":
+			return value_t;					
+			break;
+		case "GBP":
+			return value_t*currencyConverter.EUR_TO_GBP;
+			break;
+		case "USD":
+			return value_t*currencyConverter.EUR_TO_USD;
+			break;
+		case "BRL":
+			return value_t*currencyConverter.EUR_TO_BRL;
+			break;					
+	}
+	return -1;
+}
+
 
 //converts chosen fuel consumption to l/100km
 function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
@@ -73,6 +126,14 @@ function convert_km_to_std_dist(dist, distance_std_option) {
     }
 }
 
+//convert fuel price to EUR per litre
+function convert_fuel_price_to_EURpLitre(value, currency, fuel_price_volume_std, currencyConverter) {
+
+    var value_t = parseFloat(value);
+	value_t = convert_to_fuel_price_CURRpLitre(value_t, fuel_price_volume_std);//converts to currency per litre
+    return convert_to_EUR(value_t, currency, currencyConverter); //converts currency to EUR
+}
+
 //end of normalizing functions
 function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
     var insuranceValue;
@@ -121,17 +182,16 @@ function getHoursOfWorkToAffordCar(netIncomePerHour, period, totalCosts){
 
 //********************
 // *.*
-function setStatisticValues(userIds, data, country){
+function CalculateStatistics(userIds, data, country){
 	
 	var temp = [];
 	for(var i=0; i<userIds.length;i++){
 		for(var j=0; j<data.length;j++){
 		    if(data[j].uuid_client==userIds[i].uuid_client){			
-				if(is_DBentry_ok(data[j])){
+				if(is_DBentry_ok(data[j], country)){
 					var f1 = get_DB_part1(data[j]);
 					var f2 = get_DB_part2(data[j]);
 					var f3 = get_DB_part3(data[j]);
-
 					var result = calculate_costs(f1, f2, f3, country);
 					//alert(JSON.stringify(result, null, 4));
 					
@@ -163,6 +223,7 @@ function setStatisticValues(userIds, data, country){
 		}		
 	}
 
+	//alert("starting average calculation");
 	//compute average
 	if(temp.length){
 		var depTotal = 0;
@@ -260,24 +321,30 @@ function setStatisticValues(userIds, data, country){
 }
 
 //********************
+// checks whether the DB entry is valid or if it is an outlier
 // *.*
-function is_DBentry_ok(data){	
-	if(data.acquisition_year && data.acquisition_month){
-		var today = new Date();
-		var date_auto = new Date(data.acquisition_year, data.acquisition_month - 1);
+function is_DBentry_ok(data, country) {
+    
+	if (data.acquisition_year && data.acquisition_month) {
+        var today = new Date();
+        var date_auto = new Date(data.acquisition_year, data.acquisition_month - 1);
 		var age_months = date_diff(date_auto,today);
-		if(!age_months){ return false; }	 
-	}
-	else{
-		return false;
-	}	
+        if(!age_months || age_months>statsConstants.MAX_CAR_AGE_MONTHS){ return false; }	 
+    }
+    else{
+        return false;
+    }	
 	//deprecation
 	if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) 
 		|| (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now)))
-		return false;		
+		return false;
+	if (Number(data.commercial_value_at_acquisition)>convert_to_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, currencyConverterStats))
+		return false;
 	//insurance
 	if(!data.insure_type || !data.insurance_value)
-		return false;		
+		return false;
+	if (calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > convert_to_EUR(statsConstants.MAX_EUR_INSURANCE_PER_MONTH, country.currency, currencyConverterStats))
+		return false;
 	//credit
 	if(data.credit=="true" && (!data.credit_number_installments || !data.credit_amount_installment || !data.credit_residual_value || !data.credit_borrowed_amount))
 		return false;
@@ -292,9 +359,17 @@ function is_DBentry_ok(data){
 		case "km":
 			if(!data.fuel_distance_based_fuel_efficiency || !data.fuel_distance_based_fuel_price)
 				return false;
+			//remove outliers
+			if (convert_to_fuel_eff_l100km(data.fuel_distance_based_fuel_efficiency, country.fuel_efficiency_std) > statsConstants.MAX_FUEL_EFF_L100KM)
+				return false;			
 			switch(data.fuel_distance_based_car_to_work){
 				case "true":
 					if(!data.fuel_distance_based_car_to_work_distance_home_work || !data.fuel_distance_based_car_to_work_distance_weekend || !data.fuel_distance_based_car_to_work_number_days_week)
+						return false;
+					//remove outliers
+					if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_home_work, country.distance_std) > statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK)
+						return false;
+					if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_weekend, country.distance_std) > statsConstants.MAX_KM_DRIVEN_WEEKEND)
 						return false;
 					break;
 				case "false":
@@ -302,7 +377,13 @@ function is_DBentry_ok(data){
 						return false;
 					break;				
 			}
+
+			//remove outliers for fuel price
+			var converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, country.currency, country.fuel_price_volume_std, currencyConverterStats)
+			if (converted_value!=-1 && converted_value>statsConstants.MAX_EUR_PER_LITRE_FUEL)
+				return false;
 			break;
+			
 		case "euros":
 			if(!data.fuel_currency_based_currency_value)
 				return false;
