@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Joao Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -37,6 +34,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'SEK';
 $CURR_NAME = 'Krona';
 $CURR_NAME_PLURAL = 'Kronor';
 $CURR_NAME_BIG_PLURAL = 'KRONOR';
@@ -54,14 +52,14 @@ $DURING = 'under';   //spent in tolls 3x per day _during_ 22 days per month
 $WORD_PEOPLE = 'människor';   //plural, 3 _people_ 
 $YES = 'ja';
 $NO = 'nej';
-$BUTTON_RUN = 'Kör'; //run simulator button 
-$BUTTON_RERUN = 'Kör igen'; //run simulator button 
+$BUTTON_RUN = 'Kör'; //run calculator button 
+$BUTTON_RERUN = 'Kör igen'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Kalkylator för fordonskostnader';
 $MAIN_TITLE = 'KALKYLATOR FÖR FORDONSKOSTNADER';
 $INITIAL_TEXT = 
-"Denna simulator hjälper dig att ta reda på <b>den riktiga kostnaden</b> för att äga en bil i <b>Sverige</b>. Den ger dig vanligtvis en bra uppskattning för vad du egentligen behöver spendera för att ha råd med en bil.
+"Denna calculator hjälper dig att ta reda på <b>den riktiga kostnaden</b> för att äga en bil i <b>Sverige</b>. Den ger dig vanligtvis en bra uppskattning för vad du egentligen behöver spendera för att ha råd med en bil.
 Eftersom dina fordonsrelaterade räkningar kommer vid olika tillfällen under året så kan det ofta vara svårt att räkna ut den totala kostnaden för din bil. <br>
 <br>
 Var realistisk när du fyller i alla värden. För oväntade kostnader som reparationer och böter, tänk efter hur mycket du har spenderat på dessa under de senaste åren. Som standard görs dessa uträkningar månadsvis. Använd punktsymbolen för att skriva i decimalform, till exempel <span style=\"color:rgb(255,0,0);\">1.7</span> mil mellan hem och arbete (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";

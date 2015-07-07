@@ -1,12 +1,8 @@
-﻿<!--
+<!--
 //***********************************************
                                                **
 //              AUTOCOSTS.ORG                  **
 //      the automobile costs simulator         **
-//                                             **
-//      made by João Pimentel Ferreira         **
-//           and Pedro Gonçalves               **
-//       under Creative Commons BY-SA          **
 //                                             **
 //***********************************************
 
@@ -27,7 +23,7 @@ $avail_CT = array(
     "TR" => "Türkiye",
     "CZ" => "Česká",
     "FI" => "Suomessa",
-    "ES" => "España",
+    "ES" => "España",
     "PL" => "Polska",
     "RO" => "România",
     "IT" => "Italia",

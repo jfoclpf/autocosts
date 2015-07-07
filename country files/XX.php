@@ -4,10 +4,7 @@
 //***********************************************
 //                                             **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator         **
-//                                             **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator        **
 //                                             **
 //***********************************************
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
@@ -45,13 +42,13 @@ $DURING = 'during';   //spent in tolls 3€ per day _during_ 22 days per month
 $WORD_PEOPLE = 'people';   //plural, 3 _people_ 
 $YES = 'yes';
 $NO = 'no';
-$BUTTON_RUN = 'Run'; //run simulator button 
-$BUTTON_RERUN = 'Rerun'; //run simulator button 
+$BUTTON_RUN = 'Run'; //run calculator button 
+$BUTTON_RERUN = 'Rerun'; //run calculator button 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Automobile costs calculator';
 $MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';
 $INITIAL_TEXT = 
-"This simulator will allow you to find <b>the true cost</b> of owning a car in the <b>United Kingdom</b>. It will normally give you a good estimate of what you really need to spend to afford owning a car.
+"This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United Kingdom</b>. It will normally give you a good estimate of what you really need to spend to afford owning a car.
 As your motor bills come in at different points over the year, it's often difficult to really appreciate your total spend on your car.
 <br>
 <br>

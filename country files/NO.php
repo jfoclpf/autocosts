@@ -4,10 +4,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Joao Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
@@ -47,8 +44,8 @@ $DURING = 'under';   //spent in tolls 3x per day _during_ 22 days per month
 $WORD_PEOPLE = 'personer';   //plural, 3 _people_ 
 $YES = 'ja';
 $NO = 'no';
-$BUTTON_RUN = 'Regn ut'; //run simulator button 
-$BUTTON_RERUN = 'Regn ut på nytt'; //run simulator button 
+$BUTTON_RUN = 'Regn ut'; //run calculator button 
+$BUTTON_RERUN = 'Regn ut på nytt'; //run calculator button 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Kostnadskalkulator for bil';
 $MAIN_TITLE = 'KOSTNADSKALKULATOR FOR BIL';

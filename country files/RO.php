@@ -5,10 +5,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Joao Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -34,6 +31,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'RON';
 $CURR_NAME = 'Lei';
 $CURR_NAME_PLURAL = 'Lei';
 $CURR_NAME_BIG_PLURAL = 'LEI';
@@ -52,14 +50,14 @@ $WORD_PEOPLE = 'oameni';   //plural, 3 _people_
 $YES = 'da';
 $NO = 'nu';
 
-$BUTTON_RUN = 'Rulaţi'; //run simulator button 
-$BUTTON_RERUN = 'Rulaţi din nou'; //run simulator button 
+$BUTTON_RUN = 'Rulaţi'; //run calculator button 
+$BUTTON_RERUN = 'Rulaţi din nou'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Calculator costuri automobil';
 $MAIN_TITLE = 'CALCULATOR COSTURI AUTOMOBIL';
 $INITIAL_TEXT = 
-"Acest simulator vă permite să identificaţi <b>adevăratul cost</b>al deţinerii unei maşini în <b>România</b>. în mod normal vă va oferi o bună estimare a costurilor pe care trebuie să le faceţi ca să vă permiteţi deţinerea unei maşini.
+"Acest calculator vă permite să identificaţi <b>adevăratul cost</b>al deţinerii unei maşini în <b>România</b>. în mod normal vă va oferi o bună estimare a costurilor pe care trebuie să le faceţi ca să vă permiteţi deţinerea unei maşini.
 Deoarece facturile pentru combustibil apar în diferite momente de timp peste an, este uneori dificil să puteţi aprecia costurile reale totale pe care le aveţi cu maşina dumneavoastră.
 <br>
 <br>

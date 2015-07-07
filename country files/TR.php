@@ -4,11 +4,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
-//	  										   **
+//      the automobile costs calculator		   **
 //***********************************************
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 //Fuel efficiency for car engine standard
@@ -45,8 +41,8 @@ $DURING = 'boyunca';   //spent in tolls 3€ per day _during_ 22 days per month
 $WORD_PEOPLE = 'kişi';   //plural, 3 _people_ 
 $YES = 'evet';
 $NO = 'hayır';
-$BUTTON_RUN = 'Çalıştır'; //run simulator button 
-$BUTTON_RERUN = 'Tekrar çalıştır'; //run simulator button 
+$BUTTON_RUN = 'Çalıştır'; //run calculator button 
+$BUTTON_RERUN = 'Tekrar çalıştır'; //run calculator button 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Otomobil masraf hesaplayıcı';
 $MAIN_TITLE = 'OTOMOBİL MASRAF HESAPLAYICI';

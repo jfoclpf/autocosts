@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Joăo Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -54,8 +51,8 @@ $WORD_PEOPLE = 'ihmisiä';   //plural, 3 _people_
 $YES = 'kyllä';
 $NO = 'ei';
 
-$BUTTON_RUN = 'Käynnistä'; //run simulator button 
-$BUTTON_RERUN = 'Käynnistä uudelleen'; //run simulator button 
+$BUTTON_RUN = 'Käynnistä'; //run calculator button 
+$BUTTON_RERUN = 'Käynnistä uudelleen'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Auton kustannuslaskuri';

@@ -1,19 +1,9 @@
 //********************
 //normalizing functions
 
-var conversionConstants = {
-    KM_TO_MILES: 1.609344,
-    KM_TO_MIL: 10,
-    GALLON_IMP_TO_LITER: 4.54609188,
-    GALLON_US_TO_LITER: 3.78541178
-};
-
 var statsConstants = {
 	//fuel maximum
     MAX_EUR_PER_LITRE_FUEL:    10,
-    MAX_GBP_PER_LITRE_FUEL:    10,
-    MAX_USD_PER_USGALLON_FUEL: 40,
-	MAX_BRL_PER_LITRE_FUEL:    35,
 	//maximum fuel efficiency 
     MAX_FUEL_EFF_L100KM: 50,
     //maximum distances
@@ -26,138 +16,6 @@ var statsConstants = {
 	//insurance
 	MAX_EUR_INSURANCE_PER_MONTH: 500
 };
-
-//currency converters
-//not for exact currency conversions, only for outliers removal
-//just the order of magnitude is needed
-var currencyConverterStats = {
-	EUR_TO_USD: 1,
-	EUR_TO_GBP: 1,
-	EUR_TO_BRL: 4	
-};
-
-//function that converts an input value to euro
-//value    -> input value
-//currency -> output currency
-//currencyConverter -> Currency Converter Object
-//returns value in EUR | -1 if currency not found
-function convert_to_EUR(value, currency, currencyConverter){
-	
-	value_t = parseFloat(value);
-	switch(currency){
-		case "EUR":
-			return value_t;					
-			break;
-		case "GBP":
-			return value_t*currencyConverter.EUR_TO_GBP;
-			break;
-		case "USD":
-			return value_t*currencyConverter.EUR_TO_USD;
-			break;
-		case "BRL":
-			return value_t*currencyConverter.EUR_TO_BRL;
-			break;					
-	}
-	return -1;
-}
-
-
-//converts chosen fuel consumption to l/100km
-function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
-
-    var fuel_eff_temp = parseFloat(fuel_eff);
-    
-    switch (fuel_efficiency_std_option) {
-        case 1:
-            return fuel_eff_temp;
-        case 2:
-            return 100 / fuel_eff_temp;  //km/l -> l/100km
-        case 3:
-            return (100 * conversionConstants.GALLON_IMP_TO_LITER) / (conversionConstants.KM_TO_MILES * fuel_eff_temp); //mpg(imp) -> l/100km
-        case 4:
-            return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuel_eff_temp); //mpg(US) -> l/100km
-        case 5:
-            return conversionConstants.KM_TO_MIL * fuel_eff_temp; //l/mil -> l/100km (1 mil = 10km)
-    }
-}
-
-//converts chosen fuel price to CURRENCY_unit/litre
-function convert_to_fuel_price_CURRpLitre(fuel_price, fuel_price_volume_std) {
-
-    var fuel_price_temp = parseFloat(fuel_price);
-
-    switch (fuel_price_volume_std) {
-        case 1:
-            return fuel_price_temp; // CURRENCY_unit/litre to CURRENCY_unit/litre
-        case 2:
-            return fuel_price_temp / conversionConstants.GALLON_IMP_TO_LITER; //currency/(imp gallon) -> currency/litre
-        case 3:
-            return fuel_price_temp / conversionConstants.GALLON_US_TO_LITER; //currency/(US gallon) -> currency/litre
-    }
-}
-
-//converts chosen distances to km
-function convert_std_dist_to_km(dist, distance_std_option) {
-
-    var dist_t = parseFloat(dist);
-
-    switch (distance_std_option) {
-        case 1:
-            return dist_t;
-        case 2:
-            return dist_t * conversionConstants.KM_TO_MILES; //miles to km
-        case 3:
-            return dist_t * conversionConstants.KM_TO_MIL; //mil(10km) to km
-    }
-}
-
-//converts km to chosen distances
-function convert_km_to_std_dist(dist, distance_std_option) {
-
-    var dist_t = parseFloat(dist);
-
-    switch (distance_std_option) {
-        case 1:
-            return dist_t;
-        case 2:
-            return dist_t / conversionConstants.KM_TO_MILES; //km to miles
-        case 3:
-            return dist_t / conversionConstants.KM_TO_MIL; //km to mil(10km)
-    }
-}
-
-//convert fuel price to EUR per litre
-function convert_fuel_price_to_EURpLitre(value, currency, fuel_price_volume_std, currencyConverter) {
-
-    var value_t = parseFloat(value);
-	value_t = convert_to_fuel_price_CURRpLitre(value_t, fuel_price_volume_std);//converts to currency per litre
-    return convert_to_EUR(value_t, currency, currencyConverter); //converts currency to EUR
-}
-
-//end of normalizing functions
-function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
-    var insuranceValue;
-    switch(insuranceType)
-    {
-		case "mensal":
-            insuranceValue = Number(insuranceInputValue);
-            break;
-		case "trimestral":
-            insuranceValue = insuranceInputValue / 3;
-            break;
-        case "semestral":
-            insuranceValue = insuranceInputValue / 6;
-            break;
-        case "anual":
-            insuranceValue = insuranceInputValue / 12;
-            break;       
-    }
-    return insuranceValue;
-}
-
-function calculateMonthlyDepreciation(initialCost, finalCost, months) {
-       return (initialCost - finalCost) / months;
-}
 
 function getHoursOfWorkToAffordCar(netIncomePerHour, period, totalCosts){
 	var hw = 0;
@@ -188,6 +46,7 @@ function CalculateStatistics(userIds, data, country){
 	for(var i=0; i<userIds.length;i++){
 		for(var j=0; j<data.length;j++){
 		    if(data[j].uuid_client==userIds[i].uuid_client){			
+				
 				if(is_DBentry_ok(data[j], country)){
 					var f1 = get_DB_part1(data[j]);
 					var f2 = get_DB_part2(data[j]);
@@ -334,17 +193,24 @@ function is_DBentry_ok(data, country) {
     else{
         return false;
     }	
+	
 	//deprecation
 	if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) 
 		|| (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now)))
 		return false;
-	if (Number(data.commercial_value_at_acquisition)>convert_to_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, currencyConverterStats))
+	
+	var converted_value = convert_to_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, EURcurrConverterStats);
+	if (converted_value!=-1 && Number(data.commercial_value_at_acquisition) > converted_value)
 		return false;
+	
 	//insurance
 	if(!data.insure_type || !data.insurance_value)
 		return false;
-	if (calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > convert_to_EUR(statsConstants.MAX_EUR_INSURANCE_PER_MONTH, country.currency, currencyConverterStats))
+	
+	converted_value = convert_to_EUR(statsConstants.MAX_EUR_INSURANCE_PER_MONTH, country.currency, EURcurrConverterStats);
+	if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > converted_value)
 		return false;
+	
 	//credit
 	if(data.credit=="true" && (!data.credit_number_installments || !data.credit_amount_installment || !data.credit_residual_value || !data.credit_borrowed_amount))
 		return false;
@@ -379,7 +245,7 @@ function is_DBentry_ok(data, country) {
 			}
 
 			//remove outliers for fuel price
-			var converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, country.currency, country.fuel_price_volume_std, currencyConverterStats)
+			converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, country.currency, country.fuel_price_volume_std, EURcurrConverterStats)			
 			if (converted_value!=-1 && converted_value>statsConstants.MAX_EUR_PER_LITRE_FUEL)
 				return false;
 			break;

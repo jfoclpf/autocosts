@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -30,6 +27,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'PLN';
 $CURR_NAME = 'Zloty';
 $CURR_NAME_PLURAL = 'złotych';
 $CURR_NAME_BIG_PLURAL = 'PLN';
@@ -48,8 +46,8 @@ $WORD_PEOPLE = 'osoby';   //plural, 3 _people_
 $YES = 'tak';
 $NO = 'nie';
 
-$BUTTON_RUN = 'Wykonaj'; //run simulator button 
-$BUTTON_RERUN = 'Wykonaj ponownie'; //run simulator button 
+$BUTTON_RUN = 'Wykonaj'; //run calculator button 
+$BUTTON_RERUN = 'Wykonaj ponownie'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Kalkulator kosztów utrzymania pojazdu';

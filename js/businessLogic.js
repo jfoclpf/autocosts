@@ -1,3 +1,27 @@
+function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
+    var insuranceValue;
+    switch(insuranceType)
+    {
+		case "mensal":
+            insuranceValue = Number(insuranceInputValue);
+            break;
+		case "trimestral":
+            insuranceValue = insuranceInputValue / 3;
+            break;
+        case "semestral":
+            insuranceValue = insuranceInputValue / 6;
+            break;
+        case "anual":
+            insuranceValue = insuranceInputValue / 12;
+            break;       
+    }
+    return insuranceValue;
+}
+
+function calculateMonthlyDepreciation(initialCost, finalCost, months) {
+       return (initialCost - finalCost) / months;
+}
+
 function calculate_costs(f1, f2, f3, country){
 	//f1, f2 and f3 are input objects (each for each form)
 	//country is an input object with country information

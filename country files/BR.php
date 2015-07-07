@@ -3,11 +3,8 @@
 // LANGAUAGE: PORTUGUESE - BRAZILIAN
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG           **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      Translation for AUTOCOSTS.ORG          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
@@ -45,8 +42,8 @@ $DURING = 'durante';   //spent in tolls 3€ per day _during_ 22 days per month
 $WORD_PEOPLE = 'pessoas';   //plural, 3 _people_ 
 $YES = 'sim';
 $NO = 'não';
-$BUTTON_RUN = 'Calcular'; //run simulator button 
-$BUTTON_RERUN = 'Recalcular'; //run simulator button 
+$BUTTON_RUN = 'Calcular'; //run calculator button 
+$BUTTON_RERUN = 'Recalcular'; //run calculator button 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Calculadora dos Custos do Automóvel';
 $MAIN_TITLE = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';

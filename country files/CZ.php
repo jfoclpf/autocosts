@@ -5,10 +5,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by Joao Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -34,6 +31,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'CZK';
 $CURR_NAME = 'Koruna česká';
 $CURR_NAME_PLURAL = 'Koruny české';
 $CURR_NAME_BIG_PLURAL = 'KORUNY ČESKÈ';
@@ -52,8 +50,8 @@ $WORD_PEOPLE = 'osoby';   //plural, 3 _people_
 $YES = 'ano';
 $NO = 'ne';
 
-$BUTTON_RUN = 'Vypočítat'; //run simulator button 
-$BUTTON_RERUN = 'Nový výpočet'; //run simulator button 
+$BUTTON_RUN = 'Vypočítat'; //run calculator button 
+$BUTTON_RERUN = 'Nový výpočet'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Kalkulator výdajů na auto';
@@ -112,7 +110,7 @@ $WASHING_ST = 'Mytí';
 $VIRTUAL_SPEED_TITLE = 'Skutečná rychlost';
 $KINETIC_SPEED_TITLE = 'Kinetická rychlost';
 
-//simulator words
+//calculator words
 $COSTS= "Náklady";
 $FIXED_COSTS = 'Fixní náklady';
 $FIXED_COSTS_HEADER_1= 'FIXNI NÁKLADY'; //capital letters

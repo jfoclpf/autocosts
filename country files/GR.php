@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -54,8 +51,8 @@ $WORD_PEOPLE = 'άτομα';   //plural, 3 _people_
 $YES = 'ναι';
 $NO = 'όχι';
 
-$BUTTON_RUN = 'Υπολογισμός'; //run simulator button 
-$BUTTON_RERUN = 'Νέος υπολογισμός'; //run simulator button 
+$BUTTON_RUN = 'Υπολογισμός'; //run calculator button 
+$BUTTON_RERUN = 'Νέος υπολογισμός'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Υπολογιστής εξόδων αυτοκινήτου';

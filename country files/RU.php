@@ -5,10 +5,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -34,6 +31,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'RUB';
 $CURR_NAME = ' руб.';
 $CURR_NAME_PLURAL = ' руб.';
 $CURR_NAME_BIG_PLURAL = ' рyб.';
@@ -52,8 +50,8 @@ $WORD_PEOPLE = 'человек(а)';   //plural, 3 _people_
 $YES = 'да';
 $NO = 'нет';
 
-$BUTTON_RUN = 'Рассчитать'; //run simulator button 
-$BUTTON_RERUN = 'Пересчитать'; //run simulator button 
+$BUTTON_RUN = 'Рассчитать'; //run calculator button 
+$BUTTON_RERUN = 'Пересчитать'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Калькулятор расходов на автомобиль';

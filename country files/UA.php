@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -35,6 +32,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'UAH';
 $CURR_NAME = 'гривня';
 $CURR_NAME_PLURAL = 'гривні';
 $CURR_NAME_BIG_PLURAL = 'ГРИВНІ';
@@ -53,8 +51,8 @@ $WORD_PEOPLE = 'людини';   //plural, 3 _people_
 $YES = 'так';
 $NO = 'ні';
 
-$BUTTON_RUN = 'Розрахувати'; //run simulator button 
-$BUTTON_RERUN = 'Перерахувати'; //run simulator button 
+$BUTTON_RUN = 'Розрахувати'; //run calculator button 
+$BUTTON_RERUN = 'Перерахувати'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Калькулятор витрат на автомобіль';

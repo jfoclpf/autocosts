@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -54,8 +51,8 @@ $WORD_PEOPLE = 'Personen';   //plural, 3 _people_
 $YES = 'Ja';
 $NO = 'Nein';
 
-$BUTTON_RUN = 'Berechnen'; //run simulator button 
-$BUTTON_RERUN = 'Neu berechnen'; //run simulator button 
+$BUTTON_RUN = 'Berechnen'; //run calculator button 
+$BUTTON_RERUN = 'Neu berechnen'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'KFZ-Kostenrechner';

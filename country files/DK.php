@@ -6,10 +6,7 @@
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.ORG          **
-//      the automobile costs simulator		   **
-// 											   **
-//      made by João Pimentel Ferreira         **
-//       under Creative Commons BY-SA          **
+//      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
 
@@ -35,6 +32,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
+$CURR_CODE = 'DKK';
 $CURR_NAME = 'Krone';
 $CURR_NAME_PLURAL = 'Kroner';
 $CURR_NAME_BIG_PLURAL = 'KRONER';
@@ -53,8 +51,8 @@ $WORD_PEOPLE = 'personer';   //plural, 3 _people_
 $YES = 'ja';
 $NO = 'nej';
 
-$BUTTON_RUN = 'Prøv'; //run simulator button 
-$BUTTON_RERUN = 'Prøv igen'; //run simulator button 
+$BUTTON_RUN = 'Prøv'; //run calculator button 
+$BUTTON_RERUN = 'Prøv igen'; //run calculator button 
 
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Beregn dine biludgifter';
