@@ -32,10 +32,10 @@ $fuel_price_volume_std = 1;
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
 $CURR_CODE = 'RUB';
-$CURR_NAME = ' руб.';
-$CURR_NAME_PLURAL = ' руб.';
-$CURR_NAME_BIG_PLURAL = ' рyб.';
-$CURR_SYMBOL = ' руб.';
+$CURR_NAME = 'руб.';
+$CURR_NAME_PLURAL = 'руб.';
+$CURR_NAME_BIG_PLURAL = 'рyб.';
+$CURR_SYMBOL = '&#x20bd;';
 $STD_DIST = 'км'; //short text version you'd like to apply
 $STD_DIST_FULL = 'километр';
 $STD_FUEL_CALC = 'л/100 км'; //text version you'd like to apply
