@@ -48,26 +48,6 @@
 			?> users filled in totally
 			<br>
 		</div>		
-		<b>
-        <span class="p2">
-            Open and Free project<br>
-        </span>
-        </b>
-		
-		<div style="padding:4px 0 7px 0">
-        <span class="p2">
-		<a href="http://github.com/jfoclpf/autocosts/wiki">
-            autocosts@GitHub<br>
-		</a>	
-        </span>
-		
-        <span class="p2">
-		<a href="http://sourceforge.net/projects/custos-auto/">
-            autocosts@sourceforge
-		</a>
-        </span>
-	</div>
-        		
     </div>
     
     <? if ($def_cty == "PT") { ?>
