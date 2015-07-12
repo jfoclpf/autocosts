@@ -1,3 +1,7 @@
+function calculateMonthlyDepreciation(initialCost, finalCost, months) {
+       return (initialCost - finalCost) / months;
+}
+
 function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
     var insuranceValue;
     switch(insuranceType)
@@ -18,8 +22,39 @@ function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
     return insuranceValue;
 }
 
-function calculateMonthlyDepreciation(initialCost, finalCost, months) {
-       return (initialCost - finalCost) / months;
+function calculateInterestsMonthlyValue(cred_auto_bool, credit_amount, credit_period, credit_value_p_month, credit_residual_value, age_months) {
+	
+	var output = {
+        total_interests: 0,
+        period: 0,
+        monthly_costs: 0
+    };
+
+	if(cred_auto_bool == "true") { //if there was credit
+        
+		var credit_period_float = parseFloat(credit_period);
+		output.period = credit_period_float;
+		
+		var total_interests = ((credit_period_float * parseFloat(credit_value_p_month)) + parseFloat(credit_residual_value)) - parseFloat(credit_amount);
+		output.total_interests = total_interests;
+		
+		if(total_interests < 0){
+			total_interests = 0;
+		}
+			
+		if(age_months >= credit_period_float){
+			output.monthly_costs = total_interests / age_months;
+		}
+		else{
+			output.monthly_costs = parseFloat(total_interests / credit_period_float);
+		}
+	}
+	else{
+		output.total_interests = 0;
+        output.period = 0;
+        output.monthly_costs = 0;
+	}
+	return output;
 }
 
 function calculate_costs(f1, f2, f3, country){
@@ -95,21 +130,8 @@ function calculate_costs(f1, f2, f3, country){
 	monthly_costs.insurance = calculateInsuranceMonthlyValue(f1.insurance_type, f1.insurance_value);
 	
 	//credit
-	var month_cred = 0;
-	if(f1.cred_auto_s_n == "true")
-		month_cred = parseFloat(f1.credit_period);	
-
-	var total_interests = 0;
-	if(f1.cred_auto_s_n == "true"){
-				total_interests = ((month_cred * parseFloat(f1.credit_value_p_month)) + parseFloat(f1.credit_residual_value)) - parseFloat(f1.credit_amount);
-				if(total_interests < 0)
-					total_interests = 0;
-			}
-		
-	if(age_months >= month_cred)
-		monthly_costs.credit = total_interests / age_months;
-	else
-		monthly_costs.credit = parseFloat(total_interests / month_cred);
+	var credit_object = calculateInterestsMonthlyValue(f1.cred_auto_s_n, f1.credit_amount, f1.credit_period, f1.credit_value_p_month, f1.credit_residual_value, age_months);
+	monthly_costs.credit = credit_object.monthly_costs;
 	
 	//inspection
 	if(f1.nmr_times_inspec != 0)
@@ -479,13 +501,19 @@ function calculate_costs(f1, f2, f3, country){
 		//variable fields
 		distance_per_month: distance_per_month,  //distance travelled per month (in the standard distance)
 		age_months: age_months,
-		month_cred: month_cred,
-		total_interests: total_interests,
+		//credit
+		month_cred: credit_object.period,                //number of monthly credit instalments
+		total_interests: credit_object.total_interests,  //total interests paid by the credit
+		//fuel
 		fuel_period_km: fuel_period_km,
 		fuel_cost_period: fuel_cost_period,
+		//tolls
 		tolls_period: tolls_period,
+		//fines
 		fines_period: fines_period,
+		//washing
 		washing_period: washing_period,
+		//total costs
 		total_standing_costs_month: total_standing_costs_month,
 		total_running_costs_month: total_running_costs_month,
 		total_costs_month: total_costs_month,

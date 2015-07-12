@@ -17,27 +17,6 @@ var statsConstants = {
 	MAX_EUR_INSURANCE_PER_MONTH: 500
 };
 
-function getHoursOfWorkToAffordCar(netIncomePerHour, period, totalCosts){
-	var hw = 0;
-	switch(period){
-		case 'year':
-			hw = totalCosts * 12 / netIncomePerHour;
-			break;
-		case 'month':
-			hw = totalCosts / netIncomePerHour;
-			break;
-		case 'week':
-			hw = totalCosts * 12 / 365.25 * 7 * 1 / netIncomePerHour;
-			break;
-		case 'day':
-			hw = totalCosts * 12 / 365.25 * 1 / netIncomePerHour;
-			break;
-	}
-	return hw;
-}
-
-
-
 //********************
 // *.*
 function CalculateStatistics(userIds, data, country){
