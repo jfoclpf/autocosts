@@ -9,38 +9,39 @@ var conversionConstants = {
 //not for exact currency conversions, only for outliers removal
 //just the order of magnitude is needed
 var EURcurrConverterStats = {
-	"EUR": 1,
-	"USD": 1.1,
-	"GBP": 0.7,
-	"BRL": 3.5,
-	"HUF": 320,
-	"AUD": 1.5,
-	"CAD": 1.4,
-	"CZK": 30,
-	"DKK": 7.4,
-	"NOK": 9,
-	"PLN": 4.2,
-	"RON": 4.5,
-	"RUB": 60,
-	"SEK": 9.4,
-	"TRY": 3,
-	"UAH": 20
+    "EUR": 1,
+    "USD": 1.1,
+    "GBP": 0.7,
+    "BRL": 3.5,
+    "HUF": 320,
+    "AUD": 1.5,
+    "CAD": 1.4,
+    "CZK": 30,
+    "DKK": 7.4,
+    "NOK": 9,
+    "PLN": 4.2,
+    "RON": 4.5,
+    "RUB": 60,
+    "SEK": 9.4,
+    "TRY": 3,
+    "UAH": 20
 };
 
-//function that converts an input value to euro
-//value    -> input value
+//function that converts an input value in EUR to standard currency
+//value    -> input value in EUR
 //currency -> output currency
 //EURcurrConverterStats -> Currency Converter Object
 //returns value in EUR | -1 if currency not found
-function convert_to_EUR(value, currency, EURcurrConverterStats){
+function convert_from_EUR(value, currency, EURcurrConverterStats){
 
-	var value_t = parseFloat(value);
-	var conversionRatio= EURcurrConverterStats[currency];		
-		
-	if (!conversionRatio)
-		return -1;
-	
-	return value_t*conversionRatio;
+    var value_t = parseFloat(value);
+    var conversionRatio= EURcurrConverterStats[currency];       
+        
+    if (!conversionRatio){
+        return -1;
+    }
+    
+    return value_t*conversionRatio;
 }
 
 
@@ -112,6 +113,6 @@ function convert_km_to_std_dist(dist, distance_std_option) {
 function convert_fuel_price_to_EURpLitre(value, currency, fuel_price_volume_std, currencyConverter) {
 
     var value_t = parseFloat(value);
-	value_t = convert_to_fuel_price_CURRpLitre(value_t, fuel_price_volume_std);//converts to currency per litre
-    return convert_to_EUR(value_t, currency, currencyConverter); //converts currency to EUR
+    value_t = convert_to_fuel_price_CURRpLitre(value_t, fuel_price_volume_std);//converts to currency per litre
+    return convert_from_EUR(value_t, currency, currencyConverter); //converts currency to EUR
 }

@@ -4,9 +4,6 @@
 //              AUTOCOSTS.ORG                  **
 //      the automobile costs calculator        **
 //                                             **
-//      made by João Pimentel Ferreira         **
-//    under GNU General Public License, v.3    **
-//                                             **
 //***********************************************
 -->
 
