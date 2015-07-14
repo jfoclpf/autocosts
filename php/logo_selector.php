@@ -16,6 +16,9 @@
 				case "FR":
 					echo '<img src="images/autocouts_euro.png" id="ac_logo">';
 					break;
+				case "GR":
+					echo '<img src="images/exodaautokinitou_euro.png" id="ac_logo">';
+					break;                    
 				default:
 					echo '<img src="images/autocosts_euro.png" id="ac_logo">';
 			}
