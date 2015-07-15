@@ -61,7 +61,7 @@ Wees realistisch met de ingevoerde waarden. Voor onverwachte rekeningen, zoals o
 
 $HELP_PROJECT = 'Help dit project' ;
 $AC_MOBILE = 'AUTOKOSTEN<br>voor mobiele apparaten';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOKOSTEN.CO.NL';
 $AC_SUB_HEADER = 'AUTOKOSTENSIMULATOR';
 
 //time words

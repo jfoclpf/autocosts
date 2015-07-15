@@ -1,38 +1,48 @@
-<?  switch ($currency_logo){
+<?
+
+if($is_logo){
+    switch ($currency_logo){
 		case "EUR":
 			switch ($def_cty){
 				case "PT":
-					echo '<img src="images/autocustos_euro.png" id="ac_logo">';
+					$logo_file_name = 'autocustos_euro.png';
 					break;
 				case "ES":
-					echo '<img src="images/autogastos_euro.png" id="ac_logo">';
+					$logo_file_name = 'autogastos_euro.png';
 					break;
 				case "IT":
-					echo '<img src="images/autocosti_euro.png" id="ac_logo">';
+					$logo_file_name = 'autocosti_euro.png';
 					break;
 				case "DE":
-					echo '<img src="images/autoausgaben_euro.png" id="ac_logo">';
+					$logo_file_name = 'autokosten_euro.png';
 					break;
+				case "NL":
+					$logo_file_name = 'autokosten_euro.png';
+					break;                    
 				case "FR":
-					echo '<img src="images/autocouts_euro.png" id="ac_logo">';
+					$logo_file_name = 'autocouts_euro.png';
 					break;
 				case "GR":
-					echo '<img src="images/exodaautokinitou_euro.png" id="ac_logo">';
+					$logo_file_name = 'exodaautokinitou_euro.png';
 					break;                    
 				default:
-					echo '<img src="images/autocosts_euro.png" id="ac_logo">';
+					$logo_file_name = 'autocosts_euro.png';
 			}
 			break;
 		case "DOL":
-			echo '<img src="images/autocosts_dollar.png" id="ac_logo">';
+			$logo_file_name = 'autocosts_dollar.png';
 			break;
 		case "GBP":
-			echo '<img src="images/autocosts_pound.png" id="ac_logo">';
+			$logo_file_name = 'autocosts_pound.png';
 			break;
 		case "RUB":
-			echo '<img src="images/autocosts_ruble.png" id="ac_logo">';
+			$logo_file_name = 'autocosts_ruble.png';
 			break;
 	}
-	
-	if(!$is_logo) echo '<div style="padding-top:14px;"></div>'; //in case there no currency logo applies gives a break line
+    
+	echo '<img src="images/logos/' . $logo_file_name . '" id="ac_logo">';
+}
+else{   
+	echo '<div style="padding-top:14px;"></div>'; //in case no currency logo applies gives a break line
+}
 ?>
