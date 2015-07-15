@@ -161,7 +161,7 @@ function CalculateStatistics(userIds, data, country){
         $('#txt_kinetic_speed').html(kineticAverage.toFixed(0));
         $('#txt_virtual_speed').html(virtualAverage.toFixed(0));
         $('#txt_total_costs_year').html(((total_costs_per_year/100).toFixed(0))*100);
-        $('#users_counter').html(temp.length);
+        $('#users_counter').html((temp.length / 10).toFixed(0)*10);
     }
     else{
         $('.value-field').html('0.0');

@@ -410,6 +410,27 @@ padding-left:20px;
     margin-right: auto;
 }
 
+#td-top-title {
+    border-top: 0;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px; 
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+}
+
+#table-td-bottom-left {
+	border-bottom-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+}
+#table-td-bottom-right {
+	border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+}
+
 #tbl_statistics span.stat_title{
 	font-size: 65%;
 	font-weight: bold;
@@ -420,7 +441,7 @@ padding-left:20px;
 }
 
 #tbl_statistics tr.tr-title{
-	background-color: #FFFACD;
+	background-color: #FFFACD;   
 }
 
 #tbl_statistics td.td-title{
