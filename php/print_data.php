@@ -407,7 +407,7 @@ function print_feffort_table(f1, f2, f3, data){
 	varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
                                                                                                                     "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
 																													data.fin_effort.kinetic_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
-	varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"http://github.com/jfoclpf/autocosts/wiki/Kinetic-speed-vs.-Consumer-speed\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
+	varResult+=         "<tr><td align=\"left\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"./docs/consumer_speed.html\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
 			                                                                                                        "<td style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;\"><span class=\"p2 td_values\">"+
 																													data.fin_effort.virtual_speed.toFixed(1)+" <?echo $STD_DIST?>/h</span></td></tr>";
 	varResult+="</table></center>";		

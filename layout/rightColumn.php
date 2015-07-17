@@ -40,7 +40,7 @@
 			<tr class="tr-result blue"><td class="td-result"><span><?echo $RUN_CP_DIST?></span></td><td class="right"><span id="txt_running_costs_dist" class="value-field"></span><span> <?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span></td></tr>
 			<tr class="tr-result blue"><td class="td-result"><span><?echo $TOTAL_CP_DIST?></span></td><td class="right"><span id="txt_total_costs_p_unit" class="value-field"></span><span> <?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span></td></tr>
 			<tr class="tr-result blue"><td class="td-result"><span><?echo $KINETIC_SPEED_TITLE?></span></td><td class="right"><span id="txt_kinetic_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
-			<tr class="tr-result blue"><td class="td-result"><span><?echo $VIRTUAL_SPEED_TITLE?></span></td><td class="right"><span id="txt_virtual_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
+			<tr class="tr-result blue"><td class="td-result"><span><a href="./docs/consumer_speed.html"><?echo $VIRTUAL_SPEED_TITLE?></a></span></td><td class="right"><span id="txt_virtual_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
 			<tr class="tr-result orange"><td id="table-td-bottom-left" class="td-result"><span><?echo $TOTAL_COSTS_PER_YEAR?></span></td><td id="table-td-bottom-right" class="right"><span id="txt_total_costs_year" class="value-field"></span><span> <?echo $CURR_SYMBOL?></span></td></tr>
 		</table>
 		<div id="tbl_statistics_footer"><span>According to the entries given by around</span> <span id="users_counter"></span><span> motorists in</span><span> <?php echo $def_cty?></span></div>
