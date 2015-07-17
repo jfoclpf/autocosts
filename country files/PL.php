@@ -60,7 +60,7 @@ Wprowadzaj realistyczne wartości. W kwestii niespodziewanych wydatków, takich 
 
 $HELP_PROJECT = 'Wesprzyj ten projekt' ;
 $AC_MOBILE = 'AUTOKOSZTY<br>na urządzenia mobilne';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOKOSZTY.INFO.PL';
 $AC_SUB_HEADER = 'KALKULATOR KOSZTÓW SAMOCHODOWYCH';
 
 
