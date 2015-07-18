@@ -3,7 +3,7 @@
 // LANGAUAGE: ENGLISH
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************

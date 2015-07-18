@@ -4,7 +4,7 @@
 // LANGAUAGE: RUSSIAN
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -65,7 +65,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Помогите этому проекту' ;
 $AC_MOBILE = 'AUTOCOSTS<br>для мобильных устройств';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'КAЛЬKУЛЯТОР РАСХОДОВ НА АВТОМОБИЛЬ';
 
 //time words

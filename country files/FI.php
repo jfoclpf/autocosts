@@ -5,7 +5,7 @@
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -65,7 +65,7 @@ Ole realistinen syöttämistäsi arvoista. Ajattele kuinka paljon yleensä olet 
 
 $HELP_PROJECT = 'Auta tätä projektia' ;
 $AC_MOBILE = 'AUTOKULUT<br> mobiililaitteille';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTON KUSTANNUSLASKURI';
 
 //time words

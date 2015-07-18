@@ -4,7 +4,7 @@
 // LANGAUAGE: ČESKÝ
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -66,7 +66,7 @@ Zadávejte skutečné vstupné hodnoty. Co se týče nečekaných výdajů, jako
 $HELP_PROJECT = 'Podpořte tento projekt' ;
 
 $AC_MOBILE = 'AUTONAKLADY<br>pro mobilní zařízení';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'KALKULÁTOR VÝDAJŮ NA AUTO';
 
 //time words

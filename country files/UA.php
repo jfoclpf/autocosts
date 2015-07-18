@@ -5,7 +5,7 @@
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -66,7 +66,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Це - безкоштовна послуга без реклами!' ;
 $AC_MOBILE = 'АВТОВИТРАТИ<br>для мобільних пристроїв';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'КАЛЬКУЛЯТОР ВИТРАТ НА АВТОМОБІЛЬ';
 
 //time words

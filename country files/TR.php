@@ -3,7 +3,7 @@
 // LANGAUAGE: TÜRKÇE
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //***********************************************
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
@@ -50,7 +50,7 @@ $INITIAL_TEXT =
 "Bu hesaplayıcı <b>Türkiye’de</b> bir otomobil sahibi olmanın <b>gerçek maliyetini</b> görmenize olanak sağlayacaktır. Araç sahibi olmak için gerçekte ne kadar harcamanız gerektiği konusunda size genellikle iyi bir tahmin sunar. Araç ödemeleri ve harcamaları yıl boyunca değişik zamanlarda yapıldığından, aracınıza yaptığınız toplam masrafı doğru bir şekilde anlamak genellikle zordur. <br> <br> Girdiğiniz değerlerde gerçekçi olun. Tamir ve cezalar gibi beklenmedik harcamalar için son birkaç yıl içinde bu gibi kalemlere ne kadar harcamış olduğunuzu düşünün. Bu değerlerin aylık olarak hesaplandığı varsayılmaktadır. Ondalık sayılar için nokta sembolünü kullanın, örneğin ev ile iş arası <span style=\"color:rgb(255,0,0);\">8.7</span> kilometre.<br>";
 $HELP_PROJECT = 'Bu, reklam almayan ücretsiz bir hizmettir!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobil cihazlar için'; 
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'OTOMOBİL MASRAF HESAPLAYICI';
 
 //time words 

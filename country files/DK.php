@@ -5,7 +5,7 @@
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -62,7 +62,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Dette er en gratis tjeneste uden reklamer!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobilvisning'; 
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'BEREGN DINE BILUDGIFTER';
 
 //time words $DAYLY = 'ημερησίως'; 

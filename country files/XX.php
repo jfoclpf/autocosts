@@ -3,7 +3,7 @@
 // LANGAUAGE: ENGLISH
 //***********************************************
 //                                             **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator        **
 //                                             **
 //***********************************************
@@ -55,7 +55,7 @@ As your motor bills come in at different points over the year, it's often diffic
 Be realistic on the input values. For unexpected bills, such as accident repairs or fines, think how much you have spent on those items during the last few years. By default these calculations are monthly based. Use the the dot symbol for decimal notation, for example <span style=\"color:rgb(255,0,0);\">8.7</span> miles between home and workplace.<br>";
 $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
 //time words
 $DAYLY = 'daily';

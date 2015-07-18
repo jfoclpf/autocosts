@@ -5,7 +5,7 @@
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -66,7 +66,7 @@ Legyen pontos az adatok bevitelénél. Váratlan kiadások - mint például a ba
 
 $HELP_PROJECT = 'Támogassa projektünket' ;
 $AC_MOBILE = 'AUTÓKÖLTSÉGEK<br>mobileszközökhöz';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR';
 
 //time words

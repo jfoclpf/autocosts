@@ -4,7 +4,7 @@
 // LANGAUAGE: ROMÂNĂ
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.ORG          **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -65,7 +65,7 @@ Fiţi realist când introduceţi valorile solicitate de program. Pentru costuri 
 
 $HELP_PROJECT = 'Sprijiniţi acest proiect' ;
 $AC_MOBILE = 'AUTOCOSTS<br> pentru aparate mobile';
-$AC_DOMAIN = 'AUTOCOSTS.ORG';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'CALCULATOR COSTURI AUTOMOBILE';
 
 //time words
