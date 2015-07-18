@@ -8,33 +8,33 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" >
 
 <url>
-  <loc>http://autocosts.org/</loc>
+  <loc>http://autocosts.info/</loc>
   <changefreq>weekly</changefreq>
   
-  <xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.org" />
-  <xhtml:link rel="alternate" hreflang="en-au" href="http://autocosts.org/AU" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.info" />
+  <xhtml:link rel="alternate" hreflang="en-au" href="http://autocosts.info/AU" />
   <xhtml:link rel="alternate" hreflang="pt-br" href="http://autocustos.com/BR" />
   <xhtml:link rel="alternate" hreflang="de-de" href="http://autokosten.com.de" />
   <xhtml:link rel="alternate" hreflang="es-es" href="http://autogastos.es" />
   <xhtml:link rel="alternate" hreflang="fr-fr" href="http://autocouts.fr" />
   <xhtml:link rel="alternate" hreflang="it-it" href="http://autocosti.it" />
-  <xhtml:link rel="alternate" hreflang="hu-hu" href="http://autocosts.org/HU" />
+  <xhtml:link rel="alternate" hreflang="hu-hu" href="http://autocosts.info/HU" />
   <xhtml:link rel="alternate" hreflang="nl-nl" href="http://autokosten.co.nl" />
-  <xhtml:link rel="alternate" hreflang="no-no" href="http://autocosts.org/NO" />
-  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autocosts.org/PL" />
+  <xhtml:link rel="alternate" hreflang="no-no" href="http://autocosts.info/NO" />
+  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autokoszty.info.pl/" />
   <xhtml:link rel="alternate" hreflang="pt-pt" href="http://autocustos.pt" />
-  <xhtml:link rel="alternate" hreflang="ro-ro" href="http://autocosts.org/RO" />
-  <xhtml:link rel="alternate" hreflang="fi-fi" href="http://autocosts.org/FI" />
-  <xhtml:link rel="alternate" hreflang="sv-se" href="http://autocosts.org/SE" />
-  <xhtml:link rel="alternate" hreflang="en-us" href="http://autocosts.org/US" />
-  <xhtml:link rel="alternate" hreflang="en-gb" href="http://autocosts.org.uk" />
-  <xhtml:link rel="alternate" hreflang="en-ca" href="http://autocosts.org/CA" />
-  <xhtml:link rel="alternate" hreflang="cs-cz" href="http://autocosts.org/CZ" />
-  <xhtml:link rel="alternate" hreflang="ru-ru" href="http://autocosts.org/RU" />
-  <xhtml:link rel="alternate" hreflang="uk-ua" href="http://autocosts.org/UA" />
-  <xhtml:link rel="alternate" hreflang="tr-tr" href="http://autocosts.org/TR" />
+  <xhtml:link rel="alternate" hreflang="ro-ro" href="http://autocosts.info/RO" />
+  <xhtml:link rel="alternate" hreflang="fi-fi" href="http://autocosts.info/FI" />
+  <xhtml:link rel="alternate" hreflang="sv-se" href="http://autocosts.info/SE" />
+  <xhtml:link rel="alternate" hreflang="en-us" href="http://autocosts.info/US" />
+  <xhtml:link rel="alternate" hreflang="en-gb" href="http://autocosts.info.uk" />
+  <xhtml:link rel="alternate" hreflang="en-ca" href="http://autocosts.info/CA" />
+  <xhtml:link rel="alternate" hreflang="cs-cz" href="http://autocosts.info/CZ" />
+  <xhtml:link rel="alternate" hreflang="ru-ru" href="http://autocosts.info/RU" />
+  <xhtml:link rel="alternate" hreflang="uk-ua" href="http://autocosts.info/UA" />
+  <xhtml:link rel="alternate" hreflang="tr-tr" href="http://autocosts.info/TR" />
   <xhtml:link rel="alternate" hreflang="el-gr" href="http://exodaautokinitou.gr/" /> 
-  <xhtml:link rel="alternate" hreflang="da-dk" href="http://autocosts.org/DK" />
+  <xhtml:link rel="alternate" hreflang="da-dk" href="http://autocosts.info/DK" />
 </url>
   
 </urlset>
