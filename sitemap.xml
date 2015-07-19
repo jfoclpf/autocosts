@@ -8,7 +8,7 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" >
 
 <url>
-  <loc>http://autocosts.info/</loc>
+  <loc>http://autocosts.info</loc>
   <changefreq>weekly</changefreq>
   
   <xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.info" />
@@ -21,7 +21,7 @@
   <xhtml:link rel="alternate" hreflang="hu-hu" href="http://autocosts.info/HU" />
   <xhtml:link rel="alternate" hreflang="nl-nl" href="http://autokosten.co.nl" />
   <xhtml:link rel="alternate" hreflang="no-no" href="http://autocosts.info/NO" />
-  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autokoszty.info.pl/" />
+  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autokoszty.info.pl" />
   <xhtml:link rel="alternate" hreflang="pt-pt" href="http://autocustos.pt" />
   <xhtml:link rel="alternate" hreflang="ro-ro" href="http://autocosts.info/RO" />
   <xhtml:link rel="alternate" hreflang="fi-fi" href="http://autocosts.info/FI" />
@@ -33,7 +33,7 @@
   <xhtml:link rel="alternate" hreflang="ru-ru" href="http://autocosts.info/RU" />
   <xhtml:link rel="alternate" hreflang="uk-ua" href="http://autocosts.info/UA" />
   <xhtml:link rel="alternate" hreflang="tr-tr" href="http://autocosts.info/TR" />
-  <xhtml:link rel="alternate" hreflang="el-gr" href="http://exodaautokinitou.gr/" /> 
+  <xhtml:link rel="alternate" hreflang="el-gr" href="http://exodaautokinitou.gr" /> 
   <xhtml:link rel="alternate" hreflang="da-dk" href="http://autocosts.info/DK" />
 </url>
   
