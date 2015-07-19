@@ -35,3 +35,32 @@ RewriteCond %{HTTP_HOST} ^\*\.autocost\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.\*\.autocost\.org$
 RewriteRule ^/?$ "http\:\/\/autocost\.org" [R=301,L]
 
+RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
+RewriteRule ^/?$ "http\:\/\/exodaautokinitou\.gr\/GR" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocosts\.org\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocosts\.org\.uk$
+RewriteRule ^/?$ "http\:\/\/autocosts\.org\.uk\/GB" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autokosten\.com\.de$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autokosten\.com\.de$
+RewriteRule ^/?$ "http\:\/\/autokosten\.com\.de\/DE" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autokosten\.co\.nl$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autokosten\.co\.nl$
+RewriteRule ^/?$ "http\:\/\/autokosten\.co\.nl\/NL" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autokoszty\.info\.pl$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info\.pl$
+RewriteRule ^/?$ "http\:\/\/autokoszty\.info\.pl\/PL" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
+RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
+RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
+
+
