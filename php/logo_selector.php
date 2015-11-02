@@ -8,7 +8,7 @@ if($is_logo){
 					$logo_file_name = 'autocustos_euro.png';
 					break;
 				case "ES":
-					$logo_file_name = 'autogastos_euro.png';
+					$logo_file_name = 'autocostes_euro.png';
 					break;
 				case "IT":
 					$logo_file_name = 'autocosti_euro.png';

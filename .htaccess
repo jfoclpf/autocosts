@@ -7,9 +7,9 @@ RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
-RewriteCond %{HTTP_HOST} ^autogastos\.es$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autogastos\.es$
-RewriteRule ^/?$ "http\:\/\/autogastos\.es\/ES" [R=301,L]
+RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
+RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
