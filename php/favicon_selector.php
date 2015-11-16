@@ -1,7 +1,7 @@
 <?php
 
 //favicons
-if ($def_cty == "RU") {
+if ($GLOBALS['country'] == "RU") {
 	$is_logo = true;
 	$currency_logo = "RUB";
 	echo '<link rel="icon" href="./images/favicons/favicon_rub.ico" type="image/x-icon"/>';

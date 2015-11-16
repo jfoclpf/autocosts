@@ -1,8 +1,8 @@
 <? Header("content-type: application/x-javascript");
 
-include('../country files/' . $_GET['country'] . '.php');
+include($_SERVER['DOCUMENT_ROOT'].'/country files/' . $_GET['country'] . '.php');
 
-$def_cty = $_GET['country'];
+$GLOBALS['country'] = $_GET['country'];
 
 ?>
 
@@ -39,7 +39,7 @@ function drawChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_height) 
 	
     chart_data = [
     ['<? echo $PARCEL; ?>', '<? echo $COSTS; ?>' ],
-    ['<?echo $def_cty ?>'=='RU' || '<?echo $def_cty?>'=='UA' ? '<? echo $INSURANCE_CHART; ?>' : '<? echo $INSURANCE_SHORT; ?>', a],
+    ['<?echo $GLOBALS['country'] ?>'=='RU' || '<?echo $GLOBALS['country']?>'=='UA' ? '<? echo $INSURANCE_CHART; ?>' : '<? echo $INSURANCE_SHORT; ?>', a],
     ['<? echo $FUEL; ?>', b],
     ['<? echo $DEPRECIATION; ?>', c],
     ['<? echo $CREDIT_INTERESTS; ?>', d],
@@ -53,7 +53,7 @@ function drawChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_height) 
     ['<? echo $WASHING; ?>', l]
     ];
 
-	if('<?echo $def_cty ?>'=='RU'){
+	if('<?echo $GLOBALS['country'] ?>'=='RU'){
 		$('#chart_div').css('padding','0 0 0 2%');
 	}
     data = google.visualization.arrayToDataTable(chart_data);

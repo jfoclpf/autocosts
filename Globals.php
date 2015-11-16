@@ -14,6 +14,4 @@ $autocosts_user = "jfolpf_dev";
 $autocosts_password = "124devAC%";
 $autocosts_database = "jfolpf_autocosts_test";
 
-// country definition
-$def_cty ="";
 ?>

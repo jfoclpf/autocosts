@@ -13,13 +13,13 @@
                 <div style="display: table-row;">
                     <div style="display: table-cell; height:24px;width:24px;">
                         <div style="margin-right: 2px; margin-top: 2px;"
-                             class="<?php echo strtolower($def_cty) ?> flag"></div>
+                             class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
                     </div>
                     <div style="display: table-cell; vertical-align: bottom;">
                         <select name="country_select" id="country_select" onchange="valueselect(this.value);"">
                         <?php foreach ($avail_CT as $key => $value) {
                             if ($key != "XX") { ?>
-                                <option value="<?php echo $key ?>" <? if ($key == $def_cty) {
+                                <option value="<?php echo $key ?>" <? if ($key == $GLOBALS['country']) {
                                     echo "selected=\"selected\"";
                                 } ?>> <?php echo $value ?></option>
                             <?php }

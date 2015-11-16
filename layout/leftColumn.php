@@ -1,6 +1,6 @@
 <div id="div3a" class="roundCornerSlight">
 
-    <?php include "./php/logo_selector.php"; ?>
+    <?php include($_SERVER['DOCUMENT_ROOT']."/php/logo_selector.php");?>
 
     <div
         style="text-align:center;font-size:110%; <? if ($is_logo) { ?> padding-top: 20px; border-top: solid 2px rgb(180, 180, 180); <? } ?>">
@@ -20,7 +20,7 @@
 		
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
         <div style="padding:7px 0 8px 0">
-            <?php include "./php/counter.php"; ?>			
+            <?php include($_SERVER['DOCUMENT_ROOT']."/php/counter.php");?>			
         </div>
 				<b>
         <span class="p2">
@@ -29,19 +29,19 @@
         </b>
         <div style="padding:4px 0 8px 0;width:100%;font-size:80%;">
 			&raquo;
-	         <span id="users_count"><?php include "./php/dbService.php";
+	         <span id="users_count"><?php include($_SERVER['DOCUMENT_ROOT']."/db_stats/dbService.php");
 				$query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
 				$res = executeQueryInDB($query);
 				$filled_by_cty = 0;
 				while($row = mysqli_fetch_array($res))
 				{
-					if($row['country'] == $def_cty)
+					if($row['country'] == $GLOBALS['country'])
 					{
 						$filled_by_cty++;
 					}
 				}
 				echo $filled_by_cty;	
-			?></span> users filled in for <?php echo $def_cty?> <br />
+			?></span> users filled in for <?php echo $GLOBALS['country']?> <br />
 			&raquo;
 			<?php
 				echo mysqli_num_rows($res);
@@ -50,7 +50,7 @@
 		</div>		
     </div>
     
-    <? if ($def_cty == "PT") { ?>
+    <? if ($GLOBALS['country'] == "PT") { ?>
 	<br>
         <div style="width:50%; margin: 0 auto">
         <table  style="text-align:center" align="center">

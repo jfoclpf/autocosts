@@ -12,9 +12,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width" />
-
-	<?include("./country files/country_list.php");?>
-	<?include('./php/country_selector.php');?>
+    
+	<? include("./country files/country_list.php");?>
+	<? include("./php/country_selector.php");?>
 	
     <title><? echo $WEB_PAGE_TITLE ?></title>
     <link rel="stylesheet" type="text/css" href="css/layout.css">
@@ -35,13 +35,13 @@
     <script type="text/javascript" src="js/pdf/pdfmake.js"></script>
     <script type="text/javascript" src="js/pdf/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="php/js_functions.php?country=<?php echo $def_cty ?>"></script>
+    <script type="text/javascript" src="php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>"></script>
     <script type="text/javascript" src="js/conversionFunctions.js"></script>   	
     <script type="text/javascript" src="js/coreFunctions.js"></script>
-    <script type="text/javascript" src="js/statsFunctions.js"></script>   	
+    <script type="text/javascript" src="db_stats/statsFunctions.js"></script>   	
     <script type="text/javascript" src="js/get_data.js"></script>
-    <script type="text/javascript" src="php/print_data.php?country=<?php echo $def_cty ?>"></script>
-    <script type="text/javascript" src="php/charts_js.php?country=<?php echo $def_cty ?>"></script>
+    <script type="text/javascript" src="php/print_data.php?country=<?php echo $GLOBALS['country'] ?>"></script>
+    <script type="text/javascript" src="php/charts_js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
 	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

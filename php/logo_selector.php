@@ -3,7 +3,7 @@
 if($is_logo){
     switch ($currency_logo){
 		case "EUR":
-			switch ($def_cty){
+			switch ($GLOBALS['country']){
 				case "PT":
 					$logo_file_name = 'autocustos_euro.png';
 					break;

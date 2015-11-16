@@ -1,5 +1,7 @@
 <?php
 
+//to be used in a URL to get a file with statistics
+
 include('dbService.php');
 
 $fichier = 'export_autocost.csv';

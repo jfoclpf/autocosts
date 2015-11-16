@@ -30,18 +30,18 @@ $lang1=strtoupper($lang1);
 $lang_cty=strtoupper($lang_cty);        
 
 	if (is_cty_inlist($lang_cty, $avail_CT)) {
-		$def_cty = $lang_cty;
+		$GLOBALS['country'] = $lang_cty;
 	} elseif (is_cty_inlist($lang1, $avail_CT)) {
-		$def_cty = $lang1;
+		$GLOBALS['country'] = $lang1;
 	} else {
-		$def_cty = "GB";
+		$GLOBALS['country'] = "GB";
 	}
-	echo "<script type=\"text/javascript\"> window.location.href = \"" . $def_cty . "\" </script>";
+	echo "<script type=\"text/javascript\"> window.location.href = \"" . $GLOBALS['country'] . "\" </script>";
 } else {
-	$def_cty = $url_cc;
+	$GLOBALS['country'] = $url_cc;
 }
 
-include('./country files/' . $def_cty . '.php');
+include($_SERVER['DOCUMENT_ROOT'].'/country files/' . $GLOBALS['country'] . '.php');
 
 $is_logo = false;
 $currency_logo = "";

@@ -1,8 +1,8 @@
 <? Header("content-type: application/x-javascript");
 
-include('../country files/' . $_GET['country'] . '.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/country files/' . $_GET['country'] . '.php');
 
-$def_cty = $_GET['country'];
+$GLOBALS['country'] = $_GET['country'];
 
 ?>
 var income = 'year';
@@ -754,7 +754,7 @@ function submit_data(country) {
     sanityChecks(objectToDb);
 	
     $.ajax({
-        url: 'php/SubmitUserInput.php',
+        url: 'db_stats/SubmitUserInput.php',
         type: 'POST',
         data: {
             objectToDb: objectToDb
@@ -919,7 +919,7 @@ function generatePDF(){
 			}			
 		}
 	}
-	if("<? echo $def_cty?>"=="PT" && f2.type_calc_fuel=="km"){
+	if("<? echo $GLOBALS['country']?>"=="PT" && f2.type_calc_fuel=="km"){
 		data = $('#result_table4 td');
 		body3 = getBody(data);	
 		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }, pageBreak: 'after'})

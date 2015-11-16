@@ -1,8 +1,8 @@
 <? Header("content-type: application/x-javascript");
 
-include('../country files/' . $_GET['country'] . '.php');
+include($_SERVER['DOCUMENT_ROOT'].'/country files/' . $_GET['country'] . '.php');
 
-$def_cty = $_GET['country'];
+$GLOBALS['country'] = $_GET['country'];
 
 ?>
 
@@ -267,7 +267,7 @@ function print_extern_table(f1, f2, f3, data){
     var ifr_estr_text="<b><span class=\"p3\">Desgaste das infraestruturas rodoviárias</span></b><br><span class=\"p2\">Valor aproximado: " + data.external_costs.infrastr + "<?echo $CURR_SYMBOL?>/<?echo $STD_DIST?></span>";
     var fonte_text="<b><span class=\"p2\">Fonte dos dados:</span></b><br><span class=\"p2\"><i><a href=\"" + data.external_costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia</span>";
 	var varResult="";
-	if(<?if ($def_cty=="PT") echo 'f2.type_calc_fuel=="km"'; else echo "false";?>){
+	if(<?if ($GLOBALS['country']=="PT") echo 'f2.type_calc_fuel=="km"'; else echo "false";?>){
 		varResult+="<br><center><table class=\"result_table\" id=\"result_table4\" border=\"1\" cellpadding=\"4\">";
 		//header
 		varResult+="<tr><td align=\"center\"><b><span class=\"p3\">Custos externos para o país</span></b><br><span class=\"p2\">Percorre " +(1 * f2.distance).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?></span></td><td width=\"20%\" align=\"center\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
@@ -417,7 +417,7 @@ function print_feffort_table(f1, f2, f3, data){
 
 function countryCheck(value){	
 	var res = "<?echo $CURR_SYMBOL?>&nbsp;" + value;
-	if('<?echo $def_cty ?>'=='FI'){
+	if('<?echo $GLOBALS['country'] ?>'=='FI'){
 		res = value + "&nbsp;<?echo $CURR_SYMBOL?>" ;
 	}
 	return res;

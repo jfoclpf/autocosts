@@ -33,7 +33,11 @@ var statsConstants = {
 //********************
 // *.*
 function CalculateStatistics(userIds, data, country){
-    
+//matrix *userIds* is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), 
+//the 2nd column has always the same country
+//matrix *data* is a matrix with everything for the specific country
+//userIds.length is smaller than data.length, because some users fill in more than one time 
+
     var temp = [];
     for(var i=0; i<userIds.length;i++){
         for(var j=0; j<data.length;j++){
@@ -46,22 +50,22 @@ function CalculateStatistics(userIds, data, country){
                     var result = calculate_costs(f1, f2, f3, country);
                     //alert(JSON.stringify(result, null, 4));
                     
-                    //if has information regarding average kinetic and virtual speed
+                    //checks if the result is an outlier
                     if (was_result_ok(result, country)){ 
                         temp.push({
-                            dep: result.monthly_costs.depreciation, 
-                            ins: result.monthly_costs.insurance, 
-                            cred: result.monthly_costs.credit, 
-                            insp: result.monthly_costs.inspection, 
-                            carTax: result.monthly_costs.car_tax, 
-                            fuel: result.monthly_costs.fuel,
-                            maint: result.monthly_costs.maintenance,
-                            rep: result.monthly_costs.repairs_improv,
-                            park: result.monthly_costs.parking,
-                            tolls: result.monthly_costs.tolls,
-                            fines: result.monthly_costs.fines,
-                            wash: result.monthly_costs.washing,
-                            dist: result.distance_per_month,
+                            dep:     result.monthly_costs.depreciation, 
+                            ins:     result.monthly_costs.insurance, 
+                            cred:    result.monthly_costs.credit, 
+                            insp:    result.monthly_costs.inspection, 
+                            carTax:  result.monthly_costs.car_tax, 
+                            fuel:    result.monthly_costs.fuel,
+                            maint:   result.monthly_costs.maintenance,
+                            rep:     result.monthly_costs.repairs_improv,
+                            park:    result.monthly_costs.parking,
+                            tolls:   result.monthly_costs.tolls,
+                            fines:   result.monthly_costs.fines,
+                            wash:    result.monthly_costs.washing,
+                            dist:    result.distance_per_month,
                             kinetic: result.fin_effort.kinetic_speed,
                             virtual: result.fin_effort.virtual_speed
                         });
@@ -75,6 +79,7 @@ function CalculateStatistics(userIds, data, country){
     //alert("starting average calculation");
     //compute average
     if(temp.length){
+        
         var depTotal = 0;
         var insTotal = 0;
         var credTotal = 0;
@@ -89,7 +94,8 @@ function CalculateStatistics(userIds, data, country){
         var washTotal = 0;
         var distTotal = 0;      
         var kineticTotal = 0;       
-        var virtualTotal = 0;       
+        var virtualTotal = 0; 
+        
         for(i=0;i<temp.length;i++){
             depTotal += temp[i].dep;
             insTotal += temp[i].ins;
@@ -107,6 +113,7 @@ function CalculateStatistics(userIds, data, country){
             kineticTotal += temp[i].kinetic;        
             virtualTotal += temp[i].virtual;            
         }
+        
         var depAverage = depTotal/temp.length;
         var insAverage = insTotal/temp.length;
         var credAverage = credTotal/temp.length;
@@ -140,34 +147,43 @@ function CalculateStatistics(userIds, data, country){
         var total_costs_p_unit_distance = distAverage? total_costs_month / distAverage: 0;
         
         var total_costs_per_year = total_costs_month * 12;
-                
-        $('#txt_depr').html(depAverage.toFixed(1));
-        $('#txt_ins').html(insAverage.toFixed(1));
-        $('#txt_cred').html(credAverage.toFixed(1));
-        $('#txt_insp').html(inspAverage.toFixed(1));
-        $('#txt_tax').html(carTaxAverage.toFixed(1));
-        $('#txt_standing_costs').html(total_standing_costs_month.toFixed(1));
-        $('#txt_fuel').html(fuelAverage.toFixed(1));
-        $('#txt_maint1, #txt_maint2').html((maintAverage/2).toFixed(1));
-        $('#txt_rep').html(repAverage.toFixed(1));
-        $('#txt_park').html(parkAverage.toFixed(1));
-        $('#txt_tolls').html(tollsAverage.toFixed(1));
-        $('#txt_fines').html(finesAverage.toFixed(1));
-        $('#txt_wash').html(washAverage.toFixed(1));
-        $('#txt_running_costs').html(total_running_costs_month.toFixed(1));
-        $('#txt_total_overal').html(total_costs_month.toFixed(0));
-        $('#txt_running_costs_dist').html(running_costs_p_unit_distance.toFixed(2));
-        $('#txt_total_costs_p_unit').html(total_costs_p_unit_distance.toFixed(2));
-        $('#txt_kinetic_speed').html(kineticAverage.toFixed(0));
-        $('#txt_virtual_speed').html(virtualAverage.toFixed(0));
-        $('#txt_total_costs_year').html(((total_costs_per_year/100).toFixed(0))*100);
-        $('#users_counter').html((temp.length / 10).toFixed(0)*10);
+        
+        //object to be output as result
+        var output = {
+            dep:      depAverage, 
+            ins:      insAverage, 
+            cred:     credAverage, 
+            insp:     inspAverage, 
+            carTax:   carTaxAverage,
+            standCos: total_standing_costs_month,
+            
+            fuel:     fuelAverage,
+            maint:    maintAverage,
+            rep:      repAverage,
+            park:     parkAverage,
+            tolls:    tollsAverage,
+            fines:    finesAverage,
+            wash:     washAverage,
+            runnCos:  total_running_costs_month,
+            
+            totCos:   total_costs_month,
+            totCostsPerYear: total_costs_per_year,
+            
+            runCostsProDist: running_costs_p_unit_distance,
+            totCostsProDist: total_costs_p_unit_distance,
+            kinetic_speed:   kineticAverage,
+            virtual_speed:   virtualAverage,
+            
+            users_counter:   temp.length
+        }
+        //alert(JSON.stringify(output, null, 4));
+        return output;
     }
     else{
-        $('.value-field').html('0.0');
-        $('#users_counter').html(0);
-    }   
+        return false;
+    }
 }
+            
 
 //**********************************************************************
 //**********************************************************************
@@ -364,12 +380,5 @@ function was_result_ok(result, country) {
         return false;    
     
     return true;
-}
-
-function blockTable() {
-        $('#blocker').show();
-        var width = $('#div13').width();
-        var height = $('#div13').height();
-        $('#blocker').height(height).width(width);
 }
 
