@@ -1,4 +1,5 @@
 AddDefaultCharset utf-8
+ErrorDocument 404 /i.php
 DirectoryIndex i.php index.php index.html index.htm
 
 RewriteEngine On
