@@ -66,55 +66,40 @@
         data: "",
 		dataType: "json",		
 		success: function(result) {
+            //alert(JSON.stringify(result, null, 4));
 			var country = '<? echo $GLOBALS['country']; ?>';
-			var userIds = [];
-			var data = [];				
-			var country_object = {
-				code: '<? echo $GLOBALS['country']; ?>',
-				currency: '<? echo $CURR_CODE; ?>',
-				distance_std: <? echo $distance_std_option; ?>,
-				fuel_efficiency_std: <? echo $fuel_efficiency_std_option; ?>,
-				fuel_price_volume_std: <? echo $fuel_price_volume_std; ?>							
-			};
-            //userIds will be a matrix with 2 columns, 
-            //the 1st column has a unique ID 
-            //the 2nd column has always the same country
-			$.each(result[0], function(i, item){
+			var avarage_data = [];				
+            //get data
+			$.each(result, function(i, item){
 				if(item.country==country){
-					userIds.push(item);
+					avarage_data=item;
 				}
 			})
-            //data will be a matrix with everything for the specific country
-			$.each(result[1], function(i, item){
-				if(item.country==country){
-					data.push(item);
-				}
-			})					
-			var stats_results = CalculateStatistics(userIds, data, country_object);
-            //alert(JSON.stringify(stats_results, null, 4));
+            //alert("country: "+country);
+            //alert(JSON.stringify(avarage_data, null, 4));
             
-            if(stats_results){
-                $('#txt_depr').html(stats_results.dep.toFixed(1));
-                $('#txt_ins').html(stats_results.ins.toFixed(1));
-                $('#txt_cred').html(stats_results.cred.toFixed(1));
-                $('#txt_insp').html(stats_results.insp.toFixed(1));
-                $('#txt_tax').html(stats_results.carTax.toFixed(1));
-                $('#txt_standing_costs').html(stats_results.standCos.toFixed(1));
-                $('#txt_fuel').html(stats_results.fuel.toFixed(1));
-                $('#txt_maint1, #txt_maint2').html((stats_results.maint.toFixed(1))/2);
-                $('#txt_rep').html(stats_results.rep.toFixed(1));
-                $('#txt_park').html(stats_results.park.toFixed(1));
-                $('#txt_tolls').html(stats_results.tolls.toFixed(1));
-                $('#txt_fines').html(stats_results.fines.toFixed(1));
-                $('#txt_wash').html(stats_results.wash.toFixed(1));
-                $('#txt_running_costs').html(stats_results.runnCos.toFixed(1));
-                $('#txt_total_overal').html(stats_results.totCos.toFixed(0));
-                $('#txt_running_costs_dist').html(stats_results.runCostsProDist.toFixed(2));
-                $('#txt_total_costs_p_unit').html(stats_results.totCostsProDist.toFixed(2));
-                $('#txt_kinetic_speed').html(stats_results.kinetic_speed.toFixed(0));
-                $('#txt_virtual_speed').html(stats_results.virtual_speed.toFixed(0));
-                $('#txt_total_costs_year').html((((stats_results.totCostsPerYear/100).toFixed(0))*100));
-                $('#users_counter').html(((stats_results.users_counter/10).toFixed(0)*10));
+            if(avarage_data){
+                $('#txt_depr').html(avarage_data.Depreciation);
+                $('#txt_ins').html(avarage_data.Insurance);
+                $('#txt_cred').html(avarage_data.Loan_interests);
+                $('#txt_insp').html(avarage_data.Inspection);
+                $('#txt_tax').html(avarage_data.Car_tax);
+                $('#txt_standing_costs').html(avarage_data.standing_costs);
+                $('#txt_fuel').html(avarage_data.Fuel);
+                $('#txt_maint1, #txt_maint2').html((avarage_data.Maintenance)/2);
+                $('#txt_rep').html(avarage_data.Repairs);
+                $('#txt_park').html(avarage_data.Parking);
+                $('#txt_tolls').html(avarage_data.Tolls);
+                $('#txt_fines').html(avarage_data.Fines);
+                $('#txt_wash').html(avarage_data.Washing);
+                $('#txt_running_costs').html(avarage_data.running_costs);
+                $('#txt_total_overal').html(avarage_data.total_costs);
+                $('#txt_running_costs_dist').html(avarage_data.running_costs_dist);
+                $('#txt_total_costs_p_unit').html(avarage_data.total_costs_dist);
+                $('#txt_kinetic_speed').html(avarage_data.kinetic_speed);
+                $('#txt_virtual_speed').html(avarage_data.virtual_speed);
+                $('#txt_total_costs_year').html(avarage_data.total_costs_year);
+                $('#users_counter').html(avarage_data.users_counter);
             }
             else{
                 $('.value-field').html('0.0');
