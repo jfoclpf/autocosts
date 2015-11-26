@@ -1,3 +1,10 @@
+suPHP_ConfigPath /home4/jfolpf
+
+<IfModule mod_expires.c>
+ExpiresActive On 
+ExpiresDefault "access plus 1 month"
+</IfModule>
+
 AddDefaultCharset utf-8
 ErrorDocument 404 /i.php
 DirectoryIndex i.php index.php index.html index.htm
