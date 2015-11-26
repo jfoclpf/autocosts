@@ -7,14 +7,6 @@ $def_cty = $_GET['country'];
 ?>
 var income = 'year';
 var isDistanceSet = false;
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/pt_PT/all.js#xfbml=1&appId=300675890065235";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
 
 function valueselect(myval) {
     window.location.href = "" + myval;
