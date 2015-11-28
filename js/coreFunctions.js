@@ -1,3 +1,24 @@
+function date_diff(date1, date2) {//return the difference in months between two dates date2-date1
+    var m2, y2, m1, y1;
+    m2 = date2.getUTCMonth() + 1;
+    y2 = date2.getUTCFullYear();
+    m1 = date1.getUTCMonth() + 1;
+    y1 = date1.getUTCFullYear();
+
+    //check if date2>date1
+    if (y1 > y2) {
+        return (false);
+    }
+    if (y1 === y2 && m1 > m2) {
+        return false;
+    }
+
+    if (m2 >= m1) {
+        return (y2 - y1) * 12 + (m2 - m1);
+    }
+    return (y2 - y1 - 1) * 12 + (m2 + 12 - m1);
+}
+
 function calculateMonthlyDepreciation(initialCost, finalCost, months) {
        return (initialCost - finalCost) / months;
 }
