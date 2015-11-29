@@ -1,10 +1,13 @@
+//includes
 var fs = require('fs');
-
 eval(fs.readFileSync('../js/conversionFunctions.js')+'');
 eval(fs.readFileSync('../js/coreFunctions.js')+'');
+eval(fs.readFileSync('../js/get_data.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
 
+//module to allow to execute the queries in series
 var async      = require('async');
+//module to get info from DB
 var mysql      = require('mysql');
 
 var login_UserInputDB = {
@@ -51,7 +54,6 @@ async.series([
         db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
             console.log("error task 2: " + err);
             if (err) return callback(err);
-            //console.log("point 4");
             for (var i=0; i<results.length; i++){
                 unique_users.push(results[i]);
             }
