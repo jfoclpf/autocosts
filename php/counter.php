@@ -1,7 +1,7 @@
 <?php
 
 
-include('Globals.php');
+include($_SERVER['DOCUMENT_ROOT'].'/db_stats/credentials.php');
 
 /*
 Text Counter by http://www.free-php-counter.com

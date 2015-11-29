@@ -2,7 +2,7 @@
 
 function executeQueryInDB($query)
 {
-    include($_SERVER['DOCUMENT_ROOT']."/Globals.php");
+    include("credentials.php");
 
     $isDBConnectionSane = true;
     $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
