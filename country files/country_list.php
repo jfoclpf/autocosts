@@ -1,17 +1,12 @@
-<!--
+<?
 //***********************************************
-                                               **
+//                                             **
 //              AUTOCOSTS.ORG                  **
 //      the automobile costs simulator         **
 //                                             **
-//***********************************************
-
-List of available countries
-
-NOTE: JUST ADD A COUNTRY HERE if you add the correspondent translation file
--->
-
-<?
+//**********************************************/
+//List of available countries
+//NOTE: JUST ADD A COUNTRY HERE if you add the correspondent translation file
 
 $avail_CT = array(
     "XX" => "test",
