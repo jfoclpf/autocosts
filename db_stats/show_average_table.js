@@ -11,7 +11,7 @@ function print_table(country){
         dataType: "json",		
         success: function(result) {
             //alert(JSON.stringify(result, null, 4));
-            var avarage_data = [];				
+            var avarage_data;				
             //get data
             $.each(result, function(i, item){
                 if(item.country==country){
@@ -20,7 +20,6 @@ function print_table(country){
             })
             //alert("country: "+country);
             //alert(JSON.stringify(avarage_data, null, 4));
-            
             if(avarage_data){
                 $('#txt_depr').html(avarage_data.Depreciation);
                 $('#txt_ins').html(avarage_data.Insurance);
