@@ -1,6 +1,8 @@
 <?php
 include("credentials.php");
 
+$country = $_POST['country_code']; 
+
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
 
@@ -11,16 +13,9 @@ if (!$connectionDB)
     exit;
 }
 
-$query = "SELECT * FROM monthly_costs_statistics";
+$query = "SELECT * FROM monthly_costs_statistics WHERE country='".$country."'";
 
 $result = $connectionDB->query($query);
-    
-if ($result->num_rows > 0) {
-   
-    while($row = $result->fetch_assoc()) {
-        $res[] = $row; //add every row at the end of the array, forming a matrix            
-    }
-}   
 
- echo json_encode($res);        
-    
+echo json_encode($result->fetch_assoc());
+?>    

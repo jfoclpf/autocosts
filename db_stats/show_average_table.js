@@ -7,17 +7,19 @@ function print_table(country){
 
     $.ajax({
         url: 'db_stats/GetData.php',
-        data: "",
+        type: "POST",
+        data: ({country_code: country}),
         dataType: "json",		
-        success: function(result) {
+        success: function(avarage_data) {
             //alert(JSON.stringify(result, null, 4));
-            var avarage_data;				
+            /*var avarage_data;				
             //get data
             $.each(result, function(i, item){
                 if(item.country==country){
                     avarage_data=item;
                 }
-            })
+            })*/
+             
             //alert("country: "+country);
             //alert(JSON.stringify(avarage_data, null, 4));
             if(avarage_data){
