@@ -15,9 +15,9 @@ var mysql      = require('mysql');
 
 var login_UserInputDB = {
   host     : 'localhost',
-  user     : 'jfolpf_dev',
-  password : '124devAC%',
-  database : 'jfolpf_autocosts_test'
+  user     : 'jfolpf_autocostP',
+  password : 'IPVuBP4gMXBP',
+  database : 'jfolpf_autocosts_prod'
 };
 
 //database variable
@@ -39,7 +39,7 @@ async.series([
     function(callback) {
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        //console.log("point 1");
+        console.log("Task 1 - get the set of different countries");
         db.query('SELECT * FROM country_specs', function(err, results, fields) {
             if (err) return callback(err);
             
@@ -59,7 +59,7 @@ async.series([
     function(callback) {        
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        //console.log("begin task 2");
+        console.log("Task 2 - get users unique IDs");
         db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
             for (var i=0; i<results.length; i++){
@@ -75,7 +75,7 @@ async.series([
     function(callback) {        
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        //console.log("begin task 3");
+        console.log("Task 3 - get all data from users input DB");
         db.query('SELECT * FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
 
@@ -92,10 +92,9 @@ async.series([
     function(callback) {        
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        //console.log("begin task 4");
+        console.log("Task 4 - erase content of monthly_costs_statistics table DB");
         db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
-            if (err) return callback(err);
-            //console.log(AllUserInputDb);
+            if (err){console.log(err); return callback(err);}
             db.end();
             callback();
         });
@@ -103,6 +102,7 @@ async.series([
     
     //task 5 - calculate avarages and insert them into monthly_costs_statistics table DB
     function(callback) {
+        console.log("begin task 5 - calculate avarages and insert them into monthly_costs_statistics table DB");
         var country_users = []; //array with unique users for one specific country
         var country_data  = []; //array where all data for one specific country is inserted
         var queryInsert = "";   //string to where all the average data will be inserted
@@ -144,7 +144,8 @@ async.series([
         //builds the query to insert all the vaules for each country
         //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
         for (var i=0; i<countries.length; i++){ //
-
+            //console.log("Country: " + countries[i].Country);
+        
             for (var j=0; j<unique_users.length; j++){                
                     if (unique_users[j].country==countries[i].Country)
                         country_users.push(unique_users[j]);
