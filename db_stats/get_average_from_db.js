@@ -22,6 +22,7 @@ var db;
 var countries = [];       //array of objects with countries information
 var unique_users = [];    //array of objects having unique_users IDs and respective countries 
 var AllUserInputDb = [];  //array of objects with all the data from the inputs users DB
+var queryInsert = "";     //string to where all the average data will be inserted
 
 //string with the date DD/MM/YYYY
 var d = new Date();
@@ -83,26 +84,13 @@ async.series([
             callback();
         });
     },
-
-    //erase content of monthly_costs_statistics table DB
-    function(callback) {        
-        console.log("Erase content of monthly_costs_statistics table DB");
-        db = mysql.createConnection(login_UserInputDB);
-        db.connect();
-        db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
-            if (err){console.log(err); return callback(err);}
-            db.end();
-            callback();
-        });
-    },
     
-    //calculate avarages and insert them into monthly_costs_statistics table DB
+    //calculate data and builds query
     function(callback) {
-        console.log("Calculate avarages and insert them into monthly_costs_statistics table DB");
+        console.log("Calculate data and builds query");
         var country_users = []; //array with unique users for one specific country
         var country_data  = []; //array where all data for one specific country is inserted
-        var queryInsert = "";   //string to where all the average data will be inserted
-        
+                
         //query header
         queryInsert += "INSERT INTO monthly_costs_statistics (\
             country,\
@@ -191,14 +179,29 @@ async.series([
             
             if (i!=countries.length-1)//doesn't add "," on the last set of values
                 queryInsert +=", ";
-            
             //console.log(countries[i].Country);
         }
         //console.log(queryInsert);
-        
+        callback();
+    },
+    
+    //erase content of monthly_costs_statistics table DB
+    function(callback) {        
+        console.log("Erase previous data from DB");
+        db = mysql.createConnection(login_UserInputDB);
+        db.connect();
+        db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
+            if (err){console.log(err); return callback(err);}
+            db.end();
+            callback();
+        });
+    },
+    
+    //insert data into DB
+    function(callback) {        
+        console.log("Insert new calculated data into DB");
         db = mysql.createConnection(login_UserInputDB);
         db.connect(); 
-        
         db.query(queryInsert, function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
             console.log("All data calculated!");
