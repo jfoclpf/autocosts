@@ -7,18 +7,14 @@ eval(fs.readFileSync('../js/conversionFunctions.js')+'');
 eval(fs.readFileSync('../js/coreFunctions.js')+'');
 eval(fs.readFileSync('../js/get_data.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
+//include credentials object
+eval(fs.readFileSync('./credentials.js')+'');
+var login_UserInputDB = get_DBcredentials();
 
 //module to allow to execute the queries in series
 var async      = require('async');
 //module to get info from DB
 var mysql      = require('mysql');
-
-var login_UserInputDB = {
-  host     : 'localhost',
-  user     : 'jfolpf_autocostP',
-  password : 'IPVuBP4gMXBP',
-  database : 'jfolpf_autocosts_prod'
-};
 
 //database variable
 var db; 
@@ -35,11 +31,11 @@ var date_string = "'"+d.getFullYear().toString()+"-"+(d.getMonth()+1).toString()
 //method that forces several methods to run synchronously
 async.series([
 
-    //task 1 - get the set of different countries and set them in array countries[]
+    //get the set of different countries and set them in array countries[]
     function(callback) {
+        console.log("Get the set of different countries");
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        console.log("Task 1 - get the set of different countries");
         db.query('SELECT * FROM country_specs', function(err, results, fields) {
             if (err) return callback(err);
             
@@ -55,11 +51,11 @@ async.series([
         });
     },
     
-    //task 2 - get users unique ID
+    //Get users unique ID
     function(callback) {        
+        console.log("Get users unique IDs");
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        console.log("Task 2 - get users unique IDs");
         db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
             for (var i=0; i<results.length; i++){
@@ -71,11 +67,11 @@ async.series([
         });
     },
     
-    //task 3 - get all data from users input DB
+    //Get all data from users input DB
     function(callback) {        
+        console.log("Get all data from users input DB");
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        console.log("Task 3 - get all data from users input DB");
         db.query('SELECT * FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
 
@@ -88,11 +84,11 @@ async.series([
         });
     },
 
-    //task 4 - erase content of monthly_costs_statistics table DB
+    //erase content of monthly_costs_statistics table DB
     function(callback) {        
+        console.log("Erase content of monthly_costs_statistics table DB");
         db = mysql.createConnection(login_UserInputDB);
         db.connect();
-        console.log("Task 4 - erase content of monthly_costs_statistics table DB");
         db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
             db.end();
@@ -100,9 +96,9 @@ async.series([
         });
     },
     
-    //task 5 - calculate avarages and insert them into monthly_costs_statistics table DB
+    //calculate avarages and insert them into monthly_costs_statistics table DB
     function(callback) {
-        console.log("begin task 5 - calculate avarages and insert them into monthly_costs_statistics table DB");
+        console.log("Calculate avarages and insert them into monthly_costs_statistics table DB");
         var country_users = []; //array with unique users for one specific country
         var country_data  = []; //array where all data for one specific country is inserted
         var queryInsert = "";   //string to where all the average data will be inserted
