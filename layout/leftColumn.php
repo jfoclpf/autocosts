@@ -1,17 +1,24 @@
 <div id="div3a" class="roundCornerSlight">
 
-    <?php include($_SERVER['DOCUMENT_ROOT']."/php/logo_selector.php");?>
-
+    <?php include($_SERVER['DOCUMENT_ROOT']."/php/logo_pict_selector.php");?>
+    
+    <?
+    if ($is_logo)
+        echo '<img alt="Logo" src="images/logos/' . get_logo_file_name($is_logo, $currency_logo) . '" id="ac_logo">';
+    else
+        echo '<div style="padding-top:14px;"></div>'; //in case no currency logo applies gives a break line
+    ?>
+    
     <div
         style="text-align:center;font-size:110%; <? if ($is_logo) { ?> padding-top: 20px; border-top: solid 2px rgb(180, 180, 180); <? } ?>">
     </div>
     
 	<div id="div11" style="text-align:center;margin-right:auto;margin-left:auto;">
-		<a href="images/img2.jpg">
-			<img class="roundCorner"
-             style="border-style: solid; border-width: 2px; margin-left: -9px; padding: 10px; width: 97%; border-color: rgb(180, 180, 180);"
-             src="images/img2.jpg">
-		</a>
+		<div class="roundCorner" style="border-radius: 10px; border-style: solid; border-width: 2px; margin-left: -9px; padding: 8px; width: 97%; border-color: rgb(180, 180, 180);">
+            <img alt="Picture" 
+                 style="width: 99%; border:1px solid #;-webkit-border-radius: 10px;-moz-border-radius: 10px; border-radius: 10px;"
+                 src="<? echo get_picture_file_name($CURR_CODE);?>">
+		</div>
 	</div>
 	<div id="br1">
 		<br>
