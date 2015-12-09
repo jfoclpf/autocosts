@@ -32,7 +32,7 @@
     <script type="text/javascript">
         $.get( "js/rgbcolor.js");
         $.get( "js/canvg.js"); 
-        $.get( "js/pdf/html2canvas.js.js"); 
+        $.get( "js/pdf/html2canvas.js"); 
         $.get( "js/pdf/jspdf.js"); 
         $.get( "js/pdf/jspdf.plugin.addimage.js"); 
         $.get( "js/pdf/pdfmake.js"); 
