@@ -129,6 +129,9 @@ async.series([
         //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
         for (var i=0; i<countries.length; i++){ //
             //console.log("Country: " + countries[i].Country);
+
+            country_users = []; //array will be empty
+            country_data  = []; //array will be empty
         
             for (var j=0; j<unique_users.length; j++){                
                     if (unique_users[j].country==countries[i].Country)
