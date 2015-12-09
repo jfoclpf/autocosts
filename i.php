@@ -23,26 +23,29 @@
 	
     <?include('./php/favicon_selector.php');?>
 	
-	<!-- Google API -->
-
+    
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="js/jquery.timer.js"></script> 	
-    <script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
-    <script type="text/javascript" src="//canvg.googlecode.com/svn/trunk/canvg.js"></script>	
-    <script type="text/javascript" src="js/pdf/html2canvas.js"></script>  	
-    <script type="text/javascript" src="js/pdf/jspdf.js"></script>
-    <script type="text/javascript" src="js/pdf/jspdf.plugin.addimage.js"></script>
-    <script type="text/javascript" src="js/pdf/pdfmake.js"></script>
-    <script type="text/javascript" src="js/pdf/vfs_fonts.js"></script>
+    <script type="text/javascript" src="js/jquery.timer.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script type="text/javascript" src="js/conversionFunctions.js"></script>   	
-    <script type="text/javascript" src="js/coreFunctions.js"></script>
-    <script type="text/javascript" src="db_stats/statsFunctions.js"></script>   	
-    <script type="text/javascript" src="js/get_data.js"></script>
-    <script type="text/javascript" src="php/print_data.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script type="text/javascript" src="php/charts_js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-	
+    
+    <!--include asynchronously external files-->
+    <script type="text/javascript">
+        $.get( "js/rgbcolor.js");
+        $.get( "js/canvg.js"); 
+        $.get( "js/pdf/html2canvas.js.js"); 
+        $.get( "js/pdf/jspdf.js"); 
+        $.get( "js/pdf/jspdf.plugin.addimage.js"); 
+        $.get( "js/pdf/pdfmake.js"); 
+        $.get( "js/pdf/vfs_fonts.js");        
+        $.get( "php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>");
+        $.get( "js/conversionFunctions.js"); 
+        $.get( "js/coreFunctions.js"); 
+        $.get( "db_stats/statsFunctions.js"); 
+        $.get( "js/get_data.js");
+        $.get( "php/print_data.php?country=<?php echo $GLOBALS['country'] ?>"); 
+        $.get( "php/charts_js.php?country=<?php echo $GLOBALS['country'] ?>");         
+    </script>
+ 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
