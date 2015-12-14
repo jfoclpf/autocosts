@@ -17,35 +17,20 @@
 	<? include("./php/country_selector.php");?>
 	
     <title><? echo $WEB_PAGE_TITLE ?></title>
+    
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/flags24.css">
-	
+    
     <?include('./php/favicon_selector.php');?>
-	
     
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery.timer.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>"></script>
+    <script type="text/javascript" src="js/timer.js" defer></script>
     
-    <!--include asynchronously external files-->
-    <script type="text/javascript">
-        $.get( "js/rgbcolor.js");
-        $.get( "js/canvg.js"); 
-        $.get( "js/pdf/html2canvas.js"); 
-        $.get( "js/pdf/jspdf.js"); 
-        $.get( "js/pdf/jspdf.plugin.addimage.js"); 
-        $.get( "js/pdf/pdfmake.js"); 
-        $.get( "js/pdf/vfs_fonts.js");        
-        $.get( "php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>");
-        $.get( "js/conversionFunctions.js"); 
-        $.get( "js/coreFunctions.js"); 
-        $.get( "db_stats/statsFunctions.js"); 
-        $.get( "js/get_data.js");
-        $.get( "php/print_data.php?country=<?php echo $GLOBALS['country'] ?>"); 
-        $.get( "php/charts_js.php?country=<?php echo $GLOBALS['country'] ?>");         
-    </script>
- 
+    <script>window.onload = initialize;</script>
+  
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,18 +40,12 @@
 	  ga('create', 'UA-3421546-6', 'autocosts.org');
 	  ga('send', 'pageview');
 	</script>
-	
+    
 </head>
 
 
-<body onload="initialize(); ">
-
-    <script type="text/javascript">
-        /*jslint browser:true */
-        /*jslint white: false */
-        google.load('visualization', '1', {packages: ['corechart']});
-    </script>
-
+<body>
+    
 	<div id="main_div" style=" top: 0; background: none repeat scroll 0px 0px transparent; display: block; font-family: Verdana; overflow: auto;">
 
         <?php include './layout/header.php'; ?>
@@ -146,31 +125,6 @@
         </div>
     <br>
     <br>
-	
-    <script>
-        var TimeCounter = new (function () {
-
-            var incrementTime = 500;
-            var currentTime = 0;
-
-            $(function () {
-                TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
-            });
-
-            function updateTimer() {
-                currentTime += incrementTime;
-            }
-
-            this.resetStopwatch = function () {
-                currentTime = 0;
-            };
-
-            this.getCurrentTimeInSeconds = function () {
-                return currentTime / 1000;
-            };
-        });
-        uuid = guid();
-    </script>
 	
 	</div>
 </body>

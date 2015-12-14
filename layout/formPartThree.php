@@ -359,5 +359,9 @@
     <br>
     <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2, true)" value="&laquo;" />
     <input class="button" type="submit"
-           onclick="if(formsInit() <?if ($GLOBALS['country']=="XX"){echo "&& false";}?> ){submit_data('<?php echo $GLOBALS['country'] ?>');} " value="<? echo $BUTTON_RUN; ?>" />
-</div> <!-- end of form_part3-->
+           onclick="if(formsInit() <? if ($GLOBALS["country"]=="XX"){echo "&& false";}?> ){
+                            submit_data('<? echo $GLOBALS["country"] ?>');
+                    }"
+           value="<? echo $BUTTON_RUN; ?>" />
+</div> 
+<!-- end of form_part3-->

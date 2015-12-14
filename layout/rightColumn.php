@@ -51,10 +51,9 @@
 	</div>
 <? } ?>
 
-<script src="db_stats/show_average_table.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        print_table('<? echo $GLOBALS['country']; ?>');
+    $.getScript("db_stats/show_average_table.js", function (){
+        print_table('<?echo $GLOBALS['country'];?>');
     });
 </script>
 

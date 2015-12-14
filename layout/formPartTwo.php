@@ -433,6 +433,16 @@
     <br>
     <input class="button" type="submit" onclick="openForm_part('form_part', 2, 1, true)" value="&laquo;"/>
     <p2>&nbsp;&nbsp;2/3&nbsp;&nbsp;</p2>
-    <input class="button" type="submit" onclick="openForm_part('form_part', 2, 3, true)" value="&raquo;"/>
+    <input class="button" type="submit" onclick="google.load('visualization', '1', {'packages': ['corechart'], 'callback': function(){
+                                                    openForm_part('form_part', 2, 3, true);
+                                                 }});
+                                                 $.getScript('js/google/rgbcolor.js');
+                                                 $.getScript('js/google/canvg.js'); 
+                                                 $.getScript('js/pdf/html2canvas.js'); 
+                                                 $.getScript('js/pdf/jspdf.js'); 
+                                                 $.getScript('js/pdf/jspdf.plugin.addimage.js'); 
+                                                 $.getScript('js/pdf/pdfmake.js'); 
+                                                 $.getScript('js/pdf/vfs_fonts.js');" 
+           value="&raquo;"/>
 
 </div> <!-- end of form_part2-->
