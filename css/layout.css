@@ -526,7 +526,6 @@ padding-left:20px;
 }
 
     #blocker div {
-        background: url("../images/loading.gif") no-repeat;
         position: absolute;
         top: 220px;
         left: 57%;
