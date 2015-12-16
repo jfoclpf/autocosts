@@ -27,20 +27,19 @@
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="js/jquery.timer.js"></script>
     <script type="text/javascript" src="php/js_functions.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script type="text/javascript" src="js/timer.js" defer></script>
     
-    <script>window.onload = initialize;</script>
-  
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-3421546-6', 'autocosts.org');
-	  ga('send', 'pageview');
-	</script>
-    
+    <script>
+        //runs function initialize() every time the page is loaded
+        window.onload = initialize;
+       
+        //google analytics
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	    ga('create', 'UA-3421546-6', 'autocosts.org');
+	    ga('send', 'pageview');
+	</script>  
 </head>
 
 
@@ -123,9 +122,34 @@
                 <?php include './layout/rightColumn.php'; ?>
             </div>
         </div>
-    <br>
-    <br>
-	
+        <br>
+        <br>
 	</div>
+    
+<script>
+    var TimeCounter = new (function () {
+
+        var incrementTime = 500;
+        var currentTime = 0;
+
+        $(function () {
+            TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
+        });
+
+        function updateTimer() {
+            currentTime += incrementTime;
+        }
+
+        this.resetStopwatch = function () {
+            currentTime = 0;
+        };
+
+        this.getCurrentTimeInSeconds = function () {
+            return currentTime / 1000;
+        };
+    });
+    uuid = guid();
+</script>
+    
 </body>
 </html>
