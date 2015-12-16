@@ -17,7 +17,7 @@
 		<div class="roundCorner" style="border-radius: 10px; border-style: solid; border-width: 2px; margin-left: -9px; padding: 8px; width: 97%; border-color: rgb(180, 180, 180);">
             <img alt="Picture" 
                  style="width: 99%; border:1px solid #;-webkit-border-radius: 10px;-moz-border-radius: 10px; border-radius: 10px;"
-                 src="<? echo get_picture_file_name($CURR_CODE);?>">
+                 src="<? echo get_picture_file_name($CURR_CODE);?>">          
 		</div>
 	</div>
 	<div id="br1">
