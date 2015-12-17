@@ -38,11 +38,11 @@
         return true;
     }
 
-    //**** CHECK FORM PART 1 ******
-    //check if data from form 1 (standing costs) is correctly filled 
+    /* *** CHECK FORM PART 1 ***** */
+    /*check if data from form 1 (standing costs) is correctly filled*/
     function is_userdata_formpart1_ok(){
 
-        //insurance
+        /*insurance*/
         var tipo_seguro_auto=getCheckedValue(custo.tipo_seguro);
 
         if(!isNumber(document.custo.seguro_val.value)){
@@ -55,9 +55,9 @@
             return false;
         }
         
-        //depreciation
-        var auto_mes=document.custo.auto_mes.value; //car acquisition month
-        var auto_ano=document.custo.auto_ano.value; //car acquisition year
+        /*depreciation*/
+        var auto_mes=document.custo.auto_mes.value; /*car acquisition month*/
+        var auto_ano=document.custo.auto_ano.value; /*car acquisition year*/
 
         if(!isNumber(auto_mes) || !isInteger(auto_mes) || auto_mes>12 || auto_mes<=0){
             alert("<?echo $DEPRECIATION?> - <?echo $ERROR_DEPRECIATION_MONTH?>!");
@@ -86,7 +86,7 @@
             return false;
         }
         
-        //car finance
+        /*car finance*/
         var cred_auto_s_n=getCheckedValue(custo.cred_auto);
 
         if(cred_auto_s_n == ""){
@@ -114,7 +114,7 @@
         }
 
 
-        //inspection
+        /*inspection*/
         var nmr_times_inspec=document.custo.nr_vezes_inspecao.value;
         
         if(!isNumber(nmr_times_inspec) || !isInteger(nmr_times_inspec)) {
@@ -127,7 +127,7 @@
             return false;
         }
         
-        //taxes
+        /*taxes*/
         if(!isNumber(document.custo.IUC.value)) {
             alert("<?echo $ROAD_TAXES?> - <?echo $INVALID_AMOUNT?>!");
             return false;
@@ -137,11 +137,11 @@
     }
 
 
-    //**** CHECK FORM PART 2 ******
-    //check if data from form 2 (running costs) is correctly filled 
+    /* *** CHECK FORM PART 2 ***** */
+    /*check if data from form 2 (running costs) is correctly filled*/
     function is_userdata_formpart2_ok(){
 
-        //fuel
+        /*fuel*/
         var tipo_calc_combustiveis=getCheckedValue(custo.calc_combustiveis);
 
         if(tipo_calc_combustiveis == ""){
@@ -151,7 +151,7 @@
 
         switch(tipo_calc_combustiveis)
         {
-        case "km": //fuel calculations made considering distance travelled by month
+        case "km": /*fuel calculations made considering distance travelled by month*/
 
             if(!isNumber(document.custo.consumo_auto.value)){
                 alert("<?echo $FUEL?> - <?echo $ERROR_FUEL_CAR_EFF?>!");
@@ -177,7 +177,7 @@
                 }
 
             }
-            else{//make calculation considering the user takes his car to work on a daily basis
+            else{/*make calculation considering the user takes his car to work on a daily basis*/
 
                 if(!isNumber(document.custo.dias_por_semana.value) || (document.custo.dias_por_semana.value)>7){
                     alert("<?echo $FUEL?> - <?echo $ERROR_DAYS_PER_WEEK?>!");
@@ -195,7 +195,7 @@
             }
             break;
 
-        case "euros"://fuel costs based on data input money per period of time
+        case "euros":/*fuel costs based on data input money per period of time*/
 
             if(!isNumber(document.custo.combustiveis_euro.value)){
                 alert("<?echo $FUEL?> - <?echo $ERROR_CURRENCY?>!");
@@ -204,35 +204,35 @@
             break;
         }
 
-        //maintenance
+        /*maintenance*/
         if(!isNumber(document.custo.revisoes.value)) {
             alert("<?echo $MAINTENANCE?> - <?echo $INVALID_AMOUNT?>!");
             return false;
         }
 
-        //repairs
+        /*repairs*/
         if(!isNumber(document.custo.reparacoes.value)) {
             alert("<?echo $REP_IMPROV?> - <?echo $INVALID_AMOUNT?>!");
             return false;
         }
         
-        //parking
+        /*parking*/
         if(!isNumber(document.custo.parqueamento.value)){
             alert("<?echo $PARKING?> - <?echo $INVALID_AMOUNT?>!");
             return false;
         }
 
-        //***** tolls ******
+        /* **** tolls ***** */
         var tipo_calc_portagens=getCheckedValue(document.custo.portagens_ao_dia);
 
-        //if tolls costs are calculated on a daily basis
-        if(tipo_calc_portagens=="false") {//monthly basis
+        /*if tolls costs are calculated on a daily basis*/
+        if(tipo_calc_portagens=="false") {/*monthly basis*/
             if(!isNumber(document.custo.portagens.value)) {
                 alert("<?echo $TOLLS?> - <?echo $INVALID_AMOUNT?>!");
                 return false;
             }
 
-        } else {//daily basis
+        } else {/*daily basis*/
             if(!isNumber(document.custo.preco_portagens_por_dia.value)) {
                 alert("<?echo $TOLLS?> - <?echo $TOLLS_DAY_CALC1?> - <?echo $INVALID_AMOUNT?>!");
                 return false;
@@ -245,13 +245,13 @@
 
         }
         
-        //fines
+        /*fines*/
         if(!isNumber(document.custo.multas.value)){
             alert("<?echo $FINES?> - <?echo $INVALID_AMOUNT?>!");
             return false;
         }
         
-        //washing
+        /*washing*/
         if(!isNumber(document.custo.lavagens.value)){
             alert("<?echo $WASHING?> - <?echo $INVALID_AMOUNT?>!");
             return false;
@@ -260,7 +260,7 @@
         return true;
     }
 
-    //**** CHECK FORM PART 3 ******
+    /* *** CHECK FORM PART 3 ***** */
     function is_userdata_formpart3_ok(){
 
         var n_pess_familia=document.custo.pessoas_agregado.value;
@@ -276,7 +276,7 @@
             return false;
         }
         
-        //income
+        /*income*/
         var income_type = getCheckedValue(custo.radio_income);
         switch(income_type){
         case 'year':
@@ -306,7 +306,7 @@
             }			
             break;
         }
-        //working time
+        /*working time*/
         var is_working_time = getCheckedValue(custo.radio_work_time);
         if(is_working_time == 'true'){
             if(!isNumber(document.custo.time_hours_per_week.value)){
@@ -319,7 +319,7 @@
             }
         }
         
-        //distance
+        /*distance*/
         if($('.distance_part').css('display')!='none'){
             var drive_to_work = getCheckedValue(custo.drive_to_work);
             if(drive_to_work == 'true'){
@@ -344,7 +344,7 @@
             }
         }
         
-        //time spent in driving
+        /*time spent in driving*/
         if($('.distance_part').css('display')!='none'){
             var drive_to_work = getCheckedValue(custo.drive_to_work);
             if(drive_to_work == 'true'){
