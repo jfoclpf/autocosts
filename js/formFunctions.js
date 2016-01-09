@@ -61,7 +61,8 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         
         if (!hasLoadedPart[3]){
             $.getScript('js/google/rgbcolor.js');
-            $.getScript('js/google/canvg.js'); 
+            $.getScript('js/google/canvg.js');
+            $.getScript('js/pdf/generatePDF.js');
             $.getScript('js/pdf/html2canvas.js'); 
             $.getScript('js/pdf/jspdf.js'); 
             $.getScript('js/pdf/jspdf.plugin.addimage.js'); 
@@ -469,48 +470,3 @@ function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
 
-function getBody(data){
-    var body = [];
-    for(var i=0; i<data.length; i+=2){
-        var string1 = $(data[i]).html();
-        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-        var el;
-        if(i<2){
-            var str2 = $(data[i+1]).text().trim();
-            var el2 = {text: str2, style: 'header'};
-            el = {text: str, style: 'header'};          
-            body.push([el, el2]);
-        }
-        else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el, el2]);
-        }           
-    }
-    return body;
-}
-
-function getBodyFinEffort(data){
-    var body = [];
-    for(var i=0; i<data.length; i++){
-        var string1 = $(data[i]).html();
-        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-        var el;
-        if($(data[i]).find('b').length > 0){
-            var el2 = {};
-            el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
-            body.push([el, {}]);
-        }
-        else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el,el2]);
-            i++;
-        }       
-    }
-    return body;
-}
