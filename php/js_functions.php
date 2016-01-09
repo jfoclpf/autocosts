@@ -362,7 +362,8 @@
                     alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE?>!");
                     return false;
                 }
-                if(!isNumber(document.custo.days_drive_per_month.value)){
+                var days_drive_per_month = document.custo.days_drive_per_month.value;
+                if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
                     alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
                     return false;
                 }
