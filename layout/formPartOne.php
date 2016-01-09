@@ -261,17 +261,6 @@
 
 <br>
 <p2>1/3&nbsp;&nbsp;</p2>
-<input class="button" type="submit" onclick="$.getScript('js/coreFunctions.js', function(){
-                                                $.getScript('https://www.google.com/jsapi', function(){
-                                                    openForm_part('form_part', 1, 2, true);
-                                                });
-                                             });                                             
-                                             $.getScript('js/conversionFunctions.js'); 
-                                             $.getScript('js/coreFunctions.js'); 
-                                             $.getScript('db_stats/statsFunctions.js'); 
-                                             $.getScript('js/get_data.js');
-                                             $.getScript('php/print_data.php?country=<?php echo $GLOBALS['country'] ?>'); 
-                                             $.getScript('php/charts_js.php?country=<?php echo $GLOBALS['country'] ?>');"                              
-       value="&raquo;"/>
+<input class="button" type="submit" onclick="openForm_part('form_part', 1, 2, '<?php echo $GLOBALS["country"] ?>');" value="&raquo;"/>
 
 </div> <!-- end of form_part1-->

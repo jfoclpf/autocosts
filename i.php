@@ -150,7 +150,7 @@
     window.onload = initialize;
     function initialize() {
 
-        openForm_part("form_part", 0, 1, false); /*shows just part 1 of input form*/
+        openForm_part("form_part", 0, 1); /*shows just part 1 of input form*/
 
         input_object = document.getElementById('input_div'); /*tabela de entrada*/
         result_object = document.getElementById('result_div'); /*resultados*/

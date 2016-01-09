@@ -1,6 +1,100 @@
 var income = 'year';
 var isDistanceSet = false;
 
+var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
+function openForm_part(part_name, part_number_origin, part_number_destiny, country) {
+    //alert("from "+part_number_origin+" to "+part_number_destiny +" - country:"+country);
+
+    //shows form part n and hides the other parts
+    function shows_part(n){
+        for (var p = null, i = 1; p = document.getElementById(part_name+i); ++i) {
+            if (i == n)
+                p.style.display = "";
+            else
+                p.style.display = "none";
+        }       
+    }
+
+    //change from form part 1 to 2
+    if (part_number_origin==1 && part_number_destiny==2){
+        
+        if (!hasLoadedPart[0]){
+            $.getScript('js/coreFunctions.js', function(){
+                $.getScript('https://www.google.com/jsapi', function(){
+                    hasLoadedPart[0] = true;
+                    if (!is_userdata_formpart1_ok())
+                        return;
+                    shows_part(2);
+                });
+            });                                             
+        }
+        else{
+            if (!is_userdata_formpart1_ok())
+                return;
+            shows_part(2);
+        }
+        
+        if (!hasLoadedPart[1]){
+            $.getScript('js/conversionFunctions.js'); 
+            $.getScript('db_stats/statsFunctions.js'); 
+            $.getScript('js/get_data.js');
+            $.getScript('php/print_data.php?country='+country); 
+            $.getScript('php/charts_js.php?country='+country);
+            hasLoadedPart[1] = true;
+        }
+    }
+    
+    //change from form part 2 to 3
+    if (part_number_origin==2 && part_number_destiny==3){
+        if (!is_userdata_formpart2_ok())
+            return;
+        
+        if (!hasLoadedPart[2]){
+            google.load('visualization', '1', {'packages': ['corechart'], 'callback': function(){
+                hasLoadedPart[2]=true;
+                shows_part(3);
+            }});
+        }
+        else{
+            shows_part(3);
+        }
+        
+        if (!hasLoadedPart[3]){
+            $.getScript('js/google/rgbcolor.js');
+            $.getScript('js/google/canvg.js'); 
+            $.getScript('js/pdf/html2canvas.js'); 
+            $.getScript('js/pdf/jspdf.js'); 
+            $.getScript('js/pdf/jspdf.plugin.addimage.js'); 
+            $.getScript('js/pdf/pdfmake.js'); 
+            $.getScript('js/pdf/vfs_fonts.js');
+            hasLoadedPart[3]=true;
+        }
+    }
+    
+    //change from form part 3 to 2
+    if (part_number_origin==3 && part_number_destiny==2){
+        shows_part(2);
+    }
+    
+    //change from form part 2 to 1
+    if (part_number_origin==2 && part_number_destiny==1){
+        shows_part(1);
+    }    
+
+    //when it starts/loads the website
+    if (part_number_origin==0 && part_number_destiny==1){
+        window.location.hash = "div2"; 
+        window.scrollBy(0,32);
+        shows_part(1);
+    }
+    else{
+        window.location.hash = "";
+    }
+    
+    removeHash();
+    return;
+}
+
 function valueselect(myval) {
     window.location.href = "" + myval;
 }
@@ -20,7 +114,7 @@ function Popup(data1, data2, data3, data4, title)
     mywindow.document.write('<html><head><title>'+title+'</title>');
     //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
     mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
-	mywindow.document.write('<center><div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
+    mywindow.document.write('<center><div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
     mywindow.document.write('<h3>'+title+'</h3>');
     
     mywindow.document.write(data1);
@@ -46,16 +140,16 @@ function Popup(data1, data2, data3, data4, title)
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
-		isDistanceSet = false;
-		$('.distance_part').each(function(){ $(this).show(); });
+        isDistanceSet = false;
+        $('.distance_part').each(function(){ $(this).show(); });
         $('#eurosDiv').css("display", "block");
         $('#kmDiv').css("display", "none");
-		$('.time_spent_part_1').each(function(){ $(this).hide(); });
-		$('.time_spent_part_2').show();
-		$('#drive_to_work_no').prop('checked', true);
+        $('.time_spent_part_1').each(function(){ $(this).hide(); });
+        $('.time_spent_part_2').show();
+        $('#drive_to_work_no').prop('checked', true);
     } else if (fuelCalculationMethod === 'distance') {
-		isDistanceSet = true;
-		$('.distance_part').each(function(){ $(this).hide(); });
+        isDistanceSet = true;
+        $('.distance_part').each(function(){ $(this).hide(); });
         $('#eurosDiv').css("display", "none");
         $('#kmDiv').css("display", "block");
 
@@ -72,29 +166,29 @@ function carToJob(carToJobFlag) {
     if (carToJobFlag) {
         $('#carro_emprego_sim_Div').css("display", "block");
         $('#carro_emprego_nao_Div').css("display", "none");
-		$('.time_spent_part_1').each(function(){ $(this).show(); });
-		$('.time_spent_part_2').hide();
+        $('.time_spent_part_1').each(function(){ $(this).show(); });
+        $('.time_spent_part_2').hide();
     } else {
         $('#carro_emprego_sim_Div').css("display", "none");
         $('#carro_emprego_nao_Div').css("display", "block");
-		$('.time_spent_part_1').each(function(){ $(this).hide(); });
-		$('.time_spent_part_2').show();
+        $('.time_spent_part_1').each(function(){ $(this).hide(); });
+        $('.time_spent_part_2').show();
     }
 }
 
 function driveToJob(flag){
-	if(flag){
-		$('.car_to_job_part').each(function(){ $(this).show(); });
-		$('.time_spent_part_1').each(function(){ $(this).show(); });
-		$('.time_spent_part_2').hide();
-		$('#car_no_job_part').hide();
-	}
-	else{
-		$('.car_to_job_part').each(function(){ $(this).hide(); });
-		$('.time_spent_part_1').each(function(){ $(this).hide(); });
-		$('.time_spent_part_2').show();
-		$('#car_no_job_part').show();
-	}
+    if(flag){
+        $('.car_to_job_part').each(function(){ $(this).show(); });
+        $('.time_spent_part_1').each(function(){ $(this).show(); });
+        $('.time_spent_part_2').hide();
+        $('#car_no_job_part').hide();
+    }
+    else{
+        $('.car_to_job_part').each(function(){ $(this).hide(); });
+        $('.time_spent_part_1').each(function(){ $(this).hide(); });
+        $('.time_spent_part_2').show();
+        $('#car_no_job_part').show();
+    }
 }
 
 function onclick_credit(flag) {
@@ -147,64 +241,32 @@ function removeHash () {
 }
 
 function income_toggle(value){
-	switch(value){
-		case 'year':
-			$('#div_income_per_year, #working_time_part').removeClass('hidden').show();
-			$('#div_income_per_month, #div_income_per_week, #div_income_per_hour').addClass('hidden');
-			income='year';
-			break;
-		case 'month':
-			$('#div_income_per_month, #working_time_part').removeClass('hidden').show();
-			$('#div_income_per_year, #div_income_per_week, #div_income_per_hour').addClass('hidden');
-			income='month';
-			break;
-		case 'week':
-			$('#div_income_per_week, #working_time_part').removeClass('hidden').show();
-			$('#div_income_per_year, #div_income_per_month, #div_income_per_hour').addClass('hidden');
-			income='week';
-			break;
-		case 'hour':
-			$('#div_income_per_hour').removeClass('hidden').show();
-			$('#div_income_per_year, #div_income_per_week, #div_income_per_month, #working_time_part').addClass('hidden');
-			income='hour';
-			break;
-	}	
+    switch(value){
+        case 'year':
+            $('#div_income_per_year, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_month, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+            income='year';
+            break;
+        case 'month':
+            $('#div_income_per_month, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_year, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+            income='month';
+            break;
+        case 'week':
+            $('#div_income_per_week, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_year, #div_income_per_month, #div_income_per_hour').addClass('hidden');
+            income='week';
+            break;
+        case 'hour':
+            $('#div_income_per_hour').removeClass('hidden').show();
+            $('#div_income_per_year, #div_income_per_week, #div_income_per_month, #working_time_part').addClass('hidden');
+            income='hour';
+            break;
+    }   
 }
 
 function working_time_toogle(value){
-	value ? $('#job_working_time').show() : $('#job_working_time').hide();	
-}
-
-function openForm_part(part_name, part_number_origin, part_number_destiny, bool_go2form) {
-
-    //alert("from "+part_number_origin+" to "+part_number_destiny);
-
-    //is form part 1 correctly filled?
-    if (part_number_origin==1){
-        if (!is_userdata_formpart1_ok())
-            return;
-    }
-    
-    //is form part 2 correctly filled?
-    if (part_number_origin==2 && part_number_destiny==3){
-        if (!is_userdata_formpart2_ok())
-            return;
-    }
-    
-    if (bool_go2form){
-        window.location.hash = "div2"; 
-        window.scrollBy(0,32);
-    }
-    else{
-        window.location.hash = "";
-    }
-    removeHash();
-
-    for (var p = null, i = 1;
-        p = document.getElementById(part_name+i); ++i) {
-        if (i == part_number_destiny) p.style.display = "";
-        else p.style.display = "none";
-    }
+    value ? $('#job_working_time').show() : $('#job_working_time').hide();  
 }
 
 function reload () {
@@ -316,35 +378,35 @@ function submit_data(country) {
     objectToDb.washing_value = $('#washing_value').val();
     objectToDb.washing_periodicity = $('#lavagens_select').val();
     objectToDb.household_number_people = $('#household_number_people').val();
-    objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();	
-	objectToDb.income_type = $('input[name="radio_income"]:checked', '#main_form').val();
-	objectToDb.income_per_year = $('#income_per_year').val();
-	objectToDb.income_per_month = $('#income_per_month').val();
-	objectToDb.income_months_per_year = $('#income_months_per_year').val();
-	objectToDb.income_per_week = $('#income_per_week').val();
-	objectToDb.income_weeks_per_year = $('#income_weeks_per_year').val();
-	objectToDb.income_per_hour = $('#income_per_hour').val();
-	objectToDb.income_hours_per_week = $('#income_hours_per_week').val();
-	objectToDb.income_hour_weeks_per_year = $('#income_hour_weeks_per_year').val();
-	objectToDb.work_time = $('input[name="radio_work_time"]:checked', '#main_form').val();
-	objectToDb.work_time_month_per_year = $('#time_month_per_year').val();
-	objectToDb.work_time_hours_per_week = $('#time_hours_per_week').val();
-	objectToDb.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#main_form').val();
-	objectToDb.distance_days_per_week = $('#drive_to_work_days_per_week').val();
-	objectToDb.distance_home_job = $('#dist_home_job').val();
-	objectToDb.distance_journey_weekend = $('#journey_weekend').val();
-	objectToDb.distance_per_month = $('#dist_per_month').val();
-	objectToDb.distance_period = $('#period_km').val();
-	objectToDb.time_spent_home_job = $('#time_home_job').val();
-	objectToDb.time_spent_weekend = $('#time_weekend').val();
-	objectToDb.time_spent_min_drive_per_day = $('#min_drive_per_day').val();
-	objectToDb.time_spent_days_drive_per_month = $('#days_drive_per_month').val();	
+    objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();   
+    objectToDb.income_type = $('input[name="radio_income"]:checked', '#main_form').val();
+    objectToDb.income_per_year = $('#income_per_year').val();
+    objectToDb.income_per_month = $('#income_per_month').val();
+    objectToDb.income_months_per_year = $('#income_months_per_year').val();
+    objectToDb.income_per_week = $('#income_per_week').val();
+    objectToDb.income_weeks_per_year = $('#income_weeks_per_year').val();
+    objectToDb.income_per_hour = $('#income_per_hour').val();
+    objectToDb.income_hours_per_week = $('#income_hours_per_week').val();
+    objectToDb.income_hour_weeks_per_year = $('#income_hour_weeks_per_year').val();
+    objectToDb.work_time = $('input[name="radio_work_time"]:checked', '#main_form').val();
+    objectToDb.work_time_month_per_year = $('#time_month_per_year').val();
+    objectToDb.work_time_hours_per_week = $('#time_hours_per_week').val();
+    objectToDb.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#main_form').val();
+    objectToDb.distance_days_per_week = $('#drive_to_work_days_per_week').val();
+    objectToDb.distance_home_job = $('#dist_home_job').val();
+    objectToDb.distance_journey_weekend = $('#journey_weekend').val();
+    objectToDb.distance_per_month = $('#dist_per_month').val();
+    objectToDb.distance_period = $('#period_km').val();
+    objectToDb.time_spent_home_job = $('#time_home_job').val();
+    objectToDb.time_spent_weekend = $('#time_weekend').val();
+    objectToDb.time_spent_min_drive_per_day = $('#min_drive_per_day').val();
+    objectToDb.time_spent_days_drive_per_month = $('#days_drive_per_month').val();  
     objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
     objectToDb.client_uuid = uuid;
     objectToDb.country = country;
 
     sanityChecks(objectToDb);
-	
+    
     $.ajax({
         url: 'db_stats/SubmitUserInput.php',
         type: 'POST',
@@ -352,7 +414,7 @@ function submit_data(country) {
             objectToDb: objectToDb
         },
         success: function(data) {},
-        error: function () {		
+        error: function () {        
             console.log("There was an error submitting the values for statistical analysis");
         }
     });
@@ -408,47 +470,47 @@ function guid() {
 }
 
 function getBody(data){
-	var body = [];
-	for(var i=0; i<data.length; i+=2){
-		var string1 = $(data[i]).html();
-		var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-		str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-		var el;
-		if(i<2){
-			var str2 = $(data[i+1]).text().trim();
-			var el2 = {text: str2, style: 'header'};
-			el = {text: str, style: 'header'};			
-			body.push([el, el2]);
-		}
-		else{
-			var str2 = $(data[i+1]).text();
-			var el2 = {text: str2, style: 'cell'};
-			el = {text: str, style: 'cell'};
-			body.push([el, el2]);
-		}			
-	}
-	return body;
+    var body = [];
+    for(var i=0; i<data.length; i+=2){
+        var string1 = $(data[i]).html();
+        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+        var el;
+        if(i<2){
+            var str2 = $(data[i+1]).text().trim();
+            var el2 = {text: str2, style: 'header'};
+            el = {text: str, style: 'header'};          
+            body.push([el, el2]);
+        }
+        else{
+            var str2 = $(data[i+1]).text();
+            var el2 = {text: str2, style: 'cell'};
+            el = {text: str, style: 'cell'};
+            body.push([el, el2]);
+        }           
+    }
+    return body;
 }
 
 function getBodyFinEffort(data){
-	var body = [];
-	for(var i=0; i<data.length; i++){
-		var string1 = $(data[i]).html();
-		var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-		str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-		var el;
-		if($(data[i]).find('b').length > 0){
-			var el2 = {};
-			el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
-			body.push([el, {}]);
-		}
-		else{
-			var str2 = $(data[i+1]).text();
-			var el2 = {text: str2, style: 'cell'};
-			el = {text: str, style: 'cell'};
-			body.push([el,el2]);
-			i++;
-		}		
-	}
-	return body;
+    var body = [];
+    for(var i=0; i<data.length; i++){
+        var string1 = $(data[i]).html();
+        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+        var el;
+        if($(data[i]).find('b').length > 0){
+            var el2 = {};
+            el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
+            body.push([el, {}]);
+        }
+        else{
+            var str2 = $(data[i+1]).text();
+            var el2 = {text: str2, style: 'cell'};
+            el = {text: str, style: 'cell'};
+            body.push([el,el2]);
+            i++;
+        }       
+    }
+    return body;
 }

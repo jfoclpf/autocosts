@@ -357,7 +357,7 @@
 		</tr>
     </table>
     <br>
-    <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2, true)" value="&laquo;" />
+    <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2)" value="&laquo;" />
     <input class="button" type="submit"
            onclick="if(formsInit() <? if ($GLOBALS["country"]=="XX"){echo "&& false";}?> ){
                             submit_data('<? echo $GLOBALS["country"] ?>');
