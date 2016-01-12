@@ -32,6 +32,7 @@ $avail_CT = array(
     "US" => "USA",
     "CA" => "Canada",
     "DE" => "Deutschland",
+	"IE" => "Ireland",
     "GB" => "United Kingdom"
 );
 
