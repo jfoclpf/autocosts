@@ -154,7 +154,9 @@ async.series([
             //console.log(country_object);
             
             var stats_results = CalculateStatistics(country_users, country_data, country_object);
-            console.log("\n" + countries[i].Country + " - total costs: " + stats_results.totCos);
+            console.log("\n" + countries[i].Country + 
+                " | total costs: " + ("        " + stats_results.totCos.toFixed(1)).slice(-7) +
+                " | users: " + stats_results.users_counter);
 
             queryInsert += "('" + countries[i].Country + "', "
                 + date_string            + ", "                 
