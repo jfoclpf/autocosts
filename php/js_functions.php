@@ -29,6 +29,7 @@
         tables_HTML += print_extern_table(f1, f2, f3, data);
         tables_HTML += print_publict_table(f1, f2, f3, data);
         tables_HTML += print_feffort_table(f1, f2, f3, data);
+        tables_HTML += "<br><br>";
             
         drawChartResult(frame_witdh, data)
             
