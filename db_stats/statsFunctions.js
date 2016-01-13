@@ -1,6 +1,8 @@
 //********************
 //statistics outlier removal constants
 var statsConstants = {
+    MIN_TIME_TO_FILL_FORM: 90, //minimum time to fill form shall be 90 seconds, after which is considered spam-bot
+    
     //speed
     MAX_AVERAGE_SPEED:  120, //applies both for mph and km/h
     //fuel
@@ -27,59 +29,63 @@ var statsConstants = {
         PARKING:      250,
         FINES:        150,
         WASHING:      150        
-    }    
+    }
 };
 
-//********************
-// *.*
-function CalculateStatistics(userIds, data, country){
-//matrix *userIds* is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), 
-//the 2nd column has always the same country
-//matrix *data* is a matrix with everything for the specific country
-//userIds.length is smaller than data.length, because some users fill in more than one time 
+//gets the average of array of objects
+//results_array is an array of objects previously defined in coreFunctions.js
+function get_average_costs(results_array){
+    
+    var length = results_array.length;
 
-    var temp = [];
-    for(var i=0; i<userIds.length;i++){
-        for(var j=0; j<data.length;j++){
-            if(data[j].uuid_client==userIds[i].uuid_client){            
-                
-                if(is_DBentry_ok(data[j], country)){
-                    var f1 = get_DB_part1(data[j]);
-                    var f2 = get_DB_part2(data[j]);
-                    var f3 = get_DB_part3(data[j]);
-                    var result = calculate_costs(f1, f2, f3, country);
-                    //alert(JSON.stringify(result, null, 4));
-                    
-                    //checks if the result is an outlier
-                    if (was_result_ok(result, country)){ 
-                        temp.push({
-                            dep:     result.monthly_costs.depreciation, 
-                            ins:     result.monthly_costs.insurance, 
-                            cred:    result.monthly_costs.credit, 
-                            insp:    result.monthly_costs.inspection, 
-                            carTax:  result.monthly_costs.car_tax, 
-                            fuel:    result.monthly_costs.fuel,
-                            maint:   result.monthly_costs.maintenance,
-                            rep:     result.monthly_costs.repairs_improv,
-                            park:    result.monthly_costs.parking,
-                            tolls:   result.monthly_costs.tolls,
-                            fines:   result.monthly_costs.fines,
-                            wash:    result.monthly_costs.washing,
-                            dist:    result.distance_per_month,
-                            kinetic: result.fin_effort.kinetic_speed,
-                            virtual: result.fin_effort.virtual_speed
-                        });
-                    }
-                    break;
-                }               
-            }           
-        }       
+    var monthly_costs = {
+        depreciation: 0,
+        insurance: 0,
+        credit: 0,
+        inspection: 0,
+        car_tax: 0,
+        fuel: 0,
+        maintenance: 0,
+        repairs_improv: 0,
+        parking: 0,
+        tolls: 0,
+        fines: 0,
+        washing: 0
+    };
+    var fin_effort = {
+        kinetic_speed: 0,
+        virtual_speed: 0
+    };
+    var output = {
+        monthly_costs: monthly_costs,
+        fin_effort: fin_effort,
+        distance_per_month: 0        
+    };
+       
+    if(length==0){
+        return null;
     }
-
-    //alert("starting average calculation");
-    //compute average
-    if(temp.length){
-        
+   
+    //if the length if the array of objects is 1, simply returns the own array
+    if(length==1){
+        output.monthly_costs.depreciation   = results_array[0].monthly_costs.depreciation;
+        output.monthly_costs.insurance      = results_array[0].monthly_costs.insurance;
+        output.monthly_costs.credit         = results_array[0].monthly_costs.credit;
+        output.monthly_costs.inspection     = results_array[0].monthly_costs.inspection;
+        output.monthly_costs.car_tax        = results_array[0].monthly_costs.car_tax;
+        output.monthly_costs.fuel           = results_array[0].monthly_costs.fuel;
+        output.monthly_costs.maintenance    = results_array[0].monthly_costs.maintenance;
+        output.monthly_costs.repairs_improv = results_array[0].monthly_costs.repairs_improv;
+        output.monthly_costs.parking        = results_array[0].monthly_costs.parking;
+        output.monthly_costs.tolls          = results_array[0].monthly_costs.tolls;
+        output.monthly_costs.fines          = results_array[0].monthly_costs.fines;
+        output.monthly_costs.washing        = results_array[0].monthly_costs.washing;
+        output.distance_per_month = results_array[0].distance_per_month;
+        output.fin_effort.kinetic_speed     = results_array[0].fin_effort.kinetic_speed;
+        output.fin_effort.virtual_speed     = results_array[0].fin_effort.virtual_speed;
+    }
+   
+    if(length>1){
         var depTotal = 0;
         var insTotal = 0;
         var credTotal = 0;
@@ -96,74 +102,124 @@ function CalculateStatistics(userIds, data, country){
         var kineticTotal = 0;       
         var virtualTotal = 0; 
         
-        for(i=0;i<temp.length;i++){
-            depTotal += temp[i].dep;
-            insTotal += temp[i].ins;
-            credTotal += temp[i].cred;
-            inspTotal += temp[i].insp;
-            carTaxTotal += temp[i].carTax;
-            fuelTotal += temp[i].fuel;
-            maintTotal += temp[i].maint;
-            repTotal += temp[i].rep;
-            parkTotal += temp[i].park;
-            tollsTotal += temp[i].tolls;
-            finesTotal += temp[i].fines;
-            washTotal += temp[i].wash;
-            distTotal += temp[i].dist;          
-            kineticTotal += temp[i].kinetic;        
-            virtualTotal += temp[i].virtual;            
+        for(i=0; i<length; i++){
+            depTotal += results_array[i].monthly_costs.depreciation;
+            insTotal += results_array[i].monthly_costs.insurance;
+            credTotal += results_array[i].monthly_costs.credit;
+            inspTotal += results_array[i].monthly_costs.inspection;
+            carTaxTotal += results_array[i].monthly_costs.car_tax;
+            fuelTotal += results_array[i].monthly_costs.fuel;
+            maintTotal += results_array[i].monthly_costs.maintenance;
+            repTotal += results_array[i].monthly_costs.repairs_improv;
+            parkTotal += results_array[i].monthly_costs.parking;
+            tollsTotal += results_array[i].monthly_costs.tolls;
+            finesTotal += results_array[i].monthly_costs.fines;
+            washTotal += results_array[i].monthly_costs.washing;
+            distTotal += results_array[i].distance_per_month;          
+            kineticTotal += results_array[i].fin_effort.kinetic_speed;        
+            virtualTotal += results_array[i].fin_effort.virtual_speed;            
         }
         
-        var depAverage = depTotal/temp.length;
-        var insAverage = insTotal/temp.length;
-        var credAverage = credTotal/temp.length;
-        var inspAverage = inspTotal/temp.length;
-        var carTaxAverage = carTaxTotal/temp.length;
-        var fuelAverage = fuelTotal/temp.length;
-        var maintAverage = maintTotal/temp.length;
-        var repAverage = repTotal/temp.length;
-        var parkAverage = parkTotal/temp.length;
-        var tollsAverage = tollsTotal/temp.length;
-        var finesAverage = finesTotal/temp.length;
-        var washAverage = washTotal/temp.length;
-        var distAverage = distTotal/temp.length;
-        var kineticAverage = kineticTotal/temp.length;
-        var virtualAverage = virtualTotal/temp.length;
-            
-        //standing costs
-        var total_standing_costs_month = insAverage + depAverage + credAverage +
-            inspAverage + 0.5 * maintAverage + carTaxAverage;
-        //running costs
-        var total_running_costs_month = fuelAverage + 0.5 * maintAverage + repAverage + parkAverage +
-            tollsAverage + finesAverage + washAverage;
-        //total 
-        var total_costs_month = insAverage + fuelAverage + depAverage +
-            credAverage + inspAverage + maintAverage +
-            repAverage + carTaxAverage + parkAverage +
-            tollsAverage + finesAverage + washAverage;
-                
-        var running_costs_p_unit_distance = distAverage ? total_running_costs_month / distAverage : 0;
+        output.monthly_costs.depreciation   = depTotal/length;
+        output.monthly_costs.insurance      = insTotal/length;
+        output.monthly_costs.credit         = credTotal/length;
+        output.monthly_costs.inspection     = inspTotal/length;
+        output.monthly_costs.car_tax        = carTaxTotal/length;
+        output.monthly_costs.fuel           = fuelTotal/length;
+        output.monthly_costs.maintenance    = maintTotal/length;
+        output.monthly_costs.repairs_improv = repTotal/length;
+        output.monthly_costs.parking        = parkTotal/length;
+        output.monthly_costs.tolls          = tollsTotal/length;
+        output.monthly_costs.fines          = finesTotal/length;
+        output.monthly_costs.washing        = washTotal/length;
+        output.distance_per_month = distTotal/length;
+        output.fin_effort.kinetic_speed     = kineticTotal/length;
+        output.fin_effort.virtual_speed     = virtualTotal/length;
+    } 
+ 
+    return output;
+}
+
+//********************
+//this functions calculates the avearge of the averages of the same user inputs 
+//
+function CalculateStatistics(userIds, data, country){
+//matrix *userIds* is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), 
+//the 2nd column has always the same country
+//matrix *data* is a matrix with everything for the specific country
+//userIds.length is smaller than data.length, because some users fill in more than one time
+
+//console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
+//console.log("************************************************************************");
+
+    if(userIds.length!=0 && data.length!=0){
+        var temp_i = []; //array with unique users, having one element per user 
+        var temp_j = []; //array having the several inputs from the same user
         
-        var total_costs_p_unit_distance = distAverage? total_costs_month / distAverage: 0;
+        for(var i=0; i<userIds.length;i++){
+            for(var j=0, n=0; j<data.length;j++){
+                if(data[j].uuid_client==userIds[i].uuid_client){            
+                    
+                    //checks if the entry is ok
+                    //and if it is an input spam/bot (the time to fill the form for the first input mus be greater than a time value)
+                    if(is_DBentry_ok(data[j], country)
+                        && ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
+                        var f1 = get_DB_part1(data[j]);
+                        var f2 = get_DB_part2(data[j]);
+                        var f3 = get_DB_part3(data[j]);
+                        var result = calculate_costs(f1, f2, f3, country);
+                        //alert(JSON.stringify(result, null, 4));
+                        
+                        //checks if the result is an outlier
+                        if (was_result_ok(result, country)){
+                            //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+data[j].time_to_fill_form); 
+                            temp_j.push(result);
+                            n++;
+                        }
+                    }
+                }   
+            }
+            if (temp_j.length){
+                temp_i.push(get_average_costs(temp_j));
+            }
+            temp_j = [];        
+        }
+        var avg = get_average_costs(temp_i);
+        
+        //standing costs
+        var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + avg.monthly_costs.credit +
+            avg.monthly_costs.inspection + 0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
+        //running costs
+        var total_running_costs_month = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.repairs_improv + 
+            avg.monthly_costs.parking + avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+        //total 
+        var total_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.fuel + avg.monthly_costs.depreciation +
+            avg.monthly_costs.credit + avg.monthly_costs.inspection + avg.monthly_costs.maintenance +
+            avg.monthly_costs.repairs_improv + avg.monthly_costs.car_tax + avg.monthly_costs.parking +
+            avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+                
+        var running_costs_p_unit_distance = avg.distance_per_month ? total_running_costs_month / avg.distance_per_month : 0;
+        
+        var total_costs_p_unit_distance = avg.distance_per_month? total_costs_month / avg.distance_per_month: 0;
         
         var total_costs_per_year = total_costs_month * 12;
         
         //object to be output as result
         var output = {
-            dep:      depAverage, 
-            ins:      insAverage, 
-            cred:     credAverage, 
-            insp:     inspAverage, 
-            carTax:   carTaxAverage,
+            dep:      avg.monthly_costs.depreciation, 
+            ins:      avg.monthly_costs.insurance, 
+            cred:     avg.monthly_costs.credit, 
+            insp:     avg.monthly_costs.inspection, 
+            carTax:   avg.monthly_costs.car_tax,
             standCos: total_standing_costs_month,
             
-            fuel:     fuelAverage,
-            maint:    maintAverage,
-            rep:      repAverage,
-            park:     parkAverage,
-            tolls:    tollsAverage,
-            fines:    finesAverage,
-            wash:     washAverage,
+            fuel:     avg.monthly_costs.fuel,
+            maint:    avg.monthly_costs.maintenance,
+            rep:      avg.monthly_costs.repairs_improv,
+            park:     avg.monthly_costs.parking,
+            tolls:    avg.monthly_costs.tolls,
+            fines:    avg.monthly_costs.fines,
+            wash:     avg.monthly_costs.washing,
             runnCos:  total_running_costs_month,
             
             totCos:   total_costs_month,
@@ -171,17 +227,44 @@ function CalculateStatistics(userIds, data, country){
             
             runCostsProDist: running_costs_p_unit_distance,
             totCostsProDist: total_costs_p_unit_distance,
-            kinetic_speed:   kineticAverage,
-            virtual_speed:   virtualAverage,
+            kinetic_speed:   avg.fin_effort.kinetic_speed,
+            virtual_speed:   avg.fin_effort.virtual_speed,
             
-            users_counter:   temp.length
-        }
-        //alert(JSON.stringify(output, null, 4));
+            users_counter:   temp_i.length
+        };
+        //console.log(output);
         return output;
     }
     else{
-        return false;
-    }
+        var output = {
+            dep: 0, 
+            ins: 0,
+            cred: 0,
+            insp: 0,
+            carTax: 0,
+            standCos: 0,
+            
+            fuel: 0,
+            maint: 0,
+            rep: 0,
+            park: 0,
+            tolls: 0,
+            fines: 0,
+            wash: 0,
+            runnCos: 0,
+            
+            totCos: 0,
+            totCostsPerYear: 0,
+            
+            runCostsProDist: 0,
+            totCostsProDist: 0,
+            kinetic_speed: 0,
+            virtual_speed: 0,
+            
+            users_counter: 0
+        };
+        return output;
+    } 
 }
             
 
