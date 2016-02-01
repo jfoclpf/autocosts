@@ -29,7 +29,7 @@
         <div style="padding:7px 0 8px 0">
             <?php include($_SERVER['DOCUMENT_ROOT']."/php/counter.php");?>			
         </div>
-				<b>
+        <b>
         <span class="p2">
             User Statistics<br>
         </span>
@@ -54,7 +54,15 @@
 				echo mysqli_num_rows($res);
 			?> users filled in totally
 			<br>
-		</div>		
+		</div>
+        <b>
+        <span class="p2">
+            Contact<br>
+        </span>
+        </b>
+        <div style="padding:4px 0 8px 0;width:100%;font-size:80%;">
+        <a href="mailto:info@autocosts.info">info@autocosts.info</a> 
+        </div>
     </div>
     
     <? if ($GLOBALS['country'] == "PT") { ?>
