@@ -26,17 +26,22 @@
 	
 		
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
+        <!-- Visitor Statistics block -->
         <div style="padding:7px 0 8px 0">
             <?php include($_SERVER['DOCUMENT_ROOT']."/php/counter.php");?>			
         </div>
+        
+        <!-- User Statistics block -->
         <b>
         <span class="p2">
-            User Statistics<br>
+            Users<br>
         </span>
         </b>
-        <div style="padding:4px 0 8px 0;width:100%;font-size:80%;">
-			&raquo;
-	         <span id="users_count"><?php include($_SERVER['DOCUMENT_ROOT']."/db_stats/dbService.php");
+        <div style="padding-bottom:8px;">
+        <table style="margin: 0 auto; font-size:80%;">
+            <tr>
+            <td style="text-align:right">
+	        <span id="users_count"><?php include($_SERVER['DOCUMENT_ROOT']."/db_stats/dbService.php");
 				$query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
 				$res = executeQueryInDB($query);
 				$filled_by_cty = 0;
@@ -48,13 +53,18 @@
 					}
 				}
 				echo $filled_by_cty;	
-			?></span> users filled in for <?php echo $GLOBALS['country']?> <br />
-			&raquo;
-			<?php
-				echo mysqli_num_rows($res);
-			?> users filled in totally
-			<br>
-		</div>
+			?></span>
+            </td>
+            <td style="text-align:left">filled in for <?php echo $GLOBALS['country']?></td>
+            </tr>
+            <tr>
+            <td style="text-align:right"><?php echo mysqli_num_rows($res);?></td>
+            <td style="text-align:left">filled in totally</td>
+			</tr>
+		</table>
+        </div>
+        
+        <!-- Contact block -->
         <b>
         <span class="p2">
             Contact<br>

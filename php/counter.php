@@ -204,14 +204,19 @@ if ($counter_connected == true)
    }	  
 	  	
 ?>
-    <div style="padding:2px;width:100%;font-size:80%;font-weight:bold;">
-        Visitor Statistics
+    <b>
+    <span class="p2">
+        Visitors
+    </span>
+    </b>
+    <div style="text-align:center; width:100%;">
+    <table style="margin: 0 auto; font-size:80%;">
+      <tr><td style="text-align:right"><?php echo $online; ?></td><td style="text-align:left">online</td></tr>
+      <tr><td style="text-align:right"><?php echo $month_value; ?></td><td style="text-align:left">this month</td></tr>
+      <tr><td style= "text-align:right"><?php echo $all_value; ?></td><td style="text-align:left">totally</td></tr> 
+    </table>
     </div>
-   <div style="padding:2px 2px 0 2px;width:100%;font-size:80%;">
-      &raquo; <?php echo $online; ?> online<br />
-      &raquo; <?php echo $month_value; ?> this month<br />
-      &raquo; <?php echo $all_value; ?> in total
-   </div>
+
 <?php
-}
+} /*if ($counter_connected == true)*/
 ?>
