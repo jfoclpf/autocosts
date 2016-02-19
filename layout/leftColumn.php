@@ -52,13 +52,13 @@
 						$filled_by_cty++;
 					}
 				}
-				echo $filled_by_cty;	
+				echo number_format($filled_by_cty, 0, ',', '&thinsp;');	
 			?></span>
             </td>
             <td style="text-align:left">filled in for <?php echo $GLOBALS['country']?></td>
             </tr>
             <tr>
-            <td style="text-align:right"><?php echo mysqli_num_rows($res);?></td>
+            <td style="text-align:right"><?php echo number_format(mysqli_num_rows($res), 0, ',', '&thinsp;');?></td>
             <td style="text-align:left">filled in totally</td>
 			</tr>
 		</table>

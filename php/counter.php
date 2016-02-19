@@ -211,9 +211,9 @@ if ($counter_connected == true)
     </b>
     <div style="text-align:center; width:100%;">
     <table style="margin: 0 auto; font-size:80%;">
-      <tr><td style="text-align:right"><?php echo $online; ?></td><td style="text-align:left">online</td></tr>
-      <tr><td style="text-align:right"><?php echo $month_value; ?></td><td style="text-align:left">this month</td></tr>
-      <tr><td style= "text-align:right"><?php echo $all_value; ?></td><td style="text-align:left">totally</td></tr> 
+      <tr><td style="text-align:right"><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td style="text-align:left">online</td></tr>
+      <tr><td style="text-align:right"><?php echo number_format($month_value, 0, ',', '&thinsp;'); ?></td><td style="text-align:left">this month</td></tr>
+      <tr><td style="text-align:right"><?php echo number_format($all_value,   0, ',', '&thinsp;'); ?></td><td style="text-align:left">totally</td></tr> 
     </table>
     </div>
 
