@@ -334,7 +334,7 @@ function print_extern_table(f1, f2, f3, data){
                    "<td class=\"td_right\">&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?>" + (data.external_costs.infrastr * data.distance_per_month).toFixed(1)+"</span></td></tr>";
         
          //total
-        varResult+="<tr><td class=\"td_left top_2px_solid\" style=\"border-top-width:2px;border-top-style:solid;border-top-color:black;padding:6px 10px 6px 0;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>" +
+        varResult+="<tr><td class=\"td_left top_2px_solid\" style=\"padding:6px 10px 6px 0;\" align=\"right\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>" +
                    "<td class=\"td_right top_2px_solid\"><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></td></tr>";
         
         //reference to source

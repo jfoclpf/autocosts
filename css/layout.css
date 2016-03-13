@@ -23,7 +23,7 @@ div, table, .table, .td, .tr, tr, td  {
 }
 
 .result_table td{
-    border: solid 1px black;
+    border: solid 1px rgb(180, 180, 180);
 }
 
 .result_table .border_hidden{
@@ -46,22 +46,18 @@ div, table, .table, .td, .tr, tr, td  {
 .result_table .bottom_2px_solid{
     border-bottom-width:2px; 
     border-bottom-style:solid; 
-    border-bottom-color:black;"
 }
 .result_table .top_2px_solid{
     border-top-width:2px; 
     border-top-style:solid; 
-    border-top-color:black;"
 }
 .result_table .bottom_3px_solid{
     border-bottom-width:4px; 
     border-bottom-style:double; 
-    border-bottom-color:black;"
 }
 .result_table .top_3px_solid{
     border-top-width:4px; 
     border-top-style:double;
-    border-top-color:black;"
 }
 
 .row {
