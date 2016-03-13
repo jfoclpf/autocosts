@@ -54,14 +54,13 @@ div, table, .table, .td, .tr, tr, td  {
     border-top-color:black;"
 }
 .result_table .bottom_3px_solid{
-    border-bottom-width:3px; 
-    border-bottom-style:solid; 
+    border-bottom-width:4px; 
+    border-bottom-style:double; 
     border-bottom-color:black;"
 }
-
 .result_table .top_3px_solid{
-    border-top-width:3px; 
-    border-top-style:solid; 
+    border-top-width:4px; 
+    border-top-style:double; 
     border-top-color:black;"
 }
 
