@@ -10,12 +10,59 @@ div, table, .table, .td, .tr, tr, td  {
 }
 
 .result_table{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    
 	background:rgb(250, 250, 250);
-	border:solid 1px rgb(180, 180, 180);
+	border:solid 2px rgb(180, 180, 180);
 	margin:1;
 	width:98%;
 	border-spacing:0px;
-	border-collapse:collapse;
+	border-collapse:separate;
+}
+
+.result_table td{
+    border: solid 1px black;
+}
+
+.result_table .border_hidden{
+    border-style:hidden;
+}
+
+.result_table .td_left{
+    border-left-style:hidden;
+}
+.result_table .td_right{
+    border-right-style:hidden;
+}
+.result_table .td_top{
+    border-top-style:hidden;
+}
+.result_table .td_bottom{
+    border-bottom-style:hidden;
+}
+
+.result_table .bottom_2px_solid{
+    border-bottom-width:2px; 
+    border-bottom-style:solid; 
+    border-bottom-color:black;"
+}
+.result_table .top_2px_solid{
+    border-top-width:2px; 
+    border-top-style:solid; 
+    border-top-color:black;"
+}
+.result_table .bottom_3px_solid{
+    border-bottom-width:3px; 
+    border-bottom-style:solid; 
+    border-bottom-color:black;"
+}
+
+.result_table .top_3px_solid{
+    border-top-width:3px; 
+    border-top-style:solid; 
+    border-top-color:black;"
 }
 
 .row {
@@ -82,12 +129,6 @@ select{
 	border: 2px; 
 	border-color: rgb(180, 180, 180); 
 	border-style: solid;
-}
-
-td.top_b{
-	border-top-width:2px;
-	border-top-style:solid;
-	border-top-color:black;
 }
 
 .hidden_tp{
@@ -683,6 +724,10 @@ padding-left:20px;
         margin: 0;
         text-align: center;
     }
+    
+    #generate_PDF {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 500px) and (min-width: 400px) {
@@ -783,6 +828,10 @@ padding-left:20px;
 
     #br_btween_divs {
         display: block;
+    }
+    
+    #generate_PDF {
+        display: none;
     }
 }
 
@@ -901,6 +950,10 @@ padding-left:20px;
     #br_btween_divs {
         display: block;
     }
+    
+    #generate_PDF {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 260px) {
@@ -1014,5 +1067,9 @@ padding-left:20px;
 
     #br_btween_divs {
         display: block;
+    }
+    
+    #generate_PDF {
+        display: none;
     }
 }

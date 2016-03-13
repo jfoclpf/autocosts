@@ -204,11 +204,6 @@ if ($counter_connected == true)
    }	  
 	  	
 ?>
-    <b>
-    <span class="p2">
-        Visitors
-    </span>
-    </b>
     <div style="text-align:center; width:100%;">
     <table style="margin: 0 auto; font-size:80%;">
       <tr><td style="text-align:right"><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td style="text-align:left">online</td></tr>

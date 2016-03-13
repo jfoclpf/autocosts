@@ -1,6 +1,5 @@
 function generatePDF(main_title, country){
 	var body1, body2, body3, body4, data;
-	var f2 = get_form_part2();	
 	
     data = $('#result_table1 td');	
 	body1 = get_private_costs_table(data);	
@@ -123,7 +122,7 @@ function generatePDF(main_title, country){
 			}			
 		}
 	}
-	if(country=="PT" && f2.type_calc_fuel=="km"){
+	if(country=="PT"){
 		data = $('#result_table4 td');
 		body3 = getBody2(data);	
 		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }})

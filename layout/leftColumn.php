@@ -27,13 +27,18 @@
 		
     <div id="div32" class="roundCorner" style="text-align: center; margin: auto;">
         <!-- Visitor Statistics block -->
+        <b>
+        <span class="p3">
+            Visitors
+        </span>
+        </b>
         <div style="padding:7px 0 8px 0">
             <?php include($_SERVER['DOCUMENT_ROOT']."/php/counter.php");?>			
         </div>
         
         <!-- User Statistics block -->
         <b>
-        <span class="p2">
+        <span class="p3">
             Users<br>
         </span>
         </b>
@@ -66,7 +71,7 @@
         
         <!-- Contact block -->
         <b>
-        <span class="p2">
+        <span class="p3">
             Contact<br>
         </span>
         </b>
