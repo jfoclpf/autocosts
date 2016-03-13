@@ -1,11 +1,14 @@
 function generatePDF(main_title, country){
 	var body1, body2, body3, body4, data;
 	var f2 = get_form_part2();	
-	data = $('#result_table1 td');	
-	body1 = getBody(data);	
-	data = $('#result_table2 td');
-	body2 = getBody(data);
-	data = $('#result_table3 td');
+	
+    data = $('#result_table1 td');	
+	body1 = get_private_costs_table(data);	
+	
+    data = $('#result_table2 td');
+	body2 = getBody2(data);
+	
+    data = $('#result_table3 td');
 	body4 = getBodyFinEffort(data);	
 	
 	var imageData1 = $('#img1').find('img').attr('src');
@@ -24,7 +27,7 @@ function generatePDF(main_title, country){
 			{
 				style: 'tableMarging',
 				table:{
-					headerRows: 1,
+					headerRows: 0,
 					widths: [ 390, '*' ],
 					body: body1
 				},
@@ -70,22 +73,40 @@ function generatePDF(main_title, country){
 		],
 		styles: {
 			title:{
-				fontSize: 16,
+				fontSize: 14,
 				alignment:	'center',
 				margin: [0, 10, 0, 10],
 				bold: true
 			},
 			header: {
-				fontSize: 14,
+				fontSize: 12,
 				bold: true,
 				alignment:	'center',
 				color: '#000'
 			},
+			total: {
+				fontSize: 10,
+				bold: true,
+				alignment:	'right',
+				color: '#000'
+			},
+            main_total: {
+				fontSize: 12,
+				bold: true,
+				alignment:	'right',
+				color: '#000'
+			},
+            main_total_value: {
+				fontSize: 12,
+				bold: true,
+				alignment:	'left',
+				color: '#000'
+			},
 			cell: {
-				fontSize: 12				
+				fontSize: 10,				
 			},
 			header2: {
-				fontSize: 14,
+				fontSize: 12,
 				bold: true,
 				alignment:	'left',
 				color: '#000'
@@ -104,13 +125,58 @@ function generatePDF(main_title, country){
 	}
 	if(country=="PT" && f2.type_calc_fuel=="km"){
 		data = $('#result_table4 td');
-		body3 = getBody(data);	
-		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }, pageBreak: 'after'})
+		body3 = getBody2(data);	
+		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }})
 	}	
 	pdfMake.createPdf(docDefinition).download(main_title+'-'+country+'.pdf');
 }
 
-function getBody(data){
+function get_private_costs_table(data){
+    
+    var body = [];
+    for(var i=1; i<data.length; i+=2){
+        //gets the HTML info of the first column of the table (see i+=2 in loop)
+        var string1 = $(data[i]).html(); 
+        
+        //converts a HTML info into pure string info.
+        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+
+        var el;
+        //gives header style to <td> regarding Standing Costs and Fixed Costs
+        if(i==1 || i==17){ 
+            var str2 = $(data[i+1]).text().trim();
+            var el2 = {text: str2, style: 'header'};
+            str = str.split('\n')[0]; //gets just the first line of the <td> info
+            el = {text: str, style: 'header'};          
+            body.push([el, el2]);
+        }
+        //Total costs <td> shall be aligned to the right
+        else if (i==15 || i==33){ 
+            var str2 = $(data[i+1]).text().trim();
+            var el2 = {text: str2, style: 'cell'};
+            el = {text: str, style: 'total'};          
+            body.push([el, el2]);     
+        }
+        //Main Total <td>
+        else if (i==39){ 
+            var str2 = $(data[i+1]).text().trim();
+            var el2 = {text: str2, style: 'main_total_value'};
+            el = {text: str, style: 'main_total'};          
+            body.push([el, el2]);     
+        }
+        else{
+            var str2 = $(data[i+1]).text();
+            var el2 = {text: str2, style: 'cell'};
+            el = {text: str, style: 'cell'};
+            body.push([el, el2]);
+        }           
+    }
+
+    return body;    
+}
+
+function getBody2(data){
     var body = [];
     for(var i=0; i<data.length; i+=2){
         var string1 = $(data[i]).html();
