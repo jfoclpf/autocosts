@@ -34,12 +34,21 @@ async.series([
 
     //get the set of different countries and set them in array countries[]
     function(callback) {
-        console.log("Get the set of different countries");
+        //console.log("DB login data: "); console.log(login_UserInputDB);
+        
+        console.log("\nGetting the set of different countries from 'country_specs'");
         db = mysql.createConnection(login_UserInputDB);
-        db.connect();
+        
+        db.connect(function(err){
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('Connected successfully as id ' + db.threadId);
+        });
+        
         db.query('SELECT * FROM country_specs', function(err, results, fields) {
-            if (err) return callback(err);
-            
+            if (err) {console.log(err); throw err;}
             //Check that a user was found
             for (var i=0; i<results.length; i++){
                 if (results[i].Country){
@@ -47,16 +56,24 @@ async.series([
                 }
             }
             //console.log(countries);
-            db.end();        
+            db.end();         
             callback();
         });
     },
     
     //Get users unique ID
-    function(callback) {        
-        console.log("Get users unique IDs");
+    function(callback) {  
+        console.log("\nGetting users unique IDs from 'users_insertions'");
         db = mysql.createConnection(login_UserInputDB);
-        db.connect();
+        
+        db.connect(function(err){
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('Connected successfully as id ' + db.threadId);
+        });
+        
         db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
             for (var i=0; i<results.length; i++){
@@ -70,9 +87,17 @@ async.series([
     
     //Get all data from users input DB
     function(callback) {        
-        console.log("Get all data from users input DB");
+        console.log("\nGetting all data from users input DB 'users_insertions'");
         db = mysql.createConnection(login_UserInputDB);
-        db.connect();
+        
+        db.connect(function(err){
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('Connected successfully as id ' + db.threadId);
+        });
+        
         db.query('SELECT * FROM users_insertions', function(err, results, fields) {
             if (err) return callback(err);
 
@@ -87,7 +112,7 @@ async.series([
     
     //calculate data and builds query
     function(callback) {
-        console.log("Calculate data and builds query");
+        console.log("\nCalculating data and building DB insertion query");
         var country_users = []; //array with unique users for one specific country
         var country_data  = []; //array where all data for one specific country is inserted
                 
@@ -127,7 +152,7 @@ async.series([
         
         //builds the query to insert all the vaules for each country
         //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
-        for (var i=0; i<countries.length; i++){ //
+        for (var i=0; i<countries.length; i++){ 
             //console.log("Country: " + countries[i].Country);
 
             country_users = []; //array will be empty
@@ -154,10 +179,11 @@ async.series([
             //console.log(country_object);
             
             var stats_results = CalculateStatistics(country_users, country_data, country_object);
-            console.log("\n" + countries[i].Country + 
-                " | total costs: " + ("        " + stats_results.totCos.toFixed(1)).slice(-7) +
-                " | users: " + stats_results.users_counter);
-
+            
+            //add computed data to countries array of objects
+            countries[i]["users_counter"] = stats_results.users_counter;
+            countries[i]["total_costs"] = stats_results.totCos.toFixed(1);
+            
             queryInsert += "('" + countries[i].Country + "', "
                 + date_string            + ", "                 
                 + stats_results.dep.toFixed(1)      + ", "
@@ -187,30 +213,58 @@ async.series([
             //console.log(countries[i].Country);
         }
         //console.log(queryInsert);
+        
+        //console.log(countries);
+        countries.sort(function(a, b) {//sorts the array for showing the countries list sorted by users 
+            return parseFloat(b.users_counter) - parseFloat(a.users_counter);
+        });
+        for (i=0; i<countries.length; i++) {
+            console.log("\n" + countries[i].Country + 
+                " | total costs: " + ("        " + countries[i].total_costs).slice(-7) + " " + countries[i].currency +
+                " | users: " + countries[i].users_counter);            
+        }
+        console.log("\nData calculated and DB query built");
         callback();
     },
     
     //erase content of monthly_costs_statistics table DB
     function(callback) {        
-        console.log("Erase previous data from DB");
+        console.log("\nErasing previous data from DB");
         db = mysql.createConnection(login_UserInputDB);
-        db.connect();
+        
+        db.connect(function(err){
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('Connected successfully as id ' + db.threadId);
+        });
+        
         db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
             db.end();
+            console.error('Previous data erased');
             callback();
         });
     },
     
     //insert data into DB
     function(callback) {        
-        console.log("Insert new calculated data into DB");
+        console.log("\nInserting new calculated data into DB");
         db = mysql.createConnection(login_UserInputDB);
-        db.connect(); 
+        
+        db.connect(function(err){
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('Connected successfully as id ' + db.threadId);
+        });
+        
         db.query(queryInsert, function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
-            console.log("All data calculated!");
-            db.end();
+            console.log("All new data successfully added into DB!\n");
+            db.end(); 
             callback();
         });  
     }
