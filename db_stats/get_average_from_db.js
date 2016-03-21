@@ -146,7 +146,9 @@ async.series([
             \
             total_costs_year,\
             \
-            users_counter)\
+            valid_users,\
+            total_users,\
+            global_total_users)\
             \
             VALUES ";
         
@@ -155,18 +157,18 @@ async.series([
         for (var i=0; i<countries.length; i++){ 
             //console.log("Country: " + countries[i].Country);
 
-            country_users = []; //array will be empty
-            country_data  = []; //array will be empty
+            country_users = []; //array with unique_users for selected countries[i]
+            country_data  = []; //array with everything for selected countries[i]
         
             for (var j=0; j<unique_users.length; j++){                
-                    if (unique_users[j].country==countries[i].Country)
-                        country_users.push(unique_users[j]);
-                }
+                if (unique_users[j].country==countries[i].Country)
+                    country_users.push(unique_users[j]);
+            }
             //console.log(country_users);
             for (var j=0; j<AllUserInputDb.length; j++){                
-                    if (AllUserInputDb[j].country==countries[i].Country)
-                        country_data.push(AllUserInputDb[j]);
-                }
+                if (AllUserInputDb[j].country==countries[i].Country)
+                    country_data.push(AllUserInputDb[j]);
+            }
             //console.log(country_data);
 
             var country_object = {
@@ -181,7 +183,8 @@ async.series([
             var stats_results = CalculateStatistics(country_users, country_data, country_object);
             
             //add computed data to countries array of objects
-            countries[i]["users_counter"] = stats_results.users_counter;
+            countries[i]["valid_users"] = stats_results.users_counter;
+            countries[i]["total_users"] = country_users.length;
             countries[i]["total_costs"] = stats_results.totCos.toFixed(1);
             
             queryInsert += "('" + countries[i].Country + "', "
@@ -206,7 +209,9 @@ async.series([
                 + stats_results.kinetic_speed.toFixed(0)   + ", "
                 + stats_results.virtual_speed.toFixed(0)   + ", "                    
                 + (((stats_results.totCostsPerYear/100).toFixed(0))*100) + ", "            
-                + stats_results.users_counter + " )";
+                + countries[i]["valid_users"] + ", "
+                + countries[i]["total_users"] + ", "
+                + unique_users.length + " )";
             
             if (i!=countries.length-1)//doesn't add "," on the last set of values
                 queryInsert +=", ";
@@ -215,13 +220,27 @@ async.series([
         //console.log(queryInsert);
         
         //console.log(countries);
-        countries.sort(function(a, b) {//sorts the array for showing the countries list sorted by users 
-            return parseFloat(b.users_counter) - parseFloat(a.users_counter);
+        //prints in the shell a sorted list of the computed countries 
+        countries.sort(function(a, b) {//sorts the array by the valid users field 
+            return parseFloat(b.valid_users) - parseFloat(a.valid_users);
         });
+        var total_valid_users=0;
+        var total_users=0;
         for (i=0; i<countries.length; i++) {
-            console.log("\n" + countries[i].Country + 
-                " | total costs: " + ("        " + countries[i].total_costs).slice(-7) + " " + countries[i].currency +
-                " | users: " + countries[i].users_counter);            
+            total_valid_users += countries[i].valid_users;
+            total_users += countries[i].total_users;
+        }
+        console.log("\nTotal users: " + total_users);
+        console.log("Total valid users: " + total_valid_users);
+        
+        console.log("\nCountry | Total costs | Valid users | Total users | Valid ratio | % of total valid users");
+        for (i=0; i<countries.length; i++) {
+            console.log("\n" + ("        " + countries[i].Country).slice(-5) + "  " + 
+                " | " + ("        " + countries[i].total_costs).slice(-7) + " " + countries[i].currency +
+                " | " + ("            " + countries[i].valid_users).slice(-11) + 
+                " | " + ("            " + countries[i].total_users).slice(-11) +
+                " | " + ("            " + (countries[i].valid_users/countries[i].total_users*100).toFixed(1) + "%").slice(-11) + 
+                " | " + ("               " + (countries[i].valid_users/total_valid_users*100).toFixed(1) + "%").slice(-14));
         }
         console.log("\nData calculated and DB query built");
         callback();

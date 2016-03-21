@@ -47,23 +47,16 @@
             <tr>
             <td style="text-align:right">
 	        <span id="users_count"><?php include($_SERVER['DOCUMENT_ROOT']."/db_stats/dbService.php");
-				$query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
-				$res = executeQueryInDB($query);
-				$filled_by_cty = 0;
-				while($row = mysqli_fetch_array($res))
-				{
-					if($row['country'] == $GLOBALS['country'])
-					{
-						$filled_by_cty++;
-					}
-				}
-				echo number_format($filled_by_cty, 0, ',', '&thinsp;');	
+				$query = "SELECT total_users, global_total_users FROM monthly_costs_statistics WHERE country=\"".$GLOBALS['country']."\"";
+                $res = executeQueryInDB($query);
+				$row = mysqli_fetch_array($res); //this query just has one row
+                echo number_format($row['total_users'], 0, ',', '&thinsp;');	
 			?></span>
             </td>
             <td style="text-align:left">filled in for <?php echo $GLOBALS['country']?></td>
             </tr>
             <tr>
-            <td style="text-align:right"><?php echo number_format(mysqli_num_rows($res), 0, ',', '&thinsp;');?></td>
+            <td style="text-align:right"><?php echo number_format($row['global_total_users'], 0, ',', '&thinsp;');?></td>
             <td style="text-align:left">filled in totally</td>
 			</tr>
 		</table>
