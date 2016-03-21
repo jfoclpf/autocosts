@@ -1,7 +1,4 @@
 <div class="banner topFixed" id="banner_top">
-    <h1 class="main_title">
-        <? echo $MAIN_TITLE ?>
-    </h1>
     <!--## Select country box ##-->
     <div class="b-contry">
         <div class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
@@ -17,6 +14,9 @@
         </select>
     </div>
     <!--#####################-->
+    <h1 class="main_title">
+        <? echo $MAIN_TITLE ?>
+    </h1>
 </div>
 <div class="description p3">
     <? echo $INITIAL_TEXT ?>
