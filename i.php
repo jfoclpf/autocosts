@@ -26,8 +26,9 @@
         <div id="container">
 
 			<!-- div3 = LEFT layout column-->
+            <div id="div1">
                 <?php include './layout/leftColumn.php'; ?>
-
+            </div>
             <!--#######################################################################################-->
             <!--#####################################  CALCULATOR #####################################-->
             <!--#######################################################################################-->
@@ -36,11 +37,11 @@
 
                 <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded" action="javascript:void(0);" name="custo" method="get">
 
-                        <div class="p4" id="title-div">
+                        <h2 id="title-div">
                             <a href="http://<? echo strtolower($AC_DOMAIN);?>">
                             <span class="AC_url"><? echo $AC_DOMAIN ?></span></a>
-                            <b><? echo $AC_SUB_HEADER ?></b>
-                        </div>
+                            <p><? echo $AC_SUB_HEADER ?></p>
+                        </h2>
 
                     <div id="input_div">
                         <?php include './layout/formPartOne.php'; ?>
@@ -103,10 +104,9 @@
             <!--#######################################################################################-->
 
 			<!-- div1 = RIGHT layout column-->
-			<div id="div1" class="roundCornerSlight">
+            <div id="div3">
                 <?php include './layout/rightColumn.php'; ?>
             </div>
-
         </div>
 	</div>
 
@@ -183,3 +183,4 @@
 </script>
 </body>
 </html>
+
