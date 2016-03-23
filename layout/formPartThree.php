@@ -1,13 +1,11 @@
 <!--************************** DADOS ADICIONAIS ***************************************************-->
-
 <div class="form_part" id="form_part3">
-    <div class="head-titl">
+    <div class="head-title">
         <? echo $EXTRA_DATA ?>
     </div>
     <strong class="title">
         <?php echo $EXTRA_DATA_PUBLIC_TRANSP ?>
     </strong>
-
     <table>
         <tr>
             <td>
@@ -20,7 +18,6 @@
             </td>
         </tr>
     </table>
-
     <table>
         <tr>
             <td>
@@ -29,19 +26,15 @@
             <td>
                 <input type="text" id="public_transportation_month_expense" name="preco_passe" size="6" maxlength="9"
                        value="<? echo $STD_PASS_PRICE ?>">
-			<span>
-                                <? echo $CURR_SYMBOL ?>
-                            </span>
-
-
+        <span>
+        <? echo $CURR_SYMBOL ?>
+        </span>
             </td>
         </tr>
     </table>
-
     <strong class="title">
         <?php echo $EXTRA_DATA_INCOME ?>
     </strong>
-
     <table>
         <tr>
             <td>
@@ -49,97 +42,69 @@
                     <?php echo $EXTRA_DATA_INCOME_QUESTION ?>
                     <br/>
                     <input type="radio" name="radio_income" value="year" checked onchange="income_toggle(value)"/>
-
                     <?php echo $WORD_PER ?> <?php echo $YEAR ?>
-
                     <input type="radio" name="radio_income" value="month" onchange="income_toggle(value)"/>
-
                     <?php echo $WORD_PER ?> <?php echo $MONTH ?>
-
                     <input type="radio" name="radio_income" value="week" onchange="income_toggle(value)"/>
-
                     <?php echo $WORD_PER ?> <?php echo $WEEK ?>
-
                     <input type="radio" name="radio_income" value="hour" onchange="income_toggle(value)"/>
-
                     <?php echo $WORD_PER ?> <?php echo $HOUR ?>
                 </div>
             </td>
             <td>
-
-
                 <div id="div_income_per_year" class="div_element">
-
                     <input type="text" id="income_per_year" name="income_per_year" size="6"
                            value="<? echo $STD_INCOME_YEAR ?>"/>
-
                     <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                 </div>
-
                 <div id="div_income_per_month" class="div_element hidden">
-
                     <input type="text" id="income_per_month" name="income_per_month" size="6"
                            value="<? echo $STD_INCOME_MONTH ?>"/>
-										<span>
-											<? echo $CURR_SYMBOL ?>/<? echo $MONTH ?>
-										</span>
-
+          <span>
+          <? echo $CURR_SYMBOL ?>/<? echo $MONTH ?>
+          </span>
                     <input type="text" id="income_months_per_year" name="income_months_per_year" size="6" maxlength="2"
                            value="<? echo $STD_MONTHS_YEAR ?>"/>
-										<span>
-											<? echo $MONTHS ?>/<? echo $YEAR ?>
-										</span>
-
+          <span>
+          <? echo $MONTHS ?>/<? echo $YEAR ?>
+          </span>
                 </div>
-
                 <div id="div_income_per_week" class="div_element hidden">
-
                     <input type="text" id="income_per_week" name="income_per_week" size="6"
                            value="<? echo $STD_INCOME_WEEK ?>"/>
-										<span>
-											<? echo $CURR_SYMBOL ?>/<? echo $WEEK ?>
-										</span>
-
+          <span>
+          <? echo $CURR_SYMBOL ?>/<? echo $WEEK ?>
+          </span>
                     <input type="text" id="income_weeks_per_year" name="income_weeks_per_year" size="6" maxlength="2"
                            value="<? echo $STD_WEEKS_YEAR ?>"/>
-											<span class="p2">
-												<? echo $WEEKS ?>/<? echo $YEAR ?>
-											</span>
-
+          <span class="p2">
+          <? echo $WEEKS ?>/<? echo $YEAR ?>
+          </span>
                 </div>
-
                 <div id="div_income_per_hour" class="div_element hidden">
-
                     <input type="text" id="income_per_hour" name="income_per_hour" size="6"
                            value="<? echo $STD_INCOME_HOUR ?>"/>
-										<span>
-											<? echo $CURR_SYMBOL ?>/<? echo $HOUR ?>
-										</span>
-
+          <span>
+          <? echo $CURR_SYMBOL ?>/<? echo $HOUR ?>
+          </span>
                     <input type="text" id="income_hours_per_week" name="income_hours_per_week" size="6"
                            value="<? echo $STD_HOURS_WEEK ?>"/>
-										<span>
-											<? echo $HOURS ?>/<? echo $WEEK ?>
-										</span>
-
+          <span>
+          <? echo $HOURS ?>/<? echo $WEEK ?>
+          </span>
                     <input type="text" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
                            value="<? echo $STD_WEEKS_YEAR ?>"/>
-										<span>
-											<? echo $WEEKS ?>/<? echo $YEAR ?>
-										</span>
-
+          <span>
+          <? echo $WEEKS ?>/<? echo $YEAR ?>
+          </span>
                 </div>
-
             </td>
         </tr>
     </table>
-
     <!--********************************************************************** -->
-
     <strong class="title">
         <?php echo $EXTRA_DATA_WORKING_TIME ?>
     </strong>
-
     <table>
         <tr>
             <td>
@@ -149,35 +114,29 @@
                     <input type="radio" name="radio_work_time" value="true" checked
                            onchange="working_time_toogle(true)"/>
                     <?php echo $YES ?>
-
                     <input type="radio" name="radio_work_time" value="false" onchange="working_time_toogle(false)"/>
                     <?php echo $NO ?>
                 </div>
             </td>
             <td>
                 <div id="job_working_time" class="div_element">
-
                     <input type="text" id="time_month_per_year" name="time_month_per_year" size="6" maxlength="2"
                            value="<? echo $STD_MONTHS_YEAR ?>"/>
-										<span>
-											<? echo $MONTHS ?>/<? echo $YEAR ?>
-										</span>
-
+          <span>
+          <? echo $MONTHS ?>/<? echo $YEAR ?>
+          </span>
                     <input type="text" id="time_hours_per_week" name="time_hours_per_week" size="6" maxlength="3"
                            value="<? echo $STD_HOURS_WEEK ?>"/>
-										<span>
-											<? echo $HOURS ?>/<? echo $WEEK ?>
-										</span>
-
+          <span>
+          <? echo $HOURS ?>/<? echo $WEEK ?>
+          </span>
                 </div>
             </td>
         </tr>
     </table>
-
     <strong class="title">
         <?php echo $DISTANCE ?>
     </strong>
-
     <table>
         <tr>
             <td>
@@ -187,18 +146,16 @@
                 <div>
                     <input type="radio" name="drive_to_work" id="drive_to_work_yes" value="true"
                            onchange="driveToJob(true);">
-												<span>
-													<? echo $YES ?>
-												</span>
+          <span>
+          <? echo $YES ?>
+          </span>
                 </div>
                 <div>
-
                     <input type="radio" name="drive_to_work" id="drive_to_work_no" value="false"
                            onchange="driveToJob(false);" checked>
-												<span class="p2">
-													<? echo $NO ?>
-												</span>
-
+          <span class="p2">
+          <? echo $NO ?>
+          </span>
                 </div>
             </td>
         </tr>
@@ -209,9 +166,9 @@
             <td>
                 <input id="drive_to_work_days_per_week" type="text" name="drive_to_work_days_per_week" size="5"
                        maxlength="1" value="<? echo $STD_DAYS_PER_WEEK; ?>">
-                                                <span>
-                                                    <? echo $DAYS_PER_WEEK_SHORT; ?>
-                                                </span>
+        <span>
+        <? echo $DAYS_PER_WEEK_SHORT; ?>
+        </span>
             </td>
         </tr>
         <tr>
@@ -221,9 +178,9 @@
             <td>
                 <input type="text" id="dist_home_job" name="dist_home_job" size="5" maxlength="4"
                        value="<? echo $STD_JORNEY_2WORK; ?>">
-                                            <span class="p2">
-												<? echo $STD_DIST ?>
-											</span>
+        <span class="p2">
+        <? echo $STD_DIST ?>
+        </span>
             </td>
         </tr>
         <tr>
@@ -233,53 +190,37 @@
             <td style="text-align:left;" valign="middle">
                 <input type="text" name="journey_weekend" id="journey_weekend" size="5" maxlength="4"
                        value="<? echo $STD_JORNEY_WEEKEND; ?>">
-                                            <span class="p2">
-												<? echo $STD_DIST ?>
-											</span>
+        <span class="p2">
+        <? echo $STD_DIST ?>
+        </span>
             </td>
         </tr>
-
-
     </table>
-
     <table>
         <tr id="car_no_job_part">
             <td>
                 <? echo $FUEL_DIST ?>
             </td>
             <td>
-
                 <input type="text" id="dist_per_month" name="km_per_month" size="4" maxlength="9" id="distance"
                        value="<? echo $STD_KM_PER_MONTH; ?>">
-
-									<span class="p2">
-										<? echo $STD_DIST ?>&nbsp;<? echo $WORD_PER ?>&nbsp;
-									</span>
-
+        <span class="p2">
+        <? echo $STD_DIST ?>&nbsp;<? echo $WORD_PER ?>&nbsp;
+        </span>
                 <select id="period_km">
-
                     <option value="1"><? echo $MONTH ?></option>
-
                     <option value="2"><? echo $TWO_MONTHS ?></option>
-
                     <option value="3"><? echo $TRIMESTER ?></option>
-
                     <option value="4"><? echo $SEMESTER ?></option>
-
                     <option value="5"><? echo $YEAR ?></option>
-
                 </select>
-
             </td>
         </tr>
     </table>
-
     <!--********************************************************************** -->
-
     <strong class="title">
         <? echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>
     </strong>
-
     <table>
         <tr>
             <td>
@@ -288,46 +229,40 @@
             <td>
                 <input type="text" size="6" id="time_home_job" name="time_home_job"
                        value="<? echo $STD_TIME_HOME_JOB ?>"/>
-							<span>
-								<? echo $MIN ?>
-							</span>
+        <span>
+        <? echo $MIN ?>
+        </span>
             </td>
         </tr>
-
         <tr>
             <td>
                 <? echo $EXTRA_DATA_TIME_QUESTION2 ?>
             </td>
             <td>
                 <input type="text" size="6" id="time_weekend" name="time_weekend" value="<? echo $STD_TIME_WEEKEND ?>"/>
-							<span>
-								<?php echo $MIN ?>
-							</span>
+        <span>
+        <?php echo $MIN ?>
+        </span>
             </td>
         </tr>
-
         <tr>
             <td>
                 <? echo $EXTRA_DATA_TIME_QUESTION3 ?>
             </td>
             <td>
-
                 <input type="text" size="6" id="min_drive_per_day" name="min_drive_per_day"
                        value="<? echo $STD_TIME_IN_DRIVING ?>"/>
-										<span>
-											<? echo $MINUTES ?>/<?php echo $DAY ?>
-										</span>
-
+        <span>
+        <? echo $MINUTES ?>/<?php echo $DAY ?>
+        </span>
                 <input type="text" size="6" id="days_drive_per_month" name="days_drive_per_month"
                        value="<? echo $STD_DAYS_MONTH ?>"/>
-										<span>
-											<? echo $DAYS ?>/<?php echo $MONTH ?>
-										</span>
-
+        <span>
+        <? echo $DAYS ?>/<?php echo $MONTH ?>
+        </span>
             </td>
         </tr>
     </table>
-
     <div class="b-bottom">
         <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
         <input class="button" type="submit" onclick="if(formsInit() <? if ($GLOBALS["country"] == "XX") {
@@ -335,5 +270,4 @@
         } ?> ){submit_data('<? echo $GLOBALS["country"] ?>');}" value="<? echo $BUTTON_RUN; ?>"/>
     </div>
 </div>
-
 <!-- end of form_part3-->
