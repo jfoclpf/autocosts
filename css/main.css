@@ -137,7 +137,7 @@ a {
 /* blocks */
 #banner_top {
     background: #ececec;
-    padding: 5px 20px;
+    padding: 5px 2%;
     z-index: 1000;
     position: fixed;
     top: 0;
@@ -271,7 +271,7 @@ a {
 
 @media all and (max-width: 1024px) {
     #div2 .col {
-        width: 49%;
+        width: 100%;
     }
     input[type="text"] {
         width: 50%;
@@ -298,7 +298,7 @@ a {
     }
 
     .b-contry {
-        margin-right: -33px;
+        margin-right: -25px;
     }
     #div3, #div1, #div2 {
         float: none;
@@ -306,7 +306,7 @@ a {
         margin: 50px 0 50px 0;
     }
     div#div1 {
-        margin: 20px 25%;
+        margin: 20px 20%;
     }
 }
 
