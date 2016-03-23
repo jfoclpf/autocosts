@@ -34,16 +34,12 @@ h4 {
     font-size: 18px;
     line-height: 20px;
 }
-h5 {
-    font-size: 14px;
-    line-height: 20px;
-}
+
 p {
     margin: 0 0 10px;
 }
 
 /* FORMS */
-
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     display: inline-block;
     /* height: 20px; */
@@ -71,9 +67,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     width: 65%;
 }
 
-
 /* TABLES */
-
 table {
     width: 100%;
     background-color: transparent;
@@ -126,24 +120,23 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 
 
 /* EM */
-
 img {
     width: 100%;
     margin: 1%;
 }
+
 i {
     font-size: 12px;
     color: #999;
 }
+
 a {
     color: #000;
 }
 
-
 /* blocks */
-
 #banner_top {
-    background: #fff;
+    background: #ececec;
     padding: 5px 20px;
     z-index: 1000;
     position: fixed;
@@ -152,7 +145,7 @@ a {
     right: 0;
     border-bottom: 1px solid;
     border-bottom-color: #E9E9E9;
-     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .15);
     box-shadow: 0 0 8px rgba(0, 0, 0, .15);
 }
 
@@ -200,9 +193,6 @@ a {
     border-radius: 5px;
 }
 
-
-
-
 #div2 {
     float: left;
     width: 55%;
@@ -243,7 +233,7 @@ a {
     text-align: center;
     background: #e6e6e6;
 }
-#div2 .head-titl {
+#div2 .head-title {
     padding: 10px 2%;
     background: #ada692;
     color: #fff;
@@ -253,8 +243,6 @@ a {
     display: block;
     font-size: 18px;
 }
-
-
 
 #div3 div#td-top-title {
     padding: 2%;
@@ -276,10 +264,50 @@ a {
     font-size: 12px;
 }
 
-
 #div3 .tr-sub-title td {
     background: #ffec8b;
     color: #000;
+}
+
+@media all and (max-width: 1024px) {
+    #div2 .col {
+        width: 49%;
+    }
+    input[type="text"] {
+        width: 50%;
+    }
+    #div2 td:nth-child(2n) {
+        width: 40%;
+    }
+}
+
+@media all and (max-width: 768px) {
+    h1.main_title {
+        font-size: 21px;
+    }
+    #div2 #title-div {
+        font-size: 15px;
+        line-height: 22px;
+    }
+}
+
+@media all and (max-width: 425px) {
+    h1.main_title {
+        font-size: 17px;
+        line-height: 20px;
+    }
+
+    .b-contry {
+        margin-right: -33px;
+    }
+    #div3, #div1, #div2 {
+        float: none;
+        width: auto;
+        margin: 50px 0 50px 0;
+    }
+    div#div1 {
+        margin: 20px 25%;
+    }
 }
 
 
