@@ -1,11 +1,3 @@
-<?php
-function sanitize_output($buffer) {
-    require_once('min/lib/Minify/HTML.php');
-    $buffer = Minify_HTML::minify($buffer);
-    return $buffer;
-}
-ob_start('sanitize_output');
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +5,9 @@ ob_start('sanitize_output');
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <!--   <? include("./country files/country_list.php"); ?>
+      <? include("./country files/country_list.php"); ?>
       <? include("./php/country_selector.php"); ?>
-      <? include('./php/favicon_selector.php'); ?> -->
+    <!--   <? include('./php/favicon_selector.php'); ?> -->
 </head>
 <body>
 <div id="main_div">
