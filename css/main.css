@@ -202,7 +202,7 @@ form.roundCorner {
 }
 .clear{clear: both;}
 .description.p3 {
-    margin-top: 100px;
+    margin-top: 50px;
 }
 #div3, #div1, #div2 {
     background: #f0f0f0;
@@ -315,7 +315,8 @@ form.roundCorner {
 }
 table#result_table1,
 #result_table2,
-#result_table3 {
+#result_table3,
+#result_table4 {
     border: 2px solid #b4b4b4;
     border-radius: 10px;
     /* background: #000; */
@@ -336,10 +337,14 @@ table#result_table1,
 div#text_div {
     padding: 15px;
 }
+#final-text1{text-align: center;}
 #final-text2 {
-    padding: 5% !important;
+    line-height: 100%;
 }
 
+.description br {
+    display: none;
+}
 
 @media all and (max-width: 1024px) {
     #div2 .col {
@@ -357,6 +362,7 @@ div#text_div {
     #div2, #div3, #div1 {width: 100%;}
     h1.main_title {
         font-size: 21px;
+        margin: 0;
     }
     #div2 #title-div {
         font-size: 15px;
