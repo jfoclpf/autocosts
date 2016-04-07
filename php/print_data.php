@@ -563,8 +563,10 @@ function drawChartResult(frame_witdh, data){
 
             drawVisualization(parseFloat(data.total_standing_costs_month.toFixed(1)), parseFloat(data.total_running_costs_month.toFixed(1)),chart_width,chart_height);
 
-            graph_object.style.display='block';
             chart_object.style.display='block';
+            chart_object.style.margin='0 0 0 5%';
+            graph_object.style.display='block';
+            graph_object.style.margin='0 0 0 20%';
     }
     
     reload_object.style.display='block';
