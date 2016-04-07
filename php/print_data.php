@@ -543,19 +543,19 @@ function drawChartResult(frame_witdh, data){
             chart_height=parseInt(chart_width*4/6);
 
             drawChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
-            parseFloat(data.monthly_costs.fuel.toFixed(1)),
-            parseFloat(desvalor_temp.toFixed(1)),
-            parseFloat(data.monthly_costs.credit.toFixed(1)),
-            parseFloat(data.monthly_costs.inspection.toFixed(1)),
-            parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-            parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-            parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-            parseFloat(data.monthly_costs.parking.toFixed(1)),
-            parseFloat(data.monthly_costs.tolls.toFixed(1)),
-            parseFloat(data.monthly_costs.fines.toFixed(1)),
-            parseFloat(data.monthly_costs.washing.toFixed(1)),
-            chart_width,
-            chart_height
+                parseFloat(data.monthly_costs.fuel.toFixed(1)),
+                parseFloat(desvalor_temp.toFixed(1)),
+                parseFloat(data.monthly_costs.credit.toFixed(1)),
+                parseFloat(data.monthly_costs.inspection.toFixed(1)),
+                parseFloat(data.monthly_costs.maintenance.toFixed(1)),
+                parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
+                parseFloat(data.monthly_costs.car_tax.toFixed(1)),
+                parseFloat(data.monthly_costs.parking.toFixed(1)),
+                parseFloat(data.monthly_costs.tolls.toFixed(1)),
+                parseFloat(data.monthly_costs.fines.toFixed(1)),
+                parseFloat(data.monthly_costs.washing.toFixed(1)),
+                chart_width,
+                chart_height
             );
 
             chart_width=parseInt(frame_witdh*0.80);
