@@ -59,10 +59,7 @@ $WEB_PAGE_TITLE = 'Gépjármű költségkalkulátor';
 $MAIN_TITLE = 'GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR';
 $INITIAL_TEXT = 
 "Ez a kalkulátor bemutatja egy saját tulajdonú autó vonzatának <b>a valós költségét </b> <b>Magyarországon</b>. Általánosságban egy megbízható becslést ad arról, mennyit kell valójában megspórolni egy saját autóhoz.
-Mivel az Ön járműfenntartási költségei az év folyamán más-más helyen jelentkeznek, gyakran igen nehéz reálisan felmérni, mi mindent kell megfizetni egy saját autóhoz.
-<br>
-<br>
-Legyen pontos az adatok bevitelénél. Váratlan kiadások - mint például a balesettel kapcsolatos javítások és bírságok - esetében gondoljon arra, mennyit költött az elmúlt pár évben hasonlókra. Az alapbeállításnál ezek havi számításokként szerepelnek. Használja a pont jelet a tizedesek beírásához, például <span style=\"color:rgb(255,0,0);\">8.7</span> kilométer a lakás és a munkahely között.<br>";
+Mivel az Ön járműfenntartási költségei az év folyamán más-más helyen jelentkeznek, gyakran igen nehéz reálisan felmérni, mi mindent kell megfizetni egy saját autóhoz. Legyen pontos az adatok bevitelénél. Váratlan kiadások - mint például a balesettel kapcsolatos javítások és bírságok - esetében gondoljon arra, mennyit költött az elmúlt pár évben hasonlókra. Az alapbeállításnál ezek havi számításokként szerepelnek. Használja a pont jelet a tizedesek beírásához, például <span style=\"color:rgb(255,0,0);\">8.7</span> kilométer a lakás és a munkahely között.<br>";
 
 $HELP_PROJECT = 'Támogassa projektünket' ;
 $AC_MOBILE = 'AUTÓKÖLTSÉGEK<br>mobileszközökhöz';

@@ -58,10 +58,7 @@ $WEB_PAGE_TITLE = 'Calculator costuri automobil';
 $MAIN_TITLE = 'CALCULATOR COSTURI AUTOMOBIL';
 $INITIAL_TEXT = 
 "Acest calculator vă permite să identificaţi <b>adevăratul cost</b>al deţinerii unei maşini în <b>România</b>. în mod normal vă va oferi o bună estimare a costurilor pe care trebuie să le faceţi ca să vă permiteţi deţinerea unei maşini.
-Deoarece facturile pentru combustibil apar în diferite momente de timp peste an, este uneori dificil să puteţi aprecia costurile reale totale pe care le aveţi cu maşina dumneavoastră.
-<br>
-<br>
-Fiţi realist când introduceţi valorile solicitate de program. Pentru costuri neaşteptate, cum ar fi costuri de reparaţie sau amenzi, gândiţi-vă cât aţi cheltuit pe aceste lucruri în timpul ultimilor ani. Ca regulă, aceste calcule sunt lunare. Folositi simbolul punct pentru notaţiile decimale, de exemplu <span style=\"color:rgb(255,0,0);\">8.7</span> kilometri între casă şi locul de muncă<br>";
+Deoarece facturile pentru combustibil apar în diferite momente de timp peste an, este uneori dificil să puteţi aprecia costurile reale totale pe care le aveţi cu maşina dumneavoastră. Fiţi realist când introduceţi valorile solicitate de program. Pentru costuri neaşteptate, cum ar fi costuri de reparaţie sau amenzi, gândiţi-vă cât aţi cheltuit pe aceste lucruri în timpul ultimilor ani. Ca regulă, aceste calcule sunt lunare. Folositi simbolul punct pentru notaţiile decimale, de exemplu <span style=\"color:rgb(255,0,0);\">8.7</span> kilometri între casă şi locul de muncă<br>";
 
 $HELP_PROJECT = 'Sprijiniţi acest proiect' ;
 $AC_MOBILE = 'AUTOCOSTS<br> pentru aparate mobile';

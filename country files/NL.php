@@ -54,10 +54,7 @@ $WEB_PAGE_TITLE = 'Autokostensimulator';
 $MAIN_TITLE = 'AUTOKOSTENSIMULATOR';
 $INITIAL_TEXT = 
 "Deze simulator zal u toestaan de werkelijke kost te vinden om een auto te bezitten in <b>Nederland</b>. Het kan u een goede schatting geven van wat u echt moet uitgeven om een auto te kunnen bezitten.
-Gezien uw rekeningen op verschillende tijdsstippen van het jaar binnenkomen, is het vaak moeilijk om uw totale uitgaven van uw auto werkelijk in te schatten.
-<br>
-<br>
-Wees realistisch met de ingevoerde waarden. Voor onverwachte rekeningen, zoals ongevalreparaties of boetes, denk na over hoeveel u op die posten hebt uitgegeven in de afgelopen jaren. Als standaard worden deze berekeningen maandelijks ingesteld. Gebruik het puntsymbool voor decimale aantekening, bijvoorbeeld <span style=\"color:rgb(255,0,0);\">8.7</span> kilometer tussen thuis en het werk.<br>";
+Gezien uw rekeningen op verschillende tijdsstippen van het jaar binnenkomen, is het vaak moeilijk om uw totale uitgaven van uw auto werkelijk in te schatten. Wees realistisch met de ingevoerde waarden. Voor onverwachte rekeningen, zoals ongevalreparaties of boetes, denk na over hoeveel u op die posten hebt uitgegeven in de afgelopen jaren. Als standaard worden deze berekeningen maandelijks ingesteld. Gebruik het puntsymbool voor decimale aantekening, bijvoorbeeld <span style=\"color:rgb(255,0,0);\">8.7</span> kilometer tussen thuis en het werk.<br>";
 
 $HELP_PROJECT = 'Help dit project' ;
 $AC_MOBILE = 'AUTOKOSTEN<br>voor mobiele apparaten';

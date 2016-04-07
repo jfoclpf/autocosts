@@ -48,7 +48,8 @@ $BUTTON_RERUN = 'Rerun'; //run calculator button
 $WEB_PAGE_TITLE = 'Automobile costs calculator';
 $MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';
 $INITIAL_TEXT = 
-"This calculator will allow you to find <b>the true cost</b> of owning a car in <b>Australia</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. <br> <br> Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example <span style=\"color:rgb(255,0,0);\">8.7</span> kilometres between home and the workplace.<br>";
+"This calculator will allow you to find <b>the true cost</b> of owning a car in <b>Australia</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example <span style=\"color:rgb(255,0,0);\">8.7</span> kilometres between home and the workplace.<br>";
+
 $HELP_PROJECT = 'This is a free service with no advertisements!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
 $AC_DOMAIN = 'AUTOCOSTS.INFO';

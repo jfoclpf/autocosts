@@ -58,10 +58,7 @@ $BUTTON_RERUN = 'Käynnistä uudelleen'; //run calculator button
 $WEB_PAGE_TITLE = 'Auton kustannuslaskuri';
 $MAIN_TITLE = 'AUTON KUSTANNUSLASKURI';
 $INITIAL_TEXT = 
-"Tämän simulaattorin avulla selvität auton omistuksen  <b>todelliset kustannukset</b> <b>Suomessa</b>. Normaalisti se antaa sinulle hyvän arvion siitä, kuinka paljon todella joutuisit maksamaan auton omistamisesta. Todellisten kustannuksen arviointi on usein vaikeaa, sillä auton käyttöön liittyvät laskut tulevat eri aikoihin vuodesta.
-<br>
-<br>
-Ole realistinen syöttämistäsi arvoista. Ajattele kuinka paljon yleensä olet kuluttanut odottamattomiin laskuihin, kuten vahinkojen korjauksiin tai sakkoihin viimeisten parin vuoden aikana. Nämä laskelmat perustuvat kuukausittaisiin kuluihin. Käytä piste-symbolia desimaalien syöttämiseen, esimerkiksi kodin ja työpaikan välisen <span style=\"color:rgb(255,0,0);\">8.7</span> kilometrin arvioimisessa.<br>";
+"Tämän simulaattorin avulla selvität auton omistuksen  <b>todelliset kustannukset</b> <b>Suomessa</b>. Normaalisti se antaa sinulle hyvän arvion siitä, kuinka paljon todella joutuisit maksamaan auton omistamisesta. Todellisten kustannuksen arviointi on usein vaikeaa, sillä auton käyttöön liittyvät laskut tulevat eri aikoihin vuodesta. Ole realistinen syöttämistäsi arvoista. Ajattele kuinka paljon yleensä olet kuluttanut odottamattomiin laskuihin, kuten vahinkojen korjauksiin tai sakkoihin viimeisten parin vuoden aikana. Nämä laskelmat perustuvat kuukausittaisiin kuluihin. Käytä piste-symbolia desimaalien syöttämiseen, esimerkiksi kodin ja työpaikan välisen <span style=\"color:rgb(255,0,0);\">8.7</span> kilometrin arvioimisessa.<br>";
 
 $HELP_PROJECT = 'Auta tätä projektia' ;
 $AC_MOBILE = 'AUTOKULUT<br> mobiililaitteille';

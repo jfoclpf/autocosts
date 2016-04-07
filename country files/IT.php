@@ -53,9 +53,7 @@ $BUTTON_RERUN = 'Riattivare'; //run calculator button
 $WEB_PAGE_TITLE = 'Calcolatrice dei costi di auto';
 $MAIN_TITLE = 'CALCOLATRICE DEI COSTI DI AUTO';
 $INITIAL_TEXT = 
-"Spesso è difficile rendersi conto di quali siano i costi reali associati ad un’auto, dato che le bollette automobilistiche arrivano in diversi momenti dell’anno. Questa calcolatrice vi permetterà di valutare quanto costi realmente avere un’auto in <b>Italia</b>, dandovi una buona stima di quanto dovete spendere <b>veramente</b> per permettervi un’auto.
-<br><br> 
-Siate realistici con i dati inseriti. Per le spese inaspettate, come per esempio la riparazione dopo un incidente o le multe, pensate a quanto avete speso per queste negli ultimi anni. Per impostazione predefinita, queste spese si calcolano su base mensile. Usate il simbolo di punto per la notazione decimale, per esempio 8.7 chilometri per il tragitto da casa al lavoro.
+"Spesso è difficile rendersi conto di quali siano i costi reali associati ad un’auto, dato che le bollette automobilistiche arrivano in diversi momenti dell’anno. Questa calcolatrice vi permetterà di valutare quanto costi realmente avere un’auto in <b>Italia</b>, dandovi una buona stima di quanto dovete spendere <b>veramente</b> per permettervi un’auto. Siate realistici con i dati inseriti. Per le spese inaspettate, come per esempio la riparazione dopo un incidente o le multe, pensate a quanto avete speso per queste negli ultimi anni. Per impostazione predefinita, queste spese si calcolano su base mensile. Usate il simbolo di punto per la notazione decimale, per esempio 8.7 chilometri per il tragitto da casa al lavoro.
 <br>";
 
 $HELP_PROJECT = 'Questo servizio è gratuito, senza pubblicità!' ;

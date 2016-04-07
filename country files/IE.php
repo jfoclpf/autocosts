@@ -43,10 +43,8 @@ $WEB_PAGE_TITLE = 'Automobile costs calculator';
 $MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';
 $INITIAL_TEXT = 
 "This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>Republic of Ireland</b>. It will normally give you a good estimate of what you really need to spend to afford owning a car.
-As your motor bills come in at different points over the year, it's often difficult to really appreciate your total spend on your car.
-<br>
-<br>
-Be realistic on the input values. For unexpected bills, such as accident repairs or fines, think how much you have spent on those items during the last few years. By default these calculations are monthly based. Use the the dot symbol for decimal notation, for example <span style=\"color:rgb(255,0,0);\">8.7</span> kilometres between home and workplace.<br>";
+As your motor bills come in at different points over the year, it's often difficult to really appreciate your total spend on your car. Be realistic on the input values. For unexpected bills, such as accident repairs or fines, think how much you have spent on those items during the last few years. By default these calculations are monthly based. Use the the dot symbol for decimal notation, for example <span style=\"color:rgb(255,0,0);\">8.7</span> kilometres between home and workplace.<br>";
+
 $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
 $AC_DOMAIN = 'AUTOCOSTS.INFO';

@@ -53,10 +53,7 @@ $BUTTON_RERUN = 'Wykonaj ponownie'; //run calculator button
 $WEB_PAGE_TITLE = 'Kalkulator kosztów utrzymania pojazdu';
 $MAIN_TITLE = 'KALKULATOR KOSZTÓW SAMOCHODOWYCH';
 $INITIAL_TEXT ="Ten kalkulator pozwoli Ci poznać <b>prawdziwy koszt,</b> jaki wiąże się z posiadaniem samochodu w <b>Polsce</b>. Da Ci wyobrażenie, ile tak naprawdę musisz wydać jako właściciel pojazdu.
-Ponieważ rachunki związane z utrzymaniem samochodu napływają w ciągu całego roku w sposób nieregularny, nie zawsze jest łatwo obliczyć całkowitą wielkość poniesionych wydatków.
-<br>
-<br>
-Wprowadzaj realistyczne wartości. W kwestii niespodziewanych wydatków, takich jak naprawy powypadkowe czy mandaty karne, zastanów się, ile na nie wydałeś/aś w ciągu ostatnich kilku lat. Kalkulator dokonuje domyślnie wyliczeń miesięcznych. Do zapisu liczb dziesiętnych używaj symbolu kropki, na przykład <span style=\"color:rgb(255,0,0);\">8.7</span> kilometrów między domem a miejscem pracy.<br>";
+Ponieważ rachunki związane z utrzymaniem samochodu napływają w ciągu całego roku w sposób nieregularny, nie zawsze jest łatwo obliczyć całkowitą wielkość poniesionych wydatków. Wprowadzaj realistyczne wartości. W kwestii niespodziewanych wydatków, takich jak naprawy powypadkowe czy mandaty karne, zastanów się, ile na nie wydałeś/aś w ciągu ostatnich kilku lat. Kalkulator dokonuje domyślnie wyliczeń miesięcznych. Do zapisu liczb dziesiętnych używaj symbolu kropki, na przykład <span style=\"color:rgb(255,0,0);\">8.7</span> kilometrów między domem a miejscem pracy.<br>";
 
 $HELP_PROJECT = 'Wesprzyj ten projekt' ;
 $AC_MOBILE = 'AUTOKOSZTY<br>na urządzenia mobilne';

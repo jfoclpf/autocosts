@@ -46,14 +46,13 @@ $YES = 'ja';
 $NO = 'no';
 $BUTTON_RUN = 'Regn ut'; //run calculator button 
 $BUTTON_RERUN = 'Regn ut på nytt'; //run calculator button 
+
 //WEB PAGE
 $WEB_PAGE_TITLE = 'Kostnadskalkulator for bil';
 $MAIN_TITLE = 'KOSTNADSKALKULATOR FOR BIL';
 $INITIAL_TEXT = 
-"Denne kalkulatoren lar deg regne ut hva <b>den virkelige prisen</b> på å eie en bil i <b>Norge</b> er. Den vil normalt gi et godt anslag på hva det koster å eie en bil. Ettersom bilregningene kommer til ulike tider på året kan det ofte være vanskelig å få en fullstendig oversikt over hvor mye du bruker på bilen din.
-<br>
-<br>
-Oppgi realistiske verdier. For uventede regninger som bøter eller reparasjoner på skader, tenk på hvor mye du har brukt i løpet av de siste årene. Kalkulasjonene tar som utgangspunkt en periodisitet som er månedlig basert. Bruk punktum for desimalnotering, for eksempel <span style=\"color:rgb(255,0,0);\">1.7</span> mil mellom hjem og arbeidsplass (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";
+"Denne kalkulatoren lar deg regne ut hva <b>den virkelige prisen</b> på å eie en bil i <b>Norge</b> er. Den vil normalt gi et godt anslag på hva det koster å eie en bil. Ettersom bilregningene kommer til ulike tider på året kan det ofte være vanskelig å få en fullstendig oversikt over hvor mye du bruker på bilen din. Oppgi realistiske verdier. For uventede regninger som bøter eller reparasjoner på skader, tenk på hvor mye du har brukt i løpet av de siste årene. Kalkulasjonene tar som utgangspunkt en periodisitet som er månedlig basert. Bruk punktum for desimalnotering, for eksempel <span style=\"color:rgb(255,0,0);\">1.7</span> mil mellom hjem og arbeidsplass (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";
+
 $HELP_PROJECT = 'Støtt dette prosjektet' ;
 $AC_MOBILE = 'AUTOCOSTS<br> for mobile produkter';
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
