@@ -205,8 +205,6 @@ form.roundCorner {
 .description.p3 {
     margin-top: 60px;
     font-size: 18px;
-    text-align: justify;
-    text-justify: inter-word;
 }
 #div3, #div1, #div2 {
     background: #f0f0f0;
@@ -418,6 +416,12 @@ div#text_div {
     svg {
         width: 100%;
     }
+    #graph_div,
+    #chart_div {
+        width: 420px;
+        display: block !important;
+    }
+
 
     #final-text2 {font-size: 250% !important;}
 
