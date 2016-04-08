@@ -276,8 +276,8 @@ function reload () {
     input_object.style.display = 'block';
     result_object.style.display = 'none';
     reload_object.style.display = 'none';
-    chart_object.style.display = 'none';
-    graph_object.style.display = 'none';
+    pie_chart_object.style.display = 'none';
+    bar_chart_object.style.display = 'none';
     text_object.style.display = 'none';
 
     window.scroll(0, 1);

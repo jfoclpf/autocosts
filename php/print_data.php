@@ -537,36 +537,43 @@ function drawChartResult(frame_witdh, data){
         if(data.monthly_costs.depreciation < 0) {
             desvalor_temp=0;
         } else {
-            desvalor_temp = data.monthly_costs.depreciation; }
+            desvalor_temp = data.monthly_costs.depreciation; 
+        }
 
-            chart_width=parseInt(frame_witdh*1);
-            chart_height=parseInt(chart_width*4/6);
+        //draw Pie Chart
+        var pie_chart_width=parseInt(frame_witdh*1);
+        var pie_chart_height=parseInt(pie_chart_width*4/6);
 
-            drawChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
-                parseFloat(data.monthly_costs.fuel.toFixed(1)),
-                parseFloat(desvalor_temp.toFixed(1)),
-                parseFloat(data.monthly_costs.credit.toFixed(1)),
-                parseFloat(data.monthly_costs.inspection.toFixed(1)),
-                parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-                parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-                parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-                parseFloat(data.monthly_costs.parking.toFixed(1)),
-                parseFloat(data.monthly_costs.tolls.toFixed(1)),
-                parseFloat(data.monthly_costs.fines.toFixed(1)),
-                parseFloat(data.monthly_costs.washing.toFixed(1)),
-                chart_width,
-                chart_height
-            );
+        drawPieChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
+            parseFloat(data.monthly_costs.fuel.toFixed(1)),
+            parseFloat(desvalor_temp.toFixed(1)),
+            parseFloat(data.monthly_costs.credit.toFixed(1)),
+            parseFloat(data.monthly_costs.inspection.toFixed(1)),
+            parseFloat(data.monthly_costs.maintenance.toFixed(1)),
+            parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
+            parseFloat(data.monthly_costs.car_tax.toFixed(1)),
+            parseFloat(data.monthly_costs.parking.toFixed(1)),
+            parseFloat(data.monthly_costs.tolls.toFixed(1)),
+            parseFloat(data.monthly_costs.fines.toFixed(1)),
+            parseFloat(data.monthly_costs.washing.toFixed(1)),
+            pie_chart_width,
+            pie_chart_height
+        );
 
-            chart_width=parseInt(frame_witdh*0.80);
-            chart_height=parseInt(chart_width*22/50);
+        //draw Bar Chart
+        var bar_chart_width=parseInt(frame_witdh*0.80);
+        var bar_chart_height=parseInt(bar_chart_width*22/50);
 
-            drawVisualization(parseFloat(data.total_standing_costs_month.toFixed(1)), parseFloat(data.total_running_costs_month.toFixed(1)),chart_width,chart_height);
+        drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 
+            parseFloat(data.total_running_costs_month.toFixed(1)),
+            bar_chart_width,
+            bar_chart_height
+        );
 
-            chart_object.style.display='block';
-            chart_object.style.margin='0 0 0 5%';
-            graph_object.style.display='block';
-            graph_object.style.margin='0 0 0 20%';
+        pie_chart_object.style.width=pie_chart_width+"px";
+        pie_chart_object.style.display='block';
+        bar_chart_object.style.width=bar_chart_width+"px";
+        bar_chart_object.style.display='block';
     }
     
     reload_object.style.display='block';

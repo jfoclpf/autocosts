@@ -52,11 +52,11 @@
                 <div id="result_div">
                 </div>
                 <!-- first top (pie) chart -->
-                <div id="chart_div">
+                <div id="pie_chart_div">
                 </div>
                 <br>
                 <!-- second (bars) chart -->
-                <div id="graph_div">
+                <div id="bar_chart_div">
                 </div>
                 <!-- bottom text with total costs -->
                 <div id="text_div">
@@ -101,8 +101,8 @@
         result_object = document.getElementById('result_div'); /*resultados*/
         frame_witdh = document.getElementById('result_div').offsetWidth;
         reload_object = document.getElementById('reload_div'); /*reload button*/
-        chart_object = document.getElementById('chart_div'); /*pie chart*/
-        graph_object = document.getElementById('graph_div'); /*columns chart*/
+        pie_chart_object = document.getElementById('pie_chart_div'); /*pie chart*/
+        bar_chart_object = document.getElementById('bar_chart_div'); /*columns chart*/
         text_object = document.getElementById('text_div'); /*msg text*/
         reload_object.style.display = 'none';
         tolls_daily(false);
