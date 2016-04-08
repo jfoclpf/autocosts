@@ -147,7 +147,12 @@ a {
 }
 #container,
 .description {
+    text-align: justify;
+    text-justify: inter-word;
     padding: 2%;
+}
+.description br {
+    display: none;
 }
 .b-contry {
     float: right;
@@ -221,6 +226,7 @@ form.roundCorner {
     width: 54%;
     margin: 0 2%;
     border-radius: 10px;
+    overflow: hidden;
 }
 #div2 td {
     padding: 8px 3% 0;
@@ -315,6 +321,12 @@ form.roundCorner {
 #result_div {
     margin: 15px;
 }
+
+#pie_chart_div,
+#bar_chart_div {
+    margin:0 auto;
+}
+
 table#result_table1, #result_table2, #result_table3, #result_table4 {
     border: 2px solid #b4b4b4;
     border-radius: 10px;
@@ -367,10 +379,6 @@ div#text_div {
 #final-text1{text-align: center;}
 #final-text2 {
     line-height: 100%;
-}
-
-.description br {
-    display: none;
 }
 
 @media all and (max-width: 1024px) {
@@ -441,8 +449,8 @@ div#text_div {
     svg {
         width: 100%;
     }
-    #graph_div,
-    #chart_div {
+    #pie_chart_div,
+    #bar_chart_div {
         width: 420px;
         display: block !important;
     }
