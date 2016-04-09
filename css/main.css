@@ -299,6 +299,7 @@ form.roundCorner {
     background: #f0f0f0;
     padding: 4px 5px;
     line-height: 100%;
+    text-align: left;
 }
 
 #div1 div#td-top-title {
