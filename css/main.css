@@ -87,7 +87,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     /* line-height: 1.42857143; */
     /* vertical-align: middle; */
     /* border-top: 1px solid #ddd; */
-     background: #fff;
+    background: #fff;
     /* font-size: 12px; */
     /* padding: 5px 4%; */
 }
@@ -150,7 +150,7 @@ a {
 }
 #header_main_title {
     margin-left:14%;
-} 
+}
 
 #container,
 .description {
@@ -207,7 +207,7 @@ form.roundCorner {
     border: 2px solid #ada692;
 }
 #div32 td {
-   width: 50%;
+    width: 50%;
 }
 #reload_div {
     text-align: center;
@@ -295,11 +295,15 @@ form.roundCorner {
 }
 
 #div1 td {
-    border: 1px solid #000;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
     background: #f0f0f0;
     padding: 4px 5px;
     line-height: 100%;
     text-align: left;
+}
+#div1 td:nth-child(1n) {
+    border-left: 0;
 }
 
 #div1 div#td-top-title {
@@ -340,9 +344,9 @@ form.roundCorner {
     margin:0 auto;
 }
 
-#result_table1, 
-#result_table2, 
-#result_table3, 
+#result_table1,
+#result_table2,
+#result_table3,
 #result_table4,
 #tbl_statistics {
     border: 2px solid #b4b4b4;
@@ -379,6 +383,16 @@ form.roundCorner {
 
     border-radius: 0 0 10px 0;
     border-collapse: separate;
+}
+
+#tbl_statistics {
+    border: 1px solid #000000;
+}
+
+#tbl_statistics #td-top-title {
+    text-align: center;
+    padding: 13px;
+    font-weight: bold;
 }
 
 table#visitors_table, #stats_table {
@@ -447,7 +461,7 @@ div#text_div {
         width: 80%;
     }
     #div2 td:nth-child(2n) {
-       /* width: 40%; */
+        /* width: 40%; */
     }
     #div2 {
         width:51%;
@@ -456,8 +470,8 @@ div#text_div {
 
 @media all and (max-width: 768px) {
     #div2, #div3, #div1 {
-        width: 100%; 
-        float:none; 
+        width: 100%;
+        float:none;
         margin: 2% 0;
     }
     .b-contry {
