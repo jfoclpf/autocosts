@@ -273,7 +273,7 @@ form.roundCorner {
     /* background: #e6e6e6; */
 }
 #div2 .head-title {
-    padding: 10px 2%;
+    padding: 10px 1%;
     background: #ada692;
     color: #fff;
     text-align: center;
@@ -282,7 +282,7 @@ form.roundCorner {
 }
 #div2 .head-title b {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #div1 #div13 {

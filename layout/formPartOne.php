@@ -1,6 +1,6 @@
 <div class="form_part" id="form_part1">
     <div class="head-title">
-        <? echo $FIXED_COSTS_HEADER_1 ?></b>
+        <b><? echo $FIXED_COSTS_HEADER_1 ?></b>
         <? echo $FIXED_COSTS_HEADER_2 ?>
     </div>
     <!--************************** Desvalorização do veículo ***************************************************-->

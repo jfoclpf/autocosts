@@ -1,6 +1,6 @@
 <div class="form_part" id="form_part2">
     <div class="head-title">
-        <b><? echo $RUNNING_COSTS_HEADER_1 ?> </b>
+        <b><? echo $RUNNING_COSTS_HEADER_1 ?></b>
         <? echo $RUNNING_COSTS_HEADER_2 ?>
     </div>
     <!--************************** COMBUSTÍVEIS | FUELS ***************************************************-->
