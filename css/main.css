@@ -354,7 +354,7 @@ form.roundCorner {
 #result_table2 tr:first-child td,
 #result_table3 tr:first-child td,
 #result_table4 tr:first-child td,
-#tbl_statistics tr:last-child td {
+#tbl_statistics tr:first-child td {
 
     border-radius: 10px 10px 0 0;
     border-collapse: separate;
