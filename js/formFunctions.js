@@ -38,7 +38,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('js/conversionFunctions.js'); 
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
-            $.getScript('php/print_data.php?country='+country); 
+            $.getScript('php/print_results.php?country='+country); 
             $.getScript('php/charts_js.php?country='+country);
             hasLoadedPart[1] = true;
         }
