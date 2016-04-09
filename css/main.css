@@ -156,7 +156,7 @@ a {
 .description {
     text-align: justify;
     text-justify: inter-word;
-    padding: 2%;
+    padding: 1%;
 }
 .description br {
     display: none;
@@ -391,6 +391,14 @@ table#visitors_table td:last-child,
     white-space:nowrap;
     width: auto;
 }
+table#mobile_logos_table tr,
+#mobile_logos_table td{
+    background:transparent;
+}
+table#mobile_logos_table img{
+    background-color:white;
+}
+
 #visitors_div{
     padding:2px 0 8px 0;
     width: 100%;

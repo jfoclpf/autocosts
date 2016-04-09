@@ -63,7 +63,7 @@
 
 <? if ($GLOBALS['country'] == "PT") { ?>
 
-    <table>
+    <table id="mobile_logos_table">
         <tr>
             <td>
                 <a href="http://play.google.com/store/apps/details?id=autocustos.com" imageanchor="1">
