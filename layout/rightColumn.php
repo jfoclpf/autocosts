@@ -22,7 +22,7 @@
 			<tr><td><span><?echo $ROAD_TAXES_SHORT?></span></td>                  <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_tax" class="value-field"></span></td></tr>
 			<tr><td><span>50% <?echo $MAINTENANCE?></span></td>                   <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_maint1" class="value-field"></span></td></tr>
 			<tr class="tr-result" style="font-size: 95%;">
-                <td class="right td-result"><span><?echo $WORD_TOTAL_CAP?><br><?echo $FIXED_COSTS?></span></td>
+                <td><span><?echo $WORD_TOTAL_CAP?><br><?echo $FIXED_COSTS?></span></td>
                 <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_standing_costs" class="value-field"></span></td>
             </tr>
 			
@@ -34,18 +34,28 @@
 			<tr><td><span><?echo $TOLLS?></span></td>                             <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_tolls" class="value-field"></span></td></tr>
 			<tr><td><span><?echo $FINES?></span></td>                             <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_fines" class="value-field"></span></td></tr>
 			<tr><td><span><?echo $WASHING_ST?></span></td>                        <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_wash" class="value-field"></span></td></tr>
-			<tr class="tr-result" style="font-size: 95%;">
-                <td class="right td-result"><span><?echo $WORD_TOTAL_CAP?><br><?echo $RUNNING_COSTS?></span></td>
+			<tr class="tr-result">
+                <td><span><?echo $WORD_TOTAL_CAP?><br><?echo $RUNNING_COSTS?></span></td>
                 <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_running_costs" class="value-field"></span></td>
             </tr>
 			
             <tr><td colspan="2"></td></tr>
-			<tr class="tr-sub-title"><td class="right td-result"><span><?echo $WORD_TOTAL_CAP?></span></td>  <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_total_overal" class="value-field"></span></td></tr>
-			<tr class="tr-result blue"><td class="td-result"><span><?echo $RUN_CP_DIST?></span></td>         <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_running_costs_dist" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
-			<tr class="tr-result blue"><td class="td-result"><span><?echo $TOTAL_CP_DIST?></span></td>       <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_total_costs_p_unit" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
-			<tr class="tr-result blue"><td class="td-result"><span><?echo $KINETIC_SPEED_TITLE?></span></td> <td> <span id="txt_kinetic_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
-			<tr class="tr-result blue"><td class="td-result"><span><a href="./docs/consumer_speed.html"><?echo $VIRTUAL_SPEED_TITLE?></a></span></td><td><span id="txt_virtual_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
-			<tr class="tr-result orange"><td id="table-td-bottom-left" class="td-result"><span><?echo $TOTAL_COSTS_PER_YEAR?></span></td><td id="table-td-bottom-right"><span id="txt_total_costs_year" class="value-field"></span></td></tr>
+			<tr class="tr-sub-title">
+                <td style="text-align:right"><span><?echo $WORD_TOTAL_CAP?></span></td>
+                <td style="text-align:left"><span> <?echo $CURR_SYMBOL?> </span><span id="txt_total_overal" class="value-field"></span></td>
+            </tr>
+			
+            <tr class="blue"><td><span><?echo $RUN_CP_DIST?></span></td>         <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_running_costs_dist" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
+			<tr class="blue"><td><span><?echo $TOTAL_CP_DIST?></span></td>       <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_total_costs_p_unit" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
+			<tr class="blue"><td><span><?echo $KINETIC_SPEED_TITLE?></span></td> <td> <span id="txt_kinetic_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
+			<tr class="blue">
+                <td><span><a href="./docs/consumer_speed.html"><?echo $VIRTUAL_SPEED_TITLE?></a></span></td>
+                <td><span id="txt_virtual_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td>
+            </tr>
+			<tr class="orange">
+                <td id="table-td-bottom-left"><span><?echo $TOTAL_COSTS_PER_YEAR?></span></td>
+                <td id="table-td-bottom-right"><span id="txt_total_costs_year" class="value-field"></span></td>
+            </tr>
 		</table>
 		<div id="tbl_statistics_footer"></div>
 	</div>
