@@ -14,9 +14,11 @@
         </select>
     </div>
     <!--#####################-->
-    <h1 class="main_title">
-        <? echo $MAIN_TITLE ?>
-    </h1>
+    <div id="header_main_title">
+        <h1 class="main_title">
+            <? echo $MAIN_TITLE ?>
+        </h1>
+    </div>
 </div>
 <div class="description p3">
     <? echo $INITIAL_TEXT ?>
