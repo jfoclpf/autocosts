@@ -1,4 +1,8 @@
-
+/*
+div, table, .table, .td, .tr, tr, td  {
+    border: 1px solid #000000;
+}
+*/
 body {
     width: 100%;
     margin: 0;
@@ -369,6 +373,37 @@ table#result_table1 tr:last-child td + td ,
     border-collapse: separate;
 }
 
+table#visitors_table, #stats_table {
+    margin: 0 auto;
+    width: auto;
+    font-size: 95%;
+}
+table#visitors_table td:first-child,
+#stats_table td:first-child {
+    text-align:right;
+    padding-right:3px;
+    width: auto;
+}
+table#visitors_table td:last-child,
+#stats_table td:last-child{
+    text-align:left;
+    padding-left:3px;
+    white-space:nowrap;
+    width: auto;
+}
+#visitors_div{
+    padding:2px 0 8px 0;
+    width: 100%;
+}
+#stats_div{
+    padding-bottom:8px;
+    width:100%;
+}
+#contact_div{
+    padding:4px 0 8px 0;
+    width:100%;
+    font-size:95%;
+}
 #result_div td {
     padding: 8px 3%;
     border-top: 1px solid #a5a5a5;

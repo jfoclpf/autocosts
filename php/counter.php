@@ -204,13 +204,11 @@ if ($counter_connected == true)
    }	  
 	  	
 ?>
-    <div style="text-align:center; width:100%;">
-    <table style="margin: 0 auto; font-size:80%;">
-      <tr><td style="text-align:right"><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td style="text-align:left">online</td></tr>
-      <tr><td style="text-align:right"><?php echo number_format($month_value, 0, ',', '&thinsp;'); ?></td><td style="text-align:left">this month</td></tr>
-      <tr><td style="text-align:right"><?php echo number_format($all_value,   0, ',', '&thinsp;'); ?></td><td style="text-align:left">totally</td></tr> 
+    <table id="visitors_table">
+      <tr><td><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td>online</td></tr>
+      <tr><td><?php echo number_format($month_value, 0, ',', '&thinsp;'); ?></td><td>this month</td></tr>
+      <tr><td><?php echo number_format($all_value,   0, ',', '&thinsp;'); ?></td><td>totally</td></tr> 
     </table>
-    </div>
 
 <?php
 } /*if ($counter_connected == true)*/

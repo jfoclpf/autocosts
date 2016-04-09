@@ -13,43 +13,53 @@
     <img alt="Picture" src="<? echo get_picture_file_name($CURR_CODE); ?>">
 </div>
 
-<div id="div32">
-    <!-- Visitor Statistics block -->
-
-    <b>Visitors</b>
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/php/counter.php"); ?>
-
-    <!-- User Statistics block -->
-    <b>Users</b>
-    <table class="t-users">
-        <tr>
-            <td>
-	        <span id="users_count"><?php include($_SERVER['DOCUMENT_ROOT'] . "/db_stats/dbService.php");
-                $query = "SELECT DISTINCT uuid_client, country FROM users_insertions";
-                $res = executeQueryInDB($query);
-                $filled_by_cty = 0;
-                while ($row = mysqli_fetch_array($res)) {
-                    if ($row['country'] == $GLOBALS['country']) {
-                        $filled_by_cty++;
-                    }
-                }
-                echo number_format($filled_by_cty, 0, ',', '&thinsp;');
-                ?></span>
-            </td>
-            <td>filled in for <?php echo $GLOBALS['country'] ?></td>
-        </tr>
-        <tr>
-            <td><?php echo number_format(mysqli_num_rows($res), 0, ',', '&thinsp;'); ?></td>
-            <td>filled in totally</td>
-        </tr>
-    </table>
-
-
-    <!-- Contact block -->
-
-    <b>Contact</b>
-    <a href="mailto:info@autocosts.info">info@autocosts.info</a>
-</div>
+    <div id="div32" class="roundCorner">
+        <!-- Visitor Statistics block -->
+        <b>
+        <span class="p2">
+            Visitors
+        </span>
+        </b>
+        <div id="visitors_div">
+            <?php include($_SERVER['DOCUMENT_ROOT']."/php/counter.php");?>			
+        </div>
+        
+        <!-- User Statistics block -->
+        <b>
+        <span class="p2">
+            Users<br>
+        </span>
+        </b>
+        <div id="stats_div">
+            <table id="stats_table">
+                <tr>
+                    <td>
+                    <?php include($_SERVER['DOCUMENT_ROOT']."/db_stats/dbService.php");
+                        $query = "SELECT total_users, global_total_users FROM monthly_costs_statistics WHERE country=\"".$GLOBALS['country']."\"";
+                        $res = executeQueryInDB($query);
+                        $row = mysqli_fetch_array($res); //this query just has one row
+                        echo number_format($row['total_users'], 0, ',', '&thinsp;');	
+                    ?>
+                    </td>
+                    <td>filled in for <?php echo $GLOBALS['country']?></td>
+                </tr>
+                <tr>
+                    <td><?php echo number_format($row['global_total_users'], 0, ',', '&thinsp;');?></td>
+                    <td>filled in totally</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Contact block -->
+        <b>
+        <span class="p2">
+            Contact<br>
+        </span>
+        </b>
+        <div id="contact_div">
+            <a href="mailto:info@autocosts.info">info@autocosts.info</a> 
+        </div>
+    </div>
 
 <? if ($GLOBALS['country'] == "PT") { ?>
 
