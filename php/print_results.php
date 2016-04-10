@@ -216,12 +216,12 @@ function print_costs_table(f1, f2, f3, data) {
     varResult+= '<center><table class="result_table" id="result_table1" cellpadding="4">';
     
     //Private Costs header
-    varResult+= '<tr><td style="padding:10px;" colspan="2" align="center"><b><span class="p3"><?echo $PRIVATE_COSTS?></span></b><br></td></tr>';
+    varResult+= '<tr><td style="padding:10px;" colspan="2"><b><span class="p3"><?echo $PRIVATE_COSTS?></span></b><br></td></tr>';
     
     //Standing costs header
     varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><span class=\"p3\"><?echo $FIXED_COSTS?></span></b><br>" +
                 "<i><span class=\"p2\"><?echo $TOTAL_FIXED_DESCR?></span></i></td>" +
-                '<td width="20%" align="center"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
+                '<td width="20%"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
     
     //standing costs items
     varResult+= '<tr><td align="left">' + depreciation_text + '&nbsp;</td>' + 
@@ -334,7 +334,7 @@ function print_extern_table(f1, f2, f3, data){
                    "<td>&nbsp;<span class=\"p2\"><?echo $CURR_SYMBOL?>" + (data.external_costs.infrastr * data.distance_per_month).toFixed(1)+"</span></td></tr>";
         
          //total
-        varResult+="<tr><td class=\"td_left top_2px_solid\" style=\"padding:6px 10px 6px 0;\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>" +
+        varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>" +
                    "<td><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></td></tr>";
         
         //reference to source
@@ -389,7 +389,7 @@ function print_feffort_table(f1, f2, f3, data){
     
     var varResult = "";
     varResult+="<br><center><table class=\"result_table\" id=\"result_table3\" cellpadding=\"4\">";
-    varResult+="<tr><td class=\"td_left td_top td_right\" colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b></td></tr>";
+    varResult+="<tr><td colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b></td></tr>";
     //income
     varResult+="<tr><td colspan=\"2\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b></tr>";
     switch(f3.income_type){

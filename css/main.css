@@ -1,4 +1,4 @@
-/*
+/* 
 div, table, .table, .td, .tr, tr, td  {
     border: 1px solid #000000;
 }
@@ -203,7 +203,6 @@ form.roundCorner {
     margin: 26px 0 25px 0;
     padding-top: 10px;
     text-align: center;
-    /* margin: auto; */
     border: 2px solid #ada692;
 }
 #div32 td {
@@ -242,7 +241,6 @@ form.roundCorner {
 }
 #div2 td {
     padding: 8px 3% 0;
-    vertical-align: top;
 }
 #div2 #title-div {
     text-align: center;
@@ -256,21 +254,16 @@ form.roundCorner {
     margin: 0 4%;
 }
 #div2 td:nth-child(2n) {
-    /* background: #f3f3f3; */
-    /* color: #000; */
     width: 25%;
 }
 #div2 .col {
     width: 25%;
     display: inline-block;
-    /* text-align: center; */
 }
 #div2 .title {
     display: block;
     padding: 21px 3% 0 3%;
     font-size: 18px;
-    /* text-align: center; */
-    /* background: #e6e6e6; */
 }
 #div2 .head-title {
     padding: 10px 10%;
@@ -339,6 +332,19 @@ form.roundCorner {
     margin:0 auto;
 }
 
+/*===Result div and result tables===*/
+
+#result_div td {
+    padding: 8px 3%;
+    border-top: 1px solid #a5a5a5;
+    vertical-align: middle;
+}
+
+#result_div td:nth-child(2n) {
+    /* width: 40%; */
+    border-left: solid 1px #b6b6b6;
+}
+
 #result_table1,
 #result_table2,
 #result_table3,
@@ -349,33 +355,31 @@ form.roundCorner {
     border-collapse: separate;
 }
 
-
-#result_table1 tr:first-child td ,
+#result_table1 tr:first-child td,
 #result_table2 tr:first-child td,
 #result_table3 tr:first-child td,
 #result_table4 tr:first-child td,
 #tbl_statistics tr:first-child td {
-
     border-radius: 10px 10px 0 0;
     border-collapse: separate;
     border: 0;
+    text-align: center;
+    vertical-align: middle;
 }
 
-#result_table1 tr:last-child td ,
+#result_table1 tr:last-child td,
 #result_table2 tr:last-child td,
 #result_table3 tr:last-child td,
 #result_table4 tr:last-child td,
 #tbl_statistics tr:last-child td {
-
     border-radius: 0 0 0 10px;
     border-collapse: separate;
 }
-#result_table1 tr:last-child td + td ,
+#result_table1 tr:last-child td + td,
 #result_table2 tr:last-child td + td,
 #result_table3 tr:last-child td + td,
 #result_table4 tr:last-child td + td,
 #tbl_statistics tr:last-child td + td {
-
     border-radius: 0 0 10px 0;
     border-collapse: separate;
 }
@@ -389,20 +393,29 @@ form.roundCorner {
     text-align: left;
 }
 
-
-#result_table2 tr:first-child td {
+#result_table2 tr:first-child td,
+#result_table4 tr:first-child td {
     border-radius: 10px 0 0 0 ;
 }
-#result_table2 tr:first-child td + td {
+#result_table2 tr:first-child td + td,
+#result_table4 tr:first-child td + td {
     border-left: solid 1px #b6b6b6;
     border-radius: 0 10px 0 0;
-    text-align: center;
 }
 
 #result_table1 tr:nth-child(2) td,
-#result_table1 tr:nth-child(10) td {text-align: center;}
-#result_table1 tr:nth-child(18) td {text-align: right;}
-#result_table1 tr:nth-child(18) td + td {text-align: left;}
+#result_table1 tr:nth-child(10) td {
+    text-align: center; 
+}
+#result_table1 tr:nth-child(9) td,
+#result_table1 tr:nth-child(18) td {
+    text-align: right; 
+}
+#result_table1 tr:nth-child(9) td + td,
+#result_table1 tr:nth-child(18) td + td {
+    text-align: left; 
+}
+/*==End of Result div and result tables===*/
 
 #tbl_statistics {
     border: 1px solid #000000;
@@ -452,16 +465,6 @@ table#mobile_logos_table img{
     padding:4px 0 8px 0;
     width:100%;
     font-size:95%;
-}
-#result_div td {
-    padding: 8px 3%;
-    border-top: 1px solid #a5a5a5;
-    vertical-align: top;
-}
-
-#result_div td:nth-child(2n) {
-    /* width: 40%; */
-    border-left: solid 1px #b6b6b6;
 }
 
 div#text_div {
