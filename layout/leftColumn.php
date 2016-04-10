@@ -6,12 +6,11 @@
     else
         echo '<div style="padding-top:14px;"></div>'; //in case no currency logo applies gives a break line
     ?>
-    <div class="is_logo" <? if ($is_logo) { ?><? } ?>">
-</div>
+    <? if ($is_logo) { ?><div class="is_logo"></div><? } ?>
 
-<div class="roundCorner">
-    <img alt="Picture" src="<? echo get_picture_file_name($CURR_CODE); ?>">
-</div>
+    <div class="roundCorner">
+        <img alt="Picture" src="<? echo get_picture_file_name($CURR_CODE); ?>">
+    </div>
 
     <div id="div32" class="roundCorner">
         <!-- Visitor Statistics block -->
@@ -61,21 +60,21 @@
         </div>
     </div>
 
-<? if ($GLOBALS['country'] == "PT") { ?>
+    <? if ($GLOBALS['country'] == "PT") { ?>
 
-    <table id="mobile_logos_table">
-        <tr>
-            <td>
-                <a href="http://play.google.com/store/apps/details?id=autocustos.com" imageanchor="1">
-                    <img class="roundCorner" alt="mobile version" src="images/mobile1.png">
-                </a>
-            </td>
-            <td>
-                <a href="http://build.phonegap.com/apps/359804/install" imageanchor="1">
-                    <img class="roundCorner" alt="mobile version" src="images/mobile2.png">
-                </a>
-            </td>
-        </tr>
-    </table>
-<? } ?>
+        <table id="mobile_logos_table">
+            <tr>
+                <td>
+                    <a href="http://play.google.com/store/apps/details?id=autocustos.com" imageanchor="1">
+                        <img class="roundCorner" alt="mobile version" src="images/mobile1.png">
+                    </a>
+                </td>
+                <td>
+                    <a href="http://build.phonegap.com/apps/359804/install" imageanchor="1">
+                        <img class="roundCorner" alt="mobile version" src="images/mobile2.png">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    <? } ?>
 </div>

@@ -5,12 +5,12 @@
 			<tr class="tr-title">
 				<td id="td-top-title" colspan="2" class="center td-title">
                     <? if ($GLOBALS['country'] == "TR") { ?>
-                        <span class="stat_title"><?echo $COUNTRY_NAME?></span><span class="stat_title"> <?echo $STATISTIC_TITLE?></span>
+                        <b><span><?echo $COUNTRY_NAME?></span><span class="stat_title"> <?echo $STATISTIC_TITLE?></span></b>
                     <? }
                      else{?>
-                        <span class="stat_title"><?echo $STATISTIC_TITLE?></span><span class="stat_title"> <?echo $COUNTRY_NAME?></span>
+                        <b><span><?echo $STATISTIC_TITLE?></span><span class="stat_title"> <?echo $COUNTRY_NAME?></span></b>
                     <? } ?>
-                    <span class="stat_title"><?echo $AVERAGE_COSTS_PER_TYPE?></span>
+                    <br><span><?echo $AVERAGE_COSTS_PER_TYPE?></span>
 				</td>
 			</tr>
             
@@ -54,7 +54,7 @@
             </tr>
 			<tr class="orange">
                 <td id="table-td-bottom-left"><span><?echo $TOTAL_COSTS_PER_YEAR?></span></td>
-                <td id="table-td-bottom-right"><span id="txt_total_costs_year" class="value-field"></span></td>
+                <td id="table-td-bottom-right"><?echo $CURR_SYMBOL?> <span id="txt_total_costs_year" class="value-field"></span></td>
             </tr>
 		</table>
 		<div id="tbl_statistics_footer"></div>
