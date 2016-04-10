@@ -221,7 +221,7 @@ function print_costs_table(f1, f2, f3, data) {
     //Standing costs header
     varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><span class=\"p3\"><?echo $FIXED_COSTS?></span></b><br>" +
                 "<i><span class=\"p2\"><?echo $TOTAL_FIXED_DESCR?></span></i></td>" +
-                '<td class=\"td_right bottom_2px_solid\" width="20%" align="center"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
+                '<td width="20%" align="center"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
     
     //standing costs items
     varResult+= '<tr><td align="left">' + depreciation_text + '&nbsp;</td>' + 
@@ -275,12 +275,12 @@ function print_costs_table(f1, f2, f3, data) {
     
     //TOTAL - Running costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?echo $TOTAL_VARIABLE?></b></td>"+
-                "<td class=\"td_right top_2px_solid\">&nbsp;<b><span class=\"p2\">" + countryCheck(data.total_running_costs_month.toFixed(1)) + "</span></b></td></tr>";
+                "<td>&nbsp;<b><span class=\"p2\">" + countryCheck(data.total_running_costs_month.toFixed(1)) + "</span></b></td></tr>";
     
     //costs per unit distance
     if(data.distance_per_month != 0){
         varResult+= "<tr><td><b><span class=\"p3\"><?echo $RUN_CP_DIST?></span></b></td>"+
-                    "<td class=\"td_right top_3px_solid\"><span class=\"p2\">&nbsp;" + countryCheck(data.running_costs_p_unit_distance.toFixed(2)) + "/<?echo $STD_DIST?> </span></td></tr>";
+                    "<td><span class=\"p2\">&nbsp;" + countryCheck(data.running_costs_p_unit_distance.toFixed(2)) + "/<?echo $STD_DIST?> </span></td></tr>";
         
         varResult+= "<tr><td><b><span class=\"p3\"><?echo $TOTAL_CP_DIST?></span></b></td>" +
                     "<td><span class=\"p2\">&nbsp;" + countryCheck(data.total_costs_p_unit_distance.toFixed(2)) + "/<?echo $STD_DIST?> </span></td></tr>";
@@ -335,7 +335,7 @@ function print_extern_table(f1, f2, f3, data){
         
          //total
         varResult+="<tr><td class=\"td_left top_2px_solid\" style=\"padding:6px 10px 6px 0;\"><b><span class=\"p3\"><?echo $WORD_TOTAL_CAP?></span></b></td>" +
-                   "<td class=\"td_right top_2px_solid\"><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></td></tr>";
+                   "<td><b><span class=\"p2\"><?echo $CURR_SYMBOL?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?echo $MONTH?></span></b></td></tr>";
         
         //reference to source
         varResult+="<tr><td colspan=\"2\">"+ source_ext_costs +"</td></tr>";        
@@ -391,45 +391,45 @@ function print_feffort_table(f1, f2, f3, data){
     varResult+="<br><center><table class=\"result_table\" id=\"result_table3\" cellpadding=\"4\">";
     varResult+="<tr><td class=\"td_left td_top td_right\" colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b></td></tr>";
     //income
-    varResult+="<tr><td class=\"td_left td_right\" colspan=\"2\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b></tr>";
+    varResult+="<tr><td colspan=\"2\"><b><span class=\"p3\"><?echo $EXTRA_DATA_INCOME?></span></b></tr>";
     switch(f3.income_type){
         case 'year':    
-            varResult+= "<tr><td class=\"hidden_tp\"><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td class=\"td_right hidden_tp\" style=\"width:20%\"><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>" +
+            varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $YEAR?></span></td>" + 
+                        "<td style=\"width:20%\"><span class=\"p2\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>";
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>";
             break;
         case 'month':
             varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td style=\"width:20%\"><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>" +
+                        "<td style=\"width:20%\"><span class=\"p2\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_MONTHS?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + data.fin_effort.income_per_type + "</span></td></tr>" +
+                        "<td><span class=\"p2\">" + data.fin_effort.income_per_type + "</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>" +
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "</span></td></tr>";
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "</span></td></tr>";
             break;
         case 'week':
             varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $WEEK?></span></td>" + 
-                        "<td style=\"width:20%\"><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>"+
+                        "<td style=\"width:20%\"><span class=\"p2\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + data.fin_effort.income_per_type + "</span></td></tr>" +
+                        "<td><span class=\"p2\">" + data.fin_effort.income_per_type + "</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>"+
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "<\/span></td></tr>";
             break;  
         case 'hour':
             varResult+= "<tr><td><span class=\"p2\"><?echo $NET_INCOME_PER?> <?echo $HOUR?></span></td>" + 
-                        "<td style=\"width:20%\"><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>"+
+                        "<td style=\"width:20%\"><span class=\"p2\">" + countryCheck(data.fin_effort.income) + "</span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_HOURS?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + data.fin_effort.income_hours_per_week + " <?echo $HOUR_ABBR?></span></td></tr>"+
+                        "<td><span class=\"p2\">" + data.fin_effort.income_hours_per_week + " <?echo $HOUR_ABBR?></span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $NUMBER_OF_WEEKS?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + data.fin_effort.income_per_type + "</span></td></tr>"+
+                        "<td><span class=\"p2\">" + data.fin_effort.income_per_type + "</span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>"+
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</span></td></tr>"+
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td><span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_year.toFixed(1)) + "<\/span></td></tr>";
             break;          
     }
     //working time
@@ -437,82 +437,82 @@ function print_feffort_table(f1, f2, f3, data){
         varResult+=     "<tr><td class=\"td_left td_right top_2px_solid\" colspan=\"2\"><b><span class=\"p3\"><?echo $EXTRA_DATA_WORKING_TIME?></span></b></tr>";
         if(f3.is_working_time == 'true'){
             varResult+= "<tr><td><span class=\"p2\"><?echo $HOURS_PER?> <?echo $WEEK?></span></td>" +
-                        "<td><span class=\"p2 td_values\">"+data.fin_effort.time_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>" +
+                        "<td><span class=\"p2\">"+data.fin_effort.time_hours_per_week+" <?echo $HOUR_ABBR?></span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $MONTHS_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">"+data.fin_effort.time_month_per_year+"</span></td></tr>" +
+                        "<td><span class=\"p2\">"+data.fin_effort.time_month_per_year+"</span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $AVERAGE_WORKING_HOURS_PER?> <?echo $MONTH?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">"+data.fin_effort.aver_work_time_per_m.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>" +
+                        "<td><span class=\"p2\">"+data.fin_effort.aver_work_time_per_m.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>" +
                         "<tr><td><span class=\"p2\"><?echo $WORKING_HOURS_PER?> <?echo $YEAR?></span></td>" + 
-                        "<td><span class=\"p2 td_values\">"+data.fin_effort.work_hours_per_y.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";
+                        "<td><span class=\"p2\">"+data.fin_effort.work_hours_per_y.toFixed(1)+" <?echo $HOUR_ABBR?></span></td></tr>";
         }
         else{
             varResult+= "<tr><td class=\"td_left td_right\" colspan=\"2\"><span class=\"p2\"><?echo $WORKING_TIME_MESSAGE?></span></td></tr>";
         }
     }           
-    varResult+= "<tr><td class=\"td_left top_2px_solid\"><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td>" +
-                "<td class=\"td_right top_2px_solid\">&nbsp;<span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</span></td></tr>";
+    varResult+= "<tr><td><span class=\"p2\"><?echo $AVERAGE_NET_INCOME_PER?> <?echo $HOUR?></span></td>" +
+                "<td>&nbsp;<span class=\"p2\">" + countryCheck(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</span></td></tr>";
     
     //distance
     varResult+= "<tr><td class=\"td_left td_right top_2px_solid\" colspan=\"2\"><b><span class=\"p3\"><?echo $DISTANCE?></span></b></td></tr>";
     if((f2.type_calc_fuel != 'km' && f3.drive_to_work == 'true') || (f2.type_calc_fuel != 'km' && f2.take_car_to_job == 'true')){   
         varResult+=  "<tr><td><span class=\"p2\"><?echo $DIST_HOME_JOB?></span></td>"  +  
-                     "<td><span class=\"p2 td_values\">" + parseInt(f3.dist_home_job).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
+                     "<td><span class=\"p2\">" + parseInt(f3.dist_home_job).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
                      "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_JOB?></span></td>"  +  
-                     "<td><span class=\"p2 td_values\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>" +
+                     "<td><span class=\"p2\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>" +
                      "<tr><td><span class=\"p2\"><?echo $DIST_JORNEY_WEEKEND?></span></td>" + 
-                     "<td><span class=\"p2 td_values\">" + parseInt(f3.journey_weekend).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
+                     "<td><span class=\"p2\">" + parseInt(f3.journey_weekend).toFixed(1) + " <?echo $STD_DIST?></span></td></tr>"+
                      "<tr><td><span class=\"p2\"><?echo $AVERAGE_DIST_PER_WEEK?></span></td>" + 
-                     "<td><span class=\"p2 td_values\">" + data.fin_effort.aver_drive_per_week.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";                  
+                     "<td><span class=\"p2\">" + data.fin_effort.aver_drive_per_week.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";                  
     }
 
     varResult+=  "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $MONTH?></span></td>" +
-                 "<td><span class=\"p2 td_values\">" + data.distance_per_month.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>" +
+                 "<td><span class=\"p2\">" + data.distance_per_month.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>" +
                  "<tr><td><span class=\"p2\"><?echo $YOU_DRIVE_PER?> <?echo $YEAR?></span></td>" + 
-                 "<td><span class=\"p2 td_values\">" + data.fin_effort.drive_per_year.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";  
+                 "<td><span class=\"p2\">" + data.fin_effort.drive_per_year.toFixed(1) + " <?echo $STD_DIST?></span></td></tr>";  
 
     //time spent in driving
     varResult+=  "<tr><td class=\"td_left td_right top_2px_solid\" colspan=\"2\"><b><span class=\"p3\"><?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?></span></b></td></tr>";
 
     if(f3.drive_to_work == 'true' || f2.take_car_to_job == 'true'){
         varResult+= "<tr><td><span class=\"p2\"><?echo $MINUTES_HOME_JOB?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + f3.time_home_job + " <?echo $MIN?></span></td></tr>" +
+                    "<td><span class=\"p2\">" + f3.time_home_job + " <?echo $MIN?></span></td></tr>" +
                     "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_TO_JOB?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>" +
+                    "<td><span class=\"p2\">" + f3.drive_to_work_days_per_week + " <?echo $DAYS?></span></td></tr>" +
                     "<tr><td><span class=\"p2\"><?echo $TIME_DRIVE_WEEKEND?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + f3.time_weekend + " <?echo $MIN?></span></td></tr>" +
+                    "<td><span class=\"p2\">" + f3.time_weekend + " <?echo $MIN?></span></td></tr>" +
                     "<tr><td><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $WEEK?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + data.fin_effort.min_drive_per_week + " <?echo $MIN?></span></td></tr>";
+                    "<td><span class=\"p2\">" + data.fin_effort.min_drive_per_week + " <?echo $MIN?></span></td></tr>";
     }
     else{
         varResult+= "<tr><td><span class=\"p2\"><?echo $MINUTES_DRIVE_PER?> <?echo $DAY?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + f3.min_drive_per_day + " <?echo $MIN?></span></td></tr>" +
+                    "<td><span class=\"p2\">" + f3.min_drive_per_day + " <?echo $MIN?></span></td></tr>" +
                     "<tr><td><span class=\"p2\"><?echo $DAYS_DRIVE_PER_MONTH?></span></td>" + 
-                    "<td><span class=\"p2 td_values\">" + f3.days_drive_per_month + " <?echo $DAYS?></span></td></tr>";
+                    "<td><span class=\"p2\">" + f3.days_drive_per_month + " <?echo $DAYS?></span></td></tr>";
     }
 
     varResult+= "<tr><td><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $MONTH?></span></td>" + 
-                "<td><span class=\"p2 td_values\">" + data.fin_effort.hours_drive_per_month.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>"+
+                "<td><span class=\"p2\">" + data.fin_effort.hours_drive_per_month.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>"+
                 "<tr><td><span class=\"p2\"><?echo $HOURS_DRIVE_PER?> <?echo $YEAR?></span></td>" + 
-                "<td><span class=\"p2 td_values\">" + data.fin_effort.hours_drive_per_year.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>";;
+                "<td><span class=\"p2\">" + data.fin_effort.hours_drive_per_year.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>";;
 
     //financial effort
     varResult+= "<tr><td class=\"td_left td_right\" colspan=\"2\"><b><span class=\"p3\"><?echo $FINANCIAL_EFFORT?></span></b>" +
                 "<tr><td><span class=\"p2\"><?echo $TOTAL_COSTS_PER_YEAR?></span></td>" + 
-                "<td><span class=\"p2 td_values\">" + countryCheck(data.fin_effort.total_costs_year.toFixed(1)) + "</span></td></tr>" +
+                "<td><span class=\"p2\">" + countryCheck(data.fin_effort.total_costs_year.toFixed(1)) + "</span></td></tr>" +
                 "<tr><td><span class=\"p2\"><?echo $HOURS_TO_AFFORD_CAR?></span></td>"  +  
-                "<td><span class=\"p2 td_values\">" + data.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>"+
+                "<td><span class=\"p2\">" + data.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " <?echo $HOUR_ABBR?></span></td></tr>"+
                 "<tr><td><span class=\"p2\"><?echo $MONTHS_TO_AFFORD_CAR?></span></td>" +  
-                "<td><span class=\"p2 td_values\">" + data.fin_effort.month_per_year_to_afford_car.toFixed(2)+"</span></td></tr>"+
+                "<td><span class=\"p2\">" + data.fin_effort.month_per_year_to_afford_car.toFixed(2)+"</span></td></tr>"+
                 "<tr><td><span class=\"p2\"><?echo $DAYS_CAR_PAID?></span></td>" +  
-                "<td><span class=\"p2 td_values\">" + Math.ceil(data.fin_effort.days_car_paid) + " <?echo $DAYS?></span></td></tr>";
+                "<td><span class=\"p2\">" + Math.ceil(data.fin_effort.days_car_paid) + " <?echo $DAYS?></span></td></tr>";
            
 
     //speed
     varResult+= "<tr><td class=\"td_left top_2px_solid\"><span class=\"p2\"><?echo $AVER_YEARLY?> <?echo $KINETIC_SPEED?></span></td>"+
-                "<td class=\"td_right\ top_2px_solid\"><span class=\"p2 td_values\">" + data.fin_effort.kinetic_speed.toFixed(1) + " <?echo $STD_DIST?>/h</span></td></tr>";
+                "<td class=\"td_right\ top_2px_solid\"><span class=\"p2\">" + data.fin_effort.kinetic_speed.toFixed(1) + " <?echo $STD_DIST?>/h</span></td></tr>";
                         
     varResult+= "<tr><td class=\"td_left td_bottom top_2px_solid\"><span class=\"p2\"><?echo $AVER_YEARLY?> <a href=\"./docs/consumer_speed.html\" target=\"_blank\"><?echo $VIRTUAL_SPEED?></a></span></td>"+
-                "<td class=\"td_right td_bottom top_2px_solid\"><span class=\"p2 td_values\">" + data.fin_effort.virtual_speed.toFixed(1) + " <?echo $STD_DIST?>/h</span></td></tr>";
+                "<td class=\"td_right td_bottom top_2px_solid\"><span class=\"p2\">" + data.fin_effort.virtual_speed.toFixed(1) + " <?echo $STD_DIST?>/h</span></td></tr>";
     
     varResult+="</table></center>";     
     
