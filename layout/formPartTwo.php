@@ -257,13 +257,9 @@
                 </td>
                 <td>
                     <input type="text" id="daily_expense_tolls" name="preco_portagens_por_dia" size="6" maxlength="9" value="<? echo $STD_TOLLS_DAY; ?>">
-          <span>
-          <? echo $CURR_SYMBOL ?> <? echo $DURING ?>
-          </span>
+                    <span><? echo $CURR_SYMBOL ?> <? echo $DURING ?></span><br>
                     <input type="text" id="number_days_tolls" name="dias_portagens_por_mes" size="3" maxlength="2" value="<? echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
-          <span class="p2">
-          <? echo $DAYS ?> <? echo $WORD_PER ?> <? echo $MONTH ?>
-          </span>
+                    <span class="p2"><? echo $DAYS ?> <? echo $WORD_PER ?> <? echo $MONTH ?></span>
                 </td>
             </tr>
         </table>

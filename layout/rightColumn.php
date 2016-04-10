@@ -21,7 +21,7 @@
 			<tr><td><span><?echo $INSPECTION_SHORT?></span></td>                  <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_insp" class="value-field"></span></td></tr>
 			<tr><td><span><?echo $ROAD_TAXES_SHORT?></span></td>                  <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_tax" class="value-field"></span></td></tr>
 			<tr><td><span>50% <?echo $MAINTENANCE?></span></td>                   <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_maint1" class="value-field"></span></td></tr>
-			<tr class="tr-result" style="font-size: 95%;">
+			<tr class="tr-result">
                 <td><span><?echo $WORD_TOTAL_CAP?><br><?echo $FIXED_COSTS?></span></td>
                 <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_standing_costs" class="value-field"></span></td>
             </tr>
@@ -40,9 +40,9 @@
             </tr>
 			
             <tr><td colspan="2"></td></tr>
-			<tr class="tr-sub-title">
-                <td style="text-align:right"><span><?echo $WORD_TOTAL_CAP?></span></td>
-                <td style="text-align:left"><span> <?echo $CURR_SYMBOL?> </span><span id="txt_total_overal" class="value-field"></span></td>
+			<tr class="tr-result">
+                <td><span><?echo $WORD_TOTAL_CAP?></span></td>
+                <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_total_overal" class="value-field"></span></td>
             </tr>
 			
             <tr class="blue"><td><span><?echo $RUN_CP_DIST?></span></td>         <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_running_costs_dist" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
