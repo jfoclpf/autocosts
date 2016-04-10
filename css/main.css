@@ -81,10 +81,10 @@ table>caption+thead>tr:first-child>td, table>caption+thead>tr:first-child>th, ta
 }
 table>tbody>tr:nth-of-type(odd) {
     /*  background-color: #f9f9f9; */
-  }
-  table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
+}
+table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
 
-      /* line-height: 1.42857143; */
+    /* line-height: 1.42857143; */
     /* vertical-align: middle; */
     /* border-top: 1px solid #ddd; */
     background: #fff;
@@ -379,6 +379,30 @@ form.roundCorner {
     border-radius: 0 0 10px 0;
     border-collapse: separate;
 }
+
+#result_table1 tr:last-child td,
+#result_table2 tr:last-child td {
+    text-align: right;
+}
+#result_table1 tr:last-child td + td,
+#result_table2 tr:last-child td + td {
+    text-align: left;
+}
+
+
+#result_table2 tr:first-child td {
+    border-radius: 10px 0 0 0 ;
+}
+#result_table2 tr:first-child td + td {
+    border-left: solid 1px #b6b6b6;
+    border-radius: 0 10px 0 0;
+    text-align: center;
+}
+
+#result_table1 tr:nth-child(2) td,
+#result_table1 tr:nth-child(10) td {text-align: center;}
+#result_table1 tr:nth-child(18) td {text-align: right;}
+#result_table1 tr:nth-child(18) td + td {text-align: left;}
 
 #tbl_statistics {
     border: 1px solid #000000;
