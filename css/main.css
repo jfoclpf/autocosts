@@ -89,6 +89,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     width: 25%;
     display: inline-block;
     white-space:nowrap;
+    margin:10px;
 }
 /*inputs which allow max of four digits*/
 #form_part1 #acquisitionYear {
