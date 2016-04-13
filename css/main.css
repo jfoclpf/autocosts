@@ -119,12 +119,7 @@ table>tbody>tr:nth-of-type(odd) {
 }
 table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
 
-    /* line-height: 1.42857143; */
-    /* vertical-align: middle; */
-    /* border-top: 1px solid #ddd; */
     background: #fff;
-    /* font-size: 12px; */
-    /* padding: 5px 4%; */
 }
 /* BTN */
 .button {
@@ -593,7 +588,7 @@ table#mobile_logos_table img{
         display: table;
     }
     #country_box_inline{
-        margin: 3px;
+        margin: 10px 10px 5px 10px;
     }
     #country_box {
         margin: auto;
