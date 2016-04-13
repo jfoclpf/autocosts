@@ -4,7 +4,7 @@ class CSS_Embed
   protected $_path;
   protected $_glob;
 
-  public function __construct( $css_path = 'css/', $glob = '/*.min.css')
+  public function __construct( $css_path = 'css/', $glob = '/*.css')
   {
     $this->_path = $css_path;
     $this->_glob = $glob;
