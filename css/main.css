@@ -11,6 +11,14 @@ body {
     line-height: 20px;
     color: #333333;
     background-color: #ffffff;
+  
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #ffffff), color-stop(37%, #f5f5f5), color-stop(100%, #ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* IE10+ */
+    background: linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* W3C */
 }
 /* TEXT */
 h1, h2, h3, h4, h5, h6 {
