@@ -1,8 +1,8 @@
-/* 
+/*
 div, table, .table, .td, .tr, tr, td  {
     border: 1px solid #000000;
-}
-*/
+}*/
+
 body {
     width: 100%;
     margin: 0;
@@ -162,10 +162,11 @@ i {
 a {
     color: #333;
 }
-/* blocks */
+
+/*==== HEADER =====*/
 #banner_top {
     background: #ececec;
-    padding: 5px 2%;
+    padding: 5px 0;
     z-index: 1000;
     position: fixed;
     top: 0;
@@ -175,6 +176,8 @@ a {
     border-bottom-color: #E9E9E9;
     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .15);
     box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+    display:table;
+    width:100%;
 }
 #banner_top h1 {
     font-size: 28px;
@@ -182,8 +185,31 @@ a {
     text-align: center;
     color: #606060;
 }
+#left_top_div {
+    width: 15%;
+    display:table-cell;
+}
 #header_main_title {
-    margin-left:14%;
+    text-align:center;
+    display:table-cell;
+    width:70%;
+}
+#country_box {
+    width:15%;
+    display:table-cell;
+    vertical-align: middle;
+}
+#country_box_inline{
+    display:table;
+    margin: 0 auto;
+    white-space:nowrap;
+}
+#banner_flag{
+    display: table-cell;
+}
+#country_select{
+    margin: auto;
+    display: table-cell;
 }
 
 #container,
@@ -195,10 +221,7 @@ a {
 .description br {
     display: none;
 }
-.b-contry {
-    float: right;
-    margin-top: 14px;
-}
+
 .flag {
     background-image: url("../images/flags24.png");
     height: 20px;
@@ -534,11 +557,12 @@ table#mobile_logos_table img{
 }
 /*=======================*/
 
+/*===============================*/
 @media all and (max-width: 1024px) {
     #div2 .col {
         width: 100%;
     }
-    .b-contry input[type="text"] {
+    #country_box input[type="text"] {
         width: 80%;
     }
     #div2 td:nth-child(2n) {
@@ -555,7 +579,23 @@ table#mobile_logos_table img{
         float:none;
         margin: 2% 0;
     }
-    .b-contry {
+    #banner_top,
+    #header_main_title,
+    #banner_flag,
+    #country_select{
+        display: inline;
+    }
+    #left_top_div{
+        display: none;
+    }
+    #country_box,
+    #country_box_inline{
+        display: table;
+    }
+    #country_box_inline{
+        margin: 3px;
+    }
+    #country_box {
         margin: auto;
         float: none;
         width: 200px;
@@ -566,6 +606,7 @@ table#mobile_logos_table img{
     }
     h1.main_title {
         font-size: 21px;
+        margin: 0 auto;
     }
     #div2 #title-div {
         font-size: 15px;
