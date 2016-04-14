@@ -12,24 +12,18 @@
             <td>
                 <? echo $FUEL_DESC ?>
                 <? echo $FUEL_CALC ?>
-                <span>
-        <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance'); ">
-        <span class="p2">
-        <? echo $STD_DIST ?>
-        </span>
-        </span>
-        <span>
-        <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency'); ">
-        <span class="p2">
-        <? echo $CURR_NAME_PLURAL ?>
-        </span>
-        </span>
+                <span style="white-space:nowrap">
+                    <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" /><span class="p2"><? echo $STD_DIST ?></span>
+                </span>
+                <span style="white-space:nowrap">
+                    <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" /><span class="p2"><? echo $CURR_NAME_PLURAL ?></span>
+                </span>
                 <div style="float: right; margin: 12px 0 0 0;" id="eurosDiv">
                     <input type="text" size="5" maxlength="9" id="fuel_currency_value"
-                           value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
-          <span class="p2">
-          <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
-          </span>
+                        value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
+                    <span class="p2">
+                        <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
+                    </span>
                     <select id="combustiveis_periodo_euro">
                         <option value="1"><? echo $MONTH ?></option>
                         <option value="2"><? echo $TWO_MONTHS ?></option>
@@ -46,18 +40,12 @@
             <tr>
                 <td>
                     <? echo $FUEL_JOB_CALC ?>
-                    <span>
-          <input type="radio" name="carro_emprego" id="carro_emprego_sim" value="true" onclick="carToJob(true);">
-          <span class="p2">
-          <? echo $YES ?>
-          </span>
-          </span>
-          <span>
-          <input type="radio" name="carro_emprego" id="carro_emprego_nao" value="false" onclick="carToJob(false);">
-          <span class="p2">
-          <? echo $NO ?>
-          </span>
-          </span>
+                    <span style="white-space:nowrap">
+                        <input type="radio" name="carro_emprego" id="carro_emprego_sim" value="true" onclick="carToJob(true);" /><span class="p2"><? echo $YES ?></span>
+                    </span>
+                    <span style="white-space:nowrap">
+                        <input type="radio" name="carro_emprego" id="carro_emprego_nao" value="false" onclick="carToJob(false);" /><span class="p2"><? echo $NO ?></span>
+                    </span>
                 </td>
             </tr>
         </table>
@@ -212,15 +200,12 @@
             <td>
                 <? echo $TOLLS_DAY_CALC ?>
                 <div>
-                    <input type="radio" name="portagens_ao_dia" value="true" onclick="tolls_daily(true); ">
-          <span class="p2">
-          <? echo $YES ?>
-          </span>
-                    <input type="radio" name="portagens_ao_dia" value="false" onclick="tolls_daily(false);"
-                           checked="checked">
-          <span class="p2">
-          <? echo $NO ?>
-          </span>
+                    <span style="white-space:nowrap">
+                        <input type="radio" name="portagens_ao_dia" value="true" onclick="tolls_daily(true);" /><span class="p2"><? echo $YES ?></span>
+                    </span>
+                    <span style="white-space:nowrap">
+                        <input type="radio" name="portagens_ao_dia" value="false" onclick="tolls_daily(false);" checked="checked" /><span class="p2"><? echo $NO ?></span>
+                    </span>
                 </div>
             </td>
         </tr>
@@ -235,9 +220,9 @@
                 </td>
                 <td>
                     <input type="text" id="no_daily_tolls_value" name="portagens" size="6" maxlength="9" value="<? echo $STD_TOLLS; ?>">
-          <span class="p2">
-          <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
-          </span>
+                    <span class="p2">
+                        <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
+                    </span>
                     <select id="portagens_select">
                         <option value="1"><? echo $MONTH ?></option>
                         <option value="2"><? echo $TWO_MONTHS ?></option>
@@ -275,9 +260,9 @@
             </td>
             <td>
                 <input type="text" id="tickets_value" name="multas" size="6" maxlength="9" value="<? echo $STD_FINES; ?>">
-        <span class="p2">
-        <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
-        </span>
+                <span class="p2">
+                    <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
+                </span>
                 <select id="multas_select">
                     <option value="1"><? echo $MONTH ?></option>
                     <option value="2"><? echo $TWO_MONTHS ?></option>
@@ -300,9 +285,9 @@
             <td>
                 <input type="text" id="washing_value" name="lavagens" size="6" maxlength="9"
                        value="<? echo $STD_WASHING; ?>">
-        <span>
-        <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
-        </span>
+                <span>
+                    <? echo $CURR_SYMBOL ?> <? echo $WORD_PER ?>
+                </span>
                 <select id="lavagens_select">
                     <option value="1"><? echo $MONTH ?></option>
                     <option value="2"><? echo $TWO_MONTHS ?></option>

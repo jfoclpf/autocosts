@@ -92,11 +92,9 @@
                 <? echo $CREDIT_QUESTION ?>
             </td>
             <td>
-                <input type="radio" name="cred_auto" value="true" onclick="onclick_credit('true'); ">
-                <? echo $YES ?>
-                <input type="radio" name="cred_auto" value="false" id="radio_cred_nao"
-                    onclick="onclick_credit('false');" checked>
-                <? echo $NO ?>
+                <span style="white-space:nowrap"><input type="radio" name="cred_auto" value="true" onclick="onclick_credit('true'); "> <? echo $YES ?></span>
+                <span style="white-space:nowrap"><input type="radio" name="cred_auto" value="false" id="radio_cred_nao"
+                    onclick="onclick_credit('false');" checked> <? echo $NO ?></span>
             </td>
         </tr>
     </table>
