@@ -1,7 +1,7 @@
-
+/*
 div, span, .table, .td, .tr, table, tr, td  {
     border: 1px solid #000000;
-}
+}*/
 
 body {
     width: 100%;
@@ -96,7 +96,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     width: 60%;
 }
 input[type="radio"]{
-    margin: 5px 2px 5px 6px;
+    margin: 5px 4px 5px 8px;
 }
 
 /*Form inputs which allow max of TWO digits*/
@@ -240,15 +240,28 @@ a {
 #banner_flag{
     display: table-cell;
 }
-#country_select{
+#country_select,
+#banner_flag_div,
+#country_select_div {
     display: table-cell;
+    vertical-align:middle;
 }
-
-#container,
+#container{
+    width:100%;
+    margin: 0 auto;
+}
+#container_table{
+    display:table;
+    width: 100%;
+    margin: 0 auto;
+}
 .description {
     text-align: justify;
     text-justify: inter-word;
-    padding: 1%;
+    padding-bottom: 2%;
+    display:table;
+    margin-top: 40px;
+    font-size: 18px;
 }
 .description br {
     display: none;
@@ -291,27 +304,43 @@ form.roundCorner {
     margin: 15px 0 15px 0;
 }
 .clear{clear: both;}
-.description.p3 {
-    margin-top: 60px;
-    font-size: 18px;
-}
 
+
+/*===LAYOUT under HEADER===*/
+#main_div{
+    padding: 1%;
+}
+#div3_td, #div1_td, #div2_td {
+    display: table-cell;
+    text-align: center;
+    vertical-align:top;
+}
+#div3_td, #div1_td{
+    width:22%;
+}
 #div3, #div1, #div2 {
     background: #f0f0f0;
     border: 2px solid #b4b4b4;
-    width: 21%;
     border-radius: 10px;
     overflow: hidden;
+    margin: 0 auto;
 }
-
+#div2{
+    width:90%;
+}
+#div1, #div3 {
+    width: 98%;
+}
 
 /*== Main Right Column (div1) ==*/
-#div1 {
-    float: right;
-}
-
 #div13 {
     margin: 15px;
+}
+
+#tbl_statistics tr:first-child td {
+    padding: 5%;
+    line-height: 16px;
+    text-align: center;
 }
 
 #tbl_statistics td {
@@ -324,14 +353,6 @@ form.roundCorner {
 }
 #tbl_statistics td:nth-child(1n) {
     border-left: 0;
-}
-
-#td-top-title {
-    padding: 2%;
-    line-height: 14px;
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
 }
 
 #tbl_statistics td:nth-child(2n) {
@@ -363,10 +384,6 @@ form.roundCorner {
     margin:0;
 }
 
-#tbl_statistics #td-top-title {
-    text-align: center;
-    padding: 5%;
-}
 #tbl_statistics td + td{
     text-align: right;
     padding-right: 5%;
@@ -376,13 +393,6 @@ form.roundCorner {
 
 /*===== Main Central Column (div2) ====*/
 
-#div2 {
-    float: left;
-    width: 51.7%;
-    margin: 0 2.5%;
-    border-radius: 10px;
-    overflow: hidden;
-}
 #div2 td {
     padding: 8px 3% 0;
 }
@@ -403,10 +413,11 @@ form.roundCorner {
 #div2 td:nth-child(2n) {
     width: 25%;
 }
-#div2 .title {
+.title {
     display: block;
     padding: 21px 3% 0 3%;
     font-size: 18px;
+    text-align: left;
 }
 #div2 .head-title {
     padding: 10px 10%;
@@ -534,9 +545,6 @@ form.roundCorner {
 
 /*===Main Left Column (div3)===*/
 
-#div3 {
-    float: left;
-}
 #div3a {
     margin: 15px;
 }
@@ -596,9 +604,11 @@ form.roundCorner {
 
 /*===============================*/
 @media all and (max-width: 1024px) {
-    #div1,
-    #div3 {
-        font-size:80%;
+    #div3_td, #div1_td {
+        width:25%;
+    }
+    #div2{
+        width: 95%;
     }
     #div2 .col {
         width: 100%;
@@ -606,12 +616,12 @@ form.roundCorner {
     #country_box input[type="text"] {
         width: 80%;
     }
-    #div2 {
-        width:51%;
-    }
     #div13, 
     #div3a {
         margin: 2%;
+    }
+    .description {
+        margin-top: 4em;
     }
 }
 /*===============================*/
@@ -622,11 +632,16 @@ form.roundCorner {
     }
 }
 
+/*The treshold from which the blocks are vertically aligned*/
 @media all and (max-width: 768px) {
+    #div3_td, #div1_td, #div2_td {
+        display: inline-block;
+        vertical-align: middle;
+        width: 98%;
+    }
     #div2, #div3, #div1 {
         width: 100%;
         font-size:100%;
-        float:none;
         margin: 2% 0;
     }
     #div3a {
@@ -646,7 +661,7 @@ form.roundCorner {
         display: table;
     }
     #country_box_inline{
-        margin: 10px 10px 5px 10px;
+        margin: 0 auto;
     }
     #country_box {
         margin: auto;
@@ -665,8 +680,8 @@ form.roundCorner {
         font-size: 15px;
         line-height: 22px;
     }
-    .description.p3 {
-        margin-top: 95px;
+    .description {
+        margin-top: 70px;
     }
 }
 
