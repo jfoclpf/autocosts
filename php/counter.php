@@ -1,15 +1,7 @@
 <?php
-
-
 include($_SERVER['DOCUMENT_ROOT'].'/db_stats/credentials.php');
 
-/*
-Text Counter by http://www.free-php-counter.com
-You are allowed to remove advertising after you purchased a licence
-*/
-
 // settings
-
 // ip-protection in seconds
 $counter_expire = 600;
 
@@ -19,13 +11,10 @@ $counter_ignore_agents = array('bot', 'bot1', 'bot3');
 // ignore ip list
 $counter_ignore_ips = array('127.0.0.1');
 
-
 // get basic information
 $counter_agent = $_SERVER['HTTP_USER_AGENT'];
 $counter_ip = $_SERVER['REMOTE_ADDR']; 
 $counter_time = time();
-
-
 
 // connect to database
 $counter_connected = true;
@@ -95,8 +84,7 @@ if ($counter_connected == true)
 		 break;
 	  }
    }
-   
-      
+     
    // delete free ips
    if ($ignore == false)
    {
