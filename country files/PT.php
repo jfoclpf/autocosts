@@ -50,7 +50,7 @@ $MAIN_TITLE = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
 $INITIAL_TEXT = 
 'Faça com esta calculadora as contas, ao <b>verdadeiro custo</b> que tem o seu veículo particular em Portugal. 
 Tratam-se de aproximações, mas é uma excelente ordem de grandeza para que se aperceba de quantos recursos financeiros aloca em média para o seu veículo. Os veículos têm uma série de despesas cujas periodicidades variam bastante, e por norma as pessoas não contabilizam uma série de despesas que vão pagando esporadicamente. 
-Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: <span style="color:rgb(255,0,0);">8.7</span> km entre casa e trabalho.
+Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: 8.7 km entre casa e trabalho.
 ';
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';

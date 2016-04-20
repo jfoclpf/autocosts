@@ -53,7 +53,7 @@ $BUTTON_RERUN = 'Volver'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora de gastos de coche';
 $MAIN_TITLE = 'CALCULADORA DE GASTOS DE COCHE';
 $INITIAL_TEXT = 
-"Esta calculadora te permitirá conocer <b>el coste verdadero</b> de ser propietario de un coche <b>en España</b>. Generalmente te dará una buena estimación de lo que realmente necesitas gastar para permitirte tener un automóvil. Como los gastos del coche pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento del coche. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados como reparación después del accidente o multas de los últimos años. Por defecto, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo <span style=\"color:rgb(255,0,0);\">8.7</span> kilómetros entre la casa y el lugar del trabajo.<br>";
+"Esta calculadora te permitirá conocer <b>el coste verdadero</b> de ser propietario de un coche <b>en España</b>. Generalmente te dará una buena estimación de lo que realmente necesitas gastar para permitirte tener un automóvil. Como los gastos del coche pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento del coche. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados como reparación después del accidente o multas de los últimos años. Por defecto, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el lugar del trabajo.<br>";
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';

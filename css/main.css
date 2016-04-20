@@ -4,7 +4,6 @@ div, span, .table, .td, .tr, table, tr, td  {
 }*/
 
 body {
-    width: 100%;
     margin: 0;
     font-family: "Verdana", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -255,7 +254,7 @@ a {
     width: 100%;
     margin: 0 auto;
 }
-.description {
+#description {
     text-align: justify;
     text-justify: inter-word;
     padding-bottom: 2%;
@@ -263,7 +262,7 @@ a {
     margin-top: 40px;
     font-size: 18px;
 }
-.description br {
+#description br {
     display: none;
 }
 
@@ -327,14 +326,27 @@ form.roundCorner {
 }
 #div2{
     width:90%;
+    max-width:1000px;
 }
 #div1, #div3 {
     width: 98%;
+    max-width:500px;
 }
 
 /*== Main Right Column (div1) ==*/
 #div13 {
     margin: 15px;
+}
+
+#tbl_statistics {
+    border: 1px solid #000000;
+    width: 100%;
+    margin:0;
+}
+
+#tbl_statistics td + td{
+    text-align: right;
+    padding-right: 5%;
 }
 
 #tbl_statistics tr:first-child td {
@@ -361,7 +373,7 @@ form.roundCorner {
     border-left: 1px solid #000;
 }
 
-#tbl_statistics tr.tr-result td {
+#tbl_statistics .tr-result td {
     font-weight: bold;
     color: #8a2727;
     background: #fff8dc;
@@ -371,22 +383,30 @@ form.roundCorner {
     font-size:95%;
 }
 
-#div1 .tr-sub-title td {
+#tbl_statistics .tr-sub-title td {
     background: #ffec8b;
     color: #000;
     font-weight: bold;
     text-align: center;
 }
 
-#tbl_statistics {
-    border: 1px solid #000000;
-    width: 100%;
-    margin:0;
+#tbl_statistics .main_total td {
+    font-weight: bold;
+    color: #000;
+    background: #ffec8b;
+}
+#tbl_statistics .main_total td:first-child {
+    text-align:right;
+    font-size:98%;
 }
 
-#tbl_statistics td + td{
-    text-align: right;
-    padding-right: 5%;
+#tbl_statistics tr:nth-child(1n+21) td{
+    font-size:90%;
+}
+
+#tbl_statistics tr:last-child td{
+    font-weight: bold;
+    background: #ffec8b;
 }
 
 /*=====================================*/
@@ -405,6 +425,7 @@ form.roundCorner {
     border: 2px #999 solid;
     border-radius: 10px;
     margin: 0 4%;
+    overflow: hidden;
 }
 #input_div td {
     text-align: left;
@@ -620,7 +641,7 @@ form.roundCorner {
     #div3a {
         margin: 2%;
     }
-    .description {
+    #description {
         margin-top: 4em;
     }
 }
@@ -634,10 +655,13 @@ form.roundCorner {
 
 /*The treshold from which the blocks are vertically aligned*/
 @media all and (max-width: 768px) {
+    #main_div{
+        padding: 2.5%;
+    }
     #div3_td, #div1_td, #div2_td {
         display: inline-block;
         vertical-align: middle;
-        width: 98%;
+        width: 100%;
     }
     #div2, #div3, #div1 {
         width: 100%;
@@ -676,17 +700,17 @@ form.roundCorner {
         font-size: 21px;
         margin: 0 auto;
     }
-    #div2 #title-div {
+    #title-div {
         font-size: 15px;
         line-height: 22px;
     }
-    .description {
+    #description {
         margin-top: 70px;
     }
 }
 
 @media all and (max-width: 500px) {
-    #div2 #result_div{
+    #result_div{
         font-size: 80%;
     }
     #input_div,
@@ -703,8 +727,8 @@ form.roundCorner {
         width: 92%;
     }
 
-    #div2 #result_div td,
-    #div2 #result_div td:nth-child(2n) {
+    #result_div td,
+    #result_div td:nth-child(2n) {
         display: table-cell;
         /* height: 100%; */
         /* width: 100%; */

@@ -13,7 +13,7 @@
                 <div id="banner_flag" class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
             </div>
             <div id="country_select_div">
-                <select name="country_select" id="country_select" onchange="valueselect(this.value);"">
+                <select name="country_select" id="country_select" onchange="valueselect(this.value);">
                 <?php foreach ($avail_CT as $key => $value) {
                     if ($key != "XX") { ?>
                         <option value="<?php echo $key ?>" <? if ($key == $GLOBALS['country']) {

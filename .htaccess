@@ -2,9 +2,11 @@
   ExpiresActive On
   ExpiresDefault "access plus 1 month"
 </IfModule>
+
 AddDefaultCharset utf-8
 ErrorDocument 404 /i.php
 DirectoryIndex i.php index.php index.html index.htm
+
 RewriteEngine On
 RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
@@ -51,6 +53,7 @@ RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
+
 <IfModule mod_expires.c>
   Header append Cache-Control "public"
   FileETag MTime Size
@@ -65,6 +68,7 @@ RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
   ExpiresByType image/bmp "access plus 1 years"
   ExpiresByType image/png "access plus 1 years"
 </IfModule>
+
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
   AddOutputFilterByType DEFLATE application/javascript

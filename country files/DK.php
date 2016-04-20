@@ -58,7 +58,7 @@ $BUTTON_RERUN = 'Prøv igen'; //run calculator button
 $WEB_PAGE_TITLE = 'Beregn dine biludgifter';
 $MAIN_TITLE = 'BEREGN DINE BILUDGIFTER';
 $INITIAL_TEXT = 
-"Med denne beregner kan du finde frem til <b>de reelle udgifter</b> ved at eje en bil i <b>Danmark</b>. Den vil som oftest give dig et godt billede af, hvilke udgifter du skal tage højde for som bilejer. Da afbetalinger og udgifter kommer løbende gennem hele året, kan det være svært at få overblik over omkostningerne ved at have bil. Vær realistisk, når du indtaster dine tal. Ved uforudsete udgifter, som for eksempel reparationer eller bøder, bør du overveje, hvor meget du har brugt på disse poster de sidste par år. Som udgangspunkt beregnes disse tal månedligt. Ved decimaler skal du bruge punktum, for eksempel <span style=\"color:rgb(255,0,0);\">8.7</span> km mellem hjem og arbejdsplads.<br>";
+"Med denne beregner kan du finde frem til <b>de reelle udgifter</b> ved at eje en bil i <b>Danmark</b>. Den vil som oftest give dig et godt billede af, hvilke udgifter du skal tage højde for som bilejer. Da afbetalinger og udgifter kommer løbende gennem hele året, kan det være svært at få overblik over omkostningerne ved at have bil. Vær realistisk, når du indtaster dine tal. Ved uforudsete udgifter, som for eksempel reparationer eller bøder, bør du overveje, hvor meget du har brugt på disse poster de sidste par år. Som udgangspunkt beregnes disse tal månedligt. Ved decimaler skal du bruge punktum, for eksempel 8.7 km mellem hjem og arbejdsplads.<br>";
 
 $HELP_PROJECT = 'Dette er en gratis tjeneste uden reklamer!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobilvisning'; 

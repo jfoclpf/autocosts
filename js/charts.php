@@ -1,9 +1,6 @@
 <? Header("content-type: application/x-javascript");
-
 include($_SERVER['DOCUMENT_ROOT'].'/country files/' . $_GET['country'] . '.php');
-
 $GLOBALS['country'] = $_GET['country'];
-
 ?>
 
 //draw Pie Chart

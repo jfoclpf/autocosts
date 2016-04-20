@@ -40,19 +40,20 @@
             </tr>
 			
             <tr><td colspan="2"></td></tr>
-			<tr class="tr-result">
+			
+            <tr class="main_total">
                 <td><span><?echo $WORD_TOTAL_CAP?></span></td>
                 <td><span> <?echo $CURR_SYMBOL?> </span><span id="txt_total_overal" class="value-field"></span></td>
             </tr>
 			
-            <tr class="blue"><td><span><?echo $RUN_CP_DIST?></span></td>         <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_running_costs_dist" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
-			<tr class="blue"><td><span><?echo $TOTAL_CP_DIST?></span></td>       <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_total_costs_p_unit" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
-			<tr class="blue"><td><span><?echo $KINETIC_SPEED_TITLE?></span></td> <td> <span id="txt_kinetic_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
-			<tr class="blue">
+            <tr><td><span><?echo $RUN_CP_DIST?></span></td>         <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_running_costs_dist" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
+			<tr><td><span><?echo $TOTAL_CP_DIST?></span></td>       <td><span> <?echo $CURR_SYMBOL?></span><span id="txt_total_costs_p_unit" class="value-field"></span><span>/<?echo $STD_DIST?></span></td></tr>
+			<tr><td><span><?echo $KINETIC_SPEED_TITLE?></span></td> <td> <span id="txt_kinetic_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td></tr>
+			<tr>
                 <td><span><a href="./docs/consumer_speed.html"><?echo $VIRTUAL_SPEED_TITLE?></a></span></td>
                 <td><span id="txt_virtual_speed" class="value-field"></span><span> <?echo $STD_DIST?>/h</span></td>
             </tr>
-			<tr class="orange">
+			<tr>
                 <td id="table-td-bottom-left"><span><?echo $TOTAL_COSTS_PER_YEAR?></span></td>
                 <td id="table-td-bottom-right"><?echo $CURR_SYMBOL?> <span id="txt_total_costs_year" class="value-field"></span></td>
             </tr>

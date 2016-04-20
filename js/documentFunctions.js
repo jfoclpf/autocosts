@@ -1,6 +1,55 @@
-var income = 'year';
-var isDistanceSet = false;
+/***** DOCUMENT JS FUNCTIONS *******/
 
+/*====================================================*/
+/*Functions which change the visual aspect of the page*/
+
+/*function that is run when the button Reload is clicked*/
+function reload() {
+    TimeCounter.resetStopwatch();
+    input_object.style.display = 'block';
+    result_object.style.display = 'none';
+    reload_object.style.display = 'none';
+    pie_chart_object.style.display = 'none';
+    bar_chart_object.style.display = 'none';
+    text_object.style.display = 'none';
+    openForm_part('form_part', 0, 1, false);
+}
+
+/*function that loads new HTML and that is run when country select is changed*/ 
+function valueselect(myval) {
+    window.location.href = "" + myval;
+}
+
+/*function that runs when the page is resized*/
+function resized(){
+    //adapts the margin-top CSS value according to the window width
+    var margin_top_desc = $("#banner_top").outerHeight(true) - 10;
+    $('#description').css("margin-top", margin_top_desc);
+}
+
+/*function that scrolls the page to the beggining of the form*/
+function scrollPage(){
+    
+    var scroll_speed = 300;
+    //extra top margins given on the top of the form when the page scrolls
+    var extra_margin_desktop = 15;
+    var extra_margin_mobile = 5; 
+    var windowsize = $(window).width();
+    
+    /*768px threshold from which the CSS shows the page in mobile version*/    
+    if (windowsize > 768) { 
+        $('html, body').animate({
+            scrollTop: ($("#container_table").offset().top - $("#banner_top").outerHeight(true) - extra_margin_desktop)
+        }, scroll_speed);
+    }
+    else{
+        $('html, body').animate({
+            scrollTop: ($("#div2_td").offset().top - $("#banner_top").outerHeight(true) - extra_margin_mobile)
+        }, scroll_speed);       
+    }
+}
+
+/*functions which is used to change the form parts*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
 function openForm_part(part_name, part_number_origin, part_number_destiny, country) {
     //alert("from "+part_number_origin+" to "+part_number_destiny +" - country:"+country);
@@ -39,7 +88,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
             $.getScript('php/print_results.php?country='+country); 
-            $.getScript('php/charts_js.php?country='+country);
+            $.getScript('js/charts.php?country='+country);
             hasLoadedPart[1] = true;
         }
     }
@@ -84,60 +133,20 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 
     //when it starts/loads the website
     if (part_number_origin==0 && part_number_destiny==1){
-        window.location.hash = "div2"; 
-        window.scrollBy(0,32);
         shows_part(1);
-    }
-    else{
-        window.location.hash = "";
+        scrollPage();
     }
     
-    removeHash();
+    scrollPage();
     return;
 }
 
-function valueselect(myval) {
-    window.location.href = "" + myval;
-}
 
-/*jslint browser:true */
-/*jslint white: false */
+/*========================*/
+/*=====Form Functions=====*/
 
-/*printing functions*/
-function PrintElem(elem1, elem2, elem3, elem4, title)
-{
-    Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
-}
-
-function Popup(data1, data2, data3, data4, title) 
-{
-    var mywindow = window.open('', title, 'height=600,width=600');
-    mywindow.document.write('<html><head><title>'+title+'</title>');
-    //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
-    mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
-    mywindow.document.write('<center><div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
-    mywindow.document.write('<h3>'+title+'</h3>');
-    
-    mywindow.document.write(data1);
-    mywindow.document.write('<br>');
-    mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
-        
-    mywindow.document.write(data2);
-    mywindow.document.write('<br><br>');
-    
-    mywindow.document.write(data3);
-    mywindow.document.write('<br><br>');
-    
-    mywindow.document.write(data4);
-    mywindow.document.write('</div></center>');
-    mywindow.document.write('</body></html>');
-
-    mywindow.print();
-    mywindow.close();
-
-    return true;
-}
-/*end of printing functions*/
+var income = 'year';
+var isDistanceSet = false;
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
@@ -224,23 +233,6 @@ function numberWithSpaces(x) {
     return parts.join(".");
 }
 
-function removeHash () { 
-    var scrollV, scrollH, loc = window.location;
-    if ("pushState" in history)
-        history.pushState("", document.title, loc.pathname + loc.search);
-    else {
-        // Prevent scrolling by storing the page's current scroll offset
-        scrollV = document.body.scrollTop;
-        scrollH = document.body.scrollLeft;
-
-        loc.hash = "";
-
-        // Restore the scroll offset, should be flicker free
-        document.body.scrollTop = scrollV;
-        document.body.scrollLeft = scrollH;
-    }
-}
-
 function income_toggle(value){
     switch(value){
         case 'year':
@@ -270,50 +262,7 @@ function working_time_toogle(value){
     value ? $('#job_working_time').show() : $('#job_working_time').hide();  
 }
 
-function reload () {
-
-    TimeCounter.resetStopwatch();
-    input_object.style.display = 'block';
-    result_object.style.display = 'none';
-    reload_object.style.display = 'none';
-    pie_chart_object.style.display = 'none';
-    bar_chart_object.style.display = 'none';
-    text_object.style.display = 'none';
-
-    window.scroll(0, 1);
-    
-    openForm_part('form_part', 0, 1, false);
-}
-
-function initialize() {
-
-    openForm_part("form_part", 0, 1, false); //shows just part 1 of input form
-
-    input_object = document.getElementById('input_div'); //tabela de entrada
-    result_object = document.getElementById('result_div'); //resultados
-    frame_witdh = document.getElementById('result_div').offsetWidth;
-
-    reload_object = document.getElementById('reload_div'); //reload button
-
-    chart_object = document.getElementById('chart_div'); //pie chart
-    graph_object = document.getElementById('graph_div'); //columns chart
-
-    text_object = document.getElementById('text_div'); //msg text
-
-    reload_object.style.display = 'none';
-    tolls_daily(false);
-
-    reload();
-
-    document.getElementById("radio_fuel_euros").checked = true;
-    $('#eurosDiv').css("display", "block");
-    $('#kmDiv').css("display", "none");
-
-    document.getElementById("radio_cred_nao").checked = true;
-    $('#sim_credDiv').css("display", "none");
-    
-}
-
+//function used to get from forms the selected option in radio buttons
 function getCheckedValue(radioObj) {
     var i;
 
@@ -337,6 +286,8 @@ function getCheckedValue(radioObj) {
     return "";
 }
 
+//function that is run when the user clicks the Run/Calculate button 
+//and which submits the inserted data into the Database 
 function submit_data(country) {
 
     var objectToDb = {};
@@ -423,6 +374,7 @@ function submit_data(country) {
     return false;
 }
 
+//function that is run by the previous submit_data function
 function sanityChecks(objectToDb) {
     if (objectToDb.credit === 'false') {
         objectToDb.credit_borrowed_amount = null;
@@ -462,6 +414,43 @@ function sanityChecks(objectToDb) {
     }
 }
 
+/*Printing functions; functions that are run when user clicks Print button*/
+function PrintElem(elem1, elem2, elem3, elem4, title)
+{
+    Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
+}
+
+function Popup(data1, data2, data3, data4, title) 
+{
+    var mywindow = window.open('', title, 'height=600,width=600');
+    mywindow.document.write('<html><head><title>'+title+'</title>');
+    //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
+    mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
+    mywindow.document.write('<center><div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
+    mywindow.document.write('<h3>'+title+'</h3>');
+    
+    mywindow.document.write(data1);
+    mywindow.document.write('<br>');
+    mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
+        
+    mywindow.document.write(data2);
+    mywindow.document.write('<br><br>');
+    
+    mywindow.document.write(data3);
+    mywindow.document.write('<br><br>');
+    
+    mywindow.document.write(data4);
+    mywindow.document.write('</div></center>');
+    mywindow.document.write('</body></html>');
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+}
+/*end of printing functions*/
+
+/*User Unique Identifier functions*/
 function S4() {
     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }
@@ -469,4 +458,3 @@ function S4() {
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
-

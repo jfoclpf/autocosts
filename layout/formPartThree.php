@@ -279,7 +279,7 @@
         <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
         <input class="button" type="submit" onclick="if(formsInit() <? if ($GLOBALS["country"] == "XX") {
             echo "&& false";
-        } ?> ){submit_data('<? echo $GLOBALS["country"] ?>');}" value="<? echo $BUTTON_RUN; ?>"/>
+        } ?> ){submit_data('<? echo $GLOBALS["country"] ?>'); scrollPage();}" value="<? echo $BUTTON_RUN; ?>"/>
     </div>
 </div>
 <!-- end of form_part3-->

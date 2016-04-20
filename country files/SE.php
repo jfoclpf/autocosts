@@ -60,7 +60,7 @@ $WEB_PAGE_TITLE = 'Kalkylator för fordonskostnader';
 $MAIN_TITLE = 'KALKYLATOR FÖR FORDONSKOSTNADER';
 $INITIAL_TEXT = 
 "Denna calculator hjälper dig att ta reda på <b>den riktiga kostnaden</b> för att äga en bil i <b>Sverige</b>. Den ger dig vanligtvis en bra uppskattning för vad du egentligen behöver spendera för att ha råd med en bil.
-Eftersom dina fordonsrelaterade räkningar kommer vid olika tillfällen under året så kan det ofta vara svårt att räkna ut den totala kostnaden för din bil. Var realistisk när du fyller i alla värden. För oväntade kostnader som reparationer och böter, tänk efter hur mycket du har spenderat på dessa under de senaste åren. Som standard görs dessa uträkningar månadsvis. Använd punktsymbolen för att skriva i decimalform, till exempel <span style=\"color:rgb(255,0,0);\">1.7</span> mil mellan hem och arbete (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";
+Eftersom dina fordonsrelaterade räkningar kommer vid olika tillfällen under året så kan det ofta vara svårt att räkna ut den totala kostnaden för din bil. Var realistisk när du fyller i alla värden. För oväntade kostnader som reparationer och böter, tänk efter hur mycket du har spenderat på dessa under de senaste åren. Som standard görs dessa uträkningar månadsvis. Använd punktsymbolen för att skriva i decimalform, till exempel 1.7 mil mellan hem och arbete (1&nbsp;mil&nbsp;=&nbsp;10&nbsp;km).<br>";
 
 $HELP_PROJECT = 'Assistera detta projekt';
 $AC_MOBILE = 'AUTOCOSTS<br> för fordon';
