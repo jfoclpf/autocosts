@@ -326,11 +326,11 @@ form.roundCorner {
 }
 #div2{
     width:90%;
-    max-width:1000px;
+    max-width:1200px;
 }
 #div1, #div3 {
     width: 98%;
-    max-width:500px;
+    max-width:768px;
 }
 
 /*== Main Right Column (div1) ==*/

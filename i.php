@@ -73,7 +73,7 @@
                         <div id="reload_div">
                             <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload();"/>&nbsp;
                             <form><input type="button" class="button" value="<? echo $WORD_PRINT; ?>"
-                                         onclick="PrintElem('#result_div','#chart_div','#graph_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>&nbsp;
+                                         onclick="PrintElem('#result_div','#pie_chart_div','#bar_chart_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>&nbsp;
                             <input id="generate_PDF" type="button" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<? echo $GLOBALS['country']?>')" />
                         </div>
                         <div id="img1" style="display:none"></div>
