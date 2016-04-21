@@ -10,7 +10,7 @@
     <title><? echo $WEB_PAGE_TITLE ?></title>        
     <!--Embed all CSS files within CSS folder-->
     <?=(new CSS_Embed()) ?>      
-    <!--jquery-1.11.0min.js-->
+    <!--jquery.js-->
     <script><?php include('js/js_jquery.js'); ?></script>       
 </head>
 <body>

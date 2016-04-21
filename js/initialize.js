@@ -20,6 +20,11 @@ function initialize() {
     $('#kmDiv').css("display", "none");
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
+    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No 
+    driveToJob(false);
+    //sets radio button in Form Part 2, section Fuel calculations, on Currency
+    fuelCalculationMethodChange('currency');
+    carToJob(false);
 }
 
 //function that runs when the page is resized

@@ -32,7 +32,7 @@ function get_form_part2(){
         type_calc_fuel:         getCheckedValue(d.calc_combustiveis),
         fuel_efficiency:        d.consumo_auto.value,
         fuel_price:             d.fuel_price.value,
-        take_car_to_job:        getCheckedValue(d.carro_emprego),
+        take_car_to_job:        getCheckedValue(d.car_job_form2),
         fuel_period_distance:   d.combustivel_period_km.value,      
         distance:               d.km_por_mes.value,
         car_consumption:        d.consumo_auto.value,

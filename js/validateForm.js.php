@@ -162,7 +162,7 @@ function is_userdata_formpart2_ok(){
             return false;
         }
 
-        leva_auto_job=getCheckedValue(document.custo.carro_emprego);
+        leva_auto_job=getCheckedValue(document.custo.car_job_form2);
 
         if(leva_auto_job == ""){
             alert("<?echo $FUEL?> - <?echo $ERROR_CAR_JOB?>!");
@@ -320,7 +320,7 @@ function is_userdata_formpart3_ok(){
     }
     
     /*distance*/
-    if($('.distance_part').css('display')!='none'){
+    if($('#distance_part_form3').css('display')!='none'){
         var drive_to_work = getCheckedValue(custo.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(document.custo.drive_to_work_days_per_week.value)){
@@ -345,7 +345,7 @@ function is_userdata_formpart3_ok(){
     }
     
     /*time spent in driving*/
-    if($('.distance_part').css('display')!='none'){
+    if($('#distance_part_form3').css('display')!='none'){
         var drive_to_work = getCheckedValue(custo.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(document.custo.time_home_job.value)){

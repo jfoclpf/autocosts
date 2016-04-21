@@ -41,15 +41,15 @@
                 <td>
                     <? echo $FUEL_JOB_CALC ?>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="carro_emprego" id="carro_emprego_sim" value="true" onclick="carToJob(true);" /><span class="p2"><? echo $YES ?></span>
+                        <input type="radio" name="car_job_form2" id="car_job_form2_yes" value="true" onclick="carToJob(true);" /><span class="p2"><? echo $YES ?></span>
                     </span>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="carro_emprego" id="carro_emprego_nao" value="false" onclick="carToJob(false);" /><span class="p2"><? echo $NO ?></span>
+                        <input type="radio" name="car_job_form2" id="car_job_form2_no" value="false" onclick="carToJob(false);" /><span class="p2"><? echo $NO ?></span>
                     </span>
                 </td>
             </tr>
         </table>
-        <div id="carro_emprego_sim_Div">
+        <div id="div_car_job_form2_yes"> 
             <table>
                 <tr>
                     <td>
@@ -86,7 +86,7 @@
                 </tr>
             </table>
         </div>
-        <div id="carro_emprego_nao_Div">
+        <div id="div_car_job_form2_no">
             <table>
                 <tr>
                     <td>

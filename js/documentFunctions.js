@@ -150,50 +150,75 @@ var isDistanceSet = false;
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
+        //selects actively radio button to which this function is associated
+        $("#radio_fuel_euros").prop("checked", true);
+        
         isDistanceSet = false;
-        $('.distance_part').each(function(){ $(this).show(); });
+        $('#distance_part_form3').each(function(){ $(this).show(); });
         $('#eurosDiv').css("display", "block");
         $('#kmDiv').css("display", "none");
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
         $('#drive_to_work_no').prop('checked', true);
     } else if (fuelCalculationMethod === 'distance') {
+        //selects actively radio button to which this function is associated        
+        $("#radio_fuel_km").prop("checked", true); 
+        
         isDistanceSet = true;
-        $('.distance_part').each(function(){ $(this).hide(); });
+        $('#distance_part_form3').each(function(){ $(this).hide(); });
         $('#eurosDiv').css("display", "none");
         $('#kmDiv').css("display", "block");
 
         var temp3;
-        temp3 = document.getElementById('carro_emprego_nao');
+        temp3 = document.getElementById('car_job_form2_no');
         temp3.checked = true;
         carToJob(false);
     } else {
-        console.log("wtf just happened? Either is distance or currency... make up your mind developer");
+        console.log("Either is distance or currency... make up your mind developer");
     }
 }
 
+//function that for the radio button with the question 
+//'Considering you drive to work?' in the Fuel section of Form part 2
 function carToJob(carToJobFlag) {
     if (carToJobFlag) {
-        $('#carro_emprego_sim_Div').css("display", "block");
-        $('#carro_emprego_nao_Div').css("display", "none");
+        //selects actively radio button to which this function is associated
+        $("#car_job_form2_yes").prop("checked", true); 
+        
+        $('#div_car_job_form2_yes').css("display", "block");
+        $('#div_car_job_form2_no').css("display", "none");
         $('.time_spent_part_1').each(function(){ $(this).show(); });
         $('.time_spent_part_2').hide();
     } else {
-        $('#carro_emprego_sim_Div').css("display", "none");
-        $('#carro_emprego_nao_Div').css("display", "block");
+        //selects actively radio button to which this function is associated
+        $("#car_job_form2_no").prop("checked", true); 
+        
+        $('#div_car_job_form2_yes').css("display", "none");
+        $('#div_car_job_form2_no').css("display", "block");
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
+        
+        //set to "no" the question "Do you have a job or a worthy occupation?" 
+        //in Working Time section of Form Part 3 
+        working_time_toggle(false);
+        $("#radio_work_time_no").prop("checked", true);        
     }
 }
 
 function driveToJob(flag){
     if(flag){
+        //selects actively radio button to which this function is associated
+        $("#drive_to_work_yes").prop("checked", true);
+        
         $('.car_to_job_part').each(function(){ $(this).show(); });
         $('.time_spent_part_1').each(function(){ $(this).show(); });
         $('.time_spent_part_2').hide();
         $('#car_no_job_part').hide();
     }
     else{
+        //selects actively radio button to which this function is associated
+        $("#drive_to_work_no").prop("checked", true);
+        
         $('.car_to_job_part').each(function(){ $(this).hide(); });
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
@@ -258,8 +283,21 @@ function income_toggle(value){
     }   
 }
 
-function working_time_toogle(value){
-    value ? $('#job_working_time').show() : $('#job_working_time').hide();  
+//radio button toggle function of "Working time" section in form part 3
+function working_time_toggle(value){
+    if(value){
+        //selects actively radio button to which this function is associated
+        $("#radio_work_time_yes").prop("checked", true);
+        
+        $('#job_working_time').show();
+    }
+    else{
+        //selects actively radio button to which this function is associated
+        $("#radio_work_time_no").prop("checked", true);
+        
+        $('#job_working_time').hide();
+        driveToJob(false); 
+    }  
 }
 
 //function used to get from forms the selected option in radio buttons
@@ -309,7 +347,7 @@ function submit_data(country) {
     objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#main_form').val();
     objectToDb.fuel_currency_based_currency_value = $('#fuel_currency_value').val();
     objectToDb.fuel_currency_based_periodicity = $('#combustiveis_periodo_euro').val();
-    objectToDb.fuel_distance_based_car_to_work = $('input[name="carro_emprego"]:checked', '#main_form').val();
+    objectToDb.fuel_distance_based_car_to_work = $('input[name="car_job_form2"]:checked', '#main_form').val();
     objectToDb.fuel_distance_based_car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
     objectToDb.fuel_distance_based_car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
     objectToDb.fuel_distance_based_car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
