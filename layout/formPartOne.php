@@ -154,14 +154,14 @@
             <td>
                 <? echo $INSPECTION_NBMR_TIMES ?>
             </td>
-            <td>
+            <td>              
                 <input id="numberInspections" type="text" name="nr_vezes_inspecao" size="6" maxlength="2" value="<? echo $STD_NBR_INSPECTION; ?>">
                 <span>
                     <? echo $WORD_TIMES ?>
                 </span>
             </td>
         </tr>
-        <tr>
+        <tr id="InspectionCost_tr">
             <td>
                 <? echo $INSPECTION_PRICE ?>
             </td>

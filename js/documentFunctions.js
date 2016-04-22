@@ -6,12 +6,15 @@
 /*function that is run when the button Reload is clicked*/
 function reload() {
     TimeCounter.resetStopwatch();
+    
+    //divs which are presented in the results are hidden upon reload
     input_object.style.display = 'block';
     result_object.style.display = 'none';
     reload_object.style.display = 'none';
     pie_chart_object.style.display = 'none';
     bar_chart_object.style.display = 'none';
     text_object.style.display = 'none';
+    
     openForm_part('form_part', 0, 1, false);
 }
 
@@ -147,6 +150,16 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 
 var income = 'year';
 var isDistanceSet = false;
+
+//when number of inspections is zero, hides field for cost of each inspection
+$("#numberInspections").focusout(function(){
+    if( $(this).val() == 0){
+        $('#InspectionCost_tr').css("display", "none");
+    }
+    else{
+        $('#InspectionCost_tr').css("display", "table-row");
+    }
+});
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === 'currency') {
