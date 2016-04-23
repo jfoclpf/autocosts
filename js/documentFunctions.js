@@ -170,8 +170,8 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $('#distance_form3').each(function(){ $(this).show(); });
         $('#currency_div_form2').css("display", "block");
         $('#distance_div_form2').css("display", "none");
-        $('.time_spent_part_1').each(function(){ $(this).hide(); });
-        $('.time_spent_part_2').show();
+        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
+        $('.time_spent_part2_form3').show();
         $('#drive_to_work_no').prop('checked', true);
         
         carToJob(false);
@@ -200,12 +200,12 @@ function carToJob(carToJobFlag) {
         
         $('#div_car_job_yes_form2').css("display", "block");
         $('#div_car_job_no_form2').css("display", "none");
-        $('.time_spent_part_1').each(function(){ $(this).show(); });
-        $('.time_spent_part_2').hide();
+        $('.time_spent_part1_form3').each(function(){ $(this).show(); });
+        $('.time_spent_part2_form3').hide();
         
         //working time section in form part 3
         working_time_toggle(true);
-        $('#working_time_div').hide();
+        $('#working_time_div1').hide();
         $('#working_time_div2').show();
     } else {
         //selects actively radio button to which this function is associated
@@ -213,14 +213,14 @@ function carToJob(carToJobFlag) {
         
         $('#div_car_job_yes_form2').css("display", "none");
         $('#div_car_job_no_form2').css("display", "block");
-        $('.time_spent_part_1').each(function(){ $(this).hide(); });
-        $('.time_spent_part_2').show();
+        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
+        $('.time_spent_part2_form3').show();
         
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3 
         working_time_toggle(false);
         $("#radio_work_time_no").prop("checked", true);
-        $('#working_time_div').show();
+        $('#working_time_div1').show();
         $('#working_time_div2').hide();        
     }
 }
@@ -233,14 +233,14 @@ function driveToJob(flag){
         $("#drive_to_work_yes").prop("checked", true);
         
         $('.car_to_job_part').each(function(){ $(this).show(); });
-        $('.time_spent_part_1').each(function(){ $(this).show(); });
-        $('.time_spent_part_2').hide();
+        $('.time_spent_part1_form3').each(function(){ $(this).show(); });
+        $('.time_spent_part2_form3').hide();
         $('#car_no_job_part').hide();
 
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3         
         working_time_toggle(true);
-        $('#working_time_div').hide();
+        $('#working_time_div1').hide();
         $('#working_time_div2').show();
     }
     else{
@@ -248,12 +248,12 @@ function driveToJob(flag){
         $("#drive_to_work_no").prop("checked", true);
         
         $('.car_to_job_part').each(function(){ $(this).hide(); });
-        $('.time_spent_part_1').each(function(){ $(this).hide(); });
-        $('.time_spent_part_2').show();
+        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
+        $('.time_spent_part2_form3').show();
         $('#car_no_job_part').show();
         
         working_time_toggle(true);
-        $('#working_time_div').show();
+        $('#working_time_div1').show();
         $('#working_time_div2').hide();
     }
 }
@@ -293,23 +293,23 @@ function numberWithSpaces(x) {
 function income_toggle(value){
     switch(value){
         case 'year':
-            $('#div_income_per_year, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_year, #working_time_form3').removeClass('hidden').show();
             $('#div_income_per_month, #div_income_per_week, #div_income_per_hour').addClass('hidden');
             income='year';
             break;
         case 'month':
-            $('#div_income_per_month, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_month, #working_time_form3').removeClass('hidden').show();
             $('#div_income_per_year, #div_income_per_week, #div_income_per_hour').addClass('hidden');
             income='month';
             break;
         case 'week':
-            $('#div_income_per_week, #working_time_part').removeClass('hidden').show();
+            $('#div_income_per_week, #working_time_form3').removeClass('hidden').show();
             $('#div_income_per_year, #div_income_per_month, #div_income_per_hour').addClass('hidden');
             income='week';
             break;
         case 'hour':
             $('#div_income_per_hour').removeClass('hidden').show();
-            $('#div_income_per_year, #div_income_per_week, #div_income_per_month, #working_time_part').addClass('hidden');
+            $('#div_income_per_year, #div_income_per_week, #div_income_per_month, #working_time_form3').addClass('hidden');
             income='hour';
             break;
     }   

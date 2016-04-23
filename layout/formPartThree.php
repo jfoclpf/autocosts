@@ -38,7 +38,7 @@
     <table>
         <tr>
             <td>
-                <div id="income_div">
+                <div id="income_div_form3">
                     <?php echo $EXTRA_DATA_INCOME_QUESTION ?>
                     <br/>
                     <span style="white-space:nowrap">
@@ -110,14 +110,14 @@
         </tr>
     </table>
     <!--********************************************************************** -->
-    <div id="working_time_part">
+    <div id="working_time_form3">
         <strong class="title">
             <?php echo $EXTRA_DATA_WORKING_TIME ?>
         </strong>
         <table>
             <tr>
                 <td>
-                    <div id="working_time_div">
+                    <div id="working_time_div1">
                         <br>
                         <?php echo $EXTRA_DATA_WORKING_TIME_QUESTION ?>
                         <br>
@@ -244,7 +244,7 @@
         <? echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>
     </strong>
     <table>
-        <tr class="time_spent_part_1">
+        <tr class="time_spent_part1_form3">
             <td>
                 <? echo $EXTRA_DATA_TIME_QUESTION1 ?>
             </td>
@@ -256,7 +256,7 @@
                 </span>
             </td>
         </tr>
-        <tr class="time_spent_part_1">
+        <tr class="time_spent_part1_form3">
             <td>
                 <? echo $EXTRA_DATA_TIME_QUESTION2 ?>
             </td>
@@ -267,7 +267,7 @@
                 </span>
             </td>
         </tr>
-        <tr class="time_spent_part_2">
+        <tr class="time_spent_part2_form3">
             <td>
                 <? echo $EXTRA_DATA_TIME_QUESTION3 ?>
             </td>
