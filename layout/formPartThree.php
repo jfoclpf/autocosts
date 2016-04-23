@@ -172,7 +172,7 @@
                         </span>
                     </div>
                     <div>
-                        <input type="radio" name="drive_to_work" id="drive_to_work_no" value="false"
+                        <input type="radio" name="drive_to_work" id="drive_to_work_no_form3" value="false"
                                onchange="driveToJob(false);" checked >
                             <span class="p2">
                                 <? echo $NO ?>

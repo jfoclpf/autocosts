@@ -172,7 +172,7 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $('#distance_div_form2').css("display", "none");
         $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
         $('.time_spent_part2_form3').show();
-        $('#drive_to_work_no').prop('checked', true);
+        $('#drive_to_work_no_form3').prop('checked', true);
         
         carToJob(false);
     } else if (fuelCalculationMethod === 'distance') {
@@ -245,7 +245,7 @@ function driveToJob(flag){
     }
     else{
         //selects actively radio button to which this function is associated
-        $("#drive_to_work_no").prop("checked", true);
+        $("#drive_to_work_no_form3").prop("checked", true);
         
         $('.car_to_job_distance_form3').each(function(){ $(this).hide(); });
         $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
