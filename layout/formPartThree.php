@@ -89,7 +89,7 @@
                         <? echo $WEEKS ?>/<? echo $YEAR ?>
                     </span>
                 </div>
-                <div id="div_income_per_hour" class="div_element hidden">
+                <div id="income_per_hour_form3" class="div_element hidden">
                     <input type="text" id="income_per_hour" name="income_per_hour" size="6"
                         value="<? echo $STD_INCOME_HOUR ?>"/>
                     <span>
