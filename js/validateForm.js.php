@@ -320,7 +320,7 @@ function is_userdata_formpart3_ok(){
     }
     
     /*distance*/
-    if($('#distance_part_form3').css('display')!='none'){
+    if($('#distance_form3').css('display')!='none'){
         var drive_to_work = getCheckedValue(custo.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(document.custo.drive_to_work_days_per_week.value)){
@@ -345,7 +345,7 @@ function is_userdata_formpart3_ok(){
     }
     
     /*time spent in driving*/
-    if($('#distance_part_form3').css('display')!='none'){
+    if($('#distance_form3').css('display')!='none'){
         var drive_to_work = getCheckedValue(custo.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(document.custo.time_home_job.value)){

@@ -154,7 +154,7 @@
         </table>
         </div>
     <!--********************************************************************** -->
-    <div id="distance_part_form3">
+    <div id="distance_form3">
         <strong class="title">
             <?php echo $DISTANCE ?>
         </strong>

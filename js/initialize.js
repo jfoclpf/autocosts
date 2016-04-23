@@ -16,8 +16,8 @@ function initialize() {
     //make some initial settings in the options of the form
     tolls_daily(false);
     document.getElementById("radio_fuel_euros").checked = true;
-    $('#eurosDiv').css("display", "block");
-    $('#kmDiv').css("display", "none");
+    $('#currency_div_form2').css("display", "block");
+    $('#distance_div_form2').css("display", "none");
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No 

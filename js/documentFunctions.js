@@ -167,9 +167,9 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $("#radio_fuel_euros").prop("checked", true);
         
         isDistanceSet = false;
-        $('#distance_part_form3').each(function(){ $(this).show(); });
-        $('#eurosDiv').css("display", "block");
-        $('#kmDiv').css("display", "none");
+        $('#distance_form3').each(function(){ $(this).show(); });
+        $('#currency_div_form2').css("display", "block");
+        $('#distance_div_form2').css("display", "none");
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
         $('#drive_to_work_no').prop('checked', true);
@@ -180,9 +180,9 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $("#radio_fuel_km").prop("checked", true); 
         
         isDistanceSet = true;
-        $('#distance_part_form3').each(function(){ $(this).hide(); });
-        $('#eurosDiv').css("display", "none");
-        $('#kmDiv').css("display", "block");
+        $('#distance_form3').each(function(){ $(this).hide(); });
+        $('#currency_div_form2').css("display", "none");
+        $('#distance_div_form2').css("display", "block");
 
         carToJob(false);
         driveToJob(false);
@@ -198,8 +198,8 @@ function carToJob(carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_yes").prop("checked", true); 
         
-        $('#div_car_job_form2_yes').css("display", "block");
-        $('#div_car_job_form2_no').css("display", "none");
+        $('#div_car_job_yes_form2').css("display", "block");
+        $('#div_car_job_no_form2').css("display", "none");
         $('.time_spent_part_1').each(function(){ $(this).show(); });
         $('.time_spent_part_2').hide();
         
@@ -211,8 +211,8 @@ function carToJob(carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true); 
         
-        $('#div_car_job_form2_yes').css("display", "none");
-        $('#div_car_job_form2_no').css("display", "block");
+        $('#div_car_job_yes_form2').css("display", "none");
+        $('#div_car_job_no_form2').css("display", "block");
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
         

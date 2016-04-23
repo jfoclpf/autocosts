@@ -18,7 +18,7 @@
                 <span style="white-space:nowrap">
                     <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" /><span class="p2"><? echo $CURR_NAME_PLURAL ?></span>
                 </span>
-                <div style="float: right; margin: 12px 0 0 0;white-space:nowrap;" id="eurosDiv">
+                <div style="float: right; margin: 12px 0 0 0;white-space:nowrap;" id="currency_div_form2">
                     <input type="text" size="5" maxlength="9" id="fuel_currency_value"
                         value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                     <span class="p2" style="white-space:nowrap">
@@ -35,7 +35,7 @@
             </td>
         </tr>
     </table>
-    <div id="kmDiv">
+    <div id="distance_div_form2">
         <table>
             <tr>
                 <td>
@@ -49,7 +49,7 @@
                 </td>
             </tr>
         </table>
-        <div id="div_car_job_form2_yes"> 
+        <div id="div_car_job_yes_form2"> 
             <table>
                 <tr>
                     <td>
@@ -86,7 +86,7 @@
                 </tr>
             </table>
         </div>
-        <div id="div_car_job_form2_no">
+        <div id="div_car_job_no_form2">
             <table>
                 <tr>
                     <td>
