@@ -118,8 +118,9 @@
             <tr>
                 <td>
                     <div id="working_time_div">
+                        <br>
                         <?php echo $EXTRA_DATA_WORKING_TIME_QUESTION ?>
-                        <br/>
+                        <br>
                         <span style="white-space:nowrap">
                             <input type="radio" name="radio_work_time" id="radio_work_time_yes" value="true" onchange="working_time_toggle(true)" checked />
                             <?php echo $YES ?>
@@ -127,6 +128,11 @@
                         <span style="white-space:nowrap">
                             <input type="radio" name="radio_work_time" id="radio_work_time_no" value="false" onchange="working_time_toggle(false)"/>
                             <?php echo $NO ?>
+                        </span>
+                    </div>
+                    <div id="working_time_div2">
+                        <span class="p2">
+                            <?php echo $EXTRA_DATA_WORKING_TIME ?>:
                         </span>
                     </div>
                 </td>
@@ -282,7 +288,7 @@
     </table>
     <div class="b-bottom">
         <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
-        <input class="button" type="submit" onclick="if(formsInit() <? if ($GLOBALS["country"] == "XX") {
+        <input class="button" type="submit" onclick="if(Run() <? if ($GLOBALS["country"] == "XX") {
             echo "&& false";
         } ?> ){submit_data('<? echo $GLOBALS["country"] ?>'); scrollPage();}" value="<? echo $BUTTON_RUN; ?>"/>
     </div>

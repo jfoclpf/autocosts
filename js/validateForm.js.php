@@ -1,4 +1,4 @@
-function formsInit(){	
+function Run(){	
 
     frame_witdh = document.getElementById('input_div').offsetWidth;
     

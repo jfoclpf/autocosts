@@ -173,6 +173,8 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
         $('#drive_to_work_no').prop('checked', true);
+        
+        carToJob(false);
     } else if (fuelCalculationMethod === 'distance') {
         //selects actively radio button to which this function is associated        
         $("#radio_fuel_km").prop("checked", true); 
@@ -182,10 +184,8 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $('#eurosDiv').css("display", "none");
         $('#kmDiv').css("display", "block");
 
-        var temp3;
-        temp3 = document.getElementById('car_job_form2_no');
-        temp3.checked = true;
         carToJob(false);
+        driveToJob(false);
     } else {
         console.log("Either is distance or currency... make up your mind developer");
     }
@@ -202,6 +202,11 @@ function carToJob(carToJobFlag) {
         $('#div_car_job_form2_no').css("display", "none");
         $('.time_spent_part_1').each(function(){ $(this).show(); });
         $('.time_spent_part_2').hide();
+        
+        //working time section in form part 3
+        working_time_toggle(true);
+        $('#working_time_div').hide();
+        $('#working_time_div2').show();
     } else {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true); 
@@ -214,10 +219,14 @@ function carToJob(carToJobFlag) {
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3 
         working_time_toggle(false);
-        $("#radio_work_time_no").prop("checked", true);        
+        $("#radio_work_time_no").prop("checked", true);
+        $('#working_time_div').show();
+        $('#working_time_div2').hide();        
     }
 }
 
+//Drive to Job yes/no radio button 
+//in section Distance in form part 3 
 function driveToJob(flag){
     if(flag){
         //selects actively radio button to which this function is associated
@@ -227,6 +236,12 @@ function driveToJob(flag){
         $('.time_spent_part_1').each(function(){ $(this).show(); });
         $('.time_spent_part_2').hide();
         $('#car_no_job_part').hide();
+
+        //set to "no" the question "Do you have a job or a worthy occupation?" 
+        //in Working Time section of Form Part 3         
+        working_time_toggle(true);
+        $('#working_time_div').hide();
+        $('#working_time_div2').show();
     }
     else{
         //selects actively radio button to which this function is associated
@@ -236,6 +251,10 @@ function driveToJob(flag){
         $('.time_spent_part_1').each(function(){ $(this).hide(); });
         $('.time_spent_part_2').show();
         $('#car_no_job_part').show();
+        
+        working_time_toggle(true);
+        $('#working_time_div').show();
+        $('#working_time_div2').hide();
     }
 }
 
@@ -309,7 +328,6 @@ function working_time_toggle(value){
         $("#radio_work_time_no").prop("checked", true);
         
         $('#job_working_time').hide();
-        driveToJob(false); 
     }  
 }
 
