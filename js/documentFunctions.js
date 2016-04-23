@@ -206,7 +206,7 @@ function carToJob(carToJobFlag) {
         //working time section in form part 3
         working_time_toggle(true);
         $('#working_time_part1_form3').hide();
-        $('#working_time_div2').show();
+        $('#working_time_part2_form3').show();
     } else {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true); 
@@ -221,7 +221,7 @@ function carToJob(carToJobFlag) {
         working_time_toggle(false);
         $("#radio_work_time_no").prop("checked", true);
         $('#working_time_part1_form3').show();
-        $('#working_time_div2').hide();        
+        $('#working_time_part2_form3').hide();        
     }
 }
 
@@ -241,7 +241,7 @@ function driveToJob(flag){
         //in Working Time section of Form Part 3         
         working_time_toggle(true);
         $('#working_time_part1_form3').hide();
-        $('#working_time_div2').show();
+        $('#working_time_part2_form3').show();
     }
     else{
         //selects actively radio button to which this function is associated
@@ -254,7 +254,7 @@ function driveToJob(flag){
         
         working_time_toggle(true);
         $('#working_time_part1_form3').show();
-        $('#working_time_div2').hide();
+        $('#working_time_part2_form3').hide();
     }
 }
 

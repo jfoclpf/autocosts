@@ -130,7 +130,7 @@
                             <?php echo $NO ?>
                         </span>
                     </div>
-                    <div id="working_time_div2">
+                    <div id="working_time_part2_form3">
                         <span class="p2">
                             <?php echo $EXTRA_DATA_WORKING_TIME ?>:
                         </span>
