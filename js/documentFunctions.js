@@ -235,7 +235,7 @@ function driveToJob(flag){
         $('.car_to_job_part').each(function(){ $(this).show(); });
         $('.time_spent_part1_form3').each(function(){ $(this).show(); });
         $('.time_spent_part2_form3').hide();
-        $('#car_no_job_part').hide();
+        $('#car_no_job_distance_form3').hide();
 
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3         
@@ -250,7 +250,7 @@ function driveToJob(flag){
         $('.car_to_job_part').each(function(){ $(this).hide(); });
         $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
         $('.time_spent_part2_form3').show();
-        $('#car_no_job_part').show();
+        $('#car_no_job_distance_form3').show();
         
         working_time_toggle(true);
         $('#working_time_div1').show();

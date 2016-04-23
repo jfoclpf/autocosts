@@ -218,7 +218,7 @@
             </tr>
         </table>
         <table>
-            <tr id="car_no_job_part">
+            <tr id="car_no_job_distance_form3">
                 <td>
                     <? echo $FUEL_DIST ?>
                 </td>
