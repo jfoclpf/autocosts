@@ -65,7 +65,7 @@
                         value="<? echo $STD_INCOME_YEAR ?>"/>
                     <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                 </div>
-                <div id="div_income_per_month" class="div_element hidden">
+                <div id="income_per_month_form3" class="div_element hidden">
                     <input type="text" id="income_per_month" name="income_per_month" size="6"
                         value="<? echo $STD_INCOME_MONTH ?>"/>
                     <span>
