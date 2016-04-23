@@ -137,7 +137,7 @@
                     </div>
                 </td>
                 <td>
-                    <div id="job_working_time" class="div_element">
+                    <div id="working_time_input_form3" class="div_element">
                         <input type="text" id="time_month_per_year" name="time_month_per_year" size="6" maxlength="2"
                             value="<? echo $STD_MONTHS_YEAR ?>"/>
                         <span>

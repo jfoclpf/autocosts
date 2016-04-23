@@ -321,13 +321,13 @@ function working_time_toggle(value){
         //selects actively radio button to which this function is associated
         $("#working_time_yes_form3").prop("checked", true);
         
-        $('#job_working_time').show();
+        $('#working_time_input_form3').show();
     }
     else{
         //selects actively radio button to which this function is associated
         $("#working_time_no_form3").prop("checked", true);
         
-        $('#job_working_time').hide();
+        $('#working_time_input_form3').hide();
     }  
 }
 
