@@ -180,7 +180,7 @@
                     </div>
                 </td>
             </tr>
-            <tr class="car_to_job_part">
+            <tr class="car_to_job_distance_form3">
                 <td>
                     <? echo $FUEL_DAYS ?>&nbsp;
                 </td>
@@ -192,7 +192,7 @@
                     </span>
                 </td>
             </tr>
-            <tr class="car_to_job_part">
+            <tr class="car_to_job_distance_form3">
                 <td>
                     <? echo $FUEL_DIST_HOME_JOB ?>&nbsp;
                 </td>
@@ -204,7 +204,7 @@
                     </span>
                 </td>
             </tr>
-            <tr class="car_to_job_part">
+            <tr class="car_to_job_distance_form3">
                 <td>
                     <? echo $FUEL_DIST_NO_JOB ?>&nbsp;
                 </td>

@@ -232,7 +232,7 @@ function driveToJob(flag){
         //selects actively radio button to which this function is associated
         $("#drive_to_work_yes").prop("checked", true);
         
-        $('.car_to_job_part').each(function(){ $(this).show(); });
+        $('.car_to_job_distance_form3').each(function(){ $(this).show(); });
         $('.time_spent_part1_form3').each(function(){ $(this).show(); });
         $('.time_spent_part2_form3').hide();
         $('#car_no_job_distance_form3').hide();
@@ -247,7 +247,7 @@ function driveToJob(flag){
         //selects actively radio button to which this function is associated
         $("#drive_to_work_no").prop("checked", true);
         
-        $('.car_to_job_part').each(function(){ $(this).hide(); });
+        $('.car_to_job_distance_form3').each(function(){ $(this).hide(); });
         $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
         $('.time_spent_part2_form3').show();
         $('#car_no_job_distance_form3').show();
