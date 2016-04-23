@@ -117,7 +117,7 @@
         <table>
             <tr>
                 <td>
-                    <div id="working_time_div1">
+                    <div id="working_time_part1_form3">
                         <br>
                         <?php echo $EXTRA_DATA_WORKING_TIME_QUESTION ?>
                         <br>
