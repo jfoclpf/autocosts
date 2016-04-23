@@ -319,7 +319,7 @@ function income_toggle(value){
 function working_time_toggle(value){
     if(value){
         //selects actively radio button to which this function is associated
-        $("#radio_work_time_yes").prop("checked", true);
+        $("#working_time_yes_form3").prop("checked", true);
         
         $('#job_working_time').show();
     }

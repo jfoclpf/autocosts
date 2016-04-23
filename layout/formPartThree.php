@@ -122,7 +122,7 @@
                         <?php echo $EXTRA_DATA_WORKING_TIME_QUESTION ?>
                         <br>
                         <span style="white-space:nowrap">
-                            <input type="radio" name="radio_work_time" id="radio_work_time_yes" value="true" onchange="working_time_toggle(true)" checked />
+                            <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
                             <?php echo $YES ?>
                         </span>
                         <span style="white-space:nowrap">
