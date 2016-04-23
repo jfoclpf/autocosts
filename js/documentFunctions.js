@@ -219,7 +219,7 @@ function carToJob(carToJobFlag) {
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3 
         working_time_toggle(false);
-        $("#radio_work_time_no").prop("checked", true);
+        $("#working_time_no_form3").prop("checked", true);
         $('#working_time_part1_form3').show();
         $('#working_time_part2_form3').hide();        
     }
@@ -325,7 +325,7 @@ function working_time_toggle(value){
     }
     else{
         //selects actively radio button to which this function is associated
-        $("#radio_work_time_no").prop("checked", true);
+        $("#working_time_no_form3").prop("checked", true);
         
         $('#job_working_time').hide();
     }  

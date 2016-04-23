@@ -126,7 +126,7 @@
                             <?php echo $YES ?>
                         </span>
                         <span style="white-space:nowrap">
-                            <input type="radio" name="radio_work_time" id="radio_work_time_no" value="false" onchange="working_time_toggle(false)"/>
+                            <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
                             <?php echo $NO ?>
                         </span>
                     </div>
