@@ -60,7 +60,7 @@
                 </div>
             </td>
             <td>
-                <div id="div_income_per_year" class="div_element">
+                <div id="income_per_year_form3" class="div_element">
                     <input type="text" id="income_per_year" name="income_per_year" size="6"
                         value="<? echo $STD_INCOME_YEAR ?>"/>
                     <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
