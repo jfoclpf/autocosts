@@ -165,7 +165,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="radio" name="drive_to_work" id="drive_to_work_yes" value="true"
+                        <input type="radio" name="drive_to_work" id="drive_to_work_yes_form3" value="true"
                                onchange="driveToJob(true);">
                         <span>
                             <? echo $YES ?>

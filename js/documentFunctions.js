@@ -230,7 +230,7 @@ function carToJob(carToJobFlag) {
 function driveToJob(flag){
     if(flag){
         //selects actively radio button to which this function is associated
-        $("#drive_to_work_yes").prop("checked", true);
+        $("#drive_to_work_yes_form3").prop("checked", true);
         
         $('.car_to_job_distance_form3').each(function(){ $(this).show(); });
         $('.time_spent_part1_form3').each(function(){ $(this).show(); });
