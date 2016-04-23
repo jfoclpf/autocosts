@@ -294,22 +294,22 @@ function income_toggle(value){
     switch(value){
         case 'year':
             $('#income_per_year_form3, #working_time_form3').removeClass('hidden').show();
-            $('#income_per_month_form3, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+            $('#income_per_month_form3, #income_per_week_form3, #div_income_per_hour').addClass('hidden');
             income='year';
             break;
         case 'month':
             $('#income_per_month_form3, #working_time_form3').removeClass('hidden').show();
-            $('#income_per_year_form3, #div_income_per_week, #div_income_per_hour').addClass('hidden');
+            $('#income_per_year_form3, #income_per_week_form3, #div_income_per_hour').addClass('hidden');
             income='month';
             break;
         case 'week':
-            $('#div_income_per_week, #working_time_form3').removeClass('hidden').show();
+            $('#income_per_week_form3, #working_time_form3').removeClass('hidden').show();
             $('#income_per_year_form3, #income_per_month_form3, #div_income_per_hour').addClass('hidden');
             income='week';
             break;
         case 'hour':
             $('#div_income_per_hour').removeClass('hidden').show();
-            $('#income_per_year_form3, #div_income_per_week, #income_per_month_form3, #working_time_form3').addClass('hidden');
+            $('#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3').addClass('hidden');
             income='hour';
             break;
     }   

@@ -77,7 +77,7 @@
                         <? echo $MONTHS ?>/<? echo $YEAR ?>
                     </span>
                 </div>
-                <div id="div_income_per_week" class="div_element hidden">
+                <div id="income_per_week_form3" class="div_element hidden">
                     <input type="text" id="income_per_week" name="income_per_week" size="6"
                            value="<? echo $STD_INCOME_WEEK ?>"/>
                     <span>
