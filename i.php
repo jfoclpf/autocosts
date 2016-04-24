@@ -9,9 +9,7 @@
     <? include('./php/css_embed.php'); ?>
     <title><? echo $WEB_PAGE_TITLE ?></title>        
     <!--Embed all CSS files within CSS folder-->
-    <?=(new CSS_Embed()) ?>      
-    <!--jquery.js-->
-    <script><?php include('js/js_jquery.js'); ?></script>       
+    <?=(new CSS_Embed()) ?>           
 </head>
 <body>
 <div id="main_div">
@@ -94,8 +92,11 @@
     </div>
     <br>
 </div>
+<!--jquery.js-->
+<script src="js/js_jquery.js"></script>
 <!--jquery timer-->
 <script src="js/js_timer.js"></script>
+
 <script><?php include('js/validateForm.js.php'); ?></script>
 <script src="js/documentFunctions.js"></script>
 <script src="js/initialize.js"></script>
