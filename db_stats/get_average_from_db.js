@@ -3,9 +3,9 @@
 
 //includes
 var fs = require('fs');
-eval(fs.readFileSync('./conversionFunctions.js')+'');
-eval(fs.readFileSync('./coreFunctions.js')+'');
-eval(fs.readFileSync('./get_data.js')+'');
+eval(fs.readFileSync('../js/conversionFunctions.js')+'');
+eval(fs.readFileSync('../js/coreFunctions.js')+'');
+eval(fs.readFileSync('../js/get_data.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
 //include credentials object
 eval(fs.readFileSync('./credentials.js')+'');
