@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" >
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
 
 <url>
   <loc>http://autocosts.info</loc>
@@ -28,6 +22,7 @@
   <xhtml:link rel="alternate" hreflang="sv-se" href="http://autocosts.info/SE" />
   <xhtml:link rel="alternate" hreflang="en-us" href="http://autocosts.info/US" />
   <xhtml:link rel="alternate" hreflang="en-gb" href="http://autocosts.info.uk" />
+  <xhtml:link rel="alternate" hreflang="en-ie" href="http://autocosts.info/IE" />
   <xhtml:link rel="alternate" hreflang="en-ca" href="http://autocosts.info/CA" />
   <xhtml:link rel="alternate" hreflang="cs-cz" href="http://autocosts.info/CZ" />
   <xhtml:link rel="alternate" hreflang="ru-ru" href="http://autocosts.info/RU" />
