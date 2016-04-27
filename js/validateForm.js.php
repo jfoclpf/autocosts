@@ -1,7 +1,9 @@
 function Run(){	
 
-    frame_witdh = document.getElementById('input_div').offsetWidth;
-    
+    //gets result frame width to draw charts within it
+    var frame_witdh = document.getElementById('input_div').offsetWidth;
+
+    //test if the form user inputs are correct
     if (!is_userdata_formpart1_ok()) return;
     if (!is_userdata_formpart2_ok()) return;
     if (!is_userdata_formpart3_ok()) return;
@@ -21,16 +23,17 @@ function Run(){
     var data = calculate_costs(f1, f2, f3, country);
 
     result_object = document.getElementById('result_div');
-    input_object.style.display='none';
+    input_object.style.display = 'none';
     
+    //prints on the screen the result 
     var tables_HTML = "";    
     tables_HTML += print_costs_table(f1, f2, f3, data);
     tables_HTML += print_extern_table(f1, f2, f3, data);
     tables_HTML += print_publict_table(f1, f2, f3, data);
     tables_HTML += print_feffort_table(f1, f2, f3, data);
     tables_HTML += "<br><br>";
-        
-    drawChartResult(frame_witdh, data)
+    
+    drawChartResult(frame_witdh, data);
         
     result_object.innerHTML = tables_HTML;
     result_object.style.display='block';
@@ -345,29 +348,27 @@ function is_userdata_formpart3_ok(){
     }
     
     /*time spent in driving*/
-    if($('#distance_form3').css('display')!='none'){
-        var drive_to_work = getCheckedValue(custo.drive_to_work);
-        if(drive_to_work == 'true'){
-            if(!isNumber(document.custo.time_home_job.value)){
-                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
-                return false;
-            }
-            if(!isNumber(document.custo.time_weekend.value)){
-                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
-                return false;
-            }
+    if (isVisible('.time_spent_part1_form3')){        
+        if(!isNumber(document.custo.time_home_job.value)){
+            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
+            return false;
         }
-        else{
-            if(!isNumber(document.custo.min_drive_per_day.value)){
-                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE?>!");
-                return false;
-            }
-            var days_drive_per_month = document.custo.days_drive_per_month.value;
-            if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
-                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
-                return false;
-            }
+        if(!isNumber(document.custo.time_weekend.value)){
+            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
+            return false;
         }
-    }	
+    }
+    else{
+        if(!isNumber(document.custo.min_drive_per_day.value)){
+            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE?>!");
+            return false;
+        }
+        var days_drive_per_month = document.custo.days_drive_per_month.value;
+        if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
+            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
+            return false;
+        }
+    }
+
     return true;
 }

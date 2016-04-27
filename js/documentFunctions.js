@@ -151,7 +151,15 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 var income = 'year';
 var isDistanceSet = false;
 
-//when number of inspections is zero, hides field for cost of each inspection
+/*function that checks if a certain HTML id or class is visible*/
+function isVisible(html_ref) {
+    if($(html_ref).css('display')!='none')
+        return true;
+    else
+        return false;
+}
+
+//when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(function(){
     if( $(this).val() == 0){
         $('#InspectionCost_tr').css("display", "none");
