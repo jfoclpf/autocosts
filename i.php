@@ -93,9 +93,9 @@
     <br>
 </div>
 <!--jquery.js-->
-<script src="js/js_jquery.js"></script>
+<script src="js/jquery/js_jquery.js"></script>
 <!--jquery timer-->
-<script src="js/js_timer.js"></script>
+<script src="js/jquery/js_timer.js"></script>
 
 <script><?php include('js/validateForm.js.php'); ?></script>
 <script src="js/documentFunctions.js"></script>
