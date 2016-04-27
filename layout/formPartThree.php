@@ -249,7 +249,7 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION1 ?>
             </td>
             <td>
-                <input type="text" size="6" id="time_home_job" name="time_home_job"
+                <input type="text" size="6" maxlength="4" id="time_home_job" name="time_home_job"
                        value="<? echo $STD_TIME_HOME_JOB ?>"/>
                 <span>
                     <? echo $MIN ?>
@@ -261,7 +261,7 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION2 ?>
             </td>
             <td>
-                <input type="text" size="6" id="time_weekend" name="time_weekend" value="<? echo $STD_TIME_WEEKEND ?>"/>
+                <input type="text" size="6" maxlength="4" id="time_weekend" name="time_weekend" value="<? echo $STD_TIME_WEEKEND ?>"/>
                 <span>
                     <?php echo $MIN ?>
                 </span>
@@ -272,13 +272,13 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION3 ?>
             </td>
             <td>
-                <input type="text" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                <input type="text" size="6" maxlength="4" id="min_drive_per_day" name="min_drive_per_day"
                     value="<? echo $STD_TIME_IN_DRIVING ?>"/>
                 <span>
                     <? echo $MINUTES ?>/<?php echo $DAY ?>
                 </span>
                 <br>
-                <input type="text" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                <input type="text" size="6" maxlength="2" id="days_drive_per_month" name="days_drive_per_month"
                     value="<? echo $STD_DAYS_MONTH ?>"/>
                 <span>
                     <? echo $DAYS ?>/<?php echo $MONTH ?>
