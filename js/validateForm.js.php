@@ -349,22 +349,22 @@ function is_userdata_formpart3_ok(){
         var drive_to_work = getCheckedValue(custo.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(document.custo.time_home_job.value)){
-                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
                 return false;
             }
             if(!isNumber(document.custo.time_weekend.value)){
-                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
                 return false;
             }
         }
         else{
             if(!isNumber(document.custo.min_drive_per_day.value)){
-                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MIN_DRIVE?>!");
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE?>!");
                 return false;
             }
             var days_drive_per_month = document.custo.days_drive_per_month.value;
             if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
-                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
                 return false;
             }
         }
