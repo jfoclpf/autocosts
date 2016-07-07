@@ -35,10 +35,8 @@
 
                         <div id="title-div">
                             <br>
-                            <big>
-                                <a href="http://<? echo strtolower($AC_DOMAIN);?>">
-                                    <span class="AC_url"><? echo $AC_DOMAIN ?></span></a>
-                            </big>
+                                <a class="AC_url" href="http://<? echo strtolower($AC_DOMAIN);?>">
+                                    <? echo $AC_DOMAIN ?></a>
                             <br>
                             <b><? echo $AC_SUB_HEADER ?></b>
                             <br>

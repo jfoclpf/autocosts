@@ -419,6 +419,11 @@ form.roundCorner {
 #title-div {
     text-align: center;
 }
+.AC_url {
+    color: #0000EE;
+    font-size: 18px;
+    line-height: 30px;
+}
 #input_div {
     background: #fff;
     padding: 0;
