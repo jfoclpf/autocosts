@@ -47,6 +47,13 @@ function convert_from_EUR(value, currency, EURcurrConverterStats){
 
 //converts chosen fuel consumption to l/100km
 function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
+//fuel_efficiency_std_option shall be either:
+//1 - l/100km - litres per 100 kilometres
+//2 - km/l - kilometres per litre
+//3 - mpg(imp) - miles per imperial gallon
+//4 - mpg(US) - miles per US gallon
+//5 - l/mil - litres per 10 kilometers
+//6 - km/gal(US) - km per US gallon
 
     var fuel_eff_temp = parseFloat(fuel_eff);
     
@@ -61,6 +68,8 @@ function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
             return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuel_eff_temp); //mpg(US) -> l/100km
         case 5:
             return conversionConstants.KM_TO_MIL * fuel_eff_temp; //l/mil -> l/100km (1 mil = 10km)
+        case 6:
+            return (100 * conversionConstants.GALLON_US_TO_LITER) / fuel_eff_temp; //km/gal(US) -> l/100km (1 mil = 10km)
     }
 }
 
