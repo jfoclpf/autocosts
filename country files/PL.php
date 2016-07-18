@@ -57,7 +57,7 @@ Ponieważ rachunki związane z utrzymaniem samochodu napływają w ciągu całeg
 
 $HELP_PROJECT = 'Wesprzyj ten projekt' ;
 $AC_MOBILE = 'AUTOKOSZTY<br>na urządzenia mobilne';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOKOSZTY.INFO';
 $AC_SUB_HEADER = 'KALKULATOR KOSZTÓW SAMOCHODOWYCH';
 
 
