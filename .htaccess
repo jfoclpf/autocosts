@@ -1,82 +1,87 @@
+suPHP_ConfigPath /home4/jfolpf
+
 <IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresDefault "access plus 1 month"
+ExpiresActive On 
+ExpiresDefault "access plus 1 month"
 </IfModule>
 
 AddDefaultCharset utf-8
+ErrorDocument 400 /i.php
+ErrorDocument 401 /i.php
+ErrorDocument 403 /i.php
 ErrorDocument 404 /i.php
+ErrorDocument 500 /i.php
 DirectoryIndex i.php index.php index.html index.htm
 
 RewriteEngine On
+
 RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
-RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
-RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
 RewriteRule ^/?$ "http\:\/\/autocustos\.pt\/PT" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocouts\.fr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocouts\.fr$
 RewriteRule ^/?$ "http\:\/\/autocouts\.fr\/FR" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocosti\.it$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosti\.it$
 RewriteRule ^/?$ "http\:\/\/autocosti\.it\/IT" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^automobilecosts\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.automobilecosts\.co\.uk$
 RewriteRule ^/?$ "http\:\/\/automobilecosts\.co\.uk\/GB" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autoausgaben\.de$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autoausgaben\.de$
 RewriteRule ^/?$ "http\:\/\/autoausgaben\.de\/DE" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^\*\.autocost\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.\*\.autocost\.org$
 RewriteRule ^/?$ "http\:\/\/autocost\.org" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
 RewriteRule ^/?$ "http\:\/\/exodaautokinitou\.gr\/GR" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocosts\.org\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org\.uk$
 RewriteRule ^/?$ "http\:\/\/autocosts\.org\.uk\/GB" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autokosten\.com\.de$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokosten\.com\.de$
 RewriteRule ^/?$ "http\:\/\/autokosten\.com\.de\/DE" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autokosten\.co\.nl$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokosten\.co\.nl$
 RewriteRule ^/?$ "http\:\/\/autokosten\.co\.nl\/NL" [R=301,L]
-RewriteCond %{HTTP_HOST} ^autokoszty\.info\.pl$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info\.pl$
-RewriteRule ^/?$ "http\:\/\/autokoszty\.info\.pl\/PL" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autokoszty\.info$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info$
+RewriteRule ^/?$ "http\:\/\/autokoszty\.info\/PL" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
+
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 
-<IfModule mod_expires.c>
-  Header append Cache-Control "public"
-  FileETag MTime Size
-  ExpiresActive On
-  ExpiresDefault "access plus 0 minutes"
-  ExpiresByType image/ico "access plus 1 years"
-  ExpiresByType text/css "access plus 1 years"
-  ExpiresByType text/javascript "access plus 1 years"
-  ExpiresByType image/gif "access plus 1 years"
-  ExpiresByType image/jpg "access plus 1 years"
-  ExpiresByType image/jpeg "access plus 1 years"
-  ExpiresByType image/bmp "access plus 1 years"
-  ExpiresByType image/png "access plus 1 years"
-</IfModule>
+RewriteCond %{HTTP_HOST} ^autocustos\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocustos\.com$
+RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE text/javascript
-  AddOutputFilterByType DEFLATE text/css
-  <IfModule mod_setenvif.c>
-    BrowserMatch ^Mozilla/4 gzip-only-text/html
-    BrowserMatch ^Mozilla/4\.0[678] no-gzip
-    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-  </IfModule>
-</IfModule>
+RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
+RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autogastos\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autogastos\.es$
+RewriteRule ^/?$ "http\:\/\/autocostes\.es" [R=301,L]
+
+
+
