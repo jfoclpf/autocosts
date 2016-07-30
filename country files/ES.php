@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: España
-// LANGAUAGE: español
+// LANGUAGE: español
 
 //***********************************************
 //											   **

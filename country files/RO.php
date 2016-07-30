@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: ROMÂNIA
-// LANGAUAGE: ROMÂNĂ
+// LANGUAGE: ROMÂNĂ
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

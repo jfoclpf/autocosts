@@ -1,6 +1,6 @@
 ﻿<?php
 // COUNTRY: NORGE
-// LANGAUAGE: NORSK
+// LANGUAGE: NORSK
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

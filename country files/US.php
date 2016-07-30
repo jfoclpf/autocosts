@@ -1,6 +1,6 @@
 ﻿<?php
 // COUNTRY: USA
-// LANGAUAGE: ENGLISH
+// LANGUAGE: ENGLISH
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

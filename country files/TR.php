@@ -1,6 +1,6 @@
 ﻿<?php
 // COUNTRY: TÜRKİYE
-// LANGAUAGE: TÜRKÇE
+// LANGUAGE: TÜRKÇE
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

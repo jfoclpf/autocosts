@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: UKRAINE
-// LANGAUAGE: UKRAINIAN
+// LANGUAGE: UKRAINIAN
 
 //***********************************************
 //											   **

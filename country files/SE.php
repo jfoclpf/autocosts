@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: SVERIGE
-// LANGAUAGE: SVENSKA
+// LANGUAGE: SVENSKA
 
 //***********************************************
 //											   **

@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: RUSSIA
-// LANGAUAGE: RUSSIAN
+// LANGUAGE: RUSSIAN
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

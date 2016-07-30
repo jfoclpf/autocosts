@@ -1,7 +1,7 @@
 ﻿<?php
 
 // COUNTRY: NETHERLAND
-// LANGAUAGE: NETHERLANDS
+// LANGUAGE: NETHERLANDS
 
 //***********************************************
 //											   **

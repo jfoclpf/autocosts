@@ -1,6 +1,6 @@
 ﻿<?php
 // COUNTRY: PORTUGAL
-// LANGAUAGE: PORTUGUESE
+// LANGUAGE: PORTUGUESE
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **

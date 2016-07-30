@@ -1,6 +1,6 @@
 ﻿<?php
 // COUNTRY: Republic of Ireland
-// LANGAUAGE: ENGLISH
+// LANGUAGE: ENGLISH
 //***********************************************
 //											   **
 //      Translation for AUTOCOSTS.INFO          **
