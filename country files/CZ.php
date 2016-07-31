@@ -57,7 +57,7 @@ $BUTTON_RERUN = 'Nový výpočet'; //run calculator button
 $WEB_PAGE_TITLE = 'Kalkulator výdajů na auto';
 $MAIN_TITLE = 'KALKULATOR VÝDAJŮ NA AUTO';
 $INITIAL_TEXT = 
-"Tento kalkulátor vám umožní zjistit<b>skutečné náklady</b> na vlastnictví auta v<b>České republice</b>. Obdržíte spolehlivý odhad toho, co ve skutečnosti musíte zaplatit, když chcete vlastnit auto. Vzhledem k tomu, že účtenky za provoz vozidla přicházejí nepravidelně v průběhu roku, je často obtížné odhadnout, jaké jsou skutečné celkové náklady na provoz vašeho auta. Zadávejte skutečné vstupné hodnoty. Co se týče nečekaných výdajů, jako jsou opravy po haváriích, nebo pokuty, vzpomeňte si, kolik jste utratili za tyto položky v průběhu několika posledních let. Ve výchozím nastavení jsou tyto výpočty prováděny měsíčně. Při zadávání desetinných čísel použijte desetinnou tečku, nikoliv čárku, například: 8.7 kilometrů mezi vaším domovem a místem práce.<br>";
+"Tento kalkulátor vám umožní zjistit <b>skutečné náklady</b> na vlastnictví auta v <b>České republice</b>. Obdržíte spolehlivý odhad toho, co ve skutečnosti musíte zaplatit, když chcete vlastnit auto. Vzhledem k tomu, že účtenky za provoz vozidla přicházejí nepravidelně v průběhu roku, je často obtížné odhadnout, jaké jsou skutečné celkové náklady na provoz vašeho auta. Zadávejte skutečné vstupné hodnoty. Co se týče nečekaných výdajů, jako jsou opravy po haváriích, nebo pokuty, vzpomeňte si, kolik jste utratili za tyto položky v průběhu několika posledních let. Ve výchozím nastavení jsou tyto výpočty prováděny měsíčně. Při zadávání desetinných čísel použijte desetinnou tečku, nikoliv čárku, například: 8.7 kilometrů mezi vaším domovem a místem práce.<br>";
 
 $HELP_PROJECT = 'Podpořte tento projekt' ;
 
