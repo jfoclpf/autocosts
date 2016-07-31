@@ -40,7 +40,7 @@ $avail_CT = array(
     "VE" => "Venezuela",
     "CL" => "Chile",
     "BO" => "Bolivia",
-    "GB" => "United Kingdom"
+    "UK" => "United Kingdom"
 );
 
 ?>
