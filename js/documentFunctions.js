@@ -54,7 +54,7 @@ function scrollPage(){
 
 /*functions which is used to change the form parts*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
-function openForm_part(part_name, part_number_origin, part_number_destiny, country) {
+function openForm_part(part_name, part_number_origin, part_number_destiny, country, language) {
     //alert("from "+part_number_origin+" to "+part_number_destiny +" - country:"+country);
 
     //shows form part n and hides the other parts
@@ -87,11 +87,13 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         }
         
         if (!hasLoadedPart[1]){
-            $.getScript('js/conversionFunctions.js'); 
+            $.getScript('js/conversionFunctions.js');
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
             $.getScript('php/print_results.php?country='+country); 
-            $.getScript('js/charts.php?country='+country);
+            $.getScript('js/charts.php?country='+country);            
+            $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
+            
             hasLoadedPart[1] = true;
         }
     }

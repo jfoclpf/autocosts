@@ -9,7 +9,7 @@
     <? include('./php/css_embed.php'); ?>
     <title><? echo $WEB_PAGE_TITLE ?></title>        
     <!--Embed all CSS files within CSS folder-->
-    <?=(new CSS_Embed()) ?>           
+    <?=(new CSS_Embed()) ?>   
 </head>
 <body>
 <div id="main_div">
@@ -30,8 +30,8 @@
             <!-- div2 = CENTRE layout column-->
             <div id="div2_td">
                 <div id="div2">
-                    <form class="roundCorner"  id="main_form" enctype="application/x-www-form-urlencoded"
-                          action="javascript:void(0);" name="custo" method="get">
+                    <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
+                          action="javascript:void(0);" name="custo">
 
                         <div id="title-div">
                             <br>
@@ -77,6 +77,7 @@
                         <!-- ************* ********* ************* -->
                     </form>
                     <br>
+                    </form>
                 </div>
             </div>
             <!--#######################################################################################-->

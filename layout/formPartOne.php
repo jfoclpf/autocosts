@@ -191,8 +191,8 @@
         </tr>
     </table>
     <div class="b-bottom">
-        <span class="step">Step 1/3</span>
-        <input class="button" type="submit" onclick="openForm_part('form_part', 1, 2, '<?php echo $GLOBALS["country"] ?>');"
+        <span class="step">1/3</span>
+        <input class="button" type="button" onclick="openForm_part('form_part', 1, 2, '<?php echo $GLOBALS["country"] ?>', '<?php echo $LANGUAGE_CODE ?>');"
             value="&raquo;"/>
     </div>
 </div>

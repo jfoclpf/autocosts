@@ -299,9 +299,9 @@
         </tr>
     </table>
     <div class="b-bottom">
-        <input class="button" type="submit" onclick="openForm_part('form_part', 2, 1)" value="&laquo;"/>
+        <input class="button" type="button" onclick="openForm_part('form_part', 2, 1)" value="&laquo;"/>
         <span class="step">2/3</span>
-        <input class="button" type="submit" onclick="openForm_part('form_part', 2, 3);" value="&raquo;"/>
+        <input class="button" type="button" onclick="openForm_part('form_part', 2, 3);" value="&raquo;"/>
     </div>
 </div>
 <!-- end of form_part2-->

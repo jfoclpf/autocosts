@@ -33,7 +33,7 @@ RewriteRule ^/?$ "http\:\/\/autocosti\.it\/IT" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^automobilecosts\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.automobilecosts\.co\.uk$
-RewriteRule ^/?$ "http\:\/\/automobilecosts\.co\.uk\/GB" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/automobilecosts\.co\.uk\/UK" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autoausgaben\.de$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autoausgaben\.de$
@@ -49,7 +49,7 @@ RewriteRule ^/?$ "http\:\/\/exodaautokinitou\.gr\/GR" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocosts\.org\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org\.uk$
-RewriteRule ^/?$ "http\:\/\/autocosts\.org\.uk\/GB" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocosts\.org\.uk\/UK" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autokosten\.com\.de$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokosten\.com\.de$

@@ -286,11 +286,76 @@
             </td>
         </tr>
     </table>
-    <div class="b-bottom">
-        <input class="button" type="submit" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
-        <input class="button" type="submit"
-            onclick="if(Run() <? if ($GLOBALS["country"] == "XX"){echo "&& false";} ?>){submit_data('<? echo $GLOBALS["country"] ?>');} scrollPage();"
-            value="<? echo $BUTTON_RUN; ?>"/>
+    
+    <div class="b-bottom">      
+        <div id="b-bottom_3_A">
+            <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
+            <!--Google reCaptcha-->
+            <div id="g-recaptcha" class="g-recaptcha"></div>
+        </div>
+        <div id="b-bottom_3_B">
+            <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
+            <!--Run button-->
+            <input id="run_button" class="button" type="submit" onclick="Run_form()" value="<? echo $BUTTON_RUN; ?>"/>
+        </div>
     </div>
-</div>
+
+    </div>
 <!-- end of form_part3-->
+
+<script>
+    //creates the grecaptcha after the API Google function was loaded
+    function grecaptcha_callback(){
+        grecaptcha.render( 'g-recaptcha', {
+          'sitekey' : '6LcdhB4TAAAAAKDAZ_BL4JGK0h0bK6eH3YgTdyIV',
+          'size' : 'normal',
+          'callback' : grecaptcha_solved,
+          'expired-callback' : grecaptcha_expired 
+        });
+    }
+    //runs when grecaptcha was solved
+    function grecaptcha_solved(){
+        Run_form();
+    }
+    //runs when grecaptcha has expired
+    function grecaptcha_expired(){
+        isUserHuman = false;
+        grecaptcha.reset();
+        document.getElementById("b-bottom_3_A").style.display = "inline-block";
+        document.getElementById("b-bottom_3_B").style.display = "none";
+    }
+    
+    var isUserHuman = false; //global variable that is true when Human is confirmed
+    //initially shows recaptcha and hides run button
+    document.getElementById("b-bottom_3_A").style.display = "inline-block";
+    document.getElementById("b-bottom_3_B").style.display = "none";
+    function Run_form(){
+        if(!isUserHuman){
+            //make a POST command to server to check if the user is human
+            $.ajax({
+                type: "POST",
+                url: "validate.php",
+                data: "&g-recaptcha-response=" + grecaptcha.getResponse()
+            }).done(function(result){
+                if(result=="ok"){
+                    if(Run() <? if ($GLOBALS["country"] == "XX"){echo "&& false";} ?>){
+                        submit_data('<? echo $GLOBALS["country"] ?>'); //submits data to database if no test version
+                    } 
+                    scrollPage();
+                    isUserHuman = true;
+                    document.getElementById("b-bottom_3_A").style.display = "none";
+                    document.getElementById("b-bottom_3_B").style.display = "inline-block";
+                    //alert(result);
+                }
+                else{
+                    //alert(result);
+                }
+            });
+        }
+        else{
+            if(Run() <? if ($GLOBALS["country"] == "XX"){echo "&& false";} ?>){
+                submit_data('<? echo $GLOBALS["country"] ?>'); //submits data to database if no test version
+            }
+        }                
+    }
+</script>

@@ -2,9 +2,14 @@
 
 // COUNTRY: RUSSIA
 // LANGUAGE: RUSSIAN
+
+$LANGUAGE_CODE = 'ru';
+//the language is according with the two-letter language code ISO 639-1
+//http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.INFO          **
+//      Translation for AUTOCOSTS.INFO         **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************

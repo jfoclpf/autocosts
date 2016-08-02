@@ -157,11 +157,17 @@ table>caption+thead>tr:first-child>td, table>caption+thead>tr:first-child>th, ta
 table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
     background: #fff;
 }
-/* BTN */
+
+/* Buttons */
+.b-bottom {
+    width: 100%;
+    display: table;
+}
+
 .button {
     display: inline-block;
     padding: 6px 12px;
-    margin: 4px;
+    margin: 20px 8px;
     font-size: 14px;
     font-weight: 400;
     line-height: 1.42857143;
@@ -182,6 +188,23 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     background-color: #b2b2b2;
     border-color: #969696;
 }
+/*Google reCaptcha */
+#g-recaptcha{
+    display: inline-block;
+    margin: 10px 0;
+    vertical-align: middle; 
+    border-color: #969696; 
+    background-image: none;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    color: #000;
+    border-color: #969696;
+    transform:scale(0.77);
+    -webkit-transform:scale(0.77);
+    transform-origin: center center;
+    -webkit-transform-origin:center center;
+}
+
 /* EM */
 img {
     width: 100%;
@@ -193,7 +216,6 @@ i {
 a {
     color: #333;
 }
-
 
 /*==== HEADER =====*/
 #banner_top {
@@ -273,10 +295,6 @@ a {
     float: left;
     margin: 2px 5px;
 }
-.b-bottom {
-    text-align: center;
-    padding: 20px;
-}
 .is_logo {
     padding: 14px 0;
 }
@@ -300,7 +318,6 @@ form.roundCorner {
 
 #reload_div {
     text-align: center;
-    margin: 15px 0 15px 0;
 }
 .clear{clear: both;}
 
