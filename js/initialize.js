@@ -1,5 +1,7 @@
 /* runs function initialize() every time the page is loaded */
 window.onload = initialize;
+var isUserHuman = false; //global variable for Google reCaptcha
+
 function initialize() {
     openForm_part("form_part", 0, 1); /*shows just part 1 of input form*/
     
@@ -25,6 +27,11 @@ function initialize() {
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
     fuelCalculationMethodChange('currency');
     carToJob(false);
+    
+    //Google reCaptcha issues
+    isUserHuman = false; //global variable that is true when Human is confirmed
+    document.getElementById("b-bottom_3_A").style.display = "inline-block"; //initially shows recaptcha and hides run button
+    document.getElementById("b-bottom_3_B").style.display = "none";
 }
 
 //function that runs when the page is resized

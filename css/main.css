@@ -127,10 +127,9 @@ input[type="radio"]{
     width: 40px;
 }
 #form_part1 .col {
-    width: 25%;
     display: inline-block;
-    white-space:nowrap;
-    margin:10px;
+    white-space: nowrap;
+    margin: 5px;
 }
 /*inputs which allow max of four digits*/
 #acquisitionYear {

@@ -96,6 +96,7 @@
 <!--jquery timer-->
 <script src="js/jquery/js_timer.js"></script>
 
+<script>var Country = '<? echo $GLOBALS["country"] ?>';</script>
 <script><?php include('js/validateForm.js.php'); ?></script>
 <script src="js/documentFunctions.js"></script>
 <script src="js/initialize.js"></script>

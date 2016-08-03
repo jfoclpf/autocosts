@@ -91,9 +91,12 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
             $.getScript('php/print_results.php?country='+country); 
-            $.getScript('js/charts.php?country='+country);            
-            $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
+            $.getScript('js/charts.php?country='+country);
             
+            $.getScript('js/google/g-recaptcha.js', function() {
+                $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
+            });
+                        
             hasLoadedPart[1] = true;
         }
     }
