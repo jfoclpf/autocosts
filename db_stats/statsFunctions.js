@@ -155,20 +155,24 @@ function CalculateStatistics(userIds, data, country){
     if(userIds.length!=0 && data.length!=0){
         var temp_i = []; //array with unique users, having one element per user 
         var temp_j = []; //array having the several inputs from the same user
-        
+  
         for(var i=0; i<userIds.length;i++){
             for(var j=0, n=0; j<data.length;j++){
-                if(data[j].uuid_client==userIds[i].uuid_client){            
+                if(data[j].uuid_client==userIds[i].uuid_client){          
                     
                     //checks if the entry is ok
                     //and if it is an input spam/bot (the time to fill the form for the first input mus be greater than a time value)
+                    //console.log("(i,j)=("+i+","+j+")"); console.log(data[j]);console.log(country);
                     if(is_DBentry_ok(data[j], country)
                         && ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
+                        //console.log("f1");
                         var f1 = get_DB_part1(data[j]);
+                        //console.log("f1");
                         var f2 = get_DB_part2(data[j]);
+                        //console.log("f3");
                         var f3 = get_DB_part3(data[j]);
+                        //console.log("calculate_costs");
                         var result = calculate_costs(f1, f2, f3, country);
-                        //alert(JSON.stringify(result, null, 4));
                         
                         //checks if the result is an outlier
                         if (was_result_ok(result, country)){
@@ -184,6 +188,39 @@ function CalculateStatistics(userIds, data, country){
             }
             temp_j = [];        
         }
+        
+        //if the array with the average results is empty
+        if(temp_i.length==0){
+            return {
+                dep:      0, 
+                ins:      0, 
+                cred:     0, 
+                insp:     0, 
+                carTax:   0,
+                standCos: 0,
+                
+                fuel:     0,
+                maint:    0,
+                rep:      0,
+                park:     0,
+                tolls:    0,
+                fines:    0,
+                wash:     0,
+                runnCos:  0,
+                
+                totCos:   0,
+                totCostsPerYear: 0,
+                
+                runCostsProDist: 0,
+                totCostsProDist: 0,
+                kinetic_speed:   0,
+                virtual_speed:   0,
+                
+                users_counter:   0
+            };
+        }
+                
+        //console.log("get_average_costs");
         var avg = get_average_costs(temp_i);
         
         //standing costs

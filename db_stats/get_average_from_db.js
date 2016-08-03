@@ -155,7 +155,7 @@ async.series([
         //builds the query to insert all the vaules for each country
         //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
         for (var i=0; i<countries.length; i++){ 
-            //console.log("Country: " + countries[i].Country);
+            console.log("Country: " + countries[i].Country);
 
             country_users = []; //array with unique_users for selected countries[i]
             country_data  = []; //array with everything for selected countries[i]
@@ -164,12 +164,13 @@ async.series([
                 if (unique_users[j].country==countries[i].Country)
                     country_users.push(unique_users[j]);
             }
-            //console.log(country_users);
+            //console.log("country_users:");console.log(country_users);
+            
             for (var j=0; j<AllUserInputDb.length; j++){                
                 if (AllUserInputDb[j].country==countries[i].Country)
                     country_data.push(AllUserInputDb[j]);
             }
-            //console.log(country_data);
+            //console.log("country_data:");console.log(country_data);
 
             var country_object = {
                 code: countries[i].Country,
@@ -178,7 +179,7 @@ async.series([
                 fuel_efficiency_std: countries[i].fuel_efficiency_std,
                 fuel_price_volume_std: countries[i].fuel_price_volume_std							
             };
-            //console.log(country_object);
+            //console.log("country_object:");console.log(country_object);
             
             var stats_results = CalculateStatistics(country_users, country_data, country_object);
             
