@@ -24,7 +24,7 @@ function Run_form(country){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
-            url: "validate.php",
+            url: "google/captcha_validate.php",
             data: "&g-recaptcha-response=" + grecaptcha.getResponse()
         }).done(function(result){
             if(result=="ok"){

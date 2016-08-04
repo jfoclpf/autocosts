@@ -100,6 +100,6 @@
 <script><?php include('js/validateForm.js.php'); ?></script>
 <script src="js/documentFunctions.js"></script>
 <script src="js/initialize.js"></script>
-<?php include_once("js/google/analyticstracking.php") ?>
+<?php include_once("google/analyticstracking.php") ?>
 </body>
 </html>

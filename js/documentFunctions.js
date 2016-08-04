@@ -93,7 +93,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('php/print_results.php?country='+country); 
             $.getScript('js/charts.php?country='+country);
             
-            $.getScript('js/google/g-recaptcha.js', function() {
+            $.getScript('google/g-recaptcha.js', function() {
                 $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
             });
                         
@@ -117,8 +117,8 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         }
         
         if (!hasLoadedPart[3]){
-            $.getScript('js/google/rgbcolor.js');
-            $.getScript('js/google/canvg.js');
+            $.getScript('google/rgbcolor.js');
+            $.getScript('google/canvg.js');
             $.getScript('js/pdf/generatePDF.js');
             $.getScript('js/pdf/html2canvas.js'); 
             $.getScript('js/pdf/jspdf.js'); 
