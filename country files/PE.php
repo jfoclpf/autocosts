@@ -1,15 +1,13 @@
 ﻿<?php
 
 // COUNTRY: Perú
-// LANGUAGE: español
+// LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
-//the language is according with the two-letter language code ISO 639-1
-//http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.INFO         **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -17,7 +15,7 @@ $LANGUAGE_CODE = 'es-419';
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 
 //Fuel efficiency for car engine standard
-$fuel_efficiency_std_option = 2;
+$fuel_efficiency_std_option = 6;
 //1 - l/100km - litres per 100 kilometres
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
@@ -29,7 +27,7 @@ $distance_std_option = 1;
 //2 - miles
 
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
-$fuel_price_volume_std = 1;
+$fuel_price_volume_std = 3;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
@@ -294,7 +292,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Introduzca la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en peso(moneda) o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en soles o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el auto para ir al trabajo';

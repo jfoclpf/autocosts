@@ -1,6 +1,6 @@
 ﻿<?php
 
-// COUNTRY: Ecuador
+// COUNTRY: República Dominicana
 // LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
@@ -15,11 +15,15 @@ $LANGUAGE_CODE = 'es-419';
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 
 //Fuel efficiency for car engine standard
-$fuel_efficiency_std_option = 2;
+$fuel_efficiency_std_option = 6;
 //1 - l/100km - litres per 100 kilometres
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
+//5 - l/mil - litres per 10 kilometers 
+//6 - km/gal(US) - km per US gallon 
+
+
 
 //Standard distance
 $distance_std_option = 1;
@@ -27,22 +31,30 @@ $distance_std_option = 1;
 //2 - miles
 
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
-$fuel_price_volume_std = 1;
+$fuel_price_volume_std = 3;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
 
+//Sources: 
+//https://en.wikipedia.org/wiki/Gasoline_and_diesel_usage_and_pricing#Typical_gasoline_prices_around_the_world
+//http://www.dominicantoday.com/dr/economy/2016/5/6/59187/All-fuel-prices-unchanged-May-7-to-13
+
+
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'USD';
-$CURR_NAME = 'Dólar';
-$CURR_NAME_PLURAL = 'Dólares';
-$CURR_NAME_BIG_PLURAL = 'DOLARES';
-$CURR_SYMBOL = '&#36;';
+$CURR_CODE = 'DOP';
+$CURR_NAME = 'Peso';
+$CURR_NAME_PLURAL = 'Pesos';
+$CURR_NAME_BIG_PLURAL = 'PESOS';
+$CURR_SYMBOL = 'RD&36;'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'L'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+
+
+
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
@@ -60,7 +72,7 @@ $BUTTON_RERUN = 'Volver'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora de costos de automóvil';
 $MAIN_TITLE = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 $INITIAL_TEXT = 
-"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un auto <b>en Ecuador</b>. Generalmente te dará una buena estimación de lo que realmente necesitas gastar para permitirte tener un automóvil. Como los gastos del coche pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados como reparación después de un accidente o multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el lugar de trabajo.<br>";
+"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un auto <b>en Puerto Rico</b>. Generalmente te dará una buena estimación de lo que realmente necesitas gastar para permitirte tener un automóvil. Como los gastos del coche pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados como reparación después de un accidente o multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el lugar de trabajo.<br>";
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL AUTO<br>para móviles';
@@ -99,7 +111,7 @@ $DISTANCE = "Distancia";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
-$COUNTRY_NAME = 'Ecuador';
+$COUNTRY_NAME = 'Puerto Rico';
 $STATISTIC_TITLE = 'Costos de Automóviles de';
 $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';
@@ -139,7 +151,7 @@ $FINAL_VALUE = 'Precio de hoy';
 $AQ_VALUE = 'Precio de compra';
 
 //insurance
-$INSURANCE = 'Seguro de vehículo y SPPAT';
+$INSURANCE = 'Seguro del vehículo';
 $INSURANCE_SHORT = 'Seguro';
 
 //credit
@@ -158,21 +170,21 @@ $CREDIT_RESIDUAL_VALUE1 = 'Valor residual';
 $CREDIT_INSTALMENT = 'Valor promedio mensual';
 
 //inspection
-$INSPECTION = 'Revisión Técnica Vehicular';
-$INSPECTION_SHORT = 'Revisión';
-$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el auto a revisión?';
-$INSPECTION_PRICE =  'Valor promedio por cada revisión del vehículo';
+$INSPECTION = 'Inspección Técnica Vehicular (ITV)';
+$INSPECTION_SHORT = 'Inspección';
+$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el auto a incpección?';
+$INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
 $EACH_ONE_DURING = 'cada uno durante'; //5 times costing 15€ *each one during* 20 months (inspection)
 $TIMES_COSTING = 'veces costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
-$ROAD_TAXES = 'Impuestos del vehículo';
-$ROAD_TAXES_SHORT = ' Impuestos del vehículo';
-$ROAD_TAXES_VALUE = 'Impuesto a la Propiedad de los Vehículos motorizados de transporte Terrestre y de carga y otros impuestos de tu auto:<br><i>pago realizado al estado</i>';
+$ROAD_TAXES = 'Impuesto de Circulación de Vehículos (ICV)';
+$ROAD_TAXES_SHORT = ' Marbete';
+$ROAD_TAXES_VALUE = 'Impuesto de Circulación de Vehículos:<br><i>pago realizado al estado</i>';
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, gasoil, GLP, electricidad, gas natural';
+$FUEL_DESC = 'Gasolina, diesel, korosene, gaoleo, GLP, electricidad';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en auto';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en auto';
@@ -292,7 +304,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Introduzca la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en dólares o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en peso(moneda) o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el auto para ir al trabajo';

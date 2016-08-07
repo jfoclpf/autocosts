@@ -1,15 +1,13 @@
 ﻿<?php
 
 // COUNTRY: Colombia
-// LANGUAGE: español
+// LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
-//the language is according with the two-letter language code ISO 639-1
-//http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.INFO         **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -22,8 +20,6 @@ $fuel_efficiency_std_option = 6;
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
-//5 - l/mil - litres per 10 kilometers
-//6 - km/gal(US) - km per US gallon
 
 //Standard distance
 $distance_std_option = 1;
@@ -45,8 +41,8 @@ $CURR_NAME_BIG_PLURAL = 'PESOS';
 $CURR_SYMBOL = '&#36;';
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
-$STD_FUEL_CALC = 'km/galón'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'galón'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
+$STD_VOLUME_SHORT = 'L'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day

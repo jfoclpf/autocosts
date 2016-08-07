@@ -1,11 +1,9 @@
 ﻿<?php
 
 // COUNTRY: Venezuela
-// LANGUAGE: español
+// LANGAUAGE: español
 
-$LANGUAGE_CODE = 'es';
-//the language is according with the two-letter language code ISO 639-1
-//http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+$LANGUAGE_CODE = 'es-419';
 
 //***********************************************
 //											   **
@@ -294,7 +292,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Introduzca la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en peso(moneda) o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en bolívares o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el auto para ir al trabajo';

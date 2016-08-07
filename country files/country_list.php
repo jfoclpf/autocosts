@@ -40,6 +40,17 @@ $avail_CT = array(
     "VE" => "Venezuela",
     "CL" => "Chile",
     "BO" => "Bolivia",
+    "CR" => "Costa Rica",
+    "CU" => "Cuba",
+    "DO" => "República Dominicana",
+    "EC" => "Ecuador",
+    "GT" => "Guatemala",
+    "NI" => "Nicaragua",
+    "PA" => "Panamá",
+    "PR" => "Puerto Rico",
+    "PY" => "Paraguay",
+    "SV" => "El Salvador",
+    "UY" => "Uruguay",
     "UK" => "United Kingdom"
 );
 
