@@ -1,10 +1,9 @@
 /***** DOCUMENT JS FUNCTIONS *******/
-
 /*====================================================*/
 /*Functions which change the visual aspect of the page*/
 
 /*function that is run when the button Reload is clicked*/
-function reload() {
+function reload(onDocumentLoad) {
     TimeCounter.resetStopwatch();
     
     //divs which are presented in the results are hidden upon reload
@@ -15,6 +14,16 @@ function reload() {
     bar_chart_object.style.display = 'none';
     text_object.style.display = 'none';
     
+    ResultIsShowing=false; 
+    
+    //reloaded to original screen after the result tables were shown
+    if(!onDocumentLoad){
+        $('#div1').css('display', 'block');
+        $('#div3').css('display', 'block');
+        $('#description').html(DescriptionHTML);
+        resized();
+    }
+     
     openForm_part('form_part', 0, 1, false);
 }
 
@@ -28,6 +37,22 @@ function resized(){
     //adapts the margin-top CSS value according to the window width
     var margin_top_desc = $("#banner_top").outerHeight(true) - 10;
     $('#description').css("margin-top", margin_top_desc);
+    
+    //mobile devices
+    if($(document ).width()<=768){
+        $('#div1_td').css('width', '100%');
+        $('#div3_td').css('width', '100%');
+    }
+    else{
+        if(ResultIsShowing){
+            $('#div1_td').css('width', '15%');
+            $('#div3_td').css('width', '15%');
+        }
+        else{
+            $('#div1_td').css('width', '22%');
+            $('#div3_td').css('width', '22%');
+        }
+    }
 }
 
 /*function that scrolls the page to the beggining of the form*/

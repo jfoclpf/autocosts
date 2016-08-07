@@ -330,9 +330,6 @@ form.roundCorner {
     text-align: center;
     vertical-align:top;
 }
-#div3_td, #div1_td{
-    width:22%;
-}
 #div3, #div1, #div2 {
     background: #f0f0f0;
     border: 2px solid #b4b4b4;
@@ -431,6 +428,7 @@ form.roundCorner {
 
 #div2 td {
     padding: 8px 3% 0;
+    overflow: hidden;
 }
 #title-div {
     text-align: center;
@@ -646,6 +644,7 @@ form.roundCorner {
 
 /*===============================*/
 @media all and (max-width: 1024px) {
+    
     #div3_td, #div1_td {
         width:25%;
     }
@@ -674,13 +673,22 @@ form.roundCorner {
     }
 }
 
+/***********************************************************/
+/*============ Adapts for mobile devices ==================*/
+/***********************************************************/
 /*The treshold from which the blocks are vertically aligned*/
+
 @media all and (max-width: 768px) {
+    
+    #container_table{
+        display: block;
+    }
+    
     #main_div{
         padding: 2.5%;
     }
     #div3_td, #div1_td, #div2_td {
-        display: inline-block;
+        display: block;
         vertical-align: middle;
         width: 100%;
     }

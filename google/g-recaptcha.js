@@ -45,6 +45,7 @@ function Run_form(country){
     else{
         if(Run() && country != "XX"){
             submit_data(country); //submits data to database if no test version
-        } 
+        }
+        scrollPage();
     }                
 }

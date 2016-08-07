@@ -38,6 +38,18 @@ function Run(){
     result_object.innerHTML = tables_HTML;
     result_object.style.display='block';
     
+    //hides description, left and right columns
+    $('#div1').css('display', 'none');
+    $('#div3').css('display', 'none');
+    $('#description').html('');
+    
+    //enlarges center div
+    $('#div1_td').css('width', '15%');
+    $('#div3_td').css('width', '15%');
+    
+    //global variable indicating the result are shown
+    ResultIsShowing=true;
+    
     return true;
 }
 

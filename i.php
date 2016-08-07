@@ -67,7 +67,7 @@
                         </div>
 
                         <div id="reload_div">
-                            <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload();"/>&nbsp;
+                            <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
                             <form><input type="button" class="button" value="<? echo $WORD_PRINT; ?>"
                                          onclick="PrintElem('#result_div','#pie_chart_div','#bar_chart_div','#text_div', '<? echo $WEB_PAGE_TITLE; ?>');" /></form>&nbsp;
                             <input id="generate_PDF" type="button" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<? echo $GLOBALS['country']?>')" />
@@ -96,7 +96,13 @@
 <!--jquery timer-->
 <script src="js/jquery/js_timer.js"></script>
 
-<script>var Country = '<? echo $GLOBALS["country"] ?>';</script>
+<!--define global JS variables-->
+<script>
+    var Country = '<? echo $GLOBALS["country"] ?>';
+    var input_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object, text_object;
+    var ResultIsShowing, DescriptionHTML;
+</script>
+
 <script><?php include('js/validateForm.js.php'); ?></script>
 <script src="js/documentFunctions.js"></script>
 <script src="js/initialize.js"></script>

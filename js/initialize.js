@@ -6,15 +6,19 @@ function initialize() {
     openForm_part("form_part", 0, 1); /*shows just part 1 of input form*/
     
     //divs that need to be hidden
-    input_object = document.getElementById('input_div'); /*tabela de entrada*/
-    result_object = document.getElementById('result_div'); /*resultados*/
+    input_object = document.getElementById('input_div'); /*entry form*/
+    result_object = document.getElementById('result_div'); /*results*/
     frame_witdh = document.getElementById('result_div').offsetWidth;
     reload_object = document.getElementById('reload_div'); /*reload button*/
     pie_chart_object = document.getElementById('pie_chart_div'); /*pie chart*/
     bar_chart_object = document.getElementById('bar_chart_div'); /*columns chart*/
     text_object = document.getElementById('text_div'); /*msg text*/
+    
     //hide divs that shall not appear on the front page 
-    reload();
+    reload(true);
+    ResultIsShowing=false; //global variable indicating whether the results are being shown
+    DescriptionHTML = $('#description').html();
+    
     //make some initial settings in the options of the form
     tolls_daily(false);
     document.getElementById("radio_fuel_euros").checked = true;
