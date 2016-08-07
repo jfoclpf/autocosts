@@ -531,61 +531,70 @@ function countryCheck(value){
     return res;
 }
 
-function drawChartResult(frame_witdh, data){
+function drawChartResult(frame_witdh, data, div_width){
     
-    //avoid printing the charts in mobile devices
+    //it doesn't print the charts in very small screen width
     var temp_width=document.documentElement.clientWidth;
-    if (temp_width>500) {
-        //checks if depreciation is greater or equal to zero, to print chart with no error
-        var desvalor_temp;
-        if(data.monthly_costs.depreciation < 0) {
-            desvalor_temp=0;
-        } else {
-            desvalor_temp = data.monthly_costs.depreciation; 
-        }
-
-        //draw Pie Chart
-        var pie_chart_width=parseInt(frame_witdh*1);
-        var pie_chart_height=parseInt(pie_chart_width*4/6);
-
-        drawPieChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
-            parseFloat(data.monthly_costs.fuel.toFixed(1)),
-            parseFloat(desvalor_temp.toFixed(1)),
-            parseFloat(data.monthly_costs.credit.toFixed(1)),
-            parseFloat(data.monthly_costs.inspection.toFixed(1)),
-            parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-            parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-            parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-            parseFloat(data.monthly_costs.parking.toFixed(1)),
-            parseFloat(data.monthly_costs.tolls.toFixed(1)),
-            parseFloat(data.monthly_costs.fines.toFixed(1)),
-            parseFloat(data.monthly_costs.washing.toFixed(1)),
-            pie_chart_width,
-            pie_chart_height
-        );
-
-        //draw Bar Chart
-        var bar_chart_width=parseInt(frame_witdh*0.80);
-        var bar_chart_height=parseInt(bar_chart_width*22/50);
-
-        drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 
-            parseFloat(data.total_running_costs_month.toFixed(1)),
-            bar_chart_width,
-            bar_chart_height
-        );
-
-        pie_chart_object.style.width=pie_chart_width+"px";
-        pie_chart_object.style.display='block';
-        bar_chart_object.style.width=bar_chart_width+"px";
-        bar_chart_object.style.display='block';
+    if (temp_width<300){
+        return;
     }
     
-    reload_object.style.display='block';
+    //prepares the the correspondent divs
+    $("#pie_chart_div").css('display', 'inline-block');
+    $("#pie_chart_div").css('width', div_width);
+    $("#bar_chart_div").css('display', 'inline-block');
+    $("#bar_chart_div").css('width', div_width);
+    
+    //checks if depreciation is greater or equal to zero, to print chart with no error
+    var desvalor_temp;
+    if(data.monthly_costs.depreciation < 0) {
+        desvalor_temp=0;
+    } else {
+        desvalor_temp = data.monthly_costs.depreciation; 
+    }
+
+    //draw Pie Chart
+    var pie_chart_width=parseInt(frame_witdh*1);
+    var pie_chart_height=parseInt(pie_chart_width*4/6);
+
+    drawPieChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
+        parseFloat(data.monthly_costs.fuel.toFixed(1)),
+        parseFloat(desvalor_temp.toFixed(1)),
+        parseFloat(data.monthly_costs.credit.toFixed(1)),
+        parseFloat(data.monthly_costs.inspection.toFixed(1)),
+        parseFloat(data.monthly_costs.maintenance.toFixed(1)),
+        parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
+        parseFloat(data.monthly_costs.car_tax.toFixed(1)),
+        parseFloat(data.monthly_costs.parking.toFixed(1)),
+        parseFloat(data.monthly_costs.tolls.toFixed(1)),
+        parseFloat(data.monthly_costs.fines.toFixed(1)),
+        parseFloat(data.monthly_costs.washing.toFixed(1)),
+        pie_chart_width,
+        pie_chart_height
+    );
+
+    //draw Bar Chart
+    var bar_chart_width=parseInt(frame_witdh*0.80);
+    var bar_chart_height=parseInt(bar_chart_width*22/50);
+
+    drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 
+        parseFloat(data.total_running_costs_month.toFixed(1)),
+        bar_chart_width,
+        bar_chart_height
+    );
+
+    //adjust the charst divs
+    $("#pie_chart_div").css('display', 'inline-block');
+    $("#pie_chart_div").css('width', 'auto');
+    $("#bar_chart_div").css('display', 'inline-block');
+    $("#bar_chart_div").css('width', 'auto');
     
     if(data.total_costs_month >= 150 && data.age_months > 6) {
         var text_msg="<div style=\"border-top:rgb(180, 180, 180) 3px solid;\"><br><div id=\"final-text1\" class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"+(data.total_costs_year / 100).toFixed(0)*100 + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
         text_msg+="<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + data.age_months + " <?echo $MONTHS_POSS?></div><br><center><div id=\"final-text2\" style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div></center><\/div><br>";
         text_object.innerHTML=text_msg;
         text_object.style.display='block';
-    }   
+    }
+    
+
 }

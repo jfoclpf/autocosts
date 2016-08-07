@@ -21,6 +21,7 @@ function Run(){
     };
     
     var data = calculate_costs(f1, f2, f3, country);
+    CalculatedData = data; //assigns to global variable
 
     result_object = document.getElementById('result_div');
     input_object.style.display = 'none';
@@ -33,11 +34,12 @@ function Run(){
     tables_HTML += print_feffort_table(f1, f2, f3, data);
     tables_HTML += "<br><br>";
     
-    drawChartResult(frame_witdh, data);
-        
     result_object.innerHTML = tables_HTML;
     result_object.style.display='block';
     
+    drawChartResult(frame_witdh, data, '95%');
+    reload_object.style.display='block';
+        
     //hides description, left and right columns
     $('#div1').css('display', 'none');
     $('#div3').css('display', 'none');

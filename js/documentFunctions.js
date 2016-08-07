@@ -32,14 +32,14 @@ function valueselect(myval) {
     window.location.href = "" + myval;
 }
 
-/*function that runs when the page is resized*/
+/*function that runs when the browser window is resized*/
 function resized(){
     //adapts the margin-top CSS value according to the window width
     var margin_top_desc = $("#banner_top").outerHeight(true) - 10;
     $('#description').css("margin-top", margin_top_desc);
     
     //mobile devices
-    if($(document ).width()<=768){
+    if($(document).width()<=768){
         $('#div1_td').css('width', '100%');
         $('#div3_td').css('width', '100%');
     }
@@ -52,6 +52,12 @@ function resized(){
             $('#div1_td').css('width', '22%');
             $('#div3_td').css('width', '22%');
         }
+    }
+    
+    //if the result are showing resizes the charts
+    if(ResultIsShowing){
+        var frame_witdh = document.getElementById('input_div').offsetWidth;
+        drawChartResult(frame_witdh, CalculatedData, '95%');
     }
 }
 

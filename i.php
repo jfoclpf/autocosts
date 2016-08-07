@@ -100,7 +100,7 @@
 <script>
     var Country = '<? echo $GLOBALS["country"] ?>';
     var input_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object, text_object;
-    var ResultIsShowing, DescriptionHTML;
+    var ResultIsShowing, DescriptionHTML, CalculatedData;
 </script>
 
 <script><?php include('js/validateForm.js.php'); ?></script>
