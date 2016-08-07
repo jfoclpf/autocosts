@@ -49,7 +49,7 @@ function Run(){
     $('#div1_td').css('width', '15%');
     $('#div3_td').css('width', '15%');
     
-    //global variable indicating the result are shown
+    //global variable indicating the results are shown
     ResultIsShowing=true;
     
     return true;
