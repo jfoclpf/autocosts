@@ -536,6 +536,8 @@ function drawChartResult(frame_witdh, data, div_width){
     //it doesn't print the charts in very small screen width
     var temp_width=document.documentElement.clientWidth;
     if (temp_width<300){
+        $("#pie_chart_div").css('display', 'none');
+        $("#bar_chart_div").css('display', 'none');
         return;
     }
     
