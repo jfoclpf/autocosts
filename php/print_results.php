@@ -576,8 +576,8 @@ function drawChartResult(frame_witdh, data, div_width){
     );
 
     //draw Bar Chart
-    var bar_chart_width=parseInt(frame_witdh*0.80);
-    var bar_chart_height=parseInt(bar_chart_width*22/50);
+    var bar_chart_width=parseInt(frame_witdh*0.7);
+    var bar_chart_height=parseInt(bar_chart_width*35/50);
 
     drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 
         parseFloat(data.total_running_costs_month.toFixed(1)),

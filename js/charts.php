@@ -35,7 +35,7 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
         chartArea: {left: 0, top: 10, width: "90%", height: "90%"},
         width: char_width,
         height: char_height
-        };
+    };
 	
 	var chart_div = document.getElementById('pie_chart_div');
     chart = new google.visualization.PieChart(chart_div);	      
@@ -51,10 +51,13 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 
 //draw bar chart
 function drawBarChart(fixos, variav, char_width, char_height) {
-// Create and populate the data table.
-    var data = google.visualization . arrayToDataTable([['Tipo de custo', '<? echo $FIXED_COSTS; ?>', '<? echo $RUNNING_COSTS; ?>'],['<? echo $COSTS; ?>', fixos, variav]]);
+    
+    var chart_legend, options;
+    
+    // Create and populate the data table.
+    var data = google.visualization.arrayToDataTable([['Tipo de custo', '<? echo $FIXED_COSTS; ?>', '<? echo $RUNNING_COSTS; ?>'],['<? echo $COSTS; ?>', fixos, variav]]);
 
-// Create and draw the visualization.
+    // Create and draw the visualization.
 	var chart_div = document.getElementById('bar_chart_div');
     var chart1 = new google.visualization.ColumnChart(chart_div);
 	
@@ -64,13 +67,25 @@ function drawBarChart(fixos, variav, char_width, char_height) {
         img_div.innerHTML = '<img src="' + chart1.getImageURI() + '">';        
     });
 	
-	
-    chart1.draw(data, {title: "Custos fixos/variáveis",
-                backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
-                chartArea: { left: 0, top: 0, width: "70%", height: "100%"},
-                vAxis: { minValue: 0},
-                width: char_width,
-                height: char_height
-                }
-            );
+    //cross browser solution
+    var window_width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (window_width<450){
+        chart_legend = "none";
+    }
+    else{
+        chart_legend = "right";
+    }
+    
+    options = {
+        title: "Custos fixos/variáveis",
+        backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
+        chartArea: { left: 0, top: 5, width: "70%", height: "100%"},
+        vAxis: { minValue: 0},
+        bar: {groupWidth: "60%"},
+        legend: {position: chart_legend},
+        width: char_width,
+        height: char_height
+    };
+    	
+    chart1.draw(data, options);
 }

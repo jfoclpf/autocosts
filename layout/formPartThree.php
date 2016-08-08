@@ -296,7 +296,7 @@
         <div id="b-bottom_3_B">
             <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
             <!--Run button-->
-            <input id="run_button" class="button" type="submit" onclick="Run_form()" value="<? echo $BUTTON_RUN; ?>"/>
+            <input id="run_button" class="button" type="submit" onclick="Run_form(Country)" value="<? echo $BUTTON_RUN; ?>"/>
         </div>
     </div>
 
