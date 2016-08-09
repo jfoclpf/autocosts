@@ -589,15 +589,14 @@ function countryCheck(value){
 function drawChartResult(frame_witdh, data){
     
     //client width under which the charts are not shown
-    var WIDTH_PX_OFF = 300;
+    var WIDTH_PX_OFF = 280;
     //minimum ratio width of charts as frame_witdh becomes too wide
     var MIN_RATIO = 0.7;
     //width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO
     var MIN_RATIO_WIDTH = 750;
 
     //it doesn't print the charts in very small screen width
-    var temp_width = document.documentElement.clientWidth;
-    if (temp_width < WIDTH_PX_OFF) {
+    if (frame_witdh < WIDTH_PX_OFF) {
         $("#pie_chart_div").css('display', 'none');
         $("#bar_chart_div").css('display', 'none');
         $("#text_div").css('padding', '0');
@@ -605,16 +604,18 @@ function drawChartResult(frame_witdh, data){
         return;
     }
     
-    //make charts width adjustments according to the div_width
+    //make charts width adjustments according to the div_width (uses linear expression y=mx+b)
+    var ratio;
     if (frame_witdh > MIN_RATIO_WIDTH) {
-        frame_witdh = MIN_RATIO * frame_witdh;
+        ratio = MIN_RATIO;
     }
     else if(frame_witdh > WIDTH_PX_OFF) {
-        var b = WIDTH_PX_OFF * (MIN_RATIO-1) / (MIN_RATIO_WIDTH-WIDTH_PX_OFF) - 1;
         var m = (MIN_RATIO - 1) / (MIN_RATIO_WIDTH - WIDTH_PX_OFF);
-        frame_witdh = m * frame_witdh + b;
+        var b = 1 - m * WIDTH_PX_OFF;
+        ratio = m * frame_witdh + b;
     }
-    
+    frame_witdh = ratio * frame_witdh;
+       
     //prepares the the correspondent divs
     $("#pie_chart_div").css('display', 'inline-block');
     $("#pie_chart_div").css('width', '95%');
