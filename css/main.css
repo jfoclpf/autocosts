@@ -98,6 +98,16 @@ input[type="radio"]{
     margin: 5px 4px 5px 8px;
 }
 
+/*hides spin buttons on form input number*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 /*Form inputs which allow max of TWO digits*/
 #acquisitionMonth,
 #numberInspections,

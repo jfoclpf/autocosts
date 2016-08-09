@@ -13,9 +13,9 @@
                 <? echo $AQ_DATE ?>
             </td>
             <td id="depr_input_td">
-                <input id="acquisitionMonth" type="text" name="auto_mes" size="3" maxlength="2" value="<? echo $STD_ACQ_MONTH; ?>">
+                <input id="acquisitionMonth" type="number" name="auto_mes" size="3" maxlength="2" value="<? echo $STD_ACQ_MONTH; ?>">
                 &#8209;<!--non breakable hyphen-->
-                <input id="acquisitionYear" type="text" name="auto_ano" size="6" maxlength="4" value="<? echo $STD_ACQ_YEAR; ?>">
+                <input id="acquisitionYear" type="number" name="auto_ano" size="6" maxlength="4" value="<? echo $STD_ACQ_YEAR; ?>">
             </td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 <? echo $COM_VALUE ?>
             </td>
             <td>
-                <input type="text" id="commercialValueAtAcquisition" name="auto_val_inicial" size="10" maxlength="12" value="<? echo $STD_PRICE_PAID; ?>">
+                <input type="number" id="commercialValueAtAcquisition" name="auto_val_inicial" size="10" maxlength="12" value="<? echo $STD_PRICE_PAID; ?>">
                 <span class="p2">
                     <? echo $CURR_SYMBOL ?>
                 </span>
@@ -34,7 +34,7 @@
                 <? echo $COM_VALUE_TODAY ?>
             </td>
             <td>
-                <input type="text" id="commercialValueAtNow" name="auto_val_final" size="10" maxlength="12" value="<? echo $STD_PRICE_TODAY; ?>">
+                <input type="number" id="commercialValueAtNow" name="auto_val_final" size="10" maxlength="12" value="<? echo $STD_PRICE_TODAY; ?>">
                 <span class="p2">
                     <? echo $CURR_SYMBOL ?>
                 </span>
@@ -74,7 +74,7 @@
                 </div>
             </td>
             <td>
-                <input id="insuranceValue" type="text" name="seguro_val" size="9" maxlength="10"
+                <input id="insuranceValue" type="number" name="seguro_val" size="9" maxlength="10"
                     value="<? echo $STD_INSURANCE_SEM; ?>">
                 <span class="p2">
                     <? echo $CURR_SYMBOL ?>
@@ -104,7 +104,7 @@
                     <? echo $CREDIT_LOAN ?>
                 </td>
                 <td>
-                    <input id="borrowedAmount" type="text" name="cred_auto_montante" size="9" maxlength="12" value="<? echo $STD_LOAN; ?>">
+                    <input id="borrowedAmount" type="number" name="cred_auto_montante" size="9" maxlength="12" value="<? echo $STD_LOAN; ?>">
                     <span class="p2">
                         <? echo $CURR_SYMBOL ?>
                     </span>
@@ -115,7 +115,7 @@
                     <? echo $CREDIT_PERIOD ?>
                 </td>
                 <td>
-                    <input id="numberInstallments" type="text" name="cred_auto_period" size="9" maxlength="3" value="<? echo $STD_PERIOD_OF_CREDIT; ?>">
+                    <input id="numberInstallments" type="number" name="cred_auto_period" size="9" maxlength="3" value="<? echo $STD_PERIOD_OF_CREDIT; ?>">
           <span>
           <? echo $MONTHS ?>
           </span>
@@ -126,7 +126,7 @@
                     <? echo $CREDIT_AVERAGE_VALUE ?>
                 </td>
                 <td>
-                    <input id="amountInstallment" type="text" name="cred_auto_val_mes" size="9" maxlength="9" value="<? echo $STD_MONTHLY_PAY; ?>">
+                    <input id="amountInstallment" type="number" name="cred_auto_val_mes" size="9" maxlength="9" value="<? echo $STD_MONTHLY_PAY; ?>">
                     <span>
                         <? echo $CURR_SYMBOL ?>/<? echo $MONTH ?>
                     </span>
@@ -137,7 +137,7 @@
                     <? echo $CREDIT_RESIDUAL_VALUE ?>
                 </td>
                 <td>
-                    <input id="residualValue" type="text" name="cred_auto_valresidual" size="9" maxlength="12" value="<? echo $STD_RESIDUAL_VALUE; ?>">
+                    <input id="residualValue" type="number" name="cred_auto_valresidual" size="9" maxlength="12" value="<? echo $STD_RESIDUAL_VALUE; ?>">
                     <span>
                         <? echo $CURR_SYMBOL ?>
                     </span>
@@ -155,7 +155,7 @@
                 <? echo $INSPECTION_NBMR_TIMES ?>
             </td>
             <td>              
-                <input id="numberInspections" type="text" name="nr_vezes_inspecao" size="6" maxlength="2" value="<? echo $STD_NBR_INSPECTION; ?>">
+                <input id="numberInspections" type="number" name="nr_vezes_inspecao" size="6" maxlength="2" value="<? echo $STD_NBR_INSPECTION; ?>">
                 <span>
                     <? echo $WORD_TIMES ?>
                 </span>
@@ -166,7 +166,7 @@
                 <? echo $INSPECTION_PRICE ?>
             </td>
             <td>
-                <input id="averageInspectionCost" type="text" name="preco_inspecao" size="6" maxlength="9" value="<? echo $STD_INSPECTION_PRICE; ?>">
+                <input id="averageInspectionCost" type="number" name="preco_inspecao" size="6" maxlength="9" value="<? echo $STD_INSPECTION_PRICE; ?>">
                 <span class="p2">
                     <? echo $CURR_SYMBOL ?>
                 </span>
@@ -183,7 +183,7 @@
                 <? echo $ROAD_TAXES_VALUE ?>
             </td>
             <td>
-                <input id="vehicleExciseTax" type="text" name="IUC" size="6" maxlength="9" value="<? echo $STD_ROAD_TAX; ?>">
+                <input id="vehicleExciseTax" type="number" name="IUC" size="6" maxlength="9" value="<? echo $STD_ROAD_TAX; ?>">
                 <span>
                     <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                 </span>

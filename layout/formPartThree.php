@@ -12,7 +12,7 @@
                 <? echo $EXTRA_DATA_FAMILY_NBR ?>
             </td>
             <td>
-                <input type="text" id="household_number_people" name="pessoas_agregado" size="6" maxlength="2"
+                <input type="number" id="household_number_people" name="pessoas_agregado" size="6" maxlength="2"
                     value="<? echo $STD_NR_PPL_FAMILY ?>">
                 <? echo $WORD_PEOPLE ?>
             </td>
@@ -24,7 +24,7 @@
                 <? echo $EXTRA_DATA_PRICE_PASS ?>
             </td>
             <td>
-                <input type="text" id="public_transportation_month_expense" name="preco_passe" size="6" maxlength="9"
+                <input type="number" id="public_transportation_month_expense" name="preco_passe" size="6" maxlength="9"
                     value="<? echo $STD_PASS_PRICE ?>">
                 <span>
                 <? echo $CURR_SYMBOL ?>
@@ -61,46 +61,46 @@
             </td>
             <td>
                 <div id="income_per_year_form3" class="div_element">
-                    <input type="text" id="income_per_year" name="income_per_year" size="6"
+                    <input type="number" id="income_per_year" name="income_per_year" size="6"
                         value="<? echo $STD_INCOME_YEAR ?>"/>
                     <? echo $CURR_SYMBOL ?>/<? echo $YEAR ?>
                 </div>
                 <div id="income_per_month_form3" class="div_element hidden">
-                    <input type="text" id="income_per_month" name="income_per_month" size="6"
+                    <input type="number" id="income_per_month" name="income_per_month" size="6"
                         value="<? echo $STD_INCOME_MONTH ?>"/>
                     <span>
                         <? echo $CURR_SYMBOL ?>/<? echo $MONTH ?>
                     </span><br>
-                    <input type="text" id="income_months_per_year" name="income_months_per_year" size="6" maxlength="2"
+                    <input type="number" id="income_months_per_year" name="income_months_per_year" size="6" maxlength="2"
                         value="<? echo $STD_MONTHS_YEAR ?>"/>
                     <span>
                         <? echo $MONTHS ?>/<? echo $YEAR ?>
                     </span>
                 </div>
                 <div id="income_per_week_form3" class="div_element hidden">
-                    <input type="text" id="income_per_week" name="income_per_week" size="6"
+                    <input type="number" id="income_per_week" name="income_per_week" size="6"
                            value="<? echo $STD_INCOME_WEEK ?>"/>
                     <span>
                         <? echo $CURR_SYMBOL ?>/<? echo $WEEK ?>
                     </span><br>
-                    <input type="text" id="income_weeks_per_year" name="income_weeks_per_year" size="6" maxlength="2"
+                    <input type="number" id="income_weeks_per_year" name="income_weeks_per_year" size="6" maxlength="2"
                         value="<? echo $STD_WEEKS_YEAR ?>"/>
                     <span class="p2">
                         <? echo $WEEKS ?>/<? echo $YEAR ?>
                     </span>
                 </div>
                 <div id="income_per_hour_form3" class="div_element hidden">
-                    <input type="text" id="income_per_hour" name="income_per_hour" size="6"
+                    <input type="number" id="income_per_hour" name="income_per_hour" size="6"
                         value="<? echo $STD_INCOME_HOUR ?>"/>
                     <span>
                         <? echo $CURR_SYMBOL ?>/<? echo $HOUR ?>
                     </span><br>
-                    <input type="text" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                    <input type="number" id="income_hours_per_week" name="income_hours_per_week" size="6"
                         value="<? echo $STD_HOURS_WEEK ?>"/>
                     <span>
                         <? echo $HOURS ?>/<? echo $WEEK ?>
                     </span><br>
-                    <input type="text" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                    <input type="number" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
                         value="<? echo $STD_WEEKS_YEAR ?>"/>
                     <span>
                         <? echo $WEEKS ?>/<? echo $YEAR ?>
@@ -138,12 +138,12 @@
                 </td>
                 <td>
                     <div id="working_time_input_form3" class="div_element">
-                        <input type="text" id="time_month_per_year" name="time_month_per_year" size="6" maxlength="2"
+                        <input type="number" id="time_month_per_year" name="time_month_per_year" size="6" maxlength="2"
                             value="<? echo $STD_MONTHS_YEAR ?>"/>
                         <span>
                             <? echo $MONTHS ?>/<? echo $YEAR ?>
                         </span>
-                        <input type="text" id="time_hours_per_week" name="time_hours_per_week" size="6" maxlength="3"
+                        <input type="number" id="time_hours_per_week" name="time_hours_per_week" size="6" maxlength="3"
                             value="<? echo $STD_HOURS_WEEK ?>"/>
                         <span>
                             <? echo $HOURS ?>/<? echo $WEEK ?>
@@ -185,7 +185,7 @@
                     <? echo $FUEL_DAYS ?>&nbsp;
                 </td>
                 <td>
-                    <input id="drive_to_work_days_per_week" type="text" name="drive_to_work_days_per_week" size="5"
+                    <input id="drive_to_work_days_per_week" type="number" name="drive_to_work_days_per_week" size="5"
                            maxlength="1" value="<? echo $STD_DAYS_PER_WEEK; ?>">
                     <span>
                         <? echo $DAYS_PER_WEEK_SHORT; ?>
@@ -197,7 +197,7 @@
                     <? echo $FUEL_DIST_HOME_JOB ?>&nbsp;
                 </td>
                 <td>
-                    <input type="text" id="dist_home_job" name="dist_home_job" size="5" maxlength="4"
+                    <input type="number" id="dist_home_job" name="dist_home_job" size="5" maxlength="4"
                         value="<? echo $STD_JORNEY_2WORK; ?>">
                     <span class="p2">
                         <? echo $STD_DIST ?>
@@ -209,7 +209,7 @@
                     <? echo $FUEL_DIST_NO_JOB ?>&nbsp;
                 </td>
                 <td style="text-align:left;" valign="middle">
-                    <input type="text" name="journey_weekend" id="journey_weekend" size="5" maxlength="4"
+                    <input type="number" name="journey_weekend" id="journey_weekend" size="5" maxlength="4"
                         value="<? echo $STD_JORNEY_WEEKEND; ?>">
                     <span class="p2">
                         <? echo $STD_DIST ?>
@@ -223,7 +223,7 @@
                     <? echo $FUEL_DIST ?>
                 </td>
                 <td>
-                    <input type="text" id="dist_per_month" name="km_per_month" size="4" maxlength="9" id="distance"
+                    <input type="number" id="dist_per_month" name="km_per_month" size="4" maxlength="9" id="distance"
                         value="<? echo $STD_KM_PER_MONTH; ?>">
                     <span class="p2">
                         <? echo $STD_DIST ?>&nbsp;<? echo $WORD_PER ?>&nbsp;
@@ -249,7 +249,7 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION1 ?>
             </td>
             <td>
-                <input type="text" size="6" maxlength="4" id="time_home_job" name="time_home_job"
+                <input type="number" size="6" maxlength="4" id="time_home_job" name="time_home_job"
                        value="<? echo $STD_TIME_HOME_JOB ?>"/>
                 <span>
                     <? echo $MIN ?>
@@ -261,7 +261,7 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION2 ?>
             </td>
             <td>
-                <input type="text" size="6" maxlength="4" id="time_weekend" name="time_weekend" value="<? echo $STD_TIME_WEEKEND ?>"/>
+                <input type="number" size="6" maxlength="4" id="time_weekend" name="time_weekend" value="<? echo $STD_TIME_WEEKEND ?>"/>
                 <span>
                     <?php echo $MIN ?>
                 </span>
@@ -272,13 +272,13 @@
                 <? echo $EXTRA_DATA_TIME_QUESTION3 ?>
             </td>
             <td>
-                <input type="text" size="6" maxlength="4" id="min_drive_per_day" name="min_drive_per_day"
+                <input type="number" size="6" maxlength="4" id="min_drive_per_day" name="min_drive_per_day"
                     value="<? echo $STD_TIME_IN_DRIVING ?>"/>
                 <span>
                     <? echo $MINUTES ?>/<?php echo $DAY ?>
                 </span>
                 <br>
-                <input type="text" size="6" maxlength="2" id="days_drive_per_month" name="days_drive_per_month"
+                <input type="number" size="6" maxlength="2" id="days_drive_per_month" name="days_drive_per_month"
                     value="<? echo $STD_DAYS_MONTH ?>"/>
                 <span>
                     <? echo $DAYS ?>/<?php echo $MONTH ?>
