@@ -28,6 +28,7 @@ function Run(){
     var data = calculate_costs(f1, f2, f3, country);
     CalculatedData = data; //assigns to global variable
 
+    //shows result and hides the form input
     result_object = document.getElementById('result_div');
     input_object.style.display = 'none';
     
@@ -38,7 +39,6 @@ function Run(){
     tables_HTML += print_publict_table(f1, f2, f3, data);
     tables_HTML += print_feffort_table(f1, f2, f3, data);
     tables_HTML += "<br><br>";
-    
     result_object.innerHTML = tables_HTML;
     result_object.style.display='block';
     
@@ -49,6 +49,8 @@ function Run(){
     //gets result frame width to draw charts within it
     var frame_witdh = document.getElementById('div2').offsetWidth;
     drawChartResult(frame_witdh, data);
+    
+    //shows the option buttons (reload, print, download pdf) at the end of result
     reload_object.style.display='block';
         
     //hides description, left and right columns
@@ -56,7 +58,7 @@ function Run(){
     $('#div3').css('display', 'none');
     $('#description').html('');
     
-    //global variable indicating the results are shown
+    //global variable indicating the results are being shown
     ResultIsShowing=true;
     
     return true;
