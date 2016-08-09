@@ -6,6 +6,62 @@ $GLOBALS['country'] = $_GET['country'];
 
 ?>
 
+function Run(){	
+
+    //test if the form user inputs are correct
+    if (!is_userdata_formpart1_ok()) return;
+    if (!is_userdata_formpart2_ok()) return;
+    if (!is_userdata_formpart3_ok()) return;
+
+    var f1 = get_form_part1();
+    var f2 = get_form_part2();
+    var f3 = get_form_part3();
+    
+    var country = {
+        currency: '<? echo $CURR_CODE ?>',
+        distance_std: <? echo $distance_std_option; ?>,
+        fuel_efficiency_std: <? echo $fuel_efficiency_std_option; ?>,
+        fuel_price_volume_std: <? echo $fuel_price_volume_std; ?>,
+        taxi_price: <?echo $TAXI_PRICE_PER_DIST?>
+    };
+    
+    var data = calculate_costs(f1, f2, f3, country);
+    CalculatedData = data; //assigns to global variable
+
+    result_object = document.getElementById('result_div');
+    input_object.style.display = 'none';
+    
+    //prints on the screen the result 
+    var tables_HTML = "";    
+    tables_HTML += print_costs_table(f1, f2, f3, data);
+    tables_HTML += print_extern_table(f1, f2, f3, data);
+    tables_HTML += print_publict_table(f1, f2, f3, data);
+    tables_HTML += print_feffort_table(f1, f2, f3, data);
+    tables_HTML += "<br><br>";
+    
+    result_object.innerHTML = tables_HTML;
+    result_object.style.display='block';
+    
+    //enlarges center div
+    $('#div1_td').css('width', '15%');
+    $('#div3_td').css('width', '15%');
+    
+    //gets result frame width to draw charts within it
+    var frame_witdh = document.getElementById('div2').offsetWidth;
+    drawChartResult(frame_witdh, data);
+    reload_object.style.display='block';
+        
+    //hides description, left and right columns
+    $('#div1').css('display', 'none');
+    $('#div3').css('display', 'none');
+    $('#description').html('');
+    
+    //global variable indicating the results are shown
+    ResultIsShowing=true;
+    
+    return true;
+}
+
 /*Main costs table (result_table1)*/
 function print_costs_table(f1, f2, f3, data) {
     
@@ -531,21 +587,40 @@ function countryCheck(value){
     return res;
 }
 
-function drawChartResult(frame_witdh, data, div_width){
+function drawChartResult(frame_witdh, data){
     
+    //client width under which the charts are not shown
+    var WIDTH_PX_OFF = 300;
+    //minimum ratio width of charts as frame_witdh becomes too wide
+    var MIN_RATIO = 0.7;
+    //width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO
+    var MIN_RATIO_WIDTH = 750;
+
     //it doesn't print the charts in very small screen width
-    var temp_width=document.documentElement.clientWidth;
-    if (temp_width<300){
+    var temp_width = document.documentElement.clientWidth;
+    if (temp_width < WIDTH_PX_OFF) {
         $("#pie_chart_div").css('display', 'none');
         $("#bar_chart_div").css('display', 'none');
+        $("#text_div").css('padding', '0');
+        $("#text_div").children().first().css('border-top', 'none');
         return;
+    }
+    
+    //make charts width adjustments according to the div_width
+    if (frame_witdh > MIN_RATIO_WIDTH) {
+        frame_witdh = MIN_RATIO * frame_witdh;
+    }
+    else if(frame_witdh > WIDTH_PX_OFF) {
+        var b = WIDTH_PX_OFF * (MIN_RATIO-1) / (MIN_RATIO_WIDTH-WIDTH_PX_OFF) - 1;
+        var m = (MIN_RATIO - 1) / (MIN_RATIO_WIDTH - WIDTH_PX_OFF);
+        frame_witdh = m * frame_witdh + b;
     }
     
     //prepares the the correspondent divs
     $("#pie_chart_div").css('display', 'inline-block');
-    $("#pie_chart_div").css('width', div_width);
+    $("#pie_chart_div").css('width', '95%');
     $("#bar_chart_div").css('display', 'inline-block');
-    $("#bar_chart_div").css('width', div_width);
+    $("#bar_chart_div").css('width', '95%');
     
     //checks if depreciation is greater or equal to zero, to print chart with no error
     var desvalor_temp;
@@ -576,7 +651,7 @@ function drawChartResult(frame_witdh, data, div_width){
     );
 
     //draw Bar Chart
-    var bar_chart_width=parseInt(frame_witdh*0.7);
+    var bar_chart_width=parseInt(frame_witdh*0.8);
     var bar_chart_height=parseInt(bar_chart_width*35/50);
 
     drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 

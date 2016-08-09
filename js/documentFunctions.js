@@ -56,8 +56,8 @@ function resized(){
     
     //if the result are showing resizes the charts
     if(ResultIsShowing){
-        var frame_witdh = document.getElementById('input_div').offsetWidth;
-        drawChartResult(frame_witdh, CalculatedData, '95%');
+        var frame_witdh = document.getElementById('div2').offsetWidth;
+        drawChartResult(frame_witdh, CalculatedData);
     }
 }
 
