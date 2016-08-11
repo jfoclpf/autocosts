@@ -26,16 +26,20 @@ function initialize() {
     $('#distance_div_form2').css("display", "none");
     document.getElementById("radio_cred_nao").checked = true;
     $('#sim_credDiv').css("display", "none");
+    
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No 
     driveToJob(false);
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
     fuelCalculationMethodChange('currency');
     carToJob(false);
     
-    //Google reCaptcha issues
-    isUserHuman = false; //global variable that is true when Human is confirmed
-    document.getElementById("b-bottom_3_A").style.display = "inline-block"; //initially shows recaptcha and hides run button
-    document.getElementById("b-bottom_3_B").style.display = "none";
+    //Shows Google reCaptcha
+    if (Country!='XX'){
+        ShowGoogleReCaptcha(true);
+    }
+    else{
+        ShowGoogleReCaptcha(false);
+    }
 }
 
 //function that runs when the page is resized

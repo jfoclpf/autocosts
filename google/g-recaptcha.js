@@ -3,11 +3,10 @@ function grecaptcha_solved(){
 }
 //runs when grecaptcha has expired
 function grecaptcha_expired(){
-    isUserHuman = false;
     grecaptcha.reset();
-    document.getElementById("b-bottom_3_A").style.display = "inline-block";
-    document.getElementById("b-bottom_3_B").style.display = "none";
+    ShowGoogleReCaptcha(true);
 }
+
 function grecaptcha_callback() {                    
     grecaptcha.render( 'g-recaptcha', {
         'sitekey' : '6LcdhB4TAAAAAKDAZ_BL4JGK0h0bK6eH3YgTdyIV',
@@ -32,9 +31,7 @@ function Run_form(country){
                     submit_data(country); //submits data to database if no test version
                 } 
                 scrollPage();
-                isUserHuman = true;
-                document.getElementById("b-bottom_3_A").style.display = "none";
-                document.getElementById("b-bottom_3_B").style.display = "inline-block";
+                ShowGoogleReCaptcha(false);
                 //alert(result);
             }
             else{
