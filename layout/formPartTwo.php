@@ -18,7 +18,7 @@
                 <span style="white-space:nowrap">
                     <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" /><span class="p2"><? echo $CURR_NAME_PLURAL ?></span>
                 </span>
-                <div style="float: right; margin: 12px 0 0 0;white-space:nowrap;" id="currency_div_form2">
+                <div style="float: right; margin: 12px 0 0 0; white-space:nowrap; text-align:right;" id="currency_div_form2">
                     <input type="number" size="5" maxlength="9" id="fuel_currency_value"
                         value="<? echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                     <span class="p2" style="white-space:nowrap">
