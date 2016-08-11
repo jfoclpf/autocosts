@@ -58,6 +58,11 @@ function resized(){
     if(ResultIsShowing){
         var frame_witdh = document.getElementById('div2').offsetWidth;
         drawChartResult(frame_witdh, CalculatedData);
+        
+        //prints final text accordingly
+        var text_msg = print_result_final_text(frame_witdh, CalculatedData);
+        text_object.innerHTML = text_msg;
+        text_object.style.display = 'block';
     }
 }
 

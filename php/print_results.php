@@ -47,6 +47,11 @@ function Run(){
     var frame_witdh = document.getElementById('div2').offsetWidth;
     drawChartResult(frame_witdh, data);
     
+    //prints final text 
+    var text_msg = print_result_final_text(frame_witdh, data);
+    text_object.innerHTML = text_msg;
+    text_object.style.display = 'block';
+    
     //shows the option buttons (reload, print, download pdf) at the end of result
     reload_object.style.display='block';
         
@@ -578,12 +583,28 @@ function print_extern_table(f1, f2, f3, data){
     return varResult;
 }
 
-function countryCheck(value){   
-    var res = "<?echo $CURR_SYMBOL?>&nbsp;" + value;
-    if('<?echo $GLOBALS['country'] ?>'=='FI'){
-        res = value + "&nbsp;<?echo $CURR_SYMBOL?>" ;
+/*Text with final sentence and total results of expenditures*/
+function print_result_final_text(frame_witdh, data){
+    
+    //client width under which the charts are not shown
+    var WIDTH_PX_OFF = 280;
+    
+    if(data.total_costs_month >= 150 && data.age_months > 6) {
+        var text_msg = "<div ";
+        
+        if (frame_witdh >= WIDTH_PX_OFF) {
+            text_msg += "style=\"border-top:rgb(180, 180, 180) 3px solid;\"";
+        }
+        text_msg += "><br><div id=\"final-text1\" class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"
+                    + (data.total_costs_year / 100).toFixed(0) * 100 
+                    + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
+        
+        text_msg += "<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + data.age_months + " <?echo $MONTHS_POSS?></div><br><center><div id=\"final-text2\" style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div></center><\/div><br>";
+        return text_msg;
     }
-    return res;
+    else{
+        return "";
+    }
 }
 
 function drawChartResult(frame_witdh, data){
@@ -599,8 +620,6 @@ function drawChartResult(frame_witdh, data){
     if (frame_witdh < WIDTH_PX_OFF) {
         $("#pie_chart_div").css('display', 'none');
         $("#bar_chart_div").css('display', 'none');
-        $("#text_div").css('padding', '0');
-        $("#text_div").children().first().css('border-top', 'none');
         return;
     }
     
@@ -652,10 +671,20 @@ function drawChartResult(frame_witdh, data){
 
     //draw Bar Chart
     var bar_chart_width=parseInt(frame_witdh*0.8);
-    var bar_chart_height=parseInt(bar_chart_width*35/50);
+    var bar_chart_height=parseInt(bar_chart_width*45/50);
 
-    drawBarChart(parseFloat(data.total_standing_costs_month.toFixed(1)), 
-        parseFloat(data.total_running_costs_month.toFixed(1)),
+    drawBarChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
+        parseFloat(data.monthly_costs.fuel.toFixed(1)),
+        parseFloat(desvalor_temp.toFixed(1)),
+        parseFloat(data.monthly_costs.credit.toFixed(1)),
+        parseFloat(data.monthly_costs.inspection.toFixed(1)),
+        parseFloat(data.monthly_costs.maintenance.toFixed(1)),
+        parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
+        parseFloat(data.monthly_costs.car_tax.toFixed(1)),
+        parseFloat(data.monthly_costs.parking.toFixed(1)),
+        parseFloat(data.monthly_costs.tolls.toFixed(1)),
+        parseFloat(data.monthly_costs.fines.toFixed(1)),
+        parseFloat(data.monthly_costs.washing.toFixed(1)),
         bar_chart_width,
         bar_chart_height
     );
@@ -665,13 +694,14 @@ function drawChartResult(frame_witdh, data){
     $("#pie_chart_div").css('width', 'auto');
     $("#bar_chart_div").css('display', 'inline-block');
     $("#bar_chart_div").css('width', 'auto');
-    
-    if(data.total_costs_month >= 150 && data.age_months > 6) {
-        var text_msg="<div style=\"border-top:rgb(180, 180, 180) 3px solid;\"><br><div id=\"final-text1\" class=\"p3\"><?echo $YOUR_CAR_COSTS_YOU?> <b>"+(data.total_costs_year / 100).toFixed(0)*100 + " <?echo $CURR_NAME_PLURAL?><\/b> <?echo $WORD_PER?> <?echo $YEAR?>.<br>";
-        text_msg+="<?echo $WITH_THIS_LEVEL_OF_COSTS?> " + data.age_months + " <?echo $MONTHS_POSS?></div><br><center><div id=\"final-text2\" style=\"float: center;display: inline-block;padding:2%;font-size:350%;font-weight:bold; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px\">" + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) + " <?echo $CURR_NAME_BIG_PLURAL?><\/div></center><\/div><br>";
-        text_object.innerHTML=text_msg;
-        text_object.style.display='block';
-    }
-    
+   
+}
 
+//puts the currency symbol after the money value, for certain countries 
+function countryCheck(value){   
+    var res = "<?echo $CURR_SYMBOL?>&nbsp;" + value;
+    if('<?echo $GLOBALS['country'] ?>'=='FI'){
+        res = value + "&nbsp;<?echo $CURR_SYMBOL?>" ;
+    }
+    return res;
 }
