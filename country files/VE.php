@@ -34,7 +34,7 @@ $fuel_price_volume_std = 1;
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'VEN';
+$CURR_CODE = 'VEF';
 $CURR_NAME = 'Bolívar';
 $CURR_NAME_PLURAL = 'Bolívares';
 $CURR_NAME_BIG_PLURAL = 'BOLÍVARES';

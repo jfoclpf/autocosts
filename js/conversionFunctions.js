@@ -11,7 +11,7 @@ var conversionConstants = {
 var EURcurrConverterStats = {
     "EUR": 1,
     "USD": 1.1,
-    "GBP": 0.7,
+    "GBP": 0.85,
     "BRL": 3.5,
     "HUF": 320,
     "AUD": 1.5,
@@ -24,6 +24,22 @@ var EURcurrConverterStats = {
     "RUB": 60,
     "SEK": 9.4,
     "TRY": 3,
+    "BOB": 7.7,
+    "CLP": 721,
+    "COP": 3200,
+    "DOP": 51,
+    "VEF": 11, 
+    "ARS": 16.4,
+    "CRC": 616,
+    "DOP": 51.5,
+    "GTQ": 8.3,
+    "MXN": 20,
+    "NIO": 32,
+    "PAB": 1.11,
+    "PEN": 3.7,
+    "PYG": 6137,
+    "SVC": 9.7,
+    "UYU": 32,
     "UAH": 20
 };
 

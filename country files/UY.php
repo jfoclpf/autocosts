@@ -23,8 +23,6 @@ $fuel_efficiency_std_option = 2;
 //5 - l/mil - litres per 10 kilometers 
 //6 - km/gal(US) - km per US gallon 
 
-
-
 //Standard distance
 $distance_std_option = 1;
 //1 - kilometres
@@ -52,9 +50,6 @@ $STD_DIST = 'km'; //short text version you'd like to apply
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'L'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
-
-
-
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day

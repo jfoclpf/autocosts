@@ -19,15 +19,20 @@ $fuel_efficiency_std_option = 4;
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
+//5 - l/mil - litres per 10 kilometers 
+//6 - km/gal(US) - km per US gallon 
+
 //Standard distance
 $distance_std_option = 2;
 //1 - kilometres
 //2 - miles
+
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
 $fuel_price_volume_std = 3;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
+
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
 $CURR_CODE = 'USD';
