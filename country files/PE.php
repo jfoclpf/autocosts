@@ -42,7 +42,7 @@ $CURR_SYMBOL = '&#36;';
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'L'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$STD_VOLUME_SHORT = 'l'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
@@ -162,8 +162,8 @@ $INSPECTION = 'Inspección Técnica Vehicular (ITV)';
 $INSPECTION_SHORT = 'Inspección';
 $INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a inspección?';
 $INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
-$EACH_ONE_DURING = 'cada uno durante'; //5 times costing 15€ *each one during* 20 months (inspection)
-$TIMES_COSTING = 'veces costando';     //5 *times costing* 15€ each one during 20 months (inspection)
+$EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during* 20 months (inspection)
+$TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
 $ROAD_TAXES = 'Impuestos del vehículo';
@@ -172,14 +172,14 @@ $ROAD_TAXES_VALUE = 'Impuesto vehicular anual de tu vehículo:<br><i>pago realiz
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, diesel, GNV, GLP, electricidad';
+$FUEL_DESC = 'Gasolina, diesel, GNV, GLP, electricidad.';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en tu vehículo';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DAYS = 'Día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y el trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilómetros entre tu casa y el trabajo'; //you do 7 km between home and job
-$FUEL_DIST_NO_JOB = "promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
+$FUEL_DIST_NO_JOB = "Promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
 $FUEL_DIST_NO_JOB1 = "kilómetros promedio de los días que no utilizas el vehículo para ir al trabajar"; // you do 5 km per week....
 $FUEL_DIST = 'Kilómetros recorridos';
 $FUEL_CAR_EFF = 'Eficacia del combustible de tu vehículo';
@@ -209,14 +209,14 @@ $TOLLS_DAY_CALC_DESC = 'Piensa incluso en los viajes excepcionales que haces a l
 
 //FINES
 $FINES = 'Multas';
-$FINES_DESC = 'Promedio de gastos en multas:<br><i>piensa cuánto gastaste en cualquier tipo de multa en los últimos años (estacionamiento ilegal, exceso de velocidad, uso del móvil, etc.)</i>';
+$FINES_DESC = 'Promedio de gastos en multas:<br><i>piensa cuánto gastaste en cualquier tipo de multa en los últimos años (por estacionamiento ilegal, por exceso de velocidad, por uso del celular, etc.)</i>';
 
 //WASHING
 $WASHING = 'Lavado y limpieza';
 $WASHING_DESC = 'Promedio gastado en el lavado:<br><i>en estaciones de servicio y otros lugares</i>';
 
 //TOTAL
-$TOTAL_FIXED = 'TOTAL –Gastos fijos ';
+$TOTAL_FIXED = 'TOTAL – Gastos fijos';
 $TOTAL_FIXED_DESCR = "Gastos que no dependen de la distancia recorrida y que tienen que pagarse incluso si el vehículo está parado";
 $TOTAL_FIXED_DESCR2 = 'Depreciación, Seguro, Intereses del préstamo, Impuestos, Inspección y 50% del costo del estacionamiento y mantenimiento';
 
@@ -311,7 +311,7 @@ $ERROR_DEPRECIATION_NEW_CAR =  'La depreciación no se puede aplicar porque este
 
 $ERROR_CREDIT_QUESTION = 'Indica por favor si has financiado tu vehículo';
 $ERROR_CREDIT_LOAN_VALUE = 'Cuota financiada no válida';
-$ERROR_CREDIT_PERIOD = 'Periodo de crédito o cantidad de plazos no válido';
+$ERROR_CREDIT_PERIOD = 'Periodo de crédito o cantidad de cuotas no válidos';
 $ERROR_CREDIT_INSTALMENT = 'Valor de cuota no válido';
 $ERROR_CREDIT_RESIDUAL_VALUE = 'Valor residual no válido';
 

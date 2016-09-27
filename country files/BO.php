@@ -42,7 +42,7 @@ $CURR_SYMBOL = '&#36;';
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'L'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$STD_VOLUME_SHORT = 'l'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
@@ -162,8 +162,8 @@ $INSPECTION = 'Inspección Técnica Vehicular (ITV)';
 $INSPECTION_SHORT = 'Inspección';
 $INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a la inspección?';
 $INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
-$EACH_ONE_DURING = 'cada uno durante'; //5 times costing 15€ *each one during* 20 months (inspection)
-$TIMES_COSTING = 'veces costando';     //5 *times costing* 15€ each one during 20 months (inspection)
+$EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during* 20 months (inspection)
+$TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
 $ROAD_TAXES = 'Impuestos del vehículo';
@@ -179,7 +179,7 @@ $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DAYS = 'Día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y el trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilómetros entre tu casa y el trabajo'; //you do 7 km between home and job
-$FUEL_DIST_NO_JOB = "promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
+$FUEL_DIST_NO_JOB = "Promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
 $FUEL_DIST_NO_JOB1 = "kilómetros en promedio, los días que no utilizas el vehículo para ir a trabajar"; // you do 5 km per week....
 $FUEL_DIST = 'Kilómetros recorridos';
 $FUEL_CAR_EFF = 'Eficacia del combustible de tu vehículo';
@@ -216,7 +216,7 @@ $WASHING = 'Lavado y limpieza';
 $WASHING_DESC = 'Promedio gastado en el lavado:<br><i>en estaciones de servicio y otros lugares</i>';
 
 //TOTAL
-$TOTAL_FIXED = 'TOTAL –Gastos fijos ';
+$TOTAL_FIXED = 'TOTAL – Gastos fijos';
 $TOTAL_FIXED_DESCR = "Gastos que no dependen de la distancia recorrida y que tienen que pagarse incluso si el vehículo está parado";
 $TOTAL_FIXED_DESCR2 = 'Depreciación, Seguro, Intereses del préstamo, Impuestos, Inspección y 50% del costo del estacionamiento y mantenimiento';
 
@@ -230,7 +230,7 @@ $EXTRA_DATA = 'INFORMACIÓN ADICIONAL';
 $EXTRA_DATA1 = 'Información adicional';
 $EXTRA_DATA_PUBLIC_TRANSP = 'Transporte público';
 $EXTRA_DATA_FAMILY_NBR = '¿Cuántas personas mayores de 4 años hay en tu familia (incluyéndote a ti)?';
-$EXTRA_DATA_PRICE_PASS = "Promedio de gastos mensuales por abono de transporte público por persona un día normal y corriente<br><i>si el transporte público no es una opción para ti, ingresa 0</i>";
+$EXTRA_DATA_PRICE_PASS = "Promedio de gastos mensuales por abono de transporte público por persona, un día normal y corriente<br><i>si el transporte público no es una opción para ti, ingresa 0</i>";
 $EXTRA_DATA_INCOME = "Ingresos";
 $EXTRA_DATA_INCOME_QUESTION = '¿Cuáles son tus ingresos netos?';
 $EXTRA_DATA_WORKING_TIME = 'Tiempo de trabajo';
@@ -298,7 +298,7 @@ $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica si utilizas el vehículo para ir al trabajo';
 $ERROR_FUEL_DIST = 'Cantidad de kilómetros recorridos mensualmente no válida';
 $ERROR_DAYS_PER_WEEK = 'Cantidad de días por semana no válida';
-$ERROR_DIST_HOME_WORK = 'Cantidad de kilómetros entre la casa y el lugar del trabajo no válida';
+$ERROR_DIST_HOME_WORK = 'Cantidad de kilómetros entre la casa y el trabajo no válida';
 $ERROR_DIST_NO_JOB = "Cantidad de kilómetros recorridos los días que no vas en vehículo al trabajo no válida";
 $ERROR_CURRENCY = 'Valor de bolivianos por mes no válido';
 

@@ -50,8 +50,8 @@ $CURR_NAME_BIG_PLURAL = 'COLONES';
 $CURR_SYMBOL = '¢'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
-$STD_FUEL_CALC = 'km/g'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'G'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$STD_FUEL_CALC = 'km/gal'; //text version you'd like to apply
+$STD_VOLUME_SHORT = 'gal'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 
 
 
@@ -99,7 +99,7 @@ $WEEKS = 'semanas';
 $MONTH = 'mes';
 $MONTHS = 'meses';
 $TWO_MONTHS = 'bimestre';
-$DIST_EACH_TWO_MONTHS = 'kilómetros por cada bimestre';
+$DIST_EACH_TWO_MONTHS = 'kilómetros por bimestre';
 $TRIMESTER = 'trimestre';
 $SEMESTER = 'semestre';
 $YEAR = 'año';
@@ -174,8 +174,8 @@ $INSPECTION = 'Revisión Técnica Vehicular ';
 $INSPECTION_SHORT = 'Revisión';
 $INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a revisión?';
 $INSPECTION_PRICE =  'Valor promedio por cada revisión del vehículo';
-$EACH_ONE_DURING = 'cada uno durante'; //5 times costing 15€ *each one during* 20 months (inspection)
-$TIMES_COSTING = 'veces costando';     //5 *times costing* 15€ each one during 20 months (inspection)
+$EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during* 20 months (inspection)
+$TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
 $ROAD_TAXES = 'Impuestos del vehículo';
@@ -184,14 +184,14 @@ $ROAD_TAXES_VALUE = 'Impuesto especial a la primera matrícula de bienes en el t
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, diesel, GLP, electricidad';
+$FUEL_DESC = 'Gasolina, diesel, GLP, electricidad.';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en tu vehículo';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DAYS = 'Día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilómetros entre tu casa y el trabajo'; //you do 7 km between home and job
-$FUEL_DIST_NO_JOB = "promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
+$FUEL_DIST_NO_JOB = "Promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
 $FUEL_DIST_NO_JOB1 = "kilómetros promedio de los días que no utilizas el vehículo para ir al trabajar"; // you do 5 km per week....
 $FUEL_DIST = 'Kilómetros recorridos';
 $FUEL_CAR_EFF = 'Eficacia del combustible de tu vehículo';
