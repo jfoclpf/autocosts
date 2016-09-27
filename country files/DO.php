@@ -46,7 +46,7 @@ $CURR_CODE = 'DOP';
 $CURR_NAME = 'Peso';
 $CURR_NAME_PLURAL = 'Pesos';
 $CURR_NAME_BIG_PLURAL = 'PESOS';
-$CURR_SYMBOL = 'RD$;'; 
+$CURR_SYMBOL = 'RD&#36;'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
@@ -303,8 +303,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Ingresa la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en pesoS
-s (moneda) o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en pesos (moneda) o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el vehículo para ir al trabajo';
