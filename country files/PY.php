@@ -322,7 +322,7 @@ $ERROR_DEPRECIATION_NEW_CAR =  'La depreciación no se puede aplicar porque este
 $ERROR_CREDIT_QUESTION = 'Indica por favor si has financiado tu vehículo';
 $ERROR_CREDIT_LOAN_VALUE = 'Cuota financiada no válida';
 $ERROR_CREDIT_PERIOD = 'Periodo de crédito o cantidad de cuotas no válidos';
-$ERROR_CREDIT_INSTALMENT = 'Cuota de 'Periodo de crédito o cantidad de cuotas no válidos' no válida';
+$ERROR_CREDIT_INSTALMENT = 'Cuota de plazo no válida';
 $ERROR_CREDIT_RESIDUAL_VALUE = 'Valor residual no válido';
 
 $ERROR_INSPECTION_NTIMES = 'Cantidad de veces no válida';
