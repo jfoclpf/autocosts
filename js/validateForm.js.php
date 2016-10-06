@@ -268,7 +268,7 @@ function is_userdata_formpart3_ok(){
     }
     /*working time*/
     var is_working_time = getCheckedValue(custo.radio_work_time);
-    if(is_working_time == 'true'){
+    if(is_working_time == 'true' && income_type!='hour'){
         if(!isNumber(document.custo.time_hours_per_week.value)){
             alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_HOURS_PER_WEEK?>!");
             return false;
