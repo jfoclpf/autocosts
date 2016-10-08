@@ -191,7 +191,7 @@ function print_costs_table(f1, f2, f3, data) {
                     fuel_text = f2.fuel_money + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $SEMESTER?>";
                     break;
                 case "5":                   
-                    fuel_text = document.custo.fuel_money.value + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
+                    fuel_text = f2.fuel_money + " <?echo $CURR_NAME_PLURAL?> <?echo $WORD_PER?> <?echo $YEAR?>";
                     break;
             }
             break;
