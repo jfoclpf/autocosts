@@ -160,7 +160,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             return;
         
         if (!hasLoadedPart[2]){
-            google.load('visualization', '1', {'packages': ['corechart'], 'callback': function(){
+            google.load('visualization', '1', {'packages': ['corechart'], 'language': Language, 'callback': function(){
                 hasLoadedPart[2]=true;
                 shows_part(3);
             }});

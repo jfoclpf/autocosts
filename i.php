@@ -99,6 +99,7 @@
 <!--define global JS variables-->
 <script>
     var Country = '<? echo $GLOBALS["country"] ?>';
+    var Language = '<? echo $LANGUAGE_CODE ?>'; <!-- Language code according to ISO_639-1 codes -->
     var input_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object, text_object;
     var ResultIsShowing, DescriptionHTML, CalculatedData;
 </script>

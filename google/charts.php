@@ -24,20 +24,17 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
         ['<? echo $WASHING; ?>', l]
     ];
 
-	if('<?echo $GLOBALS['country'] ?>'=='RU'){
-		$('#chart_div').css('padding','0 0 0 2%');
-	}
     data = google.visualization.arrayToDataTable(chart_data);
 
     options = {
-        title: 'Gráfico dos custos',
+        title: '<? echo $COSTS; ?>',
         backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
         chartArea: {left: 0, top: 0, width: "90%", height: "90%"},
         width: char_width,
         height: char_height
     };
 	
-	var chart_div = document.getElementById('pie_chart_div');
+    var chart_div = document.getElementById('pie_chart_div');
     chart = new google.visualization.PieChart(chart_div);	      
 
     // Wait for the chart to finish drawing before calling the getImageURI() method.
@@ -101,7 +98,7 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
     }
         
     options = {
-        title: "Custos fixos/variáveis",
+        title: "<? echo $COSTS; ?>",
         backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
         chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
         vAxis: { minValue: 0},
