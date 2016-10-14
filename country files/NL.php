@@ -62,7 +62,7 @@ Gezien uw rekeningen op verschillende tijdsstippen van het jaar binnenkomen, is 
 
 $HELP_PROJECT = 'Help dit project' ;
 $AC_MOBILE = 'AUTOKOSTEN<br>voor mobiele apparaten';
-$AC_DOMAIN = 'AUTOKOSTEN.CO.NL';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOKOSTENSIMULATOR';
 
 //time words

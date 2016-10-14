@@ -12,29 +12,51 @@
   <changefreq>weekly</changefreq>
   
   <xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.info" />
-  <xhtml:link rel="alternate" hreflang="en-au" href="http://autocosts.info/AU" />
-  <xhtml:link rel="alternate" hreflang="pt-br" href="http://autocustos.com/BR" />
-  <xhtml:link rel="alternate" hreflang="de-de" href="http://autokosten.com.de" />
+  
   <xhtml:link rel="alternate" hreflang="es-es" href="http://autocostes.es" />
   <xhtml:link rel="alternate" hreflang="fr-fr" href="http://autocouts.fr" />
   <xhtml:link rel="alternate" hreflang="it-it" href="http://autocosti.it" />
-  <xhtml:link rel="alternate" hreflang="hu-hu" href="http://autocosts.info/HU" />
-  <xhtml:link rel="alternate" hreflang="nl-nl" href="http://autokosten.co.nl" />
-  <xhtml:link rel="alternate" hreflang="no-no" href="http://autocosts.info/NO" />
-  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autokoszty.info.pl" />
+  <xhtml:link rel="alternate" hreflang="el-gr" href="http://exodaautokinitou.gr" />
   <xhtml:link rel="alternate" hreflang="pt-pt" href="http://autocustos.pt" />
+  
+  <xhtml:link rel="alternate" hreflang="pl-pl" href="http://autokoszty.info" />
+  
+  <xhtml:link rel="alternate" hreflang="pt-br" href="http://autocustos.info/BR" />
+  
+  <xhtml:link rel="alternate" hreflang="en-au" href="http://autocosts.info/AU" />
+  <xhtml:link rel="alternate" hreflang="de-de" href="http://autocosts.info/DE" />
+  <xhtml:link rel="alternate" hreflang="hu-hu" href="http://autocosts.info/HU" />
+  <xhtml:link rel="alternate" hreflang="nl-nl" href="http://autocosts.info/NL" />
+  <xhtml:link rel="alternate" hreflang="no-no" href="http://autocosts.info/NO" />
   <xhtml:link rel="alternate" hreflang="ro-ro" href="http://autocosts.info/RO" />
   <xhtml:link rel="alternate" hreflang="fi-fi" href="http://autocosts.info/FI" />
   <xhtml:link rel="alternate" hreflang="sv-se" href="http://autocosts.info/SE" />
   <xhtml:link rel="alternate" hreflang="en-us" href="http://autocosts.info/US" />
-  <xhtml:link rel="alternate" hreflang="en-gb" href="http://autocosts.info.uk" />
+  <xhtml:link rel="alternate" hreflang="en-gb" href="http://autocosts.info/GB" />
   <xhtml:link rel="alternate" hreflang="en-ca" href="http://autocosts.info/CA" />
   <xhtml:link rel="alternate" hreflang="cs-cz" href="http://autocosts.info/CZ" />
   <xhtml:link rel="alternate" hreflang="ru-ru" href="http://autocosts.info/RU" />
   <xhtml:link rel="alternate" hreflang="uk-ua" href="http://autocosts.info/UA" />
   <xhtml:link rel="alternate" hreflang="tr-tr" href="http://autocosts.info/TR" />
-  <xhtml:link rel="alternate" hreflang="el-gr" href="http://exodaautokinitou.gr" /> 
   <xhtml:link rel="alternate" hreflang="da-dk" href="http://autocosts.info/DK" />
+  
+  <xhtml:link rel="alternate" hreflang="es-ar" href="http://autocostos.info/AR" />
+  <xhtml:link rel="alternate" hreflang="es-bo" href="http://autocostos.info/BO" />
+  <xhtml:link rel="alternate" hreflang="es-cl" href="http://autocostos.info/CL" />
+  <xhtml:link rel="alternate" hreflang="es-co" href="http://autocostos.info/CO" />
+  <xhtml:link rel="alternate" hreflang="es-cr" href="http://autocostos.info/CR" />
+  <xhtml:link rel="alternate" hreflang="es-cu" href="http://autocostos.info/CU" />
+  <xhtml:link rel="alternate" hreflang="es-ec" href="http://autocostos.info/EC" />
+  <xhtml:link rel="alternate" hreflang="es-sv" href="http://autocostos.info/SV" />
+  <xhtml:link rel="alternate" hreflang="es-mx" href="http://autocostos.info/MX" />
+  <xhtml:link rel="alternate" hreflang="es-ni" href="http://autocostos.info/NI" />
+  <xhtml:link rel="alternate" hreflang="es-pa" href="http://autocostos.info/PA" />
+  <xhtml:link rel="alternate" hreflang="es-py" href="http://autocostos.info/PY" />
+  <xhtml:link rel="alternate" hreflang="es-pe" href="http://autocostos.info/PE" />
+  <xhtml:link rel="alternate" hreflang="es-pr" href="http://autocostos.info/PR" />
+  <xhtml:link rel="alternate" hreflang="es-do" href="http://autocostos.info/DO" />
+  <xhtml:link rel="alternate" hreflang="es-uy" href="http://autocostos.info/UY" />
+  <xhtml:link rel="alternate" hreflang="es-ve" href="http://autocostos.info/VE" />  
 </url>
   
 </urlset>

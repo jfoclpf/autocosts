@@ -60,7 +60,7 @@ As your motor bills come in at different points over the year, it's often diffic
 
 $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
-$AC_DOMAIN = 'AUTOCOSTS.ORG.UK';
+$AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
 
 //time words
