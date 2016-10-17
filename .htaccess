@@ -19,9 +19,17 @@ RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
+#Domain Name Policy (DNP) in: http://github.com/jfoclpf/autocosts/wiki/Domain-name-policy
+
+#Forward rules of Domains that fulfill Rule 1 of the Domain Name Policy
+
 RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
 RewriteRule ^/?$ "http\:\/\/autocustos\.pt\/PT" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
+RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocouts\.fr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocouts\.fr$
@@ -31,38 +39,23 @@ RewriteCond %{HTTP_HOST} ^autocosti\.it$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosti\.it$
 RewriteRule ^/?$ "http\:\/\/autocosti\.it\/IT" [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^automobilecosts\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.automobilecosts\.co\.uk$
-RewriteRule ^/?$ "http\:\/\/automobilecosts\.co\.uk\/UK" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autoausgaben\.de$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autoausgaben\.de$
-RewriteRule ^/?$ "http\:\/\/autoausgaben\.de\/DE" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^\*\.autocost\.org$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.\*\.autocost\.org$
-RewriteRule ^/?$ "http\:\/\/autocost\.org" [R=301,L]
+RewriteCond %{HTTP_HOST} ^autocosturi\.ro$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocosturi\.ro$
+RewriteRule ^/?$ "http\:\/\/autocosturi\.ro\/RO" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
 RewriteRule ^/?$ "http\:\/\/exodaautokinitou\.gr\/GR" [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^autocosts\.org\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocosts\.org\.uk$
-RewriteRule ^/?$ "http\:\/\/autocosts\.org\.uk\/UK" [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^autokosten\.com\.de$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autokosten\.com\.de$
-RewriteRule ^/?$ "http\:\/\/autokosten\.com\.de\/DE" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autokosten\.co\.nl$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autokosten\.co\.nl$
-RewriteRule ^/?$ "http\:\/\/autokosten\.co\.nl\/NL" [R=301,L]
+#Forward rules of Domains that fulfill Rule 2 of the Domain Name Policy
 
 RewriteCond %{HTTP_HOST} ^autokoszty\.info$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info$
 RewriteRule ^/?$ "http\:\/\/autokoszty\.info\/PL" [R=301,L]
 
+
+#General broad rules
 RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
@@ -71,17 +64,6 @@ RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^autocustos\.com$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocustos\.com$
-RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
-RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autogastos\.es$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autogastos\.es$
-RewriteRule ^/?$ "http\:\/\/autocostes\.es" [R=301,L]
 
 
 
