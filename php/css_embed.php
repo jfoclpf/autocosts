@@ -1,4 +1,5 @@
-<?
+<?php
+
 class CSS_Embed
 {
   protected $_path;

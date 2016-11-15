@@ -1,4 +1,4 @@
-<?php 
+<?php
     $captcha = "";
     if(isset($_POST['g-recaptcha-response'])){
       $captcha=$_POST['g-recaptcha-response'];

@@ -1,4 +1,5 @@
-<?
+<?php
+
 function get_logo_file_name($is_logo, $currency_logo) {
     
     if(!$is_logo) return null;
@@ -65,8 +66,9 @@ function get_picture_file_name($currency_code) {
     $number_of_files = iterator_count($fi);
     
     //get a random file
-    $rand_nbr = mt_rand(1, $number_of_files);
-    $rand_file_name = 'img ('.$rand_nbr.').jpg'; //files shall be in the format "img (#).jpg"
+    $rand_nbr = mt_rand(1, $number_of_files);  //gets a random integer between 1 and max number of files
+    $rand_nbr = sprintf("%02d", $rand_nbr); //add 0 in the beginning if necessary, for example 04
+    $rand_file_name = 'img_'.$rand_nbr.'.jpg'; //files shall be in the format "img_##.jpg"
     
     $full_file_path = $folder_web_url.$rand_file_name;
     return $full_file_path;
