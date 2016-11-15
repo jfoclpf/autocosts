@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: United Kingdom
 // LANGAUAGE: ENGLISH

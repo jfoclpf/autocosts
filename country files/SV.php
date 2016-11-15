@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: El Salvador
 // LANGAUAGE: español

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: NETHERLAND
 // LANGUAGE: NETHERLANDS

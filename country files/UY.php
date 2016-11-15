@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: Uruguay
 // LANGAUAGE: español

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: Paraguay
 // LANGAUAGE: español

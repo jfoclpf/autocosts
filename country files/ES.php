@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: España
 // LANGUAGE: español

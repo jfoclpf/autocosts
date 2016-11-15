@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: BRAZIL
 // LANGAUAGE: PORTUGUESE - BRAZILIAN

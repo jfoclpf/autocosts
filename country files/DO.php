@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: República Dominicana
 // LANGAUAGE: español

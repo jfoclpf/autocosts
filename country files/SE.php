@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: SVERIGE
 // LANGUAGE: SVENSKA

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: Republic of Ireland
 // LANGUAGE: ENGLISH

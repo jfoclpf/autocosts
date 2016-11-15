@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: SUOMESSA
 // LANGAUAGE: SUOMI

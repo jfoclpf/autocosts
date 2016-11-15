@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: Puerto Rico
 // LANGAUAGE: español

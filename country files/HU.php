@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // COUNTRY: MAGYARORSZÁG
 // LANGAUAGE: MAGYAR
