@@ -8,6 +8,7 @@
 //**********************************************/
 //List of available countries
 //NOTE: JUST ADD A COUNTRY HERE if you add the correspondent translation file
+//Country codes according to ISO 3166-1 alpha-2
 
 $avail_CT = array(
     "XX" => "test",

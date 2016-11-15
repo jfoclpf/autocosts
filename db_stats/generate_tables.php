@@ -37,7 +37,7 @@ foreach ($avail_CT as $country => $country_name) {
     $file="tables/".$country.".html";
 
     //the content of the file
-    $content = '<table align="center" id="tbl_statistics">
+    $content = '<table id="tbl_statistics">
         <tr class="tr-title">
             <td id="td-top-title" colspan="2" class="center td-title">';
             

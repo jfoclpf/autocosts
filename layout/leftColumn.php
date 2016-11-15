@@ -6,10 +6,10 @@
     else
         echo '<div style="padding-top:14px;"></div>'; //in case no currency logo applies gives a break line
     ?>
-    <? if ($is_logo) { ?><div class="is_logo"></div><? } ?>
+    <?php if ($is_logo) { ?><div class="is_logo"></div><?php } ?>
 
     <div class="roundCorner">
-        <img alt="Picture" src="<? echo get_picture_file_name($CURR_CODE); ?>">
+        <img alt="Picture" src="<?php echo get_picture_file_name($CURR_CODE); ?>">
     </div>
 
     <div id="div32" class="roundCorner">
@@ -60,21 +60,21 @@
         </div>
     </div>
 
-    <? if ($GLOBALS['country'] == "PT") { ?>
+    <?php if ($GLOBALS['country'] == "PT") { ?>
 
         <table id="mobile_logos_table">
             <tr>
                 <td>
-                    <a href="http://play.google.com/store/apps/details?id=autocustos.com" imageanchor="1">
+                    <a href="http://play.google.com/store/apps/details?id=autocustos.com">
                         <img class="roundCorner" alt="mobile version" src="images/mobile1.png">
                     </a>
                 </td>
                 <td>
-                    <a href="http://build.phonegap.com/apps/359804/install" imageanchor="1">
+                    <a href="http://build.phonegap.com/apps/359804/install">
                         <img class="roundCorner" alt="mobile version" src="images/mobile2.png">
                     </a>
                 </td>
             </tr>
         </table>
-    <? } ?>
+    <?php } ?>
 </div>

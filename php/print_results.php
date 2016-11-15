@@ -1,4 +1,4 @@
-<? Header("content-type: application/x-javascript");
+<?php Header("content-type: application/x-javascript");
 include($_SERVER['DOCUMENT_ROOT'].'/country files/' . $_GET['country'] . '.php');
 $GLOBALS['country'] = $_GET['country'];
 ?>
@@ -282,7 +282,7 @@ function print_costs_table(f1, f2, f3, data) {
     //Standing costs header
     varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><span class=\"p3\"><?echo $FIXED_COSTS?></span></b><br>" +
                 "<i><span class=\"p2\"><?echo $TOTAL_FIXED_DESCR?></span></i></td>" +
-                '<td width="20%"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
+                '<td><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';
     
     //standing costs items
     varResult+= '<tr><td align="left">' + depreciation_text + '&nbsp;</td>' + 
@@ -311,7 +311,7 @@ function print_costs_table(f1, f2, f3, data) {
     //Running costs header
     varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><span class=\"p3\"><?echo $RUNNING_COSTS?></span></b><br>" +
                 "<i><span class=\"p2\"><?echo $TOTAL_VARIABLE_DESCR?></span></i></td>" +
-                '<td width="20%"><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';   
+                '<td><b><span class="p3"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>';   
     
     varResult+= '<tr><td align="left"><b><span class="p3"><?echo $FUEL?></span></b><br><span class="p2">' + fuel_text + '</span></td>' +
                 '<td>&nbsp;<span class="p2">' + countryCheck(data.monthly_costs.fuel.toFixed(1)) + '</span></td></tr>';
@@ -549,7 +549,7 @@ function print_extern_table(f1, f2, f3, data){
 
         //header
         varResult+="<tr><td><b><span class=\"p3\">Custos externos para o país</span></b><br><span class=\"p2\">Percorre " +(1 * data.distance_per_month).toFixed(1)+" <?echo $STD_DIST?>/<?echo $MONTH?></span></td>" +
-                   "<td width=\"20%\"><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
+                   "<td><b><span class=\"p3\"><?echo $MONTHLY_AMOUNT?></span></b></td></tr>";
         
         //external costs items
         varResult+="<tr><td>" + epa_text + "</td>" +   

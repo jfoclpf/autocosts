@@ -3,7 +3,7 @@
     <!--#####################-->
     <div id="header_main_title">
         <h1 class="main_title">
-            <? echo $MAIN_TITLE ?>
+            <?php echo $MAIN_TITLE ?>
         </h1>
     </div>
     <!--## Select country box ##-->
@@ -16,7 +16,7 @@
                 <select name="country_select" id="country_select" onchange="valueselect(this.value);">
                 <?php foreach ($avail_CT as $key => $value) {
                     if ($key != "XX") { ?>
-                        <option value="<?php echo $key ?>" <? if ($key == $GLOBALS['country']) {
+                        <option value="<?php echo $key ?>" <?php if ($key == $GLOBALS['country']) {
                             echo "selected=\"selected\"";
                         } ?>> <?php echo $value ?></option>
                     <?php }
