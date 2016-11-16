@@ -66,6 +66,12 @@ h5, h6 {
 p {
     margin: 0 0 10px;
 }
+i { 
+    font-style: italic;
+}
+b {
+    font-weight: bold;
+}
 /* FORMS */
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     display: inline-block;
