@@ -52,7 +52,7 @@ function valueselect(myval) {
 /*function that runs when the browser window is resized*/
 function resized(){
     //adapts the margin-top CSS value according to the window width
-    var margin_top_desc = $("#banner_top").outerHeight(true) - 10;
+    var margin_top_desc = $("#banner_top").outerHeight(true)+3;
     $('#description').css("margin-top", margin_top_desc);
     
     //mobile devices
