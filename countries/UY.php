@@ -1,15 +1,13 @@
 <?php
 
-// COUNTRY: México
-// LANGUAGE: español
+// COUNTRY: Uruguay
+// LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
-//the language is according with the two-letter language code ISO 639-1
-//http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.INFO         **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
 //	  										   **
 //***********************************************
@@ -22,6 +20,8 @@ $fuel_efficiency_std_option = 2;
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
+//5 - l/mil - litres per 10 kilometers 
+//6 - km/gal(US) - km per US gallon 
 
 //Standard distance
 $distance_std_option = 1;
@@ -34,13 +34,18 @@ $fuel_price_volume_std = 1;
 //2 - imperial gallons
 //3 - US gallons
 
+//Sources: 
+//https://en.wikipedia.org/wiki/Gasoline_and_diesel_usage_and_pricing#Typical_gasoline_prices_around_the_world
+//http://www.ancap.com.uy/
+
+
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'MXN';
-$CURR_NAME = 'Peso';
-$CURR_NAME_PLURAL = 'Pesos';
-$CURR_NAME_BIG_PLURAL = 'PESOS';
-$CURR_SYMBOL = '&#36;';
+$CURR_CODE = 'UYU';
+$CURR_NAME = 'Peso Uruguayo';
+$CURR_NAME_PLURAL = 'Pesos Uruguayos';
+$CURR_NAME_BIG_PLURAL = 'PESOS URUGUAYOS';
+$CURR_SYMBOL = '&#36;'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
@@ -48,7 +53,7 @@ $STD_VOLUME_SHORT = 'l'; //short text version you'd like to apply for fuel price
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
-$WORDS_PER_EACH = 'por cada';   //ex: 4 miles _ per each_ two months
+$WORDS_PER_EACH = 'cada';   //ex: 4 miles _ per each_ two months
 $WORD_TIMES = 'veces'; //ex: 4 times per week
 $DURING = 'durante';   //spent in tolls 3€ per day _during_ 22 days per month
 $WORD_PEOPLE = 'personas';   //plural, 3 _people_ 
@@ -62,10 +67,11 @@ $BUTTON_RERUN = 'Volver'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora de costos de automóvil';
 $MAIN_TITLE = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 $INITIAL_TEXT = 
-"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en México</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados, como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.<br>";
+"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en Uruguay</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos inesperados, como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.";
+$DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita ni almacena, ningún nombre, correo electrónico, <i>cookies</i>, dirección IP, ni ninguna otra información personal.";
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
-$AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';
+$AC_MOBILE = 'GASTO DEL VEHÍCULO<br>para móviles';
 $AC_DOMAIN = 'AUTOCOSTOS.INFO';
 $AC_SUB_HEADER = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 
@@ -101,7 +107,7 @@ $DISTANCE = "Distancia";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
-$COUNTRY_NAME = 'México';
+$COUNTRY_NAME = 'Uruguay';
 $STATISTIC_TITLE = 'Costos de Automóviles de';
 $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';
@@ -129,7 +135,7 @@ $PUBL_TRA_EQUIV= "Gastos de transporte que tendrías que pagar al no tener tu pr
 $WORD_TOTAL_CAP = 'TOTAL'; //capital word for total
 
 $WORD_PRINT = 'Imprimir';
-$WORD_DOWNLOAD_PDF = 'Descargar Reporte en PDF';
+$WORD_DOWNLOAD_PDF = 'Descargar Informe en PDF';
 
 //depreciation
 $DEPRECIATION = 'Depreciación del vehículo';
@@ -141,8 +147,8 @@ $FINAL_VALUE = 'Precio de hoy';
 $AQ_VALUE = 'Precio de compra';
 
 //insurance
-$INSURANCE = 'Seguro de vehículo y cobertura de averías';
-$INSURANCE_SHORT = 'Seguro y cobertura de averías';
+$INSURANCE = 'Seguro de vehículo y SOA';
+$INSURANCE_SHORT = 'Seguro y SOA';
 
 //credit
 $CREDIT = 'Financiación del vehículo';
@@ -160,21 +166,21 @@ $CREDIT_RESIDUAL_VALUE1 = 'Valor residual';
 $CREDIT_INSTALMENT = 'Valor promedio mensual';
 
 //inspection
-$INSPECTION = 'Verificación Vehicular';
-$INSPECTION_SHORT = 'Verificación';
-$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a la verificación?';
-$INSPECTION_PRICE =  'Valor promedio por cada verificación del vehículo';
+$INSPECTION = 'Inspección Técnica Vehícular (ITV)';
+$INSPECTION_SHORT = 'Inspección';
+$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a la inspección?';
+$INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
 $EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during* 20 months (inspection)
 $TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
-$ROAD_TAXES = 'Tenencia';
-$ROAD_TAXES_SHORT = ' Tenencia';
-$ROAD_TAXES_VALUE = 'Tenencia de tu vehículo:<br><i>pago realizado al estado</i>';
+$ROAD_TAXES = 'Impuestos del vehículo';
+$ROAD_TAXES_SHORT = ' Impuestos del vehículo';
+$ROAD_TAXES_VALUE = 'Impuesto patrimonio vehicular, patente:<br><i>pago realizado al estado</i>';
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, diesel, GNV, electricidad.';
+$FUEL_DESC = 'Nafta, gasoil, electricidad.';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en tu vehículo';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
@@ -182,17 +188,17 @@ $FUEL_DAYS = 'Día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y el trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilómetros entre tu casa y el trabajo'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
-$FUEL_DIST_NO_JOB1 = "kilómetros en promedio, los días que no utilizas el vehículo para ir al trabajar"; // you do 5 km per week....
+$FUEL_DIST_NO_JOB1 = "kilómetros en promedio, los días que no utilizas el vehículo para ir a trabajar"; // you do 5 km per week....
 $FUEL_DIST = 'Kilómetros recorridos';
 $FUEL_CAR_EFF = 'Eficacia del combustible de tu vehículo';
-$FUEL_PRICE = 'Gasto promedio en combustible';
+$FUEL_PRICE = 'Gasto promedio de combustible';
 $FUEL_PRICE1 = 'Precio medio del combustible';
 $YOU_DRIVE_TOTTALY_AVG = 'Conduces una media de'; //__You drive totally on average of__ 5 km per day
 $YOU_DRIVE = 'Conduces'; //__You drive__ 5 km per day
 
 //MAINTENANCE
 $MAINTENANCE = 'Mantenimiento';
-$MAINTENANCE_DESC = 'Promedio de gastos de mantenimiento y de cobertura de averías:<br><i>cambio de aceite de motor, filtros, luces, llantas, frenos, aire acondicionado, alineación de dirección, etc.</i>';
+$MAINTENANCE_DESC = 'Promedio de gastos de mantenimiento y de cobertura de averías:<br><i>cambio de aceite de motor, filtros, luces, neumáticos, frenos, aire acondicionado, alineación de dirección, etc.</i>';
 
 //REPAIRS AND IMPROVEMENTS
 $REP_IMPROV = 'Reparaciones y mejoras';
@@ -220,7 +226,7 @@ $WASHING_DESC = 'Promedio gastado en el lavado:<br><i>en estaciones de servicio 
 //TOTAL
 $TOTAL_FIXED = 'TOTAL – Gastos fijos';
 $TOTAL_FIXED_DESCR = "Gastos que no dependen de la distancia recorrida y que tienen que pagarse incluso si el vehículo está parado";
-$TOTAL_FIXED_DESCR2 = 'Depreciación, Seguro, Intereses del préstamo, Impuestos, Verificación y 50% del costo del estacionamiento y mantenimiento';
+$TOTAL_FIXED_DESCR2 = 'Depreciación, Seguro, Intereses del préstamo, Impuestos, Inspección y 50% del costo del estacionamiento y mantenimiento';
 
 $TOTAL_VARIABLE = 'TOTAL – Gastos de explotación';
 $TOTAL_VARIABLE_DESCR = 'Gastos que dependen de la cantidad de kilómetros recorridos';
@@ -238,8 +244,8 @@ $EXTRA_DATA_INCOME_QUESTION = '¿Cuáles son tus ingresos netos?';
 $EXTRA_DATA_WORKING_TIME = 'Tiempo de trabajo';
 $EXTRA_DATA_WORKING_TIME_QUESTION = '¿Tienes un trabajo o una ocupación digna?';
 $EXTRA_DATA_TIME_SPENT_IN_DRIVING = 'Tiempo empleado en la conducción';
-$EXTRA_DATA_TIME_QUESTION1 = '¿Cuántos minutos conduces desde tu casa al trabajo? (solo ida)';
-$EXTRA_DATA_TIME_QUESTION2 = '¿Cuántos minutos conduces los días que no vas a trabajar en tu vehículo?';
+$EXTRA_DATA_TIME_QUESTION1 = '¿Cuántos minutos conduces desde tu casa al lugar de trabajo? (solo ida)';
+$EXTRA_DATA_TIME_QUESTION2 = '¿Cuántos minutos conduces los días que no vas a trabajar en el vehículo?';
 $EXTRA_DATA_TIME_QUESTION3 = '¿Cuántos minutos conduces?';
 
 //PUBLIC TRANSPORTS
@@ -248,7 +254,7 @@ $FAM_NBR = 'Cantidad de miembros de tu familia mayores de 4 años';
 $PERSON_OR_PEOPLE = 'persona(s)';
 $PASS_MONTH_AVG = 'Promedio de gastos en el abono mensual por persona';
 $OTHER_PUB_TRANS = 'Otros transportes públicos';
-$OTHER_PUB_TRANS_DESC = "Monto que pagaste por otro tipo de transporte público fuera de tu zona, como viajes en tren y autobuses de larga distancia";
+$OTHER_PUB_TRANS_DESC = "Cuota que pagaste por otro tipo de transporte público fuera de tu zona, como viajes en tren y autobuses de larga distancia";
 $TAXI_DESL = "Transporte en taxi";
 $ON_TAXI_PAYING = "en taxi, pagando"; //ex: 4 km __on taxi paying__ 5€ per km
 
@@ -264,15 +270,15 @@ $MONTHS_PER = 'Meses por';
 $AVERAGE_WORKING_HOURS_PER = 'Promedio de horas de trabajo por';
 $WORKING_HOURS_PER = 'Horas de trabajo por';
 $DIST_HOME_JOB = 'Conduces de casa al trabajo';
-$DAYS_DRIVE_JOB = 'Cantidad de días semanales que vas en tu vehículo a trabajar';
-$DIST_JORNEY_WEEKEND = 'Distancia que recorres los días que no vas en tu vehículo a trabajar';
-$AVERAGE_DIST_PER_WEEK = 'Conduces semanalmente un promedio de';
+$DAYS_DRIVE_JOB = 'Cantidad de días semanales que vas en vehículo a trabajar';
+$DIST_JORNEY_WEEKEND = 'Distancia que recorres los días que no vas en vehículo a trabajar';
+$AVERAGE_DIST_PER_WEEK = 'Manejas semanalmente un promedio de';
 $YOU_DRIVE_PER = 'Recorres por';
-$MINUTES_HOME_JOB = 'Cantidad de minutos que conduces para llegar de casa al trabajo';
-$DAYS_DRIVE_TO_JOB = 'Cantidad de días por semana que vas en tu vehículo al trabajo';
-$TIME_DRIVE_WEEKEND = 'Cantidad de minutos empleados en conducción los días que no vas en tu vehículo al trabajo';
-$MINUTES_DRIVE_PER = 'Cantidad de minutos que conduces por';
-$DAYS_DRIVE_PER_MONTH = 'Cantidad de días mensuales que conduces';
+$MINUTES_HOME_JOB = 'Cantidad de minutos que manejas para llegar de casa al trabajo';
+$DAYS_DRIVE_TO_JOB = 'Cantidad de días por semana que vas en vehículo al trabajo';
+$TIME_DRIVE_WEEKEND = 'Cantidad de minutos empleados en conducción los días que no vas en vehículo al trabajo';
+$MINUTES_DRIVE_PER = 'Cantidad de minutos que manejas por';
+$DAYS_DRIVE_PER_MONTH = 'Cantidad de días que manejas por mes';
 $HOURS_DRIVE_PER = 'Cantidad de horas por';
 $VIRTUAL_SPEED = 'velocidad de consumidor';
 $KINETIC_SPEED = 'velocidad cinética';
@@ -292,12 +298,12 @@ $COSTS = 'Costo';
 //****************************************************
 //ERROR MESSAGES
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
-$ERROR_INSU_PERIOD = 'Introduzca la periodicidad del seguro';
+$ERROR_INSU_PERIOD = 'Ingresa la periodicidad del seguro';
 
 $ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en pesos (moneda) o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
-$ERROR_CAR_JOB = 'Indica si utilizas tu vehículo para ir al trabajo';
+$ERROR_CAR_JOB = 'Indica, por favor, si utilizas el vehículo para ir al trabajo';
 $ERROR_FUEL_DIST = 'Cantidad de kilómetros recorridos mensualmente no válida';
 $ERROR_DAYS_PER_WEEK = 'Cantidad de días por semana no válida';
 $ERROR_DIST_HOME_WORK = 'Cantidad de kilómetros entre la casa y el trabajo no válida';
@@ -313,8 +319,8 @@ $ERROR_DEPRECIATION_NEW_CAR =  'La depreciación no se puede aplicar porque este
 
 $ERROR_CREDIT_QUESTION = 'Indica si has financiado tu vehículo';
 $ERROR_CREDIT_LOAN_VALUE = 'Cuota financiada no válida';
-$ERROR_CREDIT_PERIOD = 'Periodo de crédito o cantidad de cuotas no válida';
-$ERROR_CREDIT_INSTALMENT = 'Costo de cuota no válido';
+$ERROR_CREDIT_PERIOD = 'Periodo de crédito o cantidad de cuotas no válidos';
+$ERROR_CREDIT_INSTALMENT = 'Valor de cuota no válido';
 $ERROR_CREDIT_RESIDUAL_VALUE = 'Valor residual no válido';
 
 $ERROR_INSPECTION_NTIMES = 'Cantidad de veces no válida';

@@ -1,6 +1,6 @@
 <?php
 
-// COUNTRY: Panamá
+// COUNTRY: Puerto Rico
 // LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
@@ -23,8 +23,6 @@ $fuel_efficiency_std_option = 2;
 //5 - l/mil - litres per 10 kilometers 
 //6 - km/gal(US) - km per US gallon 
 
-
-
 //Standard distance
 $distance_std_option = 1;
 //1 - kilometres
@@ -38,23 +36,20 @@ $fuel_price_volume_std = 1;
 
 //Sources: 
 //https://en.wikipedia.org/wiki/Gasoline_and_diesel_usage_and_pricing#Typical_gasoline_prices_around_the_world
-//http://www.latinol.com/portada/precios-gasolina-panama.asp
+//http://daco.gobierno.pr/servicios/precios_combustibles/precios_gasolina
 
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'PAB';
-$CURR_NAME = 'Balboa';
-$CURR_NAME_PLURAL = 'Balboas';
-$CURR_NAME_BIG_PLURAL = 'BALBOAS';
-$CURR_SYMBOL = '฿'; 
+$CURR_CODE = 'USD';
+$CURR_NAME = 'Dólar';
+$CURR_NAME_PLURAL = 'Dólares';
+$CURR_NAME_BIG_PLURAL = 'DÓLARES';
+$CURR_SYMBOL = '&#36;'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'l'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
-
-
-
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
@@ -72,7 +67,8 @@ $BUTTON_RERUN = 'Volver'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora de costos de automóvil';
 $MAIN_TITLE = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 $INITIAL_TEXT = 
-"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en Panamá</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos, como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.<br>";
+"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en Puerto Rico</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos, como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.";
+$DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita ni almacena, ningún nombre, correo electrónico, <i>cookies</i>, dirección IP, ni ninguna otra información personal.";
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL AUTO<br>para móviles';
@@ -111,7 +107,7 @@ $DISTANCE = "Distancia";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
-$COUNTRY_NAME = 'Panamá';
+$COUNTRY_NAME = 'Puerto Rico';
 $STATISTIC_TITLE = 'Costos de Automóviles de';
 $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';
@@ -151,7 +147,7 @@ $FINAL_VALUE = 'Precio de hoy';
 $AQ_VALUE = 'Precio de compra';
 
 //insurance
-$INSURANCE = 'Seguro obligatorio básico de accidentes de tránsito';
+$INSURANCE = 'Seguro de Responsabilidad obligatorio';
 $INSURANCE_SHORT = 'Seguro';
 
 //credit
@@ -170,21 +166,21 @@ $CREDIT_RESIDUAL_VALUE1 = 'Valor residual';
 $CREDIT_INSTALMENT = 'Valor promedio mensual';
 
 //inspection
-$INSPECTION = 'Revisado Vehicular';
-$INSPECTION_SHORT = 'Revisado';
-$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo al revisado?';
-$INSPECTION_PRICE =  'Valor promedio por cada revisado del vehículo';
+$INSPECTION = 'Inspección Mecánida Vehicular (IMV)';
+$INSPECTION_SHORT = 'Inspección';
+$INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a inspección?';
+$INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
 $EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during* 20 months (inspection)
 $TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
-$ROAD_TAXES = 'Impuestos del vehículo';
-$ROAD_TAXES_SHORT = ' Impuestos del vehículo';
-$ROAD_TAXES_VALUE = 'Impuesto del vehículos:<br><i>pago realizado al estado</i>';
+$ROAD_TAXES = 'Arbitrio del vehículo';
+$ROAD_TAXES_SHORT = ' Arbitrio del vehículo';
+$ROAD_TAXES_VALUE = 'Arbitrio del vehículos:<br><i>pago realizado al estado</i>';
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, diesel, GNV, GLP, electricidad.';
+$FUEL_DESC = 'Gasolina, diesel, electricidad.';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en tu vehículo';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
@@ -304,7 +300,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Ingresa la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en balboas o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en dólares o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el vehículo para ir al trabajo';
@@ -312,7 +308,7 @@ $ERROR_FUEL_DIST = 'Cantidad de kilómetros recorridos mensualmente no válida';
 $ERROR_DAYS_PER_WEEK = 'Cantidad de días por semana no válida';
 $ERROR_DIST_HOME_WORK = 'Cantidad de kilómetros entre la casa y el trabajo no válida';
 $ERROR_DIST_NO_JOB = "Cantidad de kilómetros recorridos los días que no vas en tu vehículo al trabajo no válida";
-$ERROR_CURRENCY = 'Valor de balboas por mes no válido';
+$ERROR_CURRENCY = 'Valor de dólares por mes no válido';
 
 $ERROR_DEPRECIATION_MONTH = 'Mes de adquisición no válido';
 $ERROR_DEPRECIATION_YEAR = 'Año de adquisición no valido';

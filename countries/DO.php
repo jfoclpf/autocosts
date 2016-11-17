@@ -1,6 +1,6 @@
 <?php
 
-// COUNTRY: Puerto Rico
+// COUNTRY: República Dominicana
 // LANGAUAGE: español
 
 $LANGUAGE_CODE = 'es-419';
@@ -9,13 +9,12 @@ $LANGUAGE_CODE = 'es-419';
 //											   **
 //      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
-//	  										   **
-//***********************************************
+//	  										   **//***********************************************
 
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 
 //Fuel efficiency for car engine standard
-$fuel_efficiency_std_option = 2;
+$fuel_efficiency_std_option = 6;
 //1 - l/100km - litres per 100 kilometres
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
@@ -23,38 +22,33 @@ $fuel_efficiency_std_option = 2;
 //5 - l/mil - litres per 10 kilometers 
 //6 - km/gal(US) - km per US gallon 
 
-
-
 //Standard distance
 $distance_std_option = 1;
 //1 - kilometres
 //2 - miles
 
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
-$fuel_price_volume_std = 1;
+$fuel_price_volume_std = 3;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
 
 //Sources: 
 //https://en.wikipedia.org/wiki/Gasoline_and_diesel_usage_and_pricing#Typical_gasoline_prices_around_the_world
-//http://daco.gobierno.pr/servicios/precios_combustibles/precios_gasolina
+//http://www.dominicantoday.com/dr/economy/2016/5/6/59187/All-fuel-prices-unchanged-May-7-to-13
 
 
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'USD';
-$CURR_NAME = 'Dólar';
-$CURR_NAME_PLURAL = 'Dólares';
-$CURR_NAME_BIG_PLURAL = 'DÓLARES';
-$CURR_SYMBOL = '&#36;'; 
+$CURR_CODE = 'DOP';
+$CURR_NAME = 'Peso';
+$CURR_NAME_PLURAL = 'Pesos';
+$CURR_NAME_BIG_PLURAL = 'PESOS';
+$CURR_SYMBOL = 'RD&#36;'; 
 $STD_DIST = 'km'; //short text version you'd like to apply 
 $STD_DIST_FULL = 'kilómetros';
 $STD_FUEL_CALC = 'km/l'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'l'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
-
-
-
 
 //simple words
 $WORD_PER = 'por';     //ex: 4 km _per_ day
@@ -72,7 +66,8 @@ $BUTTON_RERUN = 'Volver'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora de costos de automóvil';
 $MAIN_TITLE = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 $INITIAL_TEXT = 
-"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en Puerto Rico</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos, como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.<br>";
+"Esta calculadora te permitirá conocer <b>el verdadero costo</b> de ser propietario de un vehículo <b>en República Dominicana</b>. Te dará una buena estimación general de lo que realmente necesitas gastar para permitirte tener un vehículo. Como los gastos del vehículo pueden variar durante el periodo de un año, a veces es muy difícil saber el gasto total del mantenimiento. Sé realista acerca del precio que pagas. Piensa en los gastos , como las reparaciones después de un accidente o las multas de los últimos años. De forma predeterminada, estos cálculos se hacen por mes. Para representar el valor decimal, utiliza el punto, por ejemplo 8.7 kilómetros entre la casa y el trabajo.";
+$DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita ni almacena, ningún nombre, correo electrónico, <i>cookies</i>, dirección IP, ni ninguna otra información personal.";
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL AUTO<br>para móviles';
@@ -111,7 +106,7 @@ $DISTANCE = "Distancia";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
-$COUNTRY_NAME = 'Puerto Rico';
+$COUNTRY_NAME = 'República Dominicana';
 $STATISTIC_TITLE = 'Costos de Automóviles de';
 $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';
@@ -151,7 +146,7 @@ $FINAL_VALUE = 'Precio de hoy';
 $AQ_VALUE = 'Precio de compra';
 
 //insurance
-$INSURANCE = 'Seguro de Responsabilidad obligatorio';
+$INSURANCE = 'Seguro del vehículo';
 $INSURANCE_SHORT = 'Seguro';
 
 //credit
@@ -170,7 +165,7 @@ $CREDIT_RESIDUAL_VALUE1 = 'Valor residual';
 $CREDIT_INSTALMENT = 'Valor promedio mensual';
 
 //inspection
-$INSPECTION = 'Inspección Mecánida Vehicular (IMV)';
+$INSPECTION = 'Inspección Técnica Vehicular (ITV)';
 $INSPECTION_SHORT = 'Inspección';
 $INSPECTION_NBMR_TIMES = '¿Cuántas veces has llevado el vehículo a inspección?';
 $INSPECTION_PRICE =  'Valor promedio por cada inspección del vehículo';
@@ -178,18 +173,18 @@ $EACH_ONE_DURING = 'cada una durante'; //5 times costing 15€ *each one during*
 $TIMES_COSTING = 'veces, costando';     //5 *times costing* 15€ each one during 20 months (inspection)
 
 //road taxes
-$ROAD_TAXES = 'Arbitrio del vehículo';
-$ROAD_TAXES_SHORT = ' Arbitrio del vehículo';
-$ROAD_TAXES_VALUE = 'Arbitrio del vehículos:<br><i>pago realizado al estado</i>';
+$ROAD_TAXES = 'Impuesto de Circulación de Vehículos (ICV)';
+$ROAD_TAXES_SHORT = 'Marbete';
+$ROAD_TAXES_VALUE = 'Impuesto de Circulación de Vehículos:<br><i>pago realizado al estado</i>';
 
 //fuel
 $FUEL = 'Combustible';
-$FUEL_DESC = 'Gasolina, diesel, electricidad.';
+$FUEL_DESC = 'Gasolina, diesel, GNV, GLP, electricidad.';
 $FUEL_CALC = 'Cálculos basados en';
 $FUEL_JOB_CALC = 'Considerando que vas al trabajo en tu vehículo';
 $FUEL_JOB_CALC1 = 'día(s) por semana que vas al trabajo en tu vehículo';
 $FUEL_DAYS = 'Día(s) por semana que vas al trabajo en tu vehículo';
-$FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilómetros que recorres entre tu casa y el trabajo (solo ida)'; //$CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilómetros entre tu casa y el trabajo'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Promedio de kilómetros que recorres los días que utilizas el vehículo para actividades no laborales:<br><i>por ejemplo, cada fin de semana</i>";
 $FUEL_DIST_NO_JOB1 = "kilómetros promedio de los días que no utilizas el vehículo para ir al trabajar"; // you do 5 km per week....
@@ -304,7 +299,7 @@ $COSTS = 'Costo';
 $ERROR_INVALID_INSU_VALUE = 'Cuota de seguro no válida';
 $ERROR_INSU_PERIOD = 'Ingresa la periodicidad del seguro';
 
-$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en dólares o kilómetros';
+$ERROR_FUEL_CURR_DIST = 'Debes indicar si prefieres hacer el cálculo basado en pesos (moneda) o kilómetros';
 $ERROR_FUEL_CAR_EFF = 'Valor de eficacia de combustible no válido';
 $ERROR_FUEL_PRICE = 'Precio de combustible no válido';
 $ERROR_CAR_JOB = 'Indica, por favor, si utilizas el vehículo para ir al trabajo';
@@ -312,7 +307,7 @@ $ERROR_FUEL_DIST = 'Cantidad de kilómetros recorridos mensualmente no válida';
 $ERROR_DAYS_PER_WEEK = 'Cantidad de días por semana no válida';
 $ERROR_DIST_HOME_WORK = 'Cantidad de kilómetros entre la casa y el trabajo no válida';
 $ERROR_DIST_NO_JOB = "Cantidad de kilómetros recorridos los días que no vas en tu vehículo al trabajo no válida";
-$ERROR_CURRENCY = 'Valor de dólares por mes no válido';
+$ERROR_CURRENCY = 'Valor de pesos por mes no válido';
 
 $ERROR_DEPRECIATION_MONTH = 'Mes de adquisición no válido';
 $ERROR_DEPRECIATION_YEAR = 'Año de adquisición no valido';

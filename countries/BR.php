@@ -55,7 +55,8 @@ $BUTTON_RERUN = 'Recalcular'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora dos Custos do Automóvel';
 $MAIN_TITLE = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
 $INITIAL_TEXT = 
-'Faça com esta calculadora as contas, ao <b>verdadeiro custo</b> que tem o seu veículo particular <b>no Brasil</b>. Tratam-se de aproximações, mas é uma excelente ordem de grandeza para que se aperceba de quantos recursos financeiros aloca em média para o seu veículo. Os veículos automotores têm uma série de despesas cujas periodicidades variam bastante, e por norma as pessoas não contabilizam uma série de despesas que vão pagando esporadicamente. Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: 8.7 km entre casa e trabalho.<br>';
+'Faça com esta calculadora as contas, ao <b>verdadeiro custo</b> que tem o seu veículo particular <b>no Brasil</b>. Tratam-se de aproximações, mas é uma excelente ordem de grandeza para que se aperceba de quantos recursos financeiros aloca em média para o seu veículo. Os veículos automotores têm uma série de despesas cujas periodicidades variam bastante, e por norma as pessoas não contabilizam uma série de despesas que vão pagando esporadicamente. Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: 8.7 km entre casa e trabalho.';
+$DISCLAIMER = "Esta calculadora é <b>completamente anônima</b>, considerando que não pede ao usuário ou armazena, nem nome, endereço de email, <i>cookies</i>, endereço IP ou qualquer outro dado pessoal.";
 
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';

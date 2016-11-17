@@ -1,7 +1,7 @@
 <?php
 
-// COUNTRY: CANADA
-// LANGAUAGE: ENGLISH
+// COUNTRY: USA
+// LANGUAGE: ENGLISH
 
 $LANGUAGE_CODE = 'en';
 //the language is according with the two-letter language code ISO 639-1
@@ -9,38 +9,41 @@ $LANGUAGE_CODE = 'en';
 
 //***********************************************
 //											   **
-//      Translation for AUTOCOSTS.INFO         **
+//      Translation for AUTOCOSTS.INFO          **
 //      the automobile costs calculator		   **
-//	  										   **
 //***********************************************
-
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 //Fuel efficiency for car engine standard
-$fuel_efficiency_std_option = 1;
+$fuel_efficiency_std_option = 4;
 //1 - l/100km - litres per 100 kilometres
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
+//5 - l/mil - litres per 10 kilometers 
+//6 - km/gal(US) - km per US gallon 
+
 //Standard distance
-$distance_std_option = 1;
+$distance_std_option = 2;
 //1 - kilometres
 //2 - miles
+
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
-$fuel_price_volume_std = 1;
+$fuel_price_volume_std = 3;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
+
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'CAD';
+$CURR_CODE = 'USD';
 $CURR_NAME = 'Dollar';
 $CURR_NAME_PLURAL = 'Dollars';
-$CURR_NAME_BIG_PLURAL = 'CAD';
-$CURR_SYMBOL = 'C&#36;';
-$STD_DIST = 'km'; //short text version you'd like to apply
-$STD_DIST_FULL = 'kilometres';
-$STD_FUEL_CALC = 'l/100km'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'litre'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$CURR_NAME_BIG_PLURAL = 'DOLLARS';
+$CURR_SYMBOL = '&#36;';
+$STD_DIST = 'mi'; //short text version you'd like to apply
+$STD_DIST_FULL = 'miles';
+$STD_FUEL_CALC = 'mpg(US)'; //text version you'd like to apply
+$STD_VOLUME_SHORT = 'gallon'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 //simple words
 $WORD_PER = 'per';     //ex: 4 km _per_ day
 $WORDS_PER_EACH = 'per each';   //ex: 4 miles _ per each_ two months
@@ -55,13 +58,16 @@ $BUTTON_RERUN = 'Rerun'; //run calculator button
 $WEB_PAGE_TITLE = 'Automobile costs calculator';
 $MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';
 $INITIAL_TEXT = 
-"This calculator will allow you to find <b>the true cost</b> of owning a car in <b>Canada</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 kilometres between home and the workplace. On this calculator it is just used the metric system.<br>";
+"This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United States</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.";
+$DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.";
 
 $HELP_PROJECT = 'This is a free service with no advertisements!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
-//time words $DAYLY = 'daily'; 
+
+//time words 
+$DAYLY = 'daily'; 
 $WEEKLY = 'weekly'; 
 $MONTHLY = 'monthly'; 
 $TRIMESTERLY = 'quarterly'; 
@@ -79,7 +85,7 @@ $WEEKS = 'weeks';
 $MONTH = 'month'; 
 $MONTHS = 'months'; 
 $TWO_MONTHS = 'two months'; 
-$DIST_EACH_TWO_MONTHS = 'kilometres for every two months'; 
+$DIST_EACH_TWO_MONTHS = 'miles for every two months'; 
 $TRIMESTER = 'trimester'; 
 $SEMESTER = 'semester'; 
 $YEAR = 'year';
@@ -89,7 +95,7 @@ $DISTANCE = "Distance";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Average monthly cost per type';
-$COUNTRY_NAME = 'Canada';
+$COUNTRY_NAME = 'United States';
 $STATISTIC_TITLE = 'Automobile costs for';
 $DEPRECIATION_ST = 'Depreciation';
 $INSURANCE_ST = 'Insurance';
@@ -98,7 +104,8 @@ $WASHING_ST = 'Washing';
 $VIRTUAL_SPEED_TITLE = 'Consumer speed';
 $KINETIC_SPEED_TITLE = 'Kinetic speed';
 
-//calculator words $COSTS= "Costs"; 
+//calculator words 
+$COSTS= "Costs"; 
 $FIXED_COSTS = 'Standing costs'; 
 $FIXED_COSTS_HEADER_1= 'STANDING COSTS'; //capital letters 
 $FIXED_COSTS_HEADER_2= "Those that don't depend on the traveled distance, and one must pay to have the car available for use"; 
@@ -107,12 +114,13 @@ $RUNNING_COSTS_HEADER_1 = 'RUNNING COSTS'; //capital letters
 $RUNNING_COSTS_HEADER_2 = 'Those that depend on the traveled distance';
 $PRIVATE_COSTS = 'Private costs'; 
 $MONTHLY_AMOUNT = 'Monthly amount'; 
-$RUN_CP_DIST = 'Running costs per kilometre'; //running costs per unit distance 
-$TOTAL_CP_DIST = 'Total costs per kilometre'; //total costs per unit distance 
+$RUN_CP_DIST = 'Running costs per mile'; //running costs per unit distance 
+$TOTAL_CP_DIST = 'Total costs per mile'; //total costs per unit distance 
 $PUBL_TRA_EQUIV= "Equivalent transport costs, considering you don't own a car"; 
 $WORD_TOTAL_CAP = 'TOTAL'; //capital word for total
 $WORD_PRINT = 'Print';
 $WORD_DOWNLOAD_PDF = 'Download PDF report';
+
 //depreciation 
 $DEPRECIATION = 'Depreciation of the vehicle'; 
 $AQ_DATE = 'Car acquisition date'; 
@@ -151,18 +159,18 @@ $ROAD_TAXES_SHORT = 'Car Tax';
 $ROAD_TAXES_VALUE = 'Car taxes paid for owning your car:<br><i>payment made to the state</i>';
 //fuel 
 $FUEL = 'Fuel'; 
-$FUEL_DESC = 'Petrol, diesel, electricity'; 
+$FUEL_DESC = 'Gas, diesel, electricity'; 
 $FUEL_CALC = 'Calculations based on'; 
 $FUEL_JOB_CALC = 'Considering you drive to work?'; 
 $FUEL_JOB_CALC1 = 'Day(s) per week you drive to work'; 
 $FUEL_DAYS = 'Day(s) per week you drive to work'; 
-$FUEL_DIST_HOME_JOB = 'Kilometres you drive between home and the workplace (one way)'; 
+$FUEL_DIST_HOME_JOB = 'Miles you drive between home and the workplace (one way)'; 
 //$CURR_DIST=km, miles, etc. 
-$FUEL_DIST_HOME_JOB1 = 'kilometres between home and the workplace'; 
+$FUEL_DIST_HOME_JOB1 = 'miles between home and the workplace'; 
 //you drive 7 miles between home and your job 
-$FUEL_DIST_NO_JOB = "Kilometres you drive on average during the days you don't take your car to the workplace:<br><i>for example per each weekend</i>"; 
-$FUEL_DIST_NO_JOB1 = "kilometres on average during the days you don't take your car to the workplace"; // you do 5 miles per week.... 
-$FUEL_DIST = 'Kilometres you drive'; 
+$FUEL_DIST_NO_JOB = "Miles you drive on average during the days you don't take your car to the workplace:<br><i>for example per each weekend</i>"; 
+$FUEL_DIST_NO_JOB1 = "miles on average during the days you don't take your car to the workplace"; // you do 5 miles per week.... 
+$FUEL_DIST = 'Miles you drive'; 
 $FUEL_CAR_EFF = 'Fuel efficiency of your vehicle'; 
 $FUEL_PRICE = 'Average price you pay for fuel/gas'; 
 $FUEL_PRICE1 = 'Average price of gas'; 
@@ -184,8 +192,8 @@ $TOLLS_DAY_CALC = 'Calculation based on day?';
 $TOLLS_DAY_CALC1 = 'Daily amount you spend on tolls'; 
 $TOLLS_DAY_CALC_DESC = 'Think about the rare trips you make beyond your town/city or to the countryside, or any kind of electronic toll collection';
 //FINES 
-$FINES = 'Traffic fines'; 
-$FINES_DESC = 'Average amount paid in traffic fines:<br><i>think in the last few years about how much you paid in any kind of traffic tickets (illegal parking, speed limit violation, mobile phone usage fines, etc.)</i>';
+$FINES = 'Traffic tickets'; 
+$FINES_DESC = 'Average amount paid in traffic tickets:<br><i>think in the last few years about how much you paid in any kind of traffic tickets (illegal parking, speed limit violation, mobile phone usage fines, etc.)</i>';
 //WASHING 
 $WASHING = 'Washing and cleaning'; 
 $WASHING_DESC = 'Average car-washing and valet parking expenses:<br><i>in service stations and other places</i>';
@@ -194,7 +202,7 @@ $TOTAL_FIXED = 'TOTAL - Standing costs';
 $TOTAL_FIXED_DESCR = "Costs that don't depend on the traveled distance and those costs which must be paid even if the car is not in use"; 
 $TOTAL_FIXED_DESCR2 = 'Depreciation, Insurance, Financing interest, Taxes, Inspection and 50% of parking and maintenance';
 $TOTAL_VARIABLE = 'TOTAL - Running costs'; 
-$TOTAL_VARIABLE_DESCR = 'Costs that depend on the number of kilometres you drive'; 
+$TOTAL_VARIABLE_DESCR = 'Costs that depend on the number of miles you drive'; 
 $TOTAL_VARIABLE_DESCR2 = 'Fuels, repairs, and improvements, Parking (considering you only pay when you use the car), tolls, traffic tickets, washing, and 50% of maintenance';
 //EXTRA DATA 
 $EXTRA_DATA = 'ADDITIONAL DATA'; 
@@ -256,14 +264,14 @@ $COSTS = 'Costs';
 //**************************************************** //ERROR MESSAGES 
 $ERROR_INVALID_INSU_VALUE = 'Invalid insurance amount'; 
 $ERROR_INSU_PERIOD = 'Insert payment frequency of insurance payments';
-$ERROR_FUEL_CURR_DIST = 'You must determine if you want to make calculations based on kilometres or AUD'; 
+$ERROR_FUEL_CURR_DIST = 'You must determine if you want to make calculations based on miles or USD'; 
 $ERROR_FUEL_CAR_EFF = 'Invalid gas efficiency amount'; 
 $ERROR_FUEL_PRICE = 'Invalid gas price'; 
 $ERROR_CAR_JOB = 'Please indicate if you take your car to the workplace'; 
-$ERROR_FUEL_DIST = 'Invalid amount of kilometres traveled per month'; 
+$ERROR_FUEL_DIST = 'Invalid amount of miles traveled per month'; 
 $ERROR_DAYS_PER_WEEK = 'Invalid number of days per week'; 
-$ERROR_DIST_HOME_WORK = 'Invalid kilometres between home and the workplace'; 
-$ERROR_DIST_NO_JOB = "Invalid number of kilometres you drive during the days you don't drive your car to the workplace"; 
+$ERROR_DIST_HOME_WORK = 'Invalid miles between home and the workplace'; 
+$ERROR_DIST_NO_JOB = "Invalid number of miles you drive during the days you don't drive your car to the workplace"; 
 $ERROR_CURRENCY = 'Invalid USD per month';
 $ERROR_DEPRECIATION_MONTH = 'Invalid acquisition month'; 
 $ERROR_DEPRECIATION_YEAR = 'Invalid acquisition year'; 

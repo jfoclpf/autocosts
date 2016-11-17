@@ -1,6 +1,6 @@
 <?php
 
-// COUNTRY: Republic of Ireland
+// COUNTRY: TEST
 // LANGUAGE: ENGLISH
 
 $LANGUAGE_CODE = 'en';
@@ -8,36 +8,42 @@ $LANGUAGE_CODE = 'en';
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 //***********************************************
-//											   **
+//                                             **
 //      Translation for AUTOCOSTS.INFO         **
-//      the automobile costs calculator		   **
-//	  										   **
+//      the automobile costs calculator        **
+//                                             **
 //***********************************************
 
 // IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 //Fuel efficiency for car engine standard
-$fuel_efficiency_std_option = 1;
-
+$fuel_efficiency_std_option = 3;
+//1 - l/100km - litres per 100 kilometres
+//2 - km/l - kilometres per litre
+//3 - mpg(imp) - miles per imperial gallon
+//4 - mpg(US) - miles per US gallon
 //Standard distance
-$distance_std_option = 1;
-
+$distance_std_option = 2;
+//1 - kilometres
+//2 - miles
 //Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
 $fuel_price_volume_std = 1;
-
+//1 - litres
+//2 - imperial gallons
+//3 - US gallons
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'EUR';
-$CURR_NAME = 'Euro';
-$CURR_NAME_PLURAL = 'Euros';
-$CURR_NAME_BIG_PLURAL = 'EUROS';
-$CURR_SYMBOL = '&euro;';
-$STD_DIST = 'km'; //short text version you'd like to apply
-$STD_DIST_FULL = 'kilometres';
-$STD_FUEL_CALC = 'l/100km'; //text version you'd like to apply
+$CURR_CODE = 'GBP';
+$CURR_NAME = 'Pound';
+$CURR_NAME_PLURAL = 'Pounds';
+$CURR_NAME_BIG_PLURAL = 'POUNDS';
+$CURR_SYMBOL = '&pound;';
+$STD_DIST = 'mi'; //short text version you'd like to apply
+$STD_DIST_FULL = 'miles';
+$STD_FUEL_CALC = 'mpg(imp)'; //text version you'd like to apply
 $STD_VOLUME_SHORT = 'ltr'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 //simple words
 $WORD_PER = 'per';     //ex: 4 km _per_ day
-$WORDS_PER_EACH = 'per each';   //ex: 4 kilometres _ per each_ two months
+$WORDS_PER_EACH = 'per each';   //ex: 4 miles _ per each_ two months
 $WORD_TIMES = 'times'; //ex: 4 times per week
 $DURING = 'during';   //spent in tolls 3€ per day _during_ 22 days per month
 $WORD_PEOPLE = 'people';   //plural, 3 _people_ 
@@ -49,52 +55,40 @@ $BUTTON_RERUN = 'Rerun'; //run calculator button
 $WEB_PAGE_TITLE = 'Automobile costs calculator';
 $MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';
 $INITIAL_TEXT = 
-"This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>Republic of Ireland</b>. It will normally give you a good estimate of what you really need to spend to afford owning a car.
-As your motor bills come in at different points over the year, it's often difficult to really appreciate your total spend on your car. Be realistic on the input values. For unexpected bills, such as accident repairs or fines, think how much you have spent on those items during the last few years. By default these calculations are monthly based. Use the the dot symbol for decimal notation, for example 8.7 kilometres between home and workplace.<br>";
+"This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United Kingdom</b>. It will normally give you a good estimate of what you really need to spend to afford owning a car.
+As your motor bills come in at different points over the year, it's often difficult to really appreciate your total spend on your car. Be realistic on the input values. For unexpected bills, such as accident repairs or fines, think how much you have spent on those items during the last few years. By default these calculations are monthly based. Use the the dot symbol for decimal notation, for example 8.7 miles between home and workplace.";
+$DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.";
 
 $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
-
 //time words
 $DAYLY = 'daily';
 $WEEKLY = 'weekly';
 $MONTHLY = 'monthly';
 $TRIMESTERLY = 'quarterly';
-$SEMESTERLY = 'half&#8209;yearly';
+$SEMESTERLY = 'half-yearly';
 $YEARLY = 'yearly';
 $MIN = 'min';
 $MINUTES = 'minutes';
 $HOUR = 'hour';
 $HOURS = 'hours';
 $HOUR_ABBR = 'h';
-$DAY = 'day'; 
-$DAYS = 'days'; 
-$WEEK = 'week'; 
-$WEEKS = 'weeks'; 
-$MONTH = 'month'; 
-$MONTHS = 'months'; 
-$TWO_MONTHS = 'two months'; 
-$DIST_EACH_TWO_MONTHS = 'kilometres for every two months'; 
-$TRIMESTER = 'trimester'; 
-$SEMESTER = 'semester'; 
+$DAY = 'day';
+$DAYS = 'days';
+$WEEK = 'week';
+$WEEKS = 'weeks';
+$MONTH = 'month';
+$MONTHS = 'months';
+$TWO_MONTHS = 'two months';
+$DIST_EACH_TWO_MONTHS = 'miles for every two months';
+$TRIMESTER = 'trimester';
+$SEMESTER = 'semester';
 $YEAR = 'year';
 $DAYS_PER_WEEK_SHORT= 'days/week';
 //distance
 $DISTANCE = "Distance";
-
-//statistics
-$AVERAGE_COSTS_PER_TYPE = 'Average monthly cost per type';
-$COUNTRY_NAME = 'Ireland';
-$STATISTIC_TITLE = 'Automobile costs for';
-$DEPRECIATION_ST = 'Depreciation';
-$INSURANCE_ST = 'Insurance';
-$REP_ST = 'Repairs';
-$WASHING_ST = 'Washing';
-$VIRTUAL_SPEED_TITLE = 'Consumer speed';
-$KINETIC_SPEED_TITLE = 'Kinetic speed';
-
 //calculator words
 $COSTS= "Costs";
 $FIXED_COSTS = 'Standing costs';
@@ -138,16 +132,16 @@ $CREDIT_RESIDUAL_VALUE = 'Residual value:<br><i>At the end of the credit period,
 $CREDIT_RESIDUAL_VALUE1 = 'Residual value';
 $CREDIT_INSTALMENT = 'Monthly average value';
 //inspection
-$INSPECTION = 'National Car Test (NCT)';
+$INSPECTION = 'Vehicle inspection (MOT test)';
 $INSPECTION_SHORT = 'Inspection';
 $INSPECTION_NBMR_TIMES = 'How many times have you taken your car to vehicle inspection?';
 $INSPECTION_PRICE =  'Average cost per each vehicle inspection';
 $EACH_ONE_DURING = 'each one during'; //5 times costing 15€ *each one during* 20 months (inspection)
 $TIMES_COSTING = 'times costing';     //5 *times costing* 15€ each one during 20 months (inspection)
 //road taxes
-$ROAD_TAXES = 'Vehicle Excise Duty (Motor tax)';
-$ROAD_TAXES_SHORT = 'Motor Tax';
-$ROAD_TAXES_VALUE = 'Motor tax for your car:<br><i>payment made to the state</i>';
+$ROAD_TAXES = 'Vehicle Excise Duty (Car tax)';
+$ROAD_TAXES_SHORT = 'Car Tax';
+$ROAD_TAXES_VALUE = 'Car tax for your car:<br><i>payment made to the state</i>';
 //fuel
 $FUEL = 'Fuel';
 $FUEL_DESC = 'Petrol, diesel, LPG, electricity';
@@ -155,11 +149,11 @@ $FUEL_CALC = 'Calculations based on';
 $FUEL_JOB_CALC = 'Considering you drive to work?';
 $FUEL_JOB_CALC1 = 'Day(s) per week you drive to work';
 $FUEL_DAYS = 'Day(s) per week you drive to work';
-$FUEL_DIST_HOME_JOB = 'Kilometres you drive between home and workplace (just one way)'; //$CURR_DIST=km, kilometres, etc.
-$FUEL_DIST_HOME_JOB1 = 'kilometres between home and workplace'; //you do 7 km between home and job
-$FUEL_DIST_NO_JOB = "Kilometres you drive on average during the days you don't take your car to workplace:<br><i>for example per each weekend</i>";
-$FUEL_DIST_NO_JOB1 = "kilometres on average during the days you don't take your car to workplace"; // you do 5 km per week....
-$FUEL_DIST = 'Kilometres you drive';
+$FUEL_DIST_HOME_JOB = 'Miles you drive between home and workplace (just one way)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB1 = 'miles between home and workplace'; //you do 7 km between home and job
+$FUEL_DIST_NO_JOB = "Miles you drive on average during the days you don't take your car to workplace:<br><i>for example per each weekend</i>";
+$FUEL_DIST_NO_JOB1 = "miles on average during the days you don't take your car to workplace"; // you do 5 km per week....
+$FUEL_DIST = 'Miles you drive';
 $FUEL_CAR_EFF = 'Fuel efficiency of your vehicle';
 $FUEL_PRICE = 'Average price you pay for the fuel';
 $FUEL_PRICE1 = 'Fuel average price';
@@ -181,7 +175,7 @@ $TOLLS_DAY_CALC = 'Calculation based on day?';
 $TOLLS_DAY_CALC1 = 'Daily amount you spend with tolls';
 $TOLLS_DAY_CALC_DESC = 'Think even about the rare trips you make to the exterior of your town or to the countryside, or on the receipts of any kind of electronic toll collection';
 //FINES
-$FINES = 'Fines';
+$FINES = 'Traffic tickets';
 $FINES_DESC = 'Average amount paid in traffic tickets:<br><i>think in the last few years how much you paid in any kind of traffic tickets (illegal parking, speed limit violation, mobile-phone, etc.)</i>';
 //WASHING
 $WASHING = 'Washing and cleaning';
@@ -191,7 +185,7 @@ $TOTAL_FIXED = 'TOTAL - Standing costs';
 $TOTAL_FIXED_DESCR = "Costs that don't depend on the travelled distance and one must pay even if the car is always stopped";
 $TOTAL_FIXED_DESCR2 = 'Depreciation, Insurance, Finance interests, Taxes, Inspection and 50% of parking and maintenance';
 $TOTAL_VARIABLE = 'TOTAL - Running costs';
-$TOTAL_VARIABLE_DESCR = 'Costs that depend on the number of kilometres you drive';
+$TOTAL_VARIABLE_DESCR = 'Costs that depend on the number of miles you drive';
 $TOTAL_VARIABLE_DESCR2 = 'Fuels, Repairing and improvements, Parking (considering you only pay it when you use the car), tolls, traffic tickets, washing, and 50% of maintenance';
 //EXTRA DATA
 $EXTRA_DATA = 'ADDITIONAL DATA';
@@ -199,7 +193,7 @@ $EXTRA_DATA1 = 'Additional data';
 $EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
 $EXTRA_DATA_FAMILY_NBR = 'How many people older than 4 years old you have in your family (including you)';
 $EXTRA_DATA_PRICE_PASS = "What is the average price per person of the public transports monthly season ticket, for your normal daily life<br><i>if public transport isn't an option for you, insert 0</i>";
-$EXTRA_DATA_INCOME = "Income";
+$EXTRA_DATA_INCOME = 'Income';
 $EXTRA_DATA_INCOME_QUESTION = 'What is your net income?';
 $EXTRA_DATA_WORKING_TIME = 'Working time';
 $EXTRA_DATA_WORKING_TIME_QUESTION = 'Do you have a job or a worthy occupation?';
@@ -250,17 +244,18 @@ $DAYS_CAR_PAID = 'For how many days, after the 1st of January, the car is paid';
 //GRAPHICS
 $PARCEL = 'Parcel';
 $COSTS = 'Costs';
-//****************************************************//ERROR MESSAGES
+//****************************************************
+//ERROR MESSAGES
 $ERROR_INVALID_INSU_VALUE = 'Invalid insurance amount';
 $ERROR_INSU_PERIOD = 'Insert periodicity of insurance';
-$ERROR_FUEL_CURR_DIST = 'You must refer if you want to make calculations based on pounds or on kilometres';
+$ERROR_FUEL_CURR_DIST = 'You must refer if you want to make calculations based on pounds or on miles';
 $ERROR_FUEL_CAR_EFF = 'Invalid fuel efficiency amount';
 $ERROR_FUEL_PRICE = 'Invalid fuel price';
 $ERROR_CAR_JOB = 'Please indicate if you take your car to workplace';
-$ERROR_FUEL_DIST = 'Invalid amount of kilometres travelled per month';
+$ERROR_FUEL_DIST = 'Invalid amount of miles travelled per month';
 $ERROR_DAYS_PER_WEEK = 'Invalid number of days per week';
-$ERROR_DIST_HOME_WORK = 'Invalid kilometres between home and workplace';
-$ERROR_DIST_NO_JOB = "Invalid number of kilometres you do during the days you don't take your car to workplace";
+$ERROR_DIST_HOME_WORK = 'Invalid miles between home and workplace';
+$ERROR_DIST_NO_JOB = "Invalid number of miles you do during the days you don't take your car to workplace";
 $ERROR_CURRENCY = 'Invalid pounds per month';
 $ERROR_DEPRECIATION_MONTH = 'Invalid acquisition month';
 $ERROR_DEPRECIATION_YEAR = 'Invalid acquisition year';
@@ -295,45 +290,45 @@ $TAXI_PRICE_PER_DIST=1.5; //price paid for taxi in chosen currency per chosen un
 //STANDARD COMMON AVERAGE DEFAULT values that apear on the start page
 //these values are to be changed by the user but you shall put values that are reasonable
 //keep in mind your chosen standard Currency and your volume and fuel efficiency standards
-$STD_ACQ_MONTH = '01'; //month of acquisition 
-$STD_ACQ_YEAR = '2000'; //year of acquisition 
-$STD_PRICE_PAID = ''; //price paid for the car
-$STD_PRICE_TODAY = ''; //the price the car has today
-$STD_INSURANCE_SEM = ''; //price paid for insurance by semester
-$STD_LOAN = ''; //amount asked for credit
-$STD_PERIOD_OF_CREDIT = ''; //period of the credit in months
-$STD_MONTHLY_PAY = ''; //monthly payment
-$STD_RESIDUAL_VALUE = ''; //residual value must be paid after credit
-$STD_NBR_INSPECTION = ''; //number of times car went to inspection
-$STD_INSPECTION_PRICE = ''; //normal inspection price
-$STD_ROAD_TAX = ''; //price paid for road taxes per year
-$STD_FUEL_PAID_PER_MONTH = ''; //money spent per month on fuels
-$STD_DAYS_PER_WEEK = ''; //days per week one takes their car to work
-$STD_JORNEY_2WORK = ''; //(standard distance, km or kilometres) made from home to work (just one way) 
-$STD_JORNEY_WEEKEND = ''; //(standard distance, km or kilometres) during the other days, for example weekends
-$STD_KM_PER_MONTH = ''; //(standard distance, km or kilometres) made per month
-$STD_CAR_FUEL_EFFICIENCY = ''; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
-$STD_FUEL_PRICE = ''; //price paid for fuel on chosen currency
-$STD_MAINTENANCE_PER_YEAR = ''; //amount paid for maintenance per year
-$STD_REPAIRS = ''; //repairs and improvements paid per year on average
-$STD_PARKING = ''; //parking paid per month
-$STD_TOLLS = ''; //amount paid in tolls per trimestre 
-$STD_TOLLS_DAY = ''; //amount paid in tolls per day
-$STD_TOLLS_DAYS_PER_MONTH = ''; //number of days per month the car crosses a tolled way
-$STD_FINES = ''; //fines paid on average per trimestre
-$STD_WASHING = ''; //amount paid in washings per trimestre
-$STD_NR_PPL_FAMILY = ''; //number of people in the family
-$STD_PASS_PRICE = ''; //price of the monthly pass
-$STD_INCOME_YEAR = ''; // net income per year
-$STD_INCOME_MONTH = ''; // net income per month
-$STD_INCOME_WEEK = ''; // net income per week
-$STD_INCOME_HOUR = ''; // net income per hour
-$STD_HOURS_WEEK = ''; // hours per week
-$STD_MONTHS_YEAR = ''; // months per year
-$STD_WEEKS_YEAR = ''; // weeks per year
-$STD_HOURS_WEEK = ''; // work hours per week
-$STD_TIME_HOME_JOB = ''; // minutes you drive from home to workplace
-$STD_TIME_WEEKEND = '';// minutes you drive in the days you don't take the car to workplace
-$STD_TIME_IN_DRIVING = ''; // time spent in driving (minutes/day)
-$STD_DAYS_MONTH = ''; // days per month
+$STD_ACQ_MONTH = '1'; //month of acquisition 
+$STD_ACQ_YEAR = '2001'; //year of acquisition 
+$STD_PRICE_PAID = '20000'; //price paid for the car
+$STD_PRICE_TODAY = '10000'; //the price the car has today
+$STD_INSURANCE_SEM = '200'; //price paid for insurance by semester
+$STD_LOAN = '15000'; //amount asked for credit
+$STD_PERIOD_OF_CREDIT = '48'; //period of the credit in months
+$STD_MONTHLY_PAY = '300'; //monthly payment
+$STD_RESIDUAL_VALUE = '5000'; //residual value must be paid after credit
+$STD_NBR_INSPECTION = '3'; //number of times car went to inspection
+$STD_INSPECTION_PRICE = '36'; //normal inspection price
+$STD_ROAD_TAX = '50'; //price paid for road taxes per year
+$STD_FUEL_PAID_PER_MONTH = '170'; //money spent per month on fuels
+$STD_DAYS_PER_WEEK = '5'; //days per week one takes their car to work
+$STD_JORNEY_2WORK = '15'; //(standard distance, km or miles) made from home to work (just one way) 
+$STD_JORNEY_WEEKEND = '40'; //(standard distance, km or miles) during the other days, for example weekends
+$STD_KM_PER_MONTH = '300'; //(standard distance, km or miles) made per month
+$STD_CAR_FUEL_EFFICIENCY = '9'; //(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard
+$STD_FUEL_PRICE = '1.4'; //price paid for fuel on chosen currency
+$STD_MAINTENANCE_PER_YEAR = '300'; //amount paid for maintenance per year
+$STD_REPAIRS = '150'; //repairs and improvements paid per year on average
+$STD_PARKING = '20'; //parking paid per month
+$STD_TOLLS = '20'; //amount paid in tolls per trimestre 
+$STD_TOLLS_DAY = '1'; //amount paid in tolls per day
+$STD_TOLLS_DAYS_PER_MONTH = '22'; //number of days per month the car crosses a tolled way
+$STD_FINES = '10'; //fines paid on average per trimestre
+$STD_WASHING = '10'; //amount paid in washings per trimestre
+$STD_NR_PPL_FAMILY = '4'; //number of people in the family
+$STD_PASS_PRICE = '40'; //price of the monthly pass
+$STD_INCOME_YEAR = '22000'; // net income per year
+$STD_INCOME_MONTH = '2000'; // net income per month
+$STD_INCOME_WEEK = '500'; // net income per week
+$STD_INCOME_HOUR = '20'; // net income per hour
+$STD_MONTHS_YEAR = '11'; // months per year
+$STD_HOURS_WEEK = '30'; // hours per week
+$STD_WEEKS_YEAR = '48'; // weeks per year
+$STD_HOURS_WEEK = '36'; // work hours per week
+$STD_TIME_HOME_JOB = '20'; // minutes you drive from home to workplace
+$STD_TIME_WEEKEND = '20';// minutes you drive in the days you don't take the car to workplace
+$STD_TIME_IN_DRIVING = '60'; // time spent in driving (minutes/day)
+$STD_DAYS_MONTH = '22'; // days per month
 ?>

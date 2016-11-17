@@ -9,7 +9,7 @@ function fixNmbr($i,$n){
 }
 
 include("credentials.php"); //DB credentials
-include("../country files/country_list.php");
+include("../countries/country_list.php");
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
@@ -31,7 +31,7 @@ foreach ($avail_CT as $country => $country_name) {
     $row = $result->fetch_assoc();
 
     //gets country language variables
-    include('../country files/'.$country.'.php');
+    include('../countries/'.$country.'.php');
 
     //the file name to which the HTML table will be saved
     $file="tables/".$country.".html";

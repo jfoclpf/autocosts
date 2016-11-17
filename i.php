@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php include("./country files/country_list.php"); ?>
+<?php include("./countries/country_list.php"); ?>
 <?php include("./php/country_selector.php"); ?>
 
 <html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">

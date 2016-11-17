@@ -2,7 +2,7 @@
 //script that populates a country DB with specs for each country
 
 include("credentials.php");
-include (dirname(__FILE__).'/../country files/country_list.php');
+include (dirname(__FILE__).'/../countries/country_list.php');
 asort($avail_CT); //sorts alphabetically the counties list got from country_list
 
 $isDBConnectionSane = true;
@@ -35,7 +35,7 @@ if (!$connectionDB)
 
 foreach ($avail_CT as $key => $value) {
     
-    include (dirname(__FILE__).'/../country files/'.$key.'.php');
+    include (dirname(__FILE__).'/../countries/'.$key.'.php');
     
     if ($key !="XX"){//teste version 
                 
