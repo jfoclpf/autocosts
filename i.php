@@ -23,7 +23,7 @@
         <?php include './layout/header.php'; ?>
         <div id="container">
             <div class="p3" id="description">
-                <?php echo $INITIAL_TEXT; ?>
+                <?php echo $INITIAL_TEXT; if(isset($DISCLAIMER)){echo " ".$DISCLAIMER;} ?>
             </div>
             <div id="container_table">
                 <!-- div3 = LEFT layout column-->
