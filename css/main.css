@@ -63,6 +63,8 @@ h5, h6 {
     color: inherit;
     text-rendering: optimizelegibility;
 }
+
+/*simple elements*/
 p {
     margin: 0 0 10px;
 }
@@ -72,6 +74,13 @@ i {
 b {
     font-weight: bold;
 }
+img {
+    width: 100%;
+}
+a {
+    color: #333;
+}
+
 /* FORMS */
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     display: inline-block;
@@ -218,18 +227,6 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     -webkit-transform:scale(0.77);
     transform-origin: center center;
     -webkit-transform-origin:center center;
-}
-
-/* EM */
-img {
-    width: 100%;
-}
-i {
-    font-size: 13px;
-    color: #505050;
-}
-a {
-    color: #333;
 }
 
 /*==== HEADER =====*/
@@ -464,6 +461,9 @@ form.roundCorner {
 }
 #input_div td {
     text-align: left;
+}
+#input_div i {
+    font-size: 13px;
 }
 
 #div2 td:nth-child(2n) {
