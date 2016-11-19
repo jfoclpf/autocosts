@@ -3,7 +3,9 @@
 // COUNTRY: SVERIGE
 // LANGUAGE: SVENSKA
 
+$COUNTRY_NAME = 'Sverige';
 $LANGUAGE_CODE = 'sv';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -102,7 +104,6 @@ $DISTANCE = "Sträcka";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Genomsnittlig månadskostnad per typ';
-$COUNTRY_NAME = 'Sverige';
 $STATISTIC_TITLE = 'Automobile kostnader för';
 $DEPRECIATION_ST = 'Avskrivningar';
 $INSURANCE_ST = 'Försäkring';

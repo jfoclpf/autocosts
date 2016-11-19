@@ -3,7 +3,9 @@
 // COUNTRY: ΕΛΛΑΔΑ
 // LANGAUAGE: ΕΛΛΗΝΙΚΑ
 
+$COUNTRY_NAME = 'Ελλάδα';
 $LANGUAGE_CODE = 'el';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -100,7 +102,6 @@ $DISTANCE = "Απόσταση";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Μέσο μηνιαίο κόστος ανά τύπο';
-$COUNTRY_NAME = 'Ελλάδα';
 $STATISTIC_TITLE = 'Δαπάνες αυτοκινήτων για την';
 $DEPRECIATION_ST = 'Απόσβεση';
 $INSURANCE_ST = 'Ασφάλιση';

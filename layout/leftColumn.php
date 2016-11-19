@@ -16,7 +16,7 @@
         <!-- Visitor Statistics block -->
         <b>
         <span class="p2">
-            Visitors
+            <?php echo isset($VISITORS) ? $VISITORS : 'Visitors'; ?>
         </span>
         </b>
         <div id="visitors_div">
@@ -26,7 +26,7 @@
         <!-- User Statistics block -->
         <b>
         <span class="p2">
-            Users<br>
+            <?php echo isset($USERS) ? $USERS : 'Users'; ?><br>
         </span>
         </b>
         <div id="stats_div">
@@ -40,11 +40,11 @@
                         echo number_format($row['total_users'], 0, ',', '&thinsp;');	
                     ?>
                     </td>
-                    <td>filled in for <?php echo $GLOBALS['country']?></td>
+                    <td><?php echo isset($FOR_COUNTRY) ? $FOR_COUNTRY : 'filled in for '.$GLOBALS['country']; ?></td>
                 </tr>
                 <tr>
                     <td><?php echo number_format($row['global_total_users'], 0, ',', '&thinsp;');?></td>
-                    <td>filled in totally</td>
+                    <td><?php echo isset($IN_TOTAL) ? $IN_TOTAL : 'in total'; ?></td>
                 </tr>
             </table>
         </div>
@@ -52,7 +52,7 @@
         <!-- Contact block -->
         <b>
         <span class="p2">
-            Contact<br>
+            <?php echo isset($CONTACT) ? $CONTACT : 'Contact'; ?><br>
         </span>
         </b>
         <div id="contact_div">

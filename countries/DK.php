@@ -3,7 +3,9 @@
 // COUNTRY: DANMARK
 // LANGAUAGE: DANSK
 
+$COUNTRY_NAME = 'Danmark';
 $LANGUAGE_CODE = 'da';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -100,7 +102,6 @@ $DISTANCE = "Distance";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Gennemsnitligt månedligt pris pr typen';
-$COUNTRY_NAME = 'Danmark';
 $STATISTIC_TITLE = 'Automobile omkostninger for';
 $DEPRECIATION_ST = 'Afskrivninger';
 $INSURANCE_ST = 'Forsikring';

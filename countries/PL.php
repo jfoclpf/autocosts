@@ -3,7 +3,9 @@
 // COUNTRY: POLSKA
 // LANGUAGE: POLSKY
 
+$COUNTRY_NAME = 'Polski';
 $LANGUAGE_CODE = 'pl';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -97,7 +99,6 @@ $DISTANCE = "Dystans";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Średni miesięczny koszt od rodzaju';
-$COUNTRY_NAME = 'Polski';
 $STATISTIC_TITLE = 'Koszty samochodowe dla';
 $DEPRECIATION_ST = 'Amortyzacja';
 $INSURANCE_ST = 'Ubezpieczenie';

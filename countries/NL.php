@@ -3,7 +3,9 @@
 // COUNTRY: NETHERLAND
 // LANGUAGE: NETHERLANDS
 
+$COUNTRY_NAME = 'Netherland';
 $LANGUAGE_CODE = 'nl';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -97,7 +99,6 @@ $DISTANCE = "Afstand";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Gemiddelde maandelijkse kosten per soort';
-$COUNTRY_NAME = 'Netherland';
 $STATISTIC_TITLE = 'Autokosten voor';
 $DEPRECIATION_ST = 'Afschrijving';
 $INSURANCE_ST = 'Verzekering';

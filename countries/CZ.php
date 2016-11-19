@@ -3,7 +3,9 @@
 // COUNTRY: ČESKÁ
 // LANGAUAGE: ČESKÝ
 
+$COUNTRY_NAME = 'Češku';
 $LANGUAGE_CODE = 'cs';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -102,7 +104,6 @@ $DISTANCE = "Vzdálenost";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Průměrná měsíční cena dle typu';
-$COUNTRY_NAME = 'Češku';
 $STATISTIC_TITLE = 'Náklady na automobilový';
 $DEPRECIATION_ST = 'Znehodnocení';
 $INSURANCE_ST = 'Pojištění';

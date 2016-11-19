@@ -3,7 +3,9 @@
 // COUNTRY: UKRAINE
 // LANGUAGE: UKRAINIAN
 
+$COUNTRY_NAME = 'України';
 $LANGUAGE_CODE = 'uk';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -102,7 +104,6 @@ $DISTANCE = "Відстань";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Середньомісячна вартість типу';
-$COUNTRY_NAME = 'України';
 $STATISTIC_TITLE = 'Автомобільні витрати для';
 $DEPRECIATION_ST = 'Амортизація';
 $INSURANCE_ST = 'Страхування';

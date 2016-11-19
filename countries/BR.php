@@ -4,6 +4,8 @@
 // LANGAUAGE: PORTUGUESE - BRAZILIAN
 
 $LANGUAGE_CODE = 'pt-BR';
+$COUNTRY_NAME = 'Brasil';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -62,6 +64,17 @@ $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
 $AC_DOMAIN = 'AUTOCUSTOS.INFO';
 $AC_SUB_HEADER = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
+
+//user statistics
+$VISITORS = 'Visitantes';
+$ONLINE = 'on-line';
+$THIS_MONTH = 'neste mês';
+$IN_TOTAL = 'no total'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'Usuários';
+$FOR_COUNTRY = 'para o Brasil'; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'no total'; //in the sense of "10000 users filled in *in total* the form"
+$CONTACT = 'Contato';
+
 //time words
 $DAYLY = 'diário';
 $WEEKLY = 'semanal';
@@ -91,7 +104,6 @@ $DISTANCE = "Distância";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Custo médio mensal por tipo';
-$COUNTRY_NAME = 'Brasil';
 $STATISTIC_TITLE = 'Custos de automóveis para o';
 $DEPRECIATION_ST = 'Depreciação';
 $INSURANCE_ST = 'Seguro';

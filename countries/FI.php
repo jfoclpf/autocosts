@@ -3,7 +3,9 @@
 // COUNTRY: SUOMESSA
 // LANGAUAGE: SUOMI
 
+$COUNTRY_NAME = 'Suomessa';
 $LANGUAGE_CODE = 'fi';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -101,7 +103,6 @@ $DISTANCE = "Etäisyys";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Keskimääräinen kuukausittainen kustannus per tyyppi';
-$COUNTRY_NAME = 'Suomessa';
 $STATISTIC_TITLE = 'Automobile kustannukset';
 $DEPRECIATION_ST = 'Arvonalennus';
 $INSURANCE_ST = 'Vakuutus';

@@ -194,9 +194,9 @@ if ($counter_connected == true)
 	  	
 ?>
     <table id="visitors_table">
-      <tr><td><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td>online</td></tr>
-      <tr><td><?php echo number_format($month_value, 0, ',', '&thinsp;'); ?></td><td>this month</td></tr>
-      <tr><td><?php echo number_format($all_value,   0, ',', '&thinsp;'); ?></td><td>totally</td></tr> 
+      <tr><td><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td><?php echo isset($ONLINE) ? $ONLINE : 'online'; ?></td></tr>
+      <tr><td><?php echo number_format($month_value, 0, ',', '&thinsp;'); ?></td><td><?php echo isset($THIS_MONTH) ? $THIS_MONTH : 'this month'; ?></td></tr>
+      <tr><td><?php echo number_format($all_value,   0, ',', '&thinsp;'); ?></td><td><?php echo isset($IN_TOTAL) ? $IN_TOTAL : 'in total'; ?></td></tr> 
     </table>
 
 <?php

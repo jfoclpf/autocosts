@@ -3,7 +3,9 @@
 // COUNTRY: FRANCE
 // LANGAUAGE: FRANCES
 
+$COUNTRY_NAME = 'France';
 $LANGUAGE_CODE = 'fr';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -63,6 +65,16 @@ $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
 $AC_DOMAIN = 'AUTOCOUTS.FR';
 $AC_SUB_HEADER = 'CALCULATRICE DES COÛTS AUTOMOBILES';
 
+//user statistics
+$VISITORS = 'Visiteurs';
+$ONLINE = 'en ligne';
+$THIS_MONTH = 'ce mois';
+$IN_TOTAL = 'au total'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'Utilisateurs';
+$FOR_COUNTRY = 'pour la '.$COUNTRY_NAME; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'au total'; //in the sense of "10000 users filled in *in total* the form "
+$CONTACT = 'Contact';
+
 //time words
 $DAYLY = 'quotidiennement';
 $WEEKLY = 'hebdomadairement';
@@ -95,7 +107,6 @@ $DISTANCE = "Distance";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Coût mensuel moyen par type';
-$COUNTRY_NAME = 'France';
 $STATISTIC_TITLE = 'Coûts d\'automobile pour la';
 $DEPRECIATION_ST = 'Dépréciation';
 $INSURANCE_ST = 'Assurance';

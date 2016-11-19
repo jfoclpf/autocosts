@@ -3,7 +3,9 @@
 // COUNTRY: México
 // LANGUAGE: español
 
+$COUNTRY_NAME = 'México';
 $LANGUAGE_CODE = 'es-419';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -70,6 +72,16 @@ $AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';
 $AC_DOMAIN = 'AUTOCOSTOS.INFO';
 $AC_SUB_HEADER = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 
+//user statistics
+$VISITORS = 'Visitantes';
+$ONLINE = 'en línea';
+$THIS_MONTH = 'en este mes';
+$IN_TOTAL = 'en total'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'Usuarios';
+$FOR_COUNTRY = 'para '.$COUNTRY_NAME; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'en total'; //in the sense of "10000 users filled in *in total* the form "
+$CONTACT = 'Contacto';
+
 //time words
 $DAYLY = 'diario';
 $WEEKLY = 'semanal';
@@ -102,7 +114,6 @@ $DISTANCE = "Distancia";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Costo mensual promedio por tipo';
-$COUNTRY_NAME = 'México';
 $STATISTIC_TITLE = 'Costos de Automóviles de';
 $DEPRECIATION_ST = 'Depreciación';
 $INSURANCE_ST = 'Seguro';

@@ -63,6 +63,17 @@ $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
+
+//user statistics
+$VISITORS = 'Visitors';
+$ONLINE = 'online';
+$THIS_MONTH = 'this month';
+$IN_TOTAL = 'in total'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'users';
+$FOR_COUNTRY = 'for the test'; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'in total'; //in the sense of "10000 users filled in *in total* the form "
+$CONTACT = 'Contact';
+
 //time words
 $DAYLY = 'daily';
 $WEEKLY = 'weekly';

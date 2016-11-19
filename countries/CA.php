@@ -3,7 +3,9 @@
 // COUNTRY: CANADA
 // LANGAUAGE: ENGLISH
 
+$COUNTRY_NAME = 'Canada';
 $LANGUAGE_CODE = 'en';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -62,6 +64,17 @@ $HELP_PROJECT = 'This is a free service with no advertisements!';
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
+
+//user statistics
+$VISITORS = 'Visitors';
+$ONLINE = 'online';
+$THIS_MONTH = 'this month';
+$IN_TOTAL = 'in total'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'users';
+$FOR_COUNTRY = 'for Canada'; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'in total'; //in the sense of "10000 users filled in *in total* the form "
+$CONTACT = 'Contact';
+
 //time words $DAYLY = 'daily'; 
 $WEEKLY = 'weekly'; 
 $MONTHLY = 'monthly'; 
@@ -90,7 +103,6 @@ $DISTANCE = "Distance";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Average monthly cost per type';
-$COUNTRY_NAME = 'Canada';
 $STATISTIC_TITLE = 'Automobile costs for';
 $DEPRECIATION_ST = 'Depreciation';
 $INSURANCE_ST = 'Insurance';

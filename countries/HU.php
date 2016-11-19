@@ -3,7 +3,9 @@
 // COUNTRY: MAGYARORSZÁG
 // LANGAUAGE: MAGYAR
 
+$COUNTRY_NAME = 'Magyarország';
 $LANGUAGE_CODE = 'hu';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -102,7 +104,6 @@ $DISTANCE = "Távolság";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Az átlagos havi költség típusú';
-$COUNTRY_NAME = 'Magyarország';
 $STATISTIC_TITLE = 'Automobile költségeit';
 $DEPRECIATION_ST = 'Értékcsökkenés';
 $INSURANCE_ST = 'Biztosítás';

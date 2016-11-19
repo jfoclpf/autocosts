@@ -3,7 +3,9 @@
 // COUNTRY: DEUTSCHLAND
 // LANGAUAGE: DEUTSCH
 
+$COUNTRY_NAME = 'Deutschland';
 $LANGUAGE_CODE = 'de';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -70,6 +72,16 @@ $AC_MOBILE = 'Autokostenrechner<br>für Mobilgeräte';
 $AC_DOMAIN = 'AUTOCOSTS.INFO';
 $AC_SUB_HEADER = 'AUTOKOSTENRECHNER';
 
+//user statistics
+$VISITORS = 'Besucher';
+$ONLINE = 'online';
+$THIS_MONTH = 'in diesem Monat';
+$IN_TOTAL = 'insgesamt'; //in the sense of "the website had 10000 visitors *in total*"
+$USERS = 'Benutzer';
+$FOR_COUNTRY = 'für '.$COUNTRY_NAME; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$IN_TOTAL = 'insgesamt'; //in the sense of "10000 users filled in *in total* the form "
+$CONTACT = 'Kontakt';
+
 //time words
 $DAYLY = 'Täglich';
 $WEEKLY = 'Pro Woche';
@@ -102,7 +114,6 @@ $DISTANCE = "Entfernung";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Durchschnittliche monatliche Kosten pro Typ';
-$COUNTRY_NAME = 'Deutschland';
 $STATISTIC_TITLE = 'Autokosten für';
 $DEPRECIATION_ST = 'Abschreibung';
 $INSURANCE_ST = 'Versicherung';

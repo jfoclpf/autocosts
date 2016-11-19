@@ -3,7 +3,9 @@
 // COUNTRY: ITALIA
 // LANGUAGE: ITALIANO
 
+$COUNTRY_NAME = 'Italia';
 $LANGUAGE_CODE = 'it';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -97,7 +99,6 @@ $DISTANCE = "Distanza";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Il costo medio mensile per tipo';
-$COUNTRY_NAME = 'l\'Italia';
 $STATISTIC_TITLE = 'Costi automobili per';
 $DEPRECIATION_ST = 'Ammortamento';
 $INSURANCE_ST = 'Assicurazione';

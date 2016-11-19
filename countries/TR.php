@@ -3,7 +3,9 @@
 // COUNTRY: TÜRKİYE
 // LANGUAGE: TÜRKÇE
 
+$COUNTRY_NAME = 'Türkiye';
 $LANGUAGE_CODE = 'tr';
+
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -90,7 +92,6 @@ $DISTANCE = "Mesafe";
 
 //statistics
 $AVERAGE_COSTS_PER_TYPE = 'Cinsine bağlı olan ortalama aylık maliyeti';
-$COUNTRY_NAME = 'Türkiye';
 $STATISTIC_TITLE = 'otomobil maliyetleri';
 $DEPRECIATION_ST = 'Amortisman';
 $INSURANCE_ST = 'Sigorta';
