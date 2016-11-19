@@ -59,6 +59,7 @@ $BUTTON_RERUN = 'Relancez'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculatrice des coûts automobiles';
 $MAIN_TITLE = "CALCULATRICE DES COÛTS AUTOMOBILES";
 $INITIAL_TEXT = "Cette calculatrice vous permettra de trouver <b>le vrai coût de revient</b> de votre voiture en <b>France</b>. Il vous donnera normalement une estimation correcte de ce qu’il faut réellement dépenser pour se permettre d’avoir une voiture. Comme les factures liées à votre automobile arrivent à différents moments de l’année, il est souvent difficile d’évaluer la somme totale dépensée. Soyez réaliste avec les valeurs que vous entrez. Pour des factures inattendues telles que des frais de réparations après un accident ou des amendes, pensez à combien vous avez dépensé sur ces postes les années précédentes. Les calculs sont faits par défaut sur une base mensuelle. Utilisez le symbole du point pour la notation décimale, par exemple 8.7 kilomètres entre la maison et le lieu de travail.<br>";
+$DISCLAIMER = "Cette calculatrice est <b>complètement anonyme</b>, car elle ne demande ni ne stocke en permanence, aucun nom, email, <i>cookies</i>, adresse IP ni aucune autre information personnelle.";
 
 $HELP_PROJECT = 'Ce service est gratuit, sans publicité!';
 $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
