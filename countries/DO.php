@@ -81,7 +81,7 @@ $ONLINE = 'en línea';
 $THIS_MONTH = 'en este mes';
 $IN_TOTAL = 'en total'; //in the sense of "the website had 10000 visitors *in total*"
 $USERS = 'Usuarios';
-$FOR_COUNTRY = 'para la '.$COUNTRY_NAME; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
+$FOR_COUNTRY = 'para la Rep. Dominicana'; //in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.
 $IN_TOTAL = 'en total'; //in the sense of "10000 users filled in *in total* the form "
 $CONTACT = 'Contacto';
 
