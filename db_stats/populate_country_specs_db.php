@@ -2,8 +2,8 @@
 //script that populates a country DB with specs for each country
 
 include("credentials.php");
-include (dirname(__FILE__).'/../countries/country_list.php');
-asort($avail_CT); //sorts alphabetically the counties list got from country_list
+include (dirname(__FILE__).'/../countries/_list.php');
+asort($avail_CT); //sorts alphabetically the counties list got from list.php
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);

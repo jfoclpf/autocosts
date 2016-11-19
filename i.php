@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<?php include("./countries/country_list.php"); ?>
-<?php include("./php/country_selector.php"); ?>
+<?php include("./countries/_list.php"); ?>
+<?php include("./countries/_country_selector.php"); ?>
 
 <html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">
 

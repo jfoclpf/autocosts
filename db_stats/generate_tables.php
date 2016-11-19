@@ -9,7 +9,7 @@ function fixNmbr($i,$n){
 }
 
 include("credentials.php"); //DB credentials
-include("../countries/country_list.php");
+include("../countries/_list.php");
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
