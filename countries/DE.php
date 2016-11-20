@@ -69,7 +69,7 @@ Da die Autorechnungen zu unterschiedlichen Zeiten im Jahr bezahlt werden müssen
 
 $HELP_PROJECT = 'Unterstützen Sie dieses Projekt!' ;
 $AC_MOBILE = 'Autokostenrechner<br>für Mobilgeräte';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/DE';
 $AC_SUB_HEADER = 'AUTOKOSTENRECHNER';
 
 //user statistics

@@ -71,7 +71,7 @@ Eftersom dina fordonsrelaterade räkningar kommer vid olika tillfällen under å
 $HELP_PROJECT = 'Assistera detta projekt';
 $AC_MOBILE = 'AUTOCOSTS<br> för fordon';
 $AC_HEADER = '<big><u>WWW.AUTOCOSTS.INFO</u></big><br><b>KALKYLATOR FÖR FORDONSKOSTNADER</b>';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/SE';
 $AC_SUB_HEADER = 'KALKYLATOR FÖR FORDONSKOSTNADER';
 
 //time words

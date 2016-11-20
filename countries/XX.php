@@ -61,7 +61,7 @@ $DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't req
 
 $HELP_PROJECT = 'This is a free service with no advertisements!' ;
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/XX';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
 
 //user statistics
@@ -100,6 +100,17 @@ $YEAR = 'year';
 $DAYS_PER_WEEK_SHORT= 'days/week';
 //distance
 $DISTANCE = "Distance";
+
+//statistics
+$AVERAGE_COSTS_PER_TYPE = 'Average monthly cost per type';
+$STATISTIC_TITLE = 'Automobile costs for';
+$DEPRECIATION_ST = 'Depreciation';
+$INSURANCE_ST = 'Insurance';
+$REP_ST = 'Repairs';
+$WASHING_ST = 'Washing';
+$VIRTUAL_SPEED_TITLE = 'Consumer speed';
+$KINETIC_SPEED_TITLE = 'Kinetic speed';
+
 //calculator words
 $COSTS= "Costs";
 $FIXED_COSTS = 'Standing costs';

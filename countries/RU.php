@@ -69,7 +69,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Помогите этому проекту' ;
 $AC_MOBILE = 'AUTOCOSTS<br>для мобильных устройств';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/RU';
 $AC_SUB_HEADER = 'КAЛЬKУЛЯТОР РАСХОДОВ НА АВТОМОБИЛЬ';
 
 //time words

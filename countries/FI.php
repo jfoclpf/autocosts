@@ -68,7 +68,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Auta tätä projektia' ;
 $AC_MOBILE = 'AUTOKULUT<br> mobiililaitteille';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/FI';
 $AC_SUB_HEADER = 'AUTON KUSTANNUSLASKURI';
 
 //time words

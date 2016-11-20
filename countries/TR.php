@@ -60,7 +60,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Bu, reklam almayan ücretsiz bir hizmettir!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobil cihazlar için'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/TR';
 $AC_SUB_HEADER = 'OTOMOBİL MASRAF HESAPLAYICI';
 
 //time words 

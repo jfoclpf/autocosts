@@ -66,7 +66,7 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL VEHÍCULO<br>para celular';
-$AC_DOMAIN = 'AUTOCOSTOS.INFO';
+$AC_DOMAIN = 'AUTOCOSTOS.INFO/AR';
 $AC_SUB_HEADER = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 
 //user statistics

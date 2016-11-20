@@ -65,7 +65,7 @@ $DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't req
 
 $HELP_PROJECT = 'This is a free service with no advertisements!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/US';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
 
 //user statistics

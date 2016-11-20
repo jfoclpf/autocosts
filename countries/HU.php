@@ -69,7 +69,7 @@ Mivel az Ön járműfenntartási költségei az év folyamán más-más helyen j
 
 $HELP_PROJECT = 'Támogassa projektünket' ;
 $AC_MOBILE = 'AUTÓKÖLTSÉGEK<br>mobileszközökhöz';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/HU';
 $AC_SUB_HEADER = 'GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR';
 
 //time words

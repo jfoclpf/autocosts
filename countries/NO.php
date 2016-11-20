@@ -64,7 +64,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Støtt dette prosjektet' ;
 $AC_MOBILE = 'AUTOCOSTS<br> for mobile produkter';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/NO';
 $AC_SUB_HEADER = 'KOSTNADSKALKULATOR FOR BIL';
 
 //time words

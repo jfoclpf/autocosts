@@ -69,7 +69,7 @@ $INITIAL_TEXT =
 $HELP_PROJECT = 'Podpořte tento projekt' ;
 
 $AC_MOBILE = 'AUTONAKLADY<br>pro mobilní zařízení';
-$AC_DOMAIN = 'AUTOCOSTS.INFO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/CZ';
 $AC_SUB_HEADER = 'KALKULÁTOR VÝDAJŮ NA AUTO';
 
 //time words
