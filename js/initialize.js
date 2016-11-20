@@ -7,12 +7,20 @@ function initialize() {
     
     //divs that need to be hidden
     input_object = document.getElementById('input_div'); /*entry form*/
-    result_object = document.getElementById('result_div'); /*results*/
-    frame_witdh = document.getElementById('result_div').offsetWidth;
-    reload_object = document.getElementById('reload_div'); /*reload button*/
+    
+    result_object = document.getElementById('monthly_costs'); /*results*/
+    frame_witdh = document.getElementById('monthly_costs').offsetWidth;
     pie_chart_object = document.getElementById('pie_chart_div'); /*pie chart*/
     bar_chart_object = document.getElementById('bar_chart_div'); /*columns chart*/
-    text_object = document.getElementById('text_div'); /*msg text*/
+    
+    fin_effort_table_object = document.getElementById('fin_effort');
+    public_transport_table_object = document.getElementById('public_transp');
+    extern_costs_table_object = document.getElementById('extern_costs');
+    
+    reload_object = document.getElementById('reload_div'); /*reload button*/
+
+    main_table_object = document.getElementById('main_table');
+
     
     //hide divs that shall not appear on the front page 
     reload(true);

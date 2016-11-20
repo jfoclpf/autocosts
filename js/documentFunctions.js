@@ -12,9 +12,11 @@ function reload(onDocumentLoad) {
     reload_object.style.display = 'none';
     pie_chart_object.style.display = 'none';
     bar_chart_object.style.display = 'none';
-    text_object.style.display = 'none';
+    //hides the horizontal bars and <br> which divide blocks in result
+    $(".on_result").css('display', 'none');
+    $(".on_non_result").css('display', 'block');
     
-    ResultIsShowing=false; 
+    ResultIsShowing=false;
     
     //reloaded to original screen after the result tables were shown
     if(!onDocumentLoad){
@@ -78,8 +80,6 @@ function resized(){
         
         //prints final text accordingly
         var text_msg = print_result_final_text(frame_witdh, CalculatedData);
-        text_object.innerHTML = text_msg;
-        text_object.style.display = 'block';
     }
 }
 
