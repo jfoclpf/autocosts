@@ -17,13 +17,14 @@ function reload(onDocumentLoad) {
     $(".on_non_result").css('display', 'block');
     
     ResultIsShowing=false;
-    
+        
     //reloaded to original screen after the result tables were shown
     if(!onDocumentLoad){
         $('#div1').css('display', 'block');
         $('#div3').css('display', 'block');
         $('#description').html(DescriptionHTML);
         resized();
+        ShowGoogleReCaptcha(false);
     }
      
     openForm_part('form_part', 0, 1, false);
@@ -36,10 +37,12 @@ function ShowGoogleReCaptcha(bool){
     
     if(!ResultIsShowing){//if the results are not being shown
         if(bool){
+            //alert('show captcha');
             document.getElementById("b-bottom_3_A").style.display = "inline-block";
             document.getElementById("b-bottom_3_B").style.display = "none";
         }
         else{
+            //alert('show button');
             document.getElementById("b-bottom_3_A").style.display = "none";
             document.getElementById("b-bottom_3_B").style.display = "inline-block";   
         }
