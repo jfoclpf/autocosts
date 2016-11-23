@@ -39,8 +39,8 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 
     // Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
-		var img_div =  document.getElementById('img1');
-        img_div.innerHTML = '<img src="' + chart.getImageURI() + '">';        
+		var img_div =  document.getElementById('img_pie_chart_div');
+        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';        
     });
 	
     chart.draw(data, options);
@@ -78,10 +78,10 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 	var chart_div = document.getElementById('bar_chart_div');
     var chart1 = new google.visualization.ColumnChart(chart_div);
 	
-	// Wait for the chart to finish drawing before calling the getImageURI() method.
+	//Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart1, 'ready', function () {
-		var img_div =  document.getElementById('img2');
-        img_div.innerHTML = '<img src="' + chart1.getImageURI() + '">';        
+		var img_div =  document.getElementById('img_bar_chart_div');
+        img_div.innerHTML = '<img alt="chart" src="' + chart1.getImageURI() + '">';        
     });
 	
     //cross browser solution; if the window width is too small hides legend of chart
@@ -89,7 +89,6 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
     if(window_width < 450){
         chart_legend = "none";
         chart_inner_width = "100%";
-        bar_width = "20"; //when the window width is too small the bar width shall be 20px
     }
     else{
         chart_legend = "right";
@@ -110,4 +109,41 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
     };
     	
     chart1.draw(data, options);
+}
+
+//draws horizontal bars chart for Financial Effort
+function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width, char_height){
+    
+    var chart_data, data, options, chart;
+    
+    var chart_data = [
+         ['','<? echo $NET_INCOME_PER." ".$YEAR; ?>', '<? echo $TOTAL_COSTS_PER_YEAR; ?>'],
+         ['', net_income_per_year, total_cost_per_year],
+    ];
+    
+    data = google.visualization.arrayToDataTable(chart_data);
+    
+    options = {
+        backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
+        chartArea: {top: 0, width: "90%", height: "75%"},
+        legend: { position: 'none' },
+        vAxis: { textPosition: 'none' },
+        hAxis: {
+          title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
+          minValue: 0,
+        },
+        width: char_width,
+        height: char_height
+    };
+	
+    var chart_div = document.getElementById('fin_effort_chart_div');
+    chart = new google.visualization.BarChart(chart_div);	      
+
+    // Wait for the chart to finish drawing before calling the getImageURI() method.
+    google.visualization.events.addListener(chart, 'ready', function () {
+		var img_div =  document.getElementById('img_fin_effort_chart_div');
+        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';        
+    });
+	
+    chart.draw(data, options);
 }

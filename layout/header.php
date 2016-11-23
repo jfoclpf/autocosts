@@ -2,9 +2,9 @@
     <div id="left_top_div">&nbsp;</div>
     <!--#####################-->
     <div id="header_main_title">
-        <h1 class="main_title">
+        <div id="main_title">
             <?php echo $MAIN_TITLE ?>
-        </h1>
+        </div>
     </div>
     <!--## Select country box ##-->
     <div id="country_box">

@@ -55,37 +55,39 @@
                             <!-- ************* PRINTING divs ***********************
                             ******************************************************-->
                             <div class="on_result">
-
                                 <div class="result_div" id="main_table"></div>
                                                                                  
-                                <div class="hbar"></div><!-- HORIZONTAL BAR -->
-                                
+                                <div class="hbar"></div><!--***************************HORIZONTAL BAR**********-->
                                 <div class="title-div">
                                     <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
                                     <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
                                 </div>
                                 <br>
                                 <!-- first top (pie) chart -->
-                                <div id="pie_chart_div"></div>
-                                <br>
+                                <div id="pie_chart_div"></div><br>
+                                <div id="img_pie_chart_div" style="display:none"></div>
                                 <!-- second (bars) chart -->
                                 <div id="bar_chart_div"></div>
+                                <div id="img_bar_chart_div" style="display:none"></div>
                                 <!-- results tables -->
                                 <div class="result_div" id="monthly_costs"></div>
                                 
-                                <div class="hbar"></div><!-- HORIZONTAL BAR -->
-                                
+                                <div class="hbar"></div><!--*******************************HORIZONTAL BAR*****-->
+                                <div class="title-div">
+                                    <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
+                                </div>
+                                <!-- third chart -->
+                                <div id="fin_effort_chart_div"></div>
+                                <div id="img_fin_effort_chart_div" style="display:none"></div>
                                 <div class="result_div" id="fin_effort"></div>
                                 
-                                <div class="hbar"></div><!-- HORIZONTAL BAR -->
-                                
+                                <div id="topbar_public_transp" class="hbar"></div><!--******HORIZONTAL BAR*****-->
                                 <div class="result_div" id="public_transp"></div>
                                 
-                                <div class="hbar"></div><!-- HORIZONTAL BAR -->
-                                
+                                <div id="topbar_exten_costs" class="hbar"></div><!--********HORIZONTAL BAR*****-->
                                 <div class="result_div" id="extern_costs"></div>
                                 
-                                <div class="hbar"></div><!-- HORIZONTAL BAR -->
+                                <div class="hbar"></div><!--***************************** HORIZONTAL BAR ******-->
                                                                 
                                 <div id="reload_div">
                                     <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
@@ -93,8 +95,7 @@
                                                  onclick="PrintElem('#main_table','#fin_effort','#monthly_costs','#pie_chart_div','#bar_chart_div','#text_div', '<?php echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
                                     <input id="generate_PDF" type="button" class="button" value="<?php echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<?php echo $GLOBALS['country']?>')" />
                                 </div>
-                                <div id="img1" style="display:none"></div>
-                                <div id="img2" style="display:none"></div>
+                                
                                 <!-- ************* ********* ************* -->
                                 <br>
                             </div>

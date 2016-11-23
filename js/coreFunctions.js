@@ -277,7 +277,7 @@ function calculate_costs(f1, f2, f3, country){
     var fin_effort = {
         //income
         income: 0,                         //income amount the user has inserted     
-        aver_income_per_year: 0,           //average income per year
+        income_per_year: 0,           //average income per year
         income_per_type: 0,                //number of income time-periods (number of months/year or weeks/year)
         income_hours_per_week: 0,          //number of hours per week  
         aver_income_per_month:0,           //average income per month
@@ -433,26 +433,26 @@ function calculate_costs(f1, f2, f3, country){
     switch(f3.income_type){
         case 'year':
             fin_effort.income = f3.income_per_year;
-            fin_effort.aver_income_per_year = fin_effort.income;        
+            fin_effort.income_per_year = fin_effort.income * 1;        
             break;
         case 'month':
             fin_effort.income = f3.income_per_month;
             fin_effort.income_per_type = f3.income_months_per_year;
-            fin_effort.aver_income_per_year = fin_effort.income * fin_effort.income_per_type;       
+            fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;       
             break;
         case 'week':
             fin_effort.income = f3.income_per_week;
             fin_effort.income_per_type = f3.income_weeks_per_year;
-            fin_effort.aver_income_per_year = fin_effort.income * fin_effort.income_per_type;   
+            fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;   
             break;
         case 'hour':
             fin_effort.income = f3.income_per_hour;
             fin_effort.income_hours_per_week = f3.income_hours_per_week;
             fin_effort.income_per_type = f3.income_hour_weeks_per_year;
-            fin_effort.aver_income_per_year = fin_effort.income * fin_effort.income_hours_per_week * fin_effort.income_per_type;
+            fin_effort.income_per_year = fin_effort.income * fin_effort.income_hours_per_week * fin_effort.income_per_type;
             break;
     }
-    fin_effort.aver_income_per_month = fin_effort.aver_income_per_year / 12;
+    fin_effort.aver_income_per_month = fin_effort.income_per_year / 12;
     
     //working time
     if(f3.income_type != 'hour'){
@@ -565,8 +565,8 @@ function calculate_costs(f1, f2, f3, country){
     
     //extra financial effort variables
     fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
-    fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_year * 12;
-    fin_effort.days_car_paid = total_costs_year / fin_effort.aver_income_per_year * 365.25;
+    fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.income_per_year * 12;
+    fin_effort.days_car_paid = total_costs_year / fin_effort.income_per_year * 365.25;
     fin_effort.kinetic_speed = fin_effort.drive_per_year / fin_effort.hours_drive_per_year;
     fin_effort.virtual_speed = fin_effort.drive_per_year / (fin_effort.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
 

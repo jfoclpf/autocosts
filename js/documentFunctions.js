@@ -564,8 +564,8 @@ function Popup(data1, data2, data3, data4, title)
     mywindow.document.write('<html><head><title>'+title+'</title>');
     //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
     mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
-    mywindow.document.write('<center><div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
-    mywindow.document.write('<h3>'+title+'</h3>');
+    mywindow.document.write('<div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
+    mywindow.document.write('<div id="title2print">'+title+'</div>');
     
     mywindow.document.write(data1);
     mywindow.document.write('<br>');
@@ -578,7 +578,7 @@ function Popup(data1, data2, data3, data4, title)
     mywindow.document.write('<br><br>');
     
     mywindow.document.write(data4);
-    mywindow.document.write('</div></center>');
+    mywindow.document.write('</div>');
     mywindow.document.write('</body></html>');
 
     mywindow.print();
