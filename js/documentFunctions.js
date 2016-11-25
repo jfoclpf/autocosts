@@ -12,19 +12,19 @@ function reload(onDocumentLoad) {
     reload_object.style.display = 'none';
     pie_chart_object.style.display = 'none';
     bar_chart_object.style.display = 'none';
-    //hides the horizontal bars and <br> which divide blocks in result
-    $(".on_result").css('display', 'none');
-    $(".on_non_result").css('display', 'block');
+    //hides the result sections blocks
+    $(".result_section").css('display', 'none');
     
     ResultIsShowing=false;
         
-    //reloaded to original screen after the result tables were shown
+    //reloaded to the original screen after the result tables were already shown
     if(!onDocumentLoad){
         $('#div1').css('display', 'block');
         $('#div3').css('display', 'block');
         $('#description').html(DescriptionHTML);
         resized();
-        ShowGoogleReCaptcha(false);
+        //if the results were already shown, it means user went already through ReCaptcha
+        ShowGoogleReCaptcha(false); 
     }
      
     openForm_part('form_part', 0, 1, false);
@@ -355,7 +355,7 @@ function isInteger(n) {
 
 function numberWithSpaces(x) {
     var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "<p1>&#160;<\/p1>");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "&#160;");
     return parts.join(".");
 }
 

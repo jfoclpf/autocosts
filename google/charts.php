@@ -86,7 +86,7 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 	
     //cross browser solution; if the window width is too small hides legend of chart
     var window_width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    if(window_width < 450){
+    if(window_width < 425){
         chart_legend = "none";
         chart_inner_width = "100%";
     }
@@ -114,7 +114,7 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 //draws horizontal bars chart for Financial Effort
 function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width, char_height){
     
-    var chart_data, data, options, chart;
+    var chart_data, data, options, chart, br_html, top_var, chart_inner_height;
     
     var chart_data = [
          ['','<? echo $NET_INCOME_PER." ".$YEAR; ?>', '<? echo $TOTAL_COSTS_PER_YEAR; ?>'],
@@ -123,13 +123,26 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
     
     data = google.visualization.arrayToDataTable(chart_data);
     
+    //cross browser solution; if the window width is too small hides legend of chart
+    var window_width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if(window_width < 425){
+        br_html = '\n';
+        chart_inner_height = "60%";
+        top_var = 0;
+    }
+    else{
+        br_html = '';
+        chart_inner_height = "90%";
+        top_var = 10;
+    } 
+    
     options = {
         backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
-        chartArea: {top: 0, width: "90%", height: "75%"},
+        chartArea: {top: top_var, width: "90%", chart_inner_height},
         legend: { position: 'none' },
         vAxis: { textPosition: 'none' },
         hAxis: {
-          title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
+          title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ' + br_html + '".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
           minValue: 0,
         },
         width: char_width,

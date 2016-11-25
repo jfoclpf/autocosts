@@ -36,16 +36,6 @@ a {
     color: #333;
 }
 
-.hbar { 
-    display: block;
-    height: 3px;
-    border: 0;
-    border-top: 2px solid #b4b4b4;
-    border-bottom: 2px solid #b4b4b4;
-    margin: 25px 0;
-    padding: 0;
-}
-
 /* FORMS */
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     display: inline-block;
@@ -134,7 +124,7 @@ input[type="number"] {
 
 /* TABLES */
 table {
-    width: 98%;
+    width: 100%;
     background-color: transparent;
     border-spacing: 0;
     border-collapse: collapse;
@@ -313,16 +303,19 @@ form.roundCorner {
     text-align: center;
     vertical-align:top;
 }
-#div3, #div1, #div2 {
+#div3, #div1, #div2, .result_section {
     background: #f0f0f0;
     border: 2px solid #b4b4b4;
     border-radius: 10px;
     overflow: hidden;
     margin: 0 auto;
 }
-#div2{
+#div2, .result_section{
     width:90%;
     max-width:1200px;
+}
+.result_section{
+    margin-top: 20px;
 }
 #div1, #div3 {
     width: 98%;
@@ -406,7 +399,6 @@ form.roundCorner {
 }
 
 /*=====================================*/
-
 /*===== Main Central Column (div2) ====*/
 
 #div2 td {
@@ -416,7 +408,7 @@ form.roundCorner {
 .title-div {
     text-align: center;
     font-size: 17px;
-    margin: 0 0 15px 0;
+    margin: 20px 0 15px 0;
 }
 .AC_url {
     color: #0000EE;
@@ -437,9 +429,11 @@ form.roundCorner {
     font-size: 13px;
 }
 
-#div2 td:nth-child(2n) {
+#div2 td:nth-child(2n),
+.result_section td:nth-child(2n) {
     width: 25%;
 }
+
 .title {
     display: block;
     padding: 21px 3% 0 3%;
@@ -547,6 +541,13 @@ form.roundCorner {
 #result_table1 tr:last-child td + td,
 #result_table2 tr:last-child td + td {
     text-align: left;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+#result_table1 tr:nth-child(9) td+td,
+#result_table1 tr:nth-child(18) td+td{
+    padding-bottom: 4px;
+    padding-top: 4px; 
 }
 
 #result_table2 tr:first-child td,
@@ -584,7 +585,6 @@ form.roundCorner {
 #text_div {
     padding: 0px 15px;
 }
-#final-text1{text-align: center;}
 #final-text2 {
     line-height: 100%;
 }
@@ -667,7 +667,7 @@ form.roundCorner {
     #div3_td, #div1_td {
         width:25%;
     }
-    #div2{
+    #div2_td{
         width: 95%;
     }
     #div2 .col {
@@ -696,7 +696,6 @@ form.roundCorner {
 /*============ Adapts for mobile devices ==================*/
 /***********************************************************/
 /*The treshold from which the blocks are vertically aligned*/
-
 @media all and (max-width: 768px) {
     
     #container_table{
@@ -711,7 +710,7 @@ form.roundCorner {
         vertical-align: middle;
         width: 100%;
     }
-    #div2, #div3, #div1 {
+    #div2, #div3, #div1, .result_section {
         width: 100%;
         font-size:100%;
         margin: 2% 0;
@@ -763,15 +762,28 @@ form.roundCorner {
 @media all and (max-width: 500px) {
     .result_div {
         font-size: 80%;
-    }
-    .result_div {
         margin: 0 2%;
     }
 }
 
+/*******************************************************************************/
 /*The treshold from which the cells on the result tables are vertically aligned*/
+/*******************************************************************************/
 @media all and (max-width: 425px) {
 
+    #main_title {
+        font-size: 18px;
+        line-height: 18px;
+    }
+    #div3, #div1, #div2, .result_section {
+        float: none;
+        width: auto;
+        margin: 20px 0 20px 0;
+    }
+
+    .result_div {
+        font-size: 105%;
+    }
     .result_table tr{
         background-color: #fff;
     }
@@ -779,6 +791,14 @@ form.roundCorner {
     .result_table tr:last-child {
         background-color: transparent;
     }
+    #result_table1 tr:last-child,
+    #result_table2 tr:last-child,
+    #result_table3 tr:last-child,
+    #result_table2 tr:first-child,
+    #result_table4 tr:first-child {
+        background-color: #fff;
+    }
+    
     #result_table0 td,
     #result_table1 td,
     #result_table2 td,
@@ -808,6 +828,9 @@ form.roundCorner {
     #result_table4 tr:first-child td:first-child {
         border-radius: 10px 10px 0 0;       
     }
+    #result_table1 tr:last-child td:first-child,
+    #result_table2 tr:last-child td:first-child,
+    #result_table3 tr:last-child td:first-child,
     #result_table2 tr:first-child td+td{
         border-radius: 0;  
     }
@@ -822,19 +845,27 @@ form.roundCorner {
     #result_table0 tr:nth-child(2) td:nth-child(4){
         border:0;
     }
-
-    #main_title {
-        font-size: 18px;
-        line-height: 18px;
+    #result_table1 tr:nth-child(9) td,
+    #result_table1 tr:nth-child(18) td,
+    #result_table1 tr:nth-child(21) td,
+    #result_table1 tr:nth-child(9) td+td,
+    #result_table1 tr:nth-child(18) td+td,
+    #result_table2 tr:last-child td:first-child,
+    #result_table4 tr:nth-last-child(2) td:first-child {
+        text-align: center; 
     }
-
-    #div3, #div1, #div2 {
-        float: none;
-        width: auto;
-        margin: 20px 0 20px 0;
+    #result_table2 tr:first-child td:first-child,
+    #result_table4 tr:first-child td:first-child {
+        border-bottom: 1px solid #b4b4b4;
     }
-
-
+    #result_table2 tr:first-child td:last-child,
+    #result_table4 tr:first-child td:last-child {
+        border: 0;
+    }
+    #result_table1 tr:last-child td:last-child,
+    #result_table2 tr:last-child td:last-child {
+        overflow: visible;
+    }
     #final-text2 {
         font-size: 250%
     }

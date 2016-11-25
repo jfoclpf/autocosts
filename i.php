@@ -14,15 +14,14 @@
     
     <?php include('./php/css_embed.php'); ?>
     <!--Embed all CSS files within CSS folder-->
-    <?=(new CSS_Embed()) ?>        
-  
+    <?=(new CSS_Embed()) ?>
 </head>
 
 <body>
     <div id="main_div">
         <?php include './layout/header.php'; ?>
         <div id="container">
-            <div class="p3" id="description">
+            <div id="description">
                 <?php echo $INITIAL_TEXT; if(isset($DISCLAIMER)){echo " ".$DISCLAIMER;} ?>
             </div>
             <div id="container_table">
@@ -37,70 +36,64 @@
                 <!-- div2 = CENTRE layout column-->
                 <div id="div2_td">
                     <div id="div2">
+                        <div class="title-div">
+                            <a class="AC_url" href="<?php echo 'http://'.strtolower($AC_DOMAIN) ?>">
+                                <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?></a>
+                        </div>
                         <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
                               action="javascript:void(0);" name="custo">
-
-                            <div class="title-div">
-                                <br>
-                                <a class="AC_url" href="<?php echo 'http://'.strtolower($AC_DOMAIN) ?>">
-                                    <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?></a>
-                            </div>
-
                             <div id="input_div">
                                 <?php include './layout/formPartOne.php'; ?>
                                 <?php include './layout/formPartTwo.php'; ?>
                                 <?php include './layout/formPartThree.php'; ?>
                             </div>
-
-                            <!-- ************* PRINTING divs ***********************
-                            ******************************************************-->
-                            <div class="on_result">
-                                <div class="result_div" id="main_table"></div>
-                                                                                 
-                                <div class="hbar"></div><!--***************************HORIZONTAL BAR**********-->
-                                <div class="title-div">
-                                    <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
-                                    <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
-                                </div>
-                                <br>
-                                <!-- first top (pie) chart -->
-                                <div id="pie_chart_div"></div><br>
-                                <div id="img_pie_chart_div" style="display:none"></div>
-                                <!-- second (bars) chart -->
-                                <div id="bar_chart_div"></div>
-                                <div id="img_bar_chart_div" style="display:none"></div>
-                                <!-- results tables -->
-                                <div class="result_div" id="monthly_costs"></div>
-                                
-                                <div class="hbar"></div><!--*******************************HORIZONTAL BAR*****-->
-                                <div class="title-div">
-                                    <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
-                                </div>
-                                <!-- third chart -->
-                                <div id="fin_effort_chart_div"></div>
-                                <div id="img_fin_effort_chart_div" style="display:none"></div>
-                                <div class="result_div" id="fin_effort"></div>
-                                
-                                <div id="topbar_public_transp" class="hbar"></div><!--******HORIZONTAL BAR*****-->
-                                <div class="result_div" id="public_transp"></div>
-                                
-                                <div id="topbar_exten_costs" class="hbar"></div><!--********HORIZONTAL BAR*****-->
-                                <div class="result_div" id="extern_costs"></div>
-                                
-                                <div class="hbar"></div><!--***************************** HORIZONTAL BAR ******-->
-                                                                
-                                <div id="reload_div">
-                                    <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
-                                    <input type="button" class="button" value="<?php echo $WORD_PRINT; ?>"
-                                                 onclick="PrintElem('#main_table','#fin_effort','#monthly_costs','#pie_chart_div','#bar_chart_div','#text_div', '<?php echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
-                                    <input id="generate_PDF" type="button" class="button" value="<?php echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<?php echo $GLOBALS['country']?>')" />
-                                </div>
-                                
-                                <!-- ************* ********* ************* -->
-                                <br>
-                            </div>
                         </form>
                     </div>
+                    
+                    <!-- ************* PRINTING divs ***********************
+                    ******************************************************-->
+                                            
+                    <div class="result_section" id="main_table_section">
+                        <div class="result_div" id="main_table"></div>
+                    </div>
+                    <div class="result_section" id="monthly_costs_section">
+                        <div class="title-div">
+                            <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
+                            <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
+                        </div>
+                        <br>
+                        <!-- first top (pie) chart -->
+                        <div id="pie_chart_div"></div><br>
+                        <div id="img_pie_chart_div" style="display:none"></div>
+                        <!-- second (bars) chart -->
+                        <div id="bar_chart_div"></div>
+                        <div id="img_bar_chart_div" style="display:none"></div>
+                        <!-- results tables -->
+                        <div class="result_div" id="monthly_costs"></div>
+                    </div>
+                    <div class="result_section" id="fin_effort_section">
+                        <div class="title-div">
+                            <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
+                        </div>
+                        <!-- third chart -->
+                        <div id="fin_effort_chart_div"></div>
+                        <div id="img_fin_effort_chart_div" style="display:none"></div>
+                        <div class="result_div" id="fin_effort"></div>
+                    </div>
+                    <div class="result_section" id="public_transp_section">
+                        <div class="result_div" id="public_transp"></div>
+                    </div>
+                    <div class="result_section" id="exten_costs_section">
+                        <div class="result_div" id="extern_costs"></div>
+                    </div>
+                    <div class="result_section" id="reload_div">
+                        <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
+                        <input type="button" class="button" value="<?php echo $WORD_PRINT; ?>"
+                                     onclick="PrintElem('#main_table','#fin_effort','#monthly_costs','#pie_chart_div','#bar_chart_div','#text_div', '<?php echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
+                        <input id="generate_PDF" type="button" class="button" value="<?php echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<?php echo $GLOBALS['country']?>')" />
+                    </div>
+                    <!-- ************* ********* ************* -->
+                    <br>
                 </div>
                 <!--#######################################################################################-->
                 <!-- div1 = RIGHT layout column-->

@@ -29,34 +29,44 @@ function Run(){
     input_object.style.display = 'none';
     
     //main table
-    var main_table_HTML = "";
-    main_table_HTML += print_main_table(f1, f2, f3, data);
+    var main_table_HTML = print_main_table(f1, f2, f3, data);
     main_table_object.innerHTML = main_table_HTML;
     main_table_object.style.display='block';
+    $('#main_table_section').show();
     
-    //monthly costs table
-    var monthly_costs_HTML = "";    
-    monthly_costs_HTML += print_costs_table(f1, f2, f3, data);
+    //monthly costs table  
+    var monthly_costs_HTML = print_costs_table(f1, f2, f3, data);
     result_object.innerHTML = monthly_costs_HTML;
     result_object.style.display='block';
+    $('#monthly_costs_section').show();
     
     //financial result table 
-    var fin_effort_table_HTML = "";
-    fin_effort_table_HTML += print_feffort_table(f1, f2, f3, data);
+    var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
     fin_effort_table_object.innerHTML = fin_effort_table_HTML;
     fin_effort_table_object.style.display='block';
+    $('#fin_effort_section').show();
     
     //public transports table 
-    var public_transport_table_HTML = "";
-    public_transport_table_HTML += print_publict_table(f1, f2, f3, data);
-    public_transport_table_object.innerHTML = public_transport_table_HTML;
-    public_transport_table_object.style.display='block';
+    var public_transport_table_HTML = print_publict_table(f1, f2, f3, data);
+    if(public_transport_table_HTML != ""){
+        $('#public_transp_section').show();
+        public_transport_table_object.innerHTML = public_transport_table_HTML;
+        public_transport_table_object.style.display='block';
+    }
+    else{
+        $('#public_transp_section').hide();
+    }
     
-    //external costs table 
-    var extern_costs_table_table_HTML = "";
-    extern_costs_table_table_HTML += print_extern_table(f1, f2, f3, data);
-    extern_costs_table_object.innerHTML = extern_costs_table_table_HTML;
-    extern_costs_table_object.style.display='block';
+    //external costs table
+    var extern_costs_table_table_HTML = print_extern_table(f1, f2, f3, data);
+    if (extern_costs_table_table_HTML != ""){
+        extern_costs_table_object.innerHTML = extern_costs_table_table_HTML;
+        extern_costs_table_object.style.display='block';
+        $('#exten_costs_section').show();
+    }
+    else{
+        $('#exten_costs_section').hide();
+    }
 
     //enlarges center div
     $('#div1_td').css('width', '15%');
@@ -73,10 +83,6 @@ function Run(){
     $('#div1').css('display', 'none');
     $('#div3').css('display', 'none');
     $('#description').html('');
-    
-    //shows horizontal bars and <br> which divide blocks in result
-    $(".on_result").css('display', 'block');
-    $(".on_non_result").css('display', 'none');
         
     //global variable indicating the results are being shown
     ResultIsShowing=true;
@@ -87,7 +93,7 @@ function Run(){
 //*************************************************************************************
 //*************************************************************************************
 
-/*Montlhy main table (result_table0)*/
+/*Total main first table (result_table0)*/
 function print_main_table(f1, f2, f3, data) {
     
     var varResult= "";
@@ -432,53 +438,6 @@ function print_costs_table(f1, f2, f3, data) {
     return varResult;
 }
 
-/*Public transports table (result_table2)*/
-function print_publict_table(f1, f2, f3, data){
-
-    var varResult = "";   
-    if(data.public_transports.display_tp()) {
-        //show topbar
-        $('#topbar_public_transp').show();
-        
-        var tp_text, outros_tp_text, taxi_text;
-
-        tp_text="<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
-                + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?>";
-        
-        if(data.public_transports.racio_custocar_caustotp < data.public_transports.racio_outros_tp){
-            outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
-        }
-        taxi_text="<b><?php echo $TAXI_DESL ?><\/span><\/b><br>" + data.public_transports.n_km_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-        
-        //starts HTML table
-        varResult+="<table class=\"result_table\" id=\"result_table2\">";
-        //header
-        varResult+="<tr><td><b><?php echo $PUBL_TRA_EQUIV ?></b><br></td>"+
-                   "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
-        //items
-        varResult+="<tr><td>" + tp_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.preco_total_tp.toFixed(1)) + "</td></tr>";
-        
-        varResult+="<tr><td>" + taxi_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.custo_taxi.toFixed(1)) + "</td></tr>";
-        
-        //in case other means of transport are shown besides taxi and urban public transports
-        if(data.public_transports.display_outros_tp) {
-            varResult+="<tr><td>" + outros_tp_text + "</td>" +
-                       "<td>&nbsp;"+countryCheck(data.public_transports.outros_tp.toFixed(1))+"</td></tr>";
-        }
-        varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                   "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
-        
-        varResult+="</table>";
-    }
-    else{
-        //hides topbar
-        $('#topbar_public_transp').hide();
-    }
-    return varResult;
-}
-
 /*Financial effort table (result_table3)*/
 function print_feffort_table(f1, f2, f3, data){
     
@@ -616,6 +575,47 @@ function print_feffort_table(f1, f2, f3, data){
     return varResult;
 }
 
+/*Public transports table (result_table2)*/
+function print_publict_table(f1, f2, f3, data){
+
+    var varResult = "";   
+    if(data.public_transports.display_tp()) {
+        
+        var tp_text, outros_tp_text, taxi_text;
+
+        tp_text="<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
+                + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?>";
+        
+        if(data.public_transports.racio_custocar_caustotp < data.public_transports.racio_outros_tp){
+            outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
+        }
+        taxi_text="<b><?php echo $TAXI_DESL ?><\/span><\/b><br>" + data.public_transports.n_km_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
+        
+        //starts HTML table
+        varResult+="<table class=\"result_table\" id=\"result_table2\">";
+        //header
+        varResult+="<tr><td><b><?php echo $PUBL_TRA_EQUIV ?></b><br></td>"+
+                   "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+        //items
+        varResult+="<tr><td>" + tp_text + "</td>" + 
+                   "<td>&nbsp;" + countryCheck(data.public_transports.preco_total_tp.toFixed(1)) + "</td></tr>";
+        
+        varResult+="<tr><td>" + taxi_text + "</td>" + 
+                   "<td>&nbsp;" + countryCheck(data.public_transports.custo_taxi.toFixed(1)) + "</td></tr>";
+        
+        //in case other means of transport are shown besides taxi and urban public transports
+        if(data.public_transports.display_outros_tp) {
+            varResult+="<tr><td>" + outros_tp_text + "</td>" +
+                       "<td>&nbsp;"+countryCheck(data.public_transports.outros_tp.toFixed(1))+"</td></tr>";
+        }
+        varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+                   "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+        
+        varResult+="</table>";
+    }
+    return varResult;
+}
+
 /*External costs table (result_table4)*/
 function print_extern_table(f1, f2, f3, data){ 
             
@@ -630,8 +630,6 @@ function print_extern_table(f1, f2, f3, data){
     var varResult     = "";
     
     if(<?if ($GLOBALS['country']=="PT") echo 'data.distance_per_month != 0'; else echo "false"; ?>){
-        //show correspondent topbar
-        $('#topbar_exten_costs').show();
         
         varResult+="<table class=\"result_table\" id=\"result_table4\">";
 
@@ -666,10 +664,6 @@ function print_extern_table(f1, f2, f3, data){
         varResult+="<tr><td colspan=\"2\">"+ source_ext_costs +"</td></tr>";        
  
         varResult+="</table>";     
-    }
-    else{
-        //hides topbar
-        $('#topbar_exten_costs').hide();
     }
             
     return varResult;
