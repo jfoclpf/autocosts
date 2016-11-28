@@ -1,172 +1,246 @@
-function generatePDF(main_title, country){
-	var body1, body2, body3, body4, data;
-	
-    data = $('#result_table1 td');	
-	body1 = get_private_costs_table(data);	
-	
-    data = $('#result_table2 td');
-	body2 = getBody2(data);
-	
+function generatePDF(main_title, public_transp_bool, extern_costs_bool){
+    //alert(public_transp_bool);alert(extern_costs_bool);
+    var body0, body1, body2, body3, body4, data;
+
+    data = $('#result_table0 td');    
+    body0 = get_main_table(data);    
+    //var str_debug = JSON.stringify(body0, null, 4); alert(str_debug);
+    
+    //monthly costs title and table
+    var monthly_costs_title = gstr($('#monthly_costs_title').html());
+    var costs_title_body = [[{text: monthly_costs_title, style: "header"}]];
+    data = $('#result_table1 td');    
+    body1 = get_private_costs_table(data);
+        
+    //financial effort title and table
+    var fin_effort_title = gstr($('#fin_effort_title').html());
+    var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];    
     data = $('#result_table3 td');
-	body4 = getBodyFinEffort(data);	
-	
-	var imageData1 = $('#img1').find('img').attr('src');
-	var imageData2 = $('#img2').find('img').attr('src');
-				
-    var txt1 = $('#final-text1').html();	
-	var txt2 = $('#final-text2').text();
-	var part1 = txt1.split('<b>')[0] + ' ';
-	var part2 = $('#final-text1').find('b').text() + ' ';
-	var part3 = txt1.split('<br>')[0].split('</b>')[1] + '\n';
-	var part4 = txt1.split('<br>')[1];
-	
-	var docDefinition = {
-		header:	{text: main_title, style: 'title'},
-		content:[			
-			{
-				style: 'tableMarging',
-				table:{
-					headerRows: 0,
-					widths: [ 390, '*' ],
-					body: body1
-				},
-				pageBreak: 'after'
-			},			
-			{
-				style:'tableMarging',
-				table:{
-					headerRows: 1,
-					widths: [ 390, '*' ],
-					body: body2
-				},
-				pageBreak: 'after'
-			},			
-			{
-				style:'tableMarging',
-				table:{
-					headerRows: 1,
-					widths: [ 390, '*' ],
-					body: body4
-				},
-				pageBreak: 'after'
-			},
-			{
-				image: imageData1,				
-				width: 450,
-				height: 300,
-				margin: [35, 0, 0, 0]				
-			},
-			{
-				image: imageData2,
-				width: 450,
-				height: 200,
-				margin: [35, 0, 0, 0]
-			},	
-			{ text:[
-				{ text: part1, alignment: 'center' },
-				{ text: part2, bold:true, fontSize: 16 },
-				{ text: part3 },
-				{ text: part4 }
-			], margin: [0, 20, 0, 0] },
-			{text: txt2, style:"finalText"}			
-		],
-		styles: {
-			title:{
-				fontSize: 14,
-				alignment:	'center',
-				margin: [0, 10, 0, 10],
-				bold: true
-			},
-			header: {
-				fontSize: 12,
-				bold: true,
-				alignment:	'center',
-				color: '#000'
-			},
-			total: {
-				fontSize: 10,
-				bold: true,
-				alignment:	'right',
-				color: '#000'
-			},
+    body2 = getBodyFinEffort(data);
+    
+    var imageData1 = $('#img_pie_chart_div').find('img').attr('src');
+    var imageData2 = $('#img_bar_chart_div').find('img').attr('src');
+    var imageData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
+
+    var docDefinition = {
+        header: {text: main_title, style: 'title'},
+        content:[            
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ '*', '*', '*', '*' ],
+                    body: body0
+                }                
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: ['*'],
+                    body: costs_title_body
+                }                
+            },
+            {
+                image: imageData1,                
+                width: 400,
+                height: 267,
+                style: 'img_style'
+            },
+            {
+                image: imageData2,
+                width: 400,
+                height: 300,
+                style: 'img_style'
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body1
+                }
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: ['*'],
+                    body: fin_effort_title_body
+                },
+                pageBreak: 'before'                
+            },
+            {
+                image: imageData3,
+                width: 400,
+                height: 200,
+                style: 'img_style',
+            },
+            {
+                style:'tableMarging',
+                table:{
+                    headerRows: 1,
+                    widths: [ 390, '*' ],
+                    body: body2
+                },
+                pageBreak: 'after'
+            }    
+        ],
+        styles: {
+            title:{
+                fontSize: 14,
+                alignment: 'center',
+                margin: [0, 10, 0, 10],
+                bold: true
+            },
+            header: {
+                fontSize: 12,
+                bold: true,
+                alignment: 'center',
+                color: '#000'
+            },
+            total: {
+                fontSize: 10,
+                bold: true,
+                alignment: 'right',
+                color: '#000'
+            },
             main_total: {
-				fontSize: 12,
-				bold: true,
-				alignment:	'right',
-				color: '#000'
-			},
+                fontSize: 12,
+                bold: true,
+                alignment:    'right',
+                color: '#000'
+            },
             main_total_value: {
-				fontSize: 12,
-				bold: true,
-				alignment:	'left',
-				color: '#000'
-			},
-			cell: {
-				fontSize: 10,				
-			},
-			header2: {
-				fontSize: 12,
-				bold: true,
-				alignment:	'left',
-				color: '#000'
-			},
-			finalText:{
-				color:'red',
-				fontSize:48,
-				alignment:	'center',
-				bold:true
-			},
-			tableMarging: {
-				margin: [0, 0, 0, 20],
-				color: '#1C1C1C'
-			}			
-		}
-	}
-	if(country=="PT"){
-		data = $('#result_table4 td');
-		body3 = getBody2(data);	
-		docDefinition.content.splice(1, 0 ,{style:'tableMarging', table:{ headerRows: 1, widths: [ 390, '*' ], body: body3 }})
-	}	
-	pdfMake.createPdf(docDefinition).download(main_title+'-'+country+'.pdf');
+                fontSize: 12,
+                bold: true,
+                alignment:    'left',
+                color: '#000'
+            },
+            cell: {
+                fontSize: 10,                
+            },
+            header2: {
+                fontSize: 12,
+                bold: true,
+                alignment:    'left',
+                color: '#000'
+            },
+            tableMarging: {
+                margin: [0, 0, 0, 20],
+                color: '#1C1C1C'
+            },
+            img_style: {
+                alignment: 'center'
+            }
+        }
+    }
+ 
+    //optional public transports table
+    if(public_transp_bool){
+        data = $('#result_table2 td');
+        body3 = get_publict_table(data);
+        body3_obj = {
+                        style:'tableMarging',
+                        table:{
+                            headerRows: 1,
+                            widths: [ 390, '*' ],
+                            body: body3
+                        }
+                    };
+        docDefinition.content.push(body3_obj);
+    }
+    //optional external costs table
+    if(extern_costs_bool){
+        data = $('#result_table4 td');
+        body4 = get_publict_table(data);
+        body4_obj = {
+                        style:'tableMarging',
+                        table:{
+                            headerRows: 1,
+                            widths: [ 390, '*' ],
+                            body: body4
+                        }
+                    };
+        docDefinition.content.push(body4_obj);
+    }
+    pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
+}
+
+
+function get_main_table(data){
+    
+    var body = [];
+    var str, el, el2, el3, el4;
+        
+    for(var i=0; i<data.length; i++){
+ 
+        switch(i){
+            case 0:
+                str = gstr(data[i]);
+                el = {text: str, colSpan:4, style: 'header'};
+                body.push([el,'','','']);
+                break;
+            case 1:
+                str = gstr(data[i]);
+                el  = {text: str, style: 'header'};
+                str = gstr(data[i+1]);
+                el2 = {text: str, style: 'header'};
+                str = gstr(data[i+2]);
+                el3 = {text: str, style: 'header'};
+                str = gstr(data[i+3]);
+                el4 = {text: str, style: 'header'};
+                body.push([el,el2,el3,el4]);
+                break;
+            case 5:
+                str = gstr(data[i]);
+                el = {text: str, colSpan:4, style: 'header'};
+                body.push([el,'','','']);
+                break;
+            case 6:
+                str = gstr(data[i]);
+                el = {text: str, colSpan:4, style: 'header'};
+                body.push([el,'','','']);
+                break;                
+        }
+                 
+    }
+    return body;
 }
 
 function get_private_costs_table(data){
     
     var body = [];
+    var str, str2, el, el2;
+    
     for(var i=1; i<data.length; i+=2){
-        //gets the HTML info of the first column of the table (see i+=2 in loop)
-        var string1 = $(data[i]).html(); 
-        
-        //converts a HTML info into pure string info.
-        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-
+        str = gstr(data[i]);
         var el;
         //gives header style to <td> regarding Standing Costs and Fixed Costs
         if(i==1 || i==17){ 
-            var str2 = $(data[i+1]).text().trim();
-            var el2 = {text: str2, style: 'header'};
+            str2 = gstr(data[i+1]);
+            el2 = {text: str2, style: 'header'};
             str = str.split('\n')[0]; //gets just the first line of the <td> info
             el = {text: str, style: 'header'};          
             body.push([el, el2]);
         }
         //Total costs <td> shall be aligned to the right
         else if (i==15 || i==33){ 
-            var str2 = $(data[i+1]).text().trim();
-            var el2 = {text: str2, style: 'cell'};
+            str2 = gstr(data[i+1]);
+            el2 = {text: str2, style: 'cell'};
             el = {text: str, style: 'total'};          
             body.push([el, el2]);     
         }
         //Main Total <td>
         else if (i==39){ 
-            var str2 = $(data[i+1]).text().trim();
-            var el2 = {text: str2, style: 'main_total_value'};
+            str2 = gstr(data[i+1]);
+            el2 = {text: str2, style: 'main_total_value'};
             el = {text: str, style: 'main_total'};          
             body.push([el, el2]);     
         }
         else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
+            str2 = gstr(data[i+1]);
+            el2 = {text: str2, style: 'cell'};
             el = {text: str, style: 'cell'};
             body.push([el, el2]);
         }           
@@ -175,12 +249,10 @@ function get_private_costs_table(data){
     return body;    
 }
 
-function getBody2(data){
+function get_publict_table(data){
     var body = [];
     for(var i=0; i<data.length; i+=2){
-        var string1 = $(data[i]).html();
-        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+        var str = gstr(data[i]);
         var el;
         if(i<2){
             var str2 = $(data[i+1]).text().trim();
@@ -201,9 +273,7 @@ function getBody2(data){
 function getBodyFinEffort(data){
     var body = [];
     for(var i=0; i<data.length; i++){
-        var string1 = $(data[i]).html();
-        var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
-        str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+        var str = gstr(data[i]);
         var el;
         if($(data[i]).find('b').length > 0){
             var el2 = {};
@@ -219,4 +289,14 @@ function getBodyFinEffort(data){
         }       
     }
     return body;
+}
+
+//adapts the string and converts a HTML info into pure string info.
+function gstr(data_i){
+
+    var string1 = $(data_i).html();
+    var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+    str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
+    
+    return str;
 }

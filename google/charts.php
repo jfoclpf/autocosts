@@ -28,7 +28,7 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
 
     options = {
         title: '<? echo $COSTS; ?>',
-        backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
+        backgroundColor: {fill: 'transparent'},
         chartArea: {left: 0, top: 0, width: "90%", height: "90%"},
         width: char_width,
         height: char_height
@@ -40,7 +40,7 @@ function drawPieChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
     // Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
 		var img_div =  document.getElementById('img_pie_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';        
+        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';
     });
 	
     chart.draw(data, options);
@@ -98,7 +98,7 @@ function drawBarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_heigh
         
     options = {
         title: "<? echo $COSTS; ?>",
-        backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
+        backgroundColor: {fill: 'transparent'},
         chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
         vAxis: { minValue: 0},
         legend: {position: chart_legend },
@@ -137,7 +137,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
     } 
     
     options = {
-        backgroundColor: {stroke: '#F0F0F0', fill: '#F0F0F0', strokeWidth: 3},
+        backgroundColor: {fill: 'transparent'},
         chartArea: {top: top_var, width: "90%", chart_inner_height},
         legend: { position: 'none' },
         vAxis: { textPosition: 'none' },

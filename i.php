@@ -57,22 +57,22 @@
                         <div class="result_div" id="main_table"></div>
                     </div>
                     <div class="result_section" id="monthly_costs_section">
-                        <div class="title-div">
+                        <div class="title-div" id="monthly_costs_title">
                             <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
                             <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
                         </div>
                         <br>
                         <!-- first top (pie) chart -->
                         <div id="pie_chart_div"></div><br>
-                        <div id="img_pie_chart_div" style="display:none"></div>
+                        <div id="img_pie_chart_div" style="display:none;"></div>
                         <!-- second (bars) chart -->
                         <div id="bar_chart_div"></div>
-                        <div id="img_bar_chart_div" style="display:none"></div>
+                        <div id="img_bar_chart_div" style="display:none;"></div>
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
                     <div class="result_section" id="fin_effort_section">
-                        <div class="title-div">
+                        <div class="title-div" id="fin_effort_title">
                             <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
                         <!-- third chart -->
@@ -86,11 +86,9 @@
                     <div class="result_section" id="exten_costs_section">
                         <div class="result_div" id="extern_costs"></div>
                     </div>
-                    <div class="result_section" id="reload_div">
-                        <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
-                        <input type="button" class="button" value="<?php echo $WORD_PRINT; ?>"
-                                     onclick="PrintElem('#main_table','#fin_effort','#monthly_costs','#pie_chart_div','#bar_chart_div','#text_div', '<?php echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
-                        <input id="generate_PDF" type="button" class="button" value="<?php echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', '<?php echo $GLOBALS['country']?>')" />
+                    <!-- ************* Buttons *************** -->
+                    <div class="result_section" id="buttons_section">
+                        <div class="result_div" id="reload_div"></div>
                     </div>
                     <!-- ************* ********* ************* -->
                     <br>
@@ -115,7 +113,7 @@
     <script>
         var Country = '<?php echo $GLOBALS["country"]; ?>';
         var Language = '<?php echo $LANGUAGE_CODE; ?>'; <!-- Language code according to ISO_639-1 codes -->
-        var input_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object;
+        var input_object, main_table_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
     </script>
 

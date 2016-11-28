@@ -43,7 +43,7 @@ function Run(){
     //financial result table 
     var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
     fin_effort_table_object.innerHTML = fin_effort_table_HTML;
-    fin_effort_table_object.style.display='block';
+    fin_effort_table_object.style.display='block'; 
     $('#fin_effort_section').show();
     
     //public transports table 
@@ -67,7 +67,13 @@ function Run(){
     else{
         $('#exten_costs_section').hide();
     }
-
+    
+    //buttons
+    var buttons_HTML = print_buttons(data);
+    reload_object.innerHTML = buttons_HTML;
+    reload_object.style.display='block';
+    $('#buttons_section').show();
+    
     //enlarges center div
     $('#div1_td').css('width', '15%');
     $('#div3_td').css('width', '15%');
@@ -75,9 +81,6 @@ function Run(){
     //gets result frame width to draw charts within it
     var frame_witdh = document.getElementById('div2').offsetWidth;
     drawChartResult(frame_witdh, data);
-    
-    //shows the option buttons (reload, print, download pdf) at the end of result
-    reload_object.style.display='block';
         
     //hides description, left and right columns
     $('#div1').css('display', 'none');
@@ -667,6 +670,36 @@ function print_extern_table(f1, f2, f3, data){
     }
             
     return varResult;
+}
+
+function print_buttons(data){
+    
+    var string = "";
+    var web_page_title = '<?php echo $WEB_PAGE_TITLE; ?>';
+    var str_word_print = '<?php echo $WORD_PRINT; ?>';
+    var str_button_run = '<?php echo $BUTTON_RERUN; ?>';
+    var str_download_PDF = '<?php echo $WORD_DOWNLOAD_PDF; ?>';
+    
+    //decices whether renders for PDF the public transports external costs table or not
+    var public_transp_bool = (data.public_transports.display_tp()) ? true : false;
+    var extern_costs_bool = (Country == 'PT') ? true : false;
+    
+    string += '<input type="submit" class="button" value="'+ str_button_run +'" onclick="reload(false);"/>&nbsp;';
+    
+    var str_Print = "PrintElem('#main_table_section',"
+                  + "'#monthly_costs_section',"
+                  + "'#fin_effort_section',"
+                  + "'" + web_page_title + "')";
+    
+    string += '<input type="button" class="button" value="' + str_word_print + '"' + ' '
+           +  'onclick="'+ str_Print +'" />&nbsp;';
+    
+    string += '<input id="generate_PDF" type="button" class="button"' + ' '
+           +  'value="' + str_download_PDF + '"' + ' '
+           +  'onclick="generatePDF(\''+ web_page_title + '\',' 
+           +  public_transp_bool + ',' + extern_costs_bool + ')" />';
+
+    return string;
 }
 
 function drawChartResult(frame_witdh, data){

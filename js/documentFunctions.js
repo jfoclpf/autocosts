@@ -146,6 +146,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('js/conversionFunctions.js');
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
+            $.getScript('js/print.js');
             $.getScript('php/print_results.php?country='+country); 
             $.getScript('google/charts.php?country='+country);
             
@@ -179,7 +180,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('js/pdf/html2canvas.js'); 
             $.getScript('js/pdf/jspdf.js'); 
             $.getScript('js/pdf/jspdf.plugin.addimage.js'); 
-            $.getScript('js/pdf/pdfmake.js'); 
+            $.getScript('js/pdf/pdfmake.js');
             $.getScript('js/pdf/vfs_fonts.js');
             hasLoadedPart[3]=true;
         }
@@ -551,42 +552,6 @@ function sanityChecks(objectToDb) {
         objectToDb.tolls_daily_number_days = null;
     }
 }
-
-/*Printing functions; functions that are run when user clicks Print button*/
-function PrintElem(elem1, elem2, elem3, elem4, title)
-{
-    Popup($(elem1).html(), $(elem2).html(), $(elem3).html(), $(elem4).html(), title);
-}
-
-function Popup(data1, data2, data3, data4, title) 
-{
-    var mywindow = window.open('', title, 'height=600,width=600');
-    mywindow.document.write('<html><head><title>'+title+'</title>');
-    //mywindow.document.write('<link rel="stylesheet" href="css/print.css" type="text/css">');
-    mywindow.document.write('</head><body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
-    mywindow.document.write('<div style="margin-left: auto; margin-right: auto; width: 90%; text-align: center;">');
-    mywindow.document.write('<div id="title2print">'+title+'</div>');
-    
-    mywindow.document.write(data1);
-    mywindow.document.write('<br>');
-    mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
-        
-    mywindow.document.write(data2);
-    mywindow.document.write('<br><br>');
-    
-    mywindow.document.write(data3);
-    mywindow.document.write('<br><br>');
-    
-    mywindow.document.write(data4);
-    mywindow.document.write('</div>');
-    mywindow.document.write('</body></html>');
-
-    mywindow.print();
-    mywindow.close();
-
-    return true;
-}
-/*end of printing functions*/
 
 /*User Unique Identifier functions*/
 function S4() {
