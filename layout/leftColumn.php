@@ -61,7 +61,6 @@
     </div>
 
     <?php if ($GLOBALS['country'] == "PT") { ?>
-
         <table id="mobile_logos_table">
             <tr>
                 <td>

@@ -6,14 +6,11 @@
 function reload(onDocumentLoad) {
     TimeCounter.resetStopwatch();
     
-    //divs which are presented in the results are hidden upon reload
-    input_object.style.display = 'block';
-    result_object.style.display = 'none';
-    reload_object.style.display = 'none';
-    pie_chart_object.style.display = 'none';
-    bar_chart_object.style.display = 'none';
-    //hides the result sections blocks
-    $(".result_section").css('display', 'none');
+    //shows the form
+    $('#input_div').show();
+    //hides the results divs and correspondent class
+    $('#monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div').hide();
+    $(".result_section").hide();
     
     ResultIsShowing=false;
         
@@ -176,13 +173,17 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         if (!hasLoadedPart[3]){
             $.getScript('google/rgbcolor.js');
             $.getScript('google/canvg.js');
-            $.getScript('js/pdf/generatePDF.js');
-            $.getScript('js/pdf/html2canvas.js'); 
-            $.getScript('js/pdf/jspdf.js'); 
-            $.getScript('js/pdf/jspdf.plugin.addimage.js'); 
-            $.getScript('js/pdf/pdfmake.js');
-            $.getScript('js/pdf/vfs_fonts.js');
-            hasLoadedPart[3]=true;
+            
+            //wiat until all PDF related files are loaded
+            //to activate the downloadPDF button
+            $.getScript('js/pdf/generatePDF.js', function() {
+                $.getScript('js/pdf/pdfmake.js', function() {
+                    $.getScript('js/pdf/vfs_fonts.js', function() {
+                         $('#generate_PDF').prop('disabled',false).removeClass('buttton_disabled');
+                         hasLoadedPart[3]=true;
+                    });
+                });
+            });
         }
     }
     

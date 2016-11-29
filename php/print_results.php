@@ -25,54 +25,54 @@ function Run(){
     var data = calculate_costs(f1, f2, f3, country);
     CalculatedData = data; //assigns to global variable
 
-    //shows result and hides the form input
-    input_object.style.display = 'none';
+    //hides the form input
+    $('#input_div').hide();
     
     //main table
     var main_table_HTML = print_main_table(f1, f2, f3, data);
-    main_table_object.innerHTML = main_table_HTML;
-    main_table_object.style.display='block';
-    $('#main_table_section').show();
+    $('#main_table').html(main_table_HTML);
+    $('#main_table, #main_table_section').show();
     
     //monthly costs table  
     var monthly_costs_HTML = print_costs_table(f1, f2, f3, data);
-    result_object.innerHTML = monthly_costs_HTML;
-    result_object.style.display='block';
-    $('#monthly_costs_section').show();
+    $('#monthly_costs').html(monthly_costs_HTML);
+    $('#monthly_costs, #monthly_costs_section').show();
     
     //financial result table 
     var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
-    fin_effort_table_object.innerHTML = fin_effort_table_HTML;
-    fin_effort_table_object.style.display='block'; 
-    $('#fin_effort_section').show();
+    $('#fin_effort').html(fin_effort_table_HTML);
+    $('#fin_effort, #fin_effort_section').show();
     
     //public transports table 
     var public_transport_table_HTML = print_publict_table(f1, f2, f3, data);
     if(public_transport_table_HTML != ""){
-        $('#public_transp_section').show();
-        public_transport_table_object.innerHTML = public_transport_table_HTML;
-        public_transport_table_object.style.display='block';
+        $('#public_transp, #public_transp_section').show();
+        $('#public_transp').html(public_transport_table_HTML);
+        public_transp_bool = true; //global variable
     }
     else{
         $('#public_transp_section').hide();
+        public_transp_bool = false;
     }
     
     //external costs table
     var extern_costs_table_table_HTML = print_extern_table(f1, f2, f3, data);
     if (extern_costs_table_table_HTML != ""){
-        extern_costs_table_object.innerHTML = extern_costs_table_table_HTML;
-        extern_costs_table_object.style.display='block';
-        $('#exten_costs_section').show();
+        $('#extern_costs').html(extern_costs_table_table_HTML);
+        $('#extern_costs, #exten_costs_section').show();
+        extern_costs_bool = true; //global variable
     }
     else{
         $('#exten_costs_section').hide();
+        extern_costs_bool = false;
     }
     
-    //buttons
-    var buttons_HTML = print_buttons(data);
-    reload_object.innerHTML = buttons_HTML;
-    reload_object.style.display='block';
-    $('#buttons_section').show();
+    //shows buttons
+    $('#result_buttons_div, #buttons_section').show();
+    //deactivates downloadPDF button until PDF files are loaded
+    if (!hasLoadedPart[3]){
+        $('#generate_PDF').prop('disabled',true).addClass('buttton_disabled');
+    }
     
     //enlarges center div
     $('#div1_td').css('width', '15%');
@@ -123,7 +123,7 @@ function print_main_table(f1, f2, f3, data) {
     
     varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'
              + ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) 
-             + '&#37;' + '</b><br></tr>';
+             + '&#37;' + '</b></tr>';
 
     varResult+= '<tr><td colspan="4">'
              + print_result_final_text(data) 
@@ -139,11 +139,10 @@ function print_result_final_text(data){
     if(data.total_costs_month >= 150 && data.age_months > 6) {
         
         var text_msg = '<div><?php echo $WITH_THIS_LEVEL_OF_COSTS ?> ' 
-                     + '<b>' + data.age_months + '</b> <?php echo $MONTHS_POSS.":" ?></div><br>'
-                     + '<div id="final-text2"'
-                     + ' style="border-radius:12px;  float: center; display: inline-block; padding:2%; font-size:350%; width:auto; font-family:Impact; color:red; border-style:solid; border-width:5px">'
+                     + '<b>' + data.age_months + '</b> <?php echo $MONTHS_POSS.":" ?></div>'
+                     + '<div class="red_bold_text">'
                      + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) 
-                     + ' <?php echo $CURR_NAME_BIG_PLURAL ?><\/div><\/div><br>';
+                     + ' ' + '<?php echo $CURR_NAME_BIG_PLURAL ?></div></div>';
         return text_msg;
     }
     else{
@@ -672,6 +671,7 @@ function print_extern_table(f1, f2, f3, data){
     return varResult;
 }
 
+/*
 function print_buttons(data){
     
     var string = "";
@@ -700,7 +700,7 @@ function print_buttons(data){
            +  public_transp_bool + ',' + extern_costs_bool + ')" />';
 
     return string;
-}
+}*/
 
 function drawChartResult(frame_witdh, data){
     

@@ -1,10 +1,10 @@
 <div class="form_part" id="form_part1">
-    <div class="head-title">
+    <div class="form_part_head_title">
         <b><?php echo $FIXED_COSTS_HEADER_1 ?></b>
         <?php echo $FIXED_COSTS_HEADER_2 ?>
     </div>
     <!--************************** Desvalorização do veículo ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $DEPRECIATION ?>
     </strong>
     <table>
@@ -38,7 +38,7 @@
         </tr>
     </table>
     <!--************************** SEGURO AUTOMÓVEL | INSURANCE ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $INSURANCE ?>
     </strong>
     <table>
@@ -69,7 +69,7 @@
         </tr>
     </table>
     <!--************************** CRÉDITO | CREDIT ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $CREDIT ?>
     </strong>
     <table>
@@ -128,7 +128,7 @@
         </table>
     </div>
     <!--************************** INSPEÇÃO PERIÓDICA | INSPECTION ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $INSPECTION ?>
     </strong>
     <table>
@@ -152,7 +152,7 @@
         </tr>
     </table>
     <!--************************** IUC ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $ROAD_TAXES ?>
     </strong>
     <table>

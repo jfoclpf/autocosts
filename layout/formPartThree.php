@@ -1,9 +1,9 @@
 <!--************************** DADOS ADICIONAIS ***************************************************--> 
 <div class="form_part" id="form_part3">
-    <div class="head-title">
+    <div class="form_part_head_title">
         <?php echo $EXTRA_DATA ?>
     </div>
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $EXTRA_DATA_PUBLIC_TRANSP ?>
     </strong>
     <table>
@@ -28,7 +28,7 @@
             </td>
         </tr>
     </table>
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $EXTRA_DATA_INCOME ?>
     </strong>
     <table>
@@ -96,7 +96,7 @@
     </table>
     <!--********************************************************************** -->
     <div id="working_time_form3">
-        <strong class="title">
+        <strong class="form_section_title">
             <?php echo $EXTRA_DATA_WORKING_TIME ?>
         </strong>
         <table>
@@ -134,7 +134,7 @@
         </div>
     <!--********************************************************************** -->
     <div id="distance_form3">
-        <strong class="title">
+        <strong class="form_section_title">
             <?php echo $DISTANCE ?>
         </strong>
         <table>
@@ -207,7 +207,7 @@
         </table>
     </div>
     <!--********************************************************************** -->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>
     </strong>
     <table>

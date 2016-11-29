@@ -137,52 +137,6 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     background-color: #fff;
 }
 
-/* Buttons */
-.b-bottom {
-    width: 100%;
-    display: table;
-}
-
-.button {
-    display: inline-block;
-    padding: 6px 12px;
-    margin: 20px 8px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    color: #000;
-    background-color: #b2b2b2;
-    border-color: #969696;
-}
-/*Google reCaptcha */
-#g-recaptcha{
-    display: inline-block;
-    margin: 10px 0;
-    vertical-align: middle; 
-    border-color: #969696; 
-    background-image: none;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    color: #000;
-    border-color: #969696;
-    transform:scale(0.77);
-    -webkit-transform:scale(0.77);
-    transform-origin: center center;
-    -webkit-transform-origin:center center;
-}
 
 /*==== HEADER =====*/
 #banner_top {
@@ -286,10 +240,6 @@ form.roundCorner {
 }
 .hidden {
     display: none;
-}
-
-#reload_div {
-    text-align: center;
 }
 .clear{clear: both;}
 
@@ -401,6 +351,55 @@ form.roundCorner {
 /*=====================================*/
 /*===== Main Central Column (div2) ====*/
 
+/* Buttons */
+.b-bottom {
+    width: 100%;
+    display: table;
+}
+.button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 20px 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    color: #000;
+    background-color: #b2b2b2;
+    border-color: #969696;
+}
+.buttton_disabled{
+    color: #999;
+}
+/*Google reCaptcha */
+#g-recaptcha{
+    display: inline-block;
+    margin: 10px 0;
+    vertical-align: middle; 
+    border-color: #969696; 
+    background-image: none;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    color: #000;
+    border-color: #969696;
+    transform:scale(0.77);
+    -webkit-transform:scale(0.77);
+    transform-origin: center center;
+    -webkit-transform-origin:center center;
+}
+
 #div2 td {
     padding: 8px 3% 0;
     overflow: hidden;
@@ -419,7 +418,7 @@ form.roundCorner {
     padding: 0;
     border: 2px #999 solid;
     border-radius: 10px;
-    margin: 0 4% 4% 4%;
+    margin: 0 16px 16px 16px;
     overflow: hidden;
 }
 #input_div td {
@@ -429,18 +428,8 @@ form.roundCorner {
     font-size: 13px;
 }
 
-#div2 td:nth-child(2n),
-.result_section td:nth-child(2n) {
-    width: 25%;
-}
-
-.title {
-    display: block;
-    padding: 21px 3% 0 3%;
-    font-size: 18px;
-    text-align: left;
-}
-#div2 .head-title {
+/*main title for each form part*/
+.form_part_head_title {
     padding: 10px 10%;
     background: #ada692;
     color: #fff;
@@ -448,11 +437,22 @@ form.roundCorner {
     border-radius: 6px 6px 0 0;
     border-bottom: 2px solid #717171;
 }
-#div2 .head-title b {
+.form_part_head_title b {
     display: block;
     font-size: 16px;
 }
+/*sub-title for each cost item*/
+.form_section_title {
+    display: block;
+    padding: 21px 3% 0 3%;
+    font-size: 18px;
+    text-align: left;
+}
 
+#div2 td:nth-child(2n),
+.result_section td:nth-child(2n) {
+    width: 25%;
+}
 
 #pie_chart_div,
 #bar_chart_div,
@@ -479,6 +479,22 @@ form.roundCorner {
 .result_table td:only-child{
     text-align:center;
 }
+
+.red_bold_text {
+    line-height: 100%;
+    border-radius:12px;
+    border-width:5px;
+    margin: 10px;
+    float: center; 
+    display: inline-block; 
+    padding:2%; 
+    font-size:350%; 
+    width:auto; 
+    font-family:Impact; 
+    color:red; 
+    border-style:solid;  
+}
+
 #result_table0 td {
     text-align: center;
     padding: 9px;
@@ -585,8 +601,8 @@ form.roundCorner {
 #text_div {
     padding: 0px 15px;
 }
-#final-text2 {
-    line-height: 100%;
+#result_buttons_div {
+    text-align: center;
 }
 
 /*=============================*/
@@ -649,19 +665,11 @@ form.roundCorner {
     font-size:95%;
 }
 
-/* to Print */
-#title2print {
-    font-size: 22px;
-    line-height: 30px;
-    margin: 10px 0;
-    font-family: inherit;
-    font-weight: bold;
-    color: inherit;
-    text-rendering: optimizelegibility;
-}
-/*===============================*/
+/*=========================================================================*/
+/***************************************************************************/
+/***************************************************************************/
+/*=========================================================================*/
 
-/*===============================*/
 @media all and (max-width: 1024px) {
     
     #div3_td, #div1_td {
@@ -866,7 +874,7 @@ form.roundCorner {
     #result_table2 tr:last-child td:last-child {
         overflow: visible;
     }
-    #final-text2 {
+    .red_bold_text {
         font-size: 250%
     }
 

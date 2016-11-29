@@ -1,4 +1,4 @@
-<!-- in case of PT shows mobile version -->
+<!-- in case of XX shows no stats table -->
 <?php if ($GLOBALS['country'] != "XX") { ?>
 	<div id="div13">
         <?php include "db_stats/tables/".$GLOBALS['country'].".html" ?>

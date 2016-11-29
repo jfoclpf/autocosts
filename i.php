@@ -52,10 +52,12 @@
                     
                     <!-- ************* PRINTING divs ***********************
                     ******************************************************-->
-                                            
+                    
+                    <!-- ************* Main Table  Section ****************** -->                           
                     <div class="result_section" id="main_table_section">
                         <div class="result_div" id="main_table"></div>
                     </div>
+                    <!-- ************* Monthly Costs section **************** -->
                     <div class="result_section" id="monthly_costs_section">
                         <div class="title-div" id="monthly_costs_title">
                             <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
@@ -71,6 +73,7 @@
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
+                    <!-- ************* Financial Effort section************** -->
                     <div class="result_section" id="fin_effort_section">
                         <div class="title-div" id="fin_effort_title">
                             <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
@@ -80,15 +83,22 @@
                         <div id="img_fin_effort_chart_div" style="display:none"></div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
+                    <!-- ********* Public Transports section **************** -->
                     <div class="result_section" id="public_transp_section">
                         <div class="result_div" id="public_transp"></div>
                     </div>
+                    <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="exten_costs_section">
                         <div class="result_div" id="extern_costs"></div>
                     </div>
-                    <!-- ************* Buttons *************** -->
+                    <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="buttons_section">
-                        <div class="result_div" id="reload_div"></div>
+                        <div class="result_div" id="result_buttons_div">
+                            <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
+                            <input type="submit" class="button" value="<? echo $WORD_PRINT; ?>"
+                                onclick="PrintElem('#main_table_section','#monthly_costs_section','#fin_effort_section','#public_transp_section','#exten_costs_section', '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
+                            <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', public_transp_bool, extern_costs_bool)" />
+                        </div>                               
                     </div>
                     <!-- ************* ********* ************* -->
                     <br>
@@ -109,11 +119,12 @@
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
-    <!--define global JS variables-->
+    <!--Define GLOBAL JS variables-->
     <script>
         var Country = '<?php echo $GLOBALS["country"]; ?>';
-        var Language = '<?php echo $LANGUAGE_CODE; ?>'; <!-- Language code according to ISO_639-1 codes -->
-        var input_object, main_table_object, result_object, frame_witdh, reload_object, pie_chart_object, bar_chart_object;
+        //Language code according to ISO_639-1 codes
+        var Language = '<?php echo $LANGUAGE_CODE; ?>'; 
+        var frame_witdh, public_transp_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
     </script>
 

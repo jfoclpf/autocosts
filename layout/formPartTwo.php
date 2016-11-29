@@ -1,10 +1,10 @@
 <div class="form_part" id="form_part2">
-    <div class="head-title">
+    <div class="form_part_head_title">
         <b><?php echo $RUNNING_COSTS_HEADER_1 ?></b>
         <?php echo $RUNNING_COSTS_HEADER_2 ?>
     </div>
     <!--************************** COMBUSTÍVEIS | FUELS ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $FUEL ?>
     </strong>
     <table>
@@ -126,7 +126,7 @@
         </table>
     </div>
     <!--************************** REVISÕES | MAINTENANCE  ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $MAINTENANCE; ?>
     </strong>
     <table>
@@ -143,7 +143,7 @@
         </tr>
     </table>
     <!--************************** REPARAÇÕES | REPAIRS AND IMPROVEMENTS ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $REP_IMPROV ?>
     </strong>
     <table>
@@ -158,7 +158,7 @@
         </tr>
     </table>
     <!--************************** PARQUEAMENTO | PARKING ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $PARKING ?>
     </strong>
     <table>
@@ -173,7 +173,7 @@
         </tr>
     </table>
     <!--************************** PORTAGENS | TOLLS ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $TOLLS ?>
     </strong>
     <table>
@@ -235,7 +235,7 @@
         </table>
     </div>
     <!--************************** MULTAS | FINES ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $FINES ?>
     </strong>
     <table>
@@ -257,7 +257,7 @@
         </tr>
     </table>
     <!--************************** LAVAGENS | WASHING ***************************************************-->
-    <strong class="title">
+    <strong class="form_section_title">
         <?php echo $WASHING ?>
     </strong>
     <table>
