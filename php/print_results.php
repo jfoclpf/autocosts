@@ -596,7 +596,7 @@ function print_publict_table(f1, f2, f3, data){
         //starts HTML table
         varResult+="<table class=\"result_table\" id=\"result_table2\">";
         //header
-        varResult+="<tr><td><b><?php echo $PUBL_TRA_EQUIV ?></b><br></td>"+
+        varResult+="<tr><td><b><?php echo $COSTS ?></b><br></td>"+
                    "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
         //items
         varResult+="<tr><td>" + tp_text + "</td>" + 
@@ -670,37 +670,6 @@ function print_extern_table(f1, f2, f3, data){
             
     return varResult;
 }
-
-/*
-function print_buttons(data){
-    
-    var string = "";
-    var web_page_title = '<?php echo $WEB_PAGE_TITLE; ?>';
-    var str_word_print = '<?php echo $WORD_PRINT; ?>';
-    var str_button_run = '<?php echo $BUTTON_RERUN; ?>';
-    var str_download_PDF = '<?php echo $WORD_DOWNLOAD_PDF; ?>';
-    
-    //decices whether renders for PDF the public transports external costs table or not
-    var public_transp_bool = (data.public_transports.display_tp()) ? true : false;
-    var extern_costs_bool = (Country == 'PT') ? true : false;
-    
-    string += '<input type="submit" class="button" value="'+ str_button_run +'" onclick="reload(false);"/>&nbsp;';
-    
-    var str_Print = "PrintElem('#main_table_section',"
-                  + "'#monthly_costs_section',"
-                  + "'#fin_effort_section',"
-                  + "'" + web_page_title + "')";
-    
-    string += '<input type="button" class="button" value="' + str_word_print + '"' + ' '
-           +  'onclick="'+ str_Print +'" />&nbsp;';
-    
-    string += '<input id="generate_PDF" type="button" class="button"' + ' '
-           +  'value="' + str_download_PDF + '"' + ' '
-           +  'onclick="generatePDF(\''+ web_page_title + '\',' 
-           +  public_transp_bool + ',' + extern_costs_bool + ')" />';
-
-    return string;
-}*/
 
 function drawChartResult(frame_witdh, data){
     

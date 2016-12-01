@@ -404,7 +404,7 @@ form.roundCorner {
     padding: 8px 3% 0;
     overflow: hidden;
 }
-.title-div {
+.result_section_title {
     text-align: center;
     font-size: 17px;
     margin: 20px 0 15px 0;
@@ -758,7 +758,7 @@ form.roundCorner {
         font-size: 21px;
         margin: 4px auto;
     }
-    .title-div {
+    .result_section_title {
         font-size: 15px;
         line-height: 22px;
     }

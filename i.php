@@ -36,7 +36,7 @@
                 <!-- div2 = CENTRE layout column-->
                 <div id="div2_td">
                     <div id="div2">
-                        <div class="title-div">
+                        <div class="result_section_title">
                             <a class="AC_url" href="<?php echo 'http://'.strtolower($AC_DOMAIN) ?>">
                                 <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?></a>
                         </div>
@@ -59,7 +59,7 @@
                     </div>
                     <!-- ************* Monthly Costs section **************** -->
                     <div class="result_section" id="monthly_costs_section">
-                        <div class="title-div" id="monthly_costs_title">
+                        <div class="result_section_title" id="monthly_costs_title">
                             <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
                             <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
                         </div>
@@ -75,7 +75,7 @@
                     </div>
                     <!-- ************* Financial Effort section************** -->
                     <div class="result_section" id="fin_effort_section">
-                        <div class="title-div" id="fin_effort_title">
+                        <div class="result_section_title" id="fin_effort_title">
                             <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
                         <!-- third chart -->
@@ -85,6 +85,9 @@
                     </div>
                     <!-- ********* Public Transports section **************** -->
                     <div class="result_section" id="public_transp_section">
+                        <div class="result_section_title" id="public_transp_title">
+                            <b><?php echo mb_convert_case($PUBL_TRA_EQUIV, MB_CASE_UPPER, "UTF-8"); ?></b>
+                        </div>
                         <div class="result_div" id="public_transp"></div>
                     </div>
                     <!-- ************* Buttons ****************** -->
