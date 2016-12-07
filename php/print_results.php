@@ -627,7 +627,8 @@ function print_publict_table(f1, f2, f3, data, country){
         var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
         var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
         
-        if(res_uber_obj.result_type==1){ //in which driver can replace every journey by uber 
+        //in which driver can replace every journey by uber 
+        if(res_uber_obj.result_type==1){ 
             //starts HTML table
             varResult+="<br><table class=\"result_table uber_table\">";
             
@@ -655,30 +656,32 @@ function print_publict_table(f1, f2, f3, data, country){
             
             varResult+="</table>";       
         }
-        else if(res_uber_obj.result_type==2){ ////the case where uber equivalent is more expensive
+        
+        //the case where uber equivalent is more expensive
+        else if(res_uber_obj.result_type==2){ 
             //starts HTML table
             varResult+="<br><table class=\"result_table uber_table\">";
             
-            varResult+="<tr><td style=\"border-bottom-width:2px;\"><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+            varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
+                       "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
              
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b></td>" + 
-                       "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+            varResult+="<tr><td style=\"border-top-width:2px;\"><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td style=\"border-top-width:2px;\">" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
             
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b></td>" + 
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
                        "<td>" + countryCheck(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
-                      
+
+            varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" + 
+                       "<td>" + data.fin_effort.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
+                       
             varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" + 
-                       "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
+                       "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
                        
             varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right;\"><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
-                       "<td><b>" + countryCheck(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
-
-            varResult+="<tr><td style=\"border-top-width:2px;\"><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
-            
+                       "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
+           
             varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right; border-top-width:2px; \"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";    
         }

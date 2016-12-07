@@ -38,7 +38,7 @@ if (!is_array($response_a->results)){
 $lat = $response_a->results[0]->geometry->location->lat;
 $long = $response_a->results[0]->geometry->location->lng;
 
-$debug=2; //put 0 for PROD; 1 for Lisbon, 2 for London
+$debug=0; //put 0 for PROD; 1 for Lisbon, 2 for London
 if($debug==1){//Lisbon coordinates
     $lat=38.722252;
     $long=-9.139337;
