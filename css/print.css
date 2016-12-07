@@ -67,9 +67,6 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     border-radius: 10px;
     overflow: hidden;
     margin: 0 auto;
-}
-#div2, .result_section{
-    width:90%;
     max-width:1200px;
 }
 .result_section{
@@ -87,7 +84,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     padding: 8px 3% 0;
     overflow: hidden;
 }
-.title-div {
+.result_section_title {
     text-align: center;
     font-size: 17px;
     margin: 20px 0 15px 0;

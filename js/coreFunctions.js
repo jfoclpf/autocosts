@@ -1,3 +1,7 @@
+/***** CORE JS FUNCTIONS *******/
+/*===========================================================*/
+/*Functions which do not change the visual aspect of the page*/
+
 function date_diff(date1, date2) {//return the difference in months between two dates date2-date1
     var m2, y2, m1, y1;
     m2 = date2.getUTCMonth() + 1;
@@ -409,7 +413,7 @@ function calculate_costs(f1, f2, f3, country){
     };
     var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
     if(public_transports.display_tp()) {
-        public_transports.preco_total_tp = f3.pmpmpc * f3.n_pess_familia;   //preço total de passes
+        public_transports.preco_total_tp = f3.pmpmpc * f3.n_pess_familia;   //total price of monthly passes 
         public_transports.total_altern = public_transports.preco_total_tp;
         public_transports.racio_custocar_caustotp= public_transports.preco_total_tp / total_costs_month;
         if(public_transports.racio_custocar_caustotp > public_transports.racio_outros_tp){    //caso se mostre outros TP além do passe mensal
@@ -509,7 +513,8 @@ function calculate_costs(f1, f2, f3, country){
         fin_effort.drive_per_year = distance_per_month * 12;
     }
     
-    if(f3.drive_to_work == 'true' || f2.take_car_to_job == 'true'){
+    //gets the time the driver spends in the car driving
+    if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
         fin_effort.time_home_job = parseInt(f3.time_home_job);
         fin_effort.time_weekend = parseInt(f3.time_weekend);
         fin_effort.min_drive_per_week = 2 * fin_effort.time_home_job * fin_effort.drive_to_work_days_per_week + fin_effort.time_weekend;
@@ -619,3 +624,92 @@ function calculate_costs(f1, f2, f3, country){
     //alert(JSON.stringify(output, null, 4));
     return output;
 }
+
+//gets uber object to compare uber costs with private car costs
+function get_uber(uber, data, country){
+    
+    //checks if uber is an object
+    if (uber === null || typeof uber !== 'object' || uber == "null"){
+        return false;
+    }
+    
+    //checks if the uber currency is the same as the user's
+    if ((uber.currency_code).toUpperCase() != (country.currency).toUpperCase()){
+        return false;
+    }
+    
+    //checks if the uber distance unit is the same as the user's
+    var uber_du = (uber.distance_unit).toLowerCase();
+    if (country.distance_std == 1){ //according to Cuuntry XX.php file, 1 means "km"
+        if (uber_du != "km"){
+            return false;
+        }
+    }
+    else if (country.distance_std == 2) { //according to Cuuntry XX.php file, 1 means "mile"
+        if (uber_du!="mile" && uber_du!="miles" && uber_du!="mi" && uber_du!="mi."){
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+    //here uber strandards (currency and distance) are the same as the user country
+    
+    var result_type, dist_uber, delta;
+    var ucd = uber.cost_per_distance*1;    //uber cost per unit distance
+    var ucm = uber.cost_per_minute*1;      //uber costs per minute 
+    var dpm = data.distance_per_month;         //total distance per month 
+    var hdpm = data.fin_effort.hours_drive_per_month;     //hours driven per month 
+    var mdpm = data.fin_effort.hours_drive_per_month*60;  //minutes driven per month 
+    var tcpd = data.total_costs_p_unit_distance;          //total costs per unit distance 
+    var tcpm = data.total_costs_month;                    //total costs per month
+    var tcpt = data.public_transports.preco_total_tp;     //total costs public transports (monthly passes for family)
+    
+    //total costs of uber for the same distance and time as the ones driven using private car
+    //total equivalent uber costs
+    var tuc = ucd*dpm + ucm*mdpm;
+    
+    //1st case, in which driver can replace every journey by uber 
+    if (tuc<tcpm){
+        result_type=1;
+        delta = tcpm-tuc;
+    }
+    else { //2nd case, where uber equivalent is more expensive
+        result_type=2;
+        
+        //if public transports (monthly pass) are not an option
+        if(!data.public_transports.display_tp()) {
+            return false;
+        }
+        
+        //amount that is left after public transports (monthly passes) are paid
+        delta = tcpm - tcpt;
+        if(delta<0){
+            return false;
+        }
+        
+        //how many distance (km or miles) can be done by uber with delta 
+        dist_uber = delta /(ucd-ucm*data.fin_effort.kinetic_speed/60);
+        
+    }
+
+    //object to be returned by this function
+    var res_uber_obj = {
+        result_type: result_type,  //result type: 1 or 2
+        ucd: ucd,            //uber cost per unit distance
+        ucm: ucm,            //uber costs per minute
+        tuc: tuc,            //total uber costs for the same distance and time as the ones driven using private car
+        dpm: dpm,            //total distance per month 
+        hdpm: hdpm,          //hours driven per month
+        mdpm: mdpm,          //minutes driven per month
+        tcpd: tcpd,          //total costs per unit distance
+        tcpm: tcpm,          //total costs per month
+        dist_uber:dist_uber, //in case result_type is 2, how many distance can be done with uber
+        tcpt: tcpt,          //total costs public transports (monthly passes for family)
+        delta: delta         //money that is left. Meaning depends on result_type 
+    }
+    
+    return res_uber_obj;
+}
+
+

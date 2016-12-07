@@ -122,7 +122,6 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 
     //change from form part 1 to 2
     if (part_number_origin==1 && part_number_destiny==2){
-        
         if (!hasLoadedPart[0]){
             $.getScript('js/coreFunctions.js', function(){
                 $.getScript('https://www.google.com/jsapi', function(){
@@ -174,7 +173,13 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('google/rgbcolor.js');
             $.getScript('google/canvg.js');
             
-            //wiat until all PDF related files are loaded
+            //gets asynchronously UBER information
+            $.get( "php/get_uber.php?c=" + Country, function( data ) {
+                //alert(JSON.stringify(data, null, 4)); 
+                uber_obj =  data; //global variable
+            });
+                        
+            //wait until all PDF related files are loaded
             //to activate the downloadPDF button
             $.getScript('js/pdf/generatePDF.js', function() {
                 $.getScript('js/pdf/pdfmake.js', function() {

@@ -35,6 +35,10 @@ img {
 a {
     color: #333;
 }
+sup { 
+    vertical-align: super;
+    font-size: smaller;
+}
 
 /* FORMS */
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
@@ -499,22 +503,14 @@ form.roundCorner {
     text-align: center;
     padding: 9px;
 }
-#result_table0,
-#result_table1,
-#result_table2,
-#result_table3,
-#result_table4,
+.result_table,
 #tbl_statistics {
     border: 2px solid #b4b4b4;
     border-radius: 10px;
     border-collapse: separate;
 }
 
-#result_table0 tr:first-child td,
-#result_table1 tr:first-child td,
-#result_table2 tr:first-child td,
-#result_table3 tr:first-child td,
-#result_table4 tr:first-child td,
+.result_table tr:first-child td,
 #tbl_statistics tr:first-child td {
     border-radius: 10px 10px 0 0;
     border-collapse: separate;
@@ -522,10 +518,15 @@ form.roundCorner {
     text-align: center;
     vertical-align: middle;
 }
+.uber_table tr:first-child td,
+.uber_table tr:first-child td+td {
+    text-align: left;
+}
 
 #result_table1 tr:last-child td,
 #result_table2 tr:last-child td,
 #result_table3 tr:last-child td,
+.uber_table tr:last-child td,
 #tbl_statistics tr:last-child td {
     border-radius: 0 0 0 10px;
     border-collapse: separate;
@@ -533,6 +534,7 @@ form.roundCorner {
 #result_table1 tr:last-child td + td,
 #result_table2 tr:last-child td + td,
 #result_table3 tr:last-child td + td,
+.uber_table tr:last-child td + td,
 #tbl_statistics tr:last-child td + td {
     border-radius: 0 0 10px 0;
     border-collapse: separate;
@@ -566,10 +568,12 @@ form.roundCorner {
     padding-top: 4px; 
 }
 
+.uber_table tr:first-child td,
 #result_table2 tr:first-child td,
 #result_table4 tr:first-child td {
     border-radius: 10px 0 0 0 ;
 }
+.uber_table tr:first-child td + td,
 #result_table2 tr:first-child td + td,
 #result_table4 tr:first-child td + td {
     border-left: solid 1px #b6b6b6;
