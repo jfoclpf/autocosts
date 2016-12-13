@@ -30,16 +30,16 @@ function Popup(data1, data2, data3, data4, data5, title)
     mywindow.document.write(data3);
     mywindow.document.write('<br><br>');
 
-    if(public_transp_bool || extern_costs_bool){
+    if(public_transp_bool || uber_obj.print_bool){
         mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
-        if(public_transp_bool){
-            mywindow.document.write(data4);
-            mywindow.document.write('<br><br>');    
-        }
-        if(extern_costs_bool){
-            mywindow.document.write(data5);
-            mywindow.document.write('<br><br>');  
-        }
+        mywindow.document.write(data4);
+        mywindow.document.write('<br><br>');    
+    }
+    
+    if(extern_costs_bool){
+        mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
+        mywindow.document.write(data5);
+        mywindow.document.write('<br><br>');  
     }
     
     mywindow.document.write('</div>');

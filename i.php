@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php include("./countries/_list.php"); ?>
+<?php include("./php/geo_functions.php"); ?>
 <?php include("./countries/_country_selector.php"); ?>
 
 <html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">
@@ -100,7 +101,7 @@
                             <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
                             <input type="submit" class="button" value="<? echo $WORD_PRINT; ?>"
                                 onclick="PrintElem('#main_table_section','#monthly_costs_section','#fin_effort_section','#public_transp_section','#exten_costs_section', '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
-                            <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', public_transp_bool, extern_costs_bool)" />
+                            <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', public_transp_bool, uber_obj.print_bool, extern_costs_bool)" />
                         </div>                               
                     </div>
                     <!-- ************* ********* ************* -->
@@ -126,7 +127,8 @@
     <script>
         var Country = '<?php echo $GLOBALS["country"]; ?>';
         //Language code according to ISO_639-1 codes
-        var Language = '<?php echo $LANGUAGE_CODE; ?>'; 
+        var Language = '<?php echo $LANGUAGE_CODE; ?>';
+        var uber_obj = {};//empty object
         var frame_witdh, public_transp_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
     </script>

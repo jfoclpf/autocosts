@@ -173,12 +173,21 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('google/rgbcolor.js');
             $.getScript('google/canvg.js');
             
-            //gets asynchronously UBER information
-            $.get( "php/get_uber.php?c=" + Country, function( data ) {
-                //alert(JSON.stringify(data, null, 4)); 
-                uber_obj =  data; //global variable
-            });
-                        
+            //uber
+            if(Country!="XX"){//if not test version
+                //gets asynchronously UBER information
+                $.get( "php/get_uber.php?c=" + Country, function(data) {
+                    //alert(JSON.stringify(data, null, 4)); 
+                    uber_obj =  data; //uber_obj is a global variable
+                });
+            }
+            else{//test version (London city, in Pounds)
+                uber_obj.cost_per_distance = 1.25;
+                uber_obj.cost_per_minute = 0.15;
+                uber_obj.currency_code = "GBP";
+                uber_obj.distance_unit = "mile";
+            }
+            
             //wait until all PDF related files are loaded
             //to activate the downloadPDF button
             $.getScript('js/pdf/generatePDF.js', function() {

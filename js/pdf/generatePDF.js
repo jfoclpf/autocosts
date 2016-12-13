@@ -1,6 +1,7 @@
-function generatePDF(main_title, public_transp_bool, extern_costs_bool){
-    //alert(public_transp_bool);alert(extern_costs_bool);
-    var body0, body1, body2, body3, body4, data;
+function generatePDF(main_title, public_transp_bool, uber_bool, extern_costs_bool){
+
+    //alert(uber_bool);
+    var body0, body1, body2, body3, body4, body5, data;
 
     data = $('#result_table0 td');    
     body0 = get_main_table(data);    
@@ -51,7 +52,8 @@ function generatePDF(main_title, public_transp_bool, extern_costs_bool){
                 image: imageData2,
                 width: 400,
                 height: 300,
-                style: 'img_style'
+                style: 'img_style',
+                pageBreak: 'after'
             },
             {
                 style: 'tableMarging',
@@ -82,8 +84,7 @@ function generatePDF(main_title, public_transp_bool, extern_costs_bool){
                     headerRows: 1,
                     widths: [ 390, '*' ],
                     body: body2
-                },
-                pageBreak: 'after'
+                }
             }    
         ],
         styles: {
@@ -137,19 +138,51 @@ function generatePDF(main_title, public_transp_bool, extern_costs_bool){
     }
  
     //optional public transports table
-    if(public_transp_bool){
-        data = $('#result_table2 td');
-        body3 = get_publict_table(data);
-        body3_obj = {
-                        style:'tableMarging',
-                        table:{
-                            headerRows: 1,
-                            widths: [ 390, '*' ],
-                            body: body3
-                        }
-                    };
-        docDefinition.content.push(body3_obj);
+    if (public_transp_bool || uber_bool){
+        //section title
+        var p_t_title = gstr($('#public_transp_section').html());
+        var p_t_title_body = [[{text: p_t_title, style: "header"}]];
+        var p_t_title_obj = {
+            style: 'tableMarging',
+            table:{
+                    headerRows: 0,
+                    widths: ['*'],
+                    body: p_t_title_body
+                },
+                pageBreak: 'before'          
+            };
+        docDefinition.content.push(p_t_title_obj);
+
+        if(public_transp_bool){       
+            data = $('#result_table2 td');
+            body3 = get_publict_table(data);
+            body3_obj = {
+                style:'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body3
+                }
+            };
+            docDefinition.content.push(body3_obj);
+        }
+        
+        //uber
+        if(uber_bool){
+            data = $('#result_table_uber td');
+            body5 = get_uber_table(data);
+            body5_obj = {
+                style:'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body5
+                }
+            };
+            docDefinition.content.push(body5_obj);
+        }
     }
+     
     //optional external costs table
     if(extern_costs_bool){
         data = $('#result_table4 td');
@@ -157,13 +190,16 @@ function generatePDF(main_title, public_transp_bool, extern_costs_bool){
         body4_obj = {
                         style:'tableMarging',
                         table:{
-                            headerRows: 1,
+                            headerRows: 0,
                             widths: [ 390, '*' ],
                             body: body4
-                        }
+                        },
+                        pageBreak: 'before'
                     };
         docDefinition.content.push(body4_obj);
     }
+    
+    //creates PDF file
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
 }
 
@@ -202,8 +238,7 @@ function get_main_table(data){
                 el = {text: str, colSpan:4, style: 'header'};
                 body.push([el,'','','']);
                 break;                
-        }
-                 
+        }                
     }
     return body;
 }
@@ -245,8 +280,28 @@ function get_private_costs_table(data){
             body.push([el, el2]);
         }           
     }
-
     return body;    
+}
+
+function getBodyFinEffort(data){
+    var body = [];
+    for(var i=0; i<data.length; i++){
+        var str = gstr(data[i]);
+        var el;
+        if($(data[i]).find('b').length > 0){
+            var el2 = {};
+            el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
+            body.push([el, {}]);
+        }
+        else{
+            var str2 = $(data[i+1]).text();
+            var el2 = {text: str2, style: 'cell'};
+            el = {text: str, style: 'cell'};
+            body.push([el,el2]);
+            i++;
+        }       
+    }
+    return body;
 }
 
 function get_publict_table(data){
@@ -270,23 +325,17 @@ function get_publict_table(data){
     return body;
 }
 
-function getBodyFinEffort(data){
+function get_uber_table(data){
     var body = [];
-    for(var i=0; i<data.length; i++){
+    for(var i=0; i<data.length; i+=2){
         var str = gstr(data[i]);
         var el;
-        if($(data[i]).find('b').length > 0){
-            var el2 = {};
-            el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
-            body.push([el, {}]);
-        }
-        else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el,el2]);
-            i++;
-        }       
+
+        var str2 = $(data[i+1]).text();
+        var el2 = {text: str2, style: 'cell'};
+        el = {text: str, style: 'cell'};
+        body.push([el, el2]);
+     
     }
     return body;
 }

@@ -624,13 +624,16 @@ function print_publict_table(f1, f2, f3, data, country){
     var res_uber_obj = get_uber(uber_obj, data, country);
     //alert(JSON.stringify(res_uber_obj, null, 4)); 
     if (res_uber_obj){
+        uber_obj.print_bool=true; //says uber table is to be printed
+        
+        //add source in table for uber URL  
         var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
         var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
         
         //in which driver can replace every journey by uber 
-        if(res_uber_obj.result_type==1){ 
+        if(res_uber_obj.result_type==1){
             //starts HTML table
-            varResult+="<br><table class=\"result_table uber_table\">";
+            varResult+="<br><table class=\"result_table uber_table\" id=\"result_table_uber\">";
             
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
                        "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
@@ -645,14 +648,14 @@ function print_publict_table(f1, f2, f3, data, country){
             varResult+="<tr><td><b><?php echo $MINUTES_DRIVE_PER.' '.$MONTH ?></b></td>" + 
                        "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
                        
-            varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right;\"><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
+            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
                        "<td><b>" + countryCheck(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
 
-            varResult+="<tr><td style=\"border-top-width:2px;\"><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
+            varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
+                       "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
             
-            varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right; border-top-width:2px; \"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+                       "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";       
         }
@@ -660,13 +663,14 @@ function print_publict_table(f1, f2, f3, data, country){
         //the case where uber equivalent is more expensive
         else if(res_uber_obj.result_type==2){ 
             //starts HTML table
-            varResult+="<br><table class=\"result_table uber_table\">";
+            varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
             
-            varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                       "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+            varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
+                     + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?></td>" 
+                     + "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
              
-            varResult+="<tr><td style=\"border-top-width:2px;\"><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
-                       "<td style=\"border-top-width:2px;\">" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
             
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
                        "<td>" + countryCheck(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
@@ -677,15 +681,18 @@ function print_publict_table(f1, f2, f3, data, country){
             varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" + 
                        "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
                        
-            varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right;\"><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
+            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
                        "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
            
-            varResult+="<tr><td style=\"padding:6px 10px 6px 0; text-align:right; border-top-width:2px; \"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td style=\"border-top-width:2px;\"><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+                       "<td><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";    
         }
                
+    }
+    else{
+        uber_obj.print_bool=false; //says uber table is not to be printed
     }
     return varResult;
 }

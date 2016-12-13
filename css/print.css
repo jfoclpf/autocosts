@@ -155,7 +155,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 #result_table2,
 #result_table3,
 #result_table4,
-#tbl_statistics {
+#result_table_uber {
     border: 2px solid #b4b4b4;
     border-radius: 10px;
     border-collapse: separate;
@@ -166,7 +166,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 #result_table2 tr:first-child td,
 #result_table3 tr:first-child td,
 #result_table4 tr:first-child td,
-#tbl_statistics tr:first-child td {
+#result_table_uber tr:first-child td{
     border-radius: 10px 10px 0 0;
     border-collapse: separate;
     border: 0;
@@ -174,17 +174,22 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     vertical-align: middle;
 }
 
+#result_table_uber tr:first-child td,
+#result_table_uber tr:first-child td+td {
+    text-align: left;
+}
+
 #result_table1 tr:last-child td,
 #result_table2 tr:last-child td,
 #result_table3 tr:last-child td,
-#tbl_statistics tr:last-child td {
+#result_table_uber tr:last-child td{
     border-radius: 0 0 0 10px;
     border-collapse: separate;
 }
 #result_table1 tr:last-child td + td,
 #result_table2 tr:last-child td + td,
 #result_table3 tr:last-child td + td,
-#tbl_statistics tr:last-child td + td {
+#result_table_uber tr:last-child td + td{
     border-radius: 0 0 10px 0;
     border-collapse: separate;
 }
@@ -216,12 +221,13 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     padding-bottom: 4px;
     padding-top: 4px; 
 }
-
+#result_table_uber tr:first-child td,
 #result_table2 tr:first-child td,
 #result_table4 tr:first-child td {
     border-radius: 10px 0 0 0 ;
 }
 #result_table2 tr:first-child td + td,
+#result_table_uber tr:first-child td + td,
 #result_table4 tr:first-child td + td {
     border-left: solid 1px #b6b6b6;
     border-radius: 0 10px 0 0;

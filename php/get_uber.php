@@ -8,6 +8,10 @@ include("geo_functions.php");
 
 //get country code and country specific strings
 $cc = $_GET["c"];
+$cc = strtoupper($cc);
+if ($cc=="XX"){ //if test version
+    exit;
+}
 include($_SERVER['DOCUMENT_ROOT'].'/countries/' . $cc . '.php');
 
 //gets city and country code of user
