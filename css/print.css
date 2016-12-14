@@ -140,6 +140,11 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     border-left: solid 1px #b6b6b6;
 }
 
+.result_table {
+    border: 2px solid #b4b4b4;
+    border-radius: 10px;
+    border-collapse: separate;
+}
 .result_table td{
     text-align:left;
 }
@@ -150,23 +155,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
     text-align: center;
     padding: 9px;
 }
-#result_table0,
-#result_table1,
-#result_table2,
-#result_table3,
-#result_table4,
-#result_table_uber {
-    border: 2px solid #b4b4b4;
-    border-radius: 10px;
-    border-collapse: separate;
-}
-
-#result_table0 tr:first-child td,
-#result_table1 tr:first-child td,
-#result_table2 tr:first-child td,
-#result_table3 tr:first-child td,
-#result_table4 tr:first-child td,
-#result_table_uber tr:first-child td{
+.result_table tr:first-child td{
     border-radius: 10px 10px 0 0;
     border-collapse: separate;
     border: 0;

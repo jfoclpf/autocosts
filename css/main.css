@@ -795,6 +795,10 @@ form.roundCorner {
         width: auto;
         margin: 20px 0 20px 0;
     }
+    
+    #input_div table td:nth-child(2n){
+        width: 35%;
+    }
 
     .result_div {
         font-size: 105%;
@@ -828,7 +832,11 @@ form.roundCorner {
         border-radius: 0; 
     }
     
-    .result_table tr td:nth-child(2){
+    .result_table tr td:nth-child(2),
+    #result_table1 tr:nth-child(2) td+td,
+    #result_table1 tr:nth-child(10) td+td,
+    #result_table1 tr:nth-child(19) td+td,
+    #result_table1 tr:nth-child(21) td+td {
         border:0;
     }
     .result_table tr:first-child td:first-child {
@@ -856,9 +864,10 @@ form.roundCorner {
     }
     #result_table1 tr:nth-child(9) td,
     #result_table1 tr:nth-child(18) td,
-    #result_table1 tr:nth-child(21) td,
-    #result_table1 tr:nth-child(9) td+td,
+    #result_table1 tr:nth-child(9) td:first-child,
     #result_table1 tr:nth-child(18) td+td,
+    #result_table1 tr:last-child td:first-child,
+    #result_table1 tr:nth-last-child(4) td:first-child,
     #result_table2 tr:last-child td:first-child,
     #result_table4 tr:nth-last-child(2) td:first-child,
     #result_table_uber tr:last-child td:first-child,
