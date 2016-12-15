@@ -134,10 +134,20 @@ table {
     border-collapse: collapse;
 }
 
-table>caption+thead>tr:first-child>td, table>caption+thead>tr:first-child>th, table>colgroup+thead>tr:first-child>td, table>colgroup+thead>tr:first-child>th, table>thead:first-child>tr:first-child>td, table>thead:first-child>tr:first-child>th {
+table>caption+thead>tr:first-child>td, 
+table>caption+thead>tr:first-child>th, 
+table>colgroup+thead>tr:first-child>td, 
+table>colgroup+thead>tr:first-child>th, 
+table>thead:first-child>tr:first-child>td, 
+table>thead:first-child>tr:first-child>th {
     border-top: 0;
 }
-table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
+table>tbody>tr>td, 
+table>tbody>tr>th, 
+table>tfoot>tr>td, 
+table>tfoot>tr>th, 
+table>thead>tr>td, 
+table>thead>tr>th {
     background-color: #fff;
 }
 
@@ -479,6 +489,7 @@ form.roundCorner {
 
 .result_table td{
     text-align:left;
+    overflow: hidden;
 }
 .result_table td:only-child{
     text-align:center;
@@ -599,6 +610,8 @@ form.roundCorner {
 #result_table1 tr:nth-child(10) td,
 #result_table1 tr:nth-child(19) td,
 #result_table1 tr:nth-child(21) td,
+#result_table2 tr:nth-child(2) td,
+#result_table2 tr:last-child td,
 .uber_table tr:last-child td,
 .uber_table tr:nth-last-child(2) td,
 .uber_table2 tr:nth-child(2) td {
@@ -733,6 +746,9 @@ form.roundCorner {
     #input_div {
         margin: 0 2% 2% 2%;
     }
+    #input_div table td:nth-child(2n){
+        width: 30%;
+    }
     #div3a {
         font-size: 110%;
     }
@@ -779,6 +795,9 @@ form.roundCorner {
         font-size: 80%;
         margin: 0 2%;
     }
+    #input_div table td:nth-child(2n){
+        width: 35%;
+    }
 }
 
 /*******************************************************************************/
@@ -797,14 +816,39 @@ form.roundCorner {
     }
     
     #input_div table td:nth-child(2n){
-        width: 35%;
+        width: 40%;
     }
 
     .result_div {
         font-size: 105%;
     }
-    .result_table tr{
+    
+    .result_table,
+    #result_table0,
+    #result_table1,
+    #result_table2,
+    #result_table3,
+    #result_table4,
+    #result_table_uber,
+    .result_table td,
+    #result_table0 td,
+    #result_table1 td,
+    #result_table2 td,
+    #result_table3 td,
+    #result_table4 td,
+    #result_table_uber td,
+    #result_table0 tr:nth-child(4) td:last-child,
+    #result_table1 tr:last-child td:first-child,
+    #result_table2 tr:last-child td:first-child,
+    #result_table2 tr:first-child td+td,
+    #result_table_uber tr:last-child td:first-child,
+    #result_table_uber tr:first-child td+td,
+    #result_table3 tr:last-child td:first-child {
+        border-radius: 0;
+    }
+    .result_table tr {
         background-color: #fff;
+        border-radius: 0;
     }
     .result_table tr:first-child,
     .result_table tr:last-child {
@@ -818,6 +862,7 @@ form.roundCorner {
     #result_table3 tr:last-child,
     #result_table4 tr:first-child {
         background-color: #fff;
+        border-radius: 0;
     }
     
     .result_table td {
@@ -836,25 +881,16 @@ form.roundCorner {
     #result_table1 tr:nth-child(2) td+td,
     #result_table1 tr:nth-child(10) td+td,
     #result_table1 tr:nth-child(19) td+td,
-    #result_table1 tr:nth-child(21) td+td {
+    #result_table1 tr:nth-child(21) td+td,
+    #result_table2 tr:nth-child(2) td:last-child,
+    #result_table2 tr:last-child td:last-child,
+    #result_table_uber tr:first-child td:last-child,
+    #result_table_uber tr:nth-child(2) td:last-child,
+    #result_table_uber tr:last-child td:last-child,
+    #result_table_uber tr:nth-last-child(2) td:last-child {
         border:0;
     }
-    .result_table tr:first-child td:first-child {
-        border-radius: 10px 10px 0 0;       
-    }
-    .result_table tr:first-child td:first-child {
-        border-radius: 10px 10px 0 0;       
-    }
     
-    #result_table1 tr:last-child td:first-child,
-    #result_table2 tr:last-child td:first-child,
-    #result_table2 tr:first-child td+td,
-    #result_table_uber tr:last-child td:first-child,
-    #result_table_uber tr:first-child td+td,
-    #result_table3 tr:last-child td:first-child {
-        border-radius: 0;  
-    }
-
     #result_table0 tr:nth-child(2) td:nth-child(2), 
     #result_table0 tr:nth-child(2) td:nth-child(4),
     #result_table2 tr:first-child td:last-child,
@@ -878,6 +914,7 @@ form.roundCorner {
     #result_table4 tr:first-child td:first-child {
         border-bottom: 1px solid #b4b4b4;
     }
+   
     #result_table1 tr:last-child td:last-child,
     #result_table2 tr:last-child td:last-child,
     #result_table_uber tr:last-child td:last-child    {

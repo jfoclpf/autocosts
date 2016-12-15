@@ -34,10 +34,20 @@ table {
     border-collapse: collapse;
 }
 
-table>caption+thead>tr:first-child>td, table>caption+thead>tr:first-child>th, table>colgroup+thead>tr:first-child>td, table>colgroup+thead>tr:first-child>th, table>thead:first-child>tr:first-child>td, table>thead:first-child>tr:first-child>th {
+table>caption+thead>tr:first-child>td, 
+table>caption+thead>tr:first-child>th, 
+table>colgroup+thead>tr:first-child>td, 
+table>colgroup+thead>tr:first-child>th, 
+table>thead:first-child>tr:first-child>td, 
+table>thead:first-child>tr:first-child>th {
     border-top: 0;
 }
-table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
+table>tbody>tr>td, 
+table>tbody>tr>th, 
+table>tfoot>tr>td, 
+table>tfoot>tr>th, 
+table>thead>tr>td, 
+table>thead>tr>th {
     background-color: #fff;
 }
 
@@ -148,7 +158,7 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 .result_table td{
     text-align:left;
 }
-.result_table td:only-child{
+.result_table td:only-child {
     text-align:center;
 }
 #result_table0 td {
@@ -240,7 +250,12 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 #result_table1 tr:nth-child(2) td,
 #result_table1 tr:nth-child(10) td,
 #result_table1 tr:nth-child(19) td,
-#result_table1 tr:nth-child(21) td {
+#result_table1 tr:nth-child(21) td,
+#result_table2 tr:nth-child(2) td,
+#result_table2 tr:last-child td,
+.uber_table tr:last-child td,
+.uber_table tr:nth-last-child(2) td,
+.uber_table2 tr:nth-child(2) td {
     border-top:2px solid #b4b4b4;
 }
 
