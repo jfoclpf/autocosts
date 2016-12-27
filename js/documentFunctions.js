@@ -143,9 +143,10 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript('db_stats/statsFunctions.js'); 
             $.getScript('js/get_data.js');
             $.getScript('js/print.js');
-            $.getScript('php/print_results.php?country='+country); 
-            $.getScript('google/charts.php?country='+country);
-            
+            $.getScript('google/charts.php?country='+country, function() {
+                $.getScript('php/print_results.php?country='+country); 
+            });
+                       
             $.getScript('google/g-recaptcha.js', function() {
                 $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
             });

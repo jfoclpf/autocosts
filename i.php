@@ -131,6 +131,7 @@
         var uber_obj = {};//empty object
         var frame_witdh, public_transp_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
+        var Run = function (){};
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>

@@ -4,7 +4,7 @@ $GLOBALS['country'] = $_GET['country'];
  ?>
 
 //function that is run when user clicks "run/calculate"
-function Run(){	
+Run = function(){	
 
     //test if the form user inputs are correct
     if (!is_userdata_formpart1_ok()) return;

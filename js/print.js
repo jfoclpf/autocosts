@@ -9,7 +9,7 @@ function Popup(data1, data2, data3, data4, data5, title)
     var mywindow = window.open('', title, 'height=600,width=600');
     mywindow.document.write('<html><head>');
     mywindow.document.write('<title>'+title+'</title>');
-    mywindow.document.write('<link rel="stylesheet" type="text/css" href="css/print.css" media="print">');
+    mywindow.document.write('<link rel="stylesheet" type="text/css" href="css/print/print.css" media="print">');
     mywindow.document.write('</head>');
     
     mywindow.document.write('<body style="font-family: Verdana, Geneva, sans-serif; text-align: center;">');
