@@ -37,22 +37,22 @@
                 <div id="income_div_form3">
                     <?php echo $EXTRA_DATA_INCOME_QUESTION ?>
                     <br/>
-                    <span style="white-space:nowrap">
+                    <div class="col">
                         <input type="radio" name="radio_income" value="year" onchange="income_toggle(value)" checked />
                         <?php echo $WORD_PER ?> <?php echo $YEAR ?>
-                    </span>
-                    <span style="white-space:nowrap">
+                    </div>
+                    <div class="col">
                         <input type="radio" name="radio_income" value="month" onchange="income_toggle(value)"/>
                         <?php echo $WORD_PER ?> <?php echo $MONTH ?>
-                    </span>
-                    <span style="white-space:nowrap">
+                    </div>
+                    <div class="col">
                         <input type="radio" name="radio_income" value="week" onchange="income_toggle(value)"/>
                         <?php echo $WORD_PER ?> <?php echo $WEEK ?>
-                    </span>
-                    <span style="white-space:nowrap">
+                    </div>
+                    <div class="col">
                         <input type="radio" name="radio_income" value="hour" onchange="income_toggle(value)"/>
                         <?php echo $WORD_PER ?> <?php echo $HOUR ?>
-                    </span>
+                    </div>
                 </div>
             </td>
             <td>

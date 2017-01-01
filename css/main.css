@@ -110,7 +110,7 @@ input[type="number"] {
 #car_to_work_distance_weekend{
     width: 40px;
 }
-#form_part1 .col {
+#input_div .col {
     display: inline-block;
     white-space: nowrap;
     margin: 5px;
@@ -698,7 +698,7 @@ form.roundCorner {
     #div2_td{
         width: 95%;
     }
-    #div2 .col {
+    #input_div .col {
         width: 100%;
     }
     #country_box input[type="text"] {
@@ -821,6 +821,10 @@ form.roundCorner {
 
     .result_div {
         font-size: 105%;
+    }
+    
+    .result_table {
+        margin: 6px auto;
     }
     
     .result_table,
