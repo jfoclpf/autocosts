@@ -8,7 +8,7 @@ function fixNmbr($i,$n){
     return number_format($float_num, $n, '.', '');
 }
 
-include("credentials.php"); //DB credentials
+include("../keys/db_credentials.php"); //DB credentials
 include("../countries/_list.php");
 
 $isDBConnectionSane = true;
