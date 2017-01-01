@@ -1,4 +1,6 @@
 <?php
+    include("../keys/recaptcha_key.php");
+
     $captcha = "";
     if(isset($_POST['g-recaptcha-response'])){
       $captcha=$_POST['g-recaptcha-response'];
@@ -8,7 +10,6 @@
         exit;
     }
     
-    $secretKey = "6LcdhB4TAAAAAA-d_ATwluuEgBj4mEx5mmiiqG0b";
     $ip = $_SERVER['REMOTE_ADDR'];
     $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
     $responseKeys = json_decode($response, true);

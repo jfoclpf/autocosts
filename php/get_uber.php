@@ -52,10 +52,7 @@ if($debug==1){//Lisbon coordinates
 }
 
 //UBER
-//to manage tokens, visit: https://developer.uber.com/dashboard
-//user:info@autocosts.info | pass: Vi**V****1****
-$token="4ad-FPs1wIe_DyjjmXqNeqIr06m2eDfuGwS14Y4C";
-
+include("../keys/uber_token.php");
 $uber_url= "https://api.uber.com/v1.2/products?latitude=$lat&longitude=$long&server_token=$token";
 
 $c_uber = curl_init();

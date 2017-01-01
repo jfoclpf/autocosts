@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'].'/db_stats/credentials.php');
+include($_SERVER['DOCUMENT_ROOT'].'/keys/db_credentials.php');
 
 // settings
 // ip-protection in seconds

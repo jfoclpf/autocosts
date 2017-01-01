@@ -8,7 +8,7 @@ eval(fs.readFileSync('../js/coreFunctions.js')+'');
 eval(fs.readFileSync('../js/get_data.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
 //include credentials object
-eval(fs.readFileSync('./credentials.js')+'');
+eval(fs.readFileSync('../keys/db_credentials.js')+'');
 var login_UserInputDB = get_DBcredentials();
 
 //module to allow to execute the queries in series

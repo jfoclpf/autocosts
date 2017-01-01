@@ -1,7 +1,7 @@
 <?php
 //script that populates a country DB with specs for each country
 
-include("credentials.php");
+include(dirname(__FILE__).'/../keys/db_credentials.php');
 include (dirname(__FILE__).'/../countries/_list.php');
 asort($avail_CT); //sorts alphabetically the counties list got from list.php
 
