@@ -882,6 +882,7 @@ form.roundCorner {
     }
     
     .result_table tr td:nth-child(2),
+    #result_table0 tr:nth-child(2) td:last-child,
     #result_table1 tr:nth-child(2) td+td,
     #result_table1 tr:nth-child(10) td+td,
     #result_table1 tr:nth-child(19) td+td,
@@ -895,7 +896,8 @@ form.roundCorner {
         border:0;
     }
     
-    #result_table0 tr:nth-child(2) td:nth-child(2), 
+    #result_table0 tr:nth-child(2) td:nth-child(2),
+    #result_table0 tr:nth-child(2) td:nth-child(3),
     #result_table0 tr:nth-child(2) td:nth-child(4),
     #result_table2 tr:first-child td:last-child,
     #result_table_uber tr:first-child td:last-child,
