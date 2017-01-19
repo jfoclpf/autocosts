@@ -28,6 +28,7 @@ function Run_form(country){
         }).done(function(result){
             if(result=="ok"){
                 if(Run() && country != "XX"){
+                    ga('send', 'event', 'form_part', 'run_OK');
                     submit_data(country); //submits data to database if no test version
                 } 
                 scrollPage();

@@ -128,6 +128,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
                     hasLoadedPart[0] = true;
                     if (!is_userdata_formpart1_ok())
                         return;
+                    ga('send', 'event', 'form_part', 'form_part_2');
                     shows_part(2);
                 });
             });                                             
@@ -163,6 +164,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         if (!hasLoadedPart[2]){
             google.load('visualization', '1', {'packages': ['corechart'], 'language': Language, 'callback': function(){
                 hasLoadedPart[2]=true;
+                ga('send', 'event', 'form_part', 'form_part_3');
                 shows_part(3);
             }});
         }
