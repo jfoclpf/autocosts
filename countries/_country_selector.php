@@ -25,6 +25,7 @@ $url_cc=strtoupper($url_cc); //uppercase
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	
     //gets the country by IP 
+    include("./php/geo_functions.php");
     $geo_cc = ip_info("Visitor", "Country Code");
     $geo_cc=strtoupper($geo_cc); //uppercase
     
@@ -51,7 +52,7 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 }
 
 //loads the correspondent country file
-include($_SERVER['DOCUMENT_ROOT'].'/countries/' . $GLOBALS['country'] . '.php');
+include('./countries/' . $GLOBALS['country'] . '.php');
 
 //gets the correspondent language to input on <html lang"##">, after the correct country file was loaded
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)
@@ -59,9 +60,6 @@ $language=$LANGUAGE_CODE;
 //$LANGUAGE_CODE might be of the type "es-419" (latin american spanish) or pt-br (brazilian portuguese)
 //gets just the 2 first characters
 $language=mb_substr($language, 0, 2);
-
-//detects city of user
-$geo_city = ip_info("Visitor", "city");
 
 //some initializations
 $is_logo = false;
