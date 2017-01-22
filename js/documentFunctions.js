@@ -105,13 +105,46 @@ function scrollPage(){
     }
 }
 
+ /*function which returns whether this session is a (test/develop version) or a prod version */  
+ function IsThisAtest() {  
+    
+    if(Country=="XX"){
+        return true;
+    }
+    
+    //verifies top level domain
+    var hostName = window.location.hostname;  
+    var hostNameArray = hostName.split(".");  
+    var posOfTld = hostNameArray.length - 1;  
+    var tld = hostNameArray[posOfTld];  
+    if(tld=="work"){
+        return true;
+    }
+    
+    return false;
+ } 
+
 /*functions which is used to change the form parts*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
+var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
 function openForm_part(part_name, part_number_origin, part_number_destiny, country, language) {
     //alert("from "+part_number_origin+" to "+part_number_destiny +" - country:"+country);
 
     //shows form part n and hides the other parts
     function shows_part(n){
+        
+        //if not a test triggers event for Google Analytics accordingly
+        if(!IsThisAtest()){                 
+            if(n==2 && !hasShownPart2){
+                ga('send', 'event', 'form_part', 'form_part_2');
+                hasShownPart2=true;
+            }
+            if(n==3 && !hasShownPart3){
+                ga('send', 'event', 'form_part', 'form_part_3');
+                hasShownPart3=true;
+            }
+        }
+               
         for (var p = null, i = 1; p = document.getElementById(part_name+i); ++i) {
             if (i == n)
                 p.style.display = "";
@@ -122,13 +155,13 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 
     //change from form part 1 to 2
     if (part_number_origin==1 && part_number_destiny==2){
+       
         if (!hasLoadedPart[0]){
             $.getScript('js/coreFunctions.js', function(){
                 $.getScript('https://www.google.com/jsapi', function(){
                     hasLoadedPart[0] = true;
                     if (!is_userdata_formpart1_ok())
                         return;
-                    ga('send', 'event', 'form_part', 'form_part_2');
                     shows_part(2);
                 });
             });                                             
@@ -164,7 +197,6 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         if (!hasLoadedPart[2]){
             google.load('visualization', '1', {'packages': ['corechart'], 'language': Language, 'callback': function(){
                 hasLoadedPart[2]=true;
-                ga('send', 'event', 'form_part', 'form_part_3');
                 shows_part(3);
             }});
         }

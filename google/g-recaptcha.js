@@ -28,8 +28,12 @@ function Run_form(country){
         }).done(function(result){
             if(result=="ok"){
                 if(Run() && country != "XX"){
-                    ga('send', 'event', 'form_part', 'run_OK');
-                    submit_data(country); //submits data to database if no test version
+                    //if not a test triggers event for Google Analytics
+                    if(!IsThisAtest()){
+                        ga('send', 'event', 'form_part', 'run_OK');
+                    }
+                    //submits data to database if no XX version
+                    submit_data(country); 
                 } 
                 scrollPage();
                 ShowGoogleReCaptcha(false);
