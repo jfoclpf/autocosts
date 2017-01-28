@@ -66,8 +66,13 @@ function get_form_part2(){
 function get_form_part3(){
     var d = document.custo; //main form document variable
     var data = {
+        //public transports section
+        IsPublicTransports:          getCheckedSliderValue(d.slider1),
         n_pess_familia:              d.pessoas_agregado.value,
         pmpmpc:                      d.preco_passe.value,
+        
+        //financial effort section
+        IsFinancialEffort:           getCheckedSliderValue(d.slider2),
         income_type:                 getCheckedValue(d.radio_income),
         income_per_year:             d.income_per_year.value,
         income_per_month:            d.income_per_month.value,
@@ -80,12 +85,16 @@ function get_form_part3(){
         is_working_time:             getCheckedValue(d.radio_work_time),
         time_hours_per_week:         d.time_hours_per_week.value,
         time_month_per_year:         d.time_month_per_year.value,
+
+        //Distance section
         drive_to_work:               getCheckedValue(d.drive_to_work),
         drive_to_work_days_per_week: d.drive_to_work_days_per_week.value,
         dist_home_job:               d.dist_home_job.value,
         journey_weekend:             d.journey_weekend.value,
         period_km:                   d.period_km.value,
         dist_per_time_period:        d.km_per_month.value,
+
+        //Time spent in driving
         time_home_job:               d.time_home_job.value,
         time_weekend:                d.time_weekend.value,
         min_drive_per_day:           d.min_drive_per_day.value,

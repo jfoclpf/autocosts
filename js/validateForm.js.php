@@ -97,6 +97,7 @@ function is_userdata_formpart1_ok(){
 }
 
 
+
 /* *** CHECK FORM PART 2 ***** */
 /*check if data from form 2 (running costs) is correctly filled*/
 function is_userdata_formpart2_ok(){
@@ -220,110 +221,122 @@ function is_userdata_formpart2_ok(){
     return true;
 }
 
+
+
 /* *** CHECK FORM PART 3 ***** */
 function is_userdata_formpart3_ok(){
 
-    var n_pess_familia=document.custo.pessoas_agregado.value;
-    var pmpmpc=document.custo.preco_passe.value;
+    var public_transport = getCheckedSliderValue(custo.slider1);
 
-    if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
-        alert("<?echo $EXTRA_DATA1?> - <?echo $INVALID_NBR_PP?>!");
-        return false;
+    if(public_transport){
+        var n_pess_familia=document.custo.pessoas_agregado.value;
+        var pmpmpc=document.custo.preco_passe.value;
+
+        if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
+            alert("<?echo $EXTRA_DATA1?> - <?echo $INVALID_NBR_PP?>!");
+            return false;
+        }
+
+        if(!isNumber(pmpmpc) || pmpmpc<0){
+            alert("<?echo $EXTRA_DATA1?> - <?echo $ERROR_PASS_AMOUNT?>!");
+            return false;
+        }
     }
 
-    if(!isNumber(pmpmpc) || pmpmpc<0){
-        alert("<?echo $EXTRA_DATA1?> - <?echo $ERROR_PASS_AMOUNT?>!");
-        return false;
-    }
-    
-    /*income*/
-    var income_type = getCheckedValue(custo.radio_income);
-    switch(income_type){
-    case 'year':
-        if(!isNumber(document.custo.income_per_year.value)){
-            alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
-            return false;
-        }			
-        break;
-    case 'month':
-        if(!isNumber(document.custo.income_per_month.value)){
-            alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
-            return false;
-        }
-        if(!isNumber(document.custo.income_months_per_year.value)){
-            alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
-            return false;
-        }			
-        break;
-    case 'week':
-        if(!isNumber(document.custo.income_per_week.value)){
-            alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
-            return false;
-        }
-        if(!isNumber(document.custo.income_weeks_per_year.value)){
-            alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_WEEKS_PER_YEAR?>!");
-            return false;
-        }			
-        break;
-    }
-    /*working time*/
-    var is_working_time = getCheckedValue(custo.radio_work_time);
-    if(is_working_time == 'true' && income_type!='hour'){
-        if(!isNumber(document.custo.time_hours_per_week.value)){
-            alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_HOURS_PER_WEEK?>!");
-            return false;
-        }
-        if(!isNumber(document.custo.time_month_per_year.value)){
-            alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
-            return false;
-        }
-    }
-    
-    /*distance*/
-    if($('#distance_form3').css('display')!='none'){
-        var drive_to_work = getCheckedValue(custo.drive_to_work);
-        if(drive_to_work == 'true'){
-            if(!isNumber(document.custo.drive_to_work_days_per_week.value)){
-                alert("<?echo $DISTANCE?> - <?echo $ERROR_DAYS_PER_WEEK?>!");
+    var fin_effort=getCheckedSliderValue(custo.slider2);
+
+    if(fin_effort){
+        /*income*/
+        var income_type = getCheckedValue(custo.radio_income);
+        switch(income_type){
+        case 'year':
+            if(!isNumber(document.custo.income_per_year.value)){
+                alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
+                return false;
+            }			
+            break;
+        case 'month':
+            if(!isNumber(document.custo.income_per_month.value)){
+                alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
                 return false;
             }
-            if(!isNumber(document.custo.dist_home_job.value)){
-                alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_HOME_WORK?>!");
+            if(!isNumber(document.custo.income_months_per_year.value)){
+                alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
+                return false;
+            }			
+            break;
+        case 'week':
+            if(!isNumber(document.custo.income_per_week.value)){
+                alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_INCOME?>!");
                 return false;
             }
-            if(!isNumber(document.custo.journey_weekend.value)){
-                alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_NO_JOB?>!");
+            if(!isNumber(document.custo.income_weeks_per_year.value)){
+                alert("<?echo $EXTRA_DATA_INCOME?> - <?echo $ERROR_WEEKS_PER_YEAR?>!");
+                return false;
+            }			
+            break;
+        }
+        /*working time*/
+        var is_working_time = getCheckedValue(custo.radio_work_time);
+        if(is_working_time == 'true' && income_type!='hour'){
+            if(!isNumber(document.custo.time_hours_per_week.value)){
+                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_HOURS_PER_WEEK?>!");
+                return false;
+            }
+            if(!isNumber(document.custo.time_month_per_year.value)){
+                alert("<?echo $EXTRA_DATA_WORKING_TIME?> - <?echo $ERROR_MONTHS_PER_YEAR?>!");
+                return false;
+            }
+        }
+    }
+     
+    if(public_transport || fin_effort){
+        /*distance*/
+        if($('#distance_form3').css('display')!='none'){
+            var drive_to_work = getCheckedValue(custo.drive_to_work);
+            if(drive_to_work == 'true'){
+                if(!isNumber(document.custo.drive_to_work_days_per_week.value)){
+                    alert("<?echo $DISTANCE?> - <?echo $ERROR_DAYS_PER_WEEK?>!");
+                    return false;
+                }
+                if(!isNumber(document.custo.dist_home_job.value)){
+                    alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_HOME_WORK?>!");
+                    return false;
+                }
+                if(!isNumber(document.custo.journey_weekend.value)){
+                    alert("<?echo $DISTANCE?> - <?echo $ERROR_DIST_NO_JOB?>!");
+                    return false;
+                }
+            }
+            else{
+                if(!isNumber(document.custo.km_per_month.value)){
+                    alert("<?echo $DISTANCE?> - <?echo $ERROR_FUEL_DIST?>!");
+                    return false;
+                }
+            }
+        }
+        
+        /*time spent in driving*/
+        if (isVisible('.time_spent_part1_form3')){        
+            if(!isNumber(document.custo.time_home_job.value)){
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
+                return false;
+            }
+            if(!isNumber(document.custo.time_weekend.value)){
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
                 return false;
             }
         }
         else{
-            if(!isNumber(document.custo.km_per_month.value)){
-                alert("<?echo $DISTANCE?> - <?echo $ERROR_FUEL_DIST?>!");
+            if(!isNumber(document.custo.min_drive_per_day.value)){
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE?>!");
                 return false;
             }
-        }
-    }
-    
-    /*time spent in driving*/
-    if (isVisible('.time_spent_part1_form3')){        
-        if(!isNumber(document.custo.time_home_job.value)){
-            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_HOME_JOB?>!");
-            return false;
-        }
-        if(!isNumber(document.custo.time_weekend.value)){
-            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE_WEEKEND?>!");
-            return false;
-        }
-    }
-    else{
-        if(!isNumber(document.custo.min_drive_per_day.value)){
-            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_MIN_DRIVE?>!");
-            return false;
-        }
-        var days_drive_per_month = document.custo.days_drive_per_month.value;
-        if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
-            alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
-            return false;
+            var days_drive_per_month = document.custo.days_drive_per_month.value;
+            if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
+                alert("<?echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING?> - <?echo $ERROR_DAYS_PER_MONTH?>!");
+                return false;
+            }
         }
     }
 

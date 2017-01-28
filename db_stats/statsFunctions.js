@@ -52,13 +52,10 @@ function get_average_costs(results_array){
         fines: 0,
         washing: 0
     };
-    var fin_effort = {
-        kinetic_speed: 0,
-        virtual_speed: 0
-    };
     var output = {
         monthly_costs: monthly_costs,
-        fin_effort: fin_effort,
+        kinetic_speed: 0,
+        virtual_speed: 0,
         distance_per_month: 0        
     };
        
@@ -81,8 +78,8 @@ function get_average_costs(results_array){
         output.monthly_costs.fines          = results_array[0].monthly_costs.fines;
         output.monthly_costs.washing        = results_array[0].monthly_costs.washing;
         output.distance_per_month = results_array[0].distance_per_month;
-        output.fin_effort.kinetic_speed     = results_array[0].fin_effort.kinetic_speed;
-        output.fin_effort.virtual_speed     = results_array[0].fin_effort.virtual_speed;
+        output.kinetic_speed     = results_array[0].kinetic_speed;
+        output.virtual_speed     = results_array[0].virtual_speed;
     }
    
     if(length>1){
@@ -116,8 +113,8 @@ function get_average_costs(results_array){
             finesTotal += results_array[i].monthly_costs.fines;
             washTotal += results_array[i].monthly_costs.washing;
             distTotal += results_array[i].distance_per_month;          
-            kineticTotal += results_array[i].fin_effort.kinetic_speed;        
-            virtualTotal += results_array[i].fin_effort.virtual_speed;            
+            kineticTotal += results_array[i].kinetic_speed;        
+            virtualTotal += results_array[i].virtual_speed;            
         }
         
         output.monthly_costs.depreciation   = depTotal/length;
@@ -133,8 +130,8 @@ function get_average_costs(results_array){
         output.monthly_costs.fines          = finesTotal/length;
         output.monthly_costs.washing        = washTotal/length;
         output.distance_per_month = distTotal/length;
-        output.fin_effort.kinetic_speed     = kineticTotal/length;
-        output.fin_effort.virtual_speed     = virtualTotal/length;
+        output.kinetic_speed     = kineticTotal/length;
+        output.virtual_speed     = virtualTotal/length;
     } 
  
     return output;
@@ -264,8 +261,8 @@ function CalculateStatistics(userIds, data, country){
             
             runCostsProDist: running_costs_p_unit_distance,
             totCostsProDist: total_costs_p_unit_distance,
-            kinetic_speed:   avg.fin_effort.kinetic_speed,
-            virtual_speed:   avg.fin_effort.virtual_speed,
+            kinetic_speed:   avg.kinetic_speed,
+            virtual_speed:   avg.virtual_speed,
             
             users_counter:   temp_i.length
         };
@@ -485,13 +482,10 @@ function is_DBentry_ok(data, country) {
 //checks if the computed result was OK and is not an outlier
 function was_result_ok(result, country) {
     
-    if(!isFinite(result.fin_effort.kinetic_speed))
+    if(!isFinite(result.kinetic_speed))
         return false;
     
-    if(result.fin_effort.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED)
-        return false;
-                
-    if(!isFinite(result.fin_effort.virtual_speed) || result.fin_effort.virtual_speed <= 0)
+    if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED)
         return false;
     
     //distance per month

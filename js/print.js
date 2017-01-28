@@ -25,10 +25,11 @@ function Popup(data1, data2, data3, data4, data5, title)
     mywindow.document.write(data2);
     mywindow.document.write('<br><br>');
     
-    mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
-        
-    mywindow.document.write(data3);
-    mywindow.document.write('<br><br>');
+    if(fin_effort_bool){
+        mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
+        mywindow.document.write(data3);
+        mywindow.document.write('<br><br>');
+    }
 
     if(public_transp_bool || uber_obj.print_bool){
         mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');

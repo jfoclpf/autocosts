@@ -26,6 +26,14 @@ function initialize() {
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
     fuelCalculationMethodChange('currency');
     carToJob(false);
+
+    //set public transporsts and fin. effort main DIVs to no
+    $('#slider1').checked = false;
+    $('#public_transp_Div_form3').css("display", "none");
+    $('#slider1').checked = false;
+    $('#fin_effort_Div_form3').css("display", "none");
+    $("#distance_time_spent_driving_form3").css("display", "none");
+
     
     //Shows Google reCaptcha
     if (Country!='XX'){

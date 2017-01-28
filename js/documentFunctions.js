@@ -378,14 +378,6 @@ function driveToJob(flag){
     }
 }
 
-function onclick_credit(flag) {
-    if(flag == 'true') {
-        $('#sim_credDiv').css("display", "block");
-    } else {
-        $('#sim_credDiv').css("display", "none");
-    }
-}
-
 function tolls_daily(tollsDailyFlag) {
     if (tollsDailyFlag) {
         $('#dia_nao_portag_DIV').css("display", "none");
@@ -395,6 +387,51 @@ function tolls_daily(tollsDailyFlag) {
         $('#dia_sim_portag_DIV').css("display", "none");
     }
 }
+
+/*function that toggles some div between visible or hidden*/
+function onclick_div_show(divID, flag) {
+    if(flag) {
+        $(divID).css("display", "block");
+    } else {
+        $(divID).css("display", "none");
+    }
+}
+
+//triggers when any slider in form part 3 toggles
+function slider_toggles_form3(){
+
+    var ckb1 = $("#slider1").is(':checked');
+    var ckb2 = $("#slider2").is(':checked');
+
+    if(ckb1){
+        $("#public_transp_Div_form3").css("display", "block");
+    }
+    else{
+        $("#public_transp_Div_form3").css("display", "none");
+    }
+
+    if(ckb2){
+        $("#fin_effort_Div_form3").css("display", "block");
+    }
+    else{
+        $("#fin_effort_Div_form3").css("display", "none");
+    }
+
+    //if Public Transporst or Financial Effort toogle sliders in form part 3 are activated,
+    //shows Distance and Time spent in driving form part 3 section
+    if(ckb1 || ckb2){
+        $("#distance_time_spent_driving_form3").css("display", "block");
+    }
+    else{
+        $("#distance_time_spent_driving_form3").css("display", "none");
+    }
+}
+$("#slider1").change(function() {
+    slider_toggles_form3();
+});
+$("#slider2").change(function() {
+    slider_toggles_form3();
+});
 
 function isNumber(n) {
     return (!isNaN(parseFloat(n)) && isFinite(n) && n >= 0);
@@ -473,6 +510,10 @@ function getCheckedValue(radioObj) {
         }
     }
     return "";
+}
+
+function getCheckedSliderValue(ObjName) {
+    return ObjName.checked;
 }
 
 //function that is run when the user clicks the Run/Calculate button 

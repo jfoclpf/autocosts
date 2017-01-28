@@ -2,6 +2,16 @@
 /*===========================================================*/
 /*Functions which do not change the visual aspect of the page*/
 
+//detects if a variable is defined and different from zero
+function isDef(variable){
+    if ((typeof variable !== 'undefined') && variable!=0) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 function date_diff(date1, date2) {//return the difference in months between two dates date2-date1
     var m2, y2, m1, y1;
     m2 = date2.getUTCMonth() + 1;
@@ -277,43 +287,6 @@ function calculate_costs(f1, f2, f3, country){
         fines: 0,                          //fines monthly cost
         washing: 0                         //washing monthly cost
     };
-    //financial effort object
-    var fin_effort = {
-        //income
-        income: 0,                         //income amount the user has inserted     
-        income_per_year: 0,           //average income per year
-        income_per_type: 0,                //number of income time-periods (number of months/year or weeks/year)
-        income_hours_per_week: 0,          //number of hours per week  
-        aver_income_per_month:0,           //average income per month
-        aver_income_per_hour: 0,           //average income per hour
-        time_hours_per_week: 36,           //default hours per week
-        time_month_per_year: 11,           //default months per year
-        aver_work_time_per_m: 0,           //average working time per month        
-        work_hours_per_y: 0,               //total working hours per year
-        //driving distance
-        drive_per_year:0,                  //total distance driven per year
-        drive_to_work_days_per_week: 0,    //number of days per week, the user drives to job 
-        dist_home_job: 0,                  //distance between home and job (one-way)
-        journey_weekend: 0,                //distance the user drives during weekend
-        aver_drive_per_week: 0,            //average distance driven per week
-        fuel_period_km: f3.period_km,      //time-period for distance calculation 
-        //driving time
-        time_home_job: 0,                  //time (in minutes) driven between home and job
-        time_weekend: 0,                   //time (in minutes) driven during weekends
-        min_drive_per_week: 0,             //time (in minutes) driven per week
-        min_drive_per_day: 0,              //time (in minutes) driven per day
-        days_drive_per_month: 0,           //number of days driven per month    
-        hours_drive_per_month: 0,          //number of hours driven per month
-        hours_drive_per_year: 0,           //number of hours driven per year
-        //costs
-        total_costs_year: 0,               //total costs per year
-        hours_per_year_to_afford_car: 0,   //hours per year to afford the car
-        month_per_year_to_afford_car: 0,   //months per year to afford the car
-        days_car_paid: 0,                  //number of days till the car is paid
-        //speed
-        kinetic_speed: 0,                  //average kinetic speed
-        virtual_speed: 0                   //average virtual speed
-    };
     
     //function global variables 
     var distance_per_month;  //distance per month in the standard unit
@@ -390,192 +363,253 @@ function calculate_costs(f1, f2, f3, country){
                     monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
 
     var total_costs_year = total_costs_month * 12;
-    fin_effort.total_costs_year = total_costs_year;
-    
-    //*************** EXTRA DATA - PUBLIC TRANSPORTS ************
-    
-    var public_transports = {
-        racio_car_tp: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
-        racio_outros_tp: 0.6,  //inferior ao qual mostra outras alternativas de TP, para lá do passe mensal (rede expresso, longo curso, etc.)          
-        taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance        
-        display_tp: function(){
-            if(f3.pmpmpc * f3.n_pess_familia < this.racio_car_tp * total_costs_month && f3.pmpmpc != 0) 
-                return true;
-            return false;
-        },
-        preco_total_tp: 0,
-        display_outros_tp: false,
-        total_altern: 0,
-        racio_custocar_caustotp: 0,
-        custo_taxi: 0,
-        n_km_taxi: 0,
-        outros_tp: 0
-    };
-    var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
-    if(public_transports.display_tp()) {
-        public_transports.preco_total_tp = f3.pmpmpc * f3.n_pess_familia;   //total price of monthly passes 
-        public_transports.total_altern = public_transports.preco_total_tp;
-        public_transports.racio_custocar_caustotp= public_transports.preco_total_tp / total_costs_month;
-        if(public_transports.racio_custocar_caustotp > public_transports.racio_outros_tp){    //caso se mostre outros TP além do passe mensal
-            public_transports.display_outros_tp = false;
-            public_transports.custo_taxi = total_costs_month - public_transports.preco_total_tp;
-            public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;  //número de km possíveis de fazer de táxi
-            public_transports.total_altern += public_transports.custo_taxi;
-        }
-        else{
-            public_transports.display_outros_tp = true;
-            public_transports.custo_taxi = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;
-            public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;
-            public_transports.outros_tp = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;    //valor alocado a outros TP, excetuando passe mensal
 
-            public_transports.total_altern += public_transports.custo_taxi + public_transports.outros_tp;
-        }
-    }
     
-    //*** financial effort ***
-    //income
-    switch(f3.income_type){
-        case 'year':
-            fin_effort.income = f3.income_per_year;
-            fin_effort.income_per_year = fin_effort.income * 1;        
-            break;
-        case 'month':
-            fin_effort.income = f3.income_per_month;
-            fin_effort.income_per_type = f3.income_months_per_year;
-            fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;       
-            break;
-        case 'week':
-            fin_effort.income = f3.income_per_week;
-            fin_effort.income_per_type = f3.income_weeks_per_year;
-            fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;   
-            break;
-        case 'hour':
-            fin_effort.income = f3.income_per_hour;
-            fin_effort.income_hours_per_week = f3.income_hours_per_week;
-            fin_effort.income_per_type = f3.income_hour_weeks_per_year;
-            fin_effort.income_per_year = fin_effort.income * fin_effort.income_hours_per_week * fin_effort.income_per_type;
-            break;
-    }
-    fin_effort.aver_income_per_month = fin_effort.income_per_year / 12;
-    
-    //working time
-    if(f3.income_type != 'hour'){
-        if(f3.is_working_time == 'true'){
-            fin_effort.time_hours_per_week = f3.time_hours_per_week;
-            fin_effort.time_month_per_year = f3.time_month_per_year;
-        }
-
-        fin_effort.aver_work_time_per_m = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12 / 12;
-        fin_effort.work_hours_per_y = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12;
-    }
-    
-    //driving distance
-    if(f2.type_calc_fuel == 'euros'){ //if fuel calculation with distance was NOT chosen in form 2, gets from form 3
-        if(f3.drive_to_work == 'true'){
-            fin_effort.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
-            fin_effort.dist_home_job =  parseInt(f3.dist_home_job);
-            fin_effort.journey_weekend = parseInt(f3.journey_weekend);
-            fin_effort.aver_drive_per_week = 2 * fin_effort.drive_to_work_days_per_week * fin_effort.dist_home_job + fin_effort.journey_weekend;
-        
-            distance_per_month = 365.25 / 7 * fin_effort.aver_drive_per_week / 12;
-            fin_effort.drive_per_year = 365.25 / 7 * fin_effort.aver_drive_per_week;    
-        
-        }
-        else{
-            switch(fin_effort.fuel_period_km)
-            {
-                case "1":
-                    distance_per_month = parseInt(f3.dist_per_time_period);             
-                    break;
-                case "2":
-                    distance_per_month = f3.dist_per_time_period / 2;
-                    break;
-                case "3":
-                    distance_per_month = f3.dist_per_time_period / 3;               
-                    break;
-                case "4":
-                    distance_per_month = f3.dist_per_time_period / 6;               
-                    break;
-                case "5":
-                    distance_per_month = f3.dist_per_time_period / 12;          
-                    break;
+    //*************** PUBLIC TRANSPORTS ************
+    if (f3.IsPublicTransports){
+        //create object
+        var public_transports = {
+            racio_car_tp: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
+            racio_outros_tp: 0.6,  //inferior ao qual mostra outras alternativas de TP, para lá do passe mensal (rede expresso, longo curso, etc.)          
+            taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance        
+            display_tp: function(){
+                if(f3.pmpmpc * f3.n_pess_familia < this.racio_car_tp * total_costs_month && f3.pmpmpc != 0) 
+                    return true;
+                return false;
+            },
+            preco_total_tp: 0,
+            display_outros_tp: false,
+            total_altern: 0,
+            racio_custocar_caustotp: 0,
+            custo_taxi: 0,
+            n_km_taxi: 0,
+            outros_tp: 0
+        };
+        var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
+        if(public_transports.display_tp()) {
+            public_transports.preco_total_tp = f3.pmpmpc * f3.n_pess_familia;   //total price of monthly passes 
+            public_transports.total_altern = public_transports.preco_total_tp;
+            public_transports.racio_custocar_caustotp= public_transports.preco_total_tp / total_costs_month;
+            if(public_transports.racio_custocar_caustotp > public_transports.racio_outros_tp){    //caso se mostre outros TP além do passe mensal
+                public_transports.display_outros_tp = false;
+                public_transports.custo_taxi = total_costs_month - public_transports.preco_total_tp;
+                public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;  //número de km possíveis de fazer de táxi
+                public_transports.total_altern += public_transports.custo_taxi;
             }
-            fin_effort.drive_per_year = distance_per_month * 12;            
+            else{
+                public_transports.display_outros_tp = true;
+                public_transports.custo_taxi = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;
+                public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;
+                public_transports.outros_tp = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;    //valor alocado a outros TP, excetuando passe mensal
+
+                public_transports.total_altern += public_transports.custo_taxi + public_transports.outros_tp;
+            }
         }
-    }
-    else{ //f2.type_calc_fuel == 'km' 
-        if(f2.take_car_to_job == 'true'){ 
-            fin_effort.drive_to_work_days_per_week = f2.days_p_week;
-            fin_effort.dist_home_job = parseInt(f2.distance_home2job);
-            fin_effort.journey_weekend = parseInt(f2.distance_weekend);
-            fin_effort.aver_drive_per_week = 2 * fin_effort.drive_to_work_days_per_week * fin_effort.dist_home_job + fin_effort.journey_weekend;
-        }   
-        fin_effort.drive_per_year = distance_per_month * 12;
+    }//EOF PUBLIC TRANSPORTS
+
+    //*************** FINANCIAL EFFORT ************
+    if (f3.IsFinancialEffort){
+        //create financial effort object
+        var fin_effort = {
+            //income
+            income: 0,                          //income amount the user has inserted     
+            income_per_year: 0,                 //average income per year
+            income_per_type: 0,                 //number of income time-periods (number of months/year or weeks/year)
+            income_hours_per_week: 0,           //number of hours per week  
+            aver_income_per_month:0,            //average income per month
+            aver_income_per_hour: 0,            //average income per hour
+            time_hours_per_week: 36,            //default hours per week
+            time_month_per_year: 11,            //default months per year
+            aver_work_time_per_m: 0,            //average working time per month        
+            work_hours_per_y: 0,                //total working hours per year
+            //costs
+            total_costs_year: total_costs_year, //total costs per year
+            hours_per_year_to_afford_car: 0,    //hours per year to afford the car
+            month_per_year_to_afford_car: 0,    //months per year to afford the car
+            days_car_paid: 0,                   //number of days till the car is paid
+        };
+
+        //income
+        switch(f3.income_type){
+            case 'year':
+                fin_effort.income = f3.income_per_year;
+                fin_effort.income_per_year = fin_effort.income * 1;        
+                break;
+            case 'month':
+                fin_effort.income = f3.income_per_month;
+                fin_effort.income_per_type = f3.income_months_per_year;
+                fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;       
+                break;
+            case 'week':
+                fin_effort.income = f3.income_per_week;
+                fin_effort.income_per_type = f3.income_weeks_per_year;
+                fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;   
+                break;
+            case 'hour':
+                fin_effort.income = f3.income_per_hour;
+                fin_effort.income_hours_per_week = f3.income_hours_per_week;
+                fin_effort.income_per_type = f3.income_hour_weeks_per_year;
+                fin_effort.income_per_year = fin_effort.income * fin_effort.income_hours_per_week * fin_effort.income_per_type;
+                break;
+        }
+        fin_effort.aver_income_per_month = fin_effort.income_per_year / 12;
+        
+        //working time
+        if(f3.income_type != 'hour'){
+            if(f3.is_working_time == 'true'){
+                fin_effort.time_hours_per_week = f3.time_hours_per_week;
+                fin_effort.time_month_per_year = f3.time_month_per_year;
+            }
+
+            fin_effort.aver_work_time_per_m = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12 / 12;
+            fin_effort.work_hours_per_y = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12;
+        }
+
+        //****find Net Income per Hour
+        var typeIncome = f3.income_type;
+        //alert("typeIncome:"+typeIncome);
+        var isJob = f3.is_working_time;
+        //alert("isJob:"+isJob);
+        var a = 11; //default months per year of work
+        var b = 36; //default hours per week of normal working week
+        var T, x, y, n;
+        //if has a job, find a=months per year of work, b=hours per week of work
+        if(isJob=='true'){ 
+            a = parseInt(f3.time_month_per_year);
+            b = parseInt(f3.time_hours_per_week);
+        }
+        T = 365.25/7 * a/12 * b; //T=number of working hours per year
+        switch(typeIncome){
+            case 'year':
+                x = parseInt(f3.income_per_year);
+                n = x/T;
+                break;
+            case 'month':
+                x = parseInt(f3.income_per_month);
+                y = parseInt(f3.income_months_per_year);
+                n = (x*y)/T;
+                break;
+            case 'week':
+                x = parseInt(f3.income_per_week);
+                y = parseInt(f3.income_weeks_per_year);
+                n = (x*y)/T;
+                break;
+            case 'hour':
+                n = parseInt(f3.income_per_hour);
+        }
+        fin_effort.aver_income_per_hour = n;
+
+        //extra financial effort variables
+        fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
+        fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.income_per_year * 12;
+        fin_effort.days_car_paid = total_costs_year / fin_effort.income_per_year * 365.25;
+
+    }//EOF FINANCIAL EFFORT
+        
+    //******* Driving distance and Time spent in driving *******
+    //if either Financial effort or Public Transports slider in form part 3 is activated
+    //the form demands information from both Driving distance and Time spent in driving
+    if (f3.IsFinancialEffort || f3.IsPublicTransports){
+        
+        //driving distance
+        var driving_distance = {
+            drive_per_year:0,                   //total distance driven per year
+            drive_to_work_days_per_week: 0,     //number of days per week, the user drives to job 
+            dist_home_job: 0,                   //distance between home and job (one-way)
+            journey_weekend: 0,                 //distance the user drives during weekend
+            aver_drive_per_week: 0,             //average distance driven per week
+            fuel_period_km: f3.period_km        //time-period for distance calculation 
+        }
+        
+        if(f2.type_calc_fuel == 'euros'){ //if fuel calculation with distance was NOT chosen in form part 2, gets from form part 3
+            if(f3.drive_to_work == 'true'){
+                driving_distance.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
+                driving_distance.dist_home_job =  parseInt(f3.dist_home_job);
+                driving_distance.journey_weekend = parseInt(f3.journey_weekend);
+                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week * driving_distance.dist_home_job + driving_distance.journey_weekend;
+            
+                distance_per_month = 365.25 / 7 * driving_distance.aver_drive_per_week / 12;
+                driving_distance.drive_per_year = 365.25 / 7 * driving_distance.aver_drive_per_week;    
+            
+            }
+            else{
+                switch(driving_distance.fuel_period_km)
+                {
+                    case "1":
+                        distance_per_month = parseInt(f3.dist_per_time_period);             
+                        break;
+                    case "2":
+                        distance_per_month = f3.dist_per_time_period / 2;
+                        break;
+                    case "3":
+                        distance_per_month = f3.dist_per_time_period / 3;               
+                        break;
+                    case "4":
+                        distance_per_month = f3.dist_per_time_period / 6;               
+                        break;
+                    case "5":
+                        distance_per_month = f3.dist_per_time_period / 12;          
+                        break;
+                }
+                driving_distance.drive_per_year = distance_per_month * 12;            
+            }
+        }
+        else{ //f2.type_calc_fuel == 'km' (get info from form part 2)
+            if(f2.take_car_to_job == 'true'){ 
+                driving_distance.drive_to_work_days_per_week = f2.days_p_week;
+                driving_distance.dist_home_job = parseInt(f2.distance_home2job);
+                driving_distance.journey_weekend = parseInt(f2.distance_weekend);
+                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week * driving_distance.dist_home_job + driving_distance.journey_weekend;
+            }   
+            driving_distance.drive_per_year = distance_per_month * 12;
+        }
+
+        //Time spent in driving
+        var time_spent_driving = {
+            time_home_job: 0,                   //time (in minutes) driven between home and job
+            time_weekend: 0,                    //time (in minutes) driven during weekends
+            min_drive_per_week: 0,              //time (in minutes) driven per week
+            min_drive_per_day: 0,               //time (in minutes) driven per day
+            days_drive_per_month: 0,            //number of days driven per month    
+            hours_drive_per_month: 0,           //number of hours driven per month
+            hours_drive_per_year: 0             //number of hours driven per year
+        }        
+        
+        if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
+            time_spent_driving.time_home_job = parseInt(f3.time_home_job);
+            time_spent_driving.time_weekend = parseInt(f3.time_weekend);
+            time_spent_driving.min_drive_per_week = 2 * time_spent_driving.time_home_job * driving_distance.drive_to_work_days_per_week + time_spent_driving.time_weekend;
+            time_spent_driving.hours_drive_per_month = 365.25 / 7 / 12 * time_spent_driving.min_drive_per_week / 60;    
+        }
+        else{
+            time_spent_driving.min_drive_per_day = parseInt(f3.min_drive_per_day);
+            time_spent_driving.days_drive_per_month = parseInt(f3.days_drive_per_month);
+            time_spent_driving.hours_drive_per_month = time_spent_driving.min_drive_per_day * time_spent_driving.days_drive_per_month / 60;
+        }
+
+        time_spent_driving.hours_drive_per_year = time_spent_driving.hours_drive_per_month * 12;
+
+        var kinetic_speed = driving_distance.drive_per_year / time_spent_driving.hours_drive_per_year;
+    
+    }//EOF Driving distance and Time spent in driving
+
+    if (f3.IsFinancialEffort){
+        var virtual_speed = driving_distance.drive_per_year / (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
     }
     
-    //gets the time the driver spends in the car driving
-    if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
-        fin_effort.time_home_job = parseInt(f3.time_home_job);
-        fin_effort.time_weekend = parseInt(f3.time_weekend);
-        fin_effort.min_drive_per_week = 2 * fin_effort.time_home_job * fin_effort.drive_to_work_days_per_week + fin_effort.time_weekend;
-        fin_effort.hours_drive_per_month = 365.25 / 7 / 12 * fin_effort.min_drive_per_week / 60;    
+    var running_costs_p_unit_distance, total_costs_p_unit_distance;
+    if(isDef(distance_per_month)){
+        //running costs per unit dist.
+        running_costs_p_unit_distance = total_running_costs_month / distance_per_month;    
+        //total costs per unit dist.
+        total_costs_p_unit_distance = total_costs_month / distance_per_month;
     }
     else{
-        fin_effort.min_drive_per_day = parseInt(f3.min_drive_per_day);
-        fin_effort.days_drive_per_month = parseInt(f3.days_drive_per_month);
-        fin_effort.hours_drive_per_month = fin_effort.min_drive_per_day * fin_effort.days_drive_per_month / 60;
+        running_costs_p_unit_distance = undefined;
+        total_costs_p_unit_distance = undefined;
     }
-    fin_effort.hours_drive_per_year = fin_effort.hours_drive_per_month * 12;    
-        
-    //running costs per unit dist.
-    var running_costs_p_unit_distance = total_running_costs_month / distance_per_month;
     
-    //total costs per unit dist.
-    var total_costs_p_unit_distance = total_costs_month / distance_per_month;
-    
-    
-    //****find Net Income per Hour
-    var typeIncome = f3.income_type;
-    //alert("typeIncome:"+typeIncome);
-    var isJob = f3.is_working_time;
-    //alert("isJob:"+isJob);
-    var a = 11; //default months per year of work
-    var b = 36; //default hours per week of normal working week
-    var T, x, y, n;
-    //if has a job, find a=months per year of work, b=hours per week of work
-    if(isJob=='true'){ 
-        a = parseInt(f3.time_month_per_year);
-        b = parseInt(f3.time_hours_per_week);
-    }
-    T = 365.25/7 * a/12 * b; //T=number of working hours per year
-    switch(typeIncome){
-        case 'year':
-            x = parseInt(f3.income_per_year);
-            n = x/T;
-            break;
-        case 'month':
-            x = parseInt(f3.income_per_month);
-            y = parseInt(f3.income_months_per_year);
-            n = (x*y)/T;
-            break;
-        case 'week':
-            x = parseInt(f3.income_per_week);
-            y = parseInt(f3.income_weeks_per_year);
-            n = (x*y)/T;
-            break;
-        case 'hour':
-            n = parseInt(f3.income_per_hour);
-    }
-    fin_effort.aver_income_per_hour = n;
-    
-    //extra financial effort variables
-    fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
-    fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.income_per_year * 12;
-    fin_effort.days_car_paid = total_costs_year / fin_effort.income_per_year * 365.25;
-    fin_effort.kinetic_speed = fin_effort.drive_per_year / fin_effort.hours_drive_per_year;
-    fin_effort.virtual_speed = fin_effort.drive_per_year / (fin_effort.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
-
-    //External costs object
+    //************* External costs object *************
     var external_costs = {
         handbook_extern_URL: 'http:\/\/ec.europa.eu\/transport\/themes\/sustainable\/doc\/2008_costs_handbook.pdf',
         polution: 0.005,      //pollutants in €/km
@@ -593,11 +627,22 @@ function calculate_costs(f1, f2, f3, country){
     //object to be returned by the function
     var output = {
         //object fields
-        monthly_costs: monthly_costs,            //object with the calculated monthly costs
-        external_costs: external_costs,          //object with the external costs
-        public_transports: public_transports,    //object with the car-alternative public transports costs
-        fin_effort: fin_effort,                  //object with financial effort variables
+        monthly_costs: monthly_costs,                    //object with the calculated monthly costs
         
+        public_transports: undefined,                    //object with the car-alternative public transports costs
+        public_transports_calculated: false,
+
+        fin_effort: undefined,                           //object with financial effort variables
+        fin_effort_calculated: false,
+
+        driving_distance: undefined,                     //object with driving distance variables
+        driving_distance_calculated: false,
+
+        time_spent_driving: undefined,                   //object with Time spent in driving variables
+        time_spent_driving_calculated: false,        
+
+        external_costs: external_costs,                 //object with the external costs
+
         //variable fields
         distance_per_month: distance_per_month,          //distance travelled per month (in the standard distance)
         age_months: age_months,                          //car age in months
@@ -613,6 +658,7 @@ function calculate_costs(f1, f2, f3, country){
         fines_period: f2.fines_select,
         //washing
         washing_period: f2.washing_select,
+
         //total costs
         total_standing_costs_month: total_standing_costs_month,
         total_running_costs_month: total_running_costs_month,
@@ -620,7 +666,29 @@ function calculate_costs(f1, f2, f3, country){
         total_costs_year: total_costs_year,
         running_costs_p_unit_distance: running_costs_p_unit_distance,
         total_costs_p_unit_distance: total_costs_p_unit_distance,
+
+        //speed
+        kinetic_speed: undefined,           //average kinetic speed
+        virtual_speed: undefined            //average consumer/virtual speed
     };
+
+    if (f3.IsPublicTransports){
+        output.public_transports_calculated = true;
+        output.public_transports = public_transports;
+    }
+    if (f3.IsFinancialEffort){
+        output.fin_effort_calculated = true;
+        output.fin_effort = fin_effort;
+        output.virtual_speed = virtual_speed;
+    }
+    if (f3.IsPublicTransports || f3.IsFinancialEffort){
+        output.driving_distance = driving_distance;
+        output.driving_distance_calculated = true;
+        output.time_spent_driving = time_spent_driving;
+        output.time_spent_driving_calculated = true;
+        output.kinetic_speed = kinetic_speed;
+    }
+
     //alert(JSON.stringify(output, null, 4));
     return output;
 }
@@ -628,6 +696,15 @@ function calculate_costs(f1, f2, f3, country){
 //gets uber object to compare uber costs with private car costs
 function get_uber(uber, data, country){
     
+    if(!(data.public_transports_calculated)){
+        return false;
+    }
+
+    //if distance information not available or zero
+    if(!isDef(data.distance_per_month)){
+        return false;
+    }
+
     //checks if uber is an object
     if (uber === null || typeof uber !== 'object' || uber == "null"){
         return false;
@@ -654,21 +731,21 @@ function get_uber(uber, data, country){
         return false;
     }
     //here uber strandards (currency and distance) are the same as the user country
-    
+
     var result_type, dist_uber, delta;
-    var ucd = uber.cost_per_distance*1;    //uber cost per unit distance
-    var ucm = uber.cost_per_minute*1;      //uber costs per minute 
-    var dpm = data.distance_per_month;         //total distance per month 
-    var hdpm = data.fin_effort.hours_drive_per_month;     //hours driven per month 
-    var mdpm = data.fin_effort.hours_drive_per_month*60;  //minutes driven per month 
-    var tcpd = data.total_costs_p_unit_distance;          //total costs per unit distance 
-    var tcpm = data.total_costs_month;                    //total costs per month
-    var tcpt = data.public_transports.preco_total_tp;     //total costs public transports (monthly passes for family)
-    
+    var ucd = uber.cost_per_distance*1;                //uber cost per unit distance
+    var ucm = uber.cost_per_minute*1;                  //uber costs per minute 
+    var dpm = data.distance_per_month;                 //total distance per month 
+    var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance 
+    var tcpm = data.total_costs_month;                 //total costs per month
+    var tcpt = data.public_transports.preco_total_tp;  //total costs public transports (monthly passes for family)
+    var hdpm = data.time_spent_driving.hours_drive_per_month;     //hours driven per month 
+    var mdpm = data.time_spent_driving.hours_drive_per_month*60;  //minutes driven per month 
+
     //total costs of uber for the same distance and time as the ones driven using private car
-    //total equivalent uber costs
-    var tuc = ucd*dpm + ucm*mdpm;
-    
+    //Total equivalent Uber Costs
+    tuc = ucd * dpm + ucm * mdpm;
+        
     //1st case, in which driver can replace every journey by uber 
     if (tuc<tcpm){
         result_type=1;
@@ -689,7 +766,7 @@ function get_uber(uber, data, country){
         }
         
         //how many distance (km or miles) can be done by uber with delta 
-        dist_uber = delta /(ucd-ucm*data.fin_effort.kinetic_speed/60);
+        dist_uber = delta /(ucd-ucm*data.kinetic_speed/60);
         
     }
 

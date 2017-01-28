@@ -462,6 +462,80 @@ form.roundCorner {
     font-size: 18px;
     text-align: left;
 }
+.form_section_title2 {
+    display: block;
+    padding: 0 3% 0 0;
+    font-size: 18px;
+    text-align: left;
+}
+#form_part3 .form_section_question {
+    margin-top: 10px;
+}
+#form_part3 .form_section_question td {
+    vertical-align: middle;
+}
+
+/* The switch - the box around the slider in form part 3*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 49px;
+  height: 28px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #ada692;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #ada692;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 5px;
+}
+
+.slider.round:before {
+  border-radius: 15%;
+}
+#form_part3 .switch_td{
+    text-align: right;
+    padding-right: 7%;
+}
+
 
 #div2 td:nth-child(2n),
 .result_section td:nth-child(2n) {

@@ -1,4 +1,4 @@
-function generatePDF(main_title, public_transp_bool, uber_bool, extern_costs_bool){
+function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool, extern_costs_bool){
 
     //alert(uber_bool);
     var body0, body1, body2, body3, body4, body5, data;
@@ -13,15 +13,8 @@ function generatePDF(main_title, public_transp_bool, uber_bool, extern_costs_boo
     data = $('#result_table1 td');    
     body1 = get_private_costs_table(data);
         
-    //financial effort title and table
-    var fin_effort_title = gstr($('#fin_effort_title').html());
-    var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];    
-    data = $('#result_table3 td');
-    body2 = getBodyFinEffort(data);
-    
     var imageData1 = $('#img_pie_chart_div').find('img').attr('src');
     var imageData2 = $('#img_bar_chart_div').find('img').attr('src');
-    var imageData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
 
     var docDefinition = {
         header: {text: main_title, style: 'title'},
@@ -62,30 +55,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, extern_costs_boo
                     widths: [ 390, '*' ],
                     body: body1
                 }
-            },
-            {
-                style: 'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: ['*'],
-                    body: fin_effort_title_body
-                },
-                pageBreak: 'before'                
-            },
-            {
-                image: imageData3,
-                width: 400,
-                height: 200,
-                style: 'img_style',
-            },
-            {
-                style:'tableMarging',
-                table:{
-                    headerRows: 1,
-                    widths: [ 390, '*' ],
-                    body: body2
-                }
-            }    
+            }   
         ],
         styles: {
             title:{
@@ -135,6 +105,43 @@ function generatePDF(main_title, public_transp_bool, uber_bool, extern_costs_boo
                 alignment: 'center'
             }
         }
+    }
+
+    //financial effort title and table
+    if(fin_effort_bool){
+        var fin_effort_title = gstr($('#fin_effort_title').html());
+        var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];    
+        data = $('#result_table3 td');
+        body2 = getBodyFinEffort(data);
+        var imageData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
+
+        var body2_objA = {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: ['*'],
+                    body: fin_effort_title_body
+                },
+                pageBreak: 'before'                
+            };
+        var body2_objB = {
+                image: imageData3,
+                width: 400,
+                height: 200,
+                style: 'img_style'
+            };
+        var body2_objC = {
+                style:'tableMarging',
+                table:{
+                    headerRows: 1,
+                    widths: [ 390, '*' ],
+                    body: body2
+                }
+            };
+
+        docDefinition.content.push(body2_objA);
+        docDefinition.content.push(body2_objB);
+        docDefinition.content.push(body2_objC);
     }
  
     //optional public transports table

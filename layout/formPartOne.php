@@ -79,10 +79,10 @@
             </td>
             <td>
                 <span style="white-space:nowrap">
-                    <input type="radio" name="cred_auto" value="true" onclick="onclick_credit('true'); "><?php echo $YES ?>
+                    <input type="radio" name="cred_auto" value="true" onclick="onclick_div_show('#sim_credDiv',true);"><?php echo $YES ?>
                 </span>
                 <span style="white-space:nowrap">
-                    <input type="radio" name="cred_auto" value="false" id="radio_cred_nao" onclick="onclick_credit('false');" checked><?php echo $NO ?>
+                    <input type="radio" name="cred_auto" value="false" id="radio_cred_nao" onclick="onclick_div_show('#sim_credDiv',false);" checked><?php echo $NO ?>
                 </span>
             </td>
         </tr>
