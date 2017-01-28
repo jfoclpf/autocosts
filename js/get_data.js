@@ -69,7 +69,7 @@ function get_form_part3(){
         //public transports section
         IsPublicTransports:          getCheckedSliderValue(d.slider1),
         n_pess_familia:              d.pessoas_agregado.value,
-        pmpmpc:                      d.preco_passe.value,
+        monthly_pass_cost:           d.preco_passe.value,
         
         //financial effort section
         IsFinancialEffort:           getCheckedSliderValue(d.slider2),
@@ -171,9 +171,13 @@ function get_DB_part2(datab){
 
 function get_DB_part3(datab){
     var data = {
+        //public transports section
+        IsPublicTransports:          false,
         n_pess_familia:              datab.household_number_people,
-        pmpmpc:                      datab.public_transportation_month_expense,
+        monthly_pass_cost:           datab.public_transportation_month_expense,
         
+        //financial effort section
+        IsFinancialEffort:           false,
         income_type:                 datab.income_type,
         income_per_year:             datab.income_per_year,
         income_per_month:            datab.income_per_month,
@@ -183,21 +187,47 @@ function get_DB_part3(datab){
         income_per_hour:             datab.income_per_hour,
         income_hours_per_week:       datab.income_hours_per_week,
         income_hour_weeks_per_year:  datab.income_hour_weeks_per_year,
-        
         is_working_time:             datab.work_time,
         time_month_per_year:         datab.work_time_month_per_year,
         time_hours_per_week:         datab.work_time_hours_per_week,
+        
+        //Distance section
         drive_to_work:               datab.distance_drive_to_work,
         drive_to_work_days_per_week: datab.distance_days_per_week,
-        
         dist_home_job:               datab.distance_home_job,       
         journey_weekend:             datab.distance_journey_weekend,
         period_km:                   datab.distance_period,
         dist_per_time_period:        datab.distance_per_month,
+        
+        //Time spent in driving
         time_home_job:               datab.time_spent_home_job,     
         time_weekend:                datab.time_spent_weekend,
         min_drive_per_day:           datab.time_spent_min_drive_per_day,
         days_drive_per_month:        datab.time_spent_days_drive_per_month 
     };
+    
+    data.IsPublicTransports = isThereinDbPublicTranspData(data);
+    data.IsFinancialEffort = isThereinDbFinEffortData(data);
+    
     return data;
+}
+
+//Gets information from DB whether DB has or not Public Transport data 
+function isThereinDbPublicTranspData(f3){
+    return (isDef(f3.n_pess_familia) && isDef(f3.monthly_pass_cost));
+}
+
+//Gets information from DB whether DB has or not Financial Effort data  
+function isThereinDbFinEffortData(f3){
+
+    switch(f3.income_type){
+        case 'year':
+            return (isDef(f3.income_per_year));
+        case 'month':
+            return (isDef(f3.income_per_month) && isDef(f3.income_months_per_year));
+        case 'week':
+            return (isDef(f3.income_per_week) && isDef(f3.income_weeks_per_year));
+        case 'hour':
+            return (isDef(f3.income_per_hour) && isDef(f3.income_hours_per_week) && isDef(f3.income_hour_weeks_per_year));
+    }
 }

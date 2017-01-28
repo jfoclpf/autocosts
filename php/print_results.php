@@ -42,17 +42,30 @@ Run = function(){
     $('#monthly_costs').html(monthly_costs_HTML);
     $('#monthly_costs, #monthly_costs_section').show();
     
-    //financial result table 
-    var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
-    $('#fin_effort').html(fin_effort_table_HTML);
-    $('#fin_effort, #fin_effort_section').show();
+    //financial result table
+    if(data.fin_effort_calculated){
+        var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
+        $('#fin_effort').html(fin_effort_table_HTML);
+        $('#fin_effort, #fin_effort_section').show();
+        fin_effort_bool = true; //global variable
+    }
+    else{
+        $('#fin_effort, #fin_effort_section').hide();
+        fin_effort_bool = false;
+    }
     
-    //public transports table 
-    var public_transport_table_HTML = print_publict_table(f1, f2, f3, data, country);
-    if(public_transport_table_HTML != ""){
-        $('#public_transp, #public_transp_section').show();
-        $('#public_transp').html(public_transport_table_HTML);
-        public_transp_bool = true; //global variable
+    if(data.public_transports_calculated){
+        //public transports table 
+        var public_transport_table_HTML = print_publict_table(f1, f2, f3, data, country);
+        if(public_transport_table_HTML != ""){
+            $('#public_transp, #public_transp_section').show();
+            $('#public_transp').html(public_transport_table_HTML);
+            public_transp_bool = true; //global variable
+        }
+        else{
+            $('#public_transp_section').hide();
+            public_transp_bool = false;
+        }
     }
     else{
         $('#public_transp_section').hide();
@@ -125,9 +138,11 @@ function print_main_table(f1, f2, f3, data) {
     
     varResult+= '</tr>';
     
-    varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'
-             + ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) 
-             + '&#37;' + '</b></tr>';
+    if(f3.IsFinancialEffort){
+        varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'
+                 + ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) 
+                 + '&#37;' + '</b></tr>';
+    }
 
     varResult+= '<tr><td colspan="4">'
              + print_result_final_text(data) 
@@ -427,7 +442,7 @@ function print_costs_table(f1, f2, f3, data) {
                 "<td>&nbsp;<b>" + countryCheck(data.total_running_costs_month.toFixed(1)) + "</b></td></tr>";
     
     //costs per unit distance
-    if(data.distance_per_month != 0){
+    if((typeof data.distance_per_month) !== 'undefined' && data.distance_per_month != 0){
         varResult+= "<tr><td><b><?php echo $RUN_CP_DIST ?></b></td>"+
                     "<td>&nbsp;" + countryCheck(data.running_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
         
@@ -522,13 +537,13 @@ function print_feffort_table(f1, f2, f3, data){
                      "<tr><td><?php echo $DIST_JORNEY_WEEKEND ?></td>" + 
                      "<td>" + parseInt(f3.journey_weekend).toFixed(1) + " <?php echo $STD_DIST ?></td></tr>"+
                      "<tr><td><?php echo $AVERAGE_DIST_PER_WEEK ?></td>" + 
-                     "<td>" + data.fin_effort.aver_drive_per_week.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";                  
+                     "<td>" + data.driving_distance.aver_drive_per_week.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";                  
     }
 
     varResult+=  "<tr><td><?php echo $YOU_DRIVE_PER ?> <?php echo $MONTH ?></td>" +
                  "<td>" + data.distance_per_month.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>" +
                  "<tr><td><?php echo $YOU_DRIVE_PER ?> <?php echo $YEAR ?></td>" + 
-                 "<td>" + data.fin_effort.drive_per_year.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";  
+                 "<td>" + data.driving_distance.drive_per_year.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";  
 
     //time spent in driving
     varResult+=  "<tr><td colspan=\"2\"><b><?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?></b></td></tr>";
@@ -541,7 +556,7 @@ function print_feffort_table(f1, f2, f3, data){
                     "<tr><td><?php echo $TIME_DRIVE_WEEKEND ?></td>" + 
                     "<td>" + f3.time_weekend + " <?php echo $MIN ?></td></tr>" +
                     "<tr><td><?php echo $MINUTES_DRIVE_PER ?> <?php echo $WEEK ?></td>" + 
-                    "<td>" + data.fin_effort.min_drive_per_week + " <?php echo $MIN ?></td></tr>";
+                    "<td>" + data.time_spent_driving.min_drive_per_week + " <?php echo $MIN ?></td></tr>";
     }
     else{
         varResult+= "<tr><td><?php echo $MINUTES_DRIVE_PER ?> <?php echo $DAY ?></td>" + 
@@ -551,9 +566,9 @@ function print_feffort_table(f1, f2, f3, data){
     }
 
     varResult+= "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $MONTH ?></td>" + 
-                "<td>" + data.fin_effort.hours_drive_per_month.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
+                "<td>" + data.time_spent_driving.hours_drive_per_month.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
                 "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $YEAR ?></td>" + 
-                "<td>" + data.fin_effort.hours_drive_per_year.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>";;
+                "<td>" + data.time_spent_driving.hours_drive_per_year.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>";;
 
     //financial effort
     varResult+= "<tr><td colspan=\"2\"><b><?php echo $FINANCIAL_EFFORT ?>" +
@@ -571,10 +586,10 @@ function print_feffort_table(f1, f2, f3, data){
 
     //speed
     varResult+= "<tr><td><?php echo $AVER_YEARLY ?> <?php echo $KINETIC_SPEED ?></td>"+
-                "<td>" + data.fin_effort.kinetic_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
+                "<td>" + data.kinetic_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
                         
     varResult+= "<tr><td><?php echo $AVER_YEARLY ?> <a href=\"./docs/consumer_speed.html\" target=\"_blank\"><?php echo $VIRTUAL_SPEED ?></a></td>"+
-                "<td>" + data.fin_effort.virtual_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
+                "<td>" + data.virtual_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
     
     varResult+="</table>";     
     
@@ -590,7 +605,7 @@ function print_publict_table(f1, f2, f3, data, country){
         var tp_text, outros_tp_text, taxi_text;
 
         tp_text="<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
-                + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?>";
+                + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?>";
         
         if(data.public_transports.racio_custocar_caustotp < data.public_transports.racio_outros_tp){
             outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
@@ -666,7 +681,7 @@ function print_publict_table(f1, f2, f3, data, country){
             varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
             
             varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
-                     + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?></td>" 
+                     + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" 
                      + "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
              
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
@@ -676,7 +691,7 @@ function print_publict_table(f1, f2, f3, data, country){
                        "<td>" + countryCheck(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
             varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" + 
-                       "<td>" + data.fin_effort.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
+                       "<td>" + data.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
                        
             varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" + 
                        "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
@@ -831,24 +846,28 @@ function drawChartResult(frame_witdh, data){
                  bar_chart_width,
                  bar_chart_height
             );
-    
-    //draw Financial Effort Chart
-    var fe_chart_width=parseInt(frame_witdh*0.9);
-    var fe_chart_height=parseInt(fe_chart_width*1/2);
-    
-    drawFinEffortChart(parseFloat(data.fin_effort.total_costs_year.toFixed(0)),
-                       parseFloat(data.fin_effort.income_per_year.toFixed(0)),
-                       fe_chart_width,
-                       fe_chart_height
-                );
 
     //adjust the charst divs
     $("#pie_chart_div").css('display', 'inline-block');
     $("#pie_chart_div").css('width', 'auto');
     $("#bar_chart_div").css('display', 'inline-block');
     $("#bar_chart_div").css('width', 'auto');
-    $("#fin_effort_chart_div").css('display', 'inline-block');
-    $("#fin_effort_chart_div").css('width', 'auto'); 
+    
+    //draw Financial Effort Chart
+    if(data.fin_effort_calculated){
+        var fe_chart_width=parseInt(frame_witdh*0.9);
+        var fe_chart_height=parseInt(fe_chart_width*1/2);
+        
+        drawFinEffortChart(parseFloat(data.fin_effort.total_costs_year.toFixed(0)),
+                           parseFloat(data.fin_effort.income_per_year.toFixed(0)),
+                           fe_chart_width,
+                           fe_chart_height
+                    );
+            
+        $("#fin_effort_chart_div").css('display', 'inline-block');
+        $("#fin_effort_chart_div").css('width', 'auto');
+    }
+
 }
 
 //puts the currency symbol after the money value, for certain countries 

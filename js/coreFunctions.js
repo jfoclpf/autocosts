@@ -373,7 +373,7 @@ function calculate_costs(f1, f2, f3, country){
             racio_outros_tp: 0.6,  //inferior ao qual mostra outras alternativas de TP, para lá do passe mensal (rede expresso, longo curso, etc.)          
             taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance        
             display_tp: function(){
-                if(f3.pmpmpc * f3.n_pess_familia < this.racio_car_tp * total_costs_month && f3.pmpmpc != 0) 
+                if(f3.monthly_pass_cost * f3.n_pess_familia < this.racio_car_tp * total_costs_month && f3.monthly_pass_cost != 0) 
                     return true;
                 return false;
             },
@@ -387,7 +387,7 @@ function calculate_costs(f1, f2, f3, country){
         };
         var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
         if(public_transports.display_tp()) {
-            public_transports.preco_total_tp = f3.pmpmpc * f3.n_pess_familia;   //total price of monthly passes 
+            public_transports.preco_total_tp = f3.monthly_pass_cost * f3.n_pess_familia;   //total price of monthly passes 
             public_transports.total_altern = public_transports.preco_total_tp;
             public_transports.racio_custocar_caustotp= public_transports.preco_total_tp / total_costs_month;
             if(public_transports.racio_custocar_caustotp > public_transports.racio_outros_tp){    //caso se mostre outros TP além do passe mensal

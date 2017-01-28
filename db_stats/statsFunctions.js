@@ -170,7 +170,8 @@ function CalculateStatistics(userIds, data, country){
                         var f3 = get_DB_part3(data[j]);
                         //console.log("calculate_costs");
                         var result = calculate_costs(f1, f2, f3, country);
-                        
+                        //console.log("(i,j)=("+i+","+j+")");console.log(country);console.log(result);
+
                         //checks if the result is an outlier
                         if (was_result_ok(result, country)){
                             //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+data[j].time_to_fill_form); 
@@ -486,6 +487,9 @@ function was_result_ok(result, country) {
         return false;
     
     if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED)
+        return false;
+
+    if(!isFinite(result.virtual_speed) || result.virtual_speed <= 0)
         return false;
     
     //distance per month
