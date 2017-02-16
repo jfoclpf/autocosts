@@ -118,7 +118,7 @@
         <br>
     </div>
     <!--jquery.js-->
-    <script src="js/jquery/js_jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
@@ -130,13 +130,14 @@
         var uber_obj = {};//empty object
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
-        var Run = function (){};
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>
     <script src="js/documentFunctions.js"></script>
     <script src="js/initialize.js"></script>
     <?php include_once("google/analyticstracking.php"); ?>
+    
+    
 </body>
 
 </html>

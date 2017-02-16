@@ -116,7 +116,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
     
     var chart_data, data, options, chart, br_html, top_var, chart_inner_height;
     
-    var chart_data = [
+    chart_data = [
          ['','<? echo $NET_INCOME_PER." ".$YEAR; ?>', '<? echo $TOTAL_COSTS_PER_YEAR; ?>'],
          ['', net_income_per_year, total_cost_per_year],
     ];
@@ -138,7 +138,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
     
     options = {
         backgroundColor: {fill: 'transparent'},
-        chartArea: {top: top_var, width: "90%", chart_inner_height},
+        chartArea: {top: top_var, width: "90%", height: chart_inner_height},
         legend: { position: 'none' },
         vAxis: { textPosition: 'none' },
         hAxis: {
