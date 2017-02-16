@@ -4,7 +4,7 @@ $GLOBALS['country'] = $_GET['country'];
  ?>
 
 //function that is run when user clicks "run/calculate"
-Run = function(){	
+function Run(){	
 
     //test if the form user inputs are correct
     if (!is_userdata_formpart1_ok()) return;
@@ -125,13 +125,13 @@ function print_main_table(f1, f2, f3, data) {
     
     varResult+= '</tr>';
     
-    varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'
-             + ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) 
-             + '&#37;' + '</b></tr>';
+    varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'+
+                ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0)+
+                '&#37;' + '</b></tr>';
 
-    varResult+= '<tr><td colspan="4">'
-             + print_result_final_text(data) 
-             + '</td></tr>';
+    varResult+= '<tr><td colspan="4">'+
+                print_result_final_text(data)+ 
+                '</td></tr>';
     
     varResult+="</table>";      
     return varResult;
@@ -142,11 +142,11 @@ function print_result_final_text(data){
     
     if(data.total_costs_month >= 150 && data.age_months > 6) {
         
-        var text_msg = '<div><?php echo $WITH_THIS_LEVEL_OF_COSTS ?> ' 
-                     + '<b>' + data.age_months + '</b> <?php echo $MONTHS_POSS.":" ?></div>'
-                     + '<div class="red_bold_text">'
-                     + numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) 
-                     + ' ' + '<?php echo $CURR_NAME_BIG_PLURAL ?></div></div>';
+        var text_msg = '<div><?php echo $WITH_THIS_LEVEL_OF_COSTS ?> ' +
+                       '<b>' + data.age_months + '</b> <?php echo $MONTHS_POSS.":" ?></div>' +
+                       '<div class="red_bold_text">' +
+                       numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100) +
+                       ' ' + '<?php echo $CURR_NAME_BIG_PLURAL ?></div></div>';
         return text_msg;
     }
     else{
@@ -162,13 +162,13 @@ function print_costs_table(f1, f2, f3, data) {
     if (data.age_months == 0) {    
         depreciation_text = "<?php echo $ERROR_DEPRECIATION_NEW_CAR ?>&nbsp;&nbsp;";
     } else {
-        depreciation_text = "<b><?php echo $DEPRECIATION ?><\/span></b>&nbsp;&nbsp;<br><?php echo $AQ_VALUE ?>: "
-            + f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $FINAL_VALUE ?>: "
-            + f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $PERIOD_OWN ?>: "
-            + data.age_months + " <?php echo $MONTHS ?><br>("
-            + f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?>-"
-            + f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?>)/"
-            + data.age_months + " <?php echo $MONTHS ?>";
+        depreciation_text = "<b><?php echo $DEPRECIATION ?><\/span></b>&nbsp;&nbsp;<br><?php echo $AQ_VALUE ?>: "+
+            f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $FINAL_VALUE ?>: "+
+            f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $PERIOD_OWN ?>: "+
+            data.age_months + " <?php echo $MONTHS ?><br>("+
+            f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?>-"+
+            f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?>)/"+
+            data.age_months + " <?php echo $MONTHS ?>";
     }
     
     //Insurance
@@ -194,15 +194,15 @@ function print_costs_table(f1, f2, f3, data) {
     
     if(f1.cred_auto_s_n == "true") {
 
-        interests_text = "<b><?php echo $CREDIT_INTERESTS ?></b>&nbsp;&nbsp;<br><?php echo $CREDIT_LOAN2 ?>: "
-                    + f1.credit_amount
-                    + "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_PERIOD ?>: "
-                    + f1.credit_period
-                    + " <?php echo $MONTHS ?><br><?php echo $CREDIT_INSTALMENT ?>: "
-                    + f1.credit_value_p_month
-                    + "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_RESIDUAL_VALUE1 ?>: "
-                    + f1.credit_residual_value
-                    + "<?php echo $CURR_SYMBOL ?><br>";    
+        interests_text = "<b><?php echo $CREDIT_INTERESTS ?></b>&nbsp;&nbsp;<br><?php echo $CREDIT_LOAN2 ?>: "+
+                    f1.credit_amount+
+                    "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_PERIOD ?>: "+
+                    f1.credit_period+
+                    " <?php echo $MONTHS ?><br><?php echo $CREDIT_INSTALMENT ?>: "+
+                    f1.credit_value_p_month+
+                    "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_RESIDUAL_VALUE1 ?>: "+
+                    f1.credit_residual_value+
+                    "<?php echo $CURR_SYMBOL ?><br>";    
 
         interests_text += "<?php echo $CREDIT_TOTAL_INTERESTS ?>: "+data.total_interests+"<?php echo $CURR_SYMBOL ?><br>(" + data.month_cred + "*"+ f1.credit_value_p_month + ")+" + f1.credit_residual_value + "-" + f1.credit_amount;
 
@@ -214,19 +214,19 @@ function print_costs_table(f1, f2, f3, data) {
     //Inspection
     var inspection_text;
     if (f1.nmr_times_inspec != 0){
-        inspection_text = "<b><?php echo $INSPECTION ?></b><br>"
-                      + f1.nmr_times_inspec
-                      + " <?php echo $TIMES_COSTING ?> "
-                      + f1.inspec_price
-                      + " <?php echo $CURR_SYMBOL ?> <?php echo $EACH_ONE_DURING ?> "
-                      + data.age_months + " <?php echo $MONTHS ?>&nbsp;";
+        inspection_text = "<b><?php echo $INSPECTION ?></b><br>"+
+                      f1.nmr_times_inspec+
+                      " <?php echo $TIMES_COSTING ?> "+
+                      f1.inspec_price+
+                      " <?php echo $CURR_SYMBOL ?> <?php echo $EACH_ONE_DURING ?> "+
+                      data.age_months + " <?php echo $MONTHS ?>&nbsp;";
     }
     else        
         inspection_text = "<b><?php echo $INSPECTION ?></b><br>";
     
     //Taxes
-    var cartax_text = "<b><?php echo $ROAD_TAXES ?></b><br>"
-                 + f1.car_tax + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var cartax_text = "<b><?php echo $ROAD_TAXES ?></b><br>"+
+                 f1.car_tax + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
     
     //Fuel
     var fuel_text;
@@ -286,12 +286,12 @@ function print_costs_table(f1, f2, f3, data) {
     }
     
     //Maintenance
-    var maintenance_text = "<b>1/2 <?php echo $MAINTENANCE ?></b><br>"
-                      + f2.maintenance + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var maintenance_text = "<b>1/2 <?php echo $MAINTENANCE ?></b><br>"+
+                      f2.maintenance + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
     
     //Repairs
-    var repairs_text = "<b><?php echo $REP_IMPROV ?><\/span></b><br>"
-                        + f2.repairs + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var repairs_text = "<b><?php echo $REP_IMPROV ?><\/span></b><br>"+
+                        f2.repairs + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
     
     //Tolls
     var tolls_text="<b><?php echo $TOLLS ?></b><br>";
@@ -553,7 +553,7 @@ function print_feffort_table(f1, f2, f3, data){
     varResult+= "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $MONTH ?></td>" + 
                 "<td>" + data.fin_effort.hours_drive_per_month.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
                 "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $YEAR ?></td>" + 
-                "<td>" + data.fin_effort.hours_drive_per_year.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>";;
+                "<td>" + data.fin_effort.hours_drive_per_year.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>";
 
     //financial effort
     varResult+= "<tr><td colspan=\"2\"><b><?php echo $FINANCIAL_EFFORT ?>" +
@@ -589,8 +589,8 @@ function print_publict_table(f1, f2, f3, data, country){
         
         var tp_text, outros_tp_text, taxi_text;
 
-        tp_text="<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
-                + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?>";
+        tp_text="<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"+
+                "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?>";
         
         if(data.public_transports.racio_custocar_caustotp < data.public_transports.racio_outros_tp){
             outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
@@ -665,9 +665,9 @@ function print_publict_table(f1, f2, f3, data, country){
             //starts HTML table
             varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
             
-            varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"
-                     + "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?></td>" 
-                     + "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+            varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>"+
+                     "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.pmpmpc + "<?php echo $CURR_SYMBOL ?></td>"+
+                     "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
              
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
                        "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
@@ -715,7 +715,7 @@ function print_extern_table(f1, f2, f3, data){
         varResult+="<table class=\"result_table\" id=\"result_table4\">";
 
         //header
-        varResult+="<tr><td><b>Custos externos para o país</b><br>Percorre " +(1 * data.distance_per_month).toFixed(1)+" <?php echo $STD_DIST ?>/<?php echo $MONTH ?></td>" +
+        varResult+="<tr><td><b>Custos externos</b><br>Percorre " +(1 * data.distance_per_month).toFixed(1)+" <?php echo $STD_DIST ?>/<?php echo $MONTH ?></td>" +
                    "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
         
         //external costs items
