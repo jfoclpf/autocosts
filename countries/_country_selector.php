@@ -25,7 +25,7 @@ $url_cc=strtoupper($url_cc); //uppercase
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	
     //gets the country by IP 
-    include("./php/geo_functions.php");
+    include_once("./php/geo_functions.php");
     $geo_cc = ip_info("Visitor", "Country Code");
     $geo_cc=strtoupper($geo_cc); //uppercase
     

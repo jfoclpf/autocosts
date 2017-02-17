@@ -118,7 +118,7 @@
         <br>
     </div>
     <!--jquery.js-->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/jquery/js_jquery.js"></script>
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 

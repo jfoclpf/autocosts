@@ -4,7 +4,7 @@
 and tries to return, if applicable, a cost per unit distance of the correspondent 
 UBER service in that region from which the user is accessing the site */
 
-include("geo_functions.php");
+include_once("geo_functions.php");
 
 //get country code and country specific strings
 $cc = $_GET["c"];

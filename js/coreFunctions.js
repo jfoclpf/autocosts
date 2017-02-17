@@ -593,6 +593,7 @@ function calculate_costs(f1, f2, f3, country){
     
     }//EOF Driving distance and Time spent in driving
 
+    //Virtual/Consumer Speed is calculated only Financial Effort info is available
     if (f3.IsFinancialEffort){
         var virtual_speed = driving_distance.drive_per_year / (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
     }

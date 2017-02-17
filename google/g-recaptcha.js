@@ -1,5 +1,5 @@
 function grecaptcha_solved(){
-    Run_form(Country);
+    Run1(Country);
 }
 //runs when grecaptcha has expired
 function grecaptcha_expired(){
@@ -18,7 +18,7 @@ function grecaptcha_callback() {
 
 //creates the grecaptcha after the API Google function was loaded
 //runs when grecaptcha was solved
-function Run_form(country){
+function Run1(country){
     if(!isUserHuman){
         //make a POST command to server to check if the user is human
         $.ajax({
@@ -27,7 +27,7 @@ function Run_form(country){
             data: "&g-recaptcha-response=" + grecaptcha.getResponse()
         }).done(function(result){
             if(result=="ok"){
-                if(Run() && country != "XX"){
+                if(Run2() && country != "XX"){
                     //if not a test triggers event for Google Analytics
                     if(!IsThisAtest()){
                         ga('send', 'event', 'form_part', 'run_OK');
@@ -45,7 +45,7 @@ function Run_form(country){
         });
     }
     else{
-        if(Run() && country != "XX"){
+        if(Run2() && country != "XX"){
             submit_data(country); //submits data to database if no test version
         }
         scrollPage();

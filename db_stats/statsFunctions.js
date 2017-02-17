@@ -36,6 +36,7 @@ var statsConstants = {
 //results_array is an array of objects previously defined in coreFunctions.js
 function get_average_costs(results_array){
     
+    var i, virtual_speed_len;
     var length = results_array.length;
 
     var monthly_costs = {
@@ -99,7 +100,7 @@ function get_average_costs(results_array){
         var kineticTotal = 0;       
         var virtualTotal = 0; 
         
-        for(i=0; i<length; i++){
+        for(i=0, virtual_speed_len=0; i<length; i++){
             depTotal += results_array[i].monthly_costs.depreciation;
             insTotal += results_array[i].monthly_costs.insurance;
             credTotal += results_array[i].monthly_costs.credit;
@@ -113,8 +114,15 @@ function get_average_costs(results_array){
             finesTotal += results_array[i].monthly_costs.fines;
             washTotal += results_array[i].monthly_costs.washing;
             distTotal += results_array[i].distance_per_month;          
-            kineticTotal += results_array[i].kinetic_speed;        
-            virtualTotal += results_array[i].virtual_speed;            
+            kineticTotal += results_array[i].kinetic_speed; 
+            
+            //some virtual_speed fields have no info because the user
+            //did not introduce financial effort information
+            //thus calculate the average only from the fields that have info
+            if(isDef(results_array[i].virtual_speed)){
+                virtualTotal += results_array[i].virtual_speed;
+                virtual_speed_len++;
+            }
         }
         
         output.monthly_costs.depreciation   = depTotal/length;
@@ -129,9 +137,15 @@ function get_average_costs(results_array){
         output.monthly_costs.tolls          = tollsTotal/length;
         output.monthly_costs.fines          = finesTotal/length;
         output.monthly_costs.washing        = washTotal/length;
-        output.distance_per_month = distTotal/length;
-        output.kinetic_speed     = kineticTotal/length;
-        output.virtual_speed     = virtualTotal/length;
+        output.distance_per_month           = distTotal/length;
+        output.kinetic_speed                = kineticTotal/length;
+        
+        if(virtual_speed_len!=0){
+            output.virtual_speed      = virtualTotal/virtual_speed_len;
+        }
+        else{
+            output.virtual_speed = 0;
+        }
     } 
  
     return output;
@@ -220,6 +234,7 @@ function CalculateStatistics(userIds, data, country){
                 
         //console.log("get_average_costs");
         var avg = get_average_costs(temp_i);
+        console.log(avg.virtual_speed);
         
         //standing costs
         var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + avg.monthly_costs.credit +
