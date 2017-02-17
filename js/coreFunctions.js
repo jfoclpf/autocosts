@@ -367,42 +367,51 @@ function calculate_costs(f1, f2, f3, country){
     
     //*************** PUBLIC TRANSPORTS ************
     if (f3.IsPublicTransports){
-        //create object
+        
+        //Object for public transports as an alternative to car usage
+        //i.e., how much of public transports could be used with the same amount
+        //of money that the user spends totally with automobile
         var public_transports = {
-            racio_car_tp: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
-            racio_outros_tp: 0.6,  //inferior ao qual mostra outras alternativas de TP, para lá do passe mensal (rede expresso, longo curso, etc.)          
+            ptcosts_carcosts_ratio_threshold: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
+            other_pt_ratio_threshold: 0.6,             //ratio of costs ptcosts/carcosts under which shows other alternatives with further public transports (intercity trains for example)
             taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance        
-            display_tp: function(){
-                if(f3.monthly_pass_cost * f3.n_pess_familia < this.racio_car_tp * total_costs_month && f3.monthly_pass_cost != 0) 
+            
+            //boolean function that says if public transporst alternatives are shown 
+            display_pt: function(){
+                if((f3.monthly_pass_cost*f3.n_pess_familia<this.ptcosts_carcosts_ratio_threshold*total_costs_month) && f3.monthly_pass_cost != 0) 
                     return true;
                 return false;
             },
-            preco_total_tp: 0,
-            display_outros_tp: false,
-            total_altern: 0,
-            racio_custocar_caustotp: 0,
-            custo_taxi: 0,
-            n_km_taxi: 0,
-            outros_tp: 0
+            
+            total_price_pt: 0,         //total costs of public transports for family 
+            total_altern: 0,           //total alternative costs by not having a car 
+            pt_carcost_ratio: 0,       //public transports over car costs ratio 
+            taxi_cost: 0,              //amount set to the usage of taxi as an alternative to car 
+            km_by_taxi: 0,             //km that could be done by taxi with such amount 
+            display_other_pt: false,   //boolean for further alternative public transports 
+            other_pt: 0                //amount of costs set to such alternatives
         };
         var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
-        if(public_transports.display_tp()) {
-            public_transports.preco_total_tp = f3.monthly_pass_cost * f3.n_pess_familia;   //total price of monthly passes 
-            public_transports.total_altern = public_transports.preco_total_tp;
-            public_transports.racio_custocar_caustotp= public_transports.preco_total_tp / total_costs_month;
-            if(public_transports.racio_custocar_caustotp > public_transports.racio_outros_tp){    //caso se mostre outros TP além do passe mensal
-                public_transports.display_outros_tp = false;
-                public_transports.custo_taxi = total_costs_month - public_transports.preco_total_tp;
-                public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;  //número de km possíveis de fazer de táxi
-                public_transports.total_altern += public_transports.custo_taxi;
+        if(public_transports.display_pt()) {
+            
+            public_transports.total_price_pt = f3.monthly_pass_cost * f3.n_pess_familia;   //total price of monthly passes 
+            public_transports.total_altern = public_transports.total_price_pt;
+            public_transports.pt_carcost_ratio= public_transports.total_price_pt / total_costs_month;
+            
+            //in case other public transports are not shown
+            if(public_transports.pt_carcost_ratio > public_transports.other_pt_ratio_threshold){    
+                public_transports.display_other_pt = false;
+                public_transports.taxi_cost = total_costs_month - public_transports.total_price_pt;
+                public_transports.km_by_taxi = public_transports.taxi_cost / public_transports.taxi_price_per_km;  //número de km possíveis de fazer de táxi
+                public_transports.total_altern += public_transports.taxi_cost;
             }
             else{
-                public_transports.display_outros_tp = true;
-                public_transports.custo_taxi = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;
-                public_transports.n_km_taxi = public_transports.custo_taxi / public_transports.taxi_price_per_km;
-                public_transports.outros_tp = total_costs_month * (1 - public_transports.racio_custocar_caustotp) / 2;    //valor alocado a outros TP, excetuando passe mensal
+                public_transports.display_other_pt = true;
+                public_transports.taxi_cost = total_costs_month * (1 - public_transports.pt_carcost_ratio) / 2;
+                public_transports.km_by_taxi = public_transports.taxi_cost / public_transports.taxi_price_per_km;
+                public_transports.other_pt = total_costs_month * (1 - public_transports.pt_carcost_ratio) / 2;    //valor alocado a outros TP, excetuando passe mensal
 
-                public_transports.total_altern += public_transports.custo_taxi + public_transports.outros_tp;
+                public_transports.total_altern += public_transports.taxi_cost + public_transports.other_pt;
             }
         }
     }//EOF PUBLIC TRANSPORTS
@@ -520,8 +529,9 @@ function calculate_costs(f1, f2, f3, country){
             aver_drive_per_week: 0,             //average distance driven per week
             fuel_period_km: f3.period_km        //time-period for distance calculation 
         }
-        
-        if(f2.type_calc_fuel == 'euros'){ //if fuel calculation with distance was NOT chosen in form part 2, gets from form part 3
+            
+        //if fuel calculation with distance was NOT chosen in form part 2, gets from form part 3
+        if(f2.type_calc_fuel == 'euros'){
             if(f3.drive_to_work == 'true'){
                 driving_distance.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
                 driving_distance.dist_home_job =  parseInt(f3.dist_home_job);
@@ -554,7 +564,8 @@ function calculate_costs(f1, f2, f3, country){
                 driving_distance.drive_per_year = distance_per_month * 12;            
             }
         }
-        else{ //f2.type_calc_fuel == 'km' (get info from form part 2)
+        //f2.type_calc_fuel == 'km', thus get distance information from form part 2
+        else{
             if(f2.take_car_to_job == 'true'){ 
                 driving_distance.drive_to_work_days_per_week = f2.days_p_week;
                 driving_distance.dist_home_job = parseInt(f2.distance_home2job);
@@ -566,13 +577,13 @@ function calculate_costs(f1, f2, f3, country){
 
         //Time spent in driving
         var time_spent_driving = {
-            time_home_job: 0,                   //time (in minutes) driven between home and job
-            time_weekend: 0,                    //time (in minutes) driven during weekends
-            min_drive_per_week: 0,              //time (in minutes) driven per week
-            min_drive_per_day: 0,               //time (in minutes) driven per day
-            days_drive_per_month: 0,            //number of days driven per month    
-            hours_drive_per_month: 0,           //number of hours driven per month
-            hours_drive_per_year: 0             //number of hours driven per year
+            time_home_job: 0,          //time (in minutes) driven between home and job
+            time_weekend: 0,           //time (in minutes) driven during weekends
+            min_drive_per_week: 0,     //time (in minutes) driven per week
+            min_drive_per_day: 0,      //time (in minutes) driven per day
+            days_drive_per_month: 0,   //number of days driven per month    
+            hours_drive_per_month: 0,  //number of hours driven per month
+            hours_drive_per_year: 0    //number of hours driven per year
         }        
         
         if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
@@ -695,8 +706,13 @@ function calculate_costs(f1, f2, f3, country){
 }
 
 //gets uber object to compare uber costs with private car costs
-function get_uber(uber, data, country){
+function get_uber(uber_obj, data, country){
+//uber_obj is an object with four fields: 
+//cost_per_distance, cost_per_minute, currency_code, distance_unit 
+//data is the object output of functions calculate_costs
     
+    //if public transporst information was not obtained from user
+    //in form part 3, then leaves by returning false
     if(!(data.public_transports_calculated)){
         return false;
     }
@@ -706,24 +722,24 @@ function get_uber(uber, data, country){
         return false;
     }
 
-    //checks if uber is an object
-    if (uber === null || typeof uber !== 'object' || uber == "null"){
+    //checks if uber_obj is an object
+    if (uber_obj === null || typeof uber_obj !== 'object' || uber_obj == "null"){
         return false;
     }
     
     //checks if the uber currency is the same as the user's
-    if ((uber.currency_code).toUpperCase() != (country.currency).toUpperCase()){
+    if ((uber_obj.currency_code).toUpperCase() != (country.currency).toUpperCase()){
         return false;
     }
     
     //checks if the uber distance unit is the same as the user's
-    var uber_du = (uber.distance_unit).toLowerCase();
+    var uber_du = (uber_obj.distance_unit).toLowerCase();
     if (country.distance_std == 1){ //according to Cuuntry XX.php file, 1 means "km"
         if (uber_du != "km"){
             return false;
         }
     }
-    else if (country.distance_std == 2) { //according to Cuuntry XX.php file, 1 means "mile"
+    else if (country.distance_std == 2) { //according to Cuuntry XX.php file, 2 means "mile"
         if (uber_du!="mile" && uber_du!="miles" && uber_du!="mi" && uber_du!="mi."){
             return false;
         }
@@ -731,15 +747,16 @@ function get_uber(uber, data, country){
     else{
         return false;
     }
-    //here uber strandards (currency and distance) are the same as the user country
+    //from here uber strandards (currency and distance) are the same as the user country
 
     var result_type, dist_uber, delta;
-    var ucd = uber.cost_per_distance*1;                //uber cost per unit distance
-    var ucm = uber.cost_per_minute*1;                  //uber costs per minute 
+
+    var ucd = uber_obj.cost_per_distance*1;            //uber cost per unit distance
+    var ucm = uber_obj.cost_per_minute*1;              //uber costs per minute 
     var dpm = data.distance_per_month;                 //total distance per month 
     var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance 
     var tcpm = data.total_costs_month;                 //total costs per month
-    var tcpt = data.public_transports.preco_total_tp;  //total costs public transports (monthly passes for family)
+    var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
     var hdpm = data.time_spent_driving.hours_drive_per_month;     //hours driven per month 
     var mdpm = data.time_spent_driving.hours_drive_per_month*60;  //minutes driven per month 
 
@@ -752,11 +769,13 @@ function get_uber(uber, data, country){
         result_type=1;
         delta = tcpm-tuc;
     }
-    else { //2nd case, where uber equivalent is more expensive
+    //2nd case, where uber equivalent is more expensive
+    //tries to combine uber with other public transports less expensive per unit-distance 
+    else { 
         result_type=2;
         
-        //if public transports (monthly pass) are not an option
-        if(!data.public_transports.display_tp()) {
+        //if public transports (with monthly pass) are not an option
+        if(!data.public_transports.display_pt()) {
             return false;
         }
         
@@ -767,8 +786,7 @@ function get_uber(uber, data, country){
         }
         
         //how many distance (km or miles) can be done by uber with delta 
-        dist_uber = delta /(ucd-ucm*data.kinetic_speed/60);
-        
+        dist_uber = delta /(ucd-ucm*data.kinetic_speed/60);        
     }
 
     //object to be returned by this function
@@ -786,7 +804,7 @@ function get_uber(uber, data, country){
         tcpt: tcpt,          //total costs public transports (monthly passes for family)
         delta: delta         //money that is left. Meaning depends on result_type 
     }
-    
+
     return res_uber_obj;
 }
 

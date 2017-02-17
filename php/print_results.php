@@ -600,7 +600,7 @@ function print_feffort_table(f1, f2, f3, data){
 function print_publict_table(f1, f2, f3, data, country){
 
     var varResult = "";   
-    if(data.public_transports.display_tp()) {
+    if(data.public_transports.display_pt()) {
         
         var tp_text, outros_tp_text, taxi_text;
 
@@ -609,10 +609,10 @@ function print_publict_table(f1, f2, f3, data, country){
                   "<br><?php echo $PASS_MONTH_AVG ?>: " + 
                   f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?>";
         
-        if(data.public_transports.racio_custocar_caustotp < data.public_transports.racio_outros_tp){
+        if(data.public_transports.pt_carcost_ratio < data.public_transports.other_pt_ratio_threshold){
             outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
         }
-        taxi_text="<b><?php echo $TAXI_DESL ?><\/span><\/b><br>" + data.public_transports.n_km_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
+        taxi_text="<b><?php echo $TAXI_DESL ?><\/span><\/b><br>" + data.public_transports.km_by_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
         
         //starts HTML table
         varResult+="<table class=\"result_table\" id=\"result_table2\">";
@@ -621,15 +621,15 @@ function print_publict_table(f1, f2, f3, data, country){
                    "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
         //items
         varResult+="<tr><td>" + tp_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.preco_total_tp.toFixed(1)) + "</td></tr>";
+                   "<td>&nbsp;" + countryCheck(data.public_transports.total_price_pt.toFixed(1)) + "</td></tr>";
         
         varResult+="<tr><td>" + taxi_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.custo_taxi.toFixed(1)) + "</td></tr>";
+                   "<td>&nbsp;" + countryCheck(data.public_transports.taxi_cost.toFixed(1)) + "</td></tr>";
         
         //in case other means of transport are shown besides taxi and urban public transports
-        if(data.public_transports.display_outros_tp) {
+        if(data.public_transports.display_other_pt) {
             varResult+="<tr><td>" + outros_tp_text + "</td>" +
-                       "<td>&nbsp;"+countryCheck(data.public_transports.outros_tp.toFixed(1))+"</td></tr>";
+                       "<td>&nbsp;"+countryCheck(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
         }
         varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
                    "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
