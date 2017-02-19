@@ -1,6 +1,5 @@
 function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool, extern_costs_bool){
 
-    //alert(uber_bool);
     var body0, body1, body2, body3, body4, body5, data;
 
     data = $('#result_table0 td');    
@@ -147,7 +146,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
     //optional public transports table
     if (public_transp_bool || uber_bool){
         //section title
-        var p_t_title = gstr($('#public_transp_section').html());
+        var p_t_title = gstr($('#alternative_to_carcosts_section').html());
         var p_t_title_body = [[{text: p_t_title, style: "header"}]];
         var p_t_title_obj = {
             style: 'tableMarging',
@@ -210,6 +209,10 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
 }
 
+
+//******************************************************
+//******************************************************
+//functions that generate the respective tables
 
 function get_main_table(data){
     

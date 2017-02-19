@@ -7,18 +7,18 @@ function reload(onDocumentLoad) {
     TimeCounter.resetStopwatch();
     
     //shows the form
-    $('#input_div').show();
+    $("#input_div").show();
     //hides the results divs and correspondent class
-    $('#monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div').hide();
+    $("#monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").hide();
     $(".result_section").hide();
     
     ResultIsShowing=false;
         
     //reloaded to the original screen after the result tables were already shown
     if(!onDocumentLoad){
-        $('#div1').css('display', 'block');
-        $('#div3').css('display', 'block');
-        $('#description').html(DescriptionHTML);
+        $("#div1").css("display", "block");
+        $("#div3").css("display", "block");
+        $("#description").html(DescriptionHTML);
         resized();
         //if the results were already shown, it means user went already through ReCaptcha
         ShowGoogleReCaptcha(false); 
@@ -55,27 +55,27 @@ function valueselect(myval) {
 function resized(){
     //adapts the margin-top CSS value according to the window width
     var margin_top_desc = $("#banner_top").outerHeight(true)+3;
-    $('#description').css("margin-top", margin_top_desc);
+    $("#description").css("margin-top", margin_top_desc);
     
     //mobile devices
     if($(document).width()<=768){
-        $('#div1_td').css('width', '100%');
-        $('#div3_td').css('width', '100%');
+        $("#div1_td").css("width", "100%");
+        $("#div3_td").css("width", "100%");
     }
     else{
         if(ResultIsShowing){
-            $('#div1_td').css('width', '15%');
-            $('#div3_td').css('width', '15%');
+            $("#div1_td").css("width", "15%");
+            $("#div3_td").css("width", "15%");
         }
         else{
-            $('#div1_td').css('width', '22%');
-            $('#div3_td').css('width', '22%');
+            $("#div1_td").css("width", "22%");
+            $("#div3_td").css("width", "22%");
         }
     }
     
     //if the result are showing resizes the charts
     if(ResultIsShowing){
-        var frame_witdh = document.getElementById('div2').offsetWidth;
+        var frame_witdh = document.getElementById("div2").offsetWidth;
         drawChartResult(frame_witdh, CalculatedData);
         
         //prints final text accordingly
@@ -94,12 +94,12 @@ function scrollPage(){
     
     /*768px threshold from which the CSS shows the page in mobile version*/    
     if (windowsize > 768) { 
-        $('html, body').animate({
+        $("html, body").animate({
             scrollTop: ($("#container_table").offset().top - $("#banner_top").outerHeight(true) - extra_margin_desktop)
         }, scroll_speed);
     }
     else{
-        $('html, body').animate({
+        $("html, body").animate({
             scrollTop: ($("#div2_td").offset().top - $("#banner_top").outerHeight(true) - extra_margin_mobile)
         }, scroll_speed);       
     }
@@ -136,29 +136,34 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         //if not a test triggers event for Google Analytics accordingly
         if(!IsThisAtest()){                 
             if(n==2 && !hasShownPart2){
-                ga('send', 'event', 'form_part', 'form_part_2');
+                ga("send", "event", "form_part", "form_part_2");
                 hasShownPart2=true;
             }
             if(n==3 && !hasShownPart3){
-                ga('send', 'event', 'form_part', 'form_part_3');
+                ga("send", "event", "form_part", "form_part_3");
                 hasShownPart3=true;
             }
         }
-               
-        for (var p = null, i = 1; p = document.getElementById(part_name+i); ++i) {
-            if (i == n)
+
+        var i = 1, p = document.getElementById(part_name+1);
+        while (p !== null){
+            if (i === n){
                 p.style.display = "";
-            else
+            }
+            else{
                 p.style.display = "none";
-        }       
+            }
+            i++;
+            p = document.getElementById(part_name+i);
+        }   
     }
 
     //change from form part 1 to 2
-    if (part_number_origin==1 && part_number_destiny==2){
+    if (part_number_origin===1 && part_number_destiny===2){
        
         if (!hasLoadedPart[0]){
-            $.getScript('js/coreFunctions.js', function(){
-                $.getScript('https://www.google.com/jsapi', function(){
+            $.getScript("js/coreFunctions.js", function(){
+                $.getScript("https://www.google.com/jsapi", function(){
                     hasLoadedPart[0] = true;
                     if (!is_userdata_formpart1_ok())
                         return;
@@ -173,16 +178,16 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         }
         
         if (!hasLoadedPart[1]){
-            $.getScript('js/conversionFunctions.js');
-            $.getScript('db_stats/statsFunctions.js'); 
-            $.getScript('js/get_data.js');
-            $.getScript('js/print.js');
-            $.getScript('google/charts.php?country='+country, function() {
-                $.getScript('php/print_results.php?country='+country); 
+            $.getScript("js/conversionFunctions.js");
+            $.getScript("db_stats/statsFunctions.js"); 
+            $.getScript("js/get_data.js");
+            $.getScript("js/print.js");
+            $.getScript("google/charts.php?country="+country, function() {
+                $.getScript("php/print_results.php?country="+country); 
             });
                        
-            $.getScript('google/g-recaptcha.js', function() {
-                $.getScript('https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl='+language);
+            $.getScript("google/g-recaptcha.js", function() {
+                $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+language);
             });
                         
             hasLoadedPart[1] = true;
@@ -195,7 +200,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             return;
         
         if (!hasLoadedPart[2]){
-            google.load('visualization', '1', {'packages': ['corechart'], 'language': Language, 'callback': function(){
+            google.load("visualization", "1", {"packages": ["corechart"], "language": Language, "callback": function(){
                 hasLoadedPart[2]=true;
                 shows_part(3);
             }});
@@ -205,8 +210,8 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
         }
         
         if (!hasLoadedPart[3]){
-            $.getScript('google/rgbcolor.js');
-            $.getScript('google/canvg.js');
+            $.getScript("google/rgbcolor.js");
+            $.getScript("google/canvg.js");
             
             //uber
             if(Country!="XX"){//if not test version
@@ -225,10 +230,10 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             
             //wait until all PDF related files are loaded
             //to activate the downloadPDF button
-            $.getScript('js/pdf/generatePDF.js', function() {
-                $.getScript('js/pdf/pdfmake.js', function() {
-                    $.getScript('js/pdf/vfs_fonts.js', function() {
-                         $('#generate_PDF').prop('disabled',false).removeClass('buttton_disabled');
+            $.getScript("js/pdf/generatePDF.js", function() {
+                $.getScript("js/pdf/pdfmake.js", function() {
+                    $.getScript("js/pdf/vfs_fonts.js", function() {
+                         $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
                          hasLoadedPart[3]=true;
                     });
                 });
@@ -247,7 +252,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
     }    
 
     //when it starts/loads the website
-    if (part_number_origin==0 && part_number_destiny==1){
+    if (part_number_origin===0 && part_number_destiny===1){
         shows_part(1);
         scrollPage();
     }
@@ -260,12 +265,12 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
 /*========================*/
 /*=====Form Functions=====*/
 
-var income = 'year';
+var income = "year";
 var isDistanceSet = false;
 
 /*function that checks if a certain HTML id or class is visible*/
 function isVisible(html_ref) {
-    if($(html_ref).css('display')!='none')
+    if($(html_ref).css("display")!="none")
         return true;
     else
         return false;
@@ -274,35 +279,35 @@ function isVisible(html_ref) {
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(function(){
     if( $(this).val() == 0){
-        $('#InspectionCost_tr').css("display", "none");
+        $("#InspectionCost_tr").css("display", "none");
     }
     else{
-        $('#InspectionCost_tr').css("display", "table-row");
+        $("#InspectionCost_tr").css("display", "table-row");
     }
 });
 
 function fuelCalculationMethodChange(fuelCalculationMethod) {
-    if (fuelCalculationMethod === 'currency') {
+    if (fuelCalculationMethod === "currency") {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_euros").prop("checked", true);
         
         isDistanceSet = false;
-        $('#distance_form3').each(function(){ $(this).show(); });
-        $('#currency_div_form2').css("display", "block");
-        $('#distance_div_form2').css("display", "none");
-        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
-        $('.time_spent_part2_form3').show();
-        $('#drive_to_work_no_form3').prop('checked', true);
+        $("#distance_form3").each(function(){ $(this).show(); });
+        $("#currency_div_form2").css("display", "block");
+        $("#distance_div_form2").css("display", "none");
+        $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
+        $(".time_spent_part2_form3").show();
+        $("#drive_to_work_no_form3").prop("checked", true);
         
         carToJob(false);
-    } else if (fuelCalculationMethod === 'distance') {
+    } else if (fuelCalculationMethod === "distance") {
         //selects actively radio button to which this function is associated        
         $("#radio_fuel_km").prop("checked", true); 
         
         isDistanceSet = true;
-        $('#distance_form3').each(function(){ $(this).hide(); });
-        $('#currency_div_form2').css("display", "none");
-        $('#distance_div_form2').css("display", "block");
+        $("#distance_form3").each(function(){ $(this).hide(); });
+        $("#currency_div_form2").css("display", "none");
+        $("#distance_div_form2").css("display", "block");
 
         carToJob(false);
         driveToJob(false);
@@ -318,30 +323,30 @@ function carToJob(carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_yes").prop("checked", true); 
         
-        $('#div_car_job_yes_form2').css("display", "block");
-        $('#div_car_job_no_form2').css("display", "none");
-        $('.time_spent_part1_form3').each(function(){ $(this).show(); });
-        $('.time_spent_part2_form3').hide();
+        $("#div_car_job_yes_form2").css("display", "block");
+        $("#div_car_job_no_form2").css("display", "none");
+        $(".time_spent_part1_form3").each(function(){ $(this).show(); });
+        $(".time_spent_part2_form3").hide();
         
         //working time section in form part 3
         working_time_toggle(true);
-        $('#working_time_part1_form3').hide();
-        $('#working_time_part2_form3').show();
+        $("#working_time_part1_form3").hide();
+        $("#working_time_part2_form3").show();
     } else {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true); 
         
-        $('#div_car_job_yes_form2').css("display", "none");
-        $('#div_car_job_no_form2').css("display", "block");
-        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
-        $('.time_spent_part2_form3').show();
+        $("#div_car_job_yes_form2").css("display", "none");
+        $("#div_car_job_no_form2").css("display", "block");
+        $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
+        $(".time_spent_part2_form3").show();
         
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3 
         working_time_toggle(false);
         $("#working_time_no_form3").prop("checked", true);
-        $('#working_time_part1_form3').show();
-        $('#working_time_part2_form3').hide();        
+        $("#working_time_part1_form3").show();
+        $("#working_time_part2_form3").hide();        
     }
 }
 
@@ -352,39 +357,39 @@ function driveToJob(flag){
         //selects actively radio button to which this function is associated
         $("#drive_to_work_yes_form3").prop("checked", true);
         
-        $('.car_to_job_distance_form3').each(function(){ $(this).show(); });
-        $('.time_spent_part1_form3').each(function(){ $(this).show(); });
-        $('.time_spent_part2_form3').hide();
-        $('#car_no_job_distance_form3').hide();
+        $(".car_to_job_distance_form3").each(function(){ $(this).show(); });
+        $(".time_spent_part1_form3").each(function(){ $(this).show(); });
+        $(".time_spent_part2_form3").hide();
+        $("#car_no_job_distance_form3").hide();
 
         //set to "no" the question "Do you have a job or a worthy occupation?" 
         //in Working Time section of Form Part 3         
         working_time_toggle(true);
-        $('#working_time_part1_form3').hide();
-        $('#working_time_part2_form3').show();
+        $("#working_time_part1_form3").hide();
+        $("#working_time_part2_form3").show();
     }
     else{
         //selects actively radio button to which this function is associated
         $("#drive_to_work_no_form3").prop("checked", true);
         
-        $('.car_to_job_distance_form3').each(function(){ $(this).hide(); });
-        $('.time_spent_part1_form3').each(function(){ $(this).hide(); });
-        $('.time_spent_part2_form3').show();
-        $('#car_no_job_distance_form3').show();
+        $(".car_to_job_distance_form3").each(function(){ $(this).hide(); });
+        $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
+        $(".time_spent_part2_form3").show();
+        $("#car_no_job_distance_form3").show();
         
         working_time_toggle(true);
-        $('#working_time_part1_form3').show();
-        $('#working_time_part2_form3').hide();
+        $("#working_time_part1_form3").show();
+        $("#working_time_part2_form3").hide();
     }
 }
 
 function tolls_daily(tollsDailyFlag) {
     if (tollsDailyFlag) {
-        $('#dia_nao_portag_DIV').css("display", "none");
-        $('#dia_sim_portag_DIV').css("display", "block");
+        $("#dia_nao_portag_DIV").css("display", "none");
+        $("#dia_sim_portag_DIV").css("display", "block");
     } else {
-        $('#dia_nao_portag_DIV').css("display", "block");
-        $('#dia_sim_portag_DIV').css("display", "none");
+        $("#dia_nao_portag_DIV").css("display", "block");
+        $("#dia_sim_portag_DIV").css("display", "none");
     }
 }
 
@@ -400,8 +405,8 @@ function onclick_div_show(divID, flag) {
 //triggers when any slider in form part 3 toggles
 function slider_toggles_form3(){
 
-    var ckb1 = $("#slider1").is(':checked');
-    var ckb2 = $("#slider2").is(':checked');
+    var ckb1 = $("#slider1").is(":checked");
+    var ckb2 = $("#slider2").is(":checked");
 
     if(ckb1){
         $("#public_transp_Div_form3").css("display", "block");
@@ -449,25 +454,25 @@ function numberWithSpaces(x) {
 
 function income_toggle(value){
     switch(value){
-        case 'year':
-            $('#income_per_year_form3, #working_time_form3').removeClass('hidden').show();
-            $('#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3').addClass('hidden');
-            income='year';
+        case "year":
+            $("#income_per_year_form3, #working_time_form3").removeClass("hidden").show();
+            $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").addClass("hidden");
+            income="year";
             break;
-        case 'month':
-            $('#income_per_month_form3, #working_time_form3').removeClass('hidden').show();
-            $('#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3').addClass('hidden');
-            income='month';
+        case "month":
+            $("#income_per_month_form3, #working_time_form3").removeClass("hidden").show();
+            $("#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3").addClass("hidden");
+            income="month";
             break;
-        case 'week':
-            $('#income_per_week_form3, #working_time_form3').removeClass('hidden').show();
-            $('#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3').addClass('hidden');
-            income='week';
+        case "week":
+            $("#income_per_week_form3, #working_time_form3").removeClass("hidden").show();
+            $("#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3").addClass("hidden");
+            income="week";
             break;
-        case 'hour':
-            $('#income_per_hour_form3').removeClass('hidden').show();
-            $('#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3').addClass('hidden');
-            income='hour';
+        case "hour":
+            $("#income_per_hour_form3").removeClass("hidden").show();
+            $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").addClass("hidden");
+            income="hour";
             break;
     }   
 }
@@ -478,13 +483,13 @@ function working_time_toggle(value){
         //selects actively radio button to which this function is associated
         $("#working_time_yes_form3").prop("checked", true);
         
-        $('#working_time_input_form3').show();
+        $("#working_time_input_form3").show();
     }
     else{
         //selects actively radio button to which this function is associated
         $("#working_time_no_form3").prop("checked", true);
         
-        $('#working_time_input_form3').hide();
+        $("#working_time_input_form3").hide();
     }  
 }
 
@@ -497,7 +502,7 @@ function getCheckedValue(radioObj) {
     }
 
     var radioLength = radioObj.length;
-    if (radioLength == undefined) {
+    if (radioLength === undefined) {
         if (radioObj.checked) {
             return radioObj.value;
         }
@@ -522,8 +527,8 @@ function submit_data(country) {
 
     var objectToDb = {};
 
-    objectToDb.acquisition_month = $('#acquisitionMonth').val();
-    objectToDb.acquisition_year = $('#acquisitionYear').val();
+    objectToDb.acquisition_month = $("#acquisitionMonth").val();
+    objectToDb.acquisition_year = $("#acquisitionYear").val();
     objectToDb.commercial_value_at_acquisition = $('#commercialValueAtAcquisition').val();
     objectToDb.commercial_value_at_now = $('#commercialValueAtNow').val();
     objectToDb.insure_type = $('input[name="tipo_seguro"]:checked', '#main_form').val();

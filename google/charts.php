@@ -1,5 +1,5 @@
 <?php Header("content-type: application/x-javascript");
-include($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
 $GLOBALS['country'] = $_GET['country'];
 ?>
 

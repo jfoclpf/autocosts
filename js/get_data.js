@@ -67,7 +67,7 @@ function get_form_part3(){
     var d = document.custo; //main form document variable
     var data = {
         //public transports section
-        IsPublicTransports:          getCheckedSliderValue(d.slider1),
+        IsAlternativeToCarCosts:          getCheckedSliderValue(d.slider1),
         n_pess_familia:              d.pessoas_agregado.value,
         monthly_pass_cost:           d.preco_passe.value,
         
@@ -172,7 +172,7 @@ function get_DB_part2(datab){
 function get_DB_part3(datab){
     var data = {
         //public transports section
-        IsPublicTransports:          false,
+        IsAlternativeToCarCosts:          false,
         n_pess_familia:              datab.household_number_people,
         monthly_pass_cost:           datab.public_transportation_month_expense,
         
@@ -206,14 +206,14 @@ function get_DB_part3(datab){
         days_drive_per_month:        datab.time_spent_days_drive_per_month 
     };
     
-    data.IsPublicTransports = isThereinDbPublicTranspData(data);
+    data.IsAlternativeToCarCosts = isThereinDbAlternativeToCarCostsData(data);
     data.IsFinancialEffort = isThereinDbFinEffortData(data);
     
     return data;
 }
 
 //Gets information from DB whether DB has or not Public Transport data 
-function isThereinDbPublicTranspData(f3){
+function isThereinDbAlternativeToCarCostsData(f3){
     return (isDef(f3.n_pess_familia) && isDef(f3.monthly_pass_cost));
 }
 

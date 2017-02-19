@@ -1,5 +1,5 @@
 <?php Header("content-type: application/x-javascript");
-include($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
 $GLOBALS['country'] = $_GET['country'];
 ?>
 
@@ -56,20 +56,17 @@ function Run2(){
 
     if(data.public_transports_calculated){
         //public transports table 
-        var public_transport_table_HTML = print_publict_table(f1, f2, f3, data, country);
+        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, country);
         if(public_transport_table_HTML !== ""){
-            $("#public_transp, #public_transp_section").show();
-            $("#public_transp").html(public_transport_table_HTML);
-            public_transp_bool = true; //global variable
+            $("#alternative_to_carcosts, #alternative_to_carcosts_section").show();
+            $("#alternative_to_carcosts").html(public_transport_table_HTML);
         }
         else{
-            $("#public_transp_section").hide();
-            public_transp_bool = false;
+            $("#alternative_to_carcosts_section").hide();
         }
     }
     else{
-        $("#public_transp_section").hide();
-        public_transp_bool = false;
+        $("#alternative_to_carcosts_section").hide();
     }
 
     //external costs table
@@ -597,11 +594,12 @@ function print_feffort_table(f1, f2, f3, data){
 }
 
 /*Public transports table (result_table2)*/
-function print_publict_table(f1, f2, f3, data, country){
+function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
 
     var varResult = "";   
     if(data.public_transports.display_pt()) {
         
+        public_transp_bool = true; //global variable
         var tp_text, outros_tp_text, taxi_text;
 
         tp_text = "<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + 
@@ -636,12 +634,15 @@ function print_publict_table(f1, f2, f3, data, country){
         
         varResult+="</table>";
     }
+    else{
+        public_transp_bool = false; //global variable
+    }
     
     //UBER
     var res_uber_obj = get_uber(uber_obj, data, country);
     //alert(JSON.stringify(res_uber_obj, null, 4)); 
     if (res_uber_obj){
-        uber_obj.print_bool=true; //says uber table is to be printed
+        uber_obj.print_bool=true; //says uber table is to be printed; global variable
         
         //add source in table for uber URL  
         var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
@@ -672,7 +673,7 @@ function print_publict_table(f1, f2, f3, data, country){
                        "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
             
             varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";       
         }
@@ -709,7 +710,7 @@ function print_publict_table(f1, f2, f3, data, country){
                
     }
     else{
-        uber_obj.print_bool=false; //says uber table is not to be printed
+        uber_obj.print_bool=false; //says uber table is not to be printed; global variable
     }
     return varResult;
 }
@@ -727,7 +728,7 @@ function print_extern_table(f1, f2, f3, data){
     
     var varResult     = "";
     
-    if(<?if ($GLOBALS['country']=="PT") echo 'data.distance_per_month != 0'; else echo "false"; ?>){
+    if(Country=="PT" && isDef(data.distance_per_month)){
         
         varResult+="<table class=\"result_table\" id=\"result_table4\">";
 

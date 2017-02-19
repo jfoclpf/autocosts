@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<?php include("./countries/_list.php"); ?>
-<?php include("./countries/_country_selector.php"); ?>
+<?php include_once("./countries/_list.php"); ?>
+<?php include_once("./countries/_country_selector.php"); ?>
 
 <html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">
 
@@ -10,16 +10,16 @@
 
     <title><?php echo $WEB_PAGE_TITLE; ?></title>
     
-    <?php include('./php/favicon_selector.php'); ?>
+    <?php include_once('./php/favicon_selector.php'); ?>
     
-    <?php include('./php/css_embed.php'); ?>
+    <?php include_once('./php/css_embed.php'); ?>
     <!--Embed all CSS files within CSS folder-->
     <?=(new CSS_Embed()) ?>
 </head>
 
 <body>
     <div id="main_div">
-        <?php include './layout/header.php'; ?>
+        <?php include_once './layout/header.php'; ?>
         <div id="container">
             <div id="description">
                 <?php echo $INITIAL_TEXT; if(isset($DISCLAIMER)){echo " ".$DISCLAIMER;} ?>
@@ -28,7 +28,7 @@
                 <!-- div3 = LEFT layout column-->
                 <div id="div3_td">
                     <div id="div3">
-                        <?php include './layout/leftColumn.php'; ?>
+                        <?php include_once './layout/leftColumn.php'; ?>
                     </div>
                 </div>
                 <!--#####################################  CALCULATOR #####################################-->
@@ -43,9 +43,9 @@
                         <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
                               action="javascript:void(0);" name="custo">
                             <div id="input_div">
-                                <?php include './layout/formPartOne.php'; ?>
-                                <?php include './layout/formPartTwo.php'; ?>
-                                <?php include './layout/formPartThree.php'; ?>
+                                <?php include_once './layout/formPartOne.php'; ?>
+                                <?php include_once './layout/formPartTwo.php'; ?>
+                                <?php include_once './layout/formPartThree.php'; ?>
                             </div>
                         </form>
                     </div>
@@ -83,12 +83,12 @@
                         <div id="img_fin_effort_chart_div" style="display:none"></div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
-                    <!-- ********* Public Transports section **************** -->
-                    <div class="result_section" id="public_transp_section">
-                        <div class="result_section_title" id="public_transp_title">
+                    <!-- ********* Alternative Costs to Car Costs section **************** -->
+                    <div class="result_section" id="alternative_to_carcosts_section">
+                        <div class="result_section_title" id="alternative_to_carcosts_title">
                             <b><?php echo mb_convert_case($PUBL_TRA_EQUIV, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
-                        <div class="result_div" id="public_transp"></div>
+                        <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
                     <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="exten_costs_section">
@@ -99,7 +99,7 @@
                         <div class="result_div" id="result_buttons_div">
                             <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload(false);"/>&nbsp;
                             <input type="submit" class="button" value="<? echo $WORD_PRINT; ?>"
-                                onclick="PrintElem('#main_table_section','#monthly_costs_section','#fin_effort_section','#public_transp_section','#exten_costs_section', '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
+                                onclick="PrintElem('#main_table_section','#monthly_costs_section','#fin_effort_section','#alternative_to_carcosts_section','#exten_costs_section', '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;
                             <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', public_transp_bool, uber_obj.print_bool, fin_effort_bool, extern_costs_bool)" />
                         </div>                               
                     </div>
@@ -110,7 +110,7 @@
                 <!-- div1 = RIGHT layout column-->
                 <div id="div1_td">
                     <div id="div1" class="roundCornerSlight">
-                        <?php include './layout/rightColumn.php'; ?>
+                        <?php include_once './layout/rightColumn.php'; ?>
                     </div>
                 </div>
             </div>

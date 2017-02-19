@@ -12,7 +12,7 @@ $cc = strtoupper($cc);
 if ($cc=="XX"){ //if test version
     exit;
 }
-include($_SERVER['DOCUMENT_ROOT'].'/countries/' . $cc . '.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $cc . '.php');
 
 //gets city and country code of user
 $user_city = ip_info("Visitor", "city");
@@ -52,7 +52,7 @@ if($debug==1){//Lisbon coordinates
 }
 
 //UBER
-include("../keys/uber_token.php");
+include_once("../keys/uber_token.php");
 $uber_url= "https://api.uber.com/v1.2/products?latitude=$lat&longitude=$long&server_token=$token";
 
 $c_uber = curl_init();

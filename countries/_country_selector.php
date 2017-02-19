@@ -52,7 +52,7 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 }
 
 //loads the correspondent country file
-include('./countries/' . $GLOBALS['country'] . '.php');
+include_once('./countries/' . $GLOBALS['country'] . '.php');
 
 //gets the correspondent language to input on <html lang"##">, after the correct country file was loaded
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)

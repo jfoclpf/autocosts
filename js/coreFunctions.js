@@ -366,7 +366,7 @@ function calculate_costs(f1, f2, f3, country){
 
     
     //*************** PUBLIC TRANSPORTS ************
-    if (f3.IsPublicTransports){
+    if (f3.IsAlternativeToCarCosts){
         
         //Object for public transports as an alternative to car usage
         //i.e., how much of public transports could be used with the same amount
@@ -518,7 +518,7 @@ function calculate_costs(f1, f2, f3, country){
     //******* Driving distance and Time spent in driving *******
     //if either Financial effort or Public Transports slider in form part 3 is activated
     //the form demands information from both Driving distance and Time spent in driving
-    if (f3.IsFinancialEffort || f3.IsPublicTransports){
+    if (f3.IsFinancialEffort || f3.IsAlternativeToCarCosts){
         
         //driving distance
         var driving_distance = {
@@ -684,7 +684,7 @@ function calculate_costs(f1, f2, f3, country){
         virtual_speed: undefined            //average consumer/virtual speed
     };
 
-    if (f3.IsPublicTransports){
+    if (f3.IsAlternativeToCarCosts){
         output.public_transports_calculated = true;
         output.public_transports = public_transports;
     }
@@ -693,7 +693,7 @@ function calculate_costs(f1, f2, f3, country){
         output.fin_effort = fin_effort;
         output.virtual_speed = virtual_speed;
     }
-    if (f3.IsPublicTransports || f3.IsFinancialEffort){
+    if (f3.IsAlternativeToCarCosts || f3.IsFinancialEffort){
         output.driving_distance = driving_distance;
         output.driving_distance_calculated = true;
         output.time_spent_driving = time_spent_driving;
@@ -726,12 +726,12 @@ function get_uber(uber_obj, data, country){
     if (uber_obj === null || typeof uber_obj !== 'object' || uber_obj == "null"){
         return false;
     }
-    
+            
     //checks if the uber currency is the same as the user's
     if ((uber_obj.currency_code).toUpperCase() != (country.currency).toUpperCase()){
         return false;
     }
-    
+            
     //checks if the uber distance unit is the same as the user's
     var uber_du = (uber_obj.distance_unit).toLowerCase();
     if (country.distance_std == 1){ //according to Cuuntry XX.php file, 1 means "km"
@@ -756,14 +756,13 @@ function get_uber(uber_obj, data, country){
     var dpm = data.distance_per_month;                 //total distance per month 
     var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance 
     var tcpm = data.total_costs_month;                 //total costs per month
-    var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
     var hdpm = data.time_spent_driving.hours_drive_per_month;     //hours driven per month 
     var mdpm = data.time_spent_driving.hours_drive_per_month*60;  //minutes driven per month 
 
     //total costs of uber for the same distance and time as the ones driven using private car
     //Total equivalent Uber Costs
     tuc = ucd * dpm + ucm * mdpm;
-        
+
     //1st case, in which driver can replace every journey by uber 
     if (tuc<tcpm){
         result_type=1;
@@ -773,12 +772,13 @@ function get_uber(uber_obj, data, country){
     //tries to combine uber with other public transports less expensive per unit-distance 
     else { 
         result_type=2;
-        
+
         //if public transports (with monthly pass) are not an option
         if(!data.public_transports.display_pt()) {
             return false;
         }
-        
+
+        var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
         //amount that is left after public transports (monthly passes) are paid
         delta = tcpm - tcpt;
         if(delta<0){
