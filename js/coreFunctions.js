@@ -366,12 +366,13 @@ function calculate_costs(f1, f2, f3, country){
 
     
     //*************** PUBLIC TRANSPORTS ************
+    var public_transports;
     if (f3.IsAlternativeToCarCosts){
         
         //Object for public transports as an alternative to car usage
         //i.e., how much of public transports could be used with the same amount
         //of money that the user spends totally with automobile
-        var public_transports = {
+        public_transports = {
             ptcosts_carcosts_ratio_threshold: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
             other_pt_ratio_threshold: 0.6,             //ratio of costs ptcosts/carcosts under which shows other alternatives with further public transports (intercity trains for example)
             taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance        
@@ -417,9 +418,10 @@ function calculate_costs(f1, f2, f3, country){
     }//EOF PUBLIC TRANSPORTS
 
     //*************** FINANCIAL EFFORT ************
+    var fin_effort;
     if (f3.IsFinancialEffort){
         //create financial effort object
-        var fin_effort = {
+        fin_effort = {
             //income
             income: 0,                          //income amount the user has inserted     
             income_per_year: 0,                 //average income per year
@@ -518,17 +520,18 @@ function calculate_costs(f1, f2, f3, country){
     //******* Driving distance and Time spent in driving *******
     //if either Financial effort or Public Transports slider in form part 3 is activated
     //the form demands information from both Driving distance and Time spent in driving
+    var driving_distance, time_spent_driving, kinetic_speed, virtual_speed;
     if (f3.IsFinancialEffort || f3.IsAlternativeToCarCosts){
         
         //driving distance
-        var driving_distance = {
+        driving_distance = {
             drive_per_year:0,                   //total distance driven per year
             drive_to_work_days_per_week: 0,     //number of days per week, the user drives to job 
             dist_home_job: 0,                   //distance between home and job (one-way)
             journey_weekend: 0,                 //distance the user drives during weekend
             aver_drive_per_week: 0,             //average distance driven per week
             fuel_period_km: f3.period_km        //time-period for distance calculation 
-        }
+        };
             
         //if fuel calculation with distance was NOT chosen in form part 2, gets from form part 3
         if(f2.type_calc_fuel == 'euros'){
@@ -576,7 +579,7 @@ function calculate_costs(f1, f2, f3, country){
         }
 
         //Time spent in driving
-        var time_spent_driving = {
+        time_spent_driving = {
             time_home_job: 0,          //time (in minutes) driven between home and job
             time_weekend: 0,           //time (in minutes) driven during weekends
             min_drive_per_week: 0,     //time (in minutes) driven per week
@@ -584,7 +587,7 @@ function calculate_costs(f1, f2, f3, country){
             days_drive_per_month: 0,   //number of days driven per month    
             hours_drive_per_month: 0,  //number of hours driven per month
             hours_drive_per_year: 0    //number of hours driven per year
-        }        
+        };     
         
         if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
             time_spent_driving.time_home_job = parseInt(f3.time_home_job);
@@ -600,14 +603,14 @@ function calculate_costs(f1, f2, f3, country){
 
         time_spent_driving.hours_drive_per_year = time_spent_driving.hours_drive_per_month * 12;
 
-        var kinetic_speed = driving_distance.drive_per_year / time_spent_driving.hours_drive_per_year;
-    
+        kinetic_speed = driving_distance.drive_per_year / time_spent_driving.hours_drive_per_year;
+        
+        //Virtual/Consumer Speed calculated if info of Financial Effort is available 
+        if (f3.IsFinancialEffort){
+            virtual_speed = driving_distance.drive_per_year / (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
+        }
+        
     }//EOF Driving distance and Time spent in driving
-
-    //Virtual/Consumer Speed is calculated only Financial Effort info is available
-    if (f3.IsFinancialEffort){
-        var virtual_speed = driving_distance.drive_per_year / (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
-    }
     
     var running_costs_p_unit_distance, total_costs_p_unit_distance;
     if(isDef(distance_per_month)){
@@ -753,6 +756,7 @@ function get_uber(uber_obj, data, country){
 
     var ucd = uber_obj.cost_per_distance*1;            //uber cost per unit distance
     var ucm = uber_obj.cost_per_minute*1;              //uber costs per minute 
+    var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
     var dpm = data.distance_per_month;                 //total distance per month 
     var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance 
     var tcpm = data.total_costs_month;                 //total costs per month
@@ -777,8 +781,7 @@ function get_uber(uber_obj, data, country){
         if(!data.public_transports.display_pt()) {
             return false;
         }
-
-        var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
+  
         //amount that is left after public transports (monthly passes) are paid
         delta = tcpm - tcpt;
         if(delta<0){
@@ -803,7 +806,7 @@ function get_uber(uber_obj, data, country){
         dist_uber:dist_uber, //in case result_type is 2, how many distance can be done with uber
         tcpt: tcpt,          //total costs public transports (monthly passes for family)
         delta: delta         //money that is left. Meaning depends on result_type 
-    }
+    };
 
     return res_uber_obj;
 }

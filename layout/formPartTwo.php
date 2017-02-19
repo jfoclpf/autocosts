@@ -185,7 +185,7 @@
                 <?php echo $TOLLS_DAY_CALC ?>
                 <div>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="portagens_ao_dia" value="true" onclick="tolls_daily(true);" />
+                        <input type="radio" name="portagens_ao_dia" id="tolls_radiob_yes" value="true" onclick="tolls_daily(true);" />
                         <?php echo $YES ?>
                     </span>
                     <span style="white-space:nowrap">

@@ -56,6 +56,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     border: 2px solid #b4b4b4;
     margin: 4px auto;
 }
+select{
+    max-width: 95%;
+    width: auto;
+}
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     background-color: #ffffff;
     border: 2px solid #b4b4b4;
@@ -173,7 +177,6 @@ table>thead>tr>th {
     font-family: inherit;
     font-weight: bold;
     color: inherit;
-    text-rendering: optimizelegibility;
     line-height: 20px;
     font-size: 28px;
     text-align: center;
@@ -381,12 +384,10 @@ form.roundCorner {
     white-space: nowrap;
     vertical-align: middle;
     -ms-touch-action: manipulation;
-    touch-action: manipulation;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
     background-image: none;
     border: 2px solid transparent;
     border-radius: 5px;
@@ -468,6 +469,9 @@ form.roundCorner {
     font-size: 18px;
     text-align: left;
 }
+#form_part2 #tolls_radiob_yes{
+    margin-left: 0;
+}
 #form_part3 .form_section_question {
     margin-top: 10px;
 }
@@ -539,7 +543,7 @@ input:checked + .slider:before {
 
 #div2 td:nth-child(2n),
 .result_section td:nth-child(2n) {
-    width: 25%;
+    width: 28%;
 }
 
 #pie_chart_div,
@@ -574,7 +578,6 @@ input:checked + .slider:before {
     border-radius:12px;
     border-width:5px;
     margin: 10px;
-    float: center; 
     display: inline-block; 
     padding:2%; 
     font-size:350%; 

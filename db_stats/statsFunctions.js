@@ -163,6 +163,7 @@ function CalculateStatistics(userIds, data, country){
 //console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
 //console.log("************************************************************************");
 
+    var output;
     if(userIds.length!=0 && data.length!=0){
         var temp_i = []; //array with unique users, having one element per user 
         var temp_j = []; //array having the several inputs from the same user
@@ -174,8 +175,8 @@ function CalculateStatistics(userIds, data, country){
                     //checks if the entry is ok
                     //and if it is an input spam/bot (the time to fill the form for the first input mus be greater than a time value)
                     //console.log("(i,j)=("+i+","+j+")"); console.log(data[j]);console.log(country);
-                    if(is_DBentry_ok(data[j], country)
-                        && ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
+                    if(is_DBentry_ok(data[j], country) &&
+                        ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
                         //console.log("f1");
                         var f1 = get_DB_part1(data[j]);
                         //console.log("f1");
@@ -234,7 +235,6 @@ function CalculateStatistics(userIds, data, country){
                 
         //console.log("get_average_costs");
         var avg = get_average_costs(temp_i);
-        console.log(avg.virtual_speed);
         
         //standing costs
         var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + avg.monthly_costs.credit +
@@ -255,7 +255,7 @@ function CalculateStatistics(userIds, data, country){
         var total_costs_per_year = total_costs_month * 12;
         
         //object to be output as result
-        var output = {
+        output = {
             dep:      avg.monthly_costs.depreciation, 
             ins:      avg.monthly_costs.insurance, 
             cred:     avg.monthly_costs.credit, 
@@ -282,11 +282,9 @@ function CalculateStatistics(userIds, data, country){
             
             users_counter:   temp_i.length
         };
-        //console.log(output);
-        return output;
     }
     else{
-        var output = {
+        output = {
             dep: 0, 
             ins: 0,
             cred: 0,
@@ -313,8 +311,9 @@ function CalculateStatistics(userIds, data, country){
             
             users_counter: 0
         };
-        return output;
-    } 
+    }
+    //console.log(output);
+    return output;
 }
             
 
@@ -338,9 +337,10 @@ function is_DBentry_ok(data, country) {
     }   
     
     //depreciation
-    if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) 
-        || (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now)))
+    if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) ||
+       (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now))){
         return false;
+    }
     
     var converted_value = convert_from_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, EURcurrConverterStats);
     if (converted_value!=-1 && Number(data.commercial_value_at_acquisition) > converted_value)

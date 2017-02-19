@@ -27,7 +27,6 @@ var EURcurrConverterStats = {
     "BOB": 7.7,
     "CLP": 721,
     "COP": 3200,
-    "DOP": 51,
     "VEF": 11, 
     "ARS": 16.4,
     "CRC": 616,

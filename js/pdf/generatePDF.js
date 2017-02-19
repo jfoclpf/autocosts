@@ -104,7 +104,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                 alignment: 'center'
             }
         }
-    }
+    };
 
     //financial effort title and table
     if(fin_effort_bool){
@@ -260,7 +260,6 @@ function get_private_costs_table(data){
     
     for(var i=1; i<data.length; i+=2){
         str = gstr(data[i]);
-        var el;
         //gives header style to <td> regarding Standing Costs and Fixed Costs
         if(i==1 || i==17){ 
             str2 = gstr(data[i+1]);
@@ -294,18 +293,20 @@ function get_private_costs_table(data){
 }
 
 function getBodyFinEffort(data){
+    
     var body = [];
+    var str, str2, el, el2;
+    
     for(var i=0; i<data.length; i++){
-        var str = gstr(data[i]);
-        var el;
+        str = gstr(data[i]);
         if($(data[i]).find('b').length > 0){
-            var el2 = {};
+            el2 = {};
             el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
             body.push([el, {}]);
         }
         else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
+            str2 = $(data[i+1]).text();
+            el2 = {text: str2, style: 'cell'};
             el = {text: str, style: 'cell'};
             body.push([el,el2]);
             i++;
@@ -315,19 +316,21 @@ function getBodyFinEffort(data){
 }
 
 function get_publict_table(data){
+    
     var body = [];
+    var str, str2, el, el2;
+    
     for(var i=0; i<data.length; i+=2){
-        var str = gstr(data[i]);
-        var el;
+        str = gstr(data[i]);
         if(i<2){
-            var str2 = $(data[i+1]).text().trim();
-            var el2 = {text: str2, style: 'header'};
+            str2 = $(data[i+1]).text().trim();
+            el2 = {text: str2, style: 'header'};
             el = {text: str, style: 'header'};          
             body.push([el, el2]);
         }
         else{
-            var str2 = $(data[i+1]).text();
-            var el2 = {text: str2, style: 'cell'};
+            str2 = $(data[i+1]).text();
+            el2 = {text: str2, style: 'cell'};
             el = {text: str, style: 'cell'};
             body.push([el, el2]);
         }           
@@ -336,13 +339,16 @@ function get_publict_table(data){
 }
 
 function get_uber_table(data){
+    
     var body = [];
+    var str, str2, el, el2;
+    
     for(var i=0; i<data.length; i+=2){
-        var str = gstr(data[i]);
-        var el;
+        str = gstr(data[i]);
+        el;
 
-        var str2 = $(data[i+1]).text();
-        var el2 = {text: str2, style: 'cell'};
+        str2 = $(data[i+1]).text();
+        el2 = {text: str2, style: 'cell'};
         el = {text: str, style: 'cell'};
         body.push([el, el2]);
      

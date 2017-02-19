@@ -166,7 +166,7 @@ async.series([
             }
             //console.log("country_users:");console.log(country_users);
             
-            for (var j=0; j<AllUserInputDb.length; j++){                
+            for (j=0; j<AllUserInputDb.length; j++){                
                 if (AllUserInputDb[j].country==countries[i].Country)
                     country_data.push(AllUserInputDb[j]);
             }
@@ -188,31 +188,31 @@ async.series([
             countries[i]["total_users"] = country_users.length;
             countries[i]["total_costs"] = stats_results.totCos.toFixed(1);
             
-            queryInsert += "('" + countries[i].Country + "', "
-                + date_string            + ", "                 
-                + stats_results.dep.toFixed(1)      + ", "
-                + stats_results.ins.toFixed(1)      + ", " 
-                + stats_results.cred.toFixed(1)     + ", "  
-                + stats_results.insp.toFixed(1)     + ", " 
-                + stats_results.carTax.toFixed(1)   + ", " 
-                + stats_results.maint.toFixed(1)    + ", " 
-                + stats_results.fuel.toFixed(1)     + ", " 
-                + stats_results.rep.toFixed(1)      + ", " 
-                + stats_results.park.toFixed(1)     + ", " 
-                + stats_results.tolls.toFixed(1)    + ", " 
-                + stats_results.fines.toFixed(1)    + ", " 
-                + stats_results.wash.toFixed(1)     + ", "                    
-                + stats_results.standCos.toFixed(0) + ", "                   
-                + stats_results.runnCos.toFixed(0)  + ", " 
-                + stats_results.totCos.toFixed(0)   + ", "                                           
-                + stats_results.runCostsProDist.toFixed(2) + ", "
-                + stats_results.totCostsProDist.toFixed(2) + ", "                   
-                + stats_results.kinetic_speed.toFixed(0)   + ", "
-                + stats_results.virtual_speed.toFixed(0)   + ", "                    
-                + (((stats_results.totCostsPerYear/100).toFixed(0))*100) + ", "            
-                + countries[i]["valid_users"] + ", "
-                + countries[i]["total_users"] + ", "
-                + unique_users.length + " )";
+            queryInsert += "('" + countries[i].Country + "', " +
+                date_string                       + ", " +                 
+                stats_results.dep.toFixed(1)      + ", " +
+                stats_results.ins.toFixed(1)      + ", " + 
+                stats_results.cred.toFixed(1)     + ", " +
+                stats_results.insp.toFixed(1)     + ", " +
+                stats_results.carTax.toFixed(1)   + ", " +
+                stats_results.maint.toFixed(1)    + ", " +
+                stats_results.fuel.toFixed(1)     + ", " +
+                stats_results.rep.toFixed(1)      + ", " +
+                stats_results.park.toFixed(1)     + ", " +
+                stats_results.tolls.toFixed(1)    + ", " +
+                stats_results.fines.toFixed(1)    + ", " +
+                stats_results.wash.toFixed(1)     + ", " +                  
+                stats_results.standCos.toFixed(0) + ", " +                  
+                stats_results.runnCos.toFixed(0)  + ", " +
+                stats_results.totCos.toFixed(0)   + ", " +                                         
+                stats_results.runCostsProDist.toFixed(2) + ", " +
+                stats_results.totCostsProDist.toFixed(2) + ", " +                   
+                stats_results.kinetic_speed.toFixed(0)   + ", " +
+                stats_results.virtual_speed.toFixed(0)   + ", " +                  
+                (((stats_results.totCostsPerYear/100).toFixed(0))*100) + ", " + 
+                countries[i]["valid_users"] + ", " +
+                countries[i]["total_users"] + ", " +
+                unique_users.length + " )";
             
             if (i!=countries.length-1)//doesn't add "," on the last set of values
                 queryInsert +=", ";

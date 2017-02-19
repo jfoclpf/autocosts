@@ -241,7 +241,7 @@
                     <td>
                         <input type="number" id="dist_per_month" name="km_per_month" size="4"
                             value="<?php echo $STD_KM_PER_MONTH; ?>">
-                        <?php echo $STD_DIST ?>&nbsp;<?php echo $WORD_PER ?>&nbsp;
+                        <?php echo $STD_DIST ?> <?php echo $WORD_PER ?>
                         <select id="period_km">
                             <option value="1"><?php echo $MONTH ?></option>
                             <option value="2"><?php echo $TWO_MONTHS ?></option>
