@@ -24,8 +24,6 @@ $url_cc=strtoupper($url_cc); //uppercase
 //if no country is defined or the country isn't in the list
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	
-    $path="cty_not_defined";
-    
     //gets the country by IP 
     include_once("./php/geo_functions.php");
     $geo_cc = ip_info("Visitor", "Country Code");
@@ -48,8 +46,18 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	} else {
 		$GLOBALS['country'] = "UK";
 	}
+
+    //writes a simple HTML page that simply redirects to 
+    //the correct URL page for the right country
+    include_once('./countries/' . $GLOBALS['country'] . '.php');
+    echo '<html lang="' . $LANGUAGE_CODE. '-' . $GLOBALS['country'] . '">';
+    echo "<head>";
+    echo "<title>" . $WEB_PAGE_TITLE . "</title>";
+    echo "<script type=\"text/javascript\"> window.location.href = \"" . $GLOBALS['country'] . "\" </script>";
+    echo "</head><body></body></html>";
+    exit;
+     
 } else {
-    $path="cty_defined";
 	$GLOBALS['country'] = $url_cc;
 }
 
