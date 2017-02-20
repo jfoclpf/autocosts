@@ -345,7 +345,6 @@ function get_uber_table(data){
     
     for(var i=0; i<data.length; i+=2){
         str = gstr(data[i]);
-        el;
 
         str2 = $(data[i+1]).text();
         el2 = {text: str2, style: 'cell'};

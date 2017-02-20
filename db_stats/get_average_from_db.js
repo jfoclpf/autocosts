@@ -184,9 +184,9 @@ async.series([
             var stats_results = CalculateStatistics(country_users, country_data, country_object);
             
             //add computed data to countries array of objects
-            countries[i]["valid_users"] = stats_results.users_counter;
-            countries[i]["total_users"] = country_users.length;
-            countries[i]["total_costs"] = stats_results.totCos.toFixed(1);
+            countries[i].valid_users = stats_results.users_counter;
+            countries[i].total_users = country_users.length;
+            countries[i].total_costs = stats_results.totCos.toFixed(1);
             
             queryInsert += "('" + countries[i].Country + "', " +
                 date_string                       + ", " +                 
@@ -210,8 +210,8 @@ async.series([
                 stats_results.kinetic_speed.toFixed(0)   + ", " +
                 stats_results.virtual_speed.toFixed(0)   + ", " +                  
                 (((stats_results.totCostsPerYear/100).toFixed(0))*100) + ", " + 
-                countries[i]["valid_users"] + ", " +
-                countries[i]["total_users"] + ", " +
+                countries[i].valid_users + ", " +
+                countries[i].total_users + ", " +
                 unique_users.length + " )";
             
             if (i!=countries.length-1)//doesn't add "," on the last set of values

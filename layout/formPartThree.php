@@ -16,7 +16,7 @@
             <td class="switch_td">
                 <label class="switch">
                     <input id="slider1" name="slider1" type="checkbox">
-                    <div class="slider round"></div>
+                    <span class="slider round"></span>
                 </label>
             </td>
         </tr>
@@ -32,7 +32,7 @@
             <td class="switch_td">
                 <label class="switch">
                     <input id="slider2" type="checkbox">
-                    <div class="slider round"></div>
+                    <span class="slider round"></span>
                 </label>
             </td>
         </tr>

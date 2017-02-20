@@ -5,9 +5,13 @@
 <html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">
 
 <head>
+    <?php if ($path=="cty_not_defined"){
+        echo "<script type=\"text/javascript\"> window.location.href = \"" . $GLOBALS['country'] . "\" </script>";
+    }?>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
-
+    
     <title><?php echo $WEB_PAGE_TITLE; ?></title>
     
     <?php include_once('./php/favicon_selector.php'); ?>
