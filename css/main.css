@@ -469,8 +469,11 @@ form.roundCorner {
     font-size: 18px;
     text-align: left;
 }
-#form_part2 #tolls_radiob_yes{
+#main_form .no_left_margin{
     margin-left: 0;
+}
+#main_form .set_right_margin{
+    margin-right: 8px;
 }
 #form_part3 .form_section_question {
     margin-top: 10px;

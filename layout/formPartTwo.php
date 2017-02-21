@@ -9,18 +9,25 @@
     </strong>
     <table>
         <tr>
-            <td>
+            <td rowspan="2">
                 <?php echo $FUEL_DESC; ?>
-                <?php echo $FUEL_CALC; ?>
+            </td>
+            <td>
+                <?php echo $FUEL_CALC  . ": "; ?>
+                <br>
                 <span style="white-space:nowrap">
-                    <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
-                    <?php echo $STD_DIST ?>
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                    <span class="set_right_margin"><?php echo $STD_DIST ?></span>
                 </span>
                 <span style="white-space:nowrap">
-                    <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
                     <?php echo $CURR_NAME_PLURAL ?>
                 </span>
-                <div style="float: right; margin: 12px 0 0 0; white-space:nowrap; text-align:right;" id="currency_div_form2">
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="currency_div_form2">
                     <input type="number" size="5" id="fuel_currency_value"
                         value="<?php echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                     <span style="white-space:nowrap">
@@ -42,12 +49,14 @@
             <tr>
                 <td>
                     <?php echo $FUEL_JOB_CALC; ?>
+                </td>
+                <td>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="car_job_form2" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
-                        <?php echo $YES ?>
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <span class="set_right_margin"><?php echo $YES ?></span>
                     </span>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="car_job_form2" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
                         <?php echo $NO ?>
                     </span>
                 </td>
@@ -185,11 +194,11 @@
                 <?php echo $TOLLS_DAY_CALC ?>
                 <div>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="portagens_ao_dia" id="tolls_radiob_yes" value="true" onclick="tolls_daily(true);" />
-                        <?php echo $YES ?>
+                        <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <span class="set_right_margin"><?php echo $YES ?></span>
                     </span>
                     <span style="white-space:nowrap">
-                        <input type="radio" name="portagens_ao_dia" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
                         <?php echo $NO ?>
                     </span>
                 </div>
