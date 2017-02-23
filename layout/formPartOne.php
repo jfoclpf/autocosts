@@ -1,12 +1,22 @@
 <div class="form_part" id="form_part1">
     <div class="form_part_head_title">
-        <b><?php echo $FIXED_COSTS_HEADER_1 ?></b>
-        <?php echo $FIXED_COSTS_HEADER_2 ?>
+        <header>
+            <h2>
+                <b>
+                    <?php echo $FIXED_COSTS_HEADER_1 ?>
+                </b>
+            </h2>
+            <h4>
+                <?php echo $FIXED_COSTS_HEADER_2 ?>
+            </h4>
+        </header>
     </div>
     <!--************************** Desvalorização do veículo ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $DEPRECIATION ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $DEPRECIATION ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -38,9 +48,11 @@
         </tr>
     </table>
     <!--************************** SEGURO AUTOMÓVEL | INSURANCE ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $INSURANCE ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $INSURANCE ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -69,9 +81,11 @@
         </tr>
     </table>
     <!--************************** CRÉDITO | CREDIT ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $CREDIT ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $CREDIT ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -130,9 +144,11 @@
         </table>
     </div>
     <!--************************** INSPEÇÃO PERIÓDICA | INSPECTION ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $INSPECTION ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $INSPECTION ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -154,9 +170,11 @@
         </tr>
     </table>
     <!--************************** IUC ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $ROAD_TAXES ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $ROAD_TAXES ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td class="p2">

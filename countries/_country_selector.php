@@ -1,8 +1,7 @@
 <?php
 
 //function that informs if a country is in the list of available countries
-function is_cty_inlist($cc, $c_array)
-{ //cc=country code
+function is_cty_inlist($cc, $c_array){ //cc=country code
 	if ($cc == null) {
 		return false;
 	}
@@ -50,7 +49,7 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
     //writes a simple HTML page that simply redirects to 
     //the correct URL page for the right country
     include_once('./countries/' . $GLOBALS['country'] . '.php');
-    echo '<html lang="' . $LANGUAGE_CODE. '-' . $GLOBALS['country'] . '">';
+    echo '<html lang="' . HTML_tag_lang($LANGUAGE_CODE, $GLOBALS['country']) . '">';
     echo "<head>";
     echo "<title>" . $WEB_PAGE_TITLE . "</title>";
     echo "<script type=\"text/javascript\"> window.location.href = \"" . $GLOBALS['country'] . "\" </script>";

@@ -2,16 +2,20 @@
 <div class="form_part" id="form_part3">
         
     <div class="form_part_head_title">
-        <?php echo $EXTRA_DATA ?>
+        <header>
+            <h2>
+                <?php echo $EXTRA_DATA ?>
+            </h2>
+        </header>
     </div>
     
     <!-- PUBLIC TRANSPORTS SLIDER -->
     <table class="form_section_question">
         <tr>
             <td>
-                <strong class="form_section_title2">
+                <span class="form_section_title2">
                     <?php echo $PUBL_TRA_EQUIV."?" ?>
-                </strong>
+                </span>
             </td>
             <td class="switch_td">
                 <label class="switch">
@@ -25,9 +29,9 @@
     <table class="form_section_question">
         <tr>
             <td>
-                <strong class="form_section_title2">
+                <span class="form_section_title2">
                     <?php echo $FINANCIAL_EFFORT."?" ?>
-                </strong>
+                </span>
             </td>
             <td class="switch_td">
                 <label class="switch">
@@ -40,9 +44,9 @@
     
     <!-- PUBLIC TRANSPORTS SECTION -->
     <div id="public_transp_Div_form3">
-    <strong class="form_section_title">
+    <span class="form_section_title">
         <?php echo $EXTRA_DATA_PUBLIC_TRANSP ?>
-    </strong>
+    </span>
     <table>
         <tr>
             <td>
@@ -71,9 +75,9 @@
     
     <!-- FINANCIAL EFFORT SECTION -->        
     <div id="fin_effort_Div_form3">
-        <strong class="form_section_title">
+        <span class="form_section_title">
             <?php echo $EXTRA_DATA_INCOME ?>
-        </strong>
+        </span>
         <table>
             <tr>
                 <td>
@@ -139,9 +143,9 @@
         </table>
         <!--********************************************************************** -->
         <div id="working_time_form3">
-            <strong class="form_section_title">
+            <span class="form_section_title">
                 <?php echo $EXTRA_DATA_WORKING_TIME ?>
-            </strong>
+            </span>
             <table>
                 <tr>
                     <td>
@@ -181,9 +185,9 @@
     <!-- DISTANCE ||| TIME SPENT IN DRIVING ||| SECTION -->
     <div id="distance_time_spent_driving_form3">
         <div id="distance_form3">
-            <strong class="form_section_title">
+            <span class="form_section_title">
                 <?php echo $DISTANCE ?>
-            </strong>
+            </span>
             <table>
                 <tr>
                     <td>
@@ -254,9 +258,9 @@
             </table>
         </div>
         <!--********************************************************************** -->
-        <strong class="form_section_title">
+        <span class="form_section_title">
             <?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>
-        </strong>
+        </span>
         <table>
             <tr class="time_spent_part1_form3">
                 <td>

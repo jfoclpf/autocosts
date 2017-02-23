@@ -1,12 +1,22 @@
 <div class="form_part" id="form_part2">
     <div class="form_part_head_title">
-        <b><?php echo $RUNNING_COSTS_HEADER_1 ?></b>
-        <?php echo $RUNNING_COSTS_HEADER_2 ?>
+        <header>
+            <h2>
+                <b>
+                    <?php echo $RUNNING_COSTS_HEADER_1 ?>
+                </b>
+            </h2>
+            <h4>
+                <?php echo $RUNNING_COSTS_HEADER_2 ?>
+            </h4>
+        </header>
     </div>
     <!--************************** COMBUSTÍVEIS | FUELS ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $FUEL ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $FUEL ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td rowspan="2">
@@ -135,9 +145,11 @@
         </table>
     </div>
     <!--************************** REVISÕES | MAINTENANCE  ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $MAINTENANCE; ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $MAINTENANCE; ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td class="p2">
@@ -152,9 +164,11 @@
         </tr>
     </table>
     <!--************************** REPARAÇÕES | REPAIRS AND IMPROVEMENTS ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $REP_IMPROV ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $REP_IMPROV ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -167,9 +181,11 @@
         </tr>
     </table>
     <!--************************** PARQUEAMENTO | PARKING ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $PARKING ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $PARKING ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -182,9 +198,11 @@
         </tr>
     </table>
     <!--************************** PORTAGENS | TOLLS ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $TOLLS ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $TOLLS ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -244,9 +262,11 @@
         </table>
     </div>
     <!--************************** MULTAS | FINES ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $FINES ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $FINES ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>
@@ -266,9 +286,11 @@
         </tr>
     </table>
     <!--************************** LAVAGENS | WASHING ***************************************************-->
-    <strong class="form_section_title">
-        <?php echo $WASHING ?>
-    </strong>
+    <h3>
+        <span class="form_section_title">
+            <?php echo $WASHING ?>
+        </span>
+    </h3>
     <table>
         <tr>
             <td>

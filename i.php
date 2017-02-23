@@ -1,15 +1,20 @@
 <!DOCTYPE html>
+<?php include_once("./php/string_functions.php"); ?>
 <?php include_once("./countries/_list.php"); ?>
 <?php include_once("./countries/_country_selector.php"); ?>
 
-<html lang="<?php echo $language.'-'.$GLOBALS['country']; ?>">
+<html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 
 <head>
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width" />
-    
-    <title><?php echo $WEB_PAGE_TITLE; ?></title>
+    <!--gets the first sentence of variable $INITIAL_TEXT-->
+	<meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
+    <meta name="keywords" content="<?php echo get_keywords($WEB_PAGE_TITLE, $FIXED_COSTS, $RUNNING_COSTS); ?>">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Autocosts Org">
+       
+    <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     
     <?php include_once('./php/favicon_selector.php'); ?>
     
@@ -39,7 +44,8 @@
                     <div id="div2">
                         <div class="result_section_title">
                             <a class="AC_url" href="<?php echo 'http://'.strtolower($AC_DOMAIN) ?>">
-                                <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?></a>
+                                <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?>
+                            </a>
                         </div>
                         <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
                               action="javascript:void(0);" name="custo">

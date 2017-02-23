@@ -19,6 +19,29 @@ body {
     background: linear-gradient(45deg, #ffffff 0%, #f5f5f5 37%, #ffffff 100%); /* W3C */
 }
 
+/*headings*/
+h1{
+    font-size: 28px;
+    text-align: center;
+    margin: 0;
+}
+h2{
+    display: block;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 2px;
+}
+h3{
+    font-size: 18px;
+    text-align: left;
+    margin: 0;
+}
+h4{
+    display: block;
+    font-size: 15px;
+    font-weight: normal;
+    margin: 2px;    
+}
 /*simple elements*/
 p {
     margin: 0 0 10px;
@@ -427,6 +450,8 @@ form.roundCorner {
 .AC_url {
     color: #0000EE;
     line-height: 30px;
+    font-weight: normal;
+    font-size: 18px;
 }
 #input_div {
     background: #fff;
@@ -462,12 +487,14 @@ form.roundCorner {
     padding: 21px 3% 0 3%;
     font-size: 18px;
     text-align: left;
+    font-weight: bold;
 }
 .form_section_title2 {
     display: block;
     padding: 0 3% 0 0;
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
+    font-weight: bold;
 }
 #main_form .no_left_margin{
     margin-left: 0;
@@ -800,9 +827,11 @@ input:checked + .slider:before {
     }
 }
 
-/***********************************************************/
-/*============ Adapts for mobile devices ==================*/
-/***********************************************************/
+
+/*************************************************************************************************/
+/*================================ Adapts for mobile devices ====================================*/
+/*************************************************************************************************/
+
 /*The treshold from which the blocks are vertically aligned*/
 @media all and (max-width: 768px) {
     
@@ -857,7 +886,7 @@ input:checked + .slider:before {
         float: none;
         margin: 0 auto;
     }
-    #main_title {
+    #main_title, h1 {
         font-size: 21px;
         margin: 4px auto;
     }
@@ -885,7 +914,7 @@ input:checked + .slider:before {
 /*******************************************************************************/
 @media all and (max-width: 425px) {
 
-    #main_title {
+    #main_title, h1 {
         font-size: 18px;
         line-height: 18px;
     }

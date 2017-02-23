@@ -92,7 +92,7 @@ foreach ($avail_CT as $country => $country_name) {
             <td> <span id="txt_kinetic_speed" class="value-field"></span>'.fixNmbr($row["kinetic_speed"],0).'<span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>
-            <td><span><a href="./docs/consumer_speed.html">'.$VIRTUAL_SPEED_TITLE.'</a></span></td>
+            <td><span><a href="./docs/consumerspeed.html">'.$VIRTUAL_SPEED_TITLE.'</a></span></td>
             <td><span id="txt_virtual_speed" class="value-field">'.fixNmbr($row["virtual_speed"],0).'</span><span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>

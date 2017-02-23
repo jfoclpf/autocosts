@@ -3,7 +3,11 @@
     <!--#####################-->
     <div id="header_main_title">
         <div id="main_title">
-            <?php echo $MAIN_TITLE ?>
+            <header>
+                <h1>
+                    <?php echo $MAIN_TITLE ?>
+                </h1>
+            </header>
         </div>
     </div>
     <!--## Select country box ##-->
