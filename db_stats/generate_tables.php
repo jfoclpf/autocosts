@@ -50,8 +50,8 @@ foreach ($avail_CT as $country => $country_name) {
 
     $content.='<br><span>'.$AVERAGE_COSTS_PER_TYPE.'</span>
             </td>
-        </tr>   
-        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$FIXED_COSTS.'<span></td></tr>
+        </tr>  
+        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$FIXED_COSTS.'</span></td></tr>
         <tr><td style="width:50%"><span>'.$DEPRECIATION_ST.'</span></td> <td style="width:25%"><span> '.$CURR_SYMBOL.' </span><span id="txt_depr" class="value-field">'.fixNmbr($row["Depreciation"],1).'</span></td></tr>
         <tr><td><span>'.$INSURANCE_ST.'</span></td>                      <td><span> '.$CURR_SYMBOL.' </span><span id="txt_ins" class="value-field">'.fixNmbr($row["Insurance"],1).'</span></td></tr>
         <tr><td><span>'.$CREDIT_INTERESTS.'</span></td>                  <td><span> '.$CURR_SYMBOL.' </span><span id="txt_cred" class="value-field">'.fixNmbr($row["Loan_interests"],1).'</span></td></tr>
@@ -62,7 +62,7 @@ foreach ($avail_CT as $country => $country_name) {
             <td><span>'.$WORD_TOTAL_CAP.'<br>'.$FIXED_COSTS.'</span></td>
             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_standing_costs" class="value-field">'.fixNmbr($row["standing_costs"],0).'</span></td>
         </tr>   
-        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$RUNNING_COSTS.'<span></td></tr>
+        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$RUNNING_COSTS.'</span></td></tr>
         <tr><td><span>'.$FUEL.'</span></td>                              <td><span> '.$CURR_SYMBOL.' </span><span id="txt_fuel" class="value-field">'.fixNmbr($row["Fuel"],1).'</span></td></tr>
         <tr><td><span>50% '.$MAINTENANCE.'</span></td>                   <td><span> '.$CURR_SYMBOL.' </span><span id="txt_maint2" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
         <tr><td><span>'.$REP_ST.'</span></td>                            <td><span> '.$CURR_SYMBOL.' </span><span id="txt_rep" class="value-field">'.fixNmbr($row["Repairs"],1).'</span></td></tr>
