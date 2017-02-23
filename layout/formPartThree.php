@@ -153,11 +153,11 @@
                             <br>
                             <?php echo $EXTRA_DATA_WORKING_TIME_QUESTION ?>
                             <br>
-                            <span style="white-space:nowrap">
+                            <span class="nowrap">
                                 <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
                                 <?php echo $YES ?>
                             </span>
-                            <span style="white-space:nowrap">
+                            <span class="nowrap">
                                 <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
                                 <?php echo $NO ?>
                             </span>
@@ -194,16 +194,16 @@
                         <?php echo $FUEL_JOB_CALC ?>
                     </td>
                     <td>
-                        <div>
-                            <input type="radio" name="drive_to_work" id="drive_to_work_yes_form3" value="true"
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
                                    onchange="driveToJob(true);">
-                            <?php echo $YES ?>
-                        </div>
-                        <div>
-                            <input type="radio" name="drive_to_work" id="drive_to_work_no_form3" value="false"
+                            <span class="set_right_margin"><?php echo $YES ?></span>
+                        </span>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
                                    onchange="driveToJob(false);" checked >
                             <?php echo $NO ?>
-                        </div>
+                        </span>
                     </td>
                 </tr>
                 <tr class="car_to_job_distance_form3">
@@ -230,7 +230,7 @@
                     <td>
                         <?php echo $FUEL_DIST_NO_JOB ?>&nbsp;
                     </td>
-                    <td style="text-align:left;">
+                    <td class="ta-left">
                         <input type="number" name="journey_weekend" id="journey_weekend" size="5"
                             value="<?php echo $STD_JORNEY_WEEKEND; ?>">
                         <?php echo $STD_DIST ?>

@@ -68,6 +68,8 @@ RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 
+# Disable server signature
+ServerSignature Off
 
 
 

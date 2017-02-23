@@ -62,6 +62,18 @@ sup {
     vertical-align: super;
     font-size: smaller;
 }
+.nowrap{
+    white-space: nowrap;
+}
+.va-middle{
+    vertical-align:middle;
+}
+.ta-left{
+    text-align:left;
+}
+.disp_none{
+    display:none;
+}
 
 /* FORMS */
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
@@ -567,9 +579,8 @@ input:checked + .slider:before {
 }
 #form_part3 .switch_td{
     text-align: right;
-    padding-right: 7%;
+    padding-right: 40px;
 }
-
 
 #div2 td:nth-child(2n),
 .result_section td:nth-child(2n) {
@@ -752,40 +763,11 @@ input:checked + .slider:before {
     width: 50%;
 }
 
-#visitors_table, #stats_table {
-    margin: 0 auto;
-    width: auto;
-    font-size: 95%;
-}
-#visitors_table td:first-child,
-#stats_table td:first-child {
-    text-align:right;
-    padding-right:3px;
-    width: auto;
-    white-space:nowrap;
-}
-#visitors_table td:last-child,
-#stats_table td:last-child{
-    text-align:left;
-    padding-left:3px;
-    width: auto;
-}
-#mobile_logos_table tr,
-#mobile_logos_table td{
-    background:transparent;
-}
-#mobile_logos_table img{
-    background-color:white;
+span.codedirection{ 
+    unicode-bidi:bidi-override; 
+    direction: rtl; 
 }
 
-#visitors_div{
-    padding:2px 0 8px 0;
-    width: 100%;
-}
-#stats_div{
-    padding-bottom:8px;
-    width:100%;
-}
 #contact_div{
     padding:4px 0 8px 0;
     width:100%;

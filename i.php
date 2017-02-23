@@ -73,10 +73,10 @@
                         <br>
                         <!-- first top (pie) chart -->
                         <div id="pie_chart_div"></div><br>
-                        <div id="img_pie_chart_div" style="display:none;"></div>
+                        <div id="img_pie_chart_div" class="disp_none"></div>
                         <!-- second (bars) chart -->
                         <div id="bar_chart_div"></div>
-                        <div id="img_bar_chart_div" style="display:none;"></div>
+                        <div id="img_bar_chart_div" class="disp_none"></div>
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
@@ -87,7 +87,7 @@
                         </div>
                         <!-- third chart -->
                         <div id="fin_effort_chart_div"></div>
-                        <div id="img_fin_effort_chart_div" style="display:none"></div>
+                        <div id="img_fin_effort_chart_div" class="disp_none"></div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
                     <!-- ********* Alternative Costs to Car Costs section **************** -->

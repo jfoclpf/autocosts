@@ -15,7 +15,8 @@
     <div id="div32" class="roundCorner">
         <!-- Contact block -->
         <div id="contact_div">
-            <a href="mailto:info@autocosts.info">info@autocosts.info</a> 
+            <!--hides email from bot spamers-->
+            <span class="codedirection">.stso<!-- >@. -->cotua<!-- >@. -->@<!-- >@. -->ofni</span>info
         </div>
     </div>
 

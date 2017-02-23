@@ -92,11 +92,11 @@
                 <?php echo $CREDIT_QUESTION ?>
             </td>
             <td>
-                <span style="white-space:nowrap">
+                <span class="nowrap">
                     <input type="radio" name="cred_auto" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
                     <span class="set_right_margin"><?php echo $YES ?></span>
                 </span>
-                <span style="white-space:nowrap">
+                <span class="nowrap">
                     <input type="radio" name="cred_auto" value="false" class="no_left_margin" id="radio_cred_nao" onclick="onclick_div_show('#sim_credDiv',false);" checked>
                     <?php echo $NO ?>
                 </span>

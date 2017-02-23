@@ -25,11 +25,11 @@
             <td>
                 <?php echo $FUEL_CALC  . ": "; ?>
                 <br>
-                <span style="white-space:nowrap">
+                <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
                     <span class="set_right_margin"><?php echo $STD_DIST ?></span>
                 </span>
-                <span style="white-space:nowrap">
+                <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
                     <?php echo $CURR_NAME_PLURAL ?>
                 </span>
@@ -40,7 +40,7 @@
                 <div id="currency_div_form2">
                     <input type="number" size="5" id="fuel_currency_value"
                         value="<?php echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
-                    <span style="white-space:nowrap">
+                    <span class="nowrap">
                         <?php echo $CURR_SYMBOL; ?> <?php echo $WORD_PER; ?>
                     </span>
                     <select id="combustiveis_periodo_euro">
@@ -61,11 +61,11 @@
                     <?php echo $FUEL_JOB_CALC; ?>
                 </td>
                 <td>
-                    <span style="white-space:nowrap">
+                    <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
                         <span class="set_right_margin"><?php echo $YES ?></span>
                     </span>
-                    <span style="white-space:nowrap">
+                    <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
                         <?php echo $NO ?>
                     </span>
@@ -156,7 +156,7 @@
                 <?php echo $MAINTENANCE_DESC; ?>
                 <br>
             </td>
-            <td style="vertical-align:middle;">
+            <td class="va-middle">
                 <input type="number" name="revisoes" size="6" id="maintenance"
                        value="<?php echo $STD_MAINTENANCE_PER_YEAR; ?>">
                 <?php echo $CURR_SYMBOL; ?>/<?php echo $YEAR; ?>
@@ -211,11 +211,11 @@
             <td>
                 <?php echo $TOLLS_DAY_CALC ?>
                 <div>
-                    <span style="white-space:nowrap">
+                    <span class="nowrap">
                         <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
                         <span class="set_right_margin"><?php echo $YES ?></span>
                     </span>
-                    <span style="white-space:nowrap">
+                    <span class="nowrap">
                         <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
                         <?php echo $NO ?>
                     </span>
