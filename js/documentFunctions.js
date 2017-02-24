@@ -657,3 +657,14 @@ function S4() {
 function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
+
+//detects old versions of Internet Explorer
+function oldIE(){
+    var div = document.createElement("div");
+    div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
+    var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
+    if (isIeLessThan9) {
+        document.getElementById("main_div").innerHTML = "Please update your browser!";
+        alert("Please update your browser!");       
+    }
+}

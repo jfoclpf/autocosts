@@ -3,6 +3,9 @@ window.onload = initialize;
 var isUserHuman = false; //global variable for Google reCaptcha
 
 function initialize() {
+    //detects old versions of Internet Explorer
+    oldIE();
+    
     openForm_part("form_part", 0, 1); /*shows just part 1 of input form*/
     
     //divs that need to be hidden    
