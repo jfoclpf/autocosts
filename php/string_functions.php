@@ -2,12 +2,12 @@
 //function that cleans the string of HTML tags a gets only the first sentence of $string
 function meta_description($string){
 
-    //gets the first sentence of $string
-    $string = preg_replace('/(.*?[?!.](?=\s|$)).*/', '\\1', $string);
-    
     //Strip out HTML tags, leave only alphanumeric characters and space:
     $string = strip_tags($string);
- 
+    
+    //gets first sentence
+    $string = strtok($string, '.'); 
+    
     return $string;
 }
 
@@ -46,10 +46,10 @@ function get_keywords($title, $str1, $str2){
     //get an array of words stripped by space
     $words = explode(" ", $title);
 
-    //if a word has a size bigger than 4, adds to keywords
+    //if a word has a size bigger than 3, adds to keywords
     $keywords = []; 
     foreach($words as $word){
-        if (strlen($word)>4){
+        if (strlen($word)>3){
             array_push($keywords, $word);
         }
     }  
