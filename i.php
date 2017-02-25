@@ -17,7 +17,10 @@
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     
     <?php include_once('./php/favicon_selector.php'); ?>
-    
+    <?php include_once('./php/logo_pict_selector.php'); ?>    
+    <!--structured data for search engines -->
+    <?php include_once('./google/structured_data.php'); ?>
+
     <?php include_once('./php/css_embed.php'); ?>
     <!--Embed all CSS files within CSS folder-->
     <?=(new CSS_Embed()) ?>
