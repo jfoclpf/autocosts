@@ -1,5 +1,5 @@
 <div id="div3a" class="roundCornerSlight">
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/php/logo_pict_selector.php"); ?>
+    <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php/logo_pict_selector.php"); ?>
     <?
     if ($is_logo)
         echo '<img alt="Logo" src="images/logos/' . get_logo_file_name($is_logo, $currency_logo) . '" id="ac_logo">';
