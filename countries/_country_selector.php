@@ -1,20 +1,5 @@
 <?php
 
-//function that informs if a country is in the list of available countries
-function is_cty_inlist($cc, $c_array){ //cc=country code
-	if ($cc == null) {
-		return false;
-	}
-	foreach ($c_array as $key => $value) {
-		if ($key == $cc) {
-			return true;
-		}
-	}
-	return false;
-}
-//*****************
-
-
 asort($avail_CT); //sorts alphabetically the counties list
 
 $url_cc = $_GET["c"]; //selected country code from URL

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<?php include_once("./php/string_functions.php"); ?>
+<?php include_once("./php/functions.php"); ?>
 <?php include_once("./countries/_list.php"); ?>
 <?php include_once("./countries/_country_selector.php"); ?>
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 
-<head>
-    
+<head>  
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
 	<meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
     <meta name="keywords" content="<?php echo get_keywords($WEB_PAGE_TITLE, $FIXED_COSTS, $RUNNING_COSTS); ?>">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
+
+    <!-- Decides whether this specific page is to be crawled or not by search engines-->
+    <?php echo '<meta name="robots" content="' . (crawlByBot($AC_DOMAIN)?'index, follow':'noindex, nofollow') . '"/>';?>
        
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     
@@ -146,7 +148,6 @@
     <script src="js/documentFunctions.js"></script>
     <script src="js/initialize.js"></script>
     <?php include_once("google/analyticstracking.php"); ?>
-    
     
 </body>
 

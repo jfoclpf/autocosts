@@ -1,23 +1,26 @@
 <!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <HTML>
-   <HEAD>
-      <TITLE>
-         Domain list of autocosts
-      </TITLE>
-      <style>
-      table {
-          border-collapse: collapse;
-      }
-      table, th, td {
-        border: 1px solid black;
-        padding: 4px;
-      }
-      </style>
-   </HEAD>
+    <HEAD>
+        <TITLE>
+            List of countries for autocosts
+        </TITLE>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            table, th, td {
+                border: 1px solid black;
+                padding: 4px;
+            }
+        </style>
+    </HEAD>
 <BODY>
 
 <table>
     <tr>
+        <th>
+            #
+        </th>
         <th>
             Country
         </th>
@@ -51,10 +54,12 @@
         include_once("./_list.php");
         asort($avail_CT); //sorts alphabetically the counties list
         
+        $i=1;
         foreach ($avail_CT as $key => $value) {
             if (strtoupper($key) != "XX"){
                 include_once('./' . $key . '.php');
                 echo '<tr>';
+                echo '<td>'.$i.'</td>'; $i++;
                 echo '<td>'.$value.'</td>';
                 echo '<td>'.$key.'</td>';
                 echo '<td><a href="http://'.strtolower($AC_DOMAIN).'">'.strtolower($AC_DOMAIN).'</a></td>';
@@ -108,8 +113,7 @@
                         break;                        
                     default:
                         echo '<td>error</td>';
-                }                
-
+                }
                 echo '</tr>';
             }
         }

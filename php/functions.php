@@ -1,4 +1,18 @@
 <?php
+
+//function that informs if a country is in the list of available countries
+function is_cty_inlist($cc, $c_array){ //cc=country code
+	if ($cc == null) {
+		return false;
+	}
+	foreach ($c_array as $key => $value) {
+		if ($key == $cc) {
+			return true;
+		}
+	}
+	return false;
+}
+
 //function that cleans the string of HTML tags a gets only the first sentence of $string
 function meta_description($string){
 
@@ -74,5 +88,39 @@ function HTML_tag_lang($lang, $cty){
     }
     return $lang . '-' . $cty;
 }
-?>
 
+function crawlByBot($AC_DOMAIN){
+//$DomainInFile gets "autocustos.pt" or "autocosts.info/au"
+    
+    $domain_client = strtolower($_SERVER['HTTP_HOST']);
+    
+    //if test .work version do not crawl
+    if(explode('.',$domain_client)[1]=="work"){
+        return false;
+    }
+    
+    $domain_infile = explode("/", strtolower($AC_DOMAIN));
+    
+    //if the domain in file has /CC, ex: in AU.php there is "autocosts.info/au"
+    if ($domain_infile[1] && $domain_infile[1]!=""){
+        if ($domain_infile[0] == $domain_client &&
+            $domain_infile[1] == strtolower($GLOBALS['country'])){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    //if the domain in file has no /CC, ex: in PT.php there is "autocustos.pt"
+    else{      
+        if ($domain_infile[0] == $domain_client){
+            return true;
+        }
+        else{
+            return false;
+        }       
+    }
+}
+
+?>
