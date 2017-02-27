@@ -13,7 +13,12 @@ ErrorDocument 404 /i.php
 ErrorDocument 500 /i.php
 DirectoryIndex i.php index.php index.html index.htm
 
+# Disable server signature
+ServerSignature Off
+
 RewriteEngine On
+
+RewriteRule sitemap\.xml sitemap.php [L]
 
 RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
@@ -67,9 +72,6 @@ RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
-
-# Disable server signature
-ServerSignature Off
 
 
 
