@@ -29,13 +29,13 @@ include_once('./countries/_list.php');?>
         foreach ($avail_CT as $key2 => $value2){
             if($key2 != $key1){
                 echo "\t\t\t" . '<xhtml:link rel="alternate" '. 
-                     'hreflang="'. $language_list[$key2] . '-' . $key2.'" '.
+                     'hreflang="'. strtolower($language_list[$key2]) . '-' . strtolower($key2) . '" '.
                      'href="' . $domain_list[$key2] . '" />'.
                      "\xA";
             }
         }
         echo "\t\t\t" . '<xhtml:link rel="alternate" '. 
-             'hreflang="'. $language_list[$key1] . '-' . $key1.'" '.
+             'hreflang="'. strtolower($language_list[$key1]) . '-' . strtolower($key1) . '" '.
              'href="' . $domain_list[$key1] . '" />'.
              "\xA";
       
