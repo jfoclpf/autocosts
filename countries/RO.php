@@ -70,7 +70,7 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Sprijiniţi acest proiect' ;
 $AC_MOBILE = 'AUTOCOSTS<br> pentru aparate mobile';
-$AC_DOMAIN = 'AUTOCOSTURI.RO';
+$AC_DOMAIN = 'AUTOCOSTS.INFO/RO';
 $AC_SUB_HEADER = 'CALCULATOR COSTURI AUTOMOBILE';
 
 //time words

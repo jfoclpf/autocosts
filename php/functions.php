@@ -89,37 +89,39 @@ function HTML_tag_lang($lang, $cty){
     return $lang . '-' . $cty;
 }
 
+//function that says if the current URL shall be crawled by robots
+//Ex: autocustos.info/pt shall be crawled and autocosts.info/pt not 
 function crawlByBot($AC_DOMAIN){
-//$DomainInFile gets "autocustos.pt" or "autocosts.info/au"
     
     $domain_client = strtolower($_SERVER['HTTP_HOST']);
     
     //if test .work version do not crawl
-    if(explode('.',$domain_client)[1]=="work"){
+    if(explode('.',$domain_client)[1]=="work" || strtoupper($GLOBALS['country'])=="XX"){
         return false;
     }
     
     $domain_infile = explode("/", strtolower($AC_DOMAIN));
     
-    //if the domain in file has /CC, ex: in AU.php there is "autocosts.info/au"
-    if ($domain_infile[1] && $domain_infile[1]!=""){
-        if ($domain_infile[0] == $domain_client &&
-            $domain_infile[1] == strtolower($GLOBALS['country'])){
-            return true;
-        }
-        else{
-            return false;
-        }
-        
+    if ($domain_infile[0] == $domain_client &&
+        $domain_infile[1] == strtolower($GLOBALS['country'])){
+        return true;
     }
-    //if the domain in file has no /CC, ex: in PT.php there is "autocustos.pt"
-    else{      
-        if ($domain_infile[0] == $domain_client){
-            return true;
-        }
-        else{
-            return false;
-        }       
+    else{
+        return false;
+    }
+}
+
+//detect if is a test 
+function isTest(){
+
+    $domain_client = strtolower($_SERVER['HTTP_HOST']);
+   
+    //if test .work version do not crawl
+    if(explode('.',$domain_client)[1]=="work" || strtoupper($GLOBALS['country'])=="XX"){
+        return true;
+    }
+    else{
+        return false;
     }
 }
 

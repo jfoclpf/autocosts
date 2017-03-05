@@ -64,7 +64,7 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Questo servizio è gratuito, senza pubblicità!' ;
 $AC_MOBILE = 'COSTI AUTO<br>per dispositivi mobili';
-$AC_DOMAIN = 'AUTOCOSTI.IT';
+$AC_DOMAIN = 'AUTOCOSTI.INFO/IT';
 $AC_SUB_HEADER = 'CALCOLATRICE DEI COSTI DI AUTO';
 
 //time words

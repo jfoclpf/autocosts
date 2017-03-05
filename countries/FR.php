@@ -63,7 +63,7 @@ $DISCLAIMER = "Cette calculatrice est <b>complètement anonyme</b>, car elle ne 
 
 $HELP_PROJECT = 'Ce service est gratuit, sans publicité!';
 $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
-$AC_DOMAIN = 'AUTOCOUTS.FR';
+$AC_DOMAIN = 'AUTOCOUTS.INFO/FR';
 $AC_SUB_HEADER = 'CALCULATRICE DES COÛTS AUTOMOBILES';
 
 //user statistics

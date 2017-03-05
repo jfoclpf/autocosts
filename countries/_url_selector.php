@@ -6,6 +6,7 @@ $url_cc = $_GET["c"]; //selected country code from URL
 $url_cc=strtoupper($url_cc); //uppercase
 
 //if no country is defined or the country isn't in the list
+//i.e, if the CC characters in domain.pt/CC are not recognized
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	
     //gets the country by IP 
@@ -30,23 +31,36 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	} else {
 		$GLOBALS['country'] = "UK";
 	}
-
-    //writes a simple HTML page that simply redirects to 
-    //the correct URL page for the right country
+    
+    //loads the correspondent country file
     include_once('./countries/' . $GLOBALS['country'] . '.php');
-    echo '<html lang="' . HTML_tag_lang($LANGUAGE_CODE, $GLOBALS['country']) . '">';
-    echo "<head>";
-    echo "<title>" . $WEB_PAGE_TITLE . "</title>";
-    echo "<script type=\"text/javascript\"> window.location.href = \"" . $GLOBALS['country'] . "\" </script>";
-    echo "</head><body></body></html>";
+    
+    if(!isTest()){
+        $URLtoRedirect = 'http://'.strtolower($AC_DOMAIN);       
+    }
+    else{
+        $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);
+    }
+    header('Location: '.$URLtoRedirect, true, 302);
     exit;
-     
-} else {
+    
+}//if the CC characters after domain.pt/CC ARE recognized as being in the list 
+else {
 	$GLOBALS['country'] = $url_cc;
+    //loads the correspondent country file
+    include_once('./countries/' . $GLOBALS['country'] . '.php');
+    
+    //if the URL is not the valid URL
+    //example: autocosts.info/pt shall forward to autocustos.pt/pt 
+    if(!crawlByBot($AC_DOMAIN) && !isTest()){
+  
+        $URLtoRedirect = 'http://'.strtolower($AC_DOMAIN);
+        header('Location: '.$URLtoRedirect, true, 301);
+        exit; 
+    }
 }
-
-//loads the correspondent country file
-include_once('./countries/' . $GLOBALS['country'] . '.php');
+//from here the /CC is recognized 
+//AND the URL is correct
 
 //gets the correspondent language to input on <html lang"##">, after the correct country file was loaded
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)

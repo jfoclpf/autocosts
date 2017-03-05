@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<?php include_once("./php/functions.php"); ?>
-<?php include_once("./countries/_list.php"); ?>
-<?php include_once("./countries/_country_selector.php"); ?>
+<?php 
+include_once("./php/functions.php");
+include_once("./countries/_list.php");
+include_once("./countries/_url_selector.php");
+?><!DOCTYPE html>
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 
@@ -13,8 +14,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
 
-    <!-- Decides whether this specific page is to be crawled or not by search engines-->
-    <?php echo '<meta name="robots" content="' . (crawlByBot($AC_DOMAIN)?'index, follow':'noindex, nofollow') . '"/>';?>
+    <?php echo '<meta name="robots" content="' . (!isTest()?'index, follow':'noindex, nofollow') . '"/>';?>
        
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     

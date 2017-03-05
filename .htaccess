@@ -26,6 +26,7 @@ RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
 RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
 RewriteRule ^index.php$ /%1%2? [R=301,L]
+
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
 #Domain Name Policy (DNP) in: http://github.com/jfoclpf/autocosts/wiki/Domain-name-policy
@@ -34,30 +35,27 @@ RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
 RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
-RewriteRule ^/?$ "http\:\/\/autocustos\.pt\/PT" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocustos\.info\/PT" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
-RewriteRule ^/?$ "http\:\/\/autocostes\.es\/ES" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocostos\.info\/ES" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocouts\.fr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocouts\.fr$
-RewriteRule ^/?$ "http\:\/\/autocouts\.fr\/FR" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocouts\.info\/FR" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocosti\.it$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosti\.it$
-RewriteRule ^/?$ "http\:\/\/autocosti\.it\/IT" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocosti\.info\/IT" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autocosturi\.ro$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosturi\.ro$
-RewriteRule ^/?$ "http\:\/\/autocosturi\.ro\/RO" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/autocosts\.info\/RO" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
-RewriteRule ^/?$ "http\:\/\/exodaautokinitou\.gr\/GR" [R=301,L]
-
-
-#Forward rules of Domains that fulfill Rule 2 of the Domain Name Policy
+RewriteRule ^/?$ "http\:\/\/autocosts\.info\/GR" [R=301,L]
 
 RewriteCond %{HTTP_HOST} ^autokoszty\.info$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info$
