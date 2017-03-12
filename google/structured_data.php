@@ -12,8 +12,7 @@
     "image": "<?php if ($is_logo){ 
                         echo "http://autocosts.info/images/logos/".get_logo_file_name($is_logo, $currency_logo);}
                     else{
-                        echo "http://autocosts.info/images/logos/autocosts_dollar.png";} ?>';
-",
+                        echo "http://autocosts.info/images/logos/autocosts_dollar.png";} ?>",
     "name": "<?php echo adapt_title($WEB_PAGE_TITLE); ?>",
     "url": "autocosts.info/<?php echo $GLOBALS["country"]; ?>"
   },

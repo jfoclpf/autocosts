@@ -61,14 +61,13 @@ RewriteCond %{HTTP_HOST} ^autokoszty\.info$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info$
 RewriteRule ^/?$ "http\:\/\/autokoszty\.info\/PL" [R=301,L]
 
-
 #General broad rules
-RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
-RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
-
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
+RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info" [R=301,L]
 
 
