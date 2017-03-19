@@ -14,8 +14,11 @@ include_once("./countries/_url_selector.php");
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
 
-    <?php echo '<meta name="robots" content="' . (!isTest()?'index, follow':'noindex, nofollow') . '"/>';?>
-       
+    <meta name="robots" content="<?php echo (!isTest()?'index, follow':'noindex, nofollow')?>" />
+    
+    <link rel="canonical" href="http://<?php echo strtolower($AC_DOMAIN)?>" />
+    <?php include_once './countries/_hreflang.php'; ?>
+    
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     
     <?php include_once('./php/favicon_selector.php'); ?>
