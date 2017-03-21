@@ -34,9 +34,10 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
     
     //loads the correspondent country file
     include_once('./countries/' . $GLOBALS['country'] . '.php');
+    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']); 
     
     if(!isTest()){
-        $URLtoRedirect = 'http://'.strtolower($AC_DOMAIN);       
+        $URLtoRedirect = 'http://'.$AC_DOMAIN;       
     }
     else{
         $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);
@@ -49,12 +50,13 @@ else {
 	$GLOBALS['country'] = $url_cc;
     //loads the correspondent country file
     include_once('./countries/' . $GLOBALS['country'] . '.php');
+    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
     
     //if the URL is not the valid URL
     //example: autocosts.info/pt shall forward to autocustos.pt/pt 
     if(!crawlByBot($AC_DOMAIN) && !isTest()){
   
-        $URLtoRedirect = 'http://'.strtolower($AC_DOMAIN);
+        $URLtoRedirect = 'http://'.$AC_DOMAIN;
         header('Location: '.$URLtoRedirect, true, 301);
         exit; 
     }
@@ -64,10 +66,9 @@ else {
 
 //gets the correspondent language to input on <html lang"##">, after the correct country file was loaded
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)
-$language=$LANGUAGE_CODE; 
-//$LANGUAGE_CODE might be of the type "es-419" (latin american spanish) or pt-br (brazilian portuguese)
+//$lang_CT[$GLOBALS['country']] might be of the type "es-419" (latin american spanish) or pt-br (brazilian portuguese)
 //gets just the 2 first characters
-$language=mb_substr($language, 0, 2);
+$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
 
 //some initializations
 $is_logo = false;

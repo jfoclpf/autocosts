@@ -14,9 +14,8 @@ include_once('./countries/_list.php');?>
     //creates an array with all domains and all languages
     $domain_list = []; $language_list = [];
     foreach ($avail_CT as $key => $value){
-        include('./countries/' . $key . '.php');
-        $domain_list[$key] = 'http://'.strtolower($AC_DOMAIN).(!explode("/",$AC_DOMAIN)[1]?('/'.strtolower($key)):'');
-        $language_list[$key] = mb_substr($LANGUAGE_CODE, 0, 2);
+        $domain_list[$key] = 'http://'.strtolower($domain_CT[$key]).'/'.strtoupper($key);
+        $language_list[$key] = mb_substr($lang_CT[$key], 0, 2);
     }
     
     foreach ($avail_CT as $key1 => $value1){

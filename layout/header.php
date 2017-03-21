@@ -18,13 +18,18 @@
             </div>
             <div id="country_select_div">
                 <select name="country_select" id="country_select" onchange="valueselect(this.value);">
-                <?php foreach ($avail_CT as $key => $value) {
-                    if ($key != "XX") { ?>
-                        <option value="<?php echo $key ?>" <?php if ($key == $GLOBALS['country']) {
-                            echo "selected=\"selected\"";
-                        } ?>> <?php echo $value ?></option>
-                    <?php }
-                } ?>
+                    <?php 
+                        foreach ($avail_CT as $key => $value) {
+                            if ($key != "XX") {
+                                echo '<option value="'.$key.'"'; 
+                                if ($key == $GLOBALS['country']){
+                                    echo 'selected="selected"';
+                                } 
+                                echo '>'; 
+                                echo $value.'</option>';
+                             }
+                        }
+                    ?>
                 </select>
             </div>
         </div>

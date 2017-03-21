@@ -51,7 +51,7 @@ include_once("./countries/_url_selector.php");
                 <div id="div2_td">
                     <div id="div2">
                         <div class="result_section_title">
-                            <a class="AC_url" href="<?php echo 'http://'.strtolower($AC_DOMAIN) ?>">
+                            <a class="AC_url" href="<?php echo 'http://'.$AC_DOMAIN ?>">
                                 <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?>
                             </a>
                         </div>
@@ -141,7 +141,8 @@ include_once("./countries/_url_selector.php");
     <script>
         var Country = '<?php echo $GLOBALS["country"]; ?>';
         //Language code according to ISO_639-1 codes
-        var Language = '<?php echo $LANGUAGE_CODE; ?>';
+        var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
+        var Domain_list = <?php echo json_encode($domain_CT); ?>;
         var uber_obj = {};//empty object
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;

@@ -28,6 +28,9 @@
             CC
         </th>
         <th>
+            Language
+        </th>        
+        <th>
             Main domain
         </th>
         <th>
@@ -62,7 +65,8 @@
                 echo '<td>'.$i.'</td>'; $i++;
                 echo '<td>'.$value.'</td>';
                 echo '<td>'.$key.'</td>';
-                echo '<td><a href="http://'.strtolower($AC_DOMAIN).'">'.strtolower($AC_DOMAIN).'</a></td>';
+                echo '<td>'. substr($lang_CT[$key],0,2) .'</td>';
+                echo '<td><a href="http://'.strtolower($domain_CT[$key]).'/'.strtoupper($key).'">'.strtolower($domain_CT[$key]).'</a></td>';
                 echo '<td>'.$CURR_CODE.'</td>';
                 echo '<td>'.$CURR_NAME.'</td>';
                 echo '<td>'.$CURR_SYMBOL.'</td>';                
