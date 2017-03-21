@@ -4,7 +4,6 @@
 // LANGUAGE: español
 
 $COUNTRY_NAME = 'México';
-$LANGUAGE_CODE = 'es-419';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';
-$AC_DOMAIN = 'AUTOCOSTOS.INFO/MX';
 $AC_SUB_HEADER = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 
 //user statistics

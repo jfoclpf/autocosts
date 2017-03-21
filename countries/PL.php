@@ -4,7 +4,6 @@
 // LANGUAGE: POLSKY
 
 $COUNTRY_NAME = 'Polski';
-$LANGUAGE_CODE = 'pl';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -63,7 +62,6 @@ Ponieważ rachunki związane z utrzymaniem samochodu napływają w ciągu całeg
 
 $HELP_PROJECT = 'Wesprzyj ten projekt' ;
 $AC_MOBILE = 'AUTOKOSZTY<br>na urządzenia mobilne';
-$AC_DOMAIN = 'AUTOKOSZTY.INFO/PL';
 $AC_SUB_HEADER = 'KALKULATOR KOSZTÓW SAMOCHODOWYCH';
 
 

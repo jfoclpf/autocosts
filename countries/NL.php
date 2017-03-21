@@ -4,7 +4,6 @@
 // LANGUAGE: NETHERLANDS
 
 $COUNTRY_NAME = 'Netherland';
-$LANGUAGE_CODE = 'nl';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -64,7 +63,6 @@ Gezien uw rekeningen op verschillende tijdsstippen van het jaar binnenkomen, is 
 
 $HELP_PROJECT = 'Help dit project' ;
 $AC_MOBILE = 'AUTOKOSTEN<br>voor mobiele apparaten';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/NL';
 $AC_SUB_HEADER = 'AUTOKOSTENSIMULATOR';
 
 //time words

@@ -4,7 +4,6 @@
 // LANGUAGE: español
 
 $COUNTRY_NAME = 'España';
-$LANGUAGE_CODE = 'es';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -71,7 +70,6 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL COCHE<br>para móviles';
-$AC_DOMAIN = 'AUTOCOSTOS.INFO/ES';
 $AC_SUB_HEADER = 'CALCULADORA DE GASTOS DE COCHE';
 
 //user statistics

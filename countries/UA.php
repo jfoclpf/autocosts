@@ -4,7 +4,6 @@
 // LANGUAGE: UKRAINIAN
 
 $COUNTRY_NAME = 'України';
-$LANGUAGE_CODE = 'uk';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Це - безкоштовна послуга без реклами!' ;
 $AC_MOBILE = 'АВТОВИТРАТИ<br>для мобільних пристроїв';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/UA';
 $AC_SUB_HEADER = 'КАЛЬКУЛЯТОР ВИТРАТ НА АВТОМОБІЛЬ';
 
 //time words

@@ -4,7 +4,6 @@
 // LANGAUAGE: DANSK
 
 $COUNTRY_NAME = 'Danmark';
-$LANGUAGE_CODE = 'da';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -68,7 +67,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Dette er en gratis tjeneste uden reklamer!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobilvisning'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO/DK';
 $AC_SUB_HEADER = 'BEREGN DINE BILUDGIFTER';
 
 //time words $DAYLY = 'ημερησίως'; 

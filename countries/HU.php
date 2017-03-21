@@ -4,7 +4,6 @@
 // LANGAUAGE: MAGYAR
 
 $COUNTRY_NAME = 'Magyarország';
-$LANGUAGE_CODE = 'hu';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ Mivel az Ön járműfenntartási költségei az év folyamán más-más helyen j
 
 $HELP_PROJECT = 'Támogassa projektünket' ;
 $AC_MOBILE = 'AUTÓKÖLTSÉGEK<br>mobileszközökhöz';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/HU';
 $AC_SUB_HEADER = 'GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR';
 
 //time words

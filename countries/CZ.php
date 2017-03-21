@@ -4,7 +4,6 @@
 // LANGAUAGE: ČESKÝ
 
 $COUNTRY_NAME = 'Češku';
-$LANGUAGE_CODE = 'cs';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ $INITIAL_TEXT =
 $HELP_PROJECT = 'Podpořte tento projekt' ;
 
 $AC_MOBILE = 'AUTONAKLADY<br>pro mobilní zařízení';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/CZ';
 $AC_SUB_HEADER = 'KALKULÁTOR VÝDAJŮ NA AUTO';
 
 //time words

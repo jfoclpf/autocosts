@@ -4,7 +4,6 @@
 // LANGUAGE: RUSSIAN
 
 $COUNTRY_NAME = 'России';
-$LANGUAGE_CODE = 'ru';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Помогите этому проекту' ;
 $AC_MOBILE = 'AUTOCOSTS<br>для мобильных устройств';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/RU';
 $AC_SUB_HEADER = 'КAЛЬKУЛЯТОР РАСХОДОВ НА АВТОМОБИЛЬ';
 
 //time words

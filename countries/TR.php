@@ -4,7 +4,6 @@
 // LANGUAGE: TÜRKÇE
 
 $COUNTRY_NAME = 'Türkiye';
-$LANGUAGE_CODE = 'tr';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -60,7 +59,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Bu, reklam almayan ücretsiz bir hizmettir!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>mobil cihazlar için'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO/TR';
 $AC_SUB_HEADER = 'OTOMOBİL MASRAF HESAPLAYICI';
 
 //time words 

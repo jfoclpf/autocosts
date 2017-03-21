@@ -4,7 +4,6 @@
 // LANGAUAGE: español
 
 $COUNTRY_NAME = 'Puerto Rico';
-$LANGUAGE_CODE = 'es-419';
 
 //***********************************************
 //											   **
@@ -73,7 +72,6 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Este servicio es gratuito, sin publicidad';
 $AC_MOBILE = 'GASTO DEL AUTO<br>para móviles';
-$AC_DOMAIN = 'AUTOCOSTOS.INFO/PR';
 $AC_SUB_HEADER = 'CALCULADORA DE COSTOS DE AUTOMÓVIL';
 
 //user statistics

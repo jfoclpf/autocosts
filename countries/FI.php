@@ -4,7 +4,6 @@
 // LANGAUAGE: SUOMI
 
 $COUNTRY_NAME = 'Suomessa';
-$LANGUAGE_CODE = 'fi';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -68,7 +67,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Auta tätä projektia' ;
 $AC_MOBILE = 'AUTOKULUT<br> mobiililaitteille';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/FI';
 $AC_SUB_HEADER = 'AUTON KUSTANNUSLASKURI';
 
 //time words

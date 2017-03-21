@@ -4,7 +4,6 @@
 // LANGUAGE: NORSK
 
 $COUNTRY_NAME = 'Norge';
-$LANGUAGE_CODE = 'no';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -64,7 +63,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Støtt dette prosjektet' ;
 $AC_MOBILE = 'AUTOCOSTS<br> for mobile produkter';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/NO';
 $AC_SUB_HEADER = 'KOSTNADSKALKULATOR FOR BIL';
 
 //time words

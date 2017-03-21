@@ -4,7 +4,6 @@
 // LANGUAGE: ROMÂNĂ
 
 $COUNTRY_NAME = 'România';
-$LANGUAGE_CODE = 'ro';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -70,7 +69,6 @@ $DISCLAIMER = "Esta calculadora es <b>completamente anónima</b> y no solicita n
 
 $HELP_PROJECT = 'Sprijiniţi acest proiect' ;
 $AC_MOBILE = 'AUTOCOSTS<br> pentru aparate mobile';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/RO';
 $AC_SUB_HEADER = 'CALCULATOR COSTURI AUTOMOBILE';
 
 //time words

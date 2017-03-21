@@ -3,7 +3,6 @@
 // LANGAUAGE: ENGLISH
 
 $COUNTRY_NAME = 'Australia';
-$LANGUAGE_CODE = 'en';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -61,7 +60,6 @@ $DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't req
 
 $HELP_PROJECT = 'This is a free service with no advertisements!'; 
 $AC_MOBILE = 'AUTOCOSTS<br>for mobile devices'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO/AU';
 $AC_SUB_HEADER = 'AUTOMOBILE COSTS CALCULATOR';
 
 //user statistics

@@ -4,7 +4,6 @@
 // LANGUAGE: SVENSKA
 
 $COUNTRY_NAME = 'Sverige';
-$LANGUAGE_CODE = 'sv';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -71,7 +70,6 @@ Eftersom dina fordonsrelaterade räkningar kommer vid olika tillfällen under å
 $HELP_PROJECT = 'Assistera detta projekt';
 $AC_MOBILE = 'AUTOCOSTS<br> för fordon';
 $AC_HEADER = '<big><u>WWW.AUTOCOSTS.INFO</u></big><br><b>KALKYLATOR FÖR FORDONSKOSTNADER</b>';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/SE';
 $AC_SUB_HEADER = 'KALKYLATOR FÖR FORDONSKOSTNADER';
 
 //time words

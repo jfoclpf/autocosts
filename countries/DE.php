@@ -4,7 +4,6 @@
 // LANGAUAGE: DEUTSCH
 
 $COUNTRY_NAME = 'Deutschland';
-$LANGUAGE_CODE = 'de';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -69,7 +68,6 @@ Da die Autorechnungen zu unterschiedlichen Zeiten im Jahr bezahlt werden müssen
 
 $HELP_PROJECT = 'Unterstützen Sie dieses Projekt!' ;
 $AC_MOBILE = 'Autokostenrechner<br>für Mobilgeräte';
-$AC_DOMAIN = 'AUTOCOSTS.INFO/DE';
 $AC_SUB_HEADER = 'AUTOKOSTENRECHNER';
 
 //user statistics

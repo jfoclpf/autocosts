@@ -4,7 +4,6 @@
 // LANGAUAGE: FRANCES
 
 $COUNTRY_NAME = 'France';
-$LANGUAGE_CODE = 'fr';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -63,7 +62,6 @@ $DISCLAIMER = "Cette calculatrice est <b>complètement anonyme</b>, car elle ne 
 
 $HELP_PROJECT = 'Ce service est gratuit, sans publicité!';
 $AC_MOBILE = 'AUTOCOSTS<br>pour appareils mobiles';
-$AC_DOMAIN = 'AUTOCOUTS.INFO/FR';
 $AC_SUB_HEADER = 'CALCULATRICE DES COÛTS AUTOMOBILES';
 
 //user statistics

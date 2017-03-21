@@ -4,7 +4,6 @@
 // LANGUAGE: ITALIANO
 
 $COUNTRY_NAME = 'Italia';
-$LANGUAGE_CODE = 'it';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -64,7 +63,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Questo servizio è gratuito, senza pubblicità!' ;
 $AC_MOBILE = 'COSTI AUTO<br>per dispositivi mobili';
-$AC_DOMAIN = 'AUTOCOSTI.INFO/IT';
 $AC_SUB_HEADER = 'CALCOLATRICE DEI COSTI DI AUTO';
 
 //time words

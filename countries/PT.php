@@ -4,7 +4,6 @@
 // LANGUAGE: PORTUGUESE
 
 $COUNTRY_NAME = 'Portugal';
-$LANGUAGE_CODE = 'pt-PT';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -64,7 +63,6 @@ $DISCLAIMER = "Esta calculadora é <b>completamente anónima</b>, considerando q
 
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
-$AC_DOMAIN = 'AUTOCUSTOS.INFO/PT';
 $AC_SUB_HEADER = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
 
 //user statistics

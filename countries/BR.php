@@ -3,7 +3,6 @@
 // COUNTRY: BRAZIL
 // LANGAUAGE: PORTUGUESE - BRAZILIAN
 
-$LANGUAGE_CODE = 'pt-BR';
 $COUNTRY_NAME = 'Brasil';
 
 //the language is according with the two-letter language code ISO 639-1
@@ -62,7 +61,6 @@ $DISCLAIMER = "Esta calculadora é <b>completamente anônima</b>, considerando q
 
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
 $AC_MOBILE = 'AUTOCUSTOS<br>para dispositivos móveis';
-$AC_DOMAIN = 'AUTOCUSTOS.INFO/BR';
 $AC_SUB_HEADER = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
 
 //user statistics

@@ -4,7 +4,6 @@
 // LANGAUAGE: ΕΛΛΗΝΙΚΑ
 
 $COUNTRY_NAME = 'Ελλάδα';
-$LANGUAGE_CODE = 'el';
 
 //the language is according with the two-letter language code ISO 639-1
 //http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
@@ -68,7 +67,6 @@ $INITIAL_TEXT =
 
 $HELP_PROJECT = 'Η υπηρεσία παρέχεται δωρεάν, χωρίς διαφημίσεις!'; 
 $AC_MOBILE = 'ΕΞΟΔΑ ΑΥΤΟΚΙΝΗΤΟΥ<br>για φορητές συσκευές'; 
-$AC_DOMAIN = 'AUTOCOSTS.INFO/GR';
 $AC_SUB_HEADER = 'ΥΠΟΛΟΓΙΣΤΗΣ ΕΞΟΔΩΝ ΑΥΤΟΚΙΝΗΤΟΥ';
 
 //time words $DAYLY = 'ημερησίως'; 
