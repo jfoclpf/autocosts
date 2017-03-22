@@ -193,7 +193,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript("js/get_data.js");
             $.getScript("js/print.js");
             $.getScript("google/charts.php?country="+country, function() {
-                $.getScript("php/print_results.php?country="+country); 
+                $.getScript("js/print_results.js.php?country="+country); 
             });
                        
             $.getScript("google/g-recaptcha.js", function() {
