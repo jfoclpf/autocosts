@@ -2,8 +2,7 @@
 
 asort($avail_CT); //sorts alphabetically the counties list
 
-$url_cc = $_GET["c"]; //selected country code from URL
-$url_cc=strtoupper($url_cc); //uppercase
+$url_cc=strtoupper($_GET["c"]); //uppercase
 
 //if no country is defined or the country isn't in the list
 //i.e, if the CC characters in domain.pt/CC are not recognized
@@ -32,9 +31,7 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 		$GLOBALS['country'] = "UK";
 	}
     
-    //loads the correspondent country file
-    include_once('./countries/' . $GLOBALS['country'] . '.php');
-    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']); 
+    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
     
     if(!isTest()){
         $URLtoRedirect = 'http://'.$AC_DOMAIN;       
@@ -45,7 +42,23 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
     header('Location: '.$URLtoRedirect, true, 302);
     exit;
     
-}//if the CC characters after domain.pt/CC ARE recognized as being in the list 
+}
+//if the CC characters after domain.info/CC ARE recognized as being in the list 
+//But if the two-letter code are NOT all in upper case domain.info/CC 
+elseif (strtoupper($_GET["c"]) != $_GET["c"]){
+    
+    $GLOBALS['country'] = strtoupper($_GET["c"]);
+    $AC_DOMAIN = $domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
+    
+    if(!isTest()){
+        $URLtoRedirect = 'http://'.$AC_DOMAIN;       
+    }
+    else{
+        $URLtoRedirect = 'http://autocosts.work/'.$GLOBALS['country'];
+    }
+    header('Location: '.$URLtoRedirect, true, 301);
+    exit;   
+}
 else {
 	$GLOBALS['country'] = $url_cc;
     //loads the correspondent country file
@@ -63,6 +76,9 @@ else {
 }
 //from here the /CC is recognized 
 //AND the URL is correct
+
+//removes XX from array
+unset($avail_CT['XX']);
 
 //gets the correspondent language to input on <html lang"##">, after the correct country file was loaded
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)

@@ -20,14 +20,9 @@
                 <select name="country_select" id="country_select" onchange="valueselect(this.value);">
                     <?php 
                         foreach ($avail_CT as $key => $value) {
-                            if ($key != "XX") {
-                                echo '<option value="'.$key.'"'; 
-                                if ($key == $GLOBALS['country']){
-                                    echo 'selected="selected"';
-                                } 
-                                echo '>'; 
-                                echo $value.'</option>';
-                             }
+                            echo '<option value="'.$key.'"'. 
+                                 ($key==$GLOBALS['country']?'selected="selected"':'').'>'.
+                                 $value.'</option>';
                         }
                     ?>
                 </select>

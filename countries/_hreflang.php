@@ -1,5 +1,10 @@
 <?php
-echo "\xA"; //breakline
+
+echo '<link rel="canonical" href="http://'.
+     strtolower($domain_CT[$GLOBALS['country']]).
+     '/'.strtoupper($GLOBALS['country']).'" />'.
+     "\xA";
+
 foreach ($avail_CT as $key => $value){    
     echo '<link rel="alternate" '. 
          'hreflang="'. substr($lang_CT[$key],0,2) . '-' . strtolower($key=="UK"?"GB":$key) . '" '.

@@ -1,7 +1,6 @@
 <?php Header("content-type: application/x-javascript");
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
-$GLOBALS['country'] = $_GET['country'];
-?>
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
+$GLOBALS['country'] = $_GET['country'];?>
 
 //function that is run when user clicks "run/calculate"
 function Run2(){
