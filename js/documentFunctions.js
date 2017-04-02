@@ -24,7 +24,7 @@ function reload(onDocumentLoad) {
         ShowGoogleReCaptcha(false); 
     }
      
-    openForm_part('form_part', 0, 1, false);
+    openForm_part('form_part', 0, 1);
 }
 
 /*function that swaps between Google reCaptcha and normal Run button*/
@@ -137,8 +137,7 @@ function scrollPage(){
 /*functions which is used to change the form parts*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
 var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
-function openForm_part(part_name, part_number_origin, part_number_destiny, country, language) {
-    //alert("from "+part_number_origin+" to "+part_number_destiny +" - country:"+country);
+function openForm_part(part_name, part_number_origin, part_number_destiny) {
 
     //shows form part n and hides the other parts
     function shows_part(n){
@@ -192,12 +191,12 @@ function openForm_part(part_name, part_number_origin, part_number_destiny, count
             $.getScript("db_stats/statsFunctions.js"); 
             $.getScript("js/get_data.js");
             $.getScript("js/print.js");
-            $.getScript("google/charts.php?country="+country, function() {
-                $.getScript("js/print_results.js.php?country="+country); 
+            $.getScript("google/charts.php?country="+Country, function() {
+                $.getScript("js/print_results.js.php?country="+Country); 
             });
                        
             $.getScript("google/g-recaptcha.js", function() {
-                $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+language);
+                $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language);
             });
                         
             hasLoadedPart[1] = true;

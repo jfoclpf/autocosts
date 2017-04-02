@@ -17,7 +17,11 @@ function initialize() {
     DescriptionHTML = $('#description').html();
     
     //make some initial settings in the options of the form
+    $('#numberInspections').val(0);
+    $("#InspectionCost_tr").css("display", "none");
+    
     tolls_daily(false);
+    
     document.getElementById("radio_fuel_euros").checked = true;
     $('#currency_div_form2').css("display", "block");
     $('#distance_div_form2').css("display", "none");
