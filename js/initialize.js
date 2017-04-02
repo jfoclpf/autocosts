@@ -1,6 +1,5 @@
 /* runs function initialize() every time the page is loaded */
 window.onload = initialize;
-var isUserHuman = false; //global variable for Google reCaptcha
 
 function initialize() {
     //detects old versions of Internet Explorer
@@ -41,14 +40,8 @@ function initialize() {
     $('#fin_effort_Div_form3').css("display", "none");
     $("#distance_time_spent_driving_form3").css("display", "none");
 
-    
-    //Shows Google reCaptcha
-    if (Country!='XX'){
-        ShowGoogleReCaptcha(true);
-    }
-    else{
-        ShowGoogleReCaptcha(false);
-    }
+    isHumanConfirmed = false; //Google recaptcha
+
 }
 
 //function that runs when the page is resized

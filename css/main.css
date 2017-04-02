@@ -433,22 +433,6 @@ form.roundCorner {
 .buttton_disabled{
     color: #999;
 }
-/*Google reCaptcha */
-#g-recaptcha{
-    display: inline-block;
-    margin: 10px 0;
-    vertical-align: middle; 
-    border-color: #969696; 
-    background-image: none;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    color: #000;
-    border-color: #969696;
-    transform:scale(0.77);
-    -webkit-transform:scale(0.77);
-    transform-origin: center center;
-    -webkit-transform-origin:center center;
-}
 
 #div2 td {
     padding: 8px 3% 0;
@@ -519,6 +503,10 @@ form.roundCorner {
 }
 #form_part3 .form_section_question td {
     vertical-align: middle;
+}
+
+#run_button_div{
+    display: inline-block;
 }
 
 /* The switch - the box around the slider in form part 3*/

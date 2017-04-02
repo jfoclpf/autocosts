@@ -21,29 +21,10 @@ function reload(onDocumentLoad) {
         $("#description").html(DescriptionHTML);
         resized();
         //if the results were already shown, it means user went already through ReCaptcha
-        ShowGoogleReCaptcha(false); 
+        isHumanConfirmed
     }
      
     openForm_part('form_part', 0, 1);
-}
-
-/*function that swaps between Google reCaptcha and normal Run button*/
-function ShowGoogleReCaptcha(bool){
-    
-    isUserHuman = !bool; //sets global variable according to input, if shows recaptcha it means it is not yet human
-    
-    if(!ResultIsShowing){//if the results are not being shown
-        if(bool){
-            //alert('show captcha');
-            document.getElementById("b-bottom_3_A").style.display = "inline-block";
-            document.getElementById("b-bottom_3_B").style.display = "none";
-        }
-        else{
-            //alert('show button');
-            document.getElementById("b-bottom_3_A").style.display = "none";
-            document.getElementById("b-bottom_3_B").style.display = "inline-block";   
-        }
-    }
 }
 
 /*function that loads new HTML and that is run when country select is changed*/ 

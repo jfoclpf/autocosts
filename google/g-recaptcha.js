@@ -1,25 +1,21 @@
 function grecaptcha_solved(){
     Run1(Country);
 }
-//runs when grecaptcha has expired
-function grecaptcha_expired(){
-    grecaptcha.reset();
-    ShowGoogleReCaptcha(true);
-}
 
-function grecaptcha_callback() {                    
-    grecaptcha.render( 'g-recaptcha', {
-        'sitekey' : '6LcdhB4TAAAAAKDAZ_BL4JGK0h0bK6eH3YgTdyIV',
-        'size' : 'normal',
-        'callback' : grecaptcha_solved,
-        'expired-callback' : grecaptcha_expired 
-    });     
-} 
+function grecaptcha_callback() {
+
+    if (Country!='XX'){    
+        grecaptcha.render( 'run_button', {
+            'sitekey' : '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
+            'callback' : grecaptcha_solved
+        });
+    }
+}
 
 //creates the grecaptcha after the API Google function was loaded
 //runs when grecaptcha was solved
 function Run1(country){
-    if(!isUserHuman){
+    if(!isHumanConfirmed && Country!='XX'){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
@@ -36,7 +32,7 @@ function Run1(country){
                     submit_data(country); 
                 } 
                 scrollPage();
-                ShowGoogleReCaptcha(false);
+                isHumanConfirmed = true;
                 //alert(result);
             }
             else{

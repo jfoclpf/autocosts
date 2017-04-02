@@ -131,7 +131,7 @@ include_once("./countries/_url_selector.php");
         <br>
     </div>
     <!--jquery.js-->
-    <script src="js/jquery/js_jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
@@ -144,6 +144,7 @@ include_once("./countries/_url_selector.php");
         var uber_obj = {};//empty object
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
+        var isHumanConfirmed = false; //global variable for Google reCaptcha
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>

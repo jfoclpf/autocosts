@@ -300,14 +300,9 @@
     
     <!-- BUTTONS -->
     <div class="b-bottom">      
-        <div id="b-bottom_3_A">
-            <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>
-            <!--Google reCaptcha-->
-            <div id="g-recaptcha" class="g-recaptcha"></div>
-        </div>
-        <div id="b-bottom_3_B">
-            <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
-            <!--Run button-->
+        <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
+        <!--Run button-->
+        <div id="run_button_div">
             <input id="run_button" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>
         </div>
     </div>
