@@ -2,6 +2,8 @@
 /*File which generates the statistics tables on a HTML file 
 that will be shown in the right column of the main page*/
 
+$consumer_speed_url = "http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed";
+
 //function for formating numbers which come from DB 
 function fixNmbr($i,$n){
     $float_num = floatval($i);
@@ -92,7 +94,7 @@ foreach ($avail_CT as $country => $country_name) {
             <td> <span id="txt_kinetic_speed" class="value-field"></span>'.fixNmbr($row["kinetic_speed"],0).'<span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>
-            <td><span><a href="./docs/consumerspeed.html">'.$VIRTUAL_SPEED_TITLE.'</a></span></td>
+            <td><span><a target="_blank" href="'.$consumer_speed_url.'">'.$VIRTUAL_SPEED_TITLE.'</a></span></td>
             <td><span id="txt_virtual_speed" class="value-field">'.fixNmbr($row["virtual_speed"],0).'</span><span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>
