@@ -49,8 +49,8 @@ include_once("./countries/_url_selector.php");
                 <div id="div2_td">
                     <div id="div2">
                         <div class="result_section_title">
-                            <a class="AC_url" href="<?php echo 'http://'.$AC_DOMAIN ?>">
-                                <?php echo mb_strtoupper(explode("/", $AC_DOMAIN, 2)[0]) ?>
+                            <a class="AC_url" href="http://<?php echo $domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']) ?>">
+                                <?php echo strtoupper($domain_CT[$GLOBALS['country']]) ?>
                             </a>
                         </div>
                         <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"

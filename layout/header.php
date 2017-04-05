@@ -21,7 +21,7 @@
                     <?php 
                         foreach ($avail_CT as $key => $value) {
                             echo '<option value="'.$key.'"'. 
-                                 ($key==$GLOBALS['country']?'selected="selected"':'').'>'.
+                                 ($key==$GLOBALS['country']?' selected="selected"':'').'>'.
                                  $value.'</option>';
                         }
                     ?>
