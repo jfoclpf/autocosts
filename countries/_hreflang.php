@@ -8,7 +8,7 @@ echo '<link rel="canonical" href="http://'.
 foreach ($avail_CT as $key => $value){    
     echo '<link rel="alternate" '. 
          'hreflang="'. substr($lang_CT[$key],0,2) . '-' . strtolower($key=="UK"?"GB":$key) . '" '.
-         'href="http://' . $domain_CT[$key].'/'.strtoupper($key). '" />'.
+         'href="http://' . $domain_CT[$key] . '/'.strtoupper($key). '" />'.
          "\xA";
 }
 echo "\xA"; //breakline

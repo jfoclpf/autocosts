@@ -91,19 +91,14 @@ function HTML_tag_lang($lang, $cty){
 
 //function that says if the current URL shall be crawled by robots
 //Ex: autocustos.info/pt shall be crawled and autocosts.info/pt not 
-function crawlByBot($AC_DOMAIN){
+function crawlByBot(){
     
-    $domain_client = strtolower($_SERVER['HTTP_HOST']);
-    
-    //if test .work version do not crawl
-    if(explode('.',$domain_client)[1]=="work" || strtoupper($GLOBALS['country'])=="XX"){
+    //if test do not crawl
+    if(isTest()){
         return false;
     }
-    
-    $domain_infile = explode("/", strtolower($AC_DOMAIN));
-    
-    if ($domain_infile[0] == $domain_client &&
-        $domain_infile[1] == strtolower($GLOBALS['country'])){
+    //the domain on reccord must be the same as the domain of the client/browser
+    if ($GLOBALS['domain_for_CT'] == strtolower($_SERVER['HTTP_HOST']) ){
         return true;
     }
     else{
@@ -116,7 +111,6 @@ function isTest(){
 
     $domain_client = strtolower($_SERVER['HTTP_HOST']);
    
-    //if test .work version do not crawl
     if(explode('.',$domain_client)[1]=="work" || strtoupper($GLOBALS['country'])=="XX"){
         return true;
     }

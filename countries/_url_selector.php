@@ -5,7 +5,7 @@ asort($avail_CT); //sorts alphabetically the counties list
 $url_cc=strtoupper($_GET["c"]); //uppercase
 
 //if no country is defined or the country isn't in the list
-//i.e, if the CC characters in domain.pt/CC are not recognized
+//i.e, if the CC characters in domain.info/CC are not recognized
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 	
     //gets the country by IP 
@@ -31,51 +31,64 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
 		$GLOBALS['country'] = "UK";
 	}
     
-    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
-    
-    if(!isTest()){
-        $URLtoRedirect = 'http://'.$AC_DOMAIN;       
+    //if .work domain
+    if(explode('.', strtolower($_SERVER['HTTP_HOST']))[1]=="work"){
+        $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);  
     }
     else{
-        $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);
+        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
     }
-    header('Location: '.$URLtoRedirect, true, 302);
-    exit;
     
+    header('Location: '.$URLtoRedirect, true, 302); 
+    //302 redirects are temporary
+    //it's temporary because the redirect might, from a defined starting URL, 
+    //redirect to different URLs according to the locale of the user
+    exit;
 }
-//if the CC characters after domain.info/CC ARE recognized as being in the list 
+//if the CC characters after domain.info/cc ARE recognized as being in the list 
 //But if the two-letter code are NOT all in upper case domain.info/CC 
 elseif (strtoupper($_GET["c"]) != $_GET["c"]){
     
-    $GLOBALS['country'] = strtoupper($_GET["c"]);
-    $AC_DOMAIN = $domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
+    $GLOBALS['country'] = $url_cc; //it's already uppercase
+    $domain_client = strtolower($_SERVER['HTTP_HOST']);
     
-    if(!isTest()){
-        $URLtoRedirect = 'http://'.$AC_DOMAIN;       
-    }
-    else{
+    //if .work domain
+    if(explode('.', strtolower($domain_client))[1]=="work"){
         $URLtoRedirect = 'http://autocosts.work/'.$GLOBALS['country'];
+        $redir = 302; //302 redirects are temporary (test version)
     }
-    header('Location: '.$URLtoRedirect, true, 301);
-    exit;   
-}
-else {
-	$GLOBALS['country'] = $url_cc;
-    //loads the correspondent country file
-    include_once('./countries/' . $GLOBALS['country'] . '.php');
-    $AC_DOMAIN=$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+    //if test version in any domain
+    elseif($GLOBALS['country'] == "XX"){
+        $URLtoRedirect = 'http://'.$domain_client.'/XX';
+        $redir = 302; //302 redirects are temporary (test version)
+    }
+    //example: autocosts.info/pt (is not valid) shall forward to autocustos.info/PT
+    else{
+        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
+        $redir = 301; //301 redirects are permanent
+    }
     
-    //if the URL is not the valid URL
-    //example: autocosts.info/pt shall forward to autocustos.pt/pt 
-    if(!crawlByBot($AC_DOMAIN) && !isTest()){
-  
-        $URLtoRedirect = 'http://'.$AC_DOMAIN;
-        header('Location: '.$URLtoRedirect, true, 301);
-        exit; 
+    header('Location: '.$URLtoRedirect, true, $redir); //302 redirects are temporary
+    exit;
+}
+//the CC is reconginzed and it's in uppercase
+else {
+	$GLOBALS['country'] = $url_cc; //it's already uppercase
+    $GLOBALS['domain_for_CT'] = $domain_CT[$GLOBALS['country']];
+
+    //if the URL is not the valid URL  
+    //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT
+    if(!crawlByBot() && !isTest()){
+        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+        header('Location: '.$URLtoRedirect, true, 301); //301 redirects are permanent
+        exit;
     }
 }
 //from here the /CC is recognized 
 //AND the URL is correct
+
+//loads the correspondent country file
+include_once('./countries/' . $GLOBALS['country'] . '.php');
 
 //removes XX from array
 unset($avail_CT['XX']);

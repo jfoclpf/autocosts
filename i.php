@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once("./php/functions.php");
 include_once("./countries/_list.php");
 include_once("./countries/_url_selector.php");
@@ -135,7 +135,7 @@ include_once("./countries/_url_selector.php");
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
-    <!--Define GLOBAL JS variables-->
+    <!--Define GLOBAL Javascript variables-->
     <script>
         var Country = '<?php echo $GLOBALS["country"]; ?>';
         //Language code according to ISO_639-1 codes
