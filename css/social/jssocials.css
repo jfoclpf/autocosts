@@ -1,0 +1,111 @@
+.jssocials-shares {
+  margin: 0.2em 0; }
+
+.jssocials-shares * {
+  box-sizing: border-box; }
+
+.jssocials-share {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0.3em 0.6em 0.3em 0; }
+
+.jssocials-share:last-child {
+  margin-right: 0; }
+
+.jssocials-share-logo {
+  width: 1em;
+  vertical-align: middle;
+  font-size: 1.5em; }
+
+img.jssocials-share-logo {
+  width: auto;
+  height: 1em; }
+
+.jssocials-share-link {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1; }
+  .jssocials-share-link.jssocials-share-link-count {
+    padding-top: .2em; }
+    .jssocials-share-link.jssocials-share-link-count .jssocials-share-count {
+      display: block;
+      font-size: .6em;
+      margin: 0 -.5em -.8em -.5em; }
+  .jssocials-share-link.jssocials-share-no-count {
+    padding-top: .5em; }
+    .jssocials-share-link.jssocials-share-no-count .jssocials-share-count {
+      height: 1em; }
+
+.jssocials-share-label {
+  padding-left: 0.3em;
+  vertical-align: middle; }
+
+.jssocials-share-count-box {
+  display: inline-block;
+  height: 1.5em;
+  padding: 0 0.3em;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: default; }
+  .jssocials-share-count-box.jssocials-share-no-count {
+    display: none; }
+
+.jssocials-share-count {
+  line-height: 1.5em;
+  vertical-align: middle; }
+
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?eg3ofc');
+  src:  url('fonts/icomoon.eot?eg3ofc#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?eg3ofc') format('truetype'),
+    url('fonts/icomoon.woff?eg3ofc') format('woff'),
+    url('fonts/icomoon.svg?eg3ofc#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="fa-"], [class*=" fa-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-at:before {
+  content: "\e900";
+}
+.fa-google:before {
+  content: "\ea8b";
+}
+.fa-facebook:before {
+  content: "\ea90";
+}
+.fa-twitter:before {
+  content: "\ea96";
+}
+.fa-tumblr:before {
+  content: "\eab9";
+}
+.fa-linkedin:before {
+  content: "\eaca";
+}
+.fa-stumbleupon:before {
+  content: "\eace";
+}
+.fa-pinterest:before {
+  content: "\ead1";
+}
+.fa-whatsapp:before {
+  content: "\ea93";
+}

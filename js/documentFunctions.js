@@ -179,7 +179,19 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             $.getScript("google/g-recaptcha.js", function() {
                 $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language);
             });
-                        
+            
+            //Jquery social media share plugins
+            $.getScript("js/social/jssocials.min.js");
+            
+            $('<link/>', {
+               rel: 'stylesheet', type: 'text/css',
+               href: 'css/social/jssocials.css'
+            }).appendTo('head');
+            $('<link/>', {
+               rel: 'stylesheet', type: 'text/css',
+               href: 'css/social/jssocials-theme-classic.css'
+            }).appendTo('head');
+            
             hasLoadedPart[1] = true;
         }
     }

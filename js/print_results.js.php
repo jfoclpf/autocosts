@@ -1,6 +1,9 @@
 <?php Header("content-type: application/x-javascript");
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
-$GLOBALS['country'] = $_GET['country'];?>
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
+$GLOBALS['country'] = $_GET['country'];
+$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);?>
 
 //function that is run when user clicks "run/calculate"
 function Run2(){
@@ -82,6 +85,16 @@ function Run2(){
 
     //shows buttons
     $("#result_buttons_div, #buttons_section").show();
+    
+    //shows social media buttons
+    $("#shareIcons").jsSocials({
+        url: '<?php echo $PageURL ?>',
+        text: '<?php echo meta_description($INITIAL_TEXT) ?>',
+        showLabel: false,
+        showCount: "inside",
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+    });
+    
     //deactivates downloadPDF button until PDF files are loaded
     if (!hasLoadedPart[3]){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");

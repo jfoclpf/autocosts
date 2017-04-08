@@ -90,6 +90,9 @@ else {
 //loads the correspondent country file
 include_once('./countries/' . $GLOBALS['country'] . '.php');
 
+//full URL for this page
+$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+
 //removes XX from array
 unset($avail_CT['XX']);
 
