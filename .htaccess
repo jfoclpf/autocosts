@@ -57,9 +57,6 @@ RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
 RewriteRule ^/?$ "http\:\/\/autocosts\.info\/GR" [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^autokoszty\.info$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autokoszty\.info$
-RewriteRule ^/?$ "http\:\/\/autokoszty\.info\/PL" [R=301,L]
 
 #General broad rules
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
