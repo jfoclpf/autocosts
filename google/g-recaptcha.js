@@ -4,7 +4,7 @@ function grecaptcha_solved(){
 
 function grecaptcha_callback() {
 
-    if (Country!='XX'){    
+    if (!isHumanConfirmed && Country!='XX'){    
         grecaptcha.render( 'run_button', {
             'sitekey' : '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
             'callback' : grecaptcha_solved
@@ -32,7 +32,10 @@ function Run1(country){
                     submit_data(country); 
                 } 
                 scrollPage();
+                //Google Recaptcha
                 isHumanConfirmed = true;
+                $('#run_button').hide();
+                $('#run_button_noCapctha').show();
                 //alert(result);
             }
             else{

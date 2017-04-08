@@ -304,6 +304,7 @@
         <!--Run button-->
         <div id="run_button_div">
             <input id="run_button" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>
         </div>
     </div>
     

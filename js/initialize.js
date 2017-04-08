@@ -40,8 +40,10 @@ function initialize() {
     $('#fin_effort_Div_form3').css("display", "none");
     $("#distance_time_spent_driving_form3").css("display", "none");
 
-    isHumanConfirmed = false; //Google recaptcha
-
+    //Google recaptcha
+    isHumanConfirmed = false; 
+    $('#run_button').show();
+    $('#run_button_noCapctha').hide();
 }
 
 //function that runs when the page is resized

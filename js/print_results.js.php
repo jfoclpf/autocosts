@@ -91,7 +91,7 @@ function Run2(){
         url: '<?php echo $PageURL ?>',
         text: '<?php echo meta_description($INITIAL_TEXT) ?>',
         showLabel: false,
-        showCount: "inside",
+        showCount: false,
         shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
     });
     
