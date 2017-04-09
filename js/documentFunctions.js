@@ -20,8 +20,12 @@ function reload(onDocumentLoad) {
         $("#div3").css("display", "block");
         $("#description").html(DescriptionHTML);
         resized();
+        
         //if the results were already shown, it means user went already through ReCaptcha
-        isHumanConfirmed
+        isHumanConfirmed = true;
+        
+        //reset the run buttons
+        $('#run_button, #run_button_noCapctha').removeClass('button_loader').attr("value", RunButtonStr);;
     }
      
     openForm_part('form_part', 0, 1);
@@ -433,11 +437,18 @@ function slider_toggles_form3(){
         $("#distance_time_spent_driving_form3").css("display", "none");
     }
 }
+
 $("#slider1").change(function() {
     slider_toggles_form3();
 });
+
 $("#slider2").change(function() {
     slider_toggles_form3();
+});
+
+//loader after the run button is clicked
+$('#run_button, #run_button_noCapctha').click(function(){
+  $(this).addClass('button_loader').attr("value","");
 });
 
 function isNumber(n) {

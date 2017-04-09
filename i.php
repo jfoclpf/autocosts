@@ -146,6 +146,7 @@ include_once("./countries/_url_selector.php");
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
         var isHumanConfirmed = false; //global variable for Google reCaptcha
+        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>
