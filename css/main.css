@@ -430,6 +430,13 @@ form.roundCorner {
     background-color: #b2b2b2;
     border-color: #969696;
 }
+.button:focus,
+.button:hover{
+  outline:none;
+  outline-offset: none;
+  box-shadow: none;
+}
+
 .buttton_disabled{
     color: #999;
 }
