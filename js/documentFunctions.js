@@ -25,9 +25,8 @@ function reload(onDocumentLoad) {
         isHumanConfirmed = true;
         
         //reset the run buttons
-        $('#run_button, #run_button_noCapctha').removeClass('button_loader').attr("value", RunButtonStr);;
-    }
-     
+        resetRunButtons();
+    } 
     openForm_part('form_part', 0, 1);
 }
 
@@ -446,10 +445,14 @@ $("#slider2").change(function() {
     slider_toggles_form3();
 });
 
-//loader after the run button is clicked
-$('#run_button, #run_button_noCapctha').click(function(){
-  $(this).addClass('button_loader').attr("value","");
-});
+//Loader after the run button is clicked
+function runButtonLoader() {
+    $('#run_button, #run_button_noCapctha').addClass('button_loader').attr("value","");
+}
+//reset the run buttons, i.e., removes the loader of the button
+function resetRunButtons() {
+    $('#run_button, #run_button_noCapctha').removeClass('button_loader').attr("value", RunButtonStr);
+}
 
 function isNumber(n) {
     return (!isNaN(parseFloat(n)) && isFinite(n) && n >= 0);

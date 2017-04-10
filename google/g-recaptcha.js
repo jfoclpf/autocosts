@@ -15,6 +15,9 @@ function grecaptcha_callback() {
 //creates the grecaptcha after the API Google function was loaded
 //runs when grecaptcha was solved
 function Run1(country){
+    //Loader after the run button is clicked
+    runButtonLoader();
+    
     if(!isHumanConfirmed && Country!='XX'){
         //make a POST command to server to check if the user is human
         $.ajax({
@@ -30,16 +33,19 @@ function Run1(country){
                     }
                     //submits data to database if no XX version
                     submit_data(country); 
-                } 
-                scrollPage();
+                }
                 //Google Recaptcha
                 isHumanConfirmed = true;
+                
                 $('#run_button').hide();
-                $('#run_button_noCapctha').show();
-                //alert(result);
+                $('#run_button_noCapctha').show();               
+                resetRunButtons(); //reset the run buttons                              
+                
+                scrollPage();
             }
             else{
-                //alert(result);
+                //reset the run buttons
+                resetRunButtons();
             }
         });
     }
@@ -47,6 +53,8 @@ function Run1(country){
         if(Run2() && country != "XX"){
             submit_data(country); //submits data to database if no test version
         }
+      
+        resetRunButtons(); //reset the run buttons
         scrollPage();
     }                
 }
