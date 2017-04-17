@@ -9,8 +9,8 @@ var statsConstants = {
     MAX_EUR_PER_LITRE_FUEL:  10,
     MAX_FUEL_EFF_L100KM:     50,
     //maximum distances
-    MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK: 150,
-    MAX_KM_DRIVEN_WEEKEND:               400,
+    MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK: 250,
+    MAX_KM_DRIVEN_WEEKEND:               500,
     MAX_KM_DRIVEN_PER_MONTH:           10000,
     //depreciation
     MAX_CAR_AGE_MONTHS:     600,
@@ -18,17 +18,23 @@ var statsConstants = {
     
     MAX_EUR_MONTHLY: {
         DEPRECIATION: 800,
-        INSURANCE:    500,
+        INSURANCE:    900,
         CREDIT:       150,
-        INSPECTION:   150,  
+        INSPECTION:   250,  
         TAXES:        200,
-        FUEL:         900,
+        FUEL:         950,
         MAINTENANCE:  250,
         REPAIRS:      250,
         TOLLS:        250,
         PARKING:      250,
         FINES:        150,
         WASHING:      150        
+    },
+    
+    MIN_EUR_MONTHLY: {
+        INSURANCE:    3,
+        TAXES:        3,
+        MAINTENANCE:  3     
     }
 };
 
@@ -153,11 +159,12 @@ function get_average_costs(results_array){
 
 //********************
 //this functions calculates the avearge of the averages of the same user inputs 
-//
+//for a corresponding country
 function CalculateStatistics(userIds, data, country){
 //matrix *userIds* is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), 
 //the 2nd column has always the same country
 //matrix *data* is a matrix with everything for the specific country
+//*country* is the country whose average is being calculated
 //userIds.length is smaller than data.length, because some users fill in more than one time
 
 //console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
@@ -176,7 +183,7 @@ function CalculateStatistics(userIds, data, country){
                     //and if it is an input spam/bot (the time to fill the form for the first input mus be greater than a time value)
                     //console.log("(i,j)=("+i+","+j+")"); console.log(data[j]);console.log(country);
                     if(is_DBentry_ok(data[j], country) &&
-                        ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
+                       ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
                         //console.log("f1");
                         var f1 = get_DB_part1(data[j]);
                         //console.log("f1");
@@ -336,23 +343,26 @@ function is_DBentry_ok(data, country) {
         return false;
     }   
     
-    //depreciation
+    //depreciation must be positive
     if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) ||
        (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now))){
         return false;
     }
     
+    //car value at acquisition date must not exceed a certain value (MAX_EUR_CAR_VALUE)
     var converted_value = convert_from_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, EURcurrConverterStats);
     if (converted_value!=-1 && Number(data.commercial_value_at_acquisition) > converted_value)
         return false;
     
     //insurance
     if(!data.insure_type || !data.insurance_value)
-        return false;
-    
+        return false;    
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.INSURANCE, country.currency, EURcurrConverterStats);
     if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > converted_value)
         return false;
+    converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.INSURANCE, country.currency, EURcurrConverterStats);
+    if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) < converted_value)
+        return false;    
     
     //credit
     if(data.credit=="true" && (!data.credit_number_installments || !data.credit_amount_installment || !data.credit_residual_value || !data.credit_borrowed_amount))
@@ -376,6 +386,9 @@ function is_DBentry_ok(data, country) {
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.TAXES, country.currency, EURcurrConverterStats);
     if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) > converted_value)
         return false;
+    converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.TAXES, country.currency, EURcurrConverterStats);
+    if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) < converted_value)
+        return false;    
     
     //fuel & distance
     switch(data.fuel_calculation){
@@ -445,6 +458,9 @@ function is_DBentry_ok(data, country) {
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.MAINTENANCE, country.currency, EURcurrConverterStats);
     if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) > converted_value)
         return false;
+    converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.MAINTENANCE, country.currency, EURcurrConverterStats);
+    if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) < converted_value)
+        return false;    
     
     //repairs and improvements
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.REPAIRS, country.currency, EURcurrConverterStats);
