@@ -1,7 +1,10 @@
 <?php
 
-function get_logo_file_name($is_logo, $currency_logo) {
-    
+//function that gets the logo file name for the left side of the site
+function get_logo_file_name($is_logo, $currency_logo, $language) {
+//$currency_logo comes from a global variable and it's calculated in
+//file php/favicon_selector.php
+
     if(!$is_logo) return null;
     
     switch ($currency_logo){
@@ -11,7 +14,7 @@ function get_logo_file_name($is_logo, $currency_logo) {
                     $logo_file_name = 'autocustos_euro.png';
                     break;
                 case "ES":
-                    $logo_file_name = 'autocostes_euro.png';
+                    $logo_file_name = 'autocostos_euro.png';
                     break;
                 case "IT":
                     $logo_file_name = 'autocosti_euro.png';
@@ -33,8 +36,13 @@ function get_logo_file_name($is_logo, $currency_logo) {
             }
             break;
         case "DOL":
-            $logo_file_name = 'autocosts_dollar.png';
-            break;
+            if ($language == 'es'){
+                $logo_file_name = 'autocostos_dollar.png'; 
+            }
+            else{
+                $logo_file_name = 'autocosts_dollar.png';                
+            }
+            break;           
         case "GBP":
             $logo_file_name = 'autocosts_pound.png';
             break;

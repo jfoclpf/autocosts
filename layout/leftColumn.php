@@ -2,7 +2,7 @@
     <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php/logo_pict_selector.php"); ?>
     <?
     if ($is_logo)
-        echo '<img alt="Logo" src="images/logos/' . get_logo_file_name($is_logo, $currency_logo) . '" id="ac_logo">';
+        echo '<img alt="Logo" src="images/logos/' . get_logo_file_name($is_logo, $currency_logo, $language) . '" id="ac_logo">';
     else
         echo '<div style="padding-top:14px;"></div>'; //in case no currency logo applies gives a break line
     ?>
