@@ -15,7 +15,6 @@ include_once("./countries/_url_selector.php");
     <meta name="author" content="Autocosts Org">
 
     <meta name="robots" content="<?php echo (!isTest()?'index, follow':'noindex, nofollow')?>" />
-    <?php include_once './countries/_hreflang.php'; ?>
     
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
     
