@@ -1,8 +1,9 @@
 <?php
 
-echo '<link rel="canonical" href="http://'.
-     strtolower($domain_CT[$GLOBALS['country']]).
-     '/'.strtoupper($GLOBALS['country']).'" />'.
+echo "\xA";
+
+echo '<link rel="alternate" hreflang="x-default" href="http://'.
+     strtolower($domain_CT[$GLOBALS['country']]).'" />'.
      "\xA";
 
 foreach ($avail_CT as $key => $value){    
