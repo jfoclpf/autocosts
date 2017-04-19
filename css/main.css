@@ -305,7 +305,11 @@ form.roundCorner {
     text-align: center;
     vertical-align:top;
 }
-#div3, #div1, #div2, .result_section {
+#div3, #div1, #div2 {
+    overflow: hidden;
+    margin: 0 auto;
+}
+.result_section {
     background: #f0f0f0;
     border: 2px solid #b4b4b4;
     border-radius: 10px;
@@ -325,9 +329,6 @@ form.roundCorner {
 }
 
 /*== Main Right Column (div1) ==*/
-#div13 {
-    margin: 15px;
-}
 
 #tbl_statistics {
     border: 1px solid #000000;
@@ -490,11 +491,11 @@ form.roundCorner {
 /*main title for each form part*/
 .form_part_head_title {
     padding: 10px 10%;
-    background: #ada692;
-    color: #fff;
+    background: #f0f0f0;
+    color: #333333;
     text-align: center;
     border-radius: 6px 6px 0 0;
-    border-bottom: 2px solid #717171;
+    border-bottom: 1px solid #717171;
 }
 .form_part_head_title b {
     display: block;
@@ -758,9 +759,6 @@ input:checked + .slider:before {
 
 /*===Main Left Column (div3)===*/
 
-#div3a {
-    margin: 15px;
-}
 #div32 {
     background: #fff;
     padding: 15px;
