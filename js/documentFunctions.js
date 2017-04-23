@@ -127,7 +127,8 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
     function shows_part(n){
         
         //if not a test triggers event for Google Analytics accordingly
-        if(!IsThisAtest()){                 
+        //China doesn't accept files from Google servers
+        if(!IsThisAtest() && Country!="CN"){
             if(n==2 && !hasShownPart2){
                 ga("send", "event", "form_part", "form_part_2");
                 hasShownPart2=true;

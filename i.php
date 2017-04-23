@@ -126,7 +126,12 @@ include_once("./countries/_url_selector.php");
         <br>
     </div>
     <!--jquery.js-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <?php if ($GLOBALS["country"] == "CN"){ //China doesn't accept files from Google servers
+        echo '<script src="js/jquery/jquery.min.js"></script>';
+    }
+    else{
+        echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+    }?>
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
@@ -146,7 +151,9 @@ include_once("./countries/_url_selector.php");
     <script><?php include('js/validateForm.js.php'); ?></script>
     <script src="js/documentFunctions.js"></script>
     <script src="js/initialize.js"></script>
-    <?php include_once("google/analyticstracking.php"); ?>
+    <?php if ($GLOBALS["country"] != "CN"){ //China doesn't accept files from Google servers
+        include_once("google/analyticstracking.php");
+    }?>
     
 </body>
 

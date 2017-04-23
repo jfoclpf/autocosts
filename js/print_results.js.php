@@ -95,10 +95,15 @@ function Run2(){
         shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
     });
     
+    //if JP or CN hides PDF download button (due to characters problem)
+    if (Country=="JP" || Country=="CN"){
+        $("#generate_PDF").hide();
+    }
     //deactivates downloadPDF button until PDF files are loaded
     if (!hasLoadedPart[3]){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
+
 
     //enlarges center div
     $("#div1_td").css("width", "15%");
