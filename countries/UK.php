@@ -15,33 +15,39 @@ $COUNTRY_NAME = 'United Kingdom';
 //	  										   **
 //***********************************************
 
-// IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
-//Fuel efficiency for car engine standard
+//Preserve always the same standards, 
+//be coherent between the text variables and these selected standard options
+
+//Select the Fuel efficiency/consumption for car, standard in the country
 $fuel_efficiency_std_option = 3;
 //1 - l/100km - litres per 100 kilometres
 //2 - km/l - kilometres per litre
 //3 - mpg(imp) - miles per imperial gallon
 //4 - mpg(US) - miles per US gallon
-//Standard distance
+
+//Select the Standard distance, standard in the country
 $distance_std_option = 2;
 //1 - kilometres
 //2 - miles
-//Standard volume for the price of fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
+
+//Select the Volume Standard for the Price of liquid fuels, ex: Currency($,£,€,etc.)/(Litre, Imp gallon, US gallon) 
 $fuel_price_volume_std = 1;
 //1 - litres
 //2 - imperial gallons
 //3 - US gallons
+
+
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
-$CURR_CODE = 'GBP';
-$CURR_NAME = 'Pound';
-$CURR_NAME_PLURAL = 'Pounds';
-$CURR_NAME_BIG_PLURAL = 'POUNDS';
-$CURR_SYMBOL = '&pound;';
-$STD_DIST = 'mi'; //short text version you'd like to apply
-$STD_DIST_FULL = 'miles';
-$STD_FUEL_CALC = 'mpg(imp)'; //text version you'd like to apply
-$STD_VOLUME_SHORT = 'ltr'; //short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
+$CURR_CODE = 'GBP'; //Three letter currency code according to ISO 4217 http://en.wikipedia.org/wiki/ISO_4217
+$CURR_NAME = 'Pound'; //Currency name written out
+$CURR_NAME_PLURAL = 'Pounds'; //Currency name written out in plural
+$CURR_NAME_BIG_PLURAL = 'POUNDS'; //Currency name written out in plural and in capital letters 
+$CURR_SYMBOL = '&pound;'; //HTML currency symbol code http://www.freeformatter.com/html-entities.html; if there is not HTML code, just the symbol
+$STD_DIST = 'mi'; //short text version to apply for the Standard Distance 
+$STD_DIST_FULL = 'miles'; //long normal version for the Standard Distance
+$STD_FUEL_CALC = 'mpg(imp)'; //text version to apply to the Fuel efficiency / Consumption of the car
+$STD_VOLUME_SHORT = 'ltr'; //short text version to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)
 //simple words
 $WORD_PER = 'per';     //ex: 4 km _per_ day
 $WORDS_PER_EACH = 'per each';   //ex: 4 miles _ per each_ two months
@@ -79,7 +85,7 @@ $DAYLY = 'daily';
 $WEEKLY = 'weekly';
 $MONTHLY = 'monthly';
 $TRIMESTERLY = 'quarterly';
-$SEMESTERLY = 'half&#8209;yearly';
+$SEMESTERLY = 'half&#8209;yearly'; //&#8209; is just a non-breakeble space, erase if you need
 $YEARLY = 'yearly';
 $MIN = 'min';
 $MINUTES = 'minutes';

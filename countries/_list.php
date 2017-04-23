@@ -53,7 +53,9 @@ $avail_CT = array(
     "PY" => "Paraguay",
     "SV" => "El Salvador",
     "UY" => "Uruguay",
-    "UK" => "United Kingdom"
+    "UK" => "United Kingdom",
+    "JP" => "日本",
+    "CN" => "中国"
 );
 
 $lang_CT = array(
@@ -99,7 +101,9 @@ $lang_CT = array(
     "PY" => "es-419",
     "SV" => "es-419",
     "UY" => "es-419",
-    "UK" => "en"
+    "UK" => "en",
+    "JP" => "ja",
+    "CN" => "zh"
 );
 
 $domain_CT = array(
@@ -145,6 +149,8 @@ $domain_CT = array(
     "PR" => "autocostos.info",
     "PY" => "autocostos.info",
     "SV" => "autocostos.info",
-    "UY" => "autocostos.info"
+    "UY" => "autocostos.info",
+    "JP" => "autocostos.info",
+    "CN" => "autocostos.info"
 );
 ?>
