@@ -787,6 +787,12 @@ function print_extern_table(f1, f2, f3, data){
 
 function drawChartResult(frame_witdh, data){
     
+    //China doesn't accept files from Google servers
+    //This website uses Google Charts
+    if(Country=="CN"){
+        return;
+    }
+    
     //client width under which the charts are not shown
     var WIDTH_PX_OFF = 280;
     //minimum ratio width of charts as frame_witdh becomes too wide

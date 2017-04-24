@@ -157,12 +157,21 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
        
         if (!hasLoadedPart[0]){
             $.getScript("js/coreFunctions.js", function(){
-                $.getScript("https://www.google.com/jsapi", function(){
+                //China doesn't accept files from Google servers
+                if (Country!="CN"){
+                    $.getScript("https://www.google.com/jsapi", function(){
+                        hasLoadedPart[0] = true;
+                        if (!is_userdata_formpart1_ok())
+                            return;
+                        shows_part(2);
+                    });
+                }
+                else{
                     hasLoadedPart[0] = true;
                     if (!is_userdata_formpart1_ok())
                         return;
-                    shows_part(2);
-                });
+                    shows_part(2);                    
+                }
             });                                             
         }
         else{
@@ -181,7 +190,10 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             });
                        
             $.getScript("google/g-recaptcha.js", function() {
-                $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language);
+                //China doesn't accept files from Google servers
+                if (Country!="CN"){
+                    $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language);
+                }
             });
             
             //Jquery social media share plugins
@@ -206,10 +218,17 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             return;
         
         if (!hasLoadedPart[2]){
-            google.load("visualization", "1", {"packages": ["corechart"], "language": Language, "callback": function(){
+            //China doesn't accept files from Google servers
+            if (Country!="CN"){
+                google.load("visualization", "1", {"packages": ["corechart"], "language": Language, "callback": function(){
+                    hasLoadedPart[2]=true;
+                    shows_part(3);
+                }});
+            }
+            else{
                 hasLoadedPart[2]=true;
-                shows_part(3);
-            }});
+                shows_part(3);                
+            }
         }
         else{
             shows_part(3);
