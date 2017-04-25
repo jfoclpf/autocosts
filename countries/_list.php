@@ -150,7 +150,7 @@ $domain_CT = array(
     "PY" => "autocostos.info",
     "SV" => "autocostos.info",
     "UY" => "autocostos.info",
-    "JP" => "autocostos.info",
-    "CN" => "autocostos.info"
+    "JP" => "autocosts.info",
+    "CN" => "autocosts.info"
 );
 ?>

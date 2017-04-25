@@ -898,7 +898,7 @@ function drawChartResult(frame_witdh, data){
 //puts the currency symbol after the money value, for certain countries 
 function countryCheck(value){   
     
-    if('<?php echo $GLOBALS['country'] ?>'=='FI'){
+    if(Country=='FI' || Country=='CN' || Country=='PL'){
         res = value + "&nbsp;<?php echo $CURR_SYMBOL ?>" ;
     }
     else{
