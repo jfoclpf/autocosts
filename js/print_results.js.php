@@ -138,16 +138,16 @@ function print_main_table(f1, f2, f3, data) {
     
     varResult+= '<tr>';
     
-    varResult+= '<td><b>' + countryCheck(data.total_costs_month.toFixed(0)) + '</b><br>';
+    varResult+= '<td><b>' + currencyShow(data.total_costs_month.toFixed(0)) + '</b><br>';
     varResult+= '<?php echo $WORD_PER."<br>".$MONTH ?></td>';
     
-    varResult+= '<td><b>' + countryCheck((data.total_costs_month*3).toFixed(0)) + '</b><br>';
+    varResult+= '<td><b>' + currencyShow((data.total_costs_month*3).toFixed(0)) + '</b><br>';
     varResult+= '<?php echo $WORD_PER."<br>".$TRIMESTER ?>';
     
-    varResult+= '<td><b>' + countryCheck((data.total_costs_month*6).toFixed(0)) + '</b><br>';
+    varResult+= '<td><b>' + currencyShow((data.total_costs_month*6).toFixed(0)) + '</b><br>';
     varResult+= '<?php echo $WORD_PER."<br>".$SEMESTER ?></td>';
     
-    varResult+= '<td><b>' + countryCheck(data.total_costs_year.toFixed(0)) + '</b><br>';
+    varResult+= '<td><b>' + currencyShow(data.total_costs_year.toFixed(0)) + '</b><br>';
     varResult+= '<?php echo $WORD_PER."<br>".$YEAR ?></td>';
     
     varResult+= '</tr>';
@@ -403,26 +403,26 @@ function print_costs_table(f1, f2, f3, data) {
     
     //standing costs items
     varResult+= '<tr><td>' + depreciation_text + '&nbsp;</td>' + 
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.depreciation.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.depreciation.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td><b><?php echo $INSURANCE ?></b><br>' + insurance_text +'</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.insurance.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.insurance.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + interests_text + '&nbsp;</td>' + 
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.credit.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.credit.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + inspection_text + '</td>' + 
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.inspection.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.inspection.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + cartax_text + '</td>' + 
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.car_tax.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.car_tax.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + maintenance_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
     
     //TOTAL - Standing costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_FIXED ?></b></td>"+
-                "<td>&nbsp;<b>" + countryCheck(data.total_standing_costs_month.toFixed(1)) + "</b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(1)) + "</b></td></tr>";
     
     //############
     //Running costs header
@@ -431,42 +431,42 @@ function print_costs_table(f1, f2, f3, data) {
                 '<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>';   
     
     varResult+= '<tr><td><b><?php echo $FUEL ?></b><br>' + fuel_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.fuel.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.fuel.toFixed(1)) + '</td></tr>';
 
     varResult+= '<tr><td>' + maintenance_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
                 
     varResult+= '<tr><td>' + repairs_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.repairs_improv.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.repairs_improv.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td><b><?php echo $PARKING ?></b></td>'+
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.parking.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.parking.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + tolls_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.tolls.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.tolls.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + fines_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.fines.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.fines.toFixed(1)) + '</td></tr>';
     
     varResult+= '<tr><td>' + washing_text + '</td>' +
-                '<td>&nbsp;' + countryCheck(data.monthly_costs.washing.toFixed(1)) + '</td></tr>';
+                '<td>&nbsp;' + currencyShow(data.monthly_costs.washing.toFixed(1)) + '</td></tr>';
     
     //TOTAL - Running costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_VARIABLE ?></b></td>"+
-                "<td>&nbsp;<b>" + countryCheck(data.total_running_costs_month.toFixed(1)) + "</b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(1)) + "</b></td></tr>";
     
     //costs per unit distance
     if((typeof data.distance_per_month) !== 'undefined' && data.distance_per_month !== 0){
         varResult+= "<tr><td><b><?php echo $RUN_CP_DIST ?></b></td>"+
-                    "<td>&nbsp;" + countryCheck(data.running_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
+                    "<td>&nbsp;" + currencyShow(data.running_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
         
         varResult+= "<tr><td><b><?php echo $TOTAL_CP_DIST ?></b></td>" +
-                    "<td>&nbsp;" + countryCheck(data.total_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
+                    "<td>&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
     }
 
     //TOTAL
     varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-               "<td><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+               "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
     
     varResult+="</table>";
         
@@ -484,41 +484,41 @@ function print_feffort_table(f1, f2, f3, data){
     switch(f3.income_type){
         case 'year':    
             varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td style=\"width:20%\">" + countryCheck(data.fin_effort.income) + "</td></tr>" +
+                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>";
             break;
         case 'month':
             varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
-                        "<td style=\"width:20%\">" + countryCheck(data.fin_effort.income) + "</td></tr>" +
+                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
                         "<tr><td><?php echo $NUMBER_OF_MONTHS ?></td>" + 
                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>" +
+                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>" +
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
         case 'week':
             varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $WEEK ?></td>" + 
-                        "<td style=\"width:20%\">" + countryCheck(data.fin_effort.income) + "</td></tr>"+
+                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
                         "<tr><td><?php echo $NUMBER_OF_WEEKS ?></td>" + 
                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
+                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
             break;  
         case 'hour':
             varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $HOUR ?></td>" + 
-                        "<td style=\"width:20%\">" + countryCheck(data.fin_effort.income) + "</td></tr>"+
+                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
                         "<tr><td><?php echo $NUMBER_OF_HOURS ?></td>" + 
                         "<td>" + data.fin_effort.income_hours_per_week + " <?php echo $HOUR_ABBR ?></td></tr>"+
                         "<tr><td><?php echo $NUMBER_OF_WEEKS ?></td>" + 
                         "<td>" + data.fin_effort.income_per_type + "</td></tr>"+
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
+                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td>" + countryCheck(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
             break;          
     }
     //working time
@@ -539,7 +539,7 @@ function print_feffort_table(f1, f2, f3, data){
         }
     }           
     varResult+= "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $HOUR ?></td>" +
-                "<td>&nbsp;" + countryCheck(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</td></tr>";
+                "<td>&nbsp;" + currencyShow(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</td></tr>";
     
     //distance
     varResult+= "<tr><td colspan=\"2\"><b><?php echo $DISTANCE ?></b></td></tr>";
@@ -589,7 +589,7 @@ function print_feffort_table(f1, f2, f3, data){
                 ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) + 
                 '&#37;</b>' +
                 "<tr><td><?php echo $TOTAL_COSTS_PER_YEAR ?></td>" + 
-                "<td>" + countryCheck(data.fin_effort.total_costs_year.toFixed(1)) + "</td></tr>" +
+                "<td>" + currencyShow(data.fin_effort.total_costs_year.toFixed(1)) + "</td></tr>" +
                 "<tr><td><?php echo $HOURS_TO_AFFORD_CAR ?></td>"  +  
                 "<td>" + data.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
                 "<tr><td><?php echo $MONTHS_TO_AFFORD_CAR ?></td>" +  
@@ -636,18 +636,18 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
                    "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
         //items
         varResult+="<tr><td>" + tp_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.total_price_pt.toFixed(1)) + "</td></tr>";
+                   "<td>&nbsp;" + currencyShow(data.public_transports.total_price_pt.toFixed(1)) + "</td></tr>";
         
         varResult+="<tr><td>" + taxi_text + "</td>" + 
-                   "<td>&nbsp;" + countryCheck(data.public_transports.taxi_cost.toFixed(1)) + "</td></tr>";
+                   "<td>&nbsp;" + currencyShow(data.public_transports.taxi_cost.toFixed(1)) + "</td></tr>";
         
         //in case other means of transport are shown besides taxi and urban public transports
         if(data.public_transports.display_other_pt) {
             varResult+="<tr><td>" + outros_tp_text + "</td>" +
-                       "<td>&nbsp;"+countryCheck(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
+                       "<td>&nbsp;"+currencyShow(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
         }
         varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                   "<td><b>" + countryCheck(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                   "<td><b>" + currencyShow(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
         
         varResult+="</table>";
     }
@@ -671,10 +671,10 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
             varResult+="<br><table class=\"result_table uber_table\" id=\"result_table_uber\">";
             
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
-                       "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
             
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
-                       "<td>" + countryCheck(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
             varResult+="<tr><td><b><?php echo $FUEL_DIST.' '.$WORD_PER.' '.$MONTH ?></b><br></td>"+
                        "<td>" + res_uber_obj.dpm.toFixed(0) + " " +"<?php echo $STD_DIST_FULL?></td></tr>";
@@ -684,13 +684,13 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
                        "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
                        
             varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
-                       "<td><b>" + countryCheck(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
+                       "<td><b>" + currencyShow(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
 
             varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                       "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
+                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
             
             varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";       
         }
@@ -702,13 +702,13 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
             
             varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
                        "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" +
-                       "<td><b>" + countryCheck(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+                       "<td><b>" + currencyShow(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
              
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
-                       "<td>" + countryCheck(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
             
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
-                       "<td>" + countryCheck(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
             varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" + 
                        "<td>" + data.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
@@ -717,10 +717,10 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
                        "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
                        
             varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
-                       "<td><b>" + countryCheck(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
+                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
            
             varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + countryCheck(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
             
             varResult+="</table>";    
         }
@@ -787,9 +787,9 @@ function print_extern_table(f1, f2, f3, data){
 
 function drawChartResult(frame_witdh, data){
     
-    //China doesn't accept files from Google servers
+    //Whe Google services are not an option
     //This website uses Google Charts
-    if(Country=="CN"){
+    if(!IsGoogle){
         return;
     }
     
@@ -896,13 +896,16 @@ function drawChartResult(frame_witdh, data){
 }
 
 //puts the currency symbol after the money value, for certain countries 
-function countryCheck(value){   
+function currencyShow(value){   
     
-    if(Country=='FI' || Country=='CN' || Country=='PL'){
-        res = value + "&nbsp;<?php echo $CURR_SYMBOL ?>" ;
+    <?php 
+    if (isset($INVERT_CURRENCY) && $INVERT_CURRENCY){
+        echo 'res = value + "&nbsp;'.$CURR_SYMBOL.'";';
     }
     else{
-        res = "<?php echo $CURR_SYMBOL ?>&nbsp;" + value;
+        echo 'res = "'.$CURR_SYMBOL.'&nbsp;" + value;';
     }
+    ?>
+    
     return res;
 }

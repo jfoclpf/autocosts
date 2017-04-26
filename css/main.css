@@ -121,6 +121,22 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+/*make divs slight transparent and fades them in and out for mouse hover on central div*/
+#description,
+#div1_td, 
+#div3_td {
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
+    -o-transition: opacity .5s ease-out;
+}
+.fade_out{
+    opacity: .2;
+}
+.no_fade {
+    opacity: 1;
+}
+
 /*Form inputs which allow max of TWO digits*/
 #acquisitionMonth,
 #numberInspections,

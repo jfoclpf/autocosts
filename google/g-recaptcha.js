@@ -19,8 +19,8 @@ function Run1(country){
     runButtonLoader();
     
     //In test version doesn't run Captcha
-    //China doesn't accept files from Google servers
-    if(!isHumanConfirmed && country!='XX' && country!='CN'){
+    //Only when Google servers are available
+    if(!isHumanConfirmed && country!='XX' && IsGoogle){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
