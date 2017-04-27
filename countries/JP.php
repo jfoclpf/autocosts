@@ -32,8 +32,6 @@ $fuel_price_volume_std = 1;
 //2 - imperial gallons
 //3 - US gallons
 
-$IS_GOOGLE = false; //set to false when in this specific country Google services are blocked or not reliable 
-
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
 $CURR_CODE = 'JPY';

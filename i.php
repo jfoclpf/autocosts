@@ -126,12 +126,7 @@ include_once("./countries/_url_selector.php");
         <br>
     </div>
     <!--jquery.js-->
-    <?php if (!isset($IS_GOOGLE) || $IS_GOOGLE){ //When Google servers are available (ex: in China are not available)
-        echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';    
-    }
-    else{
-        echo '<script src="js/jquery/jquery.min.js"></script>';
-    }?>
+    <script src="js/jquery/jquery.min.js"></script>
     <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
 
@@ -148,14 +143,15 @@ include_once("./countries/_url_selector.php");
         var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';
         //set to false when for that country Google services are blocked or not reliable; by default is true
         var IsGoogle = <?php echo (!isset($IS_GOOGLE) || $IS_GOOGLE)?'true':'false'; ?>;
+        var IsGoogleCharts = false; //file that says whether Google Charts JS files are available
+        var IsGoogleCaptcha = false; //file that says whether Google Captcha JS files are available  
+        var IsGoogleAnalytics = false; //file that says whether Google Analytics JS files are available  
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>
     <script src="js/documentFunctions.js"></script>
     <script src="js/initialize.js"></script>
-    <?php if (!isset($IS_GOOGLE) || $IS_GOOGLE){ //China doesn't accept files from Google servers
-        include_once("google/analyticstracking.php");
-    }?>
+    <?php include_once("google/analytics.php"); ?>
     
 </body>
 

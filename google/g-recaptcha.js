@@ -19,18 +19,19 @@ function Run1(country){
     runButtonLoader();
     
     //In test version doesn't run Captcha
-    //Only when Google servers are available
-    if(!isHumanConfirmed && country!='XX' && IsGoogle){
+    //Only when Google Captcha files are available
+    if(!isHumanConfirmed && country!='XX' && IsGoogleCaptcha){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
             url: "google/captcha_validate.php",
             data: "&g-recaptcha-response=" + grecaptcha.getResponse()
         }).done(function(result){
+            //alert(result);
             if(result=="ok"){
                 if(Run2() && country != "XX"){
                     //if not a test triggers event for Google Analytics
-                    if(!IsThisAtest()){
+                    if(!IsThisAtest() && IsGoogleAnalytics){
                         ga('send', 'event', 'form_part', 'run_OK');
                     }
                     //submits data to database if no XX version
@@ -45,6 +46,13 @@ function Run1(country){
                 
                 scrollPage();
             }
+            else if(result=="not-ok-3"){ //when the Google file was not accessible
+                if(Run2() && country != "XX"){
+                    submit_data(country); //submits data to database if no test version
+                }   
+                resetRunButtons(); //reset the run buttons
+                scrollPage();               
+            }
             else{
                 //reset the run buttons
                 resetRunButtons();
@@ -54,8 +62,7 @@ function Run1(country){
     else{
         if(Run2() && country != "XX"){
             submit_data(country); //submits data to database if no test version
-        }
-      
+        }   
         resetRunButtons(); //reset the run buttons
         scrollPage();
     }                

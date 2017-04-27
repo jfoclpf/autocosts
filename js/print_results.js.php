@@ -787,9 +787,8 @@ function print_extern_table(f1, f2, f3, data){
 
 function drawChartResult(frame_witdh, data){
     
-    //Whe Google services are not an option
-    //This website uses Google Charts
-    if(!IsGoogle){
+    //Whe Google Charts are not available
+    if(!IsGoogleCharts){
         return;
     }
     

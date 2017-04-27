@@ -128,7 +128,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         
         //if not a test triggers event for Google Analytics accordingly
         //China doesn't accept files from Google servers
-        if(!IsThisAtest() && IsGoogle){
+        if(!IsThisAtest() && IsGoogleAnalytics){
             if(n==2 && !hasShownPart2){
                 ga("send", "event", "form_part", "form_part_2");
                 hasShownPart2=true;
@@ -157,21 +157,18 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
        
         if (!hasLoadedPart[0]){
             $.getScript("js/coreFunctions.js", function(){
-                //China doesn't accept files from Google servers
-                if (IsGoogle){
-                    $.getScript("https://www.google.com/jsapi", function(){
-                        hasLoadedPart[0] = true;
-                        if (!is_userdata_formpart1_ok())
-                            return;
-                        shows_part(2);
-                    });
-                }
-                else{
-                    hasLoadedPart[0] = true;
-                    if (!is_userdata_formpart1_ok())
-                        return;
-                    shows_part(2);                    
-                }
+                //Tries to load Google chart JS files
+                $.getScript("https://www.gstatic.com/charts/loader.js")
+                    .done(function(){
+                        IsGoogleCharts = true;
+                    })
+                    .fail(function(){
+                        IsGoogleCharts = false;
+                });
+                hasLoadedPart[0] = true;
+                if (!is_userdata_formpart1_ok())
+                    return;
+                shows_part(2);
             });                                             
         }
         else{
@@ -189,11 +186,14 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 $.getScript("js/print_results.js.php?country="+Country); 
             });
                        
-            $.getScript("google/g-recaptcha.js", function() {
-                //China doesn't accept files from Google servers
-                if (IsGoogle){
-                    $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language);
-                }
+            $.getScript("google/g-recaptcha.js", function() {             
+                $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language)
+                    .done(function(){
+                        IsGoogleCaptcha = true;
+                    })
+                    .fail(function(){
+                        IsGoogleCaptcha = false;
+                });
             });
             
             //Jquery social media share plugins
@@ -218,9 +218,9 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             return;
         
         if (!hasLoadedPart[2]){
-            //China doesn't accept files from Google servers
-            if (IsGoogle){
-                google.load("visualization", "1", {"packages": ["corechart"], "language": Language, "callback": function(){
+            //If Google Charts JS files are available
+            if (IsGoogleCharts){
+                google.charts.load('current', {"packages": ["corechart"], "language": Language, "callback": function(){
                     hasLoadedPart[2]=true;
                     shows_part(3);
                 }});
