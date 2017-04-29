@@ -126,6 +126,16 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
     //shows form part n and hides the other parts
     function shows_part(n){
         
+        if(n==1){
+            $('#div1_td, #div3_td').show();
+            $("#description").html(DescriptionHTML);
+        }
+        
+        if(n==2 || n==3){
+            $('#div1_td, #div3_td').hide();
+            $("#description").html("");            
+        }
+        
         //if not a test triggers event for Google Analytics accordingly
         //China doesn't accept files from Google servers
         if(!IsThisAtest() && IsGoogleAnalytics){
@@ -149,7 +159,9 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             }
             i++;
             p = document.getElementById(part_name+i);
-        }   
+        }
+
+        scrollPage();
     }
 
     //change from form part 1 to 2
@@ -282,7 +294,6 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         scrollPage();
     }
     
-    scrollPage();
     return;
 }
 
@@ -463,6 +474,24 @@ $("#slider1").change(function() {
 
 $("#slider2").change(function() {
     slider_toggles_form3();
+});
+
+//fade out lateral and top divs when mouse over central main div
+$('#input_div').hover(
+    function(){//when mouse pointer enters div
+        $('#description, #div1_td, #div3_td').removeClass('no_fade').addClass('fade_out');
+        scrollPage();
+    },
+    function(){//when mouse pointer leaves div
+        $('#description, #div1_td, #div3_td').removeClass('fade_out').addClass('no_fade');
+});
+
+$('#div2_td table, #div2_td h3').hover(
+    function(){
+        $(this).find('*').css('background-color','#fff8dc');
+    },
+    function(){
+        $(this).find('*').css('background-color','');    
 });
 
 //Loader after the run button is clicked

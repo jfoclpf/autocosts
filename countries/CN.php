@@ -35,7 +35,7 @@ $fuel_price_volume_std = 1;
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
 $CURR_CODE = 'CNY';
-$INVERT_CURRENCY = true; //the best way to present currency sumbol with numbers, when true shows "10£", when false shows "£10" 
+$INVERT_CURRENCY = true; //the best way to present currency symbol with numbers, when true shows "10£", when false shows "£10" 
 $CURR_NAME = '元';
 $CURR_NAME_PLURAL = '元';
 $CURR_NAME_BIG_PLURAL = '元';
