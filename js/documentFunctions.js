@@ -486,12 +486,17 @@ $('#input_div').hover(
         $('#description, #div1_td, #div3_td').removeClass('fade_out').addClass('no_fade');
 });
 
-$('#div2_td table, #div2_td h3').hover(
+//highlights the form area on which the mouse is hover
+$('.form_part tr').hover(
     function(){
-        $(this).find('*').css('background-color','#fff8dc');
+        $(this).find('td').css('background-color','#fff8dc');
+        var nth_parent=$(this).parentsUntil('.form_part').length;        
+        $(this).parents().eq(nth_parent-1).prevAll('h3:first').css('background-color','#ffec8b');
     },
     function(){
-        $(this).find('*').css('background-color','');    
+        $(this).find('td').css('background-color','');
+        var nth_parent=$(this).parentsUntil('.form_part').length;       
+        $(this).parents().eq(nth_parent-1).prevAll('h3:first').css('background-color','');  
 });
 
 //Loader after the run button is clicked
