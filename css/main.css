@@ -621,6 +621,16 @@ input:checked + .slider:before {
     margin: 0 auto;
 }
 
+/*smooth fade into td*/
+.form_part td,
+.form_part h3,
+.form_part .form_section_title {
+    transition: background 0.2s ease-out;
+    -moz-transition: background 0.2s ease-out;
+    -webkit-transition: background 0.2s ease-out;
+    -o-transition: background 0.2s ease-out;
+}
+
 /*divs in which the several result tables are inserted*/
 .result_div {
     margin: 15px;
