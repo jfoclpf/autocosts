@@ -526,11 +526,14 @@ $('#distance_form3 tr').hover(
 $('#working_time_form3 tr').hover(
     function(){
         $(this).find('td').css('background-color','#fff8dc');
-        $(this).prevAll('#working_time_form3:first').css('background-color','#ffec8b');      
+        $('#working_time_form3').children(".form_section_title:first").css('background-color','#ffec8b');
+        $('#fin_effort_Div_form3').children(".form_section_title:first").css('background-color','');
+        
 
     },
     function(){
         $(this).find('td').css('background-color','');
+        $('#working_time_form3').children(".form_section_title:first").css('background-color','');  
       
 
 });
