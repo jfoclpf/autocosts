@@ -137,7 +137,6 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         }
         
         //if not a test triggers event for Google Analytics accordingly
-        //China doesn't accept files from Google servers
         if(!IsThisAtest() && IsGoogleAnalytics){
             if(n==2 && !hasShownPart2){
                 ga("send", "event", "form_part", "form_part_2");
@@ -148,17 +147,20 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 hasShownPart3=true;
             }
         }
-
-        var i = 1, p = document.getElementById(part_name+1);
-        while (p !== null){
-            if (i === n){
-                p.style.display = "";
+        
+        //shows #form_part{n} and hides the other parts
+        var i = 1, p = $("#"+part_name+(i).toString());
+        while (p.length != 0){
+            
+            if (i == n){
+                p.show("slow");
+               
             }
             else{
-                p.style.display = "none";
+                p.hide("slow");        
             }
             i++;
-            p = document.getElementById(part_name+i);
+            p = $("#"+part_name+(i).toString());
         }
 
         scrollPage();

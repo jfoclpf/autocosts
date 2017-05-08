@@ -37,18 +37,18 @@ function Run2(){
     //main table
     var main_table_HTML = print_main_table(f1, f2, f3, data);
     $("#main_table").html(main_table_HTML);
-    $("#main_table, #main_table_section").show();
+    $("#main_table, #main_table_section").show("slow");
 
     //monthly costs table  
     var monthly_costs_HTML = print_costs_table(f1, f2, f3, data);
     $("#monthly_costs").html(monthly_costs_HTML);
-    $("#monthly_costs, #monthly_costs_section").show();
+    $("#monthly_costs, #monthly_costs_section").show("slow");
 
     //financial result table
     if(data.fin_effort_calculated){
         var fin_effort_table_HTML = print_feffort_table(f1, f2, f3, data);
         $("#fin_effort").html(fin_effort_table_HTML);
-        $("#fin_effort, #fin_effort_section").show();
+        $("#fin_effort, #fin_effort_section").show("slow");
         fin_effort_bool = true; //global variable
     }
     else{
@@ -60,7 +60,7 @@ function Run2(){
         //public transports table 
         var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, country);
         if(public_transport_table_HTML !== ""){
-            $("#alternative_to_carcosts, #alternative_to_carcosts_section").show();
+            $("#alternative_to_carcosts, #alternative_to_carcosts_section").show("slow");
             $("#alternative_to_carcosts").html(public_transport_table_HTML);
         }
         else{
@@ -75,7 +75,7 @@ function Run2(){
     var extern_costs_table_table_HTML = print_extern_table(f1, f2, f3, data);
     if (extern_costs_table_table_HTML !== ""){
         $("#extern_costs").html(extern_costs_table_table_HTML);
-        $("#extern_costs, #exten_costs_section").show();
+        $("#extern_costs, #exten_costs_section").show("slow");
         extern_costs_bool = true; //global variable
     }
     else{
@@ -84,7 +84,7 @@ function Run2(){
     }
 
     //shows buttons
-    $("#result_buttons_div, #buttons_section").show();
+    $("#result_buttons_div, #buttons_section").show("slow");
     
     //shows social media buttons
     $("#shareIcons").jsSocials({
