@@ -488,6 +488,13 @@ $('#input_div').hover(
         $('#description, #div1_td, #div3_td').removeClass('fade_out').addClass('no_fade');
 });
 
+//when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
+$('#tbl_statistics').click(function(){ 
+    var domain = window.location.hostname;  
+    var url2open = "http://" + domain + "/db_stats/tables/" + Country + ".jpg";
+    window.open(url2open); 
+});
+
 //highlights the form area on which the mouse is hover 
 $('#form_part1 tr, #form_part2 tr').hover(
     function(){
