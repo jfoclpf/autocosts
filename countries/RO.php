@@ -38,6 +38,7 @@ $fuel_price_volume_std = 1;
 //standards TEXT VERSION
 //IMPORTANT: BE COHERENT with the above standards
 $CURR_CODE = 'RON';
+$INVERT_CURRENCY = true; //the best way to present currency sumbol with numbers, when true shows "10£", when false shows "£10" 
 $CURR_NAME = 'Lei';
 $CURR_NAME_PLURAL = 'Lei';
 $CURR_NAME_BIG_PLURAL = 'LEI';
