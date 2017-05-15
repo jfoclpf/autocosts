@@ -341,7 +341,7 @@ $("#numberInspections").focusout(function(){
         $("#InspectionCost_tr").hide("slow");
     }
     else{
-        $("#InspectionCost_tr").css("display", "table-row");
+        $("#InspectionCost_tr").show("slow")
     }
 });
 
