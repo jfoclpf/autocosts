@@ -148,42 +148,53 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         
         //makes smooth transitions between form parts
         if (o==0 && d==1){ //when it loads
-            p1.slideDown("slow");
+            p1.slideDown("slow", function(){
+                scrollPage();
+            });
             //in form part 1 shows the lateral information and the top description
             $('#div1_td, #div3_td').show("slow");
             $("#description").html(DescriptionHTML);
             p2.hide();
-            p3.hide();
+            p3.hide();           
         }
         else if (o==1 && d==2){           
             p1.slideUp("slow", function(){
                 $("#description").html("");           
                 $('#div1_td, #div3_td').hide("slow", function(){
-                    p2.slideDown("slow");
+                    p2.slideDown("slow", function(){
+                        scrollPage();
+                    });                    
                 });                 
             });
         }
         else if(o==2 && d==3){
             p2.slideUp("slow", function(){
-                p3.slideDown("slow");
+                p3.slideDown("slow", function(){
+                    scrollPage();
+                });                
             });           
         }
         else if(o==3 && d==2){
             p3.slideUp("slow", function(){
-                p2.slideDown("slow");
+                p2.slideDown("slow", function(){
+                    scrollPage();
+                });                
             });            
         }
         else if(o==2 && d==1){
             p2.slideUp("slow", function(){
-                $("#description").hide().html(DescriptionHTML).slideDown("fast", function(){
+                $("#description").hide().
+                                html(DescriptionHTML).
+                                slideDown("fast", function(){
                                     p1.slideDown("slow", function(){
-                    $('#div1_td, #div3_td').show("slow");
-                });  
-                });                         
-            });            
+                                        $('#div1_td, #div3_td').show("slow", function(){
+                                            scrollPage();
+                                        });                                        
+                                    });  
+                                });                         
+                            });            
         }
-
-        scrollPage();
+        
     }
     
 
