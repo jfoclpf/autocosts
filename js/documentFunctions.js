@@ -303,7 +303,14 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             //to activate the downloadPDF button
             $.getScript("js/pdf/generatePDF.js", function() {
                 $.getScript("js/pdf/pdfmake.js", function() {
-                    $.getScript("js/pdf/vfs_fonts.js", function() {
+                    //path where the fonts for PDF are stored
+                    var pdf_fonts_path;
+                    if (Country=='CN' || Country=='JP' || Country=='IN'){
+                        pdf_fonts_path = "js/pdf/" + Country + "/vfs_fonts.js";                      
+                    }else{
+                        pdf_fonts_path = "js/pdf/vfs_fonts.js";
+                    }                    
+                    $.getScript(pdf_fonts_path, function() {
                          $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
                          hasLoadedPart[3]=true;
                     });

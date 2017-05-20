@@ -16,7 +16,10 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
     var imageData2 = $('#img_bar_chart_div').find('img').attr('src');
 
     var docDefinition = {
-        header: {text: main_title, style: 'title'},
+        header: {
+            text: main_title, 
+            style: 'title'
+        },
         content:[            
             {
                 style: 'tableMarging',
@@ -103,6 +106,9 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
             img_style: {
                 alignment: 'center'
             }
+        },
+        defaultStyle: {
+            font: 'Roboto'
         }
     };
 
@@ -204,6 +210,43 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                     };
         docDefinition.content.push(body4_obj);
     }
+    
+    //Languages/alphabets that need special fonts, load such fonts from different files
+    //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
+    //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
+    if (Country=='CN'){
+        pdfMake.fonts = {
+            Chinese: {
+                normal: 'Chinese.ttf',
+                bold: 'Chinese.ttf',
+                italics: 'Chinese.ttf',
+                bolditalics: 'Chinese.ttf'
+            }
+        };
+        docDefinition.defaultStyle.font = "Chinese";
+    }
+    if (Country=='JP'){
+        pdfMake.fonts = {
+            Japanese: {
+                normal: 'Japanese.ttf',
+                bold: 'Japanese.ttf',
+                italics: 'Japanese.ttf',
+                bolditalics: 'Japanese.ttf'
+            }
+        };
+        docDefinition.defaultStyle.font = "Japanese";
+    }
+    if (Country=='IN'){
+        pdfMake.fonts = {
+            Hindi: {
+                normal: 'Hindi.ttf',
+                bold: 'Hindi.ttf',
+                italics: 'Hindi.ttf',
+                bolditalics: 'Hindi.ttf'
+            }
+        };
+        docDefinition.defaultStyle.font = "Hindi";
+    }    
     
     //creates PDF file
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
