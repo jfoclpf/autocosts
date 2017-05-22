@@ -2,32 +2,43 @@
 /*====================================================*/
 /*Functions which change the visual aspect of the page*/
 
-/*function that is run when the button Reload is clicked*/
-function reload(onDocumentLoad) {
+/*function that is run when the button Reload/Rerun is clicked*/
+function reload() {
     TimeCounter.resetStopwatch();
-    
-    //shows the form
-    $("#input_div").show();
-    //hides the results divs and correspondent class
-    $("#monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").hide("slow");
-    $(".result_section").hide();
-    
     ResultIsShowing=false;
-        
-    //reloaded to the original screen after the result tables were already shown
-    if(!onDocumentLoad){
-        $("#div1").show();
-        $("#div3").show();
-        $("#description").html(DescriptionHTML);
-        resized();
-        
-        //if the results were already shown, it means user went already through ReCaptcha
-        isHumanConfirmed = true;
-        
-        //reset the run buttons
-        resetRunButtons();
-    } 
-    openForm_part('form_part', 0, 1);
+    
+    //if the results were already shown, it means user went already through ReCaptcha
+    isHumanConfirmed = true;       
+    
+    $("#form_part2, #form_part3").hide();
+    $("#description, #div1_td, #div3_td").hide();
+    $("#div1, #div3").show();
+    
+    //reset the run buttons
+    resetRunButtons();  
+    
+    //hides the results divs and correspondent class
+    $(".result_section, #monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").
+        hide("slow").
+        promise().
+        done(function(){                                        
+            $("#description").
+                html(DescriptionHTML).
+                slideDown("fast", function(){
+                    $("#input_div, #form_part1").
+                        slideDown("slow").
+                        promise().
+                        done(function(){
+                            $("#div1_td, #div3_td").
+                                show("slow").
+                                promise().
+                                done(function(){
+                                    scrollPage();
+                                    resized();
+                                });                                    
+                        });                                 
+                    });
+            });
 }
 
 /*function that loads new HTML and that is run when country select is changed*/ 
@@ -78,25 +89,32 @@ function resized(){
 }
 
 /*function that scrolls the page to the beggining of the form*/
-function scrollPage(){
-    
+function scrollPage(callback){
+
     var scroll_speed = 300;
     //extra top margins given on the top of the form when the page scrolls
     var extra_margin_desktop = 15;
     var extra_margin_mobile = 5; 
     var windowsize = $(window).width();
-    
-    /*768px threshold from which the CSS shows the page in mobile version*/    
-    if (windowsize > 768) { 
-        $("html, body").animate({
-            scrollTop: ($("#container_table").offset().top - $("#banner_top").outerHeight(true) - extra_margin_desktop)
-        }, scroll_speed);
+
+    /*768px threshold from which the CSS shows the page in mobile version*/
+    var scrollTop;
+    if (windowsize > 768) {
+        scrollTop = $("#container_table").offset().top - $("#banner_top").outerHeight(true) - extra_margin_desktop;
     }
     else{
-        $("html, body").animate({
-            scrollTop: ($("#div2_td").offset().top - $("#banner_top").outerHeight(true) - extra_margin_mobile)
-        }, scroll_speed);       
+        scrollTop = $("#div2_td").offset().top - $("#banner_top").outerHeight(true) - extra_margin_mobile;
     }
+    
+    $("html, body").
+        animate({scrollTop: scrollTop}, scroll_speed).
+        promise().
+        done(function(){            
+            if (typeof callback === 'function'){
+                callback();
+            }
+        });
+
 }
 
  /*function which returns whether this session is a (test/develop version) or a prod version */  
@@ -146,26 +164,18 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         var p2 = $("#"+part_name+"2");
         var p3 = $("#"+part_name+"3");
         
-        //makes smooth transitions between form parts
-        if (o==0 && d==1){ //when it loads
-            p1.slideDown("slow", function(){
-                scrollPage();
-            });
-            //in form part 1 shows the lateral information and the top description
-            $('#div1_td, #div3_td').show("slow");
-            $("#description").html(DescriptionHTML);
-            p2.hide();
-            p3.hide();           
-        }
-        else if (o==1 && d==2){           
+        if (o==1 && d==2){           
             p1.slideUp("slow", function(){
-                $("#description").html("");           
-                $('#div1_td, #div3_td').hide("slow", function(){
-                    p2.slideDown("slow", function(){
-                        scrollPage();
-                    });                    
-                });                 
-            });
+                    $("#description").html("");           
+                    $('#div1_td, #div3_td').hide("slow");                  
+                    $("#description, #div1_td, #div3_td").
+                        promise().
+                        done(function(){
+                            p2.slideDown("slow", function(){                                    
+                                scrollPage();
+                            });
+                        });
+                });
         }
         else if(o==2 && d==3){
             p2.slideUp("slow", function(){
@@ -182,21 +192,27 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             });            
         }
         else if(o==2 && d==1){
+            //$('#form_part1').off();
             p2.slideUp("slow", function(){
-                $("#description").hide().
-                                html(DescriptionHTML).
-                                slideDown("fast", function(){
-                                    p1.slideDown("slow", function(){
-                                        $('#div1_td, #div3_td').show("slow", function(){
-                                            scrollPage();
-                                        });                                        
-                                    });  
-                                });                         
-                            });            
+                $("#description").
+                    hide().
+                    html(DescriptionHTML).
+                    slideDown("fast", function(){
+                        $("#div1, #div3").hide();
+                        $("#div1_td, #div3_td").show();
+                        p1.slideDown("slow", function(){                        
+                            $("#div1, #div3").
+                                show("slow").
+                                promise().
+                                done(function(){                                    
+                                        scrollPage();
+                                });
+                        });                                             
+                    });                      
+            });            
         }
         
-    }
-    
+    }  
 
     //change from form part 1 to 2
     if (part_number_origin===1 && part_number_destiny===2){
@@ -327,12 +343,6 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
     //change from form part 2 to 1
     if (part_number_origin==2 && part_number_destiny==1){
         shows_part();
-    }    
-
-    //when it starts/loads the website
-    if (part_number_origin===0 && part_number_destiny===1){
-        shows_part();
-        scrollPage();
     }
     
     return;
@@ -541,14 +551,15 @@ $("#slider2").change(function() {
 });
 
 //fade out lateral and top divs when mouse over central main div
-$('#form_part1').hover(
-    function(){//when mouse pointer enters div
-        $('#description, #div1_td, #div3_td').removeClass('no_fade').addClass('fade_out');
-        scrollPage();
-    },
-    function(){//when mouse pointer leaves div
-        $('#description, #div1_td, #div3_td').removeClass('fade_out').addClass('no_fade');
-});
+$('#form_part1').on({
+    mouseenter: function(){//when mouse pointer enters div
+            $('#description, #div1_td, #div3_td').fadeTo( "slow" , 0.2);
+            scrollPage();
+        },
+    mouseleave: function(){//when mouse pointer leaves div
+            $('#description, #div1_td, #div3_td').fadeTo( "slow" , 1);
+        }
+    });
 
 //when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
 $('#tbl_statistics').click(function(){ 
