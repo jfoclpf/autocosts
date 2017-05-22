@@ -6,21 +6,15 @@ function initialize() {
     oldIE();
     
     TimeCounter.resetStopwatch();
-    ResultIsShowing=false;
+    ResultIsShowing=false; //global variable indicating whether the results are being shown
     
     //divs that need to be hidden    
     frame_witdh = document.getElementById('monthly_costs').offsetWidth;
     
-    //hides the results divs and correspondent class
-    $("#monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div, .result_section").hide();
-    $("#input_div, #div1, #div3").show();
-    
-    $("#form_part2, #form_part3").hide();
-    $("#form_part1").show();
-
-    ResultIsShowing=false; //global variable indicating whether the results are being shown
     DescriptionHTML = $('#description').html();
-    
+    $('#description').hide();     
+    $("#form_part1, #form_part2, #form_part3").hide();
+
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();
@@ -50,6 +44,40 @@ function initialize() {
     isHumanConfirmed = false; 
     $('#run_button').show();
     $('#run_button_noCapctha').hide();
+    
+    //loading entre animation
+    $(".result_section, #monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").hide();
+    
+    $("*"). //select all elememts
+        promise().
+        done(function(){                                        
+            $("#description").
+                slideDown("fast", function(){
+                    $("#div1, #div3").
+                        hide().
+                        promise().
+                        done(function(){
+                            $("#div1_td, #div3_td").
+                                show().
+                                promise().
+                                done(function(){
+                                    resized(function(){
+                                        $("#input_div").show();
+                                            $("#form_part1").
+                                            slideDown("slow", function(){                        
+                                                $("#div1, #div3").
+                                                    show("slow").
+                                                    promise().
+                                                    done(function(){                                           
+                                                        scrollPage();                                                   
+                                                    });
+                                            });
+                                    });
+                                });
+                        });
+                 });
+        });
+      
 }
 
 //function that runs when the page is resized

@@ -18,27 +18,40 @@ function reload() {
     resetRunButtons();  
     
     //hides the results divs and correspondent class
+    //and shows the initial page, chaining the transitions
     $(".result_section, #monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").
         hide("slow").
         promise().
         done(function(){                                        
             $("#description").
+                hide().
                 html(DescriptionHTML).
                 slideDown("fast", function(){
-                    $("#input_div, #form_part1").
-                        slideDown("slow").
+                    $("#div1, #div3").
+                        hide().
                         promise().
                         done(function(){
                             $("#div1_td, #div3_td").
-                                show("slow").
+                                show().
                                 promise().
                                 done(function(){
-                                    scrollPage();
-                                    resized();
-                                });                                    
-                        });                                 
-                    });
-            });
+                                    resized(function(){
+                                        $("#input_div").show();
+                                            $("#form_part1").
+                                            slideDown("slow", function(){                        
+                                                $("#div1, #div3").
+                                                    show("slow").
+                                                    promise().
+                                                    done(function(){                                           
+                                                        scrollPage();                                                   
+                                                    });
+                                            });
+                                    });
+                                });
+                        });
+                 });
+        }); 
+
 }
 
 /*function that loads new HTML and that is run when country select is changed*/ 
@@ -57,7 +70,7 @@ function valueselect(country) {
 }
 
 /*function that runs when the browser window is resized*/
-function resized(){
+function resized(callback){
     //adapts the margin-top CSS value according to the window width
     var margin_top_desc = $("#banner_top").outerHeight(true)+3;
     $("#description").css("margin-top", margin_top_desc);
@@ -85,6 +98,10 @@ function resized(){
         
         //prints final text accordingly
         var text_msg = print_result_final_text(frame_witdh, CalculatedData);
+    }
+    
+    if (typeof callback === 'function'){
+        callback();
     }
 }
 
@@ -192,26 +209,33 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             });            
         }
         else if(o==2 && d==1){
-            //$('#form_part1').off();
             p2.slideUp("slow", function(){
                 $("#description").
                     hide().
                     html(DescriptionHTML).
                     slideDown("fast", function(){
-                        $("#div1, #div3").hide();
-                        $("#div1_td, #div3_td").show();
-                        p1.slideDown("slow", function(){                        
-                            $("#div1, #div3").
-                                show("slow").
-                                promise().
-                                done(function(){                                    
-                                        scrollPage();
-                                });
+                        $("#div1, #div3").
+                            hide().
+                            promise().
+                            done(function(){
+                                $("#div1_td, #div3_td").
+                                    show().
+                                    promise().
+                                    done(function(){
+                                        p1.
+                                        slideDown("slow", function(){                        
+                                            $("#div1, #div3").
+                                                show("slow").
+                                                promise().
+                                                done(function(){                                    
+                                                        scrollPage();
+                                                });
+                                        });
+                                    });
+                            });
                         });                                             
-                    });                      
-            });            
-        }
-        
+                    });                                 
+        }       
     }  
 
     //change from form part 1 to 2
