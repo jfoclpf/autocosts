@@ -1,7 +1,8 @@
 autocosts
 =========
 
-Automobile costs calculator
+Automobile costs calculator<br>
+http://autocosts.info<br>
 
 Licensed under:<br>
 GNU GPLv3<br>
