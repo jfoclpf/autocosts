@@ -18,7 +18,10 @@ ServerSignature Off
 
 RewriteEngine On
 
-RewriteRule sitemap\.xml sitemap.php [L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+#The countries list
+RewriteRule ^list$ countries/_index.php [L]
 
 RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
