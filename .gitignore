@@ -7,3 +7,4 @@ keys/uber_key.php
 keys/db_credentials.js
 keys/db_credentials.php
 keys/
+js/pdf/pdfmake.min.js
