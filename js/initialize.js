@@ -5,6 +5,8 @@ function initialize() {
     //detects old versions of Internet Explorer
     oldIE();
     
+    CurrentFormPart=1;
+    
     TimeCounter.resetStopwatch();
     ResultIsShowing=false; //global variable indicating whether the results are being shown
     
@@ -62,7 +64,7 @@ function initialize() {
                                 promise().
                                 done(function(){
                                     resized(function(){
-                                        $("#input_div").show();
+                                        $("#div2, #input_div").show();
                                             $("#form_part1").
                                             slideDown("slow", function(){                        
                                                 $("#div1, #div3").

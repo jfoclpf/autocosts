@@ -8,8 +8,9 @@ function reload() {
     ResultIsShowing=false;
     
     //if the results were already shown, it means user went already through ReCaptcha
-    isHumanConfirmed = true;       
-    
+    isHumanConfirmed = true;   
+
+    CurrentFormPart=1;   
     $("#form_part2, #form_part3").hide();
     $("#description, #div1_td, #div3_td").hide();
     $("#div1, #div3").show();
@@ -156,7 +157,10 @@ function scrollPage(callback){
 /*functions which is used to change the form parts*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
 var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
+var CurrentFormPart; //global variable for the current Form Part
 function openForm_part(part_name, part_number_origin, part_number_destiny) {
+    
+    CurrentFormPart = part_number_destiny;
 
     //shows form part {d} coming from form part {o} hiding the remaining part
     function shows_part(){
@@ -181,6 +185,9 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
         var p2 = $("#"+part_name+"2");
         var p3 = $("#"+part_name+"3");
         
+        //clears any pending animations for all elements
+        $("*").clearQueue();
+        
         if (o==1 && d==2){           
             p1.slideUp("slow", function(){
                     $("#description").html("");           
@@ -195,18 +202,24 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 });
         }
         else if(o==2 && d==3){
-            p2.slideUp("slow", function(){
-                p3.slideDown("slow", function(){
-                    scrollPage();
-                });                
-            });           
+            $('#div1_td, #div3_td').hide();
+            $("*").promise().done(function(){
+                p2.slideUp("slow", function(){
+                    p3.slideDown("slow", function(){
+                        scrollPage();
+                    });                
+                });
+            });
         }
         else if(o==3 && d==2){
-            p3.slideUp("slow", function(){
-                p2.slideDown("slow", function(){
-                    scrollPage();
-                });                
-            });            
+            $('#div1_td, #div3_td').hide();
+            $("*").promise().done(function(){
+                p3.slideUp("slow", function(){
+                    p2.slideDown("slow", function(){
+                        scrollPage();
+                    });                
+                });
+            });           
         }
         else if(o==2 && d==1){
             p2.slideUp("slow", function(){
@@ -577,11 +590,15 @@ $("#slider2").change(function() {
 //fade out lateral and top divs when mouse over central main div
 $('#form_part1').on({
     mouseenter: function(){//when mouse pointer enters div
-            $('#description, #div1_td, #div3_td').fadeTo( "slow" , 0.2);
-            scrollPage();
+            if (CurrentFormPart==1){
+                $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 0.2);
+                scrollPage();
+            }
         },
     mouseleave: function(){//when mouse pointer leaves div
-            $('#description, #div1_td, #div3_td').fadeTo( "slow" , 1);
+            if (CurrentFormPart==1){
+                $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 1);
+            }
         }
     });
 

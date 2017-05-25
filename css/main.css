@@ -261,6 +261,7 @@ table>thead>tr>th {
     display:table;
     margin-top: 40px;
     font-size: 18px;
+    display: none;
 }
 #description br {
     display: none;
@@ -308,6 +309,7 @@ form.roundCorner {
 #div3, #div1, #div2 {
     overflow: hidden;
     margin: 0 auto;
+    display: none;
 }
 .result_section {
     background: #f0f0f0;
@@ -315,6 +317,7 @@ form.roundCorner {
     border-radius: 10px;
     overflow: hidden;
     margin: 0 auto;
+    display: none;
 }
 #div2, .result_section{
     width:90%;
