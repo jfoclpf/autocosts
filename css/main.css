@@ -76,18 +76,31 @@ sup {
 }
 
 /* FORMS */
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+select, 
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"], 
+.uneditable-input {
     display: inline-block;
-    /* height: 20px; */
     padding: 4px 6px;
-    /* margin-bottom: 9px; */
     font-size: 14px;
     line-height: 20px;
     color: #555555;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 5px;
-    /* width: 108%; */
     border: 2px solid #b4b4b4;
     margin: 4px auto;
 }
@@ -95,7 +108,22 @@ select{
     max-width: 95%;
     width: auto;
 }
-textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"], 
+.uneditable-input {
     background-color: #ffffff;
     border: 2px solid #b4b4b4;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -261,7 +289,6 @@ table>thead>tr>th {
     display:table;
     margin-top: 40px;
     font-size: 18px;
-    display: none;
 }
 #description br {
     display: none;
@@ -309,7 +336,6 @@ form.roundCorner {
 #div3, #div1, #div2 {
     overflow: hidden;
     margin: 0 auto;
-    display: none;
 }
 .result_section {
     background: #f0f0f0;
@@ -406,6 +432,10 @@ form.roundCorner {
 
 /*=====================================*/
 /*===== Main Central Column (div2) ====*/
+
+#form_part2, #form_part3 {
+    display: none;
+}
 
 /* Buttons */
 .b-bottom {

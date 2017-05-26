@@ -14,8 +14,6 @@ function initialize() {
     frame_witdh = document.getElementById('monthly_costs').offsetWidth;
     
     DescriptionHTML = $('#description').html();
-    $('#description').hide();     
-    $("#form_part1, #form_part2, #form_part3").hide();
 
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
@@ -47,39 +45,7 @@ function initialize() {
     $('#run_button').show();
     $('#run_button_noCapctha').hide();
     
-    //loading entre animation
-    $(".result_section, #monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").hide();
-    
-    $("*"). //select all elememts
-        promise().
-        done(function(){                                        
-            $("#description").
-                slideDown("fast", function(){
-                    $("#div1, #div3").
-                        hide().
-                        promise().
-                        done(function(){
-                            $("#div1_td, #div3_td").
-                                show().
-                                promise().
-                                done(function(){
-                                    resized(function(){
-                                        $("#div2, #input_div").show();
-                                            $("#form_part1").
-                                            slideDown("slow", function(){                        
-                                                $("#div1, #div3").
-                                                    show("slow").
-                                                    promise().
-                                                    done(function(){                                           
-                                                        scrollPage();                                                   
-                                                    });
-                                            });
-                                    });
-                                });
-                        });
-                 });
-        });
-      
+    scrollPage();  
 }
 
 //function that runs when the page is resized
