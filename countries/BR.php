@@ -56,7 +56,7 @@ $BUTTON_RERUN = 'Recalcular'; //run calculator button
 $WEB_PAGE_TITLE = 'Calculadora dos Custos do Automóvel';
 $MAIN_TITLE = 'CALCULADORA DOS CUSTOS DO AUTOMÓVEL';
 $INITIAL_TEXT = 
-'Faça com esta calculadora as contas, ao <b>verdadeiro custo</b> que tem o seu veículo particular <b>no Brasil</b>. Tratam-se de aproximações, mas é uma excelente ordem de grandeza para que se aperceba de quantos recursos financeiros aloca em média para o seu veículo. Os veículos automotores têm uma série de despesas cujas periodicidades variam bastante, e por norma as pessoas não contabilizam uma série de despesas que vão pagando esporadicamente. Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: 8.7 km entre casa e trabalho.';
+'Faça com essa calculadora as contas, ao <b>verdadeiro custo</b> que tem seu veículo particular <b>no Brasil</b>. Tratam-se de aproximações, mas é uma excelente ordem de grandeza para que se aperceba de quantos recursos financeiros aloca em média para seu veículo automotor. Os veículos automotores têm uma série de despesas cujas periodicidades variam bastante, e por norma as pessoas não contabilizam uma série de despesas que vão pagando esporadicamente. Seja realista nos montantes introduzidos. Para valores que considera imprevisíveis, como por exemplo reparações ou multas, pense quanto gastou em média nos últimos anos. Use o ponto para a notação decimal, ex: 8.7 km entre casa e trabalho.';
 $DISCLAIMER = "Esta calculadora é <b>completamente anônima</b>, considerando que não pede ao usuário ou armazena, nem nome, endereço de email, <i>cookies</i>, endereço IP ou qualquer outro dado pessoal.";
 
 $HELP_PROJECT = 'Este serviço é gratuito sem publicidade!' ;
@@ -211,7 +211,7 @@ $TOTAL_VARIABLE_DESCR2 = 'Combustíveis, Reparações e Melhoramentos, Estaciona
 //EXTRA DATA
 $EXTRA_DATA = 'DADOS ADICIONAIS';
 $EXTRA_DATA1 = 'Dados adicionais';
-$EXTRA_DATA_PUBLIC_TRANSP = 'Public transports';
+$EXTRA_DATA_PUBLIC_TRANSP = 'Transportes públicos';
 $EXTRA_DATA_FAMILY_NBR = 'Quantas pessoas, com mais de 4 anos de idade, tem a sua família (com você inclusive)';
 $EXTRA_DATA_PRICE_PASS = 'Qual o preço médio por pessoa, que gastaria por mês em transportes públicos caso abdicasse do carro<br><i>caso não se aplique, coloque 0</i>';
 $EXTRA_DATA_INCOME = "Rendimentos";
