@@ -98,7 +98,7 @@ function Run2(){
     }
 
     //deactivates downloadPDF button until PDF files are loaded
-    if (!hasLoadedPart[3]){
+    if (!hasLoadedPart[3] && PDF_SWITCH){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
 

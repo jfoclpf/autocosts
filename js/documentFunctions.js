@@ -135,7 +135,10 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             $.getScript("js/conversionFunctions.js");
             $.getScript("db_stats/statsFunctions.js"); 
             $.getScript("js/get_data.js");
-            $.getScript("js/print.js");
+            
+            if(PRINT_SWITCH){
+                $.getScript("js/print.js");
+            }
             
             if(CHARTS_SWITCH){
                 $.getScript("google/charts.php?country="+Country, function() {
@@ -227,23 +230,28 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 }
             }
             
-            //wait until all PDF related files are loaded
-            //to activate the downloadPDF button
-            $.getScript("js/pdf/generatePDF.js", function() {
-                $.getScript("js/pdf/pdfmake.js", function() {
-                    //path where the fonts for PDF are stored
-                    var pdf_fonts_path;
-                    if (Country=='CN' || Country=='JP' || Country=='IN'){
-                        pdf_fonts_path = "js/pdf/" + Country + "/vfs_fonts.js";                      
-                    }else{
-                        pdf_fonts_path = "js/pdf/vfs_fonts.js";
-                    }                    
-                    $.getScript(pdf_fonts_path, function() {
-                         $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
-                         hasLoadedPart[3]=true;
+            if(PDF_SWITCH){
+                //wait until all PDF related files are loaded
+                //to activate the downloadPDF button
+                $.getScript("js/pdf/generatePDF.js", function() {
+                    $.getScript("js/pdf/pdfmake.js", function() {
+                        //path where the fonts for PDF are stored
+                        var pdf_fonts_path;
+                        if (Country=='CN' || Country=='JP' || Country=='IN'){
+                            pdf_fonts_path = "js/pdf/" + Country + "/vfs_fonts.js";                      
+                        }else{
+                            pdf_fonts_path = "js/pdf/vfs_fonts.js";
+                        }                    
+                        $.getScript(pdf_fonts_path, function() {
+                             $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
+                             hasLoadedPart[3]=true;
+                        });
                     });
                 });
-            });
+            }
+            else{
+                hasLoadedPart[3]=true;
+            }
         }
     }
     
