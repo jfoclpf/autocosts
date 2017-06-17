@@ -3,7 +3,7 @@ window.onload = initialize;
 
 function initialize() {
     
-    $("#input_div").load("countries/PT_form.html", function(){
+    $("#input_div").load("form/PT.html", function(){
         hasLoadedLayout();
     }); 
     

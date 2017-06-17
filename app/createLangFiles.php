@@ -11,7 +11,7 @@
         //#######################################
         //creates form files
         $htmlStr = "";
-        $fileName = "countries/".$key."_form.html";
+        $fileName = "build/form/".$key.".html";
         file_put_contents($fileName, $htmlStr);
         ob_start();
 
@@ -30,7 +30,7 @@
         //#######################################
         //creates Validate Form file for each language
         $htmlStr = "";
-        $fileName = "countries/".$key."_validateForm.js";
+        $fileName = "build/validateForm/".$key.".js";
         file_put_contents($fileName, $htmlStr);
         ob_start();
         
@@ -47,7 +47,7 @@
         //#######################################
         //creates print_results file for each language
         $htmlStr = "";
-        $fileName = "countries/".$key."_print_results.js";
+        $fileName = "build/print_results/".$key.".js";
         file_put_contents($fileName, $htmlStr);
         ob_start();
         

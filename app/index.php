@@ -1,13 +1,50 @@
-<!DOCTYPE html>
+<?php
 
-<head>  
+//scripts that creates several HTML language layout files, stored in /countries
+include('./createLangFiles.php');
+
+$htmlStr = "";
+$fileName = "build/index.html";
+file_put_contents($fileName, $htmlStr);
+ob_start();
+
+$GLOBALS['country'] = "UK"; //test
+
+include_once("../php/functions.php");
+include_once("../countries/_list.php");
+//loads the correspondent country file
+include('../countries/' . $GLOBALS['country'] . '.php');
+
+//removes XX from array
+unset($avail_CT['XX']);
+$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
+
+//some initializations
+$is_logo = false;
+$currency_logo = "";
+?><!DOCTYPE html>
+
+<head>
+
+    <script>
+    //GLOBAL switches
+    //Change the values accordingly
+        var UBER_SWITCH = false; //Uber
+        var SOCIAL_SWITCH = false; // Social media pulgins
+        var CHARTS_SWITCH = false; //Google Charts
+        var CAPTCHA_SWITCH = false; //Google Captcha
+        var ANALYTICS_SWITCH = false; //Google Analytics
+        var DB_SWITCH = false; //Inserts user input data into DataBase
+        var PRINT_SWITCH = false; //Print option
+        var PDF_SWITCH = false; //Download PDF report option
+    </script>
+
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
-	<meta name="description" content="This calculator will allow you to find the true cost of owning a car in the United Kingdom">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
     
-    <title>Automobile Costs Calculator</title>
+    <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flags.css">
@@ -28,7 +65,8 @@
                 <div id="main_title">
                     <header>
                         <h1>
-                            AUTOMOBILE COSTS CALCULATOR                        </h1>
+                            <?php echo $MAIN_TITLE ?>
+                        </h1>
                     </header>
                 </div>
             </div>
@@ -36,11 +74,18 @@
             <div id="country_box">
                 <div id="country_box_inline">
                     <div id="banner_flag_div">
-                        <div id="banner_flag" class="uk flag"></div>
+                        <div id="banner_flag" class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
                     </div>
                     <div id="country_select_div">
-                        <select name="country_select" id="country_select" onchange="valueselect(this.value);">
-                            <option value="PT">Portugal</option><option value="BR">Brasil</option><option value="GR">Ελλάδα</option><option value="DK">Danmark</option><option value="NO">Norge</option><option value="TR">Türkiye</option><option value="CZ">Česká</option><option value="FI">Suomessa</option><option value="ES">España</option><option value="PL">Polska</option><option value="RO">România</option><option value="IT">Italia</option><option value="NL">Nederland</option><option value="FR">France</option><option value="RU">Россия</option><option value="UA">Україна</option><option value="HU">Magyarország</option><option value="SE">Sverige</option><option value="AU">Australia</option><option value="US">USA</option><option value="CA">Canada</option><option value="DE">Deutschland</option><option value="IE">Ireland</option><option value="CO">Colombia</option><option value="MX">México</option><option value="AR">Argentina</option><option value="PE">Perú</option><option value="VE">Venezuela</option><option value="CL">Chile</option><option value="BO">Bolivia</option><option value="CR">Costa Rica</option><option value="CU">Cuba</option><option value="DO">Rep. Dominicana</option><option value="EC">Ecuador</option><option value="GT">Guatemala</option><option value="NI">Nicaragua</option><option value="PA">Panamá</option><option value="PR">Puerto Rico</option><option value="PY">Paraguay</option><option value="SV">El Salvador</option><option value="UY">Uruguay</option><option value="UK" selected="selected">United Kingdom</option><option value="IN">India</option><option value="JP">日本</option><option value="CN">中国</option>                        </select>
+                        <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
+                            <?php 
+                                foreach ($avail_CT as $key => $value) {
+                                    echo '<option value="'.$key.'"'. 
+                                         ($key==$GLOBALS['country']?' selected="selected"':'').'>'.
+                                         $value.'</option>';
+                                }
+                            ?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -68,7 +113,8 @@
                     <!-- ************* Monthly Costs section **************** -->
                     <div class="result_section" id="monthly_costs_section">
                         <div class="result_section_title" id="monthly_costs_title">
-                            <b>AVERAGE MONTHLY COST PER TYPE                             (POUNDS)</b>
+                            <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
+                            <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
                         </div>
 
                         <!-- results tables -->
@@ -77,7 +123,7 @@
                     <!-- ************* Financial Effort section************** -->
                     <div class="result_section" id="fin_effort_section">
                         <div class="result_section_title" id="fin_effort_title">
-                            <b>FINANCIAL EFFORT</b>
+                            <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
 
                         <div class="result_div" id="fin_effort"></div>
@@ -85,7 +131,7 @@
                     <!-- ********* Alternative Costs to Car Costs section **************** -->
                     <div class="result_section" id="alternative_to_carcosts_section">
                         <div class="result_section_title" id="alternative_to_carcosts_title">
-                            <b>EQUIVALENT TRANSPORT COSTS, CONSIDERING YOU DON'T OWN A CAR</b>
+                            <b><?php echo mb_convert_case($PUBL_TRA_EQUIV, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
@@ -96,7 +142,7 @@
                     <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="buttons_section">
                         <div class="result_div" id="result_buttons_div">
-                            <input type="submit" class="button" value="Rerun" onclick="reload();"/>
+                            <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload();"/>
                         </div>                               
                     </div>
                     <!-- ************* ********* ************* -->
@@ -108,32 +154,35 @@
         <br>
     </div>
     <!--jquery.js-->
-    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 
     <!--Define GLOBAL Javascript variables-->
     <script>    
-        var Country = 'UK';
+        var Country = '<?php echo $GLOBALS["country"]; ?>';
         //Language code according to ISO_639-1 codes
-        var Language = 'en';
-        var Domain_list = {"XX":"autocosts.info","PT":"autocustos.info","BR":"autocustos.info","GR":"autocosts.info","DK":"autocosts.info","NO":"autocosts.info","TR":"autocosts.info","CZ":"autocosts.info","FI":"autocosts.info","ES":"autocostos.info","PL":"autokoszty.info","RO":"autocosts.info","IT":"autocosti.info","NL":"autocosts.info","FR":"autocouts.info","RU":"autocosts.info","UA":"autocosts.info","HU":"autocosts.info","SE":"autocosts.info","AU":"autocosts.info","US":"autocosts.info","CA":"autocosts.info","DE":"autocosts.info","IE":"autocosts.info","UK":"autocosts.info","CO":"autocostos.info","MX":"autocostos.info","AR":"autocostos.info","PE":"autocostos.info","VE":"autocostos.info","CL":"autocostos.info","BO":"autocostos.info","CR":"autocostos.info","CU":"autocostos.info","DO":"autocostos.info","EC":"autocostos.info","GT":"autocostos.info","NI":"autocostos.info","PA":"autocostos.info","PR":"autocostos.info","PY":"autocostos.info","SV":"autocostos.info","UY":"autocostos.info","IN":"autocostos.info","JP":"autocosts.info","CN":"autocosts.info"};
+        var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
+        var Domain_list = <?php echo json_encode($domain_CT); ?>;
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
-        var RunButtonStr = 'Run';
-        //Google global variables for each service availability
+        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';        
         var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
         var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
-        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available  
+        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available 
+        var uber_obj={};
     </script>
 
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
     <script src="js/get_data.js"></script>
-    <script src="js/documentFunctions.js"></script>
-    <script src="js/initialize.js"></script>
+    <script src="js/formFunctions.js"></script>
+    
+    <!-- these are JS APP specific files-->
+    <script src="js/APPdocumentFunctions.js"></script>
+    <script src="js/APPinitialize.js"></script>
     
     <script>
-        $.getScript("countries/PT_validateForm.js");
-        $.getScript("countries/PT_print_results.js");
+        $.getScript("validateForm/PT.js");
+        $.getScript("print_results/PT.js");
         
         function Run1(){ Run2();}
         
@@ -143,3 +192,11 @@
 
 </html>
 
+<?php 
+//  Return the contents of the output buffer
+$htmlStr = ob_get_contents();
+// Clean (erase) the output buffer and turn off output buffering
+ob_end_clean(); 
+// Write final string to file
+file_put_contents($fileName, $htmlStr);
+?>
