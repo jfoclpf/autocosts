@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<head>  
+    <meta charset="UTF-8">
+    <!--gets the first sentence of variable $INITIAL_TEXT-->
+	<meta name="description" content="This calculator will allow you to find the true cost of owning a car in the United Kingdom">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Autocosts Org">
+    
+    <title>Automobile Costs Calculator</title>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/flags.css">
+    <style>
+    #banner_top{
+        position: static !important;
+    }
+    </style>
+    
+</head>
+
+<body>
+    <div id="main_div">
+        <div id="banner_top">
+            <div id="left_top_div">&nbsp;</div>
+            <!--#####################-->
+            <div id="header_main_title">
+                <div id="main_title">
+                    <header>
+                        <h1>
+                            AUTOMOBILE COSTS CALCULATOR                        </h1>
+                    </header>
+                </div>
+            </div>
+            <!--## Select country box ##-->
+            <div id="country_box">
+                <div id="country_box_inline">
+                    <div id="banner_flag_div">
+                        <div id="banner_flag" class="uk flag"></div>
+                    </div>
+                    <div id="country_select_div">
+                        <select name="country_select" id="country_select" onchange="valueselect(this.value);">
+                            <option value="PT">Portugal</option><option value="BR">Brasil</option><option value="GR">Ελλάδα</option><option value="DK">Danmark</option><option value="NO">Norge</option><option value="TR">Türkiye</option><option value="CZ">Česká</option><option value="FI">Suomessa</option><option value="ES">España</option><option value="PL">Polska</option><option value="RO">România</option><option value="IT">Italia</option><option value="NL">Nederland</option><option value="FR">France</option><option value="RU">Россия</option><option value="UA">Україна</option><option value="HU">Magyarország</option><option value="SE">Sverige</option><option value="AU">Australia</option><option value="US">USA</option><option value="CA">Canada</option><option value="DE">Deutschland</option><option value="IE">Ireland</option><option value="CO">Colombia</option><option value="MX">México</option><option value="AR">Argentina</option><option value="PE">Perú</option><option value="VE">Venezuela</option><option value="CL">Chile</option><option value="BO">Bolivia</option><option value="CR">Costa Rica</option><option value="CU">Cuba</option><option value="DO">Rep. Dominicana</option><option value="EC">Ecuador</option><option value="GT">Guatemala</option><option value="NI">Nicaragua</option><option value="PA">Panamá</option><option value="PR">Puerto Rico</option><option value="PY">Paraguay</option><option value="SV">El Salvador</option><option value="UY">Uruguay</option><option value="UK" selected="selected">United Kingdom</option><option value="IN">India</option><option value="JP">日本</option><option value="CN">中国</option>                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+            <div id="container_table">
+
+                <!-- div2 = CENTRE layout column-->
+                <div id="div2_td">
+                    <div id="div2">
+                        <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
+                              action="javascript:void(0);" name="custo">
+                            <div id="input_div">
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- ************* PRINTING divs ***********************
+                    ******************************************************-->
+                    
+                    <!-- ************* Main Table  Section ****************** -->                           
+                    <div class="result_section" id="main_table_section">
+                        <div class="result_div" id="main_table"></div>
+                    </div>
+                    <!-- ************* Monthly Costs section **************** -->
+                    <div class="result_section" id="monthly_costs_section">
+                        <div class="result_section_title" id="monthly_costs_title">
+                            <b>AVERAGE MONTHLY COST PER TYPE                             (POUNDS)</b>
+                        </div>
+
+                        <!-- results tables -->
+                        <div class="result_div" id="monthly_costs"></div>
+                    </div>
+                    <!-- ************* Financial Effort section************** -->
+                    <div class="result_section" id="fin_effort_section">
+                        <div class="result_section_title" id="fin_effort_title">
+                            <b>FINANCIAL EFFORT</b>
+                        </div>
+
+                        <div class="result_div" id="fin_effort"></div>
+                    </div>
+                    <!-- ********* Alternative Costs to Car Costs section **************** -->
+                    <div class="result_section" id="alternative_to_carcosts_section">
+                        <div class="result_section_title" id="alternative_to_carcosts_title">
+                            <b>EQUIVALENT TRANSPORT COSTS, CONSIDERING YOU DON'T OWN A CAR</b>
+                        </div>
+                        <div class="result_div" id="alternative_to_carcosts"></div>
+                    </div>
+                    <!-- ************* Buttons ****************** -->
+                    <div class="result_section" id="exten_costs_section">
+                        <div class="result_div" id="extern_costs"></div>
+                    </div>
+                    <!-- ************* Buttons ****************** -->
+                    <div class="result_section" id="buttons_section">
+                        <div class="result_div" id="result_buttons_div">
+                            <input type="submit" class="button" value="Rerun" onclick="reload();"/>
+                        </div>                               
+                    </div>
+                    <!-- ************* ********* ************* -->
+                    <br>
+                </div>
+                <!--#######################################################################################-->
+            </div>
+        </div>
+        <br>
+    </div>
+    <!--jquery.js-->
+    <script src="js/jquery/jquery.min.js"></script>
+
+    <!--Define GLOBAL Javascript variables-->
+    <script>    
+        var Country = 'UK';
+        //Language code according to ISO_639-1 codes
+        var Language = 'en';
+        var Domain_list = {"XX":"autocosts.info","PT":"autocustos.info","BR":"autocustos.info","GR":"autocosts.info","DK":"autocosts.info","NO":"autocosts.info","TR":"autocosts.info","CZ":"autocosts.info","FI":"autocosts.info","ES":"autocostos.info","PL":"autokoszty.info","RO":"autocosts.info","IT":"autocosti.info","NL":"autocosts.info","FR":"autocouts.info","RU":"autocosts.info","UA":"autocosts.info","HU":"autocosts.info","SE":"autocosts.info","AU":"autocosts.info","US":"autocosts.info","CA":"autocosts.info","DE":"autocosts.info","IE":"autocosts.info","UK":"autocosts.info","CO":"autocostos.info","MX":"autocostos.info","AR":"autocostos.info","PE":"autocostos.info","VE":"autocostos.info","CL":"autocostos.info","BO":"autocostos.info","CR":"autocostos.info","CU":"autocostos.info","DO":"autocostos.info","EC":"autocostos.info","GT":"autocostos.info","NI":"autocostos.info","PA":"autocostos.info","PR":"autocostos.info","PY":"autocostos.info","SV":"autocostos.info","UY":"autocostos.info","IN":"autocostos.info","JP":"autocosts.info","CN":"autocosts.info"};
+        var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
+        var ResultIsShowing, DescriptionHTML, CalculatedData;
+        var RunButtonStr = 'Run';
+        //Google global variables for each service availability
+        var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
+        var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
+        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available  
+    </script>
+
+    <script src="js/coreFunctions.js"></script>
+    <script src="js/conversionFunctions.js"></script>
+    <script src="js/get_data.js"></script>
+    <script src="js/documentFunctions.js"></script>
+    <script src="js/initialize.js"></script>
+    
+    <script>
+        $.getScript("countries/PT_validateForm.js");
+        $.getScript("countries/PT_print_results.js");
+        
+        function Run1(){ Run2();}
+        
+    </script>
+    
+</body>
+
+</html>
+
