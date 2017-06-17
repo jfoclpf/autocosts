@@ -321,7 +321,7 @@ function reload() {
 }
 
 /*function that loads new HTML and that is run when country select is changed*/ 
-function valueselect(country) {
+function onCountrySelect(country) {
     
     var domain = window.location.hostname;
     
