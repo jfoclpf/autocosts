@@ -2,6 +2,316 @@
 /*====================================================*/
 /*Functions which work on the page*/
 
+/*functions which is used to change the form parts*/
+var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
+var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
+var CurrentFormPart; //global variable for the current Form Part
+function openForm_part(part_name, part_number_origin, part_number_destiny) {
+    
+    CurrentFormPart = part_number_destiny;
+
+    //shows form part {d} coming from form part {o} hiding the remaining part
+    function shows_part(){
+        //origin and destiny form parts
+        var o=part_number_origin; 
+        var d=part_number_destiny; 
+        
+        //if not a test triggers event for Google Analytics accordingly
+        if(!IsThisAtest() && IsGoogleAnalytics && ANALYTICS_SWITCH){
+            if(d==2 && !hasShownPart2){
+                ga("send", "event", "form_part", "form_part_2");
+                hasShownPart2=true;
+            }
+            if(d==3 && !hasShownPart3){
+                ga("send", "event", "form_part", "form_part_3");
+                hasShownPart3=true;
+            }
+        }
+        
+        //gets jQuery variable for each form part
+        var p1 = $("#"+part_name+"1");
+        var p2 = $("#"+part_name+"2");
+        var p3 = $("#"+part_name+"3");
+        
+        //clears any pending animations for all elements
+        $("*").clearQueue();
+        
+        if (o==1 && d==2){           
+            p1.slideUp("slow", function(){
+                    $("#description").html("");           
+                    $('#div1_td, #div3_td').hide("slow");                  
+                    $("#description, #div1_td, #div3_td").
+                        promise().
+                        done(function(){
+                            p2.slideDown("slow", function(){                                    
+                                scrollPage();
+                            });
+                        });
+                });
+        }
+        else if(o==2 && d==3){
+            $('#div1_td, #div3_td').hide();
+            $("*").promise().done(function(){
+                p2.slideUp("slow", function(){
+                    p3.slideDown("slow", function(){
+                        scrollPage();
+                    });                
+                });
+            });
+        }
+        else if(o==3 && d==2){
+            $('#div1_td, #div3_td').hide();
+            $("*").promise().done(function(){
+                p3.slideUp("slow", function(){
+                    p2.slideDown("slow", function(){
+                        scrollPage();
+                    });                
+                });
+            });           
+        }
+        else if(o==2 && d==1){
+            p2.slideUp("slow", function(){
+                $("#description").
+                    hide().
+                    html(DescriptionHTML).
+                    slideDown("fast", function(){
+                        $("#div1, #div3").
+                            hide().
+                            promise().
+                            done(function(){
+                                $("#div1_td, #div3_td").
+                                    show().
+                                    promise().
+                                    done(function(){
+                                        p1.
+                                        slideDown("slow", function(){                        
+                                            $("#div1, #div3").
+                                                show("slow").
+                                                promise().
+                                                done(function(){                                    
+                                                        scrollPage();
+                                                });
+                                        });
+                                    });
+                            });
+                        });                                             
+                    });                                 
+        }       
+    }  
+
+    //change from form part 1 to 2
+    if (part_number_origin===1 && part_number_destiny===2){
+       
+        if (!hasLoadedPart[0]){
+            $.getScript("js/coreFunctions.js", function(){
+                
+                if(CHARTS_SWITCH){
+                    //Tries to load Google chart JS files
+                    $.getScript("https://www.gstatic.com/charts/loader.js")
+                        .done(function(){
+                            IsGoogleCharts = true;
+                        })
+                        .fail(function(){
+                            IsGoogleCharts = false;
+                    });
+                }
+                else{
+                    IsGoogleCharts = false;
+                }
+                               
+                hasLoadedPart[0] = true;
+                if (!is_userdata_formpart1_ok())
+                    return;
+                shows_part();
+            });                                             
+        }
+        else{
+            if (!is_userdata_formpart1_ok())
+                return;
+            shows_part();
+        }
+        
+        if (!hasLoadedPart[1]){
+            $.getScript("js/conversionFunctions.js");
+            $.getScript("db_stats/statsFunctions.js"); 
+            $.getScript("js/get_data.js");
+            $.getScript("js/print.js");
+            
+            if(CHARTS_SWITCH){
+                $.getScript("google/charts.php?country="+Country, function() {
+                    $.getScript("js/print_results.js.php?country="+Country); 
+                });
+            }
+            else{
+                $.getScript("js/print_results.js.php?country="+Country); 
+            }
+                        
+            if(DB_SWITCH){
+                $.getScript("js/dbFunctions.js");
+            }
+            
+            $.getScript("js/g-recaptcha.js", function() {
+
+                if(CAPTCHA_SWITCH){
+                    $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language)
+                        .done(function(){
+                            IsGoogleCaptcha = true;
+                        })
+                        .fail(function(){
+                            IsGoogleCaptcha = false;
+                    });
+                }
+                else{
+                    IsGoogleCaptcha = false;
+                }
+            });
+            
+            if(SOCIAL_SWITCH){
+                //Jquery social media share plugins
+                $.getScript("js/social/jssocials.min.js");
+                
+                $('<link/>', {
+                   rel: 'stylesheet', type: 'text/css',
+                   href: 'css/social/jssocials.css'
+                }).appendTo('head');
+                $('<link/>', {
+                   rel: 'stylesheet', type: 'text/css',
+                   href: 'css/social/jssocials-theme-classic.css'
+                }).appendTo('head');
+            }
+            
+            hasLoadedPart[1] = true;
+        }
+    }
+    
+    //change from form part 2 to 3
+    if (part_number_origin==2 && part_number_destiny==3){
+        if (!is_userdata_formpart2_ok())
+            return;
+        
+        if (!hasLoadedPart[2]){
+            //If Google Charts JS files are available
+            if (IsGoogleCharts && CHARTS_SWITCH){
+                google.charts.load('current', {"packages": ["corechart"], "language": Language, "callback": function(){
+                    hasLoadedPart[2]=true;
+                    shows_part();
+                }});
+            }
+            else{
+                hasLoadedPart[2]=true;
+                shows_part();                
+            }
+        }
+        else{
+            shows_part();
+        }
+        
+        if (!hasLoadedPart[3]){
+            $.getScript("google/rgbcolor.js");
+            $.getScript("google/canvg.js");
+            
+            //uber
+            if (UBER_SWITCH){
+                if(Country!="XX"){//if not test version
+                    //gets asynchronously UBER information
+                    $.get( "php/get_uber.php?c=" + Country, function(data) {
+                        //alert(JSON.stringify(data, null, 4)); 
+                        uber_obj =  data; //uber_obj is a global variable
+                    });
+                }
+                else{//test version (London city, in Pounds)
+                    uber_obj.cost_per_distance = 1.25;
+                    uber_obj.cost_per_minute = 0.15;
+                    uber_obj.currency_code = "GBP";
+                    uber_obj.distance_unit = "mile";
+                }
+            }
+            
+            //wait until all PDF related files are loaded
+            //to activate the downloadPDF button
+            $.getScript("js/pdf/generatePDF.js", function() {
+                $.getScript("js/pdf/pdfmake.js", function() {
+                    //path where the fonts for PDF are stored
+                    var pdf_fonts_path;
+                    if (Country=='CN' || Country=='JP' || Country=='IN'){
+                        pdf_fonts_path = "js/pdf/" + Country + "/vfs_fonts.js";                      
+                    }else{
+                        pdf_fonts_path = "js/pdf/vfs_fonts.js";
+                    }                    
+                    $.getScript(pdf_fonts_path, function() {
+                         $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
+                         hasLoadedPart[3]=true;
+                    });
+                });
+            });
+        }
+    }
+    
+    //change from form part 3 to 2
+    if (part_number_origin==3 && part_number_destiny==2){
+        shows_part();
+    }
+    
+    //change from form part 2 to 1
+    if (part_number_origin==2 && part_number_destiny==1){
+        shows_part();
+    }
+    
+    return;
+}
+
+/*function that is run when the button Reload/Rerun is clicked*/
+function reload() {
+    TimeCounter.resetStopwatch();
+    ResultIsShowing=false;
+    
+    //if the results were already shown, it means user went already through ReCaptcha
+    isHumanConfirmed = true;   
+
+    CurrentFormPart=1;   
+    $("#form_part2, #form_part3").hide();
+    $("#description, #div1_td, #div3_td").hide();
+    $("#div1, #div3").show();
+    
+    //reset the run buttons
+    resetRunButtons();  
+    
+    //hides the results divs and correspondent class
+    //and shows the initial page, chaining the transitions
+    $(".result_section, #monthly_costs, #result_buttons_div, #pie_chart_div, #bar_chart_div").
+        hide("slow").
+        promise().
+        done(function(){                                        
+            $("#description").
+                hide().
+                html(DescriptionHTML).
+                slideDown("fast", function(){
+                    $("#div1, #div3").
+                        hide().
+                        promise().
+                        done(function(){
+                            $("#div1_td, #div3_td").
+                                show().
+                                promise().
+                                done(function(){
+                                    resized(function(){
+                                        $("#input_div").show();
+                                            $("#form_part1").
+                                            slideDown("slow", function(){                        
+                                                $("#div1, #div3").
+                                                    show("slow").
+                                                    promise().
+                                                    done(function(){                                           
+                                                        scrollPage();                                                   
+                                                    });
+                                            });
+                                    });
+                                });
+                        });
+                 });
+        });
+}
+
 /*function that loads new HTML and that is run when country select is changed*/ 
 function valueselect(country) {
     
@@ -117,13 +427,6 @@ $('#form_part1').on({
         }
     });
 
-//when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
-$('#tbl_statistics').click(function(){ 
-    var domain = window.location.hostname;  
-    var url2open = "http://" + domain + "/db_stats/tables/" + Country + ".jpg";
-    window.open(url2open); 
-});
-
 //highlights the form area on which the mouse is hover 
 $('#form_part1 tr, #form_part2 tr').hover(
     function(){
@@ -149,6 +452,7 @@ $('#form_part3 tr').hover(
         var nth_parent=$(this).parentsUntil('.form_part').length - 2;       
         $(this).parents().eq(nth_parent).prevAll('.form_section_title:first').css('background-color','');
 });
+
 //some particularities on form_part3
 $('#distance_form3 tr').hover(
     function(){
@@ -166,14 +470,17 @@ $('#working_time_form3 tr').hover(
         $(this).find('td').css('background-color','#fff8dc');
         $('#working_time_form3').children(".form_section_title:first").css('background-color','#ffec8b');
         $('#fin_effort_Div_form3').children(".form_section_title:first").css('background-color','');
-        
-
     },
     function(){
         $(this).find('td').css('background-color','');
         $('#working_time_form3').children(".form_section_title:first").css('background-color','');  
-      
+});
 
+//when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
+$('#tbl_statistics').click(function(){ 
+    var domain = window.location.hostname;  
+    var url2open = "http://" + domain + "/db_stats/tables/" + Country + ".jpg";
+    window.open(url2open); 
 });
 
 //Loader after the run button is clicked
@@ -197,143 +504,6 @@ function numberWithSpaces(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "&#160;");
     return parts.join(".");
-}
-
-//function that is run when the user clicks the Run/Calculate button 
-//and which submits the inserted data into the Database 
-function submit_data(country) {
-
-    var objectToDb = {};
-
-    objectToDb.acquisition_month = $("#acquisitionMonth").val();
-    objectToDb.acquisition_year = $("#acquisitionYear").val();
-    objectToDb.commercial_value_at_acquisition = $('#commercialValueAtAcquisition').val();
-    objectToDb.commercial_value_at_now = $('#commercialValueAtNow').val();
-    objectToDb.insure_type = $('input[name="tipo_seguro"]:checked', '#main_form').val();
-    objectToDb.insurance_value = $('#insuranceValue').val();
-    objectToDb.credit = $('input[name="cred_auto"]:checked', '#main_form').val();
-    objectToDb.credit_borrowed_amount = $('#borrowedAmount').val();
-    objectToDb.credit_number_installments = $('#numberInstallments').val();
-    objectToDb.credit_amount_installment = $('#amountInstallment').val();
-    objectToDb.credit_residual_value = $('#residualValue').val();
-    objectToDb.inspection_number_inspections = $('#numberInspections').val();
-    objectToDb.inspection_average_inspection_cost = $('#averageInspectionCost').val();
-    objectToDb.vehicle_excise_tax = $('#vehicleExciseTax').val();
-    objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#main_form').val();
-    objectToDb.fuel_currency_based_currency_value = $('#fuel_currency_value').val();
-    objectToDb.fuel_currency_based_periodicity = $('#combustiveis_periodo_euro').val();
-    objectToDb.fuel_distance_based_car_to_work = $('input[name="car_job_form2"]:checked', '#main_form').val();
-    objectToDb.fuel_distance_based_car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
-    objectToDb.fuel_distance_based_car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
-    objectToDb.fuel_distance_based_car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
-    objectToDb.fuel_distance_based_no_car_to_work_distance = $('#no_car_to_work_distance').val();
-    objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = $('#combustivel_period_km').val();
-    objectToDb.fuel_distance_based_fuel_efficiency = $('#fuel_efficiency').val();
-    objectToDb.fuel_distance_based_fuel_price = $('#fuel_price').val();
-    objectToDb.maintenance = $('#maintenance').val();
-    objectToDb.repairs = $('#repairs').val();
-    objectToDb.parking = $('#parking').val();
-    objectToDb.tolls_daily = $('input[name="portagens_ao_dia"]:checked', '#main_form').val();
-    objectToDb.tolls_no_daily_value = $('#no_daily_tolls_value').val();
-    objectToDb.tolls_no_daily_period = $('#portagens_select').val();
-    objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
-    objectToDb.tolls_daily_number_days = $('#number_days_tolls').val();
-    objectToDb.tickets_value = $('#tickets_value').val();
-    objectToDb.tickets_periodicity = $('#multas_select').val();
-    objectToDb.washing_value = $('#washing_value').val();
-    objectToDb.washing_periodicity = $('#lavagens_select').val();
-    objectToDb.household_number_people = $('#household_number_people').val();
-    objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();   
-    objectToDb.income_type = $('input[name="radio_income"]:checked', '#main_form').val();
-    objectToDb.income_per_year = $('#income_per_year').val();
-    objectToDb.income_per_month = $('#income_per_month').val();
-    objectToDb.income_months_per_year = $('#income_months_per_year').val();
-    objectToDb.income_per_week = $('#income_per_week').val();
-    objectToDb.income_weeks_per_year = $('#income_weeks_per_year').val();
-    objectToDb.income_per_hour = $('#income_per_hour').val();
-    objectToDb.income_hours_per_week = $('#income_hours_per_week').val();
-    objectToDb.income_hour_weeks_per_year = $('#income_hour_weeks_per_year').val();
-    objectToDb.work_time = $('input[name="radio_work_time"]:checked', '#main_form').val();
-    objectToDb.work_time_month_per_year = $('#time_month_per_year').val();
-    objectToDb.work_time_hours_per_week = $('#time_hours_per_week').val();
-    objectToDb.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#main_form').val();
-    objectToDb.distance_days_per_week = $('#drive_to_work_days_per_week').val();
-    objectToDb.distance_home_job = $('#dist_home_job').val();
-    objectToDb.distance_journey_weekend = $('#journey_weekend').val();
-    objectToDb.distance_per_month = $('#dist_per_month').val();
-    objectToDb.distance_period = $('#period_km').val();
-    objectToDb.time_spent_home_job = $('#time_home_job').val();
-    objectToDb.time_spent_weekend = $('#time_weekend').val();
-    objectToDb.time_spent_min_drive_per_day = $('#min_drive_per_day').val();
-    objectToDb.time_spent_days_drive_per_month = $('#days_drive_per_month').val();  
-    objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
-    objectToDb.client_uuid = uuid;
-    objectToDb.country = country;
-
-    sanityChecks(objectToDb);
-    
-    $.ajax({
-        url: 'db_stats/SubmitUserInput.php',
-        type: 'POST',
-        data: {
-            objectToDb: objectToDb
-        },
-        success: function(data) {},
-        error: function () {        
-            console.log("There was an error submitting the values for statistical analysis");
-        }
-    });
-
-    return false;
-}
-
-//function that is run by the previous submit_data function
-function sanityChecks(objectToDb) {
-    if (objectToDb.credit === 'false') {
-        objectToDb.credit_borrowed_amount = null;
-        objectToDb.credit_number_installments = null;
-        objectToDb.credit_amount_installment = null;
-        objectToDb.credit_residual_value = null;
-    }
-
-    if (objectToDb.fuel_calculation === 'euros') {
-        objectToDb.fuel_distance_based_fuel_efficiency = null;
-        objectToDb.fuel_distance_based_fuel_price = null;
-        objectToDb.fuel_distance_based_car_to_work = null;
-        objectToDb.fuel_distance_based_car_to_work_number_days_week = null;
-        objectToDb.fuel_distance_based_car_to_work_distance_home_work = null;
-        objectToDb.fuel_distance_based_car_to_work_distance_weekend = null;
-        objectToDb.fuel_distance_based_no_car_to_work_distance = null;
-        objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = null;
-    } else {
-        objectToDb.fuel_currency_based_currency_value = null;
-        objectToDb.fuel_currency_based_periodicity = null;
-        if (objectToDb.fuel_distance_based_car_to_work === 'true') {
-            objectToDb.fuel_distance_based_no_car_to_work_distance = null;
-            objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = null;
-        } else {
-            objectToDb.fuel_distance_based_car_to_work_number_days_week = null;
-            objectToDb.fuel_distance_based_car_to_work_distance_home_work = null;
-            objectToDb.fuel_distance_based_car_to_work_distance_weekend = null;
-        }
-    }
-
-    if (objectToDb.tolls_daily === 'true') {
-        objectToDb.tolls_no_daily_value = null;
-        objectToDb.tolls_no_daily_period = null;
-    } else {
-        objectToDb.tolls_daily_expense = null;
-        objectToDb.tolls_daily_number_days = null;
-    }
-}
-
-/*User Unique Identifier functions*/
-function S4() {
-    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-}
-
-function guid() {
-    return (S4()+"-"+S4()+"-"+S4());
 }
 
 //detects old versions of Internet Explorer

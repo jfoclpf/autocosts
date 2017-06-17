@@ -4,7 +4,7 @@ function grecaptcha_solved(){
 
 function grecaptcha_callback() {
 
-    if (!isHumanConfirmed && Country!='XX'){    
+    if (!isHumanConfirmed && Country!='XX' && CAPTCHA_SWITCH){    
         grecaptcha.render( 'run_button', {
             'sitekey' : '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
             'callback' : grecaptcha_solved
@@ -20,7 +20,7 @@ function Run1(country){
     
     //In test version doesn't run Captcha
     //Only when Google Captcha files are available
-    if(!isHumanConfirmed && country!='XX' && IsGoogleCaptcha){
+    if(!isHumanConfirmed && country!='XX' && IsGoogleCaptcha && CAPTCHA_SWITCH){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
@@ -31,11 +31,13 @@ function Run1(country){
             if(result=="ok"){
                 if(Run2() && country != "XX"){
                     //if not a test triggers event for Google Analytics
-                    if(!IsThisAtest() && IsGoogleAnalytics){
+                    if(!IsThisAtest() && IsGoogleAnalytics && ANALYTICS_SWITCH){
                         ga('send', 'event', 'form_part', 'run_OK');
                     }
                     //submits data to database if no XX version
-                    submit_data(country); 
+                    if(DB_SWITCH){
+                        submit_data(country);
+                    }                    
                 }
                 //Google Recaptcha
                 isHumanConfirmed = true;
@@ -47,7 +49,7 @@ function Run1(country){
                 scrollPage();
             }
             else if(result=="not-ok-3"){ //when the Google file was not accessible
-                if(Run2() && country != "XX"){
+                if(Run2() && country != "XX" && DB_SWITCH){
                     submit_data(country); //submits data to database if no test version
                 }   
                 resetRunButtons(); //reset the run buttons
@@ -60,7 +62,7 @@ function Run1(country){
         });
     }
     else{
-        if(Run2() && country != "XX"){
+        if(Run2() && country != "XX" && DB_SWITCH){
             submit_data(country); //submits data to database if no test version
         }   
         resetRunButtons(); //reset the run buttons

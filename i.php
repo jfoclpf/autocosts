@@ -6,7 +6,20 @@ include_once("./countries/_url_selector.php");
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 
-<head>  
+<head>
+
+    <script>
+        //GLOBAL switches
+        //change the values accordingly
+        var UBER_SWITCH = true; //Uber
+        var SOCIAL_SWITCH = true; // Social media pulgins
+        var CHARTS_SWITCH = false; //Google Charts
+        var CAPTCHA_SWITCH = true; //Google Captcha
+        var ANALYTICS_SWITCH = true; //Google Analytics
+        var DB_SWITCH = true; //Inserts user input data into DataBase
+        var PRINT_SWITCH = true; //Option to Print results
+    </script>
+
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
 	<meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
@@ -140,11 +153,13 @@ include_once("./countries/_url_selector.php");
         var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
         var ResultIsShowing, DescriptionHTML, CalculatedData;
         var isHumanConfirmed = false; //global variable for Google reCaptcha
-        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';
-        //Global variables for each service availability
+        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';       
+        //global variables for each service availability
+        //Later on in the code, the variables might be set to TRUE if the services are available
+        //Therefore do not change these values here
         var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
         var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
-        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available  
+        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available
     </script>
 
     <script><?php include('js/validateForm.js.php'); ?></script>
