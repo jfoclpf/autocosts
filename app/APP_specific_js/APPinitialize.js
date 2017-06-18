@@ -3,10 +3,19 @@ window.onload = initialize;
 
 function initialize() {
     
-    $("#input_div").load("form/PT.html", function(){
+    $("#input_div").load("form/"+Country+".html", function(){
         hasLoadedLayout();
-    }); 
+    });
     
+    $.getScript("validateForm/" + Country + ".js");
+    $.getScript("print_results/" + Country + ".js");
+    
+    //add flag
+    $("#banner_flag").removeClass().addClass(Country.toLowerCase() + " flag");
+    
+    document.title = window[Country].web_page_title;
+    $("#main_title").html(window[Country].main_title);
+        
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
 }

@@ -27,16 +27,8 @@ function reload() {
 /*function that loads new HTML and that is run when country select is changed*/ 
 function onCountrySelect(country) {
     
-    var domain = window.location.hostname;
-    
-    var url2go;
-    if(domain.split(".")[1]=="work"){
-        url2go = "http://autocosts.work/" + country.toUpperCase();
-    }
-    else{
-        url2go = "http://" + Domain_list[country] + "/" + country.toUpperCase();
-    }
-    window.location.href = url2go;
+    Country = country.toUpperCase();    
+    initialize();
 }
 
 
@@ -181,3 +173,6 @@ $(document).on("change", "#slider2", function () {
     slider_toggles_form3();
 });
 
+function Run1(){ 
+    Run2();
+}

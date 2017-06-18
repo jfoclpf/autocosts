@@ -12,6 +12,8 @@ $GLOBALS['country'] = "UK"; //test
 
 include_once("../php/functions.php");
 include_once("../countries/_list.php");
+asort($avail_CT); //alphabetically sorts the country list
+
 //loads the correspondent country file
 include('../countries/' . $GLOBALS['country'] . '.php');
 
@@ -63,11 +65,7 @@ $currency_logo = "";
             <!--#####################-->
             <div id="header_main_title">
                 <div id="main_title">
-                    <header>
-                        <h1>
-                            <?php echo $MAIN_TITLE ?>
-                        </h1>
-                    </header>
+                    <?php echo $MAIN_TITLE ?>
                 </div>
             </div>
             <!--## Select country box ##-->
@@ -175,18 +173,10 @@ $currency_logo = "";
     <script src="js/conversionFunctions.js"></script>
     <script src="js/get_data.js"></script>
     <script src="js/formFunctions.js"></script>
-    
+    <script src="js/languages.js"></script>
     <!-- these are JS APP specific files-->
     <script src="js/APPdocumentFunctions.js"></script>
     <script src="js/APPinitialize.js"></script>
-    
-    <script>
-        $.getScript("validateForm/PT.js");
-        $.getScript("print_results/PT.js");
-        
-        function Run1(){ Run2();}
-        
-    </script>
     
 </body>
 
