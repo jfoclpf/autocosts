@@ -8,18 +8,19 @@ $fileName = "build/index.html";
 file_put_contents($fileName, $htmlStr);
 ob_start();
 
-$GLOBALS['country'] = "UK"; //test
+$GLOBALS['country'] = "UK"; //to start by default
 
 include_once("../php/functions.php");
 include_once("../countries/_list.php");
 asort($avail_CT); //alphabetically sorts the country list
+$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
+$LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
 
 //loads the correspondent country file
 include('../countries/' . $GLOBALS['country'] . '.php');
 
 //removes XX from array
 unset($avail_CT['XX']);
-$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
 
 //some initializations
 $is_logo = false;
@@ -53,6 +54,12 @@ $currency_logo = "";
     <style>
     #banner_top{
         position: static !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
+    #main_title{
+        line-height: 110%;
     }
     </style>
     

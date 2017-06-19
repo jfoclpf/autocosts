@@ -100,7 +100,10 @@ unset($avail_CT['XX']);
 //language for <html> tag obeys ISO 639-1 Language Codes (simplified, 2 characters)
 //$lang_CT[$GLOBALS['country']] might be of the type "es-419" (latin american spanish) or pt-br (brazilian portuguese)
 //gets just the 2 first characters
-$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
+$language = mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
+
+//full language code, for example "es-419" for Spanish from Latin America
+$LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
 
 //some initializations
 $is_logo = false;
