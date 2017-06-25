@@ -2,6 +2,15 @@
 /*====================================================*/
 /*Functions which change the visual aspect of the page*/
 
+
+/*function that loads new HTML and that is run when country select is changed*/ 
+function onCountrySelect() {
+    
+    Country = this.options[this.selectedIndex].value;    
+    initialize();
+}
+
+
 /*function that is run when the button Reload/Rerun is clicked*/
 function reload() {
     ResultIsShowing=false; 
@@ -22,13 +31,6 @@ function reload() {
                 });
         }); 
 
-}
-
-/*function that loads new HTML and that is run when country select is changed*/ 
-function onCountrySelect(country) {
-    
-    Country = country.toUpperCase();    
-    initialize();
 }
 
 
@@ -172,7 +174,3 @@ $(document).on("change", "#slider1", function () {
 $(document).on("change", "#slider2", function () {
     slider_toggles_form3();
 });
-
-function Run1(){ 
-    Run2();
-}

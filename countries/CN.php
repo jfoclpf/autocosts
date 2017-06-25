@@ -172,7 +172,7 @@ $FUEL_CALC = '基于以下情况的计算';
 $FUEL_JOB_CALC = '假设开车去上班?';
 $FUEL_JOB_CALC1 = '每周您开车去上班的天数';
 $FUEL_DAYS = '每周您开车去上班的天数';
-$FUEL_DIST_HOME_JOB = '从家到公司的驾驶公里数(单程)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = '从家到公司的驾驶公里数(单程)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = '家到公司的公里数'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "不开车上班时，您的平均里程数:<br><i>例如，每周末的里程数</i>";
 $FUEL_DIST_NO_JOB1 = "不开车上班时，您的平均里程数"; // you do 5 km per week....

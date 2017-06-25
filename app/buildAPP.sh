@@ -1,28 +1,20 @@
 #!/bin/bash
 
-rm -fr build/
-mkdir build/
+export PATH=$PATH:/usr/local/android-sdk
+export PATH=$PATH:/usr/local/android-sdk/tools
+export PATH=$PATH:/usr/local/android-sdk/tools/bin
+export PATH=$PATH:/usr/local/android-sdk/platform-tools
+export PATH=$PATH:/usr/local/android-sdk/build-tools
+export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/
+export ANDROID_HOME=/usr/local/android-sdk/
 
-mkdir build/form/
-mkdir build/print_results/
-mkdir build/validateForm/
-mkdir build/css/
-mkdir build/css/images/
-mkdir build/js/
+./buildHTML.sh buildAPP
 
-cp ../css/flags.css build/css/
-cp ../css/main.css build/css/
-cp ../images/flags24.png build/css/images/
+cd autocosts/
 
-cp ../js/coreFunctions.js build/js/
-cp ../js/conversionFunctions.js build/js/
-cp ../js/get_data.js build/js/
-cp ../js/formFunctions.js build/js/
-cp ../js/jquery/jquery.min.js build/js/
+cordova build
+cordova emulate --target=avd android
 
-cp APP_specific_js/* build/js/
-
-php -f index.php
-
+mv platforms/android/build/outputs/apk/android-debug.apk /home/jfolpf/
 
 

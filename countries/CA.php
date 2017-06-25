@@ -168,7 +168,7 @@ $FUEL_JOB_CALC = 'Considering you drive to work?';
 $FUEL_JOB_CALC1 = 'Day(s) per week you drive to work'; 
 $FUEL_DAYS = 'Day(s) per week you drive to work'; 
 $FUEL_DIST_HOME_JOB = 'Kilometres you drive between home and the workplace (one way)'; 
-//$CURR_DIST=km, miles, etc. 
+//CURR_DIST=km, miles, etc. 
 $FUEL_DIST_HOME_JOB1 = 'kilometres between home and the workplace'; 
 //you drive 7 miles between home and your job 
 $FUEL_DIST_NO_JOB = "Kilometres you drive on average during the days you don't take your car to the workplace:<br><i>for example per each weekend</i>"; 

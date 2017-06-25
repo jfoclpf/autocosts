@@ -175,7 +175,7 @@ $FUEL_CALC = 'Uträkningar baserade på';
 $FUEL_JOB_CALC = 'Med tanke på att du kör till arbetet?';
 $FUEL_JOB_CALC1 = 'Dag(ar) per vecka du kör till arbetet';
 $FUEL_DAYS = 'Dag(ar) per vecka du kör till arbetet';
-$FUEL_DIST_HOME_JOB = 'Mil du kör mellan hem och arbete (endast enkel väg)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Mil du kör mellan hem och arbete (endast enkel väg)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'mil mellan hem och arbete'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Mil du kör i genomsnitt under de dagar du inte kör till arbetet:<br><i>till exempel per varje vecka</i>";
 $FUEL_DIST_NO_JOB1 = "Mil i genomsnitt under de dagar du inte tar bilen till arbetet"; // you do 5 km per week....

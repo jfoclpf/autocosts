@@ -189,7 +189,7 @@ $FUEL_CALC = 'Berechnung basiert auf';
 $FUEL_JOB_CALC = 'Arbeitsweg einkalkulieren?';
 $FUEL_JOB_CALC1 = 'Tag(e) pro Woche, an denen Sie zur Arbeit fahren';
 $FUEL_DAYS = 'Tag(e) pro Woche, an denen Sie zur Arbeit fahren';
-$FUEL_DIST_HOME_JOB = 'Fahrtweg zur Arbeit (einfache Fahrt)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Fahrtweg zur Arbeit (einfache Fahrt)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'Fahrtweg zur Arbeit'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Anzahl gefahrener Kilometer an arbeitsfreien Tagen:<br><i>z.B. pro Wochenende</i>";
 $FUEL_DIST_NO_JOB1 = "Anzahl gefahrener Kilometer an arbeitsfreien Tagen"; // you do 5 km per week....

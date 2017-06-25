@@ -2,6 +2,8 @@
 
     include_once('../countries/_list.php');
     unset($avail_CT["XX"]);
+    $language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
+    $LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
     
     //for each available country language file, creates a HTML layout language file
     foreach ($avail_CT as $key => $value){
@@ -11,13 +13,24 @@
         //#######################################
         //creates form files
         $htmlStr = "";
-        $fileName = "build/form/".$key.".html";
+        $fileName = "autocosts/www/form/".$key.".html";
         file_put_contents($fileName, $htmlStr);
         ob_start();
 
+        echo "<!DOCTYPE html>"."\r\n";
+        echo "<html>"."\r\n";
+        echo "<head>"."\r\n";
+        echo '<meta charset="UTF-8">'."\r\n";
+        echo "<title>Forms for ".$key."</title>"."\r\n";
+        echo "</head>"."\r\n";
+        echo "<body>"."\r\n";
+        
         include("../layout/formPartOne.php"); 
         include("../layout/formPartTwo.php");
         include("../layout/formPartThree.php");
+        
+        echo "\r\n"."</body>"."\r\n";
+        echo "</html>"."\r\n";
                                 
         //  Return the contents of the output buffer
         $htmlStr = ob_get_contents();
@@ -30,7 +43,7 @@
         //#######################################
         //creates Validate Form file for each language
         $htmlStr = "";
-        $fileName = "build/validateForm/".$key.".js";
+        $fileName = "autocosts/www/validateForm/".$key.".js";
         file_put_contents($fileName, $htmlStr);
         ob_start();
         
@@ -47,7 +60,7 @@
         //#######################################
         //creates print_results file for each language
         $htmlStr = "";
-        $fileName = "build/print_results/".$key.".js";
+        $fileName = "autocosts/www/print_results/".$key.".js";
         file_put_contents($fileName, $htmlStr);
         ob_start();
         
@@ -71,7 +84,7 @@
 //Builds the Javascript file with a JS object for each country
     
     $js_string = "";
-    $fileName = "build/js/languages.js";
+    $fileName = "autocosts/www/js/languages.js";
     file_put_contents($fileName, $js_string);
     ob_start(); 
     

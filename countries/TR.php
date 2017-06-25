@@ -158,7 +158,7 @@ $FUEL_JOB_CALC = 'İşe araba ile mi gidiyorsunuz?';
 $FUEL_JOB_CALC1 = 'Her hafta işe araba ile gittiğiniz gün sayısı'; 
 $FUEL_DAYS = 'Her hafta işe araba ile gittiğiniz gün(ler)'; 
 $FUEL_DIST_HOME_JOB = 'Ev ile iş arasında araba ile kat ettiğiniz kilometre miktarı (tek yön)'; 
-//$CURR_DIST=km, miles, etc. 
+//CURR_DIST=km, miles, etc. 
 $FUEL_DIST_HOME_JOB1 = 'ev ile iş yeri arası kilometre'; 
 //you drive 7 miles between home and your job 
 $FUEL_DIST_NO_JOB = "Arabanızı işyerine götürmediğiniz günlerde kat ettiğiniz ortalama kilometre miktarı:<br><i>örneğin haftasonları</i>"; 

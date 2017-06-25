@@ -9,6 +9,4 @@ keys/db_credentials.php
 keys/
 js/pdf/pdfmake.min.js
 app/autocosts
-app/testAPP
-
 

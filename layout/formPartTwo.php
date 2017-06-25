@@ -212,11 +212,11 @@
                 <?php echo $TOLLS_DAY_CALC ?>
                 <div>
                     <span class="nowrap">
-                        <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <input type="radio" id="tolls_daily_true" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
                         <span class="set_right_margin"><?php echo $YES ?></span>
                     </span>
                     <span class="nowrap">
-                        <input type="radio" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <input type="radio" id="tolls_daily_false" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
                         <?php echo $NO ?>
                     </span>
                 </div>
@@ -311,9 +311,9 @@
         </tr>
     </table>
     <div class="b-bottom">
-        <input class="button" type="button" onclick="openForm_part('form_part', 2, 1)" value="&laquo;"/>
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part('form_part', 2, 1)" value="&laquo;"/>
         <span class="step">2/3</span>
-        <input class="button" type="button" onclick="openForm_part('form_part', 2, 3);" value="&raquo;"/>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part('form_part', 2, 3);" value="&raquo;"/>
     </div>
 </div>
 <!-- end of form_part2-->

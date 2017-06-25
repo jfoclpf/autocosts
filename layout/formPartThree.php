@@ -300,7 +300,7 @@
     
     <!-- BUTTONS -->
     <div class="b-bottom">      
-        <input class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part('form_part', 3, 2)" value="&laquo;"/>        
         <!--Run button-->
         <div id="run_button_div">
             <input id="run_button" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>

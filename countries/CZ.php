@@ -178,7 +178,7 @@ $FUEL_CALC = 'Výpočty na základě';
 $FUEL_JOB_CALC = 'S ohledem na to, že jezdíte do práce?';
 $FUEL_JOB_CALC1 = 'Den(y) za týden, které jezdíte do práce';
 $FUEL_DAYS = 'Den(y) za týden, které jezdíte do práce';
-$FUEL_DIST_HOME_JOB = 'Kilometry, které najezdíte mezi domovem a místem vaší práce (jen jedna cesta)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilometry, které najezdíte mezi domovem a místem vaší práce (jen jedna cesta)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilometrů mezi domovem a místem vaší práce'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Kilometry, které průměrně najezdíte za ty dny, kdy nejezdíte autem do práce:<br><i>například za každý víkend</i>";
 $FUEL_DIST_NO_JOB1 = "kilometry, které průměrně najezdíte za ty dny, kdy nejezdíte autem do práce"; // you do 5 km per week....

@@ -174,7 +174,7 @@ $FUEL_CALC = 'Calcolo basato su';
 $FUEL_JOB_CALC = 'Prendete la macchina per andare al lavoro?';
 $FUEL_JOB_CALC1 = 'giorno/i a settimana in cui prendete la macchina per andare al lavoro';
 $FUEL_DAYS = 'Giorno/i a settimana in cui prendete la macchina per andare al lavoro ';
-$FUEL_DIST_HOME_JOB = 'Chilometri di tragitto in macchina tra casa e lavoro (in una direzione solo)'; //$CURR_DIST= km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Chilometri di tragitto in macchina tra casa e lavoro (in una direzione solo)'; //CURR_DIST= km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'chilometri tra casa e lavoro'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Chilometri percorsi nella media nei giorni in cui non prendete la macchina per andare al lavoro:<br><i>per esempio, per ogni fine settimana</i>";
 $FUEL_DIST_NO_JOB1 = "chilometri nella media nei giorni in cui non prendete la macchina per andare al lavoro"; // you do 5 km per week....

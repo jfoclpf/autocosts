@@ -177,7 +177,7 @@ $FUEL_CALC = 'A kiszámítás alapja';
 $FUEL_JOB_CALC = 'Autóval jár munkába?';
 $FUEL_JOB_CALC1 = '-nap(ok) száma, amikor autóval jár munkába';
 $FUEL_DAYS = '-nap(ok) száma, amikor autóval jár munkába';
-$FUEL_DIST_HOME_JOB = 'Távolság kilométerben, amit megtesz a lakása és a munkahelye között (egy nap).'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Távolság kilométerben, amit megtesz a lakása és a munkahelye között (egy nap).'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilométer a lakása és a munkahelye között'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Átlagosan megtett távolság kilométerben azokon a napokon, amikor nem autóval megy dolgozni:<br><i>például hétvégenként</i>";
 $FUEL_DIST_NO_JOB1 = "átlagosan megtett kilométer azokon a napokon, amikor nem autóval megy dolgozni"; // you do 5 km per week....

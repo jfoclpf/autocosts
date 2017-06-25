@@ -174,7 +174,7 @@ $FUEL_CALC = 'Berekeningen gebaseerd op';
 $FUEL_JOB_CALC = 'Er van uitgaande dat u naar het werk rijdt?';
 $FUEL_JOB_CALC1 = 'dag(en) per week die u naar het werk rijdt';
 $FUEL_DAYS = 'Dag(en) per week die u naar het werk rijdt';
-$FUEL_DIST_HOME_JOB = 'Kilometers die u tussen thuis en het werk rijdt (alleen enkele reis)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilometers die u tussen thuis en het werk rijdt (alleen enkele reis)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilometers tussen thuis en het werk'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Kilometers die u gemiddeld rijdt tijdens de dagen die u niet naar het werk rijdt:<br><i>alleen enkele reis</i>";
 $FUEL_DIST_NO_JOB1 = "gemiddelde kilometer tijdens de dagen die u niet naar het werk rijdt"; // you do 5 km per week....

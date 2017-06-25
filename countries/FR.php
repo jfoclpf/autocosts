@@ -183,7 +183,7 @@ $FUEL_CALC = 'Calculs basés sur';
 $FUEL_JOB_CALC = 'Conduisez-vous pour aller travailler ?';
 $FUEL_JOB_CALC1 = 'jour(s) par semaine où vous conduisez pour aller travailler';
 $FUEL_DAYS = 'Nombre de jour(s) par semaine où vous conduisez pour aller travailler';
-$FUEL_DIST_HOME_JOB = 'Kilomètres conduits entre votre maison et votre travail (dans une direction)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilomètres conduits entre votre maison et votre travail (dans une direction)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilomètres entre votre maison et votre travail '; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Kilomètres conduits en moyenne les jours où vous n’emmenez pas votre voiture au travail<br><i>par exemple par chaque weekend</i>";
 $FUEL_DIST_NO_JOB1 = "kilomètres en moyenne les jours où vous n’emmenez pas votre voiture au travail"; // you do 5 km per week....

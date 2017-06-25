@@ -24,7 +24,7 @@ function initialize() {
     document.getElementById("radio_fuel_euros").checked = true;
     $('#currency_div_form2').show();
     $('#distance_div_form2').hide();
-    document.getElementById("radio_cred_nao").checked = true;
+    document.getElementById("cred_auto_false").checked = true;
     $('#sim_credDiv').hide();
     
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No 

@@ -93,11 +93,11 @@
             </td>
             <td>
                 <span class="nowrap">
-                    <input type="radio" name="cred_auto" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <input type="radio" id="cred_auto_true" name="cred_auto" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
                     <span class="set_right_margin"><?php echo $YES ?></span>
                 </span>
                 <span class="nowrap">
-                    <input type="radio" name="cred_auto" value="false" class="no_left_margin" id="radio_cred_nao" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <input type="radio" id="cred_auto_false" name="cred_auto" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
                     <?php echo $NO ?>
                 </span>
             </td>
@@ -188,7 +188,7 @@
     </table>
     <div class="b-bottom">
         <span class="step">1/3</span>
-        <input class="button" type="button" onclick="openForm_part('form_part', 1, 2);"
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part('form_part', 1, 2);"
             value="&raquo;"/>
     </div>
 </div>

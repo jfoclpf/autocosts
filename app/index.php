@@ -1,14 +1,16 @@
 <?php
 
+$GLOBALS['country'] = "UK"; //default
+
+$temp_cty = $GLOBALS['country'];
 //scripts that creates several HTML language layout files, stored in /countries
 include('./createLangFiles.php');
+$GLOBALS['country'] = $temp_cty;
 
 $htmlStr = "";
-$fileName = "build/index.html";
+$fileName = "autocosts/www/index.html";
 file_put_contents($fileName, $htmlStr);
 ob_start();
-
-$GLOBALS['country'] = "UK"; //to start by default
 
 include_once("../php/functions.php");
 include_once("../countries/_list.php");
@@ -27,31 +29,34 @@ $is_logo = false;
 $currency_logo = "";
 ?><!DOCTYPE html>
 
+<html>
+
 <head>
 
-    <script>
-    //GLOBAL switches
-    //Change the values accordingly
-        var UBER_SWITCH = false; //Uber
-        var SOCIAL_SWITCH = false; // Social media pulgins
-        var CHARTS_SWITCH = false; //Google Charts
-        var CAPTCHA_SWITCH = false; //Google Captcha
-        var ANALYTICS_SWITCH = false; //Google Analytics
-        var DB_SWITCH = false; //Inserts user input data into DataBase
-        var PRINT_SWITCH = false; //Print option
-        var PDF_SWITCH = false; //Download PDF report option
-    </script>
+    <script src="js/APPglobals.js"></script>
 
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
     
-    <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+          
+    <title>Automobile Costs Calculator</title>
 
+    
+    <!--<link rel="stylesheet" type="text/css" href="css/index.css">-->
+    <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flags.css">
     <style>
+    
+    body{
+        background: none !important;
+        }
     #banner_top{
         position: static !important;
         border: none !important;
@@ -82,7 +87,7 @@ $currency_logo = "";
                         <div id="banner_flag" class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
                     </div>
                     <div id="country_select_div">
-                        <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
+                        <select name="country_select" id="country_select">
                             <?php 
                                 foreach ($avail_CT as $key => $value) {
                                     echo '<option value="'.$key.'"'. 
@@ -159,28 +164,23 @@ $currency_logo = "";
         <br>
     </div>
     <!--jquery.js-->
-    <script src="js/jquery.min.js"></script>
-
-    <!--Define GLOBAL Javascript variables-->
-    <script>    
-        var Country = '<?php echo $GLOBALS["country"]; ?>';
-        //Language code according to ISO_639-1 codes
-        var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
-        var Domain_list = <?php echo json_encode($domain_CT); ?>;
-        var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
-        var ResultIsShowing, DescriptionHTML, CalculatedData;
-        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';        
-        var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
-        var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
-        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available 
-        var uber_obj={};
-    </script>
-
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-1.5.0.mobile.min.js"></script>
+    
+    <!-- these are JS Cordova specific files-->
+    <?php if($argv[1]=="buildAPP"):?>
+    <script type="text/javascript" src="cordova.js"></script>
+    <?php endif; ?>
+    
+    <script type="text/javascript" src="js/index.js"></script>
+    
+    <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
     <script src="js/get_data.js"></script>
     <script src="js/formFunctions.js"></script>
     <script src="js/languages.js"></script>
+    
     <!-- these are JS APP specific files-->
     <script src="js/APPdocumentFunctions.js"></script>
     <script src="js/APPinitialize.js"></script>

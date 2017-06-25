@@ -172,7 +172,7 @@ $FUEL_CALC = '計算基準';
 $FUEL_JOB_CALC = '車での通勤を考えれば?';
 $FUEL_JOB_CALC1 = '毎週車で通勤する日数';
 $FUEL_DAYS = '毎週車で通勤する日数';
-$FUEL_DIST_HOME_JOB = '自宅から職場まで運転する距離（片道のみ）'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = '自宅から職場まで運転する距離（片道のみ）'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = '自宅から職場までの距離'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "車で通勤しない日々、平均運転距離:<br><i>たとえば頻度は毎週</i>";
 $FUEL_DIST_NO_JOB1 = "車で通勤しない日々の平均距離"; // you do 5 km per week....

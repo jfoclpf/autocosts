@@ -178,7 +178,7 @@ $FUEL_CALC = 'Laskelmat perustuvat';
 $FUEL_JOB_CALC = 'Olettaen, että ajat töihin?';
 $FUEL_JOB_CALC1 = 'Päivänä viikossa, kun ajat töihin';
 $FUEL_DAYS = 'Päivänä viikossa, kun ajat töihin';
-$FUEL_DIST_HOME_JOB = 'Kilometriä, jotka ajat kotisi ja työpaikkasi välillä (yhteen suuntaan)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilometriä, jotka ajat kotisi ja työpaikkasi välillä (yhteen suuntaan)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilometriä kodin ja työpaikan välillä'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Kilometriä, jotka ajat keskimäärin päivässä kun et ota autoa töihin:<br><i>esimerkiksi per viikonloppu</i>";
 $FUEL_DIST_NO_JOB1 = "kilometriä, jotka ajat keskimäärin niinä päivinä, kun et ota autoa töihin"; // you do 5 km per week....

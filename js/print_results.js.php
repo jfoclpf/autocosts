@@ -20,10 +20,10 @@ function Run2(){
 
     //country object with country specific variables
     var country = {
-        currency: "<? echo $CURR_CODE ?>",
-        distance_std: <? echo $distance_std_option; ?>,
-        fuel_efficiency_std: <? echo $fuel_efficiency_std_option; ?>,
-        fuel_price_volume_std: <? echo $fuel_price_volume_std; ?>,
+        currency: "<?php echo $CURR_CODE ?>",
+        distance_std: <?php echo $distance_std_option; ?>,
+        fuel_efficiency_std: <?php echo $fuel_efficiency_std_option; ?>,
+        fuel_price_volume_std: <?php echo $fuel_price_volume_std; ?>,
         taxi_price: <?php echo $TAXI_PRICE_PER_DIST ?>
     };
 

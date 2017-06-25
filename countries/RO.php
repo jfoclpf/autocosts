@@ -180,7 +180,7 @@ $FUEL_CALC = 'Calculations based on';
 $FUEL_JOB_CALC = 'Circulaţi cu maşina la servici?';
 $FUEL_JOB_CALC1 = 'Zi(le) pe săptămână  când conduceţi pentru a merge la servici';
 $FUEL_DAYS = 'Zi(le) pe săptămână  când conduceţi pentru a merge la servici';
-$FUEL_DIST_HOME_JOB = 'Kilometri parcurşi între casă şi locul de muncă (doar dus)'; //$CURR_DIST=km, miles, etc.
+$FUEL_DIST_HOME_JOB = 'Kilometri parcurşi între casă şi locul de muncă (doar dus)'; //CURR_DIST=km, miles, etc.
 $FUEL_DIST_HOME_JOB1 = 'kilometri între casă şi locul de muncă'; //you do 7 km between home and job
 $FUEL_DIST_NO_JOB = "Kilometri parcurşi în medie în zilele în care nu vă duceţi cu maşina la servici:<br><i>de exemplu, în fiecare săptămână</i>";
 $FUEL_DIST_NO_JOB1 = "kilometri parcurşi în medie în zilele în care nu vă duceţi cu maşina la servici"; // you do 5 km per week....
