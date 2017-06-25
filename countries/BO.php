@@ -12,7 +12,7 @@ $COUNTRY_NAME = 'Bolivia';
 //	  										   **
 //***********************************************
 
-// IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
+// IMPORTANT:Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 
 //Fuel efficiency for car engine standard
 $fuel_efficiency_std_option = 1;
