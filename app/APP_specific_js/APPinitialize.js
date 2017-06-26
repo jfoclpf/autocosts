@@ -5,7 +5,9 @@ document.getElementById("country_select").addEventListener("change", onCountrySe
 
 function initialize() {
        
-    $("#input_div").load("form/"+Country+".html", hasLoadedLayout);
+    $("#input_div").load("form/"+Country+".html", function(){
+            $.getScript("js/formFunctions.js", hasLoadedLayout);
+        });
     
     //add flag
     $("#banner_flag").removeClass().addClass(Country.toLowerCase() + " flag");
@@ -16,6 +18,10 @@ function initialize() {
     $("#result_buttons_div").
         html('<input type="button" class="button" id="reload_button" value="'+window[Country].button_rerun+'" />');
     $("#result_buttons_div").on("click", "#reload_button", reload);
+    
+    $("#monthly_costs_title").text(window[Country].average_costs_per_type);
+    $("#fin_effort_title").text(window[Country].financial_effort);
+    $("#alternative_to_carcosts_title").text(window[Country].publ_tra_equiv);
         
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
@@ -84,6 +90,9 @@ function hasLoadedLayout(){
     $('#fin_effort_Div_form3').hide();
     $("#distance_time_spent_driving_form3").hide();
 
+    //align radio button text
+    $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
+        
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
          

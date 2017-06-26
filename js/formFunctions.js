@@ -19,7 +19,7 @@ $("#numberInspections").focusout(function(){
         $("#InspectionCost_tr").hide("slow");
     }
     else{
-        $("#InspectionCost_tr").show("slow")
+        $("#InspectionCost_tr").show("slow");
     }
 });
 

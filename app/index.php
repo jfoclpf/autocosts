@@ -162,8 +162,7 @@ $currency_logo = "";
     <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
-    <script src="js/get_data.js"></script>
-    <script src="js/formFunctions.js"></script>
+    <script src="js/get_data.js"></script>    
     <script src="js/languages.js"></script>
     
     <!-- these are JS APP specific files-->

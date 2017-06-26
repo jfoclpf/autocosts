@@ -17,6 +17,12 @@ function onCountrySelect() {
 function Run1(){
 
     Run2();
+    
+    //removes a links
+    $('.result_div a').replaceWith(function() {
+        return $.text([this]);
+    });
+    
     ResultIsShowing=true;
 }
 

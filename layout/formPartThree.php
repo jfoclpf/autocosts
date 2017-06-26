@@ -86,19 +86,27 @@
                         <br/>
                         <div class="col">
                             <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
-                            <?php echo $WORD_PER ?> <?php echo $YEAR ?>
+                            <span>
+                                <?php echo $WORD_PER ?> <?php echo $YEAR ?>
+                            </span>
                         </div>
                         <div class="col">
                             <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
-                            <?php echo $WORD_PER ?> <?php echo $MONTH ?>
+                            <span>
+                                <?php echo $WORD_PER ?> <?php echo $MONTH ?>
+                            </span>
                         </div>
                         <div class="col">
                             <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
-                            <?php echo $WORD_PER ?> <?php echo $WEEK ?>
+                            <span>
+                                <?php echo $WORD_PER ?> <?php echo $WEEK ?>
+                            </span>
                         </div>
                         <div class="col">
                             <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
-                            <?php echo $WORD_PER ?> <?php echo $HOUR ?>
+                            <span>
+                                <?php echo $WORD_PER ?> <?php echo $HOUR ?>
+                            </span>
                         </div>
                     </div>
                 </td>
@@ -155,11 +163,15 @@
                             <br>
                             <span class="nowrap">
                                 <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
-                                <?php echo $YES ?>
+                                <span>
+                                    <?php echo $YES ?>
+                                </span>
                             </span>
                             <span class="nowrap">
                                 <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
-                                <?php echo $NO ?>
+                                <span>
+                                    <?php echo $NO ?>
+                                </span>
                             </span>
                         </div>
                         <div id="working_time_part2_form3">
@@ -197,12 +209,16 @@
                         <span class="nowrap">
                             <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
                                    onchange="driveToJob(true);">
-                            <span class="set_right_margin"><?php echo $YES ?></span>
+                            <span class="set_right_margin">
+                                <?php echo $YES ?>
+                            </span>
                         </span>
                         <span class="nowrap">
                             <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
                                    onchange="driveToJob(false);" checked >
-                            <?php echo $NO ?>
+                            <span>
+                                <?php echo $NO ?>
+                            </span>
                         </span>
                     </td>
                 </tr>

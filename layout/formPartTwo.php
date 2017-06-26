@@ -27,11 +27,15 @@
                 <br>
                 <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
-                    <span class="set_right_margin"><?php echo $STD_DIST ?></span>
+                    <span class="set_right_margin">
+                        <?php echo $STD_DIST ?>
+                    </span>
                 </span>
                 <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
-                    <?php echo $CURR_NAME_PLURAL ?>
+                    <span>
+                        <?php echo $CURR_NAME_PLURAL ?>
+                    </span>
                 </span>
              </td>
         </tr>
@@ -63,11 +67,15 @@
                 <td>
                     <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
-                        <span class="set_right_margin"><?php echo $YES ?></span>
+                        <span class="set_right_margin">
+                            <?php echo $YES ?>
+                        </span>
                     </span>
                     <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
-                        <?php echo $NO ?>
+                        <span>
+                            <?php echo $NO ?>
+                        </span>
                     </span>
                 </td>
             </tr>
@@ -213,11 +221,15 @@
                 <div>
                     <span class="nowrap">
                         <input type="radio" id="tolls_daily_true" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
-                        <span class="set_right_margin"><?php echo $YES ?></span>
+                        <span class="set_right_margin">
+                            <?php echo $YES ?>
+                        </span>
                     </span>
                     <span class="nowrap">
                         <input type="radio" id="tolls_daily_false" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
-                        <?php echo $NO ?>
+                        <span>
+                            <?php echo $NO ?>
+                        </span>
                     </span>
                 </div>
             </td>

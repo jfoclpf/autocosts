@@ -58,19 +58,27 @@
             <td>
                 <div class="col">
                     <input type="radio" name="tipo_seguro" value="mensal">
-                    <?php echo $MONTHLY ?>
+                    <span>
+                        <?php echo $MONTHLY ?>
+                    </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="tipo_seguro" value="trimestral">
-                    <?php echo $TRIMESTERLY ?>
+                    <span>
+                        <?php echo $TRIMESTERLY ?>
+                    </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="tipo_seguro" value="semestral" checked>
-                    <?php echo $SEMESTERLY ?>
+                    <span>
+                        <?php echo $SEMESTERLY ?>
+                    </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="tipo_seguro" value="anual">
-                    <?php echo $YEARLY ?>
+                    <span>
+                        <?php echo $YEARLY ?>
+                    </span>
                 </div>
             </td>
             <td>
@@ -94,11 +102,15 @@
             <td>
                 <span class="nowrap">
                     <input type="radio" id="cred_auto_true" name="cred_auto" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
-                    <span class="set_right_margin"><?php echo $YES ?></span>
+                    <span class="set_right_margin">
+                        <?php echo $YES ?>
+                    </span>
                 </span>
                 <span class="nowrap">
                     <input type="radio" id="cred_auto_false" name="cred_auto" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
-                    <?php echo $NO ?>
+                    <span>
+                        <?php echo $NO ?>
+                    </span>
                 </span>
             </td>
         </tr>
