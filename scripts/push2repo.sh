@@ -4,6 +4,7 @@ cd "${0%/*}"
 
 cd ..
 
+echo "  "
 echo "Changed files:"
 git diff --name-only
 echo "*************"

@@ -1,3 +1,5 @@
+.gitignore
+.gitattributes
 db_stats/credentials.js
 db_stats/credentials.php
 keys/credentials.js
