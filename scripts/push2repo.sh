@@ -17,4 +17,4 @@ git-ftp push
 
 git push origin master
 
-cd "$(dirname "$0")"
+cd "${0%/*}"

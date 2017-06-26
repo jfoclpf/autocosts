@@ -29,5 +29,3 @@ cp -f APP_specific.css autocosts/www/css/
 php -f index.php HTML
 
 chmod -R 777 autocosts/www/
-
-cd "$(dirname "$0")"
