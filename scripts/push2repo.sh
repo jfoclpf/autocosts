@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ..
+
 git add -A
 
 if [ -z "$1" ] 
@@ -13,4 +15,4 @@ git-ftp push
 
 git push origin master
 
-
+cd scripts/
