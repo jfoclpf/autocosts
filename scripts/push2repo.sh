@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/jfolpf/autocosts/scripts/
+cd "${0%/*}"
 
 cd ..
 
@@ -16,5 +16,3 @@ fi
 git-ftp push
 
 git push origin master
-
-cd "${0%/*}"

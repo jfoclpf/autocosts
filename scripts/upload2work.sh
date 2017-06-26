@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/jfolpf/autocosts/scripts/ 
+cd "${0%/*}"
 
 cd ..
 
