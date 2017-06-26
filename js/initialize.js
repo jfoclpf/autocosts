@@ -40,6 +40,9 @@ function initialize() {
     $('#fin_effort_Div_form3').hide();
     $("#distance_time_spent_driving_form3").hide();
 
+    //align radio button text
+    $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
+    
     //Google recaptcha
     isHumanConfirmed = false; 
     $('#run_button').show();

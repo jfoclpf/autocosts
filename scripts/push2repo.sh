@@ -4,6 +4,10 @@ cd "${0%/*}"
 
 cd ..
 
+echo "Changed files:"
+git diff --name-only
+echo "*************"
+echo "  "
 git add -A
 
 if [ -z "$1" ] 
