@@ -4,7 +4,7 @@ git add -A
 
 if [ -z "$1" ] 
 then
-    git commit
+    git commit -m "update"
 else
     git commit -m $1
 fi
