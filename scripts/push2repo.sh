@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+cd /home/jfolpf/autocosts/scripts/
+
 cd ..
 
 git add -A
@@ -16,4 +17,4 @@ git-ftp push
 
 git push origin master
 
-cd scripts/
+cd "$(dirname "$0")"

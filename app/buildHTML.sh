@@ -8,6 +8,8 @@ export PATH=$PATH:/usr/local/android-sdk/build-tools
 export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/
 export ANDROID_HOME=/usr/local/android-sdk/
 
+cd /home/jfolpf/autocosts/app/
+
 cd ..
 
 cp -f css/flags.css app/autocosts/www/css/
@@ -27,3 +29,5 @@ cp -f APP_specific.css autocosts/www/css/
 php -f index.php HTML
 
 chmod -R 777 autocosts/www/
+
+cd "$(dirname "$0")"

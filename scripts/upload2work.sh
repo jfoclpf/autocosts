@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+cd /home/jfolpf/autocosts/scripts/ 
+
 cd ..
 
 scp -P 2222 -r countries/ css/ db_stats/ google/ images/ js/ layout/ php/ jfolpf@autocosts.info:/home4/jfolpf/work/
