@@ -19,6 +19,4 @@ cordova emulate --target=avd android
 
 mv platforms/android/build/outputs/apk/android-debug.apk /home/jfolpf/
 
-cd "${0%/*}"
-
 
