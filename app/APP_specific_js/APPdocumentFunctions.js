@@ -6,14 +6,22 @@
 /*function that loads new HTML and that is run when country select is changed*/ 
 function onCountrySelect() {
     
-    Country = this.options[this.selectedIndex].value;    
+    Country = this.options[this.selectedIndex].value;
+    
+    if (ResultIsShowing){
+        reload();
+    }
     initialize();
 }
 
+function Run1(){
+
+    Run2();
+    ResultIsShowing=true;
+}
 
 /*function that is run when the button Reload/Rerun is clicked*/
 function reload() {
-    ResultIsShowing=false; 
 
     CurrentFormPart=1;   
     $("#form_part2, #form_part3").hide();
@@ -27,10 +35,11 @@ function reload() {
             $("#input_div").show();
                 $("#form_part1").
                 slideDown("slow", function(){                        
-                    scrollPage();              
+                    scrollPage(function(){
+                            ResultIsShowing=false;
+                        });
                 });
-        }); 
-
+        });
 }
 
 

@@ -85,19 +85,19 @@
                         <?php echo $EXTRA_DATA_INCOME_QUESTION ?>
                         <br/>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="year" onchange="income_toggle(value)" checked />
+                            <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
                             <?php echo $WORD_PER ?> <?php echo $YEAR ?>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="month" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
                             <?php echo $WORD_PER ?> <?php echo $MONTH ?>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="week" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
                             <?php echo $WORD_PER ?> <?php echo $WEEK ?>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="hour" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
                             <?php echo $WORD_PER ?> <?php echo $HOUR ?>
                         </div>
                     </div>

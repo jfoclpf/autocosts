@@ -1,15 +1,10 @@
 /* runs function initialize() every time the page is loaded */
-
-window.onload = initialize;
-
+window.addEventListener('load', initialize);
 document.addEventListener("initialize", onDeviceReady, false);
 document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
 
 function initialize() {
        
-    $.getScript("validateForm/" + Country + ".js");
-    $.getScript("print_results/" + Country + ".js");
-    
     $("#input_div").load("form/"+Country+".html", hasLoadedLayout);
     
     //add flag
@@ -17,6 +12,10 @@ function initialize() {
     
     document.title = window[Country].web_page_title;
     $("#main_title").html(window[Country].main_title);
+    
+    $("#result_buttons_div").
+        html('<input type="button" class="button" id="reload_button" value="'+window[Country].button_rerun+'" />');
+    $("#result_buttons_div").on("click", "#reload_button", reload);
         
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
@@ -24,13 +23,17 @@ function initialize() {
 
 function hasLoadedLayout(){
     
+    $.getScript("validateForm/" + Country + ".js");
+    $.getScript("print_results/" + Country + ".js");
     
     //due to setting reasons cordova doesn't allow onclick embedded in the HTML
+    $("#run_button").prop('type', 'button');
+    saneOnClickHandler("run_button", Run1);
+    
     saneOnClickHandler("form_part1_button_next", function(){openForm_part('form_part', 1, 2)});
     saneOnClickHandler("form_part2_button_back", function(){openForm_part('form_part', 2, 1)});
     saneOnClickHandler("form_part2_button_next", function(){openForm_part('form_part', 2, 3)});
-    saneOnClickHandler("form_part3_button_back", function(){openForm_part('form_part', 3, 2)});
-    saneOnClickHandler("run_button", function(){Run2()});
+    saneOnClickHandler("form_part3_button_back", function(){openForm_part('form_part', 3, 2)});    
     
     saneOnClickHandler("cred_auto_true", function(){onclick_div_show('#sim_credDiv',true)});
     saneOnClickHandler("cred_auto_false", function(){onclick_div_show('#sim_credDiv',false)});
@@ -39,8 +42,18 @@ function hasLoadedLayout(){
     saneOnClickHandler("car_job_form2_yes", function(){carToJob(true)});
     saneOnClickHandler("car_job_form2_no", function(){carToJob(false)});
     saneOnClickHandler("tolls_daily_true", function(){tolls_daily(true)});
-    saneOnClickHandler("tolls_daily_false", function(){tolls_daily(false)}); 
+    saneOnClickHandler("tolls_daily_false", function(){tolls_daily(false)});
     
+    saneOnClickHandler("drive_to_work_yes_form3", function(){driveToJob(true)}, "onchange");
+    saneOnClickHandler("drive_to_work_no_form3", function(){driveToJob(false)}, "onchange");
+    saneOnClickHandler("working_time_yes_form3", function(){working_time_toggle(true)}, "onchange");
+    saneOnClickHandler("working_time_no_form3", function(){working_time_toggle(false)}, "onchange");
+    
+    saneOnClickHandler("radio_income_year", function(){income_toggle("year")}, "onchange");
+    saneOnClickHandler("radio_income_month", function(){income_toggle("month")}, "onchange");
+    saneOnClickHandler("radio_income_week", function(){income_toggle("week")}, "onchange");
+    saneOnClickHandler("radio_income_hour", function(){income_toggle("hour")}, "onchange");
+   
     //divs that need to be hidden    
     frame_witdh = document.getElementById('monthly_costs').offsetWidth;
     
@@ -71,9 +84,8 @@ function hasLoadedLayout(){
     $('#fin_effort_Div_form3').hide();
     $("#distance_time_spent_driving_form3").hide();
 
-    $('#run_button').show();
-    
     $('#run_button_noCapctha').remove();
+    $('#run_button').show();
          
 }
 
@@ -81,34 +93,11 @@ function onDeviceReady() {
     
     initialize();
     
-    /*$.fn.getScript = function(src, callback) {
-        var s = document.createElement('script');
-        document.getElementsByTagName('head')[0].appendChild(s);
-        s.onload = function() {
-            if (typeof callback == "function") callback();
-            callback = null;
-        }
-        s.onreadystatechange = function() {
-            if (s.readyState == 4 || s.readyState == "complete") {
-                if (typeof callback == "function") callback();
-                callback = null; // Wipe callback, to prevent multiple calls.
-            }
-        }
-        s.src = src;
-    }*/
-    
 }
-
-/*
-function onLoadForm(){
-    $.fn.getScript("validateForm/" + Country + ".js");
-    $.fn.getScript("print_results/" + Country + ".js");
-}*/
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML
 //the attribute must be removed from the DOM and the event added
-function saneOnClickHandler(id, action){
-    document.getElementById(id).removeAttribute("onclick");
-    document.getElementById(id).addEventListener("click", action);
+function saneOnClickHandler(id, functionToExec, onAction="onclick"){
+    document.getElementById(id).removeAttribute(onAction);
+    document.getElementById(id).addEventListener("click", functionToExec);
 }
-

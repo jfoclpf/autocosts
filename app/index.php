@@ -40,33 +40,18 @@ $currency_logo = "";
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
           
     <title>Automobile Costs Calculator</title>
 
-    
-    <!--<link rel="stylesheet" type="text/css" href="css/index.css">-->
     <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flags.css">
-    <style>
-    
-    body{
-        background: none !important;
-        }
-    #banner_top{
-        position: static !important;
-        border: none !important;
-        box-shadow: none !important;
-        background: none !important;
-    }
-    #main_title{
-        line-height: 110%;
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
     
 </head>
 
@@ -145,14 +130,14 @@ $currency_logo = "";
                         </div>
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
-                    <!-- ************* Buttons ****************** -->
+                    <!-- ************* External Costs ****************** -->
                     <div class="result_section" id="exten_costs_section">
                         <div class="result_div" id="extern_costs"></div>
                     </div>
                     <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="buttons_section">
                         <div class="result_div" id="result_buttons_div">
-                            <input type="submit" class="button" value="<?php echo $BUTTON_RERUN; ?>" onclick="reload();"/>
+                            
                         </div>                               
                     </div>
                     <!-- ************* ********* ************* -->
