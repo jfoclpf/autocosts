@@ -302,7 +302,7 @@ $ERROR_MONTHS_PER_YEAR = 'Número de meses por ano, inválido';
 $ERROR_HOURS_PER_WEEK = 'Número de horas por semana, inválido';
 $ERROR_MIN_DRIVE_HOME_JOB = 'Número de minutos que conduz de casa para o trabalho, inválido';
 $ERROR_MIN_DRIVE_WEEKEND = 'Número de minutos que conduz nos dias que não leva o carro para o trabalho, inválido';
-$ERROR_MIN_DRIVE = 'Invalid number of minutes you drive';
+$ERROR_MIN_DRIVE = 'Número de minutos por dia a conduzir, inválido';
 $ERROR_DAYS_PER_MONTH = 'Número de dias por mês, inválido';
 //FINAL RESULT
 $YOUR_CAR_COSTS_YOU = 'O seu carro custa-lhe ';

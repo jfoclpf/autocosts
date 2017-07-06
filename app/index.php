@@ -51,6 +51,7 @@ $currency_logo = "";
     <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flags.css">
+    <link rel="stylesheet" type="text/css" href="css/jAlert.css">
     <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
     
 </head>
@@ -164,6 +165,7 @@ $currency_logo = "";
     <script src="js/conversionFunctions.js"></script>
     <script src="js/get_data.js"></script>    
     <script src="js/languages.js"></script>
+    <script src="js/jAlert.js"></script>
     
     <!-- these are JS APP specific files-->
     <script src="js/APPdocumentFunctions.js"></script>

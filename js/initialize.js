@@ -43,6 +43,11 @@ function initialize() {
     //align radio button text
     $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
     
+    //defaults for the alert box
+    $.fn.jAlert.defaults.size = 'sm';
+    $.fn.jAlert.defaults.theme = 'default';
+    $.fn.jAlert.defaults.closeOnClick = 'true';
+    
     //Google recaptcha
     isHumanConfirmed = false; 
     $('#run_button').show();

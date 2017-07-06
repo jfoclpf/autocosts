@@ -56,89 +56,98 @@ function reload() {
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
 var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
 var CurrentFormPart; //global variable for the current Form Part
-function openForm_part(part_name, part_number_origin, part_number_destiny) {
+
+function openForm_part(part_number_origin, part_number_destiny) {
     
-    CurrentFormPart = part_number_destiny;
-
-    //shows form part {d} coming from form part {o} hiding the remaining part
-    function shows_part(){
-        
-        //origin and destiny form parts
-        var o=part_number_origin; 
-        var d=part_number_destiny; 
-        
-        //gets jQuery variable for each form part
-        var p1 = $("#"+part_name+"1");
-        var p2 = $("#"+part_name+"2");
-        var p3 = $("#"+part_name+"3");
-        
-        //clears any pending animations for all elements
-        $("*").clearQueue();
-        
-        if (o==1 && d==2){           
-            p1.slideUp("slow", function(){
-                p2.slideDown("slow", function(){                                    
-                    scrollPage();
-                        });
-                });
-        }
-        else if(o==2 && d==3){
-            $("*").promise().done(function(){
-                p2.slideUp("slow", function(){
-                    p3.slideDown("slow", function(){
-                        scrollPage();
-                    });                
-                });
-            });
-        }
-        else if(o==3 && d==2){
-            $("*").promise().done(function(){
-                p3.slideUp("slow", function(){
-                    p2.slideDown("slow", function(){
-                        scrollPage();
-                    });                
-                });
-            });           
-        }
-        else if(o==2 && d==1){
-            p2.slideUp("slow", function(){
-                p1.slideDown("slow", function(){                        
-                                        scrollPage();
-                                    });
-                                });                                
-        }       
-    }  
-
     //change from form part 1 to 2
-    if (part_number_origin===1 && part_number_destiny===2){
-       
-        if (!is_userdata_formpart1_ok())
+    if (part_number_origin==1 && part_number_destiny==2){
+        if (!is_userdata_formpart1_ok()){
             return;
-        else
-            shows_part();
-
+        }
+        else{
+            shows_part(1, 2);
+        }
     }
     
     //change from form part 2 to 3
     if (part_number_origin==2 && part_number_destiny==3){
-        if (!is_userdata_formpart2_ok())
+        if (!is_userdata_formpart2_ok()){
             return;
-        else
-            shows_part();        
+        }
+        else{
+            shows_part(2, 3);        
+        }
     }
     
     //change from form part 3 to 2
     if (part_number_origin==3 && part_number_destiny==2){
-        shows_part();
+        shows_part(3, 2);
     }
     
     //change from form part 2 to 1
     if (part_number_origin==2 && part_number_destiny==1){
-        shows_part();
+        shows_part(2, 1);
     }
     
     return;
 }
+
+
+//shows form part {d} coming from form part {o} hiding the remaining part
+function shows_part(part_number_origin, part_number_destiny){
+
+    //origin and destiny form parts
+    var o=part_number_origin; 
+    var d=part_number_destiny; 
+
+    //gets jQuery variable for each form part
+    var p1 = $("#form_part1");
+    var p2 = $("#form_part2");
+    var p3 = $("#form_part3");
+
+    //clears any pending animations for all elements
+    $("*").clearQueue();
+
+    if (o==1 && d==2){           
+        p1.slideUp("slow", function(){
+            p2.slideDown("slow", function(){                                    
+                        scrollPage();
+                        CurrentFormPart = 2;
+                    });
+            });
+    }
+    else if(o==2 && d==3){
+        $("*").promise().done(function(){
+            p2.slideUp("slow", function(){
+                p3.slideDown("slow", function(){
+                    scrollPage(function(){
+                            CurrentFormPart = 3;
+                        });
+                });                
+            });
+        });
+    }
+    else if(o==3 && d==2){
+        $("*").promise().done(function(){
+            p3.slideUp("slow", function(){
+                p2.slideDown("slow", function(){
+                    scrollPage(function(){
+                            CurrentFormPart = 2;
+                        });
+                });                
+            });
+        });           
+    }
+    else if(o==2 && d==1){
+        p2.slideUp("slow", function(){
+            p1.slideDown("slow", function(){                        
+                scrollPage(function(){
+                            CurrentFormPart = 1;
+                        });
+            });
+        });                                
+    }       
+} 
 
 function isNumber(n) {
     return (!isNaN(parseFloat(n)) && isFinite(n) && n >= 0);

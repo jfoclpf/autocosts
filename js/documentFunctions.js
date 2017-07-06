@@ -2,133 +2,47 @@
 /*====================================================*/
 /*Functions which work on the page*/
 
-/*functions which is used to change the form parts*/
+/*Globals*/
 var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
 var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
 var CurrentFormPart; //global variable for the current Form Part
-function openForm_part(part_name, part_number_origin, part_number_destiny) {
+
+/*functions which is used to change the form parts*/
+function openForm_part(part_number_origin, part_number_destiny) {
     
-    CurrentFormPart = part_number_destiny;
-
-    //shows form part {d} coming from form part {o} hiding the remaining part
-    function shows_part(){
-        //origin and destiny form parts
-        var o=part_number_origin; 
-        var d=part_number_destiny; 
-        
-        //if not a test triggers event for Google Analytics accordingly
-        if(!IsThisAtest() && IsGoogleAnalytics && ANALYTICS_SWITCH){
-            if(d==2 && !hasShownPart2){
-                ga("send", "event", "form_part", "form_part_2");
-                hasShownPart2=true;
-            }
-            if(d==3 && !hasShownPart3){
-                ga("send", "event", "form_part", "form_part_3");
-                hasShownPart3=true;
-            }
-        }
-        
-        //gets jQuery variable for each form part
-        var p1 = $("#"+part_name+"1");
-        var p2 = $("#"+part_name+"2");
-        var p3 = $("#"+part_name+"3");
-        
-        //clears any pending animations for all elements
-        $("*").clearQueue();
-        
-        if (o==1 && d==2){           
-            p1.slideUp("slow", function(){
-                    $("#description").html("");           
-                    $('#div1_td, #div3_td').hide("slow");                  
-                    $("#description, #div1_td, #div3_td").
-                        promise().
-                        done(function(){
-                            p2.slideDown("slow", function(){                                    
-                                scrollPage();
-                            });
-                        });
-                });
-        }
-        else if(o==2 && d==3){
-            $('#div1_td, #div3_td').hide();
-            $("*").promise().done(function(){
-                p2.slideUp("slow", function(){
-                    p3.slideDown("slow", function(){
-                        scrollPage();
-                    });                
-                });
-            });
-        }
-        else if(o==3 && d==2){
-            $('#div1_td, #div3_td').hide();
-            $("*").promise().done(function(){
-                p3.slideUp("slow", function(){
-                    p2.slideDown("slow", function(){
-                        scrollPage();
-                    });                
-                });
-            });           
-        }
-        else if(o==2 && d==1){
-            p2.slideUp("slow", function(){
-                $("#description").
-                    hide().
-                    html(DescriptionHTML).
-                    slideDown("fast", function(){
-                        $("#div1, #div3").
-                            hide().
-                            promise().
-                            done(function(){
-                                $("#div1_td, #div3_td").
-                                    show().
-                                    promise().
-                                    done(function(){
-                                        p1.
-                                        slideDown("slow", function(){                        
-                                            $("#div1, #div3").
-                                                show("slow").
-                                                promise().
-                                                done(function(){                                    
-                                                        scrollPage();
-                                                });
-                                        });
-                                    });
-                            });
-                        });                                             
-                    });                                 
-        }       
-    }  
-
     //change from form part 1 to 2
     if (part_number_origin===1 && part_number_destiny===2){
        
         if (!hasLoadedPart[0]){
             $.getScript("js/coreFunctions.js", function(){
                 
-                if(CHARTS_SWITCH){
+                if (CHARTS_SWITCH){
                     //Tries to load Google chart JS files
                     $.getScript("https://www.gstatic.com/charts/loader.js")
                         .done(function(){
                             IsGoogleCharts = true;
                         })
                         .fail(function(){
-                            IsGoogleCharts = false;
+                            IsGoogleCharts = false; //can't load google charts
                     });
                 }
-                else{
+                else {
                     IsGoogleCharts = false;
                 }
                                
                 hasLoadedPart[0] = true;
-                if (!is_userdata_formpart1_ok())
+                
+                if (!is_userdata_formpart1_ok()){
                     return;
-                shows_part();
+                }
+                shows_part(1, 2);
             });                                             
         }
         else{
-            if (!is_userdata_formpart1_ok())
+            if (!is_userdata_formpart1_ok()){
                 return;
-            shows_part();
+            }
+            shows_part(1, 2);
         }
         
         if (!hasLoadedPart[1]){
@@ -136,11 +50,11 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
             $.getScript("db_stats/statsFunctions.js"); 
             $.getScript("js/get_data.js");
             
-            if(PRINT_SWITCH){
+            if (PRINT_SWITCH){
                 $.getScript("js/print.js");
             }
             
-            if(CHARTS_SWITCH){
+            if (CHARTS_SWITCH){
                 $.getScript("google/charts.php?country="+Country, function() {
                     $.getScript("js/print_results.js.php?country="+Country); 
                 });
@@ -149,13 +63,13 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 $.getScript("js/print_results.js.php?country="+Country); 
             }
                         
-            if(DB_SWITCH){
+            if (DB_SWITCH){
                 $.getScript("js/dbFunctions.js");
             }
             
             $.getScript("js/g-recaptcha.js", function() {
 
-                if(CAPTCHA_SWITCH){
+                if (CAPTCHA_SWITCH){
                     $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+Language)
                         .done(function(){
                             IsGoogleCaptcha = true;
@@ -169,7 +83,7 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
                 }
             });
             
-            if(SOCIAL_SWITCH){
+            if (SOCIAL_SWITCH){
                 //Jquery social media share plugins
                 $.getScript("js/social/jssocials.min.js");
                 
@@ -189,24 +103,25 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
     
     //change from form part 2 to 3
     if (part_number_origin==2 && part_number_destiny==3){
-        if (!is_userdata_formpart2_ok())
+        if (!is_userdata_formpart2_ok()){
             return;
+        }
         
         if (!hasLoadedPart[2]){
             //If Google Charts JS files are available
-            if (IsGoogleCharts && CHARTS_SWITCH){
+            if(IsGoogleCharts && CHARTS_SWITCH){
                 google.charts.load('current', {"packages": ["corechart"], "language": Language, "callback": function(){
                     hasLoadedPart[2]=true;
-                    shows_part();
+                    shows_part(2, 3);
                 }});
             }
             else{
                 hasLoadedPart[2]=true;
-                shows_part();                
+                shows_part(2, 3);               
             }
         }
         else{
-            shows_part();
+            shows_part(2, 3);
         }
         
         if (!hasLoadedPart[3]){
@@ -257,15 +172,112 @@ function openForm_part(part_name, part_number_origin, part_number_destiny) {
     
     //change from form part 3 to 2
     if (part_number_origin==3 && part_number_destiny==2){
-        shows_part();
+        shows_part(3, 2);
     }
     
     //change from form part 2 to 1
     if (part_number_origin==2 && part_number_destiny==1){
-        shows_part();
+        shows_part(2, 1);
     }
     
     return;
+}
+
+//shows form part {d} coming from form part {o} hiding the remaining part
+function shows_part(part_number_origin, part_number_destiny){
+    //origin and destiny form parts
+    var o=part_number_origin; 
+    var d=part_number_destiny; 
+
+    //if not a test triggers event for Google Analytics accordingly
+    if(!IsThisAtest() && IsGoogleAnalytics && ANALYTICS_SWITCH){
+        if(d==2 && !hasShownPart2){
+            ga("send", "event", "form_part", "form_part_2");
+            hasShownPart2=true;
+        }
+        if(d==3 && !hasShownPart3){
+            ga("send", "event", "form_part", "form_part_3");
+            hasShownPart3=true;
+        }
+    }
+
+    //gets jQuery variable for each form part
+    var p1 = $("#form_part1");
+    var p2 = $("#form_part2");
+    var p3 = $("#form_part3");
+
+    //clears any pending animations for all elements
+    $("*").clearQueue();
+
+    if (o==1 && d==2){           
+        p1.slideUp("slow", function(){
+                $("#description").html("");           
+                $('#div1_td, #div3_td').hide("slow");                  
+                $("#description, #div1_td, #div3_td").
+                    promise().
+                    done(function(){
+                        p2.slideDown("slow", function(){                                    
+                            scrollPage(function(){
+                                CurrentFormPart = 2;
+                            });                            
+                        });
+                    });
+            });
+    }
+    else if(o==2 && d==3){
+        $('#div1_td, #div3_td').hide();
+        $("*").promise().done(function(){
+            p2.slideUp("slow", function(){
+                p3.slideDown("slow", function(){
+                    scrollPage(function(){
+                            CurrentFormPart = 3;
+                        });                    
+                });                
+            });
+        });
+    }
+    else if(o==3 && d==2){
+        $('#div1_td, #div3_td').hide();
+        $("*").promise().done(function(){
+            p3.slideUp("slow", function(){
+                p2.slideDown("slow", function(){
+                    scrollPage(function(){
+                            CurrentFormPart = 2;
+                        });
+                });                
+            });
+        });           
+    }
+    else if(o==2 && d==1){
+        p2.slideUp("slow", function(){
+            $("#description").
+                hide().
+                html(DescriptionHTML).
+                slideDown("fast", function(){
+                    $("#div1, #div3").
+                        hide().
+                        promise().
+                        done(function(){
+                            $("#div1_td, #div3_td").
+                                show().
+                                promise().
+                                done(function(){
+                                    p1.
+                                    slideDown("slow", function(){                        
+                                        $("#div1, #div3").
+                                            show("slow").
+                                            promise().
+                                            done(function(){                                    
+                                                    scrollPage(function(){
+                                                        CurrentFormPart = 1;
+                                                    });
+                                            });
+                                    });
+                                });
+                        });
+                    });                                             
+                });                                 
+    }       
 }
 
 /*function that is run when the button Reload/Rerun is clicked*/
@@ -275,8 +287,7 @@ function reload() {
     
     //if the results were already shown, it means user went already through ReCaptcha
     isHumanConfirmed = true;   
-
-    CurrentFormPart=1;   
+  
     $("#form_part2, #form_part3").hide();
     $("#description, #div1_td, #div3_td").hide();
     $("#div1, #div3").show();
@@ -310,7 +321,9 @@ function reload() {
                                                     show("slow").
                                                     promise().
                                                     done(function(){                                           
-                                                        scrollPage();                                                   
+                                                        scrollPage(function(){
+                                                            CurrentFormPart = 1;
+                                                        });                                                   
                                                     });
                                             });
                                     });
@@ -422,8 +435,8 @@ function scrollPage(callback){
 
 //fade out lateral and top divs when mouse over central main div
 $('#form_part1').on({
-    mouseenter: function(){//when mouse pointer enters div
-            if (CurrentFormPart==1){
+    mouseenter: function(){//when mouse pointer enters div  
+        if (CurrentFormPart==1){
                 $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 0.2);
                 scrollPage();
             }

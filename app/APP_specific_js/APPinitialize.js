@@ -5,11 +5,15 @@ window.addEventListener('load', onLoad);
 
 var wasLoaded = [false, false];
 function onLoad() {
-    
+
     document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
     
     $("#input_div").load("form/"+Country+".html", function(){
-            $.getScript("js/formFunctions.js", hasLoadedLayout);
+        $.getScript("js/formFunctions.js", function(){
+            $.getScript("validateForm/" + Country + ".js", function(){
+                $.getScript("print_results/" + Country + ".js", hasLoadedAllFiles);
+              });
+            });
         });
     
     //add flag
@@ -31,22 +35,17 @@ function onLoad() {
     wasLoaded[0]=true;
 }
 
-function hasLoadedLayout(){
-    
-    document.addEventListener("deviceready", onDeviceReady, false);   
-    
-    $.getScript("validateForm/" + Country + ".js");
-    $.getScript("print_results/" + Country + ".js");
+function hasLoadedAllFiles(){
     
     //due to setting reasons cordova doesn't allow onclick embedded in the HTML
     $("#run_button").prop('type', 'button');
     saneOnClickHandler("run_button", Run1);
     
-    saneOnClickHandler("form_part1_button_next", function(){openForm_part('form_part', 1, 2)});
-    saneOnClickHandler("form_part2_button_back", function(){openForm_part('form_part', 2, 1)});
-    saneOnClickHandler("form_part2_button_next", function(){openForm_part('form_part', 2, 3)});
-    saneOnClickHandler("form_part3_button_back", function(){openForm_part('form_part', 3, 2)});    
-    
+    saneOnClickHandler("form_part1_button_next", function(){openForm_part(1, 2)});
+    saneOnClickHandler("form_part2_button_back", function(){openForm_part(2, 1)});
+    saneOnClickHandler("form_part2_button_next", function(){openForm_part(2, 3)});
+    saneOnClickHandler("form_part3_button_back", function(){openForm_part(3, 2)});     
+        
     saneOnClickHandler("cred_auto_true", function(){onclick_div_show('#sim_credDiv',true)});
     saneOnClickHandler("cred_auto_false", function(){onclick_div_show('#sim_credDiv',false)});
     saneOnClickHandler("radio_fuel_km", function(){fuelCalculationMethodChange('distance')});
@@ -102,14 +101,12 @@ function hasLoadedLayout(){
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
     
-    wasLoaded[1]=true;
-         
+    wasLoaded[1]=true;   
 }
 
-function onDeviceReady() {
+/*function onDeviceReady() {
     
-}
-
+}*/
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML
 //the attribute must be removed from the DOM and the event added
@@ -117,3 +114,5 @@ function saneOnClickHandler(id, functionToExec, onAction="onclick"){
     document.getElementById(id).removeAttribute(onAction);
     document.getElementById(id).addEventListener("click", functionToExec);
 }
+
+

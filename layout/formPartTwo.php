@@ -323,9 +323,9 @@
         </tr>
     </table>
     <div class="b-bottom">
-        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part('form_part', 2, 1)" value="&laquo;"/>
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
         <span class="step">2/3</span>
-        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part('form_part', 2, 3);" value="&raquo;"/>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
     </div>
 </div>
 <!-- end of form_part2-->

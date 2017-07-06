@@ -170,6 +170,7 @@ include_once("./countries/_url_selector.php");
     <script src="js/documentFunctions.js"></script>
     <script src="js/formFunctions.js"></script>
     <script src="js/initialize.js"></script>
+    <script src="js/jAlert/jAlert.js"></script>
     <?php include_once("google/analytics.php"); ?>
     
 </body>

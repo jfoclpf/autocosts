@@ -200,7 +200,7 @@
     </table>
     <div class="b-bottom">
         <span class="step">1/3</span>
-        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part('form_part', 1, 2);"
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
             value="&raquo;"/>
     </div>
 </div>
