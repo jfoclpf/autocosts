@@ -153,11 +153,11 @@ $currency_logo = "";
     <script src="js/jquery-1.5.0.mobile.min.js"></script>
     
     <!-- these are JS Cordova specific files-->
-    <?php if($argv[1]=="buildAPP"):?>
+    <?php if($argv[1]=="buildAPP"): ?>
     <script type="text/javascript" src="cordova.js"></script>
     <?php endif; ?>
     
-    <script type="text/javascript" src="js/index.js"></script>
+    <!--<script type="text/javascript" src="js/index.js"></script>-->
     
     <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>

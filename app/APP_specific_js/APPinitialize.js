@@ -1,10 +1,13 @@
-/* runs function initialize() every time the page is loaded */
-window.addEventListener('load', initialize);
-document.addEventListener("initialize", onDeviceReady, false);
-document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
+/* runs function onLoad() every time the page is loaded */
 
-function initialize() {
-       
+window.addEventListener('load', onLoad);
+//document.addEventListener("initialize", onDeviceReady, false);
+
+var wasLoaded = [false, false];
+function onLoad() {
+    
+    document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
+    
     $("#input_div").load("form/"+Country+".html", function(){
             $.getScript("js/formFunctions.js", hasLoadedLayout);
         });
@@ -25,9 +28,12 @@ function initialize() {
         
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
+    wasLoaded[0]=true;
 }
 
 function hasLoadedLayout(){
+    
+    document.addEventListener("deviceready", onDeviceReady, false);   
     
     $.getScript("validateForm/" + Country + ".js");
     $.getScript("print_results/" + Country + ".js");
@@ -95,14 +101,15 @@ function hasLoadedLayout(){
         
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
+    
+    wasLoaded[1]=true;
          
 }
 
 function onDeviceReady() {
     
-    initialize();
-    
 }
+
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML
 //the attribute must be removed from the DOM and the event added

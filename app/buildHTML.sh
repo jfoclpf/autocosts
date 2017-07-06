@@ -26,6 +26,12 @@ cd app/
 cp -f APP_specific_js/* autocosts/www/js/
 cp -f APP_specific.css autocosts/www/css/
 
-php -f index.php HTML
+
+if [ -z "$1" ] 
+then
+    php -f index.php HTML
+else
+    php -f index.php "$1"
+fi
 
 chmod -R 777 autocosts/www/

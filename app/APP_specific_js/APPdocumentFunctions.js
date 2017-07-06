@@ -11,7 +11,10 @@ function onCountrySelect() {
     if (ResultIsShowing){
         reload();
     }
-    initialize();
+    onLoad();
+    
+    //readjustes button
+    $('#country_select-button').css("padding-bottom", "2px");
 }
 
 function Run1(){
