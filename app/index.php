@@ -54,6 +54,11 @@ $currency_logo = "";
     <link rel="stylesheet" type="text/css" href="css/jAlert.css">
     <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
     
+    <!-- these are JS Cordova specific files-->
+    <?php if($argv[1]=="build"): ?>
+    <script type="text/javascript" src="cordova.js"></script>
+    <?php endif; ?>    
+    
 </head>
 
 <body>
@@ -152,11 +157,6 @@ $currency_logo = "";
     <!--jquery.js-->
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/jquery-1.5.0.mobile.min.js"></script>
-    
-    <!-- these are JS Cordova specific files-->
-    <?php if($argv[1]=="buildAPP"): ?>
-    <script type="text/javascript" src="cordova.js"></script>
-    <?php endif; ?>
     
     <!--<script type="text/javascript" src="js/index.js"></script>-->
     

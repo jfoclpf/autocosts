@@ -29,31 +29,39 @@ function onLoad() {
     $("#monthly_costs_title").text(window[Country].average_costs_per_type);
     $("#fin_effort_title").text(window[Country].financial_effort);
     $("#alternative_to_carcosts_title").text(window[Country].publ_tra_equiv);
-        
+    
+    //defaults for the alert box
+    $.fn.jAlert.defaults.size = 'sm';
+    $.fn.jAlert.defaults.theme = 'default';
+    $.fn.jAlert.defaults.closeOnClick = 'true';
+    $.fn.jAlert.defaults.showAnimation = 'false';
+    $.fn.jAlert.defaults.hideAnimation = 'false';
+    
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
     wasLoaded[0]=true;
 }
 
+
 function hasLoadedAllFiles(){
     
     //due to setting reasons cordova doesn't allow onclick embedded in the HTML
     $("#run_button").prop('type', 'button');
-    saneOnClickHandler("run_button", Run1);
+    saneOnClickHandler("run_button", Run1, "onclick");
     
-    saneOnClickHandler("form_part1_button_next", function(){openForm_part(1, 2)});
-    saneOnClickHandler("form_part2_button_back", function(){openForm_part(2, 1)});
-    saneOnClickHandler("form_part2_button_next", function(){openForm_part(2, 3)});
-    saneOnClickHandler("form_part3_button_back", function(){openForm_part(3, 2)});     
+    saneOnClickHandler("form_part1_button_next", function(){openForm_part(1, 2)}, "onclick");
+    saneOnClickHandler("form_part2_button_back", function(){openForm_part(2, 1)}, "onclick");
+    saneOnClickHandler("form_part2_button_next", function(){openForm_part(2, 3)}, "onclick");
+    saneOnClickHandler("form_part3_button_back", function(){openForm_part(3, 2)}, "onclick");     
         
-    saneOnClickHandler("cred_auto_true", function(){onclick_div_show('#sim_credDiv',true)});
-    saneOnClickHandler("cred_auto_false", function(){onclick_div_show('#sim_credDiv',false)});
-    saneOnClickHandler("radio_fuel_km", function(){fuelCalculationMethodChange('distance')});
-    saneOnClickHandler("radio_fuel_euros", function(){fuelCalculationMethodChange('currency')});
-    saneOnClickHandler("car_job_form2_yes", function(){carToJob(true)});
-    saneOnClickHandler("car_job_form2_no", function(){carToJob(false)});
-    saneOnClickHandler("tolls_daily_true", function(){tolls_daily(true)});
-    saneOnClickHandler("tolls_daily_false", function(){tolls_daily(false)});
+    saneOnClickHandler("cred_auto_true", function(){onclick_div_show('#sim_credDiv',true)}, "onclick");
+    saneOnClickHandler("cred_auto_false", function(){onclick_div_show('#sim_credDiv',false)}, "onclick");
+    saneOnClickHandler("radio_fuel_km", function(){fuelCalculationMethodChange('distance')}, "onclick");
+    saneOnClickHandler("radio_fuel_euros", function(){fuelCalculationMethodChange('currency')}, "onclick");
+    saneOnClickHandler("car_job_form2_yes", function(){carToJob(true)}, "onclick");
+    saneOnClickHandler("car_job_form2_no", function(){carToJob(false)}, "onclick");
+    saneOnClickHandler("tolls_daily_true", function(){tolls_daily(true)}, "onclick");
+    saneOnClickHandler("tolls_daily_false", function(){tolls_daily(false)}, "onclick");
     
     saneOnClickHandler("drive_to_work_yes_form3", function(){driveToJob(true)}, "onchange");
     saneOnClickHandler("drive_to_work_no_form3", function(){driveToJob(false)}, "onchange");
@@ -104,15 +112,12 @@ function hasLoadedAllFiles(){
     wasLoaded[1]=true;   
 }
 
-/*function onDeviceReady() {
-    
-}*/
-
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML
 //the attribute must be removed from the DOM and the event added
-function saneOnClickHandler(id, functionToExec, onAction="onclick"){
+function saneOnClickHandler(id, functionToExec, onAction){
     document.getElementById(id).removeAttribute(onAction);
     document.getElementById(id).addEventListener("click", functionToExec);
 }
+
 
 

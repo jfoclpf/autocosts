@@ -19,6 +19,11 @@ body{
     font-weight: bold;
 }
 
+.result_section{
+    margin: 0 !important;
+    border: 0 !important;
+    background: none !important;
+}
 
 
 * {
@@ -210,11 +215,6 @@ input[type=radio] {
     }
     .result_table {
         margin: 6px auto;
-    }
-    .result_section{
-        margin: 0 !important;
-        border: 0 !important;
-        background: none !important;
     }
     
     #input_div table td:nth-child(2n){
