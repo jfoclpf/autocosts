@@ -11,7 +11,7 @@ function onCountrySelect() {
     if (ResultIsShowing){
         reload();
     }
-    onLoad();
+    init();
     
     //readjustes button
     $('#country_select-button').css("padding-bottom", "2px");
@@ -201,3 +201,14 @@ $(document).on("change", "#slider1", function () {
 $(document).on("change", "#slider2", function () {
     slider_toggles_form3();
 });
+
+//test if array a contains obj
+function contains(a, obj) {
+    var i = a.length;
+    while (i--) {
+       if (a[i] === obj) {
+           return true;
+       }
+    }
+    return false;
+}

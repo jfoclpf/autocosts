@@ -1,12 +1,45 @@
-/* runs function onLoad() every time the page is loaded */
+/* runs function init() every time the page is loaded */
 
 window.addEventListener('load', onLoad);
-//document.addEventListener("initialize", onDeviceReady, false);
 
-var wasLoaded = [false, false];
 function onLoad() {
-
+    //binds function onDeviceReady with deviceready event
+    document.addEventListener("deviceready", onDeviceReady, false);
+    //associates change of country drop down menu with function onCountrySelect
     document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
+}
+
+function onDeviceReady() {
+    //tries to obtain user country
+    navigator.globalization.getLocaleName(
+        function (locale) { 
+            var Cty_temp = (locale.value).split("-")[1]; //in pt-BR gets BR
+            if (contains(CountryList, Cty_temp)){
+                Country = Cty_temp;
+            }
+            else {
+                Country = DefaultCountry;
+            }
+            init();
+        },
+        function () {
+            alert("1b");
+            Country = DefaultCountry;
+            init();
+        }
+    ); 
+}
+
+
+function init(){
+
+    //actively selects in the dropdown menu, the Country 
+    $("#country_select").val(Country);
+    $("#country_select").selectmenu("refresh", true);
+    
+    //the expression window[Country] refers to the variable whose name is Country, considering Country is here a string
+    //it comes from file js/languages.js
+    CountryLangObj = window[Country];
     
     $("#input_div").load("form/"+Country+".html", function(){
         $.getScript("js/formFunctions.js", function(){
@@ -18,17 +51,17 @@ function onLoad() {
     
     //add flag
     $("#banner_flag").removeClass().addClass(Country.toLowerCase() + " flag");
-    
-    document.title = window[Country].web_page_title;
-    $("#main_title").html(window[Country].main_title);
+      
+    document.title = CountryLangObj.web_page_title;
+    $("#main_title").html(CountryLangObj.main_title);
     
     $("#result_buttons_div").
-        html('<input type="button" class="button" id="reload_button" value="'+window[Country].button_rerun+'" />');
+        html('<input type="button" class="button" id="reload_button" value="'+CountryLangObj.button_rerun+'" />');
     $("#result_buttons_div").on("click", "#reload_button", reload);
     
-    $("#monthly_costs_title").text(window[Country].average_costs_per_type);
-    $("#fin_effort_title").text(window[Country].financial_effort);
-    $("#alternative_to_carcosts_title").text(window[Country].publ_tra_equiv);
+    $("#monthly_costs_title").text(CountryLangObj.average_costs_per_type);
+    $("#fin_effort_title").text(CountryLangObj.financial_effort);
+    $("#alternative_to_carcosts_title").text(CountryLangObj.publ_tra_equiv);
     
     //defaults for the alert box
     $.fn.jAlert.defaults.size = 'sm';
@@ -109,7 +142,8 @@ function hasLoadedAllFiles(){
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
     
-    wasLoaded[1]=true;   
+    wasLoaded[1]=true;
+    //alert("init()");
 }
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML
@@ -118,6 +152,5 @@ function saneOnClickHandler(id, functionToExec, onAction){
     document.getElementById(id).removeAttribute(onAction);
     document.getElementById(id).addEventListener("click", functionToExec);
 }
-
 
 

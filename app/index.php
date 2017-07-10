@@ -48,7 +48,7 @@ $currency_logo = "";
           
     <title>Automobile Costs Calculator</title>
 
-    <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
+    <link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flags.css">
     <link rel="stylesheet" type="text/css" href="css/jAlert.css">
@@ -81,9 +81,7 @@ $currency_logo = "";
                         <select name="country_select" id="country_select">
                             <?php 
                                 foreach ($avail_CT as $key => $value) {
-                                    echo '<option value="'.$key.'"'. 
-                                         ($key==$GLOBALS['country']?' selected="selected"':'').'>'.
-                                         $value.'</option>';
+                                    echo '<option value="'.$key.'">'.$value.'</option>';
                                 }
                             ?>
                         </select>
@@ -155,11 +153,9 @@ $currency_logo = "";
         <br>
     </div>
     <!--jquery.js-->
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery-1.5.0.mobile.min.js"></script>
-    
-    <!--<script type="text/javascript" src="js/index.js"></script>-->
-    
+    <script src="jquery/jquery-1.11.1.min.js"></script>
+    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>    
+        
     <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>

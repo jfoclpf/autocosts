@@ -87,8 +87,23 @@
     $fileName = "autocosts/www/js/languages.js";
     file_put_contents($fileName, $js_string);
     ob_start(); 
-    
-    //for each available country language file, creates a HTML layout language file
+
+    //creates array of available countries
+    $last_key = end(array_keys($avail_CT));
+    echo "var CountryList = ["."\xA";
+    foreach ($avail_CT as $key => $valueCT){
+        echo "\t".'"'.$key.'"';
+        if ($key != $last_key) {
+            echo ","."\xA";
+        } else {
+            echo "\xA";
+        }        
+    }
+    echo "];";
+    echo "\xA"."\xA";
+
+    //********************* list of objects ****************************
+    //for each available country language file, creates a Javascript Object
     foreach ($avail_CT as $key => $valueCT){
             
         include("../countries/".$key.".php");
