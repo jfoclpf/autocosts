@@ -12,8 +12,7 @@ cd "${0%/*}"
 
 cd ..
 
-cp -f css/flags.css app/autocosts/www/css/
-cp -f css/main.css app/autocosts/www/css/
+cp -f css/flags.css css/main.css css/central.css css/form.css css/results.css app/autocosts/www/css/
 cp -f images/flags24.png app/autocosts/www/css/images/
 cp -f js/coreFunctions.js app/autocosts/www/js/
 cp -f js/conversionFunctions.js app/autocosts/www/js/

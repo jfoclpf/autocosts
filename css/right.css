@@ -1,0 +1,91 @@
+/**************************************************************************************************/
+/*** MAIN RIGHT COLUMN DIV (#div1), as viewed on a large PC screen (more than 1024 px width) *******/
+/**************************************************************************************************/
+
+#tbl_statistics {
+    border: 2px solid #b4b4b4;
+    border-radius: 10px;
+    border-collapse: separate;
+    width: 100%;
+    margin:0;
+}
+
+#tbl_statistics td {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    background: #f0f0f0;
+    padding: 4px 5px;
+    line-height: 100%;
+    text-align: left;
+}
+
+#tbl_statistics td + td {
+    text-align: right;
+    padding-right: 5%;
+}
+
+#tbl_statistics tr:first-child td {
+    border-radius: 10px 10px 0 0;
+    border-collapse: separate;
+    border: 0;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5%;
+    line-height: 16px;  
+}
+
+#tbl_statistics tr:last-child td {
+    border-radius: 0 0 0 10px;
+    border-collapse: separate;
+}
+
+#tbl_statistics tr:last-child td + td {
+    border-radius: 0 0 10px 0;
+    border-collapse: separate;
+}
+
+#tbl_statistics td:nth-child(1n) {
+    border-left: 0;
+}
+
+#tbl_statistics td:nth-child(2n) {
+    color: #000;
+    width: 30%;
+    border-left: 1px solid #000;
+}
+
+#tbl_statistics .tr-result td {
+    font-weight: bold;
+    color: #8a2727;
+    background: #fff8dc;
+}
+#tbl_statistics .tr-result td:first-child {
+    text-align:right;
+    font-size:95%;
+}
+
+#tbl_statistics .tr-sub-title td {
+    background: #ffec8b;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+
+#tbl_statistics .main_total td {
+    font-weight: bold;
+    color: #000;
+    background: #ffec8b;
+}
+#tbl_statistics .main_total td:first-child {
+    text-align:right;
+    font-size:98%;
+}
+
+#tbl_statistics tr:nth-child(1n+21) td{
+    font-size:90%;
+}
+
+#tbl_statistics tr:last-child td{
+    font-weight: bold;
+    background: #ffec8b;
+}

@@ -121,8 +121,8 @@ function Run2(){
     return true;
 }
 
-//*************************************************************************************
-//*************************************************************************************
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
 
 /*Total main first table (result_table0)*/
 function print_main_table(f1, f2, f3, data) {
@@ -179,6 +179,12 @@ function print_result_final_text(data){
         return "";
     }
 }
+
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
+
+//use for varible double quotes " instead of ' because some text varuiables might contain ' such as the English word "don't"
+//Example varResult+= "<table class=\"result_table\" id=\"result_table1\">"
 
 /*Montlhy costs table (result_table1)*/
 function print_costs_table(f1, f2, f3, data) {
@@ -385,90 +391,121 @@ function print_costs_table(f1, f2, f3, data) {
             break;
         }
     washing_text+="";
-      
+    
+    //*************************************************
+    //*************************************************
+
+    //############
+    //Standing/fixed costs table
     var varResult= "";
-    //main table
-    varResult+= '<table class="result_table" id="result_table1">';
+    varResult+= "<table class=\"result_table costs_table\">";
     
-    //Private Costs header
-    varResult+= '<tr><td style="padding:10px;" colspan="2"><b><?php echo $AVERAGE_COSTS_PER_TYPE ?></b><br></td></tr>';
+    //Standing Costs Header
+    varResult+= "<tr><td style=\"padding:10px 50px;\" colspan=\"2\"><b><?php echo $FIXED_COSTS ?></b><br>" +
+                "<i><?php echo $TOTAL_FIXED_DESCR ?></i></td></tr>";
     
-    //Standing costs header
-    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $FIXED_COSTS ?></b><br>" +
-                "<i><?php echo $TOTAL_FIXED_DESCR ?></i></td>" +
-                '<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>';
+    //Costs || Monthly amount
+    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
+                "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
     
     //standing costs items
-    varResult+= '<tr><td>' + depreciation_text + '&nbsp;</td>' + 
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.depreciation.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + depreciation_text + "&nbsp;</td>" + 
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.depreciation.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td><b><?php echo $INSURANCE ?></b><br>' + insurance_text +'</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.insurance.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td><b><?php echo $INSURANCE ?></b><br>" + insurance_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.insurance.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + interests_text + '&nbsp;</td>' + 
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.credit.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + interests_text + "&nbsp;</td>" + 
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.credit.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + inspection_text + '</td>' + 
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.inspection.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + inspection_text + "</td>" + 
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.inspection.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + cartax_text + '</td>' + 
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.car_tax.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + cartax_text + "</td>" + 
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.car_tax.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + maintenance_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + maintenance_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
     
     //TOTAL - Standing costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_FIXED ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(1)) + "</b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
     
-    //############
-    //Running costs header
-    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $RUNNING_COSTS ?></b><br>" +
-                "<i><?php echo $TOTAL_VARIABLE_DESCR ?></i></td>" +
-                '<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>';   
+    varResult+="</table>";
     
-    varResult+= '<tr><td><b><?php echo $FUEL ?></b><br>' + fuel_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.fuel.toFixed(1)) + '</td></tr>';
+    varResult+="<br>";
+    
+    //#############
+    //Running costs table
+    varResult+= "<table class=\"result_table costs_table\">";
+    
+    //Running Costs Header
+    varResult+= "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b><?php echo $RUNNING_COSTS ?></b><br>" +
+                "<i><?php echo $TOTAL_VARIABLE_DESCR ?></i></td></tr>";
+                  
+    //Costs || Monthly amount
+    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
+                "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
 
-    varResult+= '<tr><td>' + maintenance_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + maintenance_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
                 
-    varResult+= '<tr><td>' + repairs_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.repairs_improv.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + repairs_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.repairs_improv.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td><b><?php echo $PARKING ?></b></td>'+
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.parking.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td><b><?php echo $PARKING ?></b></td>"+
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.parking.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + tolls_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.tolls.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + tolls_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.tolls.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + fines_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.fines.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + fines_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.fines.toFixed(1)) + "</td></tr>";
     
-    varResult+= '<tr><td>' + washing_text + '</td>' +
-                '<td>&nbsp;' + currencyShow(data.monthly_costs.washing.toFixed(1)) + '</td></tr>';
+    varResult+= "<tr><td>" + washing_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.washing.toFixed(1)) + "</td></tr>";
     
     //TOTAL - Running costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_VARIABLE ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(1)) + "</b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
     
-    //costs per unit distance
+    varResult+="</table>";
+    
+    varResult+="<br>";
+    
+    //############
+    //Costs per unit distance and TOTAL    
+    varResult+= "<table class=\"result_table costs_table total_costs_table\">";
+    
+    varResult+= "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b><?php echo $WORD_TOTAL_CAP ?></b><br></td></tr>"; 
+
     if((typeof data.distance_per_month) !== 'undefined' && data.distance_per_month !== 0){
+              
         varResult+= "<tr><td><b><?php echo $RUN_CP_DIST ?></b></td>"+
                     "<td>&nbsp;" + currencyShow(data.running_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
         
-        varResult+= "<tr><td><b><?php echo $TOTAL_CP_DIST ?></b></td>" +
-                    "<td>&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
+        varResult+= "<tr><td class=\"border_bottom_2px\"><b><?php echo $TOTAL_CP_DIST ?></b></td>" +
+                    "<td class=\"border_bottom_2px\">&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
     }
 
-    //TOTAL
-    varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-               "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+    varResult+= "<tr><td><b><?php echo $FIXED_COSTS ?></b></td>"+
+                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
     
-    varResult+="</table>";
-        
+    varResult+= "<tr><td><b><?php echo $RUNNING_COSTS ?></b></td>"+
+                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";    
+    
+    varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+               "<td>&nbsp;<b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+
+    varResult+="</table>"; 
+
+    
     return varResult;
 }
+            
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
+
 
 /*Financial effort table (result_table3)*/
 function print_feffort_table(f1, f2, f3, data){
@@ -607,6 +644,10 @@ function print_feffort_table(f1, f2, f3, data){
     return varResult;
 }
 
+
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
+
 /*Public transports table (result_table2)*/
 function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
 
@@ -735,6 +776,10 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
     return varResult;
 }
 
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
+
+
 /*External costs table (result_table4)*/
 function print_extern_table(f1, f2, f3, data){ 
             
@@ -787,6 +832,10 @@ function print_extern_table(f1, f2, f3, data){
             
     return varResult;
 }
+
+//******************************************************************************************************************************************************
+//******************************************************************************************************************************************************
+
 
 function drawChartResult(frame_witdh, data){
     

@@ -1,7 +1,6 @@
-/*=========================================================================*/
-/***************************************************************************/
-/***************************************************************************/
-/*=========================================================================*/
+/*==================================================================================================*/
+/******  CSS file for screen under 1024px of width **************************************************/
+/*==================================================================================================*/
 
 @media all and (max-width: 1024px) {
     
@@ -118,6 +117,7 @@
 /*******************************************************************************/
 /*The treshold from which the cells on the result tables are vertically aligned*/
 /*******************************************************************************/
+
 @media all and (max-width: 425px) {
 
     #main_title, h1 {
@@ -144,36 +144,36 @@
     
     .result_table,
     #result_table0,
-    #result_table1,
+    .costs_table,
     #result_table2,
     #result_table3,
     #result_table4,
     #result_table_uber,
     .result_table td,
     #result_table0 td,
-    #result_table1 td,
+    .costs_table td,
     #result_table2 td,
     #result_table3 td,
     #result_table4 td,
     #result_table_uber td,
     #result_table0 tr:nth-child(4) td:last-child,
-    #result_table1 tr:last-child td:first-child,
+    .costs_table tr:last-child td:first-child,
     #result_table2 tr:last-child td:first-child,
     #result_table2 tr:first-child td+td,
     #result_table_uber tr:last-child td:first-child,
     #result_table_uber tr:first-child td+td,
     #result_table3 tr:last-child td:first-child {
-        border-radius: 0;
+        border-radius: 0 !important;
     }
     .result_table tr {
         background-color: #fff;
-        border-radius: 0;
+        border-radius: 0 !important;
     }
     .result_table tr:first-child,
     .result_table tr:last-child {
         background-color: transparent;
     }
-    #result_table1 tr:last-child,
+    .costs_table tr:last-child, 
     #result_table2 tr:first-child,
     #result_table2 tr:last-child,
     #result_table_uber tr:first-child,
@@ -181,7 +181,7 @@
     #result_table3 tr:last-child,
     #result_table4 tr:first-child {
         background-color: #fff;
-        border-radius: 0;
+        border-radius: 0 !important;
     }
     
     .result_table td {
@@ -193,15 +193,12 @@
         border-left: 0;
         border-right: 0;
         border-bottom: solid 1px #b6b6b6;
-        border-radius: 0; 
+        border-radius: 0 !important; 
     }
     
     .result_table tr td:nth-child(2),
     #result_table0 tr:nth-child(2) td:last-child,
-    #result_table1 tr:nth-child(2) td+td,
-    #result_table1 tr:nth-child(10) td+td,
-    #result_table1 tr:nth-child(19) td+td,
-    #result_table1 tr:nth-child(21) td+td,
+    .costs_table tr:nth-child(2) td+td,
     #result_table2 tr:nth-child(2) td:last-child,
     #result_table2 tr:last-child td:last-child,
     #result_table_uber tr:first-child td:last-child,
@@ -217,14 +214,11 @@
     #result_table2 tr:first-child td:last-child,
     #result_table_uber tr:first-child td:last-child,
     #result_table4 tr:first-child td:last-child {
-        border-left:0;
+        border-left: 0;
     }
-    #result_table1 tr:nth-child(9) td,
-    #result_table1 tr:nth-child(18) td,
-    #result_table1 tr:nth-child(9) td:first-child,
-    #result_table1 tr:nth-child(18) td+td,
-    #result_table1 tr:last-child td:first-child,
-    #result_table1 tr:nth-last-child(4) td:first-child,
+
+    .costs_table tr:last-child td:first-child,
+    .costs_table tr:nth-last-child(4) td:first-child,
     #result_table2 tr:last-child td:first-child,
     #result_table4 tr:nth-last-child(2) td:first-child,
     #result_table_uber tr:last-child td:first-child,
@@ -235,8 +229,13 @@
     #result_table4 tr:first-child td:first-child {
         border-bottom: 1px solid #b4b4b4;
     }
+    
+    .costs_table tr:last-child td:last-child {
+        border-top: 0;
+        padding-left: 0;
+    }
    
-    #result_table1 tr:last-child td:last-child,
+    .costs_table tr:last-child td:last-child,
     #result_table2 tr:last-child td:last-child,
     #result_table_uber tr:last-child td:last-child    {
         overflow: visible;

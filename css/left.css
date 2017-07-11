@@ -1,0 +1,27 @@
+/**************************************************************************************************/
+/*** MAIN LEFT COLUMN DIV (#div3), as viewed on a large PC screen (more than 1024 px width) ********/
+/**************************************************************************************************/
+
+#div32 {
+    background: #fff;
+    padding: 15px;
+    margin: 26px 0 25px 0;
+    padding-top: 10px;
+    text-align: center;
+    border: 2px solid #ada692;
+    overflow: hidden;
+}
+#div32 td {
+    width: 50%;
+}
+
+span.codedirection{ 
+    unicode-bidi:bidi-override; 
+    direction: rtl; 
+}
+
+#contact_div{
+    padding:4px 0 8px 0;
+    width:100%;
+    font-size:95%;
+}

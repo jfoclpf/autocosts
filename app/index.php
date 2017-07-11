@@ -50,6 +50,9 @@ $currency_logo = "";
 
     <link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/central.css">
+    <link rel="stylesheet" type="text/css" href="css/form.css">
+    <link rel="stylesheet" type="text/css" href="css/results.css">    
     <link rel="stylesheet" type="text/css" href="css/flags.css">
     <link rel="stylesheet" type="text/css" href="css/jAlert.css">
     <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
