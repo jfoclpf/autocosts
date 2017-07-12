@@ -50,6 +50,7 @@ $currency_logo = "";
 
     <link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">    
     <link rel="stylesheet" type="text/css" href="css/central.css">
     <link rel="stylesheet" type="text/css" href="css/form.css">
     <link rel="stylesheet" type="text/css" href="css/results.css">    
@@ -57,28 +58,25 @@ $currency_logo = "";
     <link rel="stylesheet" type="text/css" href="css/jAlert.css">
     <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
     
-    <!-- these are JS Cordova specific files-->
-    <?php if($argv[1]=="build"): ?>
-    <script type="text/javascript" src="cordova.js"></script>
-    <?php endif; ?>    
-    
 </head>
 
 <body>
-    <div id="main_div">
+    <div id="loader_div">
+        <img id="loader_img" src="jquery/images/ajax-loader.gif" width="46" height="46"> 
+    </div>
+    <div id="main_div" style="display:none;">
         <div id="banner_top">
             <div id="left_top_div">&nbsp;</div>
             <!--#####################-->
             <div id="header_main_title">
-                <div id="main_title">
-                    <?php echo $MAIN_TITLE ?>
+                <div id="main_title">                    
                 </div>
             </div>
             <!--## Select country box ##-->
             <div id="country_box">
                 <div id="country_box_inline">
                     <div id="banner_flag_div">
-                        <div id="banner_flag" class="<?php echo strtolower($GLOBALS['country']) ?> flag"></div>
+                        <div id="banner_flag" class="flag"></div>
                     </div>
                     <div id="country_select_div">
                         <select name="country_select" id="country_select">
@@ -114,27 +112,18 @@ $currency_logo = "";
                     </div>
                     <!-- ************* Monthly Costs section **************** -->
                     <div class="result_section" id="monthly_costs_section">
-                        <div class="result_section_title" id="monthly_costs_title">
-                            <b><?php echo mb_convert_case($AVERAGE_COSTS_PER_TYPE, MB_CASE_UPPER, "UTF-8"); ?>
-                            <?php echo ' '.'('.$CURR_NAME_BIG_PLURAL.')'; ?></b>
-                        </div>
-
+                        <div class="result_section_title" id="monthly_costs_title"></div>
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
                     <!-- ************* Financial Effort section************** -->
                     <div class="result_section" id="fin_effort_section">
-                        <div class="result_section_title" id="fin_effort_title">
-                            <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
-                        </div>
-
+                        <div class="result_section_title" id="fin_effort_title"></div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
                     <!-- ********* Alternative Costs to Car Costs section **************** -->
                     <div class="result_section" id="alternative_to_carcosts_section">
-                        <div class="result_section_title" id="alternative_to_carcosts_title">
-                            <b><?php echo mb_convert_case($PUBL_TRA_EQUIV, MB_CASE_UPPER, "UTF-8"); ?></b>
-                        </div>
+                        <div class="result_section_title" id="alternative_to_carcosts_title"></div>
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
                     <!-- ************* External Costs ****************** -->
@@ -143,9 +132,7 @@ $currency_logo = "";
                     </div>
                     <!-- ************* Buttons ****************** -->
                     <div class="result_section" id="buttons_section">
-                        <div class="result_div" id="result_buttons_div">
-                            
-                        </div>                               
+                        <div class="result_div" id="result_buttons_div"></div>                               
                     </div>
                     <!-- ************* ********* ************* -->
                     <br>
@@ -155,6 +142,12 @@ $currency_logo = "";
         </div>
         <br>
     </div>
+    
+    <!-- these are JS Cordova specific files-->
+    <?php if($argv[1]=="build"): ?>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <?php endif; ?>
+    
     <!--jquery.js-->
     <script src="jquery/jquery-1.11.1.min.js"></script>
     <script src="jquery/jquery.mobile-1.4.5.min.js"></script>    

@@ -1,15 +1,12 @@
 /* runs function init() every time the page is loaded */
 
-window.addEventListener('load', onLoad);
-
-function onLoad() {
-    //binds function onDeviceReady with deviceready event
+$(document).ready(function() {
+    //alert("1");
     document.addEventListener("deviceready", onDeviceReady, false);
-    //associates change of country drop down menu with function onCountrySelect
-    document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
-}
+});
 
 function onDeviceReady() {
+    //alert("2");
     //tries to obtain user country
     navigator.globalization.getLocaleName(
         function (locale) { 
@@ -23,16 +20,28 @@ function onDeviceReady() {
             init();
         },
         function () {
-            alert("1b");
             Country = DefaultCountry;
             init();
         }
     ); 
 }
 
+//if by any strange reason onDeviceReady doesn't trigger, load init() anyway
+setTimeout(function () {
+    if (!WAS_INIT){
+        //alert("4");
+        Country = DefaultCountry;
+        init();
+    }
+}, 5000);
 
 function init(){
-
+    //alert("3");
+    WAS_INIT = true;
+    
+    //associates change of country drop down menu with function onCountrySelect
+    document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
+    
     //actively selects in the dropdown menu, the Country 
     $("#country_select").val(Country);
     $("#country_select").selectmenu("refresh", true);
@@ -142,8 +151,9 @@ function hasLoadedAllFiles(){
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
     
-    wasLoaded[1]=true;
     //alert("init()");
+    
+    showLayout();
 }
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML

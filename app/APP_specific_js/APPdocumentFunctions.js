@@ -6,6 +6,8 @@
 /*function that loads new HTML and that is run when country select is changed*/ 
 function onCountrySelect() {
     
+    showLoader();
+    
     Country = this.options[this.selectedIndex].value;
     
     if (ResultIsShowing){
@@ -211,4 +213,14 @@ function contains(a, obj) {
        }
     }
     return false;
+}
+
+function showLoader() {
+    $("#loader_div").css("display", "block");
+    $("#main_div").css("display", "none");
+}
+
+function showLayout(){
+    $("#loader_div").css("display", "none");
+    $("#main_div").css("display", "block");
 }

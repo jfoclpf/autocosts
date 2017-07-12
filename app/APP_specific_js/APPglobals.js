@@ -14,7 +14,7 @@ var DefaultCountry = 'UK';
 var Language = 'en';
 var Country = DefaultCountry; //assumes US as default
 var CountryLangObj = window[Country]; //Javascript variable whose name is Country (Country here is a string). From file js/languages.js
-var wasLoaded = [false, false];
+var WAS_INIT = false;
 
 var Domain_list = {};
 var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;

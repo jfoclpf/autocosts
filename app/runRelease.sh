@@ -22,9 +22,10 @@ cd platforms/android/build/outputs/apk/
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass VidaVigor12345 android-release-unsigned.apk autocosts
 
-zipalign -v 4 android-release-unsigned.apk autocosts.apk
+cd ../../../../../
+cordova run android --noprepare --nobuild --release --device
 
-rm /home/jfolpf/autocosts.apk
-cp ./autocosts.apk /home/jfolpf/
+
+
 
 

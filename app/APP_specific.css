@@ -1,12 +1,24 @@
 body{
     background: none !important;
-    }
+}
+
+#loader_img{
+    
+    display:block;
+    margin: auto; 
+    width: 46px; 
+    height: 46px;
+    margin: 30px auto;
+    margin-top: 50px;
+}
+
 #banner_top{
     position: static !important;
     border: none !important;
     box-shadow: none !important;
     background: none !important;
 }
+
 #main_title{
     line-height: 110%;
 }
@@ -104,6 +116,16 @@ input[type=radio] {
     border: 0px !important;
     width: 15px !important;
     height: 15px !important;
+}
+
+.result_section_title{
+    text-decoration: underline;
+    font-weight: bold;
+    margin: 20px 40px 15px 40px;
+}
+
+.result_div {
+    margin: 0 !important;
 }
 
 @media all and (max-width: 1024px) {
