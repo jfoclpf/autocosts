@@ -6,7 +6,7 @@ $GLOBALS['country'] = $_GET['country'];
 $PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);?>
 
 //function that is run when user clicks "run/calculate"
-function Run2(){
+function Run2(callback){
 
     //test if the form user inputs are correct
     if (!is_userdata_formpart1_ok()){ return;}
@@ -37,7 +37,7 @@ function Run2(){
     //main table
     var main_table_HTML = print_main_table(f1, f2, f3, data);
     $("#main_table").html(main_table_HTML);
-    $("#main_table, #main_table_section").show("slow");
+    $("#main_table, #main_table_section").show("slow");               
 
     //monthly costs table  
     var monthly_costs_HTML = print_costs_table(f1, f2, f3, data);
@@ -118,6 +118,13 @@ function Run2(){
     //global variable indicating the results are being shown
     ResultIsShowing=true;
 
+    //calls the callback() if it's a function
+    if (typeof callback === 'function'){
+        
+        $("#main_table, #main_table_section, #monthly_costs, #monthly_costs_section,#fin_effort, #fin_effort_section, #alternative_to_carcosts, #alternative_to_carcosts_section, #extern_costs, #exten_costs_section, #result_buttons_div, #buttons_section").
+            promise().done(callback);
+    }
+    
     return true;
 }
 
@@ -446,6 +453,9 @@ function print_costs_table(f1, f2, f3, data) {
     //Costs || Monthly amount
     varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
                 "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+
+    varResult+= "<tr><td><b><?php echo $FUEL ?></b><br>" + fuel_text + "</td>" +
+                "<td>&nbsp;" + currencyShow(data.monthly_costs.fuel.toFixed(1)) + "</td></tr>";
 
     varResult+= "<tr><td>" + maintenance_text + "</td>" +
                 "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";

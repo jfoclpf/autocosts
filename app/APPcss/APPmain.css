@@ -128,6 +128,11 @@ input[type=radio] {
     margin: 0 !important;
 }
 
+.charts_container {
+  width: 95%; 
+  margin: 5px auto;
+}
+
 @media all and (max-width: 1024px) {
     
     #div3_td, #div1_td {

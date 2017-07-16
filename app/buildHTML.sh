@@ -22,8 +22,8 @@ cp -f favicon.ico app/autocosts/www/
 
 cd app/
 
-cp -f APP_specific_js/* autocosts/www/js/
-cp -f APP_specific.css autocosts/www/css/
+cp -f APPjs/* autocosts/www/js/
+cp -f APPcss/* autocosts/www/css/
 
 
 if [ -z "$1" ] 

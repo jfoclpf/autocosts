@@ -2,6 +2,18 @@
 /*====================================================*/
 /*Functions which change the visual aspect of the page*/
 
+function Run1(){
+
+    //Runs the function and afterwards (callback), displays the charts
+    Run2(displayCharts);
+    
+    //removes a links
+    $('.result_div a').replaceWith(function() {
+        return $.text([this]);
+    });
+    
+    ResultIsShowing=true;
+}
 
 /*function that loads new HTML and that is run when country select is changed*/ 
 function onCountrySelect() {
@@ -17,18 +29,6 @@ function onCountrySelect() {
     
     //readjustes button
     $('#country_select-button').css("padding-bottom", "2px");
-}
-
-function Run1(){
-
-    Run2();
-    
-    //removes a links
-    $('.result_div a').replaceWith(function() {
-        return $.text([this]);
-    });
-    
-    ResultIsShowing=true;
 }
 
 /*function that is run when the button Reload/Rerun is clicked*/
@@ -204,6 +204,16 @@ $(document).on("change", "#slider2", function () {
     slider_toggles_form3();
 });
 
+function showLoader() {
+    $("#loader_div").css("display", "block");
+    $("#main_div").css("display", "none");
+}
+
+function showLayout(){
+    $("#loader_div").css("display", "none");
+    $("#main_div").css("display", "block");
+}
+
 //test if array a contains obj
 function contains(a, obj) {
     var i = a.length;
@@ -213,14 +223,4 @@ function contains(a, obj) {
        }
     }
     return false;
-}
-
-function showLoader() {
-    $("#loader_div").css("display", "block");
-    $("#main_div").css("display", "none");
-}
-
-function showLayout(){
-    $("#loader_div").css("display", "none");
-    $("#main_div").css("display", "block");
 }

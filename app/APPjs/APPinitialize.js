@@ -33,11 +33,13 @@ setTimeout(function () {
         Country = DefaultCountry;
         init();
     }
-}, 5000);
+}, 2000);
 
 function init(){
     //alert("3");
     WAS_INIT = true;
+    
+    SCREEN_WIDTH = $(window).width();
     
     //associates change of country drop down menu with function onCountrySelect
     document.getElementById("country_select").addEventListener("change", onCountrySelect, false);
@@ -81,7 +83,6 @@ function init(){
     
     CurrentFormPart=1;
     ResultIsShowing=false; //global variable indicating whether the results are being shown
-    wasLoaded[0]=true;
 }
 
 
@@ -151,8 +152,7 @@ function hasLoadedAllFiles(){
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
     
-    //alert("init()");
-    
+    //alert("init()");   
     showLayout();
 }
 

@@ -13,7 +13,8 @@ var PDF_SWITCH = false; //Download PDF report option
 var DefaultCountry = 'UK';
 var Language = 'en';
 var Country = DefaultCountry; //assumes US as default
-var CountryLangObj = window[Country]; //Javascript variable whose name is Country (Country here is a string). From file js/languages.js
+var CountryLangObj; //Javascript variable whose name is Country (Country here is a string). From file js/languages.js
+var SCREEN_WIDTH;
 var WAS_INIT = false;
 
 var Domain_list = {};

@@ -55,8 +55,9 @@ $currency_logo = "";
     <link rel="stylesheet" type="text/css" href="css/form.css">
     <link rel="stylesheet" type="text/css" href="css/results.css">    
     <link rel="stylesheet" type="text/css" href="css/flags.css">
+    <link rel="stylesheet" type="text/css" href="css/colors.css">
     <link rel="stylesheet" type="text/css" href="css/jAlert.css">
-    <link rel="stylesheet" type="text/css" href="css/APP_specific.css">
+    <link rel="stylesheet" type="text/css" href="css/APPmain.css">
     
 </head>
 
@@ -110,28 +111,45 @@ $currency_logo = "";
                     <div class="result_section" id="main_table_section">
                         <div class="result_div" id="main_table"></div>
                     </div>
-                    <!-- ************* Monthly Costs section **************** -->
+                    <!-- ************* Monthly Costs section **************** -->                    
                     <div class="result_section" id="monthly_costs_section">
+                        <br><hr><hr><hr>
                         <div class="result_section_title" id="monthly_costs_title"></div>
+                        
+                        <div class="charts_container">
+                            <div class="chart">
+                                <canvas id="pieChart" width="400" height="600"></canvas>
+                            </div>
+                            <br>
+                            <div class="chart">
+                                <canvas id="barChart" width="400" height="600"></canvas>
+                            </div>
+                            <br>
+                        </div>
+                        
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
-                    <!-- ************* Financial Effort section************** -->
+                    <!-- ************* Financial Effort section************** -->                    
                     <div class="result_section" id="fin_effort_section">
+                        <br><hr><hr><hr>
                         <div class="result_section_title" id="fin_effort_title"></div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
-                    <!-- ********* Alternative Costs to Car Costs section **************** -->
+                    <!-- ********* Alternative Costs to Car Costs section **************** -->                    
                     <div class="result_section" id="alternative_to_carcosts_section">
+                        <br><hr><hr><hr>
                         <div class="result_section_title" id="alternative_to_carcosts_title"></div>
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
-                    <!-- ************* External Costs ****************** -->
+                    <!-- ************* External Costs ****************** -->                    
                     <div class="result_section" id="exten_costs_section">
+                        <br><hr><hr><hr>
+                        <div class="result_section_title"></div>
                         <div class="result_div" id="extern_costs"></div>
                     </div>
-                    <!-- ************* Buttons ****************** -->
-                    <div class="result_section" id="buttons_section">
+                    <!-- ************* Buttons ****************** -->                    
+                    <div class="result_section" id="buttons_section">                        
                         <div class="result_div" id="result_buttons_div"></div>                               
                     </div>
                     <!-- ************* ********* ************* -->
@@ -150,8 +168,8 @@ $currency_logo = "";
     
     <!--jquery.js-->
     <script src="jquery/jquery-1.11.1.min.js"></script>
-    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>    
-        
+    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
+    
     <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
@@ -162,6 +180,11 @@ $currency_logo = "";
     <!-- these are JS APP specific files-->
     <script src="js/APPdocumentFunctions.js"></script>
     <script src="js/APPinitialize.js"></script>
+    
+    <!--Chart.js-->
+    <script src="js/Chart.min.js"></script>
+    <script src="js/APPcharts.js"></script>
+    
     
 </body>
 
