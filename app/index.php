@@ -111,18 +111,18 @@ $currency_logo = "";
                     <div class="result_section" id="main_table_section">
                         <div class="result_div" id="main_table"></div>
                     </div>
+                    
                     <!-- ************* Monthly Costs section **************** -->                    
                     <div class="result_section" id="monthly_costs_section">
                         <br><hr><hr><hr>
-                        <div class="result_section_title" id="monthly_costs_title"></div>
-                        
+                        <div class="result_section_title" id="monthly_costs_title"></div>                      
                         <div class="charts_container">
                             <div class="chart">
-                                <canvas id="pieChart" width="400" height="600"></canvas>
+                                <canvas id="pieChart" height="300"></canvas>
                             </div>
                             <br>
                             <div class="chart">
-                                <canvas id="barChart" width="400" height="600"></canvas>
+                                <canvas id="barChart" height="300"></canvas>
                             </div>
                             <br>
                         </div>
@@ -130,24 +130,38 @@ $currency_logo = "";
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
+                    
                     <!-- ************* Financial Effort section************** -->                    
                     <div class="result_section" id="fin_effort_section">
                         <br><hr><hr><hr>
                         <div class="result_section_title" id="fin_effort_title"></div>
+                        <div class="charts_container">
+                            <div class="chart">
+                                <canvas id="FinEffChart" height="150"></canvas>
+                            </div>
+                        </div>
                         <div class="result_div" id="fin_effort"></div>
                     </div>
+                    
                     <!-- ********* Alternative Costs to Car Costs section **************** -->                    
                     <div class="result_section" id="alternative_to_carcosts_section">
                         <br><hr><hr><hr>
                         <div class="result_section_title" id="alternative_to_carcosts_title"></div>
+                        <div class="charts_container">
+                            <div class="chart">
+                                <canvas id="AlterToCarCostsChart" height="400"></canvas>
+                            </div>
+                        </div>                        
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
+                    
                     <!-- ************* External Costs ****************** -->                    
                     <div class="result_section" id="exten_costs_section">
                         <br><hr><hr><hr>
                         <div class="result_section_title"></div>
                         <div class="result_div" id="extern_costs"></div>
                     </div>
+                    
                     <!-- ************* Buttons ****************** -->                    
                     <div class="result_section" id="buttons_section">                        
                         <div class="result_div" id="result_buttons_div"></div>                               

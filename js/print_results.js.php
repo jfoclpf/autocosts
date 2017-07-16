@@ -56,8 +56,8 @@ function Run2(callback){
         fin_effort_bool = false;
     }
 
-    if(data.public_transports_calculated){
-        //public transports table 
+    //public transports table
+    if(data.public_transports_calculated){        
         var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, country);
         if(public_transport_table_HTML !== ""){
             $("#alternative_to_carcosts, #alternative_to_carcosts_section").show("slow");

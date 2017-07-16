@@ -1,8 +1,18 @@
-var PIE_CHART, BAR_CHART;
+var PIE_CHART, BAR_CHART, FINEFF_CHART, ALTERN_TO_CARCOSTS;
 
 function displayCharts(){
+    
     displayPieChart();
     displayBarChart();
+    
+    if(CalculatedData.fin_effort_calculated){
+        displayFinEffChart();
+    }
+    
+    if(CalculatedData.public_transports_calculated && CalculatedData.public_transports.display_pt()){
+        displayAlternToCarCostsChart();
+    }    
+
 }
 
 //#######################################################################
@@ -188,9 +198,191 @@ function displayBarChart(){
                         labels: labels,
                         datasets: dataset
                     },
-                    options
+                    options: options
                   }; 
 
     BAR_CHART = new Chart(barChart, content);    
 
 }
+
+function displayFinEffChart(){
+    
+    var L = CountryLangObj; //Language Object
+    var c = CalculatedData.fin_effort; //Financial object of calculated data
+    
+    //always creates a new chart
+    if (typeof FINEFF_CHART !== 'undefined'){
+        FINEFF_CHART.destroy();    
+        delete FINEFF_CHART;
+    }    
+
+    var labels = [L.net_income_per + " " + L.year, L.total_costs_per_year];  
+
+    var dataset = [                      
+                      {
+                         label: L.costs,
+                         data: [
+                                parseFloat(c.income_per_year.toFixed(0)), 
+                                parseFloat(c.total_costs_year.toFixed(0))
+                         ],
+                         backgroundColor:[
+                                           'blue', 
+                                           'red'
+                                         ]
+                       }
+                  ];
+    
+    var options =  {
+                       legend: {
+                                display: false
+                               },
+                       scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        fontSize: 9
+                                    }
+                                }]
+                               }                             
+                   };
+    
+    var content = {
+        type: 'horizontalBar',
+        data: {
+            labels: labels,
+            datasets: dataset
+        },
+        options: options
+    };    
+    
+    FINEFF_CHART = new Chart(FinEffChart, content); 
+   
+}
+
+//#######################################################################
+//Stacked Bar Chart
+function displayAlternToCarCostsChart(){
+
+    var L = CountryLangObj; //Language Object
+    var p = CalculatedData.public_transports; //Public Transports object 
+    var c = CalculatedData.monthly_costs; //Monthly costs object 
+    //rounds every element   
+    for (var key in c) {
+      if (c.hasOwnProperty(key)) {
+        c[key] = parseFloat(c[key].toFixed(1));
+      }
+    }
+    
+    //always creates a new chart
+    if (typeof ALTERN_TO_CARCOSTS !== 'undefined'){
+        ALTERN_TO_CARCOSTS.destroy();    
+        delete ALTERN_TO_CARCOSTS;
+    }
+    
+    var labels = [L.costs, L.extra_data_public_transp];
+
+    var dataset = [
+                       //Public Transports
+                      {
+                         label: (p.display_other_pt ? L.other_pub_trans : ""),
+                         data: [0, (p.display_other_pt ? parseFloat(p.other_pt.toFixed(1)) : 0)],
+                         backgroundColor: 'fuchsia'
+                      }, {
+                         label: L.taxi_desl,
+                         data: [0, parseFloat(p.taxi_cost.toFixed(1))],
+                         backgroundColor: '#b3b300'
+                      }, {
+                         label: L.pub_trans_text,
+                         data: [0, parseFloat(p.total_price_pt.toFixed(1))],
+                         backgroundColor: '#006600'
+                      },              
+        
+                      //standing costs
+                      {
+                         label: L.depreciation_st,
+                         data: [c.depreciation, 0],
+                         backgroundColor: 'navy'
+                      }, {
+                         label: L.insurance_short,
+                         data: [c.insurance, 0],
+                         backgroundColor: 'blue'
+                      }, {
+                         label: L.credit,
+                         data: [c.credit, 0],
+                         backgroundColor: 'aqua'
+                      }, {
+                         label: L.inspection_short,
+                         data: [c.inspection, 0],
+                         backgroundColor: 'teal'
+                      }, {
+                         label: L.road_taxes_short,
+                         data: [c.car_tax, 0],
+                         backgroundColor: 'olive'
+                      }, {
+                         label: L.maintenance,
+                         data: [c.maintenance, 0],
+                         backgroundColor: 'green'
+                      },
+                      //running costs    
+                      {
+                         label: L.rep_improv,
+                         data: [c.repairs_improv, 0],
+                         backgroundColor: 'lime'
+                      }, {
+                         label: L.fuel,
+                         data: [c.fuel, 0],
+                         backgroundColor: 'maroon'
+                      }, {                          
+                         label: L.parking,
+                         data: [c.parking, 0],
+                         backgroundColor: 'yellow'
+                      }, {
+                         label: L.tolls,
+                         data: [c.tolls, 0],
+                         backgroundColor: 'orange'
+                      }, {
+                         label: L.fines,
+                         data: [c.fines, 0],
+                         backgroundColor: 'red'
+                      }, {
+                         label: L.washing,
+                         data: [c.washing, 0],
+                         backgroundColor: 'purple'
+                      }
+                    ];
+
+    var options = {
+                      legend: {
+                         position: 'right', // place legend on the right side of chart
+                         labels : {
+                             fontSize: 9,
+                             fontColor: 'black'
+                         }
+                      },
+                      scales: {
+                         xAxes: [{
+                            stacked: true, // this should be set to make the bars stacked
+                            ticks: {
+                                fontSize: 9
+                            }                             
+                         }],
+                         yAxes: [{
+                            stacked: true // this also..
+                         }]
+                      }
+                   };
+
+    var content = {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: dataset
+                    },
+                    options: options
+                  }; 
+
+    ALTERN_TO_CARCOSTS = new Chart(AlterToCarCostsChart, content);    
+
+}
+
+
+
