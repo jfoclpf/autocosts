@@ -76,6 +76,10 @@ h1 {
     text-align:center;
 }
 
+#input_div i {
+    font-size: 80% !important;
+}
+
 .event {
     border-radius:4px;
     -webkit-border-radius:4px;

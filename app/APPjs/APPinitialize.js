@@ -33,7 +33,7 @@ setTimeout(function () {
         Country = DefaultCountry;
         init();
     }
-}, 2000);
+}, 3000);
 
 function init(){
     //alert("3");

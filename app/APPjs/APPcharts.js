@@ -177,6 +177,7 @@ function displayBarChart(){
     var options = {
                       legend: {
                          position: 'right', // place legend on the right side of chart
+                         display: false, //do not display
                          labels : {
                              fontSize: 9,
                              fontColor: 'black'
@@ -283,8 +284,8 @@ function displayAlternToCarCostsChart(){
     var dataset = [
                        //Public Transports
                       {
-                         label: (p.display_other_pt ? L.other_pub_trans : ""),
-                         data: [0, (p.display_other_pt ? parseFloat(p.other_pt.toFixed(1)) : 0)],
+                         label: L.other_pub_trans,
+                         data: [0, parseFloat(p.other_pt.toFixed(1))],
                          backgroundColor: 'fuchsia'
                       }, {
                          label: L.taxi_desl,
@@ -349,15 +350,13 @@ function displayAlternToCarCostsChart(){
                          backgroundColor: 'purple'
                       }
                     ];
+    
+    //removes first item from dataset, related to Public Transports bar, if it's not applicable
+    if(!p.display_other_pt){
+        dataset.splice(0, 1);
+    }
 
     var options = {
-                      legend: {
-                         position: 'right', // place legend on the right side of chart
-                         labels : {
-                             fontSize: 9,
-                             fontColor: 'black'
-                         }
-                      },
                       scales: {
                          xAxes: [{
                             stacked: true, // this should be set to make the bars stacked
