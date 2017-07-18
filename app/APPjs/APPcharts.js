@@ -185,10 +185,12 @@ function displayBarChart(){
                       },
                       scales: {
                          xAxes: [{
-                            stacked: true // this should be set to make the bars stacked
+                            stacked: true, // this should be set to make the bars stacked
+                            beginAtZero: true
                          }],
                          yAxes: [{
-                            stacked: true // this also..
+                            stacked: true, // this also..
+                            beginAtZero: true
                          }]
                       }
                    };
@@ -217,7 +219,7 @@ function displayFinEffChart(){
         delete FINEFF_CHART;
     }    
 
-    var labels = [L.net_income_per + " " + L.year, L.total_costs_per_year];  
+    var labels = [formatLabel(L.net_income_per + " " + L.year, 20), formatLabel(L.total_costs_per_year, 20)];
 
     var dataset = [                      
                       {
@@ -238,11 +240,16 @@ function displayFinEffChart(){
                                 display: false
                                },
                        scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }],
                                 yAxes: [{
                                     ticks: {
                                         fontSize: 9
                                     }
-                                }]
+                                }]                                
                                }                             
                    };
     
@@ -279,7 +286,7 @@ function displayAlternToCarCostsChart(){
         delete ALTERN_TO_CARCOSTS;
     }
     
-    var labels = [L.costs, L.extra_data_public_transp];
+    var labels = [formatLabel(L.your_car_costs_you + " " + L.word_per + " " + L.month, 25), formatLabel(L.publ_tra_equiv, 25)];
 
     var dataset = [
                        //Public Transports
@@ -361,11 +368,14 @@ function displayAlternToCarCostsChart(){
                          xAxes: [{
                             stacked: true, // this should be set to make the bars stacked
                             ticks: {
-                                fontSize: 9
+                                beginAtZero: true
                             }                             
                          }],
                          yAxes: [{
-                            stacked: true // this also..
+                            stacked: true, // this also..
+                            ticks: {
+                                beginAtZero: true
+                            }
                          }]
                       }
                    };
@@ -384,4 +394,50 @@ function displayAlternToCarCostsChart(){
 }
 
 
+/* takes a string phrase and breaks it into separate phrases 
+   no bigger than 'maxwidth' (in the number of characters), breaks are made at complete words.*/
 
+function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
+
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+        }
+
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
+}
