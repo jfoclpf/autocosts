@@ -187,13 +187,15 @@ $currency_logo = "";
     <!-- these are JS autocosts WEB generic files-->
     <script src="js/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
+    <script src="js/dbFunctions.js"></script>
     <script src="js/get_data.js"></script>    
     <script src="js/languages.js"></script>
     <script src="js/jAlert.js"></script>
-    
+        
     <!-- these are JS APP specific files-->
     <script src="js/APPdocumentFunctions.js"></script>
     <script src="js/APPinitialize.js"></script>
+    <script src="js/APPstorage.js"></script>
     
     <!--Chart.js-->
     <script src="js/Chart.min.js"></script>

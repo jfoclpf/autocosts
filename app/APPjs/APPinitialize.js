@@ -6,38 +6,58 @@ $(document).ready(function() {
 });
 
 function onDeviceReady() {
-    //alert("2");
-    //tries to obtain user country
-    navigator.globalization.getLocaleName(
-        function (locale) { 
-            var Cty_temp = (locale.value).split("-")[1]; //in pt-BR gets BR
-            if (contains(CountryList, Cty_temp)){
-                Country = Cty_temp;
-            }
-            else {
+    console.log("onDeviceReady() started");
+    
+    //tries to get the Cuuntry by the stotrage, i.e., previous usage/ country selection
+    var country = getCountryOnStorage();
+    if(country){
+        console.log("onDeviceReady() found CountryOnStorage");
+        Country = country;
+        init();
+    }
+    else{
+        console.log("onDeviceReady() didn't find CountryOnStorage");
+        //tries to obtain user country from device spec.
+        navigator.globalization.getLocaleName(
+            function (locale) { 
+                var Cty_temp = (locale.value).split("-")[1]; //in pt-BR gets BR
+                if (contains(CountryList, Cty_temp)){
+                    Country = Cty_temp;
+                }
+                else {
+                    Country = DefaultCountry;
+                }
+                init();
+            },
+            function () {
                 Country = DefaultCountry;
+                init();
             }
-            init();
-        },
-        function () {
-            Country = DefaultCountry;
-            init();
-        }
-    ); 
+        );
+    }
 }
 
 //if by any strange reason onDeviceReady doesn't trigger, load init() anyway
 setTimeout(function () {
-    if (!WAS_INIT){
-        //alert("4");
-        Country = DefaultCountry;
+    if (!WAS_INIT){        
+        var country = getCountryOnStorage();
+        window.console && console.log("getCountryOnStorage(): " + country);
+        
+        if(country){
+            Country = country;
+        }
+        else{
+            Country = DefaultCountry;
+        }
+      
         init();
     }
 }, 3000);
 
-function init(){
-    //alert("3");
-    WAS_INIT = true;
+function init(callback){
+    window.console && console.log("init() started");
+    
+    WAS_INIT = true; 
     
     SCREEN_WIDTH = $(window).width();
     
@@ -55,7 +75,14 @@ function init(){
     $("#input_div").load("form/"+Country+".html", function(){
         $.getScript("js/formFunctions.js", function(){
             $.getScript("validateForm/" + Country + ".js", function(){
-                $.getScript("print_results/" + Country + ".js", hasLoadedAllFiles);
+                $.getScript("print_results/" + Country + ".js", function(){
+                    if (typeof callback === 'function'){        
+                        hasLoadedAllFiles(callback);
+                    }                    
+                    else{
+                        hasLoadedAllFiles();
+                    }                    
+                });
               });
             });
         });
@@ -86,7 +113,7 @@ function init(){
 }
 
 
-function hasLoadedAllFiles(){
+function hasLoadedAllFiles(callback){
     
     //due to setting reasons cordova doesn't allow onclick embedded in the HTML
     $("#run_button").prop('type', 'button');
@@ -124,6 +151,8 @@ function hasLoadedAllFiles(){
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();
+    setRadioButton("tipo_seguro", "semestral");
+    $("#main_form select").val('1'); //set all the selects to "month"
     
     tolls_daily(false);
     
@@ -152,8 +181,16 @@ function hasLoadedAllFiles(){
     $('#run_button_noCapctha').remove();
     $('#run_button').show();
     
+    //read predefined values from local storage
+    readFromStorage();
+    
     //alert("init()");   
     showLayout();
+    
+    //calls the callback() if it's a function
+    if (typeof callback === 'function'){        
+        callback();
+    }
 }
 
 //due to setting reasons cordova doesn't allow onclick embedded in the HTML

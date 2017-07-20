@@ -11,7 +11,7 @@
             </h4>
         </header>
     </div>
-    <!--************************** Desvalorização do veículo ***************************************************-->
+    <!--************************** DEPRECIATION ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $DEPRECIATION ?>
@@ -33,7 +33,7 @@
                 <?php echo $COM_VALUE ?>
             </td>
             <td>
-                <input type="number" id="commercialValueAtAcquisition" name="auto_val_inicial" size="10" value="<?php echo $STD_PRICE_PAID; ?>">
+                <input type="number" id="commercialValueAtAcquisition" class="currencyInput" name="auto_val_inicial" size="10" value="<?php echo $STD_PRICE_PAID; ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
         </tr>
@@ -42,12 +42,12 @@
                 <?php echo $COM_VALUE_TODAY ?>
             </td>
             <td>
-                <input type="number" id="commercialValueAtNow" name="auto_val_final" size="10" value="<?php echo $STD_PRICE_TODAY; ?>">
+                <input type="number" id="commercialValueAtNow" class="currencyInput" name="auto_val_final" size="10" value="<?php echo $STD_PRICE_TODAY; ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
         </tr>
     </table>
-    <!--************************** SEGURO AUTOMÓVEL | INSURANCE ***************************************************-->
+    <!--************************** INSURANCE ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $INSURANCE ?>
@@ -69,7 +69,7 @@
                     </span>
                 </div>
                 <div class="col">
-                    <input type="radio" name="tipo_seguro" value="semestral" checked>
+                    <input type="radio" name="tipo_seguro" value="semestral">
                     <span>
                         <?php echo $SEMESTERLY ?>
                     </span>
@@ -82,13 +82,13 @@
                 </div>
             </td>
             <td>
-                <input id="insuranceValue" type="number" name="seguro_val" size="9"
+                <input id="insuranceValue" class="currencyInput" type="number" name="seguro_val" size="9"
                     value="<?php echo $STD_INSURANCE_SEM; ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
         </tr>
     </table>
-    <!--************************** CRÉDITO | CREDIT ***************************************************-->
+    <!--************************** CREDIT ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $CREDIT ?>
@@ -122,7 +122,7 @@
                     <?php echo $CREDIT_LOAN ?>
                 </td>
                 <td>
-                    <input id="borrowedAmount" type="number" name="cred_auto_montante" size="9" value="<?php echo $STD_LOAN; ?>">
+                    <input id="borrowedAmount" class="currencyInput" type="number" name="cred_auto_montante" size="9" value="<?php echo $STD_LOAN; ?>">
                     <?php echo $CURR_SYMBOL ?>
                 </td>
             </tr>
@@ -140,7 +140,7 @@
                     <?php echo $CREDIT_AVERAGE_VALUE ?>
                 </td>
                 <td>
-                    <input id="amountInstallment" type="number" name="cred_auto_val_mes" size="9" value="<?php echo $STD_MONTHLY_PAY; ?>">
+                    <input id="amountInstallment" class="currencyInput" type="number" name="cred_auto_val_mes" size="9" value="<?php echo $STD_MONTHLY_PAY; ?>">
                     <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
                 </td>
             </tr>
@@ -149,13 +149,13 @@
                     <?php echo $CREDIT_RESIDUAL_VALUE ?>
                 </td>
                 <td>
-                    <input id="residualValue" type="number" name="cred_auto_valresidual" size="9" value="<?php echo $STD_RESIDUAL_VALUE; ?>">
+                    <input id="residualValue" class="currencyInput" type="number" name="cred_auto_valresidual" size="9" value="<?php echo $STD_RESIDUAL_VALUE; ?>">
                     <?php echo $CURR_SYMBOL ?>
                 </td>
             </tr>
         </table>
     </div>
-    <!--************************** INSPEÇÃO PERIÓDICA | INSPECTION ***************************************************-->
+    <!--************************** INSPECTION ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $INSPECTION ?>
@@ -176,12 +176,12 @@
                 <?php echo $INSPECTION_PRICE ?>
             </td>
             <td>
-                <input id="averageInspectionCost" type="number" name="preco_inspecao" size="6" value="<?php echo $STD_INSPECTION_PRICE; ?>">
+                <input id="averageInspectionCost" class="currencyInput" type="number" name="preco_inspecao" size="6" value="<?php echo $STD_INSPECTION_PRICE; ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
         </tr>
     </table>
-    <!--************************** IUC ***************************************************-->
+    <!--************************** ROAD TAX ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $ROAD_TAXES ?>
@@ -193,7 +193,7 @@
                 <?php echo $ROAD_TAXES_VALUE ?>
             </td>
             <td>
-                <input id="vehicleExciseTax" type="number" name="IUC" size="6" value="<?php echo $STD_ROAD_TAX; ?>">
+                <input id="vehicleExciseTax" class="currencyInput" type="number" name="IUC" size="6" value="<?php echo $STD_ROAD_TAX; ?>">
                 <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
             </td>
         </tr>

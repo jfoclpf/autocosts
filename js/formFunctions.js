@@ -14,14 +14,16 @@ function isVisible(html_ref) {
 }
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
-$("#numberInspections").focusout(function(){
-    if( $(this).val() == 0){
+$("#numberInspections").focusout(nbrInspectOnChanged);
+function nbrInspectOnChanged(){
+    
+    if($("#numberInspections").val() == 0){
         $("#InspectionCost_tr").hide("slow");
     }
     else{
         $("#InspectionCost_tr").show("slow");
     }
-});
+}
 
 //function for the radio button with the question 
 //'Calculations based on:' in the Fuel section of Form part 2
@@ -237,6 +239,11 @@ function working_time_toggle(value){
     }  
 }
 
+//clears all the form inputs whose unit is a currency
+function clearCurrencyInputs(){
+    $(".currencyInput").val("");
+}
+
 //function used to get from forms the selected option in radio buttons
 function getCheckedValue(radioObj) {
     var i;
@@ -259,6 +266,11 @@ function getCheckedValue(radioObj) {
         }
     }
     return "";
+}
+
+//sets in a radio button with a specific option 
+function setRadioButton(name, option){
+   $('input[name="' + name + '"][value="'+option+'"]').click();
 }
 
 function getCheckedSliderValue(ObjName) {

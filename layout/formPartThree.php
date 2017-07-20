@@ -25,6 +25,7 @@
             </td>
         </tr>
     </table>
+    
     <!-- FINANCIAL EFFORT SLIDER -->
     <table class="form_section_question">
         <tr>
@@ -53,7 +54,8 @@
                 <?php echo $EXTRA_DATA_FAMILY_NBR ?>
             </td>
             <td>
-                <input type="number" id="household_number_people" name="pessoas_agregado" size="6" value="<?php echo $STD_NR_PPL_FAMILY ?>">
+                <input type="number" id="household_number_people" name="pessoas_agregado" size="6" 
+                       value="<?php echo $STD_NR_PPL_FAMILY ?>">
                 <?php echo $WORD_PEOPLE ?>
             </td>
         </tr>
@@ -64,7 +66,8 @@
                 <?php echo $EXTRA_DATA_PRICE_PASS ?>
             </td>
             <td>
-                <input type="number" id="public_transportation_month_expense" name="preco_passe" size="6" value="<?php echo $STD_PASS_PRICE ?>">
+                <input type="number" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" 
+                       value="<?php echo $STD_PASS_PRICE ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
         </tr>
@@ -112,38 +115,39 @@
                 </td>
                 <td>
                     <div id="income_per_year_form3" class="div_element">
-                        <input type="number" id="income_per_year" name="income_per_year" size="6"
-                            value="<?php echo $STD_INCOME_YEAR ?>"/>
+                        <input type="number" id="income_per_year" class="currencyInput" name="income_per_year" size="6" 
+                               value="<?php echo $STD_INCOME_YEAR ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_month_form3" class="div_element hidden">
-                        <input type="number" id="income_per_month" name="income_per_month" size="6"
-                            value="<?php echo $STD_INCOME_MONTH ?>"/>
+                        <input type="number" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                               value="<?php echo $STD_INCOME_MONTH ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
                         <br>
                         <input type="number" id="income_months_per_year" name="income_months_per_year" size="6"
-                            value="<?php echo $STD_MONTHS_YEAR ?>"/>
+                               value="<?php echo $STD_MONTHS_YEAR ?>"/>
                         <?php echo $MONTHS ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_week_form3" class="div_element hidden">
-                        <input type="number" id="income_per_week" name="income_per_week" size="6"
+                        <input type="number" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
                                value="<?php echo $STD_INCOME_WEEK ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $WEEK ?>
                         <br>
                         <input type="number" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
-                            value="<?php echo $STD_WEEKS_YEAR ?>"/>
+                               value="<?php echo $STD_WEEKS_YEAR ?>"/>
                         <?php echo $WEEKS ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_hour_form3" class="div_element hidden">
-                        <input type="number" id="income_per_hour" name="income_per_hour" size="6" value="<?php echo $STD_INCOME_HOUR ?>"/>
+                        <input type="number" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                               value="<?php echo $STD_INCOME_HOUR ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $HOUR ?>
                         <br>
                         <input type="number" id="income_hours_per_week" name="income_hours_per_week" size="6"
-                            value="<?php echo $STD_HOURS_WEEK ?>"/>
+                               value="<?php echo $STD_HOURS_WEEK ?>"/>
                         <?php echo $HOURS ?>/<?php echo $WEEK ?>
                         <br>
                         <input type="number" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
-                            value="<?php echo $STD_WEEKS_YEAR ?>"/>
+                               value="<?php echo $STD_WEEKS_YEAR ?>"/>
                         <?php echo $WEEKS ?>/<?php echo $YEAR ?>
                     </div>
                 </td>

@@ -42,7 +42,7 @@
         <tr>
             <td>
                 <div id="currency_div_form2">
-                    <input type="number" size="5" id="fuel_currency_value"
+                    <input type="number" size="5" id="fuel_currency_value" class="currencyInput"
                         value="<?php echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                     <span class="nowrap">
                         <?php echo $CURR_SYMBOL; ?> <?php echo $WORD_PER; ?>
@@ -146,7 +146,7 @@
                     <?php echo $FUEL_PRICE; ?>
                 </td>
                 <td>
-                    <input type="number" id="fuel_price" name="fuel_price" size="5" value="<?php echo $STD_FUEL_PRICE; ?>">
+                    <input type="number" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="<?php echo $STD_FUEL_PRICE; ?>">
                     <?php echo $CURR_SYMBOL; ?>/<?php echo $STD_VOLUME_SHORT; ?>
                 </td>
             </tr>
@@ -165,7 +165,7 @@
                 <br>
             </td>
             <td class="va-middle">
-                <input type="number" name="revisoes" size="6" id="maintenance"
+                <input type="number" name="revisoes" size="6" id="maintenance" class="currencyInput"
                        value="<?php echo $STD_MAINTENANCE_PER_YEAR; ?>">
                 <?php echo $CURR_SYMBOL; ?>/<?php echo $YEAR; ?>
             </td>
@@ -183,7 +183,8 @@
                 <?php echo $REP_IMPROV_DESC ?>
             </td>
             <td>
-                <input type="number" name="reparacoes" size="6" id="repairs" value="<?php echo $STD_REPAIRS; ?>">
+                <input type="number" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                       value="<?php echo $STD_REPAIRS; ?>">
                 <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
             </td>
         </tr>
@@ -200,7 +201,8 @@
                 <?php echo $PARKING_DESC ?>
             </td>
             <td>
-                <input type="number" name="parqueamento" size="6" id="parking" value="<?php echo $STD_PARKING; ?>">
+                <input type="number" name="parqueamento" size="6" id="parking" class="currencyInput"
+                       value="<?php echo $STD_PARKING; ?>">
                 <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
             </td>
         </tr>
@@ -244,7 +246,8 @@
                     </i>
                 </td>
                 <td>
-                    <input type="number" id="no_daily_tolls_value" name="portagens" size="6" value="<?php echo $STD_TOLLS; ?>">
+                    <input type="number" id="no_daily_tolls_value" class="currencyInput" name="portagens" size="6" 
+                           value="<?php echo $STD_TOLLS; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                     <select id="portagens_select">
                         <option value="1"><?php echo $MONTH ?></option>
@@ -264,10 +267,12 @@
                     <?php echo $TOLLS_DAY_CALC1 ?>
                 </td>
                 <td>
-                    <input type="number" id="daily_expense_tolls" name="preco_portagens_por_dia" size="6" value="<?php echo $STD_TOLLS_DAY; ?>">
+                    <input type="number" id="daily_expense_tolls" class="currencyInput" name="preco_portagens_por_dia" size="6" 
+                           value="<?php echo $STD_TOLLS_DAY; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $DURING ?>
                     <br>
-                    <input type="number" id="number_days_tolls" name="dias_portagens_por_mes" size="3" value="<?php echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
+                    <input type="number" id="number_days_tolls" name="dias_portagens_por_mes" size="3" 
+                           value="<?php echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
                     <?php echo $DAYS ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>
                 </td>
             </tr>
@@ -285,7 +290,8 @@
                 <?php echo $FINES_DESC ?>
             </td>
             <td>
-                <input type="number" id="tickets_value" name="multas" size="6" value="<?php echo $STD_FINES; ?>">
+                <input type="number" id="tickets_value" class="currencyInput" name="multas" size="6" 
+                       value="<?php echo $STD_FINES; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                 <select id="multas_select">
                     <option value="1"><?php echo $MONTH ?></option>
@@ -309,7 +315,7 @@
                 <?php echo $WASHING_DESC ?>
             </td>
             <td>
-                <input type="number" id="washing_value" name="lavagens" size="6"
+                <input type="number" id="washing_value" class="currencyInput" name="lavagens" size="6"
                        value="<?php echo $STD_WASHING; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                 <select id="lavagens_select">

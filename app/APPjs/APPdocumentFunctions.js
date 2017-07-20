@@ -5,14 +5,16 @@
 function Run1(){
 
     //Runs the function and afterwards (callback), displays the charts
-    Run2(displayCharts);
-    
-    //removes a links
-    $('.result_div a').replaceWith(function() {
-        return $.text([this]);
-    });
-    
-    ResultIsShowing=true;
+    if(Run2(displayCharts)){ //if runs successful
+        
+        //removes a links
+        $('.result_div a').replaceWith(function() {
+            return $.text([this]);
+        });
+
+        saveToStorage();
+        ResultIsShowing=true;    
+    }
 }
 
 /*function that loads new HTML and that is run when country select is changed*/ 
@@ -20,12 +22,22 @@ function onCountrySelect() {
     
     showLoader();
     
+    var prevCountry = Country;
+    var prevLang = CountryLangObj;
+    
     Country = this.options[this.selectedIndex].value;
     
     if (ResultIsShowing){
         reload();
     }
-    init();
+    
+    //after initiates the new country, if the new country has a different currency
+    //clears all the inputs regarding currency, since the values might be very different
+    init(function(){
+        if(prevLang.curr_code != CountryLangObj.curr_code){
+            clearCurrencyInputs();
+        }
+    });    
     
     //readjustes button
     $('#country_select-button').css("padding-bottom", "2px");

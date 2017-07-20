@@ -9,9 +9,9 @@ $PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['co
 function Run2(callback){
 
     //test if the form user inputs are correct
-    if (!is_userdata_formpart1_ok()){ return;}
-    if (!is_userdata_formpart2_ok()){ return;}
-    if (!is_userdata_formpart3_ok()){ return;}
+    if (!is_userdata_formpart1_ok()){ return false;}
+    if (!is_userdata_formpart2_ok()){ return false;}
+    if (!is_userdata_formpart3_ok()){ return false;}
 
     //for each form part gets object with content
     var f1 = get_form_part1();
@@ -121,8 +121,7 @@ function Run2(callback){
     //calls the callback() if it's a function
     if (typeof callback === 'function'){
         
-        $("#main_table, #main_table_section, #monthly_costs, #monthly_costs_section,#fin_effort, #fin_effort_section, #alternative_to_carcosts, #alternative_to_carcosts_section, #extern_costs, #exten_costs_section, #result_buttons_div, #buttons_section").
-            promise().done(callback);
+        $("*").promise().done(callback);
     }
     
     return true;
