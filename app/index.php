@@ -122,7 +122,7 @@ $currency_logo = "";
                             </div>
                             <br>
                             <div class="chart">
-                                <canvas id="barChart" height="400"></canvas>
+                                <canvas id="barChart" height="300"></canvas>
                             </div>
                             <br>
                         </div>
@@ -149,7 +149,7 @@ $currency_logo = "";
                         <div class="result_section_title" id="alternative_to_carcosts_title"></div>
                         <div class="charts_container">
                             <div class="chart">
-                                <canvas id="AlterToCarCostsChart" height="450"></canvas>
+                                <canvas id="AlterToCarCostsChart" height="550"></canvas>
                             </div>
                         </div>                        
                         <div class="result_div" id="alternative_to_carcosts"></div>

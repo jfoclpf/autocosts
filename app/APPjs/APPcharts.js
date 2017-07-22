@@ -368,7 +368,8 @@ function displayAlternToCarCostsChart(){
                          xAxes: [{
                             stacked: true, // this should be set to make the bars stacked
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                fontSize: 9
                             }                             
                          }],
                          yAxes: [{
