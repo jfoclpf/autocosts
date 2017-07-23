@@ -54,8 +54,8 @@ function get_form_part2(){
         price_tolls_p_day:      d.preco_portagens_por_dia.value,
         tolls_days_p_month:     d.dias_portagens_por_mes.value,
         //fines
-        fines:                  d.multas.value,
-        fines_select:           d.multas_select.value,
+        fines:                  d.tickets_value.value,
+        fines_select:           d.tickets_period_select.value,
         //washing
         washing:                d.lavagens.value,
         washing_select:         d.lavagens_select.value     

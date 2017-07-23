@@ -55,7 +55,7 @@ function createObjToDB(){
     objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
     objectToDb.tolls_daily_number_days = $('#number_days_tolls').val();
     objectToDb.tickets_value = $('#tickets_value').val();
-    objectToDb.tickets_periodicity = $('#multas_select').val();
+    objectToDb.tickets_periodicity = $('#tickets_period_select').val();
     objectToDb.washing_value = $('#washing_value').val();
     objectToDb.washing_periodicity = $('#lavagens_select').val();
     
@@ -203,7 +203,7 @@ function submitDataToForm(readObj){
     $('#number_days_tolls').val(readObj.tolls_daily_number_days);
     //tickets
     $('#tickets_value').val(readObj.tickets_value);
-    $('#multas_select').val(readObj.tickets_periodicity);
+    $('#tickets_period_select').val(readObj.tickets_periodicity);
     //washing
     $('#washing_value').val(readObj.washing_value);    
     $('#lavagens_select').val(readObj.washing_periodicity);

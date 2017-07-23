@@ -15,6 +15,10 @@ function initialize() {
     
     DescriptionHTML = $('#description').html();
 
+    setRadioButton("tipo_seguro", "semestral");
+    $("#main_form select").val('1'); //set all the selects to "month"
+    $("#tickets_period_select").val('5'); //set fines to year
+    
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();

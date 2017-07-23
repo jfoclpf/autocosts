@@ -304,7 +304,7 @@ function is_userdata_formpart2_ok(){
     }
     
     /*fines*/
-    if(!isNumber(f.multas.value)){
+    if(!isNumber(f.tickets_value.value)){
         $.jAlert({
             'title': "<?php echo $FINES ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"

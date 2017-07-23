@@ -11,7 +11,7 @@
             </h4>
         </header>
     </div>
-    <!--************************** COMBUSTÍVEIS | FUELS ***************************************************-->
+    <!--************************** FUELS ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $FUEL ?>
@@ -152,7 +152,7 @@
             </tr>
         </table>
     </div>
-    <!--************************** REVISÕES | MAINTENANCE  ***************************************************-->
+    <!--************************** MAINTENANCE  ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $MAINTENANCE; ?>
@@ -171,7 +171,7 @@
             </td>
         </tr>
     </table>
-    <!--************************** REPARAÇÕES | REPAIRS AND IMPROVEMENTS ***************************************************-->
+    <!--************************** REPAIRS AND IMPROVEMENTS ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $REP_IMPROV ?>
@@ -189,7 +189,7 @@
             </td>
         </tr>
     </table>
-    <!--************************** PARQUEAMENTO | PARKING ***************************************************-->
+    <!--************************** PARKING ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $PARKING ?>
@@ -207,7 +207,7 @@
             </td>
         </tr>
     </table>
-    <!--************************** PORTAGENS | TOLLS ***************************************************-->
+    <!--************************** TOLLS ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $TOLLS ?>
@@ -252,7 +252,7 @@
                     <select id="portagens_select">
                         <option value="1"><?php echo $MONTH ?></option>
                         <option value="2"><?php echo $TWO_MONTHS ?></option>
-                        <option value="3" selected="selected"><?php echo $TRIMESTER ?></option>
+                        <option value="3"><?php echo $TRIMESTER ?></option>
                         <option value="4"><?php echo $SEMESTER ?></option>
                         <option value="5"><?php echo $YEAR ?></option>
                     </select>
@@ -278,7 +278,7 @@
             </tr>
         </table>
     </div>
-    <!--************************** MULTAS | FINES ***************************************************-->
+    <!--************************** FINES / TICKETS ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $FINES ?>
@@ -290,20 +290,20 @@
                 <?php echo $FINES_DESC ?>
             </td>
             <td>
-                <input type="number" id="tickets_value" class="currencyInput" name="multas" size="6" 
+                <input type="number" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
                        value="<?php echo $STD_FINES; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
-                <select id="multas_select">
+                <select id="tickets_period_select">
                     <option value="1"><?php echo $MONTH ?></option>
                     <option value="2"><?php echo $TWO_MONTHS ?></option>
                     <option value="3"><?php echo $TRIMESTER ?></option>
-                    <option value="4" selected="selected"><?php echo $SEMESTER ?></option>
+                    <option value="4"><?php echo $SEMESTER ?></option>
                     <option value="5"><?php echo $YEAR ?></option>
                 </select>
             </td>
         </tr>
     </table>
-    <!--************************** LAVAGENS | WASHING ***************************************************-->
+    <!--************************** WASHING ***************************************************-->
     <h3>
         <span class="form_section_title">
             <?php echo $WASHING ?>
@@ -321,7 +321,7 @@
                 <select id="lavagens_select">
                     <option value="1"><?php echo $MONTH ?></option>
                     <option value="2"><?php echo $TWO_MONTHS ?></option>
-                    <option value="3" selected="selected"><?php echo $TRIMESTER ?></option>
+                    <option value="3"><?php echo $TRIMESTER ?></option>
                     <option value="4"><?php echo $SEMESTER ?></option>
                     <option value="5"><?php echo $YEAR ?></option>
                 </select>
