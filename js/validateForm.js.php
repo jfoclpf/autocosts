@@ -272,7 +272,7 @@ function is_userdata_formpart2_ok(){
     }
 
     /* **** tolls ***** */
-    var tipo_calc_portagens=getCheckedValue(f.portagens_ao_dia);
+    var tipo_calc_portagens=getCheckedValue(f.tolls_daily_radioBtn);
 
     /*if tolls costs are calculated on a daily basis*/
     if(tipo_calc_portagens=="false") {/*monthly basis*/
@@ -285,14 +285,14 @@ function is_userdata_formpart2_ok(){
         }
 
     } else {/*daily basis*/
-        if(!isNumber(f.preco_portagens_por_dia.value)) {
+        if(!isNumber(f.daily_expense_tolls.value)) {
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
                 'content': "<?php echo $TOLLS_DAY_CALC1 ?> - <?php echo $INVALID_AMOUNT ?>!"
             });            
             return false;
         }
-        var toll_days_pmonth=f.dias_portagens_por_mes.value;
+        var toll_days_pmonth=f.number_days_tolls.value;
         if(!isNumber(toll_days_pmonth) || !isInteger(toll_days_pmonth) || toll_days_pmonth>31) {
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
@@ -313,7 +313,7 @@ function is_userdata_formpart2_ok(){
     }
     
     /*washing*/
-    if(!isNumber(f.lavagens.value)){
+    if(!isNumber(f.washing_value.value)){
         $.jAlert({
             'title': "<?php echo $WASHING ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"

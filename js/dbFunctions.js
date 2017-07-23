@@ -49,15 +49,15 @@ function createObjToDB(){
     objectToDb.maintenance = $('#maintenance').val();
     objectToDb.repairs = $('#repairs').val();
     objectToDb.parking = $('#parking').val();
-    objectToDb.tolls_daily = $('input[name="portagens_ao_dia"]:checked', '#main_form').val();
+    objectToDb.tolls_daily = $('input[name="tolls_daily_radioBtn"]:checked', '#main_form').val();
     objectToDb.tolls_no_daily_value = $('#no_daily_tolls_value').val();
-    objectToDb.tolls_no_daily_period = $('#portagens_select').val();
+    objectToDb.tolls_no_daily_period = $('#tolls_period_select').val();
     objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
     objectToDb.tolls_daily_number_days = $('#number_days_tolls').val();
     objectToDb.tickets_value = $('#tickets_value').val();
     objectToDb.tickets_periodicity = $('#tickets_period_select').val();
     objectToDb.washing_value = $('#washing_value').val();
-    objectToDb.washing_periodicity = $('#lavagens_select').val();
+    objectToDb.washing_periodicity = $('#washing_period_select').val();
     
     //form part 3
     objectToDb.form_part3_slide1 = $('#slider1').prop('checked');
@@ -196,9 +196,9 @@ function submitDataToForm(readObj){
     //parking
     $('#parking').val(readObj.parking);
     //tolls
-    setRadioButton("portagens_ao_dia", readObj.tolls_daily);
+    setRadioButton("tolls_daily_radioBtn", readObj.tolls_daily);
     $('#no_daily_tolls_value').val(readObj.tolls_no_daily_value);
-    $('#portagens_select').val(readObj.tolls_no_daily_period);
+    $('#tolls_period_select').val(readObj.tolls_no_daily_period);
     $('#daily_expense_tolls').val(readObj.tolls_daily_expense);
     $('#number_days_tolls').val(readObj.tolls_daily_number_days);
     //tickets
@@ -206,7 +206,7 @@ function submitDataToForm(readObj){
     $('#tickets_period_select').val(readObj.tickets_periodicity);
     //washing
     $('#washing_value').val(readObj.washing_value);    
-    $('#lavagens_select').val(readObj.washing_periodicity);
+    $('#washing_period_select').val(readObj.washing_periodicity);
     
     //form part 3
     //sliders

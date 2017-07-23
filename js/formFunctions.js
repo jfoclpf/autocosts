@@ -145,11 +145,11 @@ function driveToJob(flag){
 
 function tolls_daily(tollsDailyFlag) {
     if (tollsDailyFlag) {
-        $("#dia_nao_portag_DIV").slideUp("slow");
-        $("#dia_sim_portag_DIV").slideDown("slow");
+        $("#daily_tolls_false_div").slideUp("slow");
+        $("#daily_tolls_true_div").slideDown("slow");
     } else {
-        $("#dia_nao_portag_DIV").slideDown("slow");
-        $("#dia_sim_portag_DIV").slideUp("slow");
+        $("#daily_tolls_false_div").slideDown("slow");
+        $("#daily_tolls_true_div").slideUp("slow");
     }
 }
 

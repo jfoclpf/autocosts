@@ -48,17 +48,17 @@ function get_form_part2(){
         //parking
         parking:                d.parqueamento.value,
         //tolls
-        type_calc_tolls:        getCheckedValue(d.portagens_ao_dia),
-        tolls_select:           d.portagens_select.value,
-        tolls:                  d.portagens.value,
-        price_tolls_p_day:      d.preco_portagens_por_dia.value,
-        tolls_days_p_month:     d.dias_portagens_por_mes.value,
+        type_calc_tolls:        getCheckedValue(d.tolls_daily_radioBtn),
+        tolls_select:           d.tolls_period_select.value,
+        tolls:                  d.no_daily_tolls_value.value,
+        price_tolls_p_day:      d.daily_expense_tolls.value,
+        tolls_days_p_month:     d.number_days_tolls.value,
         //fines
         fines:                  d.tickets_value.value,
         fines_select:           d.tickets_period_select.value,
         //washing
-        washing:                d.lavagens.value,
-        washing_select:         d.lavagens_select.value     
+        washing:                d.washing_value.value,
+        washing_select:         d.washing_period_select.value     
     };
     return data;
 }

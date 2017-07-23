@@ -17,7 +17,8 @@ function initialize() {
 
     setRadioButton("tipo_seguro", "semestral");
     $("#main_form select").val('1'); //set all the selects to "month"
-    $("#tickets_period_select").val('5'); //set fines to year
+    $("#tickets_period_select").val('5'); //set fines period to year
+    $("#washing_period_select").val('3'); //set washing period to trimester
     
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);

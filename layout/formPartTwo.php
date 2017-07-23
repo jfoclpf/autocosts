@@ -222,13 +222,13 @@
                 <?php echo $TOLLS_DAY_CALC ?>
                 <div>
                     <span class="nowrap">
-                        <input type="radio" id="tolls_daily_true" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
                         <span class="set_right_margin">
                             <?php echo $YES ?>
                         </span>
                     </span>
                     <span class="nowrap">
-                        <input type="radio" id="tolls_daily_false" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
                         <span>
                             <?php echo $NO ?>
                         </span>
@@ -237,7 +237,7 @@
             </td>
         </tr>
     </table>
-    <div id="dia_nao_portag_DIV">
+    <div id="daily_tolls_false_div">
         <table>
             <tr>
                 <td>
@@ -246,10 +246,10 @@
                     </i>
                 </td>
                 <td>
-                    <input type="number" id="no_daily_tolls_value" class="currencyInput" name="portagens" size="6" 
+                    <input type="number" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
                            value="<?php echo $STD_TOLLS; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
-                    <select id="portagens_select">
+                    <select id="tolls_period_select">
                         <option value="1"><?php echo $MONTH ?></option>
                         <option value="2"><?php echo $TWO_MONTHS ?></option>
                         <option value="3"><?php echo $TRIMESTER ?></option>
@@ -260,18 +260,18 @@
             </tr>
         </table>
     </div>
-    <div id="dia_sim_portag_DIV">
+    <div id="daily_tolls_true_div">
         <table>
             <tr>
                 <td>
                     <?php echo $TOLLS_DAY_CALC1 ?>
                 </td>
                 <td>
-                    <input type="number" id="daily_expense_tolls" class="currencyInput" name="preco_portagens_por_dia" size="6" 
+                    <input type="number" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
                            value="<?php echo $STD_TOLLS_DAY; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $DURING ?>
                     <br>
-                    <input type="number" id="number_days_tolls" name="dias_portagens_por_mes" size="3" 
+                    <input type="number" id="number_days_tolls" name="number_days_tolls" size="3" 
                            value="<?php echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
                     <?php echo $DAYS ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>
                 </td>
@@ -315,10 +315,10 @@
                 <?php echo $WASHING_DESC ?>
             </td>
             <td>
-                <input type="number" id="washing_value" class="currencyInput" name="lavagens" size="6"
+                <input type="number" id="washing_value" class="currencyInput" name="washing_value" size="6"
                        value="<?php echo $STD_WASHING; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
-                <select id="lavagens_select">
+                <select id="washing_period_select">
                     <option value="1"><?php echo $MONTH ?></option>
                     <option value="2"><?php echo $TWO_MONTHS ?></option>
                     <option value="3"><?php echo $TRIMESTER ?></option>
