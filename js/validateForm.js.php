@@ -3,40 +3,20 @@
 function is_userdata_formpart1_ok(){
     
     var f = document.custo; //form
+    var minCarYear = 1910; //the year of the first produced car
 
-    /*insurance*/
-    var tipo_seguro_auto=getCheckedValue(f.tipo_seguro);
-
-    if(!isNumber(f.seguro_val.value)){
-              
-        $.jAlert({ 
-            'title': "<?php echo $INSURANCE ?>",
-            'content': "<?php echo $ERROR_INVALID_INSU_VALUE ?>!"
-        });
-        return false;
-    }
-
-    if(tipo_seguro_auto == ""){
-
-        $.jAlert({
-            'title': "<?php echo $INSURANCE ?>",
-            'content': "<?php echo $ERROR_INSU_PERIOD ?>!"
-        });        
-        return false;
-    }
-    
     /*depreciation*/
     var auto_mes=f.auto_mes.value; /*car acquisition month*/
     var auto_ano=f.auto_ano.value; /*car acquisition year*/
 
-    if(!isNumber(auto_mes) || !isInteger(auto_mes) || auto_mes>12 || auto_mes<=0){
+    if(!isNumber(auto_mes) || !isInteger(auto_mes) || auto_mes > 12 || auto_mes <= 0){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_MONTH ?>!"
         });
         return false;
     }
-    if(!isNumber(f.auto_ano.value) || !isInteger(f.auto_ano.value)){
+    if(!isNumber(f.auto_ano.value) || !isInteger(f.auto_ano.value) || f.auto_ano.value < minCarYear){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_YEAR ?>!"
@@ -70,6 +50,27 @@ function is_userdata_formpart1_ok(){
         });         
         return false;
     }
+    
+    /*insurance*/
+    var tipo_seguro_auto=getCheckedValue(f.tipo_seguro);
+
+    if(!isNumber(f.seguro_val.value)){
+              
+        $.jAlert({ 
+            'title': "<?php echo $INSURANCE ?>",
+            'content': "<?php echo $ERROR_INVALID_INSU_VALUE ?>!"
+        });
+        return false;
+    }
+
+    if(tipo_seguro_auto == ""){
+
+        $.jAlert({
+            'title': "<?php echo $INSURANCE ?>",
+            'content': "<?php echo $ERROR_INSU_PERIOD ?>!"
+        });        
+        return false;
+    }    
     
     /*car finance*/
     var cred_auto_s_n=getCheckedValue(f.cred_auto);
