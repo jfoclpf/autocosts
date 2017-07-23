@@ -237,6 +237,7 @@
             </td>
         </tr>
     </table>
+    <!-- Calculating tolls on a montlhy basis -->
     <div id="daily_tolls_false_div">
         <table>
             <tr>
@@ -260,6 +261,7 @@
             </tr>
         </table>
     </div>
+    <!-- Calculating tolls on a daily basis -->
     <div id="daily_tolls_true_div">
         <table>
             <tr>

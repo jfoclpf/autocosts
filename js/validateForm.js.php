@@ -272,11 +272,11 @@ function is_userdata_formpart2_ok(){
     }
 
     /* **** tolls ***** */
-    var tipo_calc_portagens=getCheckedValue(f.tolls_daily_radioBtn);
+    var tolls_calc_method=getCheckedValue(f.tolls_daily_radioBtn);
 
     /*if tolls costs are calculated on a daily basis*/
-    if(tipo_calc_portagens=="false") {/*monthly basis*/
-        if(!isNumber(f.portagens.value)) {
+    if(tolls_calc_method == "false") {/*monthly basis*/
+        if(!isNumber(f.no_daily_tolls_value.value)) {
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
                 'content': "<?php echo $INVALID_AMOUNT ?>!"
