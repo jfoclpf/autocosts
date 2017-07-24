@@ -7,6 +7,7 @@ $PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['co
 
 //function that is run when user clicks "run/calculate"
 function Run2(callback){
+    console.log("started Run2()");
 
     //test if the form user inputs are correct
     if (!is_userdata_formpart1_ok()){ return false;}
@@ -353,7 +354,7 @@ function print_costs_table(f1, f2, f3, data) {
         }
     }
     else 
-        tolls_text+=f2.price_tolls_p_day + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $DURING ?> " + f2.tolls_days_p_month + " <?php echo $MONTH ?>";
+        tolls_text+=f2.price_tolls_p_day + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $DURING ?> " + f2.tolls_days_p_month + " <?php echo $DAYS ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
     tolls_text += "";
     
     //Fines

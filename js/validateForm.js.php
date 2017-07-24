@@ -2,7 +2,7 @@
 /*check if data from form 1 (standing costs) is correctly filled*/
 function is_userdata_formpart1_ok(){
     
-    var f = document.custo; //form
+    var f = document.costs_form; //form
     var minCarYear = 1910; //the year of the first produced car
 
     /*depreciation*/
@@ -152,7 +152,7 @@ function is_userdata_formpart1_ok(){
 /*check if data from form 2 (running costs) is correctly filled*/
 function is_userdata_formpart2_ok(){
     
-    var f = document.custo; //form
+    var f = document.costs_form; //form
 
     /*fuel*/
     var tipo_calc_combustiveis=getCheckedValue(f.calc_combustiveis);
@@ -329,7 +329,7 @@ function is_userdata_formpart2_ok(){
 /* *** CHECK FORM PART 3 ***** */
 function is_userdata_formpart3_ok(){
 
-    var f = document.custo; //form
+    var f = document.costs_form; //form
     
     var public_transport = getCheckedSliderValue(f.slider1);
 

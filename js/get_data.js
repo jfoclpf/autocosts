@@ -1,6 +1,6 @@
 // get from form
 function get_form_part1(){
-    var d = document.custo; //main form document variable
+    var d = document.costs_form; //main form document variable
     var data = {
         //depreciation
         auto_mes:               d.auto_mes.value,
@@ -26,7 +26,7 @@ function get_form_part1(){
 }
 
 function get_form_part2(){
-    var d = document.custo; //main form document variable
+    var d = document.costs_form; //main form document variable
     var data = {
         //fuel
         type_calc_fuel:         getCheckedValue(d.calc_combustiveis),
@@ -64,7 +64,7 @@ function get_form_part2(){
 }
 
 function get_form_part3(){
-    var d = document.custo; //main form document variable
+    var d = document.costs_form; //main form document variable
     var data = {
         //public transports section
         IsAlternativeToCarCosts:          getCheckedSliderValue(d.slider1),

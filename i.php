@@ -62,7 +62,7 @@ include_once("./countries/_url_selector.php");
                 <div id="div2_td">
                     <div id="div2">
                         <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
-                              action="javascript:void(0);" name="custo">
+                              action="javascript:void(0);" name="costs_form">
                             <div id="input_div">
                                 <?php include_once './layout/formPartOne.php'; ?>
                                 <?php include_once './layout/formPartTwo.php'; ?>
