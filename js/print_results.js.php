@@ -122,9 +122,13 @@ function Run2(callback){
     //calls the callback() if it's a function
     if (typeof callback === 'function'){
         
-        $("*").promise().done(callback);
+        $("*").promise().done(function(){
+                    console.log("runs callback in Run2()");
+                    callback();
+                });
     }
     
+    console.log("finished Run2()");
     return true;
 }
 

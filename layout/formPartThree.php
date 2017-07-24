@@ -54,7 +54,7 @@
                 <?php echo $EXTRA_DATA_FAMILY_NBR ?>
             </td>
             <td>
-                <input type="number" id="household_number_people" name="pessoas_agregado" size="6" 
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6" 
                        value="<?php echo $STD_NR_PPL_FAMILY ?>">
                 <?php echo $WORD_PEOPLE ?>
             </td>
@@ -66,7 +66,7 @@
                 <?php echo $EXTRA_DATA_PRICE_PASS ?>
             </td>
             <td>
-                <input type="number" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" 
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" 
                        value="<?php echo $STD_PASS_PRICE ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
@@ -115,38 +115,38 @@
                 </td>
                 <td>
                     <div id="income_per_year_form3" class="div_element">
-                        <input type="number" id="income_per_year" class="currencyInput" name="income_per_year" size="6" 
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6" 
                                value="<?php echo $STD_INCOME_YEAR ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_month_form3" class="div_element hidden">
-                        <input type="number" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
                                value="<?php echo $STD_INCOME_MONTH ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
                         <br>
-                        <input type="number" id="income_months_per_year" name="income_months_per_year" size="6"
+                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
                                value="<?php echo $STD_MONTHS_YEAR ?>"/>
                         <?php echo $MONTHS ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_week_form3" class="div_element hidden">
-                        <input type="number" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
+                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
                                value="<?php echo $STD_INCOME_WEEK ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $WEEK ?>
                         <br>
-                        <input type="number" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
+                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
                                value="<?php echo $STD_WEEKS_YEAR ?>"/>
                         <?php echo $WEEKS ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_hour_form3" class="div_element hidden">
-                        <input type="number" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
                                value="<?php echo $STD_INCOME_HOUR ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $HOUR ?>
                         <br>
-                        <input type="number" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
                                value="<?php echo $STD_HOURS_WEEK ?>"/>
                         <?php echo $HOURS ?>/<?php echo $WEEK ?>
                         <br>
-                        <input type="number" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
                                value="<?php echo $STD_WEEKS_YEAR ?>"/>
                         <?php echo $WEEKS ?>/<?php echo $YEAR ?>
                     </div>
@@ -184,10 +184,10 @@
                     </td>
                     <td>
                         <div id="working_time_input_form3" class="div_element">
-                            <input type="number" id="time_month_per_year" name="time_month_per_year" size="6"
+                            <input type="number" min="1" max="12" step="1" id="time_month_per_year" name="time_month_per_year" size="6"
                                 value="<?php echo $STD_MONTHS_YEAR ?>"/>
                             <?php echo $MONTHS ?>/<?php echo $YEAR ?>
-                            <input type="number" id="time_hours_per_week" name="time_hours_per_week" size="6"
+                            <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" name="time_hours_per_week" size="6"
                                 value="<?php echo $STD_HOURS_WEEK ?>"/>
                             <?php echo $HOURS ?>/<?php echo $WEEK ?>
                         </div>
@@ -231,7 +231,7 @@
                         <?php echo $FUEL_DAYS ?>&nbsp;
                     </td>
                     <td>
-                        <input id="drive_to_work_days_per_week" type="number" name="drive_to_work_days_per_week" size="5"
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" size="5"
                                value="<?php echo $STD_DAYS_PER_WEEK; ?>">
                         <?php echo $DAYS_PER_WEEK_SHORT; ?>
                     </td>
@@ -241,7 +241,7 @@
                         <?php echo $FUEL_DIST_HOME_JOB ?>&nbsp;
                     </td>
                     <td>
-                        <input type="number" id="dist_home_job" name="dist_home_job" size="5"
+                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5"
                             value="<?php echo $STD_JORNEY_2WORK; ?>">
                         <?php echo $STD_DIST ?>
                     </td>
@@ -251,7 +251,7 @@
                         <?php echo $FUEL_DIST_NO_JOB ?>&nbsp;
                     </td>
                     <td class="ta-left">
-                        <input type="number" name="journey_weekend" id="journey_weekend" size="5"
+                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5"
                             value="<?php echo $STD_JORNEY_WEEKEND; ?>">
                         <?php echo $STD_DIST ?>
                     </td>
@@ -263,7 +263,7 @@
                         <?php echo $FUEL_DIST ?>
                     </td>
                     <td>
-                        <input type="number" id="dist_per_month" name="km_per_month" size="4"
+                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4"
                             value="<?php echo $STD_KM_PER_MONTH; ?>">
                         <?php echo $STD_DIST ?> <?php echo $WORD_PER ?>
                         <select id="period_km">
@@ -287,7 +287,7 @@
                     <?php echo $EXTRA_DATA_TIME_QUESTION1 ?>
                 </td>
                 <td>
-                    <input type="number" size="6" id="time_home_job" name="time_home_job"
+                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job"
                            value="<?php echo $STD_TIME_HOME_JOB ?>"/>
                     <?php echo $MIN ?>
                 </td>
@@ -297,7 +297,7 @@
                     <?php echo $EXTRA_DATA_TIME_QUESTION2 ?>
                 </td>
                 <td>
-                    <input type="number" size="6" id="time_weekend" name="time_weekend" value="<?php echo $STD_TIME_WEEKEND ?>"/>
+                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" value="<?php echo $STD_TIME_WEEKEND ?>"/>
                     <?php echo $MIN ?>
                 </td>
             </tr>
@@ -306,11 +306,11 @@
                     <?php echo $EXTRA_DATA_TIME_QUESTION3 ?>
                 </td>
                 <td>
-                    <input type="number" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day"
                         value="<?php echo $STD_TIME_IN_DRIVING ?>"/>
                     <?php echo $MINUTES ?>/<?php echo $DAY ?>
                     <br>
-                    <input type="number" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month"
                         value="<?php echo $STD_DAYS_MONTH ?>"/>
                     <?php echo $DAYS ?>/<?php echo $MONTH ?>
                 </td>

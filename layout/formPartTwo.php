@@ -42,7 +42,7 @@
         <tr>
             <td>
                 <div id="currency_div_form2">
-                    <input type="number" size="5" id="fuel_currency_value" class="currencyInput"
+                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput"
                         value="<?php echo $STD_FUEL_PAID_PER_MONTH; ?>" name="combustiveis_euro">
                     <span class="nowrap">
                         <?php echo $CURR_SYMBOL; ?> <?php echo $WORD_PER; ?>
@@ -87,7 +87,7 @@
                         <?php echo $FUEL_DAYS; ?>
                     </td>
                     <td>
-                        <input id="car_to_work_number_days_week" type="number" name="dias_por_semana" size="5" value="<?php echo $STD_DAYS_PER_WEEK; ?>">
+                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" value="<?php echo $STD_DAYS_PER_WEEK; ?>">
                         <?php echo $DAYS_PER_WEEK_SHORT; ?>
                     </td>
                 </tr>
@@ -96,7 +96,7 @@
                         <?php echo $FUEL_DIST_HOME_JOB; ?>&nbsp;
                     </td>
                     <td>
-                        <input type="number" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="<?php echo $STD_JORNEY_2WORK; ?>">
+                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="<?php echo $STD_JORNEY_2WORK; ?>">
                         <?php echo $STD_DIST; ?>
                     </td>
                 </tr>
@@ -105,7 +105,7 @@
                         <?php echo $FUEL_DIST_NO_JOB; ?>&nbsp;
                     </td>
                     <td>
-                        <input type="number" name="km_fds" id="car_to_work_distance_weekend" size="5" value="<?php echo $STD_JORNEY_WEEKEND; ?>">
+                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" value="<?php echo $STD_JORNEY_WEEKEND; ?>">
                         <?php echo $STD_DIST ?>
                     </td>
                 </tr>
@@ -118,7 +118,7 @@
                         <?php echo $FUEL_DIST; ?>
                     </td>
                     <td>
-                        <input type="number" name="km_por_mes" size="4" id="no_car_to_work_distance" value="<?php echo $STD_KM_PER_MONTH; ?>">
+                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" value="<?php echo $STD_KM_PER_MONTH; ?>">
                         <?php echo $STD_DIST; ?>&nbsp;<?php echo $WORD_PER; ?>
                         <select id="combustivel_period_km">
                             <option value="1"><?php echo $MONTH; ?></option>
@@ -137,7 +137,7 @@
                     <?php echo $FUEL_CAR_EFF; ?>
                 </td>
                 <td>
-                    <input type="number" id="fuel_efficiency" name="consumo_auto" size="5" value="<?php echo $STD_CAR_FUEL_EFFICIENCY; ?>">
+                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" value="<?php echo $STD_CAR_FUEL_EFFICIENCY; ?>">
                     <?php echo $STD_FUEL_CALC; ?>
                 </td>
             </tr>
@@ -146,7 +146,7 @@
                     <?php echo $FUEL_PRICE; ?>
                 </td>
                 <td>
-                    <input type="number" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="<?php echo $STD_FUEL_PRICE; ?>">
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="<?php echo $STD_FUEL_PRICE; ?>">
                     <?php echo $CURR_SYMBOL; ?>/<?php echo $STD_VOLUME_SHORT; ?>
                 </td>
             </tr>
@@ -165,7 +165,7 @@
                 <br>
             </td>
             <td class="va-middle">
-                <input type="number" name="revisoes" size="6" id="maintenance" class="currencyInput"
+                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput"
                        value="<?php echo $STD_MAINTENANCE_PER_YEAR; ?>">
                 <?php echo $CURR_SYMBOL; ?>/<?php echo $YEAR; ?>
             </td>
@@ -183,7 +183,7 @@
                 <?php echo $REP_IMPROV_DESC ?>
             </td>
             <td>
-                <input type="number" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput"
                        value="<?php echo $STD_REPAIRS; ?>">
                 <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
             </td>
@@ -201,7 +201,7 @@
                 <?php echo $PARKING_DESC ?>
             </td>
             <td>
-                <input type="number" name="parqueamento" size="6" id="parking" class="currencyInput"
+                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput"
                        value="<?php echo $STD_PARKING; ?>">
                 <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
             </td>
@@ -237,7 +237,7 @@
             </td>
         </tr>
     </table>
-    <!-- Calculating tolls on a montlhy basis -->
+    <!-- Calculating tolls on a no daily basis -->
     <div id="daily_tolls_false_div">
         <table>
             <tr>
@@ -247,7 +247,7 @@
                     </i>
                 </td>
                 <td>
-                    <input type="number" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
+                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
                            value="<?php echo $STD_TOLLS; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                     <select id="tolls_period_select">
@@ -269,11 +269,11 @@
                     <?php echo $TOLLS_DAY_CALC1 ?>
                 </td>
                 <td>
-                    <input type="number" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
+                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
                            value="<?php echo $STD_TOLLS_DAY; ?>">
                     <?php echo $CURR_SYMBOL ?> <?php echo $DURING ?>
                     <br>
-                    <input type="number" id="number_days_tolls" name="number_days_tolls" size="3" 
+                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" 
                            value="<?php echo $STD_TOLLS_DAYS_PER_MONTH; ?>">
                     <?php echo $DAYS ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>
                 </td>
@@ -292,7 +292,7 @@
                 <?php echo $FINES_DESC ?>
             </td>
             <td>
-                <input type="number" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
                        value="<?php echo $STD_FINES; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                 <select id="tickets_period_select">
@@ -317,7 +317,7 @@
                 <?php echo $WASHING_DESC ?>
             </td>
             <td>
-                <input type="number" id="washing_value" class="currencyInput" name="washing_value" size="6"
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6"
                        value="<?php echo $STD_WASHING; ?>">
                 <?php echo $CURR_SYMBOL ?> <?php echo $WORD_PER ?>
                 <select id="washing_period_select">

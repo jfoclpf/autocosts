@@ -275,7 +275,7 @@ function is_userdata_formpart2_ok(){
     var tolls_calc_method=getCheckedValue(f.tolls_daily_radioBtn);
 
     /*if tolls costs are calculated on a daily basis*/
-    if(tolls_calc_method == "false") {/*monthly basis*/
+    if(tolls_calc_method == "false") {/*no daily basis*/
         if(!isNumber(f.no_daily_tolls_value.value)) {
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
