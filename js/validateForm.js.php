@@ -38,12 +38,12 @@ function is_userdata_formpart1_ok(){
         return false;
     }
 
-    var today = new Date();
-    var date_auto= new Date(f.auto_ano.value,f.auto_mes.value-1);
+    var today  = new Date();
+    var carAcquisitionDate = new Date(acquisitionYear, acquisitionMonth - 1);
 
-    var meses=date_diff(date_auto,today);
+    var carNumberOfMonths = date_diff(carAcquisitionDate, today);
 
-    if(!meses){
+    if(!carNumberOfMonths){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_DATE ?>!"
