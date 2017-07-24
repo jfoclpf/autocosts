@@ -293,7 +293,7 @@ function calculate_costs(f1, f2, f3, country){
     
     //depreciation
     var today = new Date();
-    var date_auto = new Date(f1.auto_ano, f1.auto_mes - 1);
+    var date_auto = new Date(f1.acquisitionYear, f1.acquisitionMonth - 1);
     var age_months = date_diff(date_auto,today);
     
     if(age_months != 0)

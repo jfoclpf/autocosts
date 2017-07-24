@@ -6,31 +6,31 @@ function is_userdata_formpart1_ok(){
     var minCarYear = 1910; //the year of the first produced car
 
     /*depreciation*/
-    var auto_mes=f.auto_mes.value; /*car acquisition month*/
-    var auto_ano=f.auto_ano.value; /*car acquisition year*/
+    var acquisitionMonth = f.acquisitionMonth.value; /*car acquisition month*/
+    var acquisitionYear  = f.acquisitionYear.value; /*car acquisition year*/
 
-    if(!isNumber(auto_mes) || !isInteger(auto_mes) || auto_mes > 12 || auto_mes <= 0){
+    if(!isNumber(acquisitionMonth) || !isInteger(acquisitionMonth) || acquisitionMonth > 12 || acquisitionMonth <= 0){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_MONTH ?>!"
         });
         return false;
     }
-    if(!isNumber(f.auto_ano.value) || !isInteger(f.auto_ano.value) || f.auto_ano.value < minCarYear){
+    if(!isNumber(f.acquisitionYear.value) || !isInteger(f.acquisitionYear.value) || f.acquisitionYear.value < minCarYear){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_YEAR ?>!"
         });        
         return false;
     }
-    if(!isNumber(f.auto_val_inicial.value)){
+    if(!isNumber(f.commercialValueAtAcquisition.value)){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_VALUE ?>!"
         });         
         return false;
     }
-    if(!isNumber(f.auto_val_final.value)){
+    if(!isNumber(f.commercialValueAtNow.value)){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_VALUE_TODAY ?>!"
@@ -52,9 +52,18 @@ function is_userdata_formpart1_ok(){
     }
     
     /*insurance*/
-    var tipo_seguro_auto=getCheckedValue(f.tipo_seguro);
+    var insurancePaymentPeriod = getCheckedValue(f.insurancePaymentPeriod);
+    
+    if(insurancePaymentPeriod == ""){
 
-    if(!isNumber(f.seguro_val.value)){
+        $.jAlert({
+            'title': "<?php echo $INSURANCE ?>",
+            'content': "<?php echo $ERROR_INSU_PERIOD ?>!"
+        });        
+        return false;
+    } 
+    
+    if(!isNumber(f.insuranceValue.value)){
               
         $.jAlert({ 
             'title': "<?php echo $INSURANCE ?>",
@@ -63,19 +72,10 @@ function is_userdata_formpart1_ok(){
         return false;
     }
 
-    if(tipo_seguro_auto == ""){
-
-        $.jAlert({
-            'title': "<?php echo $INSURANCE ?>",
-            'content': "<?php echo $ERROR_INSU_PERIOD ?>!"
-        });        
-        return false;
-    }    
-    
     /*car finance*/
-    var cred_auto_s_n=getCheckedValue(f.cred_auto);
+    var AutoCreditRadioBtn=getCheckedValue(f.AutoCreditRadioBtn);
 
-    if(cred_auto_s_n == ""){
+    if(AutoCreditRadioBtn == ""){
         $.jAlert({
             'title': "<?php echo $CREDIT ?>",
             'content': "<?php echo $ERROR_CREDIT_QUESTION ?>!"
@@ -83,29 +83,29 @@ function is_userdata_formpart1_ok(){
         return false;
     }
 
-    if(cred_auto_s_n == "true") {
-        if(!isNumber(f.cred_auto_montante.value)) {
+    if(AutoCreditRadioBtn == "true") {
+        if(!isNumber(f.borrowedAmount.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_LOAN_VALUE ?>!"
             });                        
             return false;
         }
-        if(!isNumber(f.cred_auto_period.value)) {
+        if(!isNumber(f.numberInstallments.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_PERIOD ?>!"
             });             
             return false;
         }
-        if(!isNumber(f.cred_auto_val_mes.value)) {
+        if(!isNumber(f.amountInstallment.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_INSTALMENT ?>!"
             });             
             return false;
         }
-        if(!isNumber(f.cred_auto_valresidual.value)) {
+        if(!isNumber(f.residualValue.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_RESIDUAL_VALUE ?>!"
@@ -116,9 +116,9 @@ function is_userdata_formpart1_ok(){
 
 
     /*inspection*/
-    var nmr_times_inspec=f.nr_vezes_inspecao.value;
+    var numberInspections = f.numberInspections.value;
     
-    if(!isNumber(nmr_times_inspec) || !isInteger(nmr_times_inspec)) {
+    if(!isNumber(numberInspections) || !isInteger(numberInspections)) {
         $.jAlert({
             'title': "<?php echo $INSPECTION ?>",
             'content': "<?php echo $ERROR_INSPECTION_NTIMES ?>!"
@@ -126,7 +126,7 @@ function is_userdata_formpart1_ok(){
         return false;
     }
 
-    if(!isNumber(f.preco_inspecao.value) && nmr_times_inspec!=0) {
+    if(numberInspections!=0 && !isNumber(f.averageInspectionCost.value)) {
         $.jAlert({
             'title': "<?php echo $INSPECTION ?>",
             'content': "<?php echo $ERROR_INSPECTION_COSTS ?>!"
@@ -135,7 +135,7 @@ function is_userdata_formpart1_ok(){
     }
     
     /*taxes*/
-    if(!isNumber(f.IUC.value)) {
+    if(!isNumber(f.roadTaxes.value)) {
         $.jAlert({
             'title': "<?php echo $ROAD_TAXES ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"

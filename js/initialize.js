@@ -15,7 +15,7 @@ function initialize() {
     
     DescriptionHTML = $('#description').html();
 
-    setRadioButton("tipo_seguro", "semestral");
+    setRadioButton("insurancePaymentPeriod", "semestral");
     $("#main_form select").val('1'); //set all the selects to "month"
     $("#tickets_period_select").val('5'); //set fines period to year
     $("#washing_period_select").val('3'); //set washing period to trimester

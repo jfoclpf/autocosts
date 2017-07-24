@@ -23,16 +23,16 @@ function createObjToDB(){
     objectToDb.acquisition_year = $("#acquisitionYear").val();
     objectToDb.commercial_value_at_acquisition = $('#commercialValueAtAcquisition').val();
     objectToDb.commercial_value_at_now = $('#commercialValueAtNow').val();
-    objectToDb.insure_type = $('input[name="tipo_seguro"]:checked', '#main_form').val();
+    objectToDb.insure_type = $('input[name="insurancePaymentPeriod"]:checked', '#main_form').val();
     objectToDb.insurance_value = $('#insuranceValue').val();
-    objectToDb.credit = $('input[name="cred_auto"]:checked', '#main_form').val();
+    objectToDb.credit = $('input[name="AutoCreditRadioBtn"]:checked', '#main_form').val();
     objectToDb.credit_borrowed_amount = $('#borrowedAmount').val();
     objectToDb.credit_number_installments = $('#numberInstallments').val();
     objectToDb.credit_amount_installment = $('#amountInstallment').val();
     objectToDb.credit_residual_value = $('#residualValue').val();
     objectToDb.inspection_number_inspections = $('#numberInspections').val();
     objectToDb.inspection_average_inspection_cost = $('#averageInspectionCost').val();
-    objectToDb.vehicle_excise_tax = $('#vehicleExciseTax').val();
+    objectToDb.vehicle_excise_tax = $('#roadTaxes').val();
     
     //form part 2
     objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#main_form').val();
@@ -161,10 +161,10 @@ function submitDataToForm(readObj){
     $('#commercialValueAtAcquisition').val(readObj.commercial_value_at_acquisition);
     $('#commercialValueAtNow').val(readObj.commercial_value_at_now);
     //insurance
-    setRadioButton("tipo_seguro", readObj.insure_type);
+    setRadioButton("insurancePaymentPeriod", readObj.insure_type);
     $('#insuranceValue').val(readObj.insurance_value);
     //credit
-    setRadioButton("cred_auto", readObj.credit);
+    setRadioButton("AutoCreditRadioBtn", readObj.credit);
     $('#borrowedAmount').val(readObj.credit_borrowed_amount);
     $('#numberInstallments').val(readObj.credit_number_installments);
     $('#amountInstallment').val(readObj.credit_amount_installment);
@@ -174,7 +174,7 @@ function submitDataToForm(readObj){
     nbrInspectOnChanged();
     $('#averageInspectionCost').val(readObj.inspection_average_inspection_cost);
     //road tax
-    $('#vehicleExciseTax').val(readObj.vehicle_excise_tax);
+    $('#roadTaxes').val(readObj.vehicle_excise_tax);
     
     //form part 2
     //fuel

@@ -3,24 +3,24 @@ function get_form_part1(){
     var d = document.costs_form; //main form document variable
     var data = {
         //depreciation
-        auto_mes:               d.auto_mes.value,
-        auto_ano:               d.auto_ano.value,
-        auto_initial_cost:      d.auto_val_inicial.value,
-        auto_final_cost:        d.auto_val_final.value,     
+        acquisitionMonth:       d.acquisitionMonth.value,
+        acquisitionYear:        d.acquisitionYear.value,
+        auto_initial_cost:      d.commercialValueAtAcquisition.value,
+        auto_final_cost:        d.commercialValueAtNow.value,     
         //insurance
-        insurance_type:         getCheckedValue(d.tipo_seguro),
-        insurance_value:        d.seguro_val.value,
+        insurance_type:         getCheckedValue(d.insurancePaymentPeriod),
+        insurance_value:        d.insuranceValue.value,
         //finance
-        cred_auto_s_n:          getCheckedValue(d.cred_auto),
-        credit_amount:          d.cred_auto_montante.value,
-        credit_period:          d.cred_auto_period.value,
-        credit_value_p_month:   d.cred_auto_val_mes.value,
-        credit_residual_value:  d.cred_auto_valresidual.value,
+        cred_auto_s_n:          getCheckedValue(d.AutoCreditRadioBtn),
+        credit_amount:          d.borrowedAmount.value,
+        credit_period:          d.numberInstallments.value,
+        credit_value_p_month:   d.amountInstallment.value,
+        credit_residual_value:  d.residualValue.value,
         //inspection
-        nmr_times_inspec:       d.nr_vezes_inspecao.value,
-        inspec_price:           d.preco_inspecao.value,
+        nmr_times_inspec:       d.numberInspections.value,
+        inspec_price:           d.averageInspectionCost.value,
         //car tax
-        car_tax:                d.IUC.value
+        car_tax:                d.roadTaxes.value
     };
     return data;
 }

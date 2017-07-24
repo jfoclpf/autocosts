@@ -151,7 +151,7 @@ function hasLoadedAllFiles(callback){
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();
-    setRadioButton("tipo_seguro", "semestral");
+    setRadioButton("insurancePaymentPeriod", "semestral");
     $("#main_form select").val('1'); //set all the selects to "month"
     
     tolls_daily(false);
