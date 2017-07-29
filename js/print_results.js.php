@@ -943,9 +943,9 @@ function drawChartResult(frame_witdh, data){
     $("#pie_chart_div").css('width', 'auto');
     $("#bar_chart_div").css('display', 'inline-block');
     $("#bar_chart_div").css('width', 'auto');
-    
+
     //draw Financial Effort Chart
-    if(data.fin_effort_calculated){
+    if(data.fin_effort_calculated){//if the financial effort was calculated 
         var fe_chart_width=parseInt(frame_witdh*0.9);
         var fe_chart_height=parseInt(fe_chart_width*1/2);
         
@@ -958,6 +958,30 @@ function drawChartResult(frame_witdh, data){
         $("#fin_effort_chart_div").css('display', 'inline-block');
         $("#fin_effort_chart_div").css('width', 'auto');
     }
+     
+    //draw Alternative to Car Costs Chart
+    if(data.public_transports_calculated){//if the public alternative transports were calculated  
+        var alter_to_car_chart_width=parseInt(frame_witdh*0.8);
+        var alter_to_car_chart_height=parseInt(alter_to_car_chart_width*45/50);
+
+        drawAlterToCarChart( parseFloat(data.monthly_costs.insurance.toFixed(1)),
+                             parseFloat(data.monthly_costs.fuel.toFixed(1)),
+                             parseFloat(desvalor_temp.toFixed(1)),
+                             parseFloat(data.monthly_costs.credit.toFixed(1)),
+                             parseFloat(data.monthly_costs.inspection.toFixed(1)),
+                             parseFloat(data.monthly_costs.maintenance.toFixed(1)),
+                             parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
+                             parseFloat(data.monthly_costs.car_tax.toFixed(1)),
+                             parseFloat(data.monthly_costs.parking.toFixed(1)),
+                             parseFloat(data.monthly_costs.tolls.toFixed(1)),
+                             parseFloat(data.monthly_costs.fines.toFixed(1)),
+                             parseFloat(data.monthly_costs.washing.toFixed(1)),
+                             alter_to_car_chart_width,
+                             alter_to_car_chart_height
+                        );
+        $("#alternative_carcosts_chart_div").css('display', 'inline-block');
+        $("#alternative_carcosts_chart_div").css('width', 'auto');
+    }    
 }
 
 //puts the currency symbol after the money value, for certain countries 

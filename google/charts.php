@@ -160,3 +160,68 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
 	
     chart.draw(data, options);
 }
+
+//draw bar chart
+function drawAlterToCarChart(a, b, c, d, e, f, g, h, i, j, k, l, char_width, char_height) {
+       
+    var data, chart_legend, chart_inner_width, bar_width, options, char_data;
+    
+    // Create and populate the data table.
+    chart_data = [
+        ['<? echo $PARCEL; ?>', 
+            '<?echo $GLOBALS['country'] ?>'=='RU' || '<?echo $GLOBALS['country']?>'=='UA' ? '<? echo $INSURANCE_CHART; ?>' : '<? echo $INSURANCE_SHORT; ?>', //a
+            '<? echo $FUEL; ?>',             //b
+            '<? echo $DEPRECIATION; ?>',     //c
+            '<? echo $CREDIT_INTERESTS; ?>', //d
+            '<? echo $INSPECTION_SHORT; ?>', //e
+            '<? echo $MAINTENANCE; ?>',      //f
+            '<? echo $REP_IMPROV; ?>',       //g
+            '<? echo $ROAD_TAXES_SHORT; ?>', //h
+            '<? echo $PARKING; ?>',          //i      
+            '<? echo $TOLLS; ?>',            //j
+            '<?echo $FINES; ?>',             //k
+            '<? echo $WASHING; ?>',          //l
+            { role: 'annotation' } ],
+        ['<? echo $FIXED_COSTS; ?>',   a, 0, c, d, e, (f/2), 0, 0, 0, 0, 0, 0, ''],
+        ['<? echo $RUNNING_COSTS; ?>', 0, b, 0, 0, 0, (f/2), g, h, i, j, k, l, '']
+    ];
+    //alert(JSON.stringify(chart_data, null, 4));
+    
+    data = google.visualization.arrayToDataTable(chart_data);
+    
+    // Create and draw the visualization.
+	var chart_div = document.getElementById('alternative_carcosts_chart_div');
+    var chart1 = new google.visualization.ColumnChart(chart_div);
+	
+	//Wait for the chart to finish drawing before calling the getImageURI() method.
+    google.visualization.events.addListener(chart1, 'ready', function () {
+		var img_div =  document.getElementById('img_alternative_carcosts_chart_div');
+        img_div.innerHTML = '<img alt="chart" src="' + chart1.getImageURI() + '">';        
+    });
+	
+    //cross browser solution; if the window width is too small hides legend of chart
+    var window_width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if(window_width < 425){
+        chart_legend = "none";
+        chart_inner_width = "100%";
+    }
+    else{
+        chart_legend = "right";
+        chart_inner_width = "60%";
+        bar_width = "61.8%"; //default value
+    }
+        
+    options = {
+        title: "<? echo $COSTS; ?>",
+        backgroundColor: {fill: 'transparent'},
+        chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
+        vAxis: { minValue: 0},
+        legend: {position: chart_legend },
+        bar: { groupWidth: bar_width },
+        isStacked: true,
+        width: char_width,
+        height: char_height
+    };
+    	
+    chart1.draw(data, options);
+}

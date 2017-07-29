@@ -5,22 +5,7 @@ include_once("./countries/_url_selector.php");
 ?><!DOCTYPE html>
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
-
 <head>
-
-    <script>
-    //GLOBAL switches
-    //Change the values accordingly
-        var UBER_SWITCH = true; //Uber
-        var SOCIAL_SWITCH = true; // Social media pulgins
-        var CHARTS_SWITCH = true; //Google Charts
-        var CAPTCHA_SWITCH = true; //Google Captcha
-        var ANALYTICS_SWITCH = true; //Google Analytics
-        var DB_SWITCH = true; //Inserts user input data into DataBase
-        var PRINT_SWITCH = true; //Print option
-        var PDF_SWITCH = true; //Download PDF report option
-    </script>
-
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
 	<meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
@@ -86,10 +71,10 @@ include_once("./countries/_url_selector.php");
                         </div>
                         <br>
                         <!-- first top (pie) chart -->
-                        <div id="pie_chart_div"></div><br>
+                        <div id="pie_chart_div" class="chart_div"></div><br>
                         <div id="img_pie_chart_div" class="disp_none"></div>
                         <!-- second (bars) chart -->
-                        <div id="bar_chart_div"></div>
+                        <div id="bar_chart_div" class="chart_div"></div>
                         <div id="img_bar_chart_div" class="disp_none"></div>
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
@@ -100,8 +85,9 @@ include_once("./countries/_url_selector.php");
                             <b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
                         <!-- third chart -->
-                        <div id="fin_effort_chart_div"></div>
+                        <div id="fin_effort_chart_div" class="chart_div"></div>
                         <div id="img_fin_effort_chart_div" class="disp_none"></div>
+                        <!-- results table -->
                         <div class="result_div" id="fin_effort"></div>
                     </div>
                     <!-- ********* Alternative Costs to Car Costs section **************** -->
@@ -109,6 +95,10 @@ include_once("./countries/_url_selector.php");
                         <div class="result_section_title" id="alternative_to_carcosts_title">
                             <b><?php echo mb_convert_case($PUBL_TRA_EQUIV, MB_CASE_UPPER, "UTF-8"); ?></b>
                         </div>
+                        <!-- fourth chart -->
+                        <div id="alternative_carcosts_chart_div" class="chart_div"></div>
+                        <div id="img_alternative_carcosts_chart_div" class="disp_none"></div>
+                        <!-- results table -->
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>
                     <!-- ************* Buttons ****************** -->
@@ -139,40 +129,19 @@ include_once("./countries/_url_selector.php");
         </div>
         <br>
     </div>
-    <!--jquery.js-->
+    <!--jQuery-->
     <script src="js/jquery/jquery.min.js"></script>
-    <!--jquery timer-->
     <script src="js/jquery/js_timer.js"></script>
-
-    <!--Define GLOBAL Javascript variables-->
-    <script>
-        var Country = '<?php echo $GLOBALS["country"]; ?>';
-        //Language code according to ISO_639-1 codes
-        var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
-        var Domain_list = <?php echo json_encode($domain_CT); ?>;
-        var uber_obj = {};//empty object
-        var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
-        var ResultIsShowing, DescriptionHTML, CalculatedData;
-        var isHumanConfirmed = false; //global variable for Google reCaptcha
-        var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';       
-        //global variables for each service availability
-        //Later on in the code, the variables might be set to TRUE if the services are available
-        //Therefore do not change these values here
-        var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
-        var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
-        var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available
-        //renders according to Global swicthes
-        if(!PRINT_SWITCH){$("#print_button").hide();}
-        if(!PDF_SWITCH){$("#generate_PDF").hide();}
-    </script>
-
-    <script><?php include('js/validateForm.js.php'); ?></script>
+    <!--Autocosts JavaScript files-->
+    <script src="GlobalSwitches.js"></script>
+    <script src="js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
+    <script src="js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>    
     <script src="js/documentFunctions.js"></script>
     <script src="js/formFunctions.js"></script>
     <script src="js/initialize.js"></script>
+    <!--Popup alert window-->
     <script src="js/jAlert/jAlert.js"></script>
+    <!--Google Analytics-->
     <?php include_once("google/analytics.php"); ?>
-    
 </body>
-
 </html>

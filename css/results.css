@@ -1,11 +1,5 @@
 /*************** RESULTS, TABLES and CHARTS ***************/
 
-#pie_chart_div,
-#bar_chart_div,
-#fin_effort_chart_div {
-    margin: 0 auto;
-}
-
 .result_div {
     margin: 15px;
 }
@@ -16,6 +10,16 @@
 }
 .result_div td:nth-child(2n) {
     border-left: solid 1px #b6b6b6;
+}
+
+.result_section_title {
+    text-align: center;
+    font-size: 17px;
+    margin: 20px 10% 15px 10%;
+}
+
+.chart_div {
+    margin: 0 auto;
 }
 
 .result_table td{

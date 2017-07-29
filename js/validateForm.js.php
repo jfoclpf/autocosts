@@ -1,3 +1,7 @@
+<?php Header("content-type: application/x-javascript");
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
+$GLOBALS['country'] = $_GET['country'];?>
+
 /* *** CHECK FORM PART 1 ***** */
 /*check if data from form 1 (standing costs) is correctly filled*/
 function is_userdata_formpart1_ok(){
