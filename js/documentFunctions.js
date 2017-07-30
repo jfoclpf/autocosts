@@ -55,7 +55,7 @@ function openForm_part(part_number_origin, part_number_destiny) {
             }
             
             if (CHARTS_SWITCH){
-                $.getScript("google/charts.php?country="+Country, function() {
+                $.getScript("js/charts.js.php?country="+Country, function() {
                     $.getScript("js/print_results.js.php?country="+Country); 
                 });
             }

@@ -1,4 +1,5 @@
 <?php Header("content-type: application/x-javascript");
+if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 $GLOBALS['country'] = $_GET['country'];?>
 

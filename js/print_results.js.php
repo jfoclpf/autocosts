@@ -1,4 +1,5 @@
 <?php Header("content-type: application/x-javascript");
+if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
@@ -58,8 +59,10 @@ function Run2(callback){
     }
 
     //public transports table
-    if(data.public_transports_calculated){        
-        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, country);
+    var res_uber_obj = undefined;
+    if(data.public_transports_calculated){
+        res_uber_obj = get_uber(uber_obj, data, country);
+        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, country);
         if(public_transport_table_HTML !== ""){
             $("#alternative_to_carcosts, #alternative_to_carcosts_section").show("slow");
             $("#alternative_to_carcosts").html(public_transport_table_HTML);
@@ -109,7 +112,7 @@ function Run2(callback){
 
     //gets result frame width to draw charts within it
     var frame_witdh = document.getElementById("div2").offsetWidth;
-    drawChartResult(frame_witdh, data);
+    drawChartResult(frame_witdh, data, res_uber_obj);
 
     //hides description, left and right columns
     $("#div1").css("display", "none");
@@ -205,7 +208,7 @@ function print_costs_table(f1, f2, f3, data) {
     if (data.age_months === 0) {    
         depreciation_text = "<?php echo $ERROR_DEPRECIATION_NEW_CAR ?>&nbsp;&nbsp;";
     } else {
-        depreciation_text = "<b><?php echo $DEPRECIATION ?><\/span></b>&nbsp;&nbsp;<br><?php echo $AQ_VALUE ?>: "+
+        depreciation_text = "<b><?php echo $DEPRECIATION ?></b>&nbsp;&nbsp;<br><?php echo $AQ_VALUE ?>: "+
             f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $FINAL_VALUE ?>: "+
             f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $PERIOD_OWN ?>: "+
             data.age_months + " <?php echo $MONTHS ?><br>("+
@@ -333,7 +336,7 @@ function print_costs_table(f1, f2, f3, data) {
                            f2.maintenance + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
     
     //Repairs
-    var repairs_text = "<b><?php echo $REP_IMPROV ?><\/span></b><br>" +
+    var repairs_text = "<b><?php echo $REP_IMPROV ?></b><br>" +
                        f2.repairs + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
     
     //Tolls
@@ -554,7 +557,7 @@ function print_feffort_table(f1, f2, f3, data){
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;  
         case 'hour':
             varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $HOUR ?></td>" + 
@@ -566,7 +569,7 @@ function print_feffort_table(f1, f2, f3, data){
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" + 
                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
                         "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" + 
-                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "<\/span></td></tr>";
+                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;          
     }
     //working time
@@ -663,7 +666,7 @@ function print_feffort_table(f1, f2, f3, data){
 //******************************************************************************************************************************************************
 
 /*Public transports table (result_table2)*/
-function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
+function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, country){
 
     var varResult = "";   
     if(data.public_transports.display_pt()) {
@@ -676,10 +679,10 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
                   "<br><?php echo $PASS_MONTH_AVG ?>: " + 
                   f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?>";
         
-        if(data.public_transports.pt_carcost_ratio < data.public_transports.other_pt_ratio_threshold){
+        if(data.public_transports.display_other_pt){
             outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
         }
-        taxi_text="<b><?php echo $TAXI_DESL ?><\/span><\/b><br>" + data.public_transports.km_by_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
+        taxi_text="<b><?php echo $TAXI_DESL ?><\/b><br>" + data.public_transports.km_by_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
         
         //starts HTML table
         varResult+="<table class=\"result_table\" id=\"result_table2\">";
@@ -708,84 +711,80 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, country){
     }
     
     //UBER
-    if(UBER_SWITCH){
-        var res_uber_obj = get_uber(uber_obj, data, country);
-        //alert(JSON.stringify(res_uber_obj, null, 4)); 
-        if (res_uber_obj){
-            uber_obj.print_bool=true; //says uber table is to be printed; global variable
+    if(UBER_SWITCH && res_uber_obj){
+        //alert(JSON.stringify(res_uber_obj, null, 4));         
+        uber_obj.print_bool=true; //says uber table is to be printed; global variable
+        
+        //add source in table for uber URL  
+        var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
+        var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
+        
+        //in which driver can replace every journey by uber 
+        if(res_uber_obj.result_type==1){
+            //starts HTML table
+            varResult+="<br><table class=\"result_table uber_table\" id=\"result_table_uber\">";
             
-            //add source in table for uber URL  
-            var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
-            var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
             
-            //in which driver can replace every journey by uber 
-            if(res_uber_obj.result_type==1){
-                //starts HTML table
-                varResult+="<br><table class=\"result_table uber_table\" id=\"result_table_uber\">";
-                
-                varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
-                           "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
-                
-                varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
-                           "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
-                varResult+="<tr><td><b><?php echo $FUEL_DIST.' '.$WORD_PER.' '.$MONTH ?></b><br></td>"+
-                           "<td>" + res_uber_obj.dpm.toFixed(0) + " " +"<?php echo $STD_DIST_FULL?></td></tr>";
-                
-                           
-                varResult+="<tr><td><b><?php echo $MINUTES_DRIVE_PER.' '.$MONTH ?></b></td>" + 
-                           "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
-                           
-                varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
-                           "<td><b>" + currencyShow(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
-
-                varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
-                           "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
-                
-                varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                           "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
-                
-                varResult+="</table>";       
-            }
+            varResult+="<tr><td><b><?php echo $FUEL_DIST.' '.$WORD_PER.' '.$MONTH ?></b><br></td>"+
+                       "<td>" + res_uber_obj.dpm.toFixed(0) + " " +"<?php echo $STD_DIST_FULL?></td></tr>";
             
-            //the case where uber equivalent is more expensive
-            else if(res_uber_obj.result_type==2){ 
-                //starts HTML table
-                varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
-                
-                varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
-                           "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" +
-                           "<td><b>" + currencyShow(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
-                 
-                varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
-                           "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
-                
-                varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
-                           "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+                       
+            varResult+="<tr><td><b><?php echo $MINUTES_DRIVE_PER.' '.$MONTH ?></b></td>" + 
+                       "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
+                       
+            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
+                       "<td><b>" + currencyShow(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";                     
 
-                varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" + 
-                           "<td>" + data.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
-                           
-                varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" + 
-                           "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
-                           
-                varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
-                           "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
-               
-                varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                           "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
-                
-                varResult+="</table>";    
-            }
-                   
+            varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" + 
+                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
+            
+            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+            
+            varResult+="</table>";       
+        }
+        
+        //the case where uber equivalent is more expensive
+        else if(res_uber_obj.result_type==2){ 
+            //starts HTML table
+            varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
+            
+            varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
+                       "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" +
+                       "<td><b>" + currencyShow(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+             
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+            
+            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" + 
+                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+
+            varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" + 
+                       "<td>" + data.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
+                       
+            varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" + 
+                       "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
+                       
+            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" + 
+                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";                     
+           
+            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+            
+            varResult+="</table>";    
         }
         else{
-            uber_obj.print_bool=false; //says uber table is not to be printed; global variable
-        }
+            uber_obj.print_bool=false;
+        }           
     }
     else{
         uber_obj.print_bool=false; //says uber table is not to be printed; global variable
-    }    
+    }
     
     return varResult;
 }
@@ -801,7 +800,7 @@ function print_extern_table(f1, f2, f3, data){
     var egee_text     = "<b>Emissões de gases de efeito de estufa</b><br>Valor aproximado: " + data.external_costs.ghg + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
     var ruido_text    = "<b>Poluição sonora</b><br>Valor aproximado: " + data.external_costs.noise + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
     var sr_text       = "<b>Sinistralidade rodoviária</b><br>Valor aproximado: " + data.external_costs.fatalities + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var cgstn_text    = "<b>Congestionamento<\/span></b><br>Valor aproximado: " + data.external_costs.congestion + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
+    var cgstn_text    = "<b>Congestionamento</b><br>Valor aproximado: " + data.external_costs.congestion + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
     var ifr_estr_text = "<b>Desgaste das infraestruturas rodoviárias</b><br>Valor aproximado: " + data.external_costs.infrastr + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
     var source_ext_costs  = "<b>Fonte dos dados:</b><br><i><a href=\"" + data.external_costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia";
     
@@ -851,7 +850,7 @@ function print_extern_table(f1, f2, f3, data){
 //******************************************************************************************************************************************************
 
 
-function drawChartResult(frame_witdh, data){
+function drawChartResult(frame_witdh, data, res_uber_obj){
     
     //Whe Google Charts are not available
     if(!IsGoogleCharts || !CHARTS_SWITCH){
@@ -902,41 +901,13 @@ function drawChartResult(frame_witdh, data){
     var pie_chart_width=parseInt(frame_witdh*1);
     var pie_chart_height=parseInt(pie_chart_width*4/6);
 
-    drawPieChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
-                 parseFloat(data.monthly_costs.fuel.toFixed(1)),
-                 parseFloat(desvalor_temp.toFixed(1)),
-                 parseFloat(data.monthly_costs.credit.toFixed(1)),
-                 parseFloat(data.monthly_costs.inspection.toFixed(1)),
-                 parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-                 parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-                 parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-                 parseFloat(data.monthly_costs.parking.toFixed(1)),
-                 parseFloat(data.monthly_costs.tolls.toFixed(1)),
-                 parseFloat(data.monthly_costs.fines.toFixed(1)),
-                 parseFloat(data.monthly_costs.washing.toFixed(1)),
-                 pie_chart_width,
-                 pie_chart_height
-            );
+    drawMonthlyCostsPieChart(data, pie_chart_width,  pie_chart_height);
 
     //draw Bar Chart
     var bar_chart_width=parseInt(frame_witdh*0.8);
     var bar_chart_height=parseInt(bar_chart_width*45/50);
 
-    drawBarChart(parseFloat(data.monthly_costs.insurance.toFixed(1)),
-                 parseFloat(data.monthly_costs.fuel.toFixed(1)),
-                 parseFloat(desvalor_temp.toFixed(1)),
-                 parseFloat(data.monthly_costs.credit.toFixed(1)),
-                 parseFloat(data.monthly_costs.inspection.toFixed(1)),
-                 parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-                 parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-                 parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-                 parseFloat(data.monthly_costs.parking.toFixed(1)),
-                 parseFloat(data.monthly_costs.tolls.toFixed(1)),
-                 parseFloat(data.monthly_costs.fines.toFixed(1)),
-                 parseFloat(data.monthly_costs.washing.toFixed(1)),
-                 bar_chart_width,
-                 bar_chart_height
-            );
+    drawMonthlyCostsBarChart(data, bar_chart_width, bar_chart_height);
 
     //adjust the charst divs
     $("#pie_chart_div").css('display', 'inline-block');
@@ -963,22 +934,9 @@ function drawChartResult(frame_witdh, data){
     if(data.public_transports_calculated){//if the public alternative transports were calculated  
         var alter_to_car_chart_width=parseInt(frame_witdh*0.8);
         var alter_to_car_chart_height=parseInt(alter_to_car_chart_width*45/50);
-
-        drawAlterToCarChart( parseFloat(data.monthly_costs.insurance.toFixed(1)),
-                             parseFloat(data.monthly_costs.fuel.toFixed(1)),
-                             parseFloat(desvalor_temp.toFixed(1)),
-                             parseFloat(data.monthly_costs.credit.toFixed(1)),
-                             parseFloat(data.monthly_costs.inspection.toFixed(1)),
-                             parseFloat(data.monthly_costs.maintenance.toFixed(1)),
-                             parseFloat(data.monthly_costs.repairs_improv.toFixed(1)),
-                             parseFloat(data.monthly_costs.car_tax.toFixed(1)),
-                             parseFloat(data.monthly_costs.parking.toFixed(1)),
-                             parseFloat(data.monthly_costs.tolls.toFixed(1)),
-                             parseFloat(data.monthly_costs.fines.toFixed(1)),
-                             parseFloat(data.monthly_costs.washing.toFixed(1)),
-                             alter_to_car_chart_width,
-                             alter_to_car_chart_height
-                        );
+        
+        drawAlterToCarChart(data, res_uber_obj, alter_to_car_chart_width, alter_to_car_chart_height);
+        
         $("#alternative_carcosts_chart_div").css('display', 'inline-block');
         $("#alternative_carcosts_chart_div").css('width', 'auto');
     }    
