@@ -24,4 +24,4 @@ var RunButtonStr = 'Run';
 var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
 var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
 var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available 
-var uber_obj={};
+var UBER_OBJ = {};

@@ -31,7 +31,7 @@ function Popup(data1, data2, data3, data4, data5, title)
         mywindow.document.write('<br><br>');
     }
 
-    if(public_transp_bool || uber_obj.print_bool){
+    if(public_transp_bool || UBER_OBJ.print_bool){
         mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
         mywindow.document.write(data4);
         mywindow.document.write('<br><br>');    

@@ -59,10 +59,9 @@ function Run2(callback){
     }
 
     //public transports table
-    var res_uber_obj = undefined;
     if(data.public_transports_calculated){
-        res_uber_obj = get_uber(uber_obj, data, country);
-        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, country);
+        RES_UBER_OBJ = get_uber(UBER_OBJ, data, country);
+        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, RES_UBER_OBJ, country);
         if(public_transport_table_HTML !== ""){
             $("#alternative_to_carcosts, #alternative_to_carcosts_section").show("slow");
             $("#alternative_to_carcosts").html(public_transport_table_HTML);
@@ -112,7 +111,7 @@ function Run2(callback){
 
     //gets result frame width to draw charts within it
     var frame_witdh = document.getElementById("div2").offsetWidth;
-    drawChartResult(frame_witdh, data, res_uber_obj);
+    drawChartResult(frame_witdh, data, RES_UBER_OBJ);
 
     //hides description, left and right columns
     $("#div1").css("display", "none");
@@ -711,9 +710,9 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
     }
     
     //UBER
-    if(UBER_SWITCH && res_uber_obj){
+    if(UBER_SWITCH && !$.isEmptyObject(res_uber_obj)){
         //alert(JSON.stringify(res_uber_obj, null, 4));         
-        uber_obj.print_bool=true; //says uber table is to be printed; global variable
+        UBER_OBJ.print_bool=true; //says uber table is to be printed; global variable
         
         //add source in table for uber URL  
         var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
@@ -779,11 +778,11 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
             varResult+="</table>";    
         }
         else{
-            uber_obj.print_bool=false;
+            UBER_OBJ.print_bool=false;
         }           
     }
     else{
-        uber_obj.print_bool=false; //says uber table is not to be printed; global variable
+        UBER_OBJ.print_bool=false; //says uber table is not to be printed; global variable
     }
     
     return varResult;

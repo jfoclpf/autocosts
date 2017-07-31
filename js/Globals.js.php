@@ -8,7 +8,8 @@ var Country = '<?php echo $GLOBALS["country"]; ?>';
 //Language code according to ISO_639-1 codes
 var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
 var Domain_list = <?php echo json_encode($domain_CT); ?>;
-var uber_obj = {};//empty object
+var UBER_OBJ = {};//object from UBER API, with UBER city data
+var RES_UBER_OBJ = {}; //Result UBER object, calculated from core functions 
 var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
 var ResultIsShowing, DescriptionHTML, CalculatedData;
 var isHumanConfirmed = false; //global variable for Google reCaptcha

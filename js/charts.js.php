@@ -197,12 +197,12 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, char_width
 }
 
 //draw bar chart
-function drawAlterToCarChart(data, uber_obj, char_width, char_height) {
+function drawAlterToCarChart(data, res_uber_obj, char_width, char_height) {
     
     var char_data, chart_legend, chart_inner_width, bar_width, options, chart_content;
     var c = pfto(data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
     var pt = data.public_transports;
-    var u = uber_obj;
+    var u = res_uber_obj;
 
     //it makes some strange arrays operations, because according to Google Charts
     //when one has stacked vertical bar charts, all the arrays, for each column must be the same size
@@ -318,22 +318,29 @@ function drawAlterToCarChart(data, uber_obj, char_width, char_height) {
     
     
     legend.push({ role: 'annotation' });
-    monthly_costs.push("");
-    pt_array.push("");
-    uber_array.push("");
+    monthly_costs.push("");    
     
     // Create and populate the data table
-    chart_content = [ legend, monthly_costs ];
+    chart_content = [legend, monthly_costs ];
     if(data.public_transports.display_pt()) {
-        chart_content.push(pt_array);        
+        pt_array.push("");
+        chart_content.push(pt_array);     
     }
     if(UBER_SWITCH && u){
+        uber_array.push("");
         chart_content.push(uber_array);
     }
     
+    //check if all the arrays into chart_content have the same size
+    for (var i=1; i<chart_content.length; i++){
+        if(chart_content[i].length != chart_content[i-1].length){
+            console.error("arrays in chart_content do not have the same size");
+            return;
+        }
+    }
     console.log("drawAlterToCarChart", JSON.stringify(chart_content, null, 4));
-    char_data = google.visualization.arrayToDataTable(chart_content);
     
+    char_data = google.visualization.arrayToDataTable(chart_content);
     // Create and draw the visualization.
 	var chart_div = document.getElementById('alternative_carcosts_chart_div');
     var chart1 = new google.visualization.ColumnChart(chart_div);
@@ -359,9 +366,9 @@ function drawAlterToCarChart(data, uber_obj, char_width, char_height) {
     options = {
                 title: "<? echo $COSTS; ?>",
                 backgroundColor: {fill: 'transparent'},
-                chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
+                chartArea: {width: chart_inner_width, height: "90%"},
                 vAxis: { minValue: 0},
-                legend: {position: chart_legend },
+                legend: {position: 'none'},
                 bar: { groupWidth: bar_width },
                 isStacked: true,
                 width: char_width,

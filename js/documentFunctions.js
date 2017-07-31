@@ -134,14 +134,14 @@ function openForm_part(part_number_origin, part_number_destiny) {
                     //gets asynchronously UBER information
                     $.get( "php/get_uber.php?c=" + Country, function(data) {
                         //alert(JSON.stringify(data, null, 4)); 
-                        uber_obj =  data; //uber_obj is a global variable
+                        UBER_OBJ =  data; //UBER_OBJ is a global variable
                     });
                 }
                 else{//test version (London city, in Pounds)
-                    uber_obj.cost_per_distance = 1.25;
-                    uber_obj.cost_per_minute = 0.15;
-                    uber_obj.currency_code = "GBP";
-                    uber_obj.distance_unit = "mile";
+                    UBER_OBJ.cost_per_distance = 1.25;
+                    UBER_OBJ.cost_per_minute = 0.15;
+                    UBER_OBJ.currency_code = "GBP";
+                    UBER_OBJ.distance_unit = "mile";
                 }
             }
             
@@ -373,7 +373,7 @@ function resized(callback){
     //if the result are showing resizes the charts
     if(ResultIsShowing){
         var frame_witdh = document.getElementById("div2").offsetWidth;
-        drawChartResult(frame_witdh, CalculatedData);
+        drawChartResult(frame_witdh, CalculatedData, RES_UBER_OBJ);
         
         //prints final text accordingly
         var text_msg = print_result_final_text(frame_witdh, CalculatedData);
