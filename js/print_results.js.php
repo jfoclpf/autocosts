@@ -805,7 +805,7 @@ function print_extern_table(f1, f2, f3, data){
     
     var varResult     = "";
     
-    if(Country=="PT" && isDef(data.distance_per_month)){
+    if(COUNTRY=="PT" && isDef(data.distance_per_month)){
         
         varResult+="<table class=\"result_table\" id=\"result_table4\">";
 

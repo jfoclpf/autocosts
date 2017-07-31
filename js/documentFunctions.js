@@ -55,12 +55,12 @@ function openForm_part(part_number_origin, part_number_destiny) {
             }
             
             if (CHARTS_SWITCH){
-                $.getScript("js/charts.js.php?country="+Country, function() {
-                    $.getScript("js/print_results.js.php?country="+Country); 
+                $.getScript("js/charts.js.php?country="+COUNTRY, function() {
+                    $.getScript("js/print_results.js.php?country="+COUNTRY); 
                 });
             }
             else{
-                $.getScript("js/print_results.js.php?country="+Country); 
+                $.getScript("js/print_results.js.php?country="+COUNTRY); 
             }
                         
             if (DB_SWITCH){
@@ -130,9 +130,9 @@ function openForm_part(part_number_origin, part_number_destiny) {
             
             //uber
             if (UBER_SWITCH){
-                if(Country!="XX"){//if not test version
+                if(COUNTRY!="XX"){//if not test version
                     //gets asynchronously UBER information
-                    $.get( "php/get_uber.php?c=" + Country, function(data) {
+                    $.get( "php/get_uber.php?c=" + COUNTRY, function(data) {
                         //alert(JSON.stringify(data, null, 4)); 
                         UBER_OBJ =  data; //UBER_OBJ is a global variable
                     });
@@ -152,8 +152,8 @@ function openForm_part(part_number_origin, part_number_destiny) {
                     $.getScript("js/pdf/pdfmake.js", function() {
                         //path where the fonts for PDF are stored
                         var pdf_fonts_path;
-                        if (Country=='CN' || Country=='JP' || Country=='IN'){
-                            pdf_fonts_path = "js/pdf/" + Country + "/vfs_fonts.js";                      
+                        if (COUNTRY=='CN' || COUNTRY=='JP' || COUNTRY=='IN'){
+                            pdf_fonts_path = "js/pdf/" + COUNTRY + "/vfs_fonts.js";                      
                         }else{
                             pdf_fonts_path = "js/pdf/vfs_fonts.js";
                         }                    
@@ -416,7 +416,7 @@ function scrollPage(callback){
  /*function which returns whether this session is a (test/develop version) or a prod version */  
  function IsThisAtest() {  
     
-    if(Country=="XX"){
+    if(COUNTRY=="XX"){
         return true;
     }
     
@@ -500,7 +500,7 @@ $('#working_time_form3 tr').hover(
 //when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
 $('#tbl_statistics').click(function(){ 
     var domain = window.location.hostname;  
-    var url2open = "http://" + domain + "/db_stats/tables/" + Country + ".jpg";
+    var url2open = "http://" + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
     window.open(url2open); 
 });
 

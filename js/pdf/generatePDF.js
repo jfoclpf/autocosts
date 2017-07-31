@@ -214,7 +214,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
     //Languages/alphabets that need special fonts, load such fonts from different files
     //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
     //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
-    if (Country=='CN'){
+    if (COUNTRY=='CN'){
         pdfMake.fonts = {
             Chinese: {
                 normal: 'Chinese.ttf',
@@ -225,7 +225,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
         };
         docDefinition.defaultStyle.font = "Chinese";
     }
-    if (Country=='JP'){
+    if (COUNTRY=='JP'){
         pdfMake.fonts = {
             Japanese: {
                 normal: 'Japanese.ttf',
@@ -236,7 +236,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
         };
         docDefinition.defaultStyle.font = "Japanese";
     }
-    if (Country=='IN'){
+    if (COUNTRY=='IN'){
         pdfMake.fonts = {
             Hindi: {
                 normal: 'Hindi.ttf',

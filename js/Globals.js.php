@@ -4,7 +4,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 $GLOBALS['country'] = $_GET['country'];?>
 
 //Define GLOBAL Javascript variables
-var Country = '<?php echo $GLOBALS["country"]; ?>';
+var COUNTRY = '<?php echo $GLOBALS["country"]; ?>';
 //Language code according to ISO_639-1 codes
 var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
 var Domain_list = <?php echo json_encode($domain_CT); ?>;

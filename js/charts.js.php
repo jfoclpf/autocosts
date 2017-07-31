@@ -12,7 +12,7 @@ function drawMonthlyCostsPieChart(data, char_width, char_height) {
 	
     chart_content = [
                         ["<?php echo $PARCEL; ?>", "<?php echo $COSTS; ?>" ],
-                        [Country=='RU' || Country=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>", c.insurance],
+                        [COUNTRY=='RU' || COUNTRY=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>", c.insurance],
                         ["<?php echo $FUEL; ?>",                    c.fuel],
                         ["<?php echo $DEPRECIATION; ?>",            c.depreciation],
                         ["<?php echo $CREDIT_INTERESTS; ?>",        c.credit],
@@ -58,7 +58,7 @@ function drawMonthlyCostsBarChart(data, char_width, char_height) {
     chart_content = [
                         [   
                             "<?php echo $PARCEL; ?>", 
-                            Country=="RU" || Country=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>",
+                            COUNTRY=="RU" || COUNTRY=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>",
                             "<?php echo $FUEL; ?>",
                             "<?php echo $DEPRECIATION; ?>",
                             "<?php echo $CREDIT_INTERESTS; ?>",
@@ -209,7 +209,7 @@ function drawAlterToCarChart(data, res_uber_obj, char_width, char_height) {
     
     var legend = [
                     "<?php echo $PARCEL; ?>",
-                    Country == "RU" || Country =="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>",
+                    COUNTRY == "RU" || COUNTRY =="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>",
                     "<?php echo $FUEL; ?>",
                     "<?php echo $DEPRECIATION; ?>",     
                     "<?php echo $CREDIT_INTERESTS; ?>", 

@@ -323,8 +323,8 @@
         <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>        
         <!--Run button-->
         <div id="run_button_div">
-            <input id="run_button" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>
-            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1(Country)" value="<?php echo $BUTTON_RUN; ?>"/>
+            <input id="run_button" class="button" type="submit" onclick="Run1()" value="<?php echo $BUTTON_RUN; ?>"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="<?php echo $BUTTON_RUN; ?>"/>
         </div>
     </div>
     

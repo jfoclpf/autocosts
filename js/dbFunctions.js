@@ -1,6 +1,6 @@
 //function that is run when the user clicks the Run/Calculate button 
 //and which submits the inserted data into the Database 
-function submit_data(country) {
+function submit_data() {
 
     var objectToDb = createObjToDB();
     objectToDb = sanityChecks(objectToDb);
@@ -8,7 +8,7 @@ function submit_data(country) {
     objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
     objectToDb.client_uuid = uuid;
     
-    objectToDb.country = Country; //Country is a global variable
+    objectToDb.country = COUNTRY; //Country is a global variable
     
     submitDataToDB(objectToDb);
 
