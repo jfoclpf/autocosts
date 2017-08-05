@@ -6,7 +6,7 @@ function get_form_part1(){
         acquisitionMonth:       d.acquisitionMonth.value,
         acquisitionYear:        d.acquisitionYear.value,
         auto_initial_cost:      d.commercialValueAtAcquisition.value,
-        auto_final_cost:        d.commercialValueAtNow.value,     
+        auto_final_cost:        d.commercialValueAtNow.value,
         //insurance
         insurance_type:         getCheckedValue(d.insurancePaymentPeriod),
         insurance_value:        d.insuranceValue.value,
@@ -33,7 +33,7 @@ function get_form_part2(){
         fuel_efficiency:        d.consumo_auto.value,
         fuel_price:             d.fuel_price.value,
         take_car_to_job:        getCheckedValue(d.car_job_form2),
-        fuel_period_distance:   d.combustivel_period_km.value,      
+        fuel_period_distance:   d.combustivel_period_km.value,
         distance:               d.km_por_mes.value,
         car_consumption:        d.consumo_auto.value,
         distance_home2job:      d.km_entre_casa_trabalho.value,
@@ -58,7 +58,7 @@ function get_form_part2(){
         fines_select:           d.tickets_period_select.value,
         //washing
         washing:                d.washing_value.value,
-        washing_select:         d.washing_period_select.value     
+        washing_select:         d.washing_period_select.value
     };
     return data;
 }
@@ -70,7 +70,7 @@ function get_form_part3(){
         IsAlternativeToCarCosts:          getCheckedSliderValue(d.slider1),
         n_pess_familia:              d.pessoas_agregado.value,
         monthly_pass_cost:           d.preco_passe.value,
-        
+
         //financial effort section
         IsFinancialEffort:           getCheckedSliderValue(d.slider2),
         income_type:                 getCheckedValue(d.radio_income),
@@ -103,14 +103,14 @@ function get_form_part3(){
     return data;
 }
 
-//get from database 
+//get from database
 function get_DB_part1(datab){
     var data = {
         //depreciation
         auto_mes:              datab.acquisition_month,
         auto_ano:              datab.acquisition_year,
         auto_initial_cost:     datab.commercial_value_at_acquisition,
-        auto_final_cost:       datab.commercial_value_at_now,       
+        auto_final_cost:       datab.commercial_value_at_now,
         //insurance
         insurance_type:        datab.insure_type,
         insurance_value:       datab.insurance_value,
@@ -143,8 +143,8 @@ function get_DB_part2(datab){
         distance:               datab.fuel_distance_based_no_car_to_work_distance,
         fuel_period_distance:   datab.fuel_distance_based_no_car_to_fuel_period_distance,
         car_consumption:        datab.fuel_distance_based_fuel_efficiency,
-        fuel_price:             datab.fuel_distance_based_fuel_price,       
-            
+        fuel_price:             datab.fuel_distance_based_fuel_price,
+
         fuel_efficiency:        datab.fuel_distance_based_fuel_efficiency,  //repetitions
 
         //maintenance
@@ -164,7 +164,7 @@ function get_DB_part2(datab){
         fines_select:           datab.tickets_periodicity,
         //washing
         washing:                datab.washing_value,
-        washing_select:         datab.washing_periodicity       
+        washing_select:         datab.washing_periodicity
     };
     return data;
 }
@@ -175,7 +175,7 @@ function get_DB_part3(datab){
         IsAlternativeToCarCosts:          false,
         n_pess_familia:              datab.household_number_people,
         monthly_pass_cost:           datab.public_transportation_month_expense,
-        
+
         //financial effort section
         IsFinancialEffort:           false,
         income_type:                 datab.income_type,
@@ -190,34 +190,34 @@ function get_DB_part3(datab){
         is_working_time:             datab.work_time,
         time_month_per_year:         datab.work_time_month_per_year,
         time_hours_per_week:         datab.work_time_hours_per_week,
-        
+
         //Distance section
         drive_to_work:               datab.distance_drive_to_work,
         drive_to_work_days_per_week: datab.distance_days_per_week,
-        dist_home_job:               datab.distance_home_job,       
+        dist_home_job:               datab.distance_home_job,
         journey_weekend:             datab.distance_journey_weekend,
         period_km:                   datab.distance_period,
         dist_per_time_period:        datab.distance_per_month,
-        
+
         //Time spent in driving
-        time_home_job:               datab.time_spent_home_job,     
+        time_home_job:               datab.time_spent_home_job,
         time_weekend:                datab.time_spent_weekend,
         min_drive_per_day:           datab.time_spent_min_drive_per_day,
-        days_drive_per_month:        datab.time_spent_days_drive_per_month 
+        days_drive_per_month:        datab.time_spent_days_drive_per_month
     };
-    
+
     data.IsAlternativeToCarCosts = isThereinDbAlternativeToCarCostsData(data);
     data.IsFinancialEffort = isThereinDbFinEffortData(data);
-    
+
     return data;
 }
 
-//Gets information from DB whether DB has or not Public Transport data 
+//Gets information from DB whether DB has or not Public Transport data
 function isThereinDbAlternativeToCarCostsData(f3){
     return (isDef(f3.n_pess_familia) && isDef(f3.monthly_pass_cost));
 }
 
-//Gets information from DB whether DB has or not Financial Effort data  
+//Gets information from DB whether DB has or not Financial Effort data
 function isThereinDbFinEffortData(f3){
 
     switch(f3.income_type){

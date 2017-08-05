@@ -5,7 +5,7 @@ var conversionConstants = {
     GALLON_US_TO_LITER: 3.78541178
 };
 
-//currency converters for statistics analysis 
+//currency converters for statistics analysis
 //not for exact currency conversions, only for outliers removal
 //just the order of magnitude is needed
 var EURcurrConverterStats = {
@@ -27,7 +27,7 @@ var EURcurrConverterStats = {
     "BOB": 7.7,
     "CLP": 721,
     "COP": 3200,
-    "VEF": 11, 
+    "VEF": 11,
     "ARS": 16.4,
     "CRC": 616,
     "DOP": 51.5,
@@ -50,12 +50,12 @@ var EURcurrConverterStats = {
 function convert_from_EUR(value, currency, EURcurrConverterStats){
 
     var value_t = parseFloat(value);
-    var conversionRatio= EURcurrConverterStats[currency];       
-        
+    var conversionRatio= EURcurrConverterStats[currency];
+
     if (!conversionRatio){
         return -1;
     }
-    
+
     return value_t*conversionRatio;
 }
 
@@ -71,7 +71,7 @@ function convert_to_fuel_eff_l100km(fuel_eff, fuel_efficiency_std_option) {
 //6 - km/gal(US) - km per US gallon
 
     var fuel_eff_temp = parseFloat(fuel_eff);
-    
+
     switch (fuel_efficiency_std_option) {
         case 1:
             return fuel_eff_temp;

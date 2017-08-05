@@ -16,7 +16,7 @@ function isVisible(html_ref) {
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(nbrInspectOnChanged);
 function nbrInspectOnChanged(){
-    
+
     if($("#numberInspections").val() == 0){
         $("#InspectionCost_tr").hide("slow");
     }
@@ -25,13 +25,13 @@ function nbrInspectOnChanged(){
     }
 }
 
-//function for the radio button with the question 
+//function for the radio button with the question
 //'Calculations based on:' in the Fuel section of Form part 2
 function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === "currency") {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_euros").prop("checked", true);
-        
+
         isDistanceSet = false;
         $("#distance_form3").each(function(){ $(this).show(); });
         $("#currency_div_form2").slideDown("slow");
@@ -39,12 +39,12 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
         $(".time_spent_part2_form3").show();
         $("#drive_to_work_no_form3").prop("checked", true);
-        
+
         carToJob(false);
     } else if (fuelCalculationMethod === "distance") {
-        //selects actively radio button to which this function is associated        
-        $("#radio_fuel_km").prop("checked", true); 
-        
+        //selects actively radio button to which this function is associated
+        $("#radio_fuel_km").prop("checked", true);
+
         isDistanceSet = true;
         $("#distance_form3").each(function(){ $(this).hide(); });
         $("#currency_div_form2").slideUp("slow");
@@ -57,89 +57,89 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
     }
 }
 
-//function for the radio button with the question 
+//function for the radio button with the question
 //'Considering you drive to work?' in the Fuel section of Form part 2
 function carToJob(carToJobFlag) {
     if (carToJobFlag) {
         //selects actively radio button to which this function is associated
-        $("#car_job_form2_yes").prop("checked", true); 
-        
+        $("#car_job_form2_yes").prop("checked", true);
+
         $("#div_car_job_yes_form2").slideDown("slow");
         $("#div_car_job_no_form2").slideUp("slow");
         $(".time_spent_part1_form3").each(function(){ $(this).show(); });
         $(".time_spent_part2_form3").hide();
-        
+
         //working time section in form part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").hide();
         $("#working_time_part2_form3").show();
     } else {
         //selects actively radio button to which this function is associated
-        $("#car_job_form2_no").prop("checked", true); 
-        
+        $("#car_job_form2_no").prop("checked", true);
+
         $("#div_car_job_yes_form2").slideUp("slow");
         $("#div_car_job_no_form2").slideDown("slow");
         $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
         $(".time_spent_part2_form3").show();
-        
-        //set to "no" the question "Do you have a job or a worthy occupation?" 
-        //in Working Time section of Form Part 3 
+
+        //set to "no" the question "Do you have a job or a worthy occupation?"
+        //in Working Time section of Form Part 3
         working_time_toggle(false);
         $("#working_time_no_form3").prop("checked", true);
         $("#working_time_part1_form3").show();
-        $("#working_time_part2_form3").hide();        
+        $("#working_time_part2_form3").hide();
     }
 }
 
-//Drive to Job yes/no radio button 
-//in section Distance in form part 3 
+//Drive to Job yes/no radio button
+//in section Distance in form part 3
 function driveToJob(flag){
     if(flag){
         //selects actively radio button to which this function is associated
         //$("#drive_to_work_yes_form3").prop("checked", true);
-        
+
         //distance section
         $("#car_no_job_distance_form3").fadeOut(function(){
-            $(".car_to_job_distance_form3").each(function(i, elm){ 
-                $(elm).fadeIn("slow"); 
-            });           
+            $(".car_to_job_distance_form3").each(function(i, elm){
+                $(elm).fadeIn("slow");
+            });
         });
 
-        //set to "no" the question "Do you have a job or a worthy occupation?" 
-        //in Working Time section of Form Part 3         
+        //set to "no" the question "Do you have a job or a worthy occupation?"
+        //in Working Time section of Form Part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").hide("slow");
         $("#working_time_part2_form3").show("slow");
-        
+
         //time spent in driving section
         $(".time_spent_part2_form3").fadeOut("slow", function(){
-            $(".time_spent_part1_form3").each(function(i, elm){ 
-                $(elm).fadeIn("slow"); 
-            });            
+            $(".time_spent_part1_form3").each(function(i, elm){
+                $(elm).fadeIn("slow");
+            });
         });
-      
+
     }
     else{
         //selects actively radio button to which this function is associated
         $("#drive_to_work_no_form3").prop("checked", true);
-        
+
         $(".car_to_job_distance_form3").each(function(i, elm){
             $(elm).fadeOut("slow")
-         }).promise().done( function(){ 
+         }).promise().done( function(){
             $("#car_no_job_distance_form3").fadeIn("slow");
         });
-        
-        //in Working Time section of Form Part 3  
+
+        //in Working Time section of Form Part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").show("slow");
         $("#working_time_part2_form3").hide("slow");
-        
+
         //time spent in driving section
         $(".time_spent_part1_form3").each(function(i, elm){
             $(elm).fadeOut("slow");
-        }).promise().done( function(){ 
+        }).promise().done( function(){
             $(".time_spent_part2_form3").fadeIn("slow");
-        });       
+        });
     }
 }
 
@@ -222,21 +222,21 @@ function income_toggle(value){
             $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").hide("slow");
             income="hour";
             break;
-    }   
+    }
 }
 
 //radio button toggle function of "Working time" section in form part 3
 function working_time_toggle(value){
     if(value){
         //selects actively radio button to which this function is associated
-        $("#working_time_yes_form3").prop("checked", true);       
+        $("#working_time_yes_form3").prop("checked", true);
         $("#working_time_input_form3").show("slow");
     }
     else{
         //selects actively radio button to which this function is associated
         $("#working_time_no_form3").prop("checked", true);
         $("#working_time_input_form3").hide("slow");
-    }  
+    }
 }
 
 //clears all the form inputs whose unit is a currency
@@ -268,7 +268,7 @@ function getCheckedValue(radioObj) {
     return "";
 }
 
-//sets in a radio button with a specific option 
+//sets in a radio button with a specific option
 function setRadioButton(name, option){
    $('input[name="' + name + '"][value="'+option+'"]').click();
 }

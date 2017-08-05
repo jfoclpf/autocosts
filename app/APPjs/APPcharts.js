@@ -1,70 +1,70 @@
 var PIE_CHART, BAR_CHART, FINEFF_CHART, ALTERN_TO_CARCOSTS;
 
 function displayCharts(){
-    
+
     displayPieChart();
     displayBarChart();
-    
+
     if(CalculatedData.fin_effort_calculated){
         displayFinEffChart();
     }
-    
+
     if(CalculatedData.public_transports_calculated && CalculatedData.public_transports.display_pt()){
         displayAlternToCarCostsChart();
-    }    
+    }
 
 }
 
 //#######################################################################
 //Pie Chart
 function displayPieChart(){
-    
+
     var L = CountryLangObj; //Language Object
     var c = CalculatedData.monthly_costs; //Monthly costs object of calculated data
-    //rounds every element 
+    //rounds every element
     for (var key in c) {
       if (c.hasOwnProperty(key)) {
         c[key] = parseFloat(c[key].toFixed(1));
       }
     }
-    
+
     //always creates a new chart
     if (typeof PIE_CHART !== 'undefined'){
-        PIE_CHART.destroy();    
+        PIE_CHART.destroy();
         delete PIE_CHART;
     }
-    
+
     var labels = [
-                    L.depreciation_st, 
-                    L.insurance_short, 
-                    L.credit, 
-                    L.inspection_short, 
-                    L.road_taxes_short, 
-                    L.maintenance, 
-                    L.fuel, 
+                    L.depreciation_st,
+                    L.insurance_short,
+                    L.credit,
+                    L.inspection_short,
+                    L.road_taxes_short,
+                    L.maintenance,
+                    L.fuel,
                     L.rep_improv,
-                    L.parking, 
-                    L.tolls, 
-                    L.fines, 
+                    L.parking,
+                    L.tolls,
+                    L.fines,
                     L.washing
                  ];
 
-    var dataset = [{ 
+    var dataset = [{
                     label: L.costs,
                     data: [
-                            c.depreciation, 
-                            c.insurance, 
-                            c.credit, 
-                            c.inspection, 
-                            c.car_tax, 
-                            c.maintenance, 
-                            c.fuel, 
-                            c.repairs_improv, 
+                            c.depreciation,
+                            c.insurance,
+                            c.credit,
+                            c.inspection,
+                            c.car_tax,
+                            c.maintenance,
+                            c.fuel,
+                            c.repairs_improv,
                             c.parking,
-                            c.tolls, 
-                            c.fines, 
+                            c.tolls,
+                            c.fines,
                             c.washing
-                          ],                       
+                          ],
                     backgroundColor: [
                                         'navy',
                                         'blue',
@@ -73,10 +73,10 @@ function displayPieChart(){
                                         'olive',
                                         'green',
                                         'maroon',
-                                        'lime',                        
+                                        'lime',
                                         'yellow',
                                         'orange',
-                                        'red', 
+                                        'red',
                                         'purple'
                                       ]
                     }];
@@ -90,7 +90,7 @@ function displayPieChart(){
     };
 
     PIE_CHART = new Chart(pieChart, content);
-    
+
 }
 
 //#######################################################################
@@ -98,21 +98,21 @@ function displayPieChart(){
 function displayBarChart(){
 
     var L = CountryLangObj; //Language Object
-    var c = CalculatedData.monthly_costs; //Monthly costs object of calculated data    
-    //rounds every element 
-    
+    var c = CalculatedData.monthly_costs; //Monthly costs object of calculated data
+    //rounds every element
+
     for (var key in c) {
       if (c.hasOwnProperty(key)) {
         c[key] = parseFloat(c[key].toFixed(1));
       }
     }
-    
+
     //always creates a new chart
     if (typeof BAR_CHART !== 'undefined'){
-        BAR_CHART.destroy();    
+        BAR_CHART.destroy();
         delete BAR_CHART;
     }
-    
+
     var labels = [L.fixed_costs, L.running_costs];
 
     var dataset = [
@@ -142,7 +142,7 @@ function displayBarChart(){
                          data: [(1/2*c.maintenance), 0],
                          backgroundColor: 'green'
                       },
-                      //running costs    
+                      //running costs
                       {
                          label: L.rep_improv,
                          data: [0, c.repairs_improv],
@@ -151,7 +151,7 @@ function displayBarChart(){
                          label: L.fuel,
                          data: [0, c.fuel],
                          backgroundColor: 'maroon'
-                      }, {                          
+                      }, {
                          label: L.parking,
                          data: [0, c.parking],
                          backgroundColor: 'yellow'
@@ -202,39 +202,39 @@ function displayBarChart(){
                         datasets: dataset
                     },
                     options: options
-                  }; 
+                  };
 
-    BAR_CHART = new Chart(barChart, content);    
+    BAR_CHART = new Chart(barChart, content);
 
 }
 
 function displayFinEffChart(){
-    
+
     var L = CountryLangObj; //Language Object
     var c = CalculatedData.fin_effort; //Financial object of calculated data
-    
+
     //always creates a new chart
     if (typeof FINEFF_CHART !== 'undefined'){
-        FINEFF_CHART.destroy();    
+        FINEFF_CHART.destroy();
         delete FINEFF_CHART;
-    }    
+    }
 
     var labels = [formatLabel(L.net_income_per + " " + L.year, 20), formatLabel(L.total_costs_per_year, 20)];
 
-    var dataset = [                      
+    var dataset = [
                       {
                          label: L.costs,
                          data: [
-                                parseFloat(c.income_per_year.toFixed(0)), 
+                                parseFloat(c.income_per_year.toFixed(0)),
                                 parseFloat(c.total_costs_year.toFixed(0))
                          ],
                          backgroundColor:[
-                                           'blue', 
+                                           'blue',
                                            'red'
                                          ]
                        }
                   ];
-    
+
     var options =  {
                        legend: {
                                 display: false
@@ -249,10 +249,10 @@ function displayFinEffChart(){
                                     ticks: {
                                         fontSize: 9
                                     }
-                                }]                                
-                               }                             
+                                }]
+                               }
                    };
-    
+
     var content = {
         type: 'horizontalBar',
         data: {
@@ -260,10 +260,10 @@ function displayFinEffChart(){
             datasets: dataset
         },
         options: options
-    };    
-    
-    FINEFF_CHART = new Chart(FinEffChart, content); 
-   
+    };
+
+    FINEFF_CHART = new Chart(FinEffChart, content);
+
 }
 
 //#######################################################################
@@ -271,21 +271,21 @@ function displayFinEffChart(){
 function displayAlternToCarCostsChart(){
 
     var L = CountryLangObj; //Language Object
-    var p = CalculatedData.public_transports; //Public Transports object 
-    var c = CalculatedData.monthly_costs; //Monthly costs object 
-    //rounds every element   
+    var p = CalculatedData.public_transports; //Public Transports object
+    var c = CalculatedData.monthly_costs; //Monthly costs object
+    //rounds every element
     for (var key in c) {
       if (c.hasOwnProperty(key)) {
         c[key] = parseFloat(c[key].toFixed(1));
       }
     }
-    
+
     //always creates a new chart
     if (typeof ALTERN_TO_CARCOSTS !== 'undefined'){
-        ALTERN_TO_CARCOSTS.destroy();    
+        ALTERN_TO_CARCOSTS.destroy();
         delete ALTERN_TO_CARCOSTS;
     }
-    
+
     var labels = [formatLabel(L.your_car_costs_you + " " + L.word_per + " " + L.month, 25), formatLabel(L.publ_tra_equiv, 25)];
 
     var dataset = [
@@ -302,8 +302,8 @@ function displayAlternToCarCostsChart(){
                          label: L.pub_trans_text,
                          data: [0, parseFloat(p.total_price_pt.toFixed(1))],
                          backgroundColor: '#006600'
-                      },              
-        
+                      },
+
                       //standing costs
                       {
                          label: L.depreciation_st,
@@ -330,7 +330,7 @@ function displayAlternToCarCostsChart(){
                          data: [c.maintenance, 0],
                          backgroundColor: 'green'
                       },
-                      //running costs    
+                      //running costs
                       {
                          label: L.rep_improv,
                          data: [c.repairs_improv, 0],
@@ -339,7 +339,7 @@ function displayAlternToCarCostsChart(){
                          label: L.fuel,
                          data: [c.fuel, 0],
                          backgroundColor: 'maroon'
-                      }, {                          
+                      }, {
                          label: L.parking,
                          data: [c.parking, 0],
                          backgroundColor: 'yellow'
@@ -357,7 +357,7 @@ function displayAlternToCarCostsChart(){
                          backgroundColor: 'purple'
                       }
                     ];
-    
+
     //removes first item from dataset, related to Public Transports bar, if it's not applicable
     if(!p.display_other_pt){
         dataset.splice(0, 1);
@@ -370,7 +370,7 @@ function displayAlternToCarCostsChart(){
                             ticks: {
                                 beginAtZero: true,
                                 fontSize: 9
-                            }                             
+                            }
                          }],
                          yAxes: [{
                             stacked: true, // this also..
@@ -388,14 +388,14 @@ function displayAlternToCarCostsChart(){
                         datasets: dataset
                     },
                     options: options
-                  }; 
+                  };
 
-    ALTERN_TO_CARCOSTS = new Chart(AlterToCarCostsChart, content);    
+    ALTERN_TO_CARCOSTS = new Chart(AlterToCarCostsChart, content);
 
 }
 
 
-/* takes a string phrase and breaks it into separate phrases 
+/* takes a string phrase and breaks it into separate phrases
    no bigger than 'maxwidth' (in the number of characters), breaks are made at complete words.*/
 
 function formatLabel(str, maxwidth){

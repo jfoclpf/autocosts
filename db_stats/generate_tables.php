@@ -1,10 +1,10 @@
 <?
-/*File which generates the statistics tables on a HTML file 
+/*File which generates the statistics tables on a HTML file
 that will be shown in the right column of the main page*/
 
 $consumer_speed_url = "http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed";
 
-//function for formating numbers which come from DB 
+//function for formating numbers which come from DB
 function fixNmbr($i,$n){
     $float_num = floatval($i);
     return number_format($float_num, $n, '.', '');
@@ -42,8 +42,8 @@ foreach ($avail_CT as $country => $country_name) {
     $content = '<table id="tbl_statistics">
         <tr class="tr-title">
             <td id="td-top-title" colspan="2" class="center td-title">';
-            
-    if ($country == "TR") { 
+
+    if ($country == "TR") {
         $content.='<b><span>'.$COUNTRY_NAME.'</span><span class="stat_title"> '.$STATISTIC_TITLE.'</span></b>';
     }
     else{
@@ -52,7 +52,7 @@ foreach ($avail_CT as $country => $country_name) {
 
     $content.='<br><span>'.$AVERAGE_COSTS_PER_TYPE.'</span>
             </td>
-        </tr>  
+        </tr>
         <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$FIXED_COSTS.'</span></td></tr>
         <tr><td style="width:50%"><span>'.$DEPRECIATION_ST.'</span></td> <td style="width:25%"><span> '.$CURR_SYMBOL.' </span><span id="txt_depr" class="value-field">'.fixNmbr($row["Depreciation"],1).'</span></td></tr>
         <tr><td><span>'.$INSURANCE_ST.'</span></td>                      <td><span> '.$CURR_SYMBOL.' </span><span id="txt_ins" class="value-field">'.fixNmbr($row["Insurance"],1).'</span></td></tr>
@@ -63,7 +63,7 @@ foreach ($avail_CT as $country => $country_name) {
         <tr class="tr-result">
             <td><span>'.$WORD_TOTAL_CAP.'<br>'.$FIXED_COSTS.'</span></td>
             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_standing_costs" class="value-field">'.fixNmbr($row["standing_costs"],0).'</span></td>
-        </tr>   
+        </tr>
         <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$RUNNING_COSTS.'</span></td></tr>
         <tr><td><span>'.$FUEL.'</span></td>                              <td><span> '.$CURR_SYMBOL.' </span><span id="txt_fuel" class="value-field">'.fixNmbr($row["Fuel"],1).'</span></td></tr>
         <tr><td><span>50% '.$MAINTENANCE.'</span></td>                   <td><span> '.$CURR_SYMBOL.' </span><span id="txt_maint2" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
@@ -75,12 +75,12 @@ foreach ($avail_CT as $country => $country_name) {
         <tr class="tr-result">
             <td><span>'.$WORD_TOTAL_CAP.'<br>'.$RUNNING_COSTS.'</span></td>
             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_running_costs" class="value-field">'.fixNmbr($row["running_costs"],0).'</span></td>
-        </tr>    
-        <tr><td colspan="2"></td></tr>    
+        </tr>
+        <tr><td colspan="2"></td></tr>
         <tr class="main_total">
             <td><span>'.$WORD_TOTAL_CAP.'</span></td>
             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_total_overal" class="value-field">'.fixNmbr($row["total_costs"],0).'</span></td>
-        </tr>    
+        </tr>
         <tr>
             <td><span>'.$RUN_CP_DIST.'</span></td>
             <td><span> '.$CURR_SYMBOL.'</span><span id="txt_running_costs_dist" class="value-field">'.fixNmbr($row["running_costs_dist"],2).'</span><span>/'.$STD_DIST.'</span></td>

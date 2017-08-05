@@ -6,20 +6,46 @@ $GLOBALS['country'] = $_GET['country'];?>
 //Define GLOBAL Javascript variables
 var COUNTRY = '<?php echo $GLOBALS["country"]; ?>';
 //Language code according to ISO_639-1 codes
-var Language = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
-var Domain_list = <?php echo json_encode($domain_CT); ?>;
-var UBER_OBJ = {};//object from UBER API, with UBER city data
-var RES_UBER_OBJ = {}; //Result UBER object, calculated from core functions 
-var frame_witdh, public_transp_bool, fin_effort_bool, extern_costs_bool;
-var ResultIsShowing, DescriptionHTML, CalculatedData;
-var isHumanConfirmed = false; //global variable for Google reCaptcha
-var RunButtonStr = '<?php echo $BUTTON_RUN; ?>';       
-//global variables for each service availability
-//Later on in the code, the variables might be set to TRUE if the services are available
-//Therefore do not change these values here
-var IsGoogleCharts = false; //variable that says whether Google Charts JS files are available
-var IsGoogleCaptcha = false; //variable that says whether Google Captcha JS files are available  
-var IsGoogleAnalytics = false; //variable that says whether Google Analytics JS files are available
-//renders according to Global swicthes
-if(!PRINT_SWITCH){$("#print_button").hide();}
-if(!PDF_SWITCH){$("#generate_PDF").hide();}
+var LANGUAGE = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
+//List of domains in a Javascript Object
+var DOMAIN_LIST = <?php echo json_encode($domain_CT); ?>;
+//global variable for Google reCaptcha
+var IS_HUMAN_CONFIRMED = false;
+//object from UBER API, with UBER city data
+var UBER_API = {};
+
+//calculated information after user clicks "Run", calculated from coreFunctions.js
+var CALCULATED = {
+    data:     {},  //calculated data (costs, financial effort, etc.)
+    uber:     {}   //calculated UBER as alternative to car, calculated from core functions
+};
+
+//Global Object regarding the display of information
+var DISPLAY = {
+    centralFrameWidth :  0,  //width of central frame #div2
+    descriptionHTML :   "",
+    result: {
+        isShowing          : false,  //tells whether the result with result tables is being shown
+        fin_effort         : false,
+        public_transports  : false,
+        uber               : false,
+        ext_costs          : false
+    },
+    charts: {
+        WIDTH_PX_OFF:    280, //client width in px under which the charts are not shown
+        MIN_RATIO:       0.7, //minimum ratio width of charts as frame_witdh becomes too wide
+        MIN_RATIO_WIDTH: 750, //width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO
+        MIN_LEGEND:      425  //window width value under which the legends of the charts are hidden
+    },
+    RunButtonStr: '<?php echo $BUTTON_RUN; ?>'
+};
+
+//Service availability. Later on in the code, the variables might be set to TRUE
+//if the services are available. Therefore do not change these values here
+var SERVICE_AVAILABILITY = {
+    g_charts      : false,   //variable that says whether Google Charts JS files are available
+    g_captcha     : false,   //variable that says whether Google Captcha JS files are available
+    g_analytics   : false    //variable that says whether Google Analytics JS files are available
+};
+
+

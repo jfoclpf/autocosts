@@ -110,8 +110,8 @@ include_once("./countries/_url_selector.php");
                         <div class="result_div" id="result_buttons_div">
                             <input type="submit" class="button" value="<? echo $BUTTON_RERUN; ?>" onclick="reload();"/>&nbsp;
                             <input type="submit" id="print_button" class="button" value="<? echo $WORD_PRINT; ?>"
-                                onclick="PrintElem('#main_table_section','#monthly_costs_section','#fin_effort_section','#alternative_to_carcosts_section','#exten_costs_section', '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;                            
-                            <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick="generatePDF('<?echo $MAIN_TITLE ?>', public_transp_bool, UBER_OBJ.print_bool, fin_effort_bool, extern_costs_bool)" />
+                                onclick="PrintElem( '<? echo $WEB_PAGE_TITLE; ?>');" />&nbsp;                            
+                            <input id="generate_PDF" type="submit" class="button" value="<? echo $WORD_DOWNLOAD_PDF; ?>" onclick='generatePDF("<?php echo $MAIN_TITLE ?>")' />
                             <div id="shareIcons"></div>
                         </div>                               
                     </div>

@@ -1,33 +1,36 @@
-function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool, extern_costs_bool){
+function generatePDF(main_title){
 
-    var body0, body1, body2, body3, body4, body5, data;
+    var body0, body11, body12, body13, body2, body3, body4, body5;
+    var data;
 
-    data = $('#result_table0 td');    
-    body0 = get_main_table(data);    
-    //var str_debug = JSON.stringify(body0, null, 4); alert(str_debug);
-    
+    //main top table with total costs
+    body0 = get_main_table("#result_table0");
+
     //monthly costs title and table
     var monthly_costs_title = gstr($('#monthly_costs_title').html());
     var costs_title_body = [[{text: monthly_costs_title, style: "header"}]];
-    data = $('#result_table1 td');    
-    body1 = get_private_costs_table(data);
-        
+
+    //monthly costs tables
+    body11 = get_monthly_costs_table("#standing_costs_table");
+    body12 = get_monthly_costs_table("#running_costs_table");
+    body13 = get_monthly_costs_table("#total_costs_table");
+
     var imageData1 = $('#img_pie_chart_div').find('img').attr('src');
     var imageData2 = $('#img_bar_chart_div').find('img').attr('src');
 
     var docDefinition = {
         header: {
-            text: main_title, 
+            text: main_title,
             style: 'title'
         },
-        content:[            
+        content:[
             {
                 style: 'tableMarging',
                 table:{
                     headerRows: 0,
                     widths: [ '*', '*', '*', '*' ],
                     body: body0
-                }                
+                }
             },
             {
                 style: 'tableMarging',
@@ -35,10 +38,10 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                     headerRows: 0,
                     widths: ['*'],
                     body: costs_title_body
-                }                
+                }
             },
             {
-                image: imageData1,                
+                image: imageData1,
                 width: 400,
                 height: 267,
                 style: 'img_style'
@@ -55,9 +58,25 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body1
+                    body: body11
                 }
-            }   
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body12
+                }
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body13
+                }
+            }
         ],
         styles: {
             title:{
@@ -91,7 +110,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                 color: '#000'
             },
             cell: {
-                fontSize: 10,                
+                fontSize: 10,
             },
             header2: {
                 fontSize: 12,
@@ -113,11 +132,11 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
     };
 
     //financial effort title and table
-    if(fin_effort_bool){
+    if(DISPLAY.result.fin_effort){
         var fin_effort_title = gstr($('#fin_effort_title').html());
-        var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];    
-        data = $('#result_table3 td');
-        body2 = getBodyFinEffort(data);
+        var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];
+
+        body2 = getBodyFinEffort("#result_table3");
         var imageData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
 
         var body2_objA = {
@@ -127,7 +146,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                     widths: ['*'],
                     body: fin_effort_title_body
                 },
-                pageBreak: 'before'                
+                pageBreak: 'before'
             };
         var body2_objB = {
                 image: imageData3,
@@ -148,9 +167,9 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
         docDefinition.content.push(body2_objB);
         docDefinition.content.push(body2_objC);
     }
- 
+
     //optional public transports table
-    if (public_transp_bool || uber_bool){
+    if (DISPLAY.result.public_transports || DISPLAY.result.uber){
         //section title
         var p_t_title = gstr($('#alternative_to_carcosts_section').html());
         var p_t_title_body = [[{text: p_t_title, style: "header"}]];
@@ -161,13 +180,12 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                     widths: ['*'],
                     body: p_t_title_body
                 },
-                pageBreak: 'before'          
+                pageBreak: 'before'
             };
         docDefinition.content.push(p_t_title_obj);
 
-        if(public_transp_bool){       
-            data = $('#result_table2 td');
-            body3 = get_publict_table(data);
+        if(DISPLAY.result.public_transports){
+            body3 = get_publict_table("#result_table2");
             body3_obj = {
                 style:'tableMarging',
                 table:{
@@ -178,11 +196,10 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
             };
             docDefinition.content.push(body3_obj);
         }
-        
+
         //uber
-        if(uber_bool){
-            data = $('#result_table_uber td');
-            body5 = get_uber_table(data);
+        if(DISPLAY.result.uber){
+            body5 = get_uber_table("#result_table_uber");
             body5_obj = {
                 style:'tableMarging',
                 table:{
@@ -194,11 +211,10 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
             docDefinition.content.push(body5_obj);
         }
     }
-     
+
     //optional external costs table
-    if(extern_costs_bool){
-        data = $('#result_table4 td');
-        body4 = get_publict_table(data);
+    if(DISPLAY.result.ext_costs){
+        body4 = get_publict_table("#result_table4");
         body4_obj = {
                         style:'tableMarging',
                         table:{
@@ -210,7 +226,7 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
                     };
         docDefinition.content.push(body4_obj);
     }
-    
+
     //Languages/alphabets that need special fonts, load such fonts from different files
     //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
     //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
@@ -246,10 +262,11 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
             }
         };
         docDefinition.defaultStyle.font = "Hindi";
-    }    
-    
+    }
+
     //creates PDF file
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
+
 }
 
 
@@ -257,13 +274,16 @@ function generatePDF(main_title, public_transp_bool, uber_bool, fin_effort_bool,
 //******************************************************
 //functions that generate the respective tables
 
-function get_main_table(data){
-    
+function get_main_table(tableID){
+
+    //gets an array of jQuery objects representing the "td" elements of the table
+    var data = $(tableID +' td');
+
     var body = [];
     var str, el, el2, el3, el4;
-        
+
     for(var i=0; i<data.length; i++){
- 
+
         switch(i){
             case 0:
                 str = gstr(data[i]);
@@ -290,56 +310,61 @@ function get_main_table(data){
                 str = gstr(data[i]);
                 el = {text: str, colSpan:4, style: 'header'};
                 body.push([el,'','','']);
-                break;                
-        }                
+                break;
+        }
     }
     return body;
 }
 
-function get_private_costs_table(data){
-    
+
+function get_monthly_costs_table(tableID){
+
+    //gets an array of jQuery objects representing the "td" elements of the table
+    var data = $(tableID +' td');
+
     var body = [];
     var str, str2, el, el2;
-    
-    for(var i=1; i<data.length; i+=2){
+
+    for(var i=0; i<data.length; i+=2){
         str = gstr(data[i]);
-        //gives header style to <td> regarding Standing Costs and Fixed Costs
-        if(i==1 || i==17){ 
-            str2 = gstr(data[i+1]);
-            el2 = {text: str2, style: 'header'};
-            str = str.split('\n')[0]; //gets just the first line of the <td> info
-            el = {text: str, style: 'header'};          
-            body.push([el, el2]);
+        switch(i){
+            case 0: //header
+                el = {text: str, colSpan:2, style: 'header'};
+                body.push([el,'']);
+                i=-1; //so the next step is i=1
+                break;
+            case 1://first line header  || Costs | Monthly Amount ||
+                str2 = gstr(data[i+1]);
+                el2 = {text: str2, style: 'header'};
+                str = str.split('\n')[0]; //gets just the first line of the <td> info
+                el = {text: str, style: 'header'};
+                body.push([el, el2]);
+                break;
+            case (data.length-2)://first td on the last line
+                str2 = gstr(data[i+1]);
+                el2 = {text: str2, style: 'main_total_value'};
+                el = {text: str, style: 'main_total'};
+                body.push([el, el2]);
+                i=data.length; //breaks the "for" loop
+                break;
+            default:
+                str2 = gstr(data[i+1]);
+                el2 = {text: str2, style: 'cell'};
+                el = {text: str, style: 'cell'};
+                body.push([el, el2]);
         }
-        //Total costs <td> shall be aligned to the right
-        else if (i==15 || i==33){ 
-            str2 = gstr(data[i+1]);
-            el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'total'};          
-            body.push([el, el2]);     
-        }
-        //Main Total <td>
-        else if (i==39){ 
-            str2 = gstr(data[i+1]);
-            el2 = {text: str2, style: 'main_total_value'};
-            el = {text: str, style: 'main_total'};          
-            body.push([el, el2]);     
-        }
-        else{
-            str2 = gstr(data[i+1]);
-            el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el, el2]);
-        }           
     }
-    return body;    
+    return body;
 }
 
-function getBodyFinEffort(data){
-    
+function getBodyFinEffort(tableID){
+
+    //gets an array of jQuery objects representing the "td" elements of the table
+    var data = $(tableID +' td');
+
     var body = [];
     var str, str2, el, el2;
-    
+
     for(var i=0; i<data.length; i++){
         str = gstr(data[i]);
         if($(data[i]).find('b').length > 0){
@@ -353,22 +378,25 @@ function getBodyFinEffort(data){
             el = {text: str, style: 'cell'};
             body.push([el,el2]);
             i++;
-        }       
+        }
     }
     return body;
 }
 
-function get_publict_table(data){
-    
+function get_publict_table(tableID){
+
+    //gets an array of jQuery objects representing the "td" elements of the table
+    var data = $(tableID +' td');
+
     var body = [];
     var str, str2, el, el2;
-    
+
     for(var i=0; i<data.length; i+=2){
         str = gstr(data[i]);
         if(i<2){
             str2 = $(data[i+1]).text().trim();
             el2 = {text: str2, style: 'header'};
-            el = {text: str, style: 'header'};          
+            el = {text: str, style: 'header'};
             body.push([el, el2]);
         }
         else{
@@ -376,16 +404,19 @@ function get_publict_table(data){
             el2 = {text: str2, style: 'cell'};
             el = {text: str, style: 'cell'};
             body.push([el, el2]);
-        }           
+        }
     }
     return body;
 }
 
-function get_uber_table(data){
-    
+function get_uber_table(tableID){
+
+    //gets an array of jQuery objects representing the "td" elements of the table
+    var data = $(tableID +' td');
+
     var body = [];
     var str, str2, el, el2;
-    
+
     for(var i=0; i<data.length; i+=2){
         str = gstr(data[i]);
 
@@ -393,17 +424,17 @@ function get_uber_table(data){
         el2 = {text: str2, style: 'cell'};
         el = {text: str, style: 'cell'};
         body.push([el, el2]);
-     
+
     }
     return body;
 }
 
-//adapts the string and converts a HTML info into pure string info.
+//gets the string and converts such HTML info into pure string info.
 function gstr(data_i){
 
     var string1 = $(data_i).html();
     var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
     str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
-    
+
     return str;
 }

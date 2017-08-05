@@ -15,7 +15,7 @@ if (!$connectionDB)
     exit;
 }
 
-//delete table before populate it 
+//delete table before populate it
 $query = "DELETE FROM country_specs";
 $result = mysqli_query($connectionDB, $query);
 //echo "result command DELETE: ".$result."\n\n";
@@ -34,11 +34,11 @@ if (!$connectionDB)
 }
 
 foreach ($avail_CT as $key => $value) {
-    
+
     include (dirname(__FILE__).'/../countries/'.$key.'.php');
-    
-    if ($key !="XX"){//teste version 
-                
+
+    if ($key !="XX"){//teste version
+
         $queryInsert = "INSERT INTO country_specs (
             Country,
             currency,
@@ -46,7 +46,7 @@ foreach ($avail_CT as $key => $value) {
             fuel_efficiency_std,
             fuel_price_volume_std
             )
-            
+
             VALUES (
             '".$key."',
             '".$CURR_CODE."',
@@ -63,5 +63,5 @@ foreach ($avail_CT as $key => $value) {
 }
 
 mysqli_close($connectionDB);
-?>    
-    
+?>
+

@@ -6,7 +6,7 @@ $GLOBALS['country'] = $_GET['country'];?>
 /* *** CHECK FORM PART 1 ***** */
 /*check if data from form 1 (standing costs) is correctly filled*/
 function is_userdata_formpart1_ok(){
-    
+
     var f = document.costs_form; //form
     var minCarYear = 1910; //the year of the first produced car
 
@@ -25,21 +25,21 @@ function is_userdata_formpart1_ok(){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_YEAR ?>!"
-        });        
+        });
         return false;
     }
     if(!isNumber(f.commercialValueAtAcquisition.value)){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_VALUE ?>!"
-        });         
+        });
         return false;
     }
     if(!isNumber(f.commercialValueAtNow.value)){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_VALUE_TODAY ?>!"
-        });        
+        });
         return false;
     }
 
@@ -52,25 +52,25 @@ function is_userdata_formpart1_ok(){
         $.jAlert({
             'title': "<?php echo $DEPRECIATION ?>",
             'content': "<?php echo $ERROR_DEPRECIATION_DATE ?>!"
-        });         
+        });
         return false;
     }
-    
+
     /*insurance*/
     var insurancePaymentPeriod = getCheckedValue(f.insurancePaymentPeriod);
-    
+
     if(insurancePaymentPeriod == ""){
 
         $.jAlert({
             'title': "<?php echo $INSURANCE ?>",
             'content': "<?php echo $ERROR_INSU_PERIOD ?>!"
-        });        
+        });
         return false;
-    } 
-    
+    }
+
     if(!isNumber(f.insuranceValue.value)){
-              
-        $.jAlert({ 
+
+        $.jAlert({
             'title': "<?php echo $INSURANCE ?>",
             'content': "<?php echo $ERROR_INVALID_INSU_VALUE ?>!"
         });
@@ -84,7 +84,7 @@ function is_userdata_formpart1_ok(){
         $.jAlert({
             'title': "<?php echo $CREDIT ?>",
             'content': "<?php echo $ERROR_CREDIT_QUESTION ?>!"
-        });                 
+        });
         return false;
     }
 
@@ -93,28 +93,28 @@ function is_userdata_formpart1_ok(){
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_LOAN_VALUE ?>!"
-            });                        
+            });
             return false;
         }
         if(!isNumber(f.numberInstallments.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_PERIOD ?>!"
-            });             
+            });
             return false;
         }
         if(!isNumber(f.amountInstallment.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_INSTALMENT ?>!"
-            });             
+            });
             return false;
         }
         if(!isNumber(f.residualValue.value)) {
             $.jAlert({
                 'title': "<?php echo $CREDIT ?>",
                 'content': "<?php echo $ERROR_CREDIT_RESIDUAL_VALUE ?>!"
-            });             
+            });
             return false;
         }
     }
@@ -122,7 +122,7 @@ function is_userdata_formpart1_ok(){
 
     /*inspection*/
     var numberInspections = f.numberInspections.value;
-    
+
     if(!isNumber(numberInspections) || !isInteger(numberInspections)) {
         $.jAlert({
             'title': "<?php echo $INSPECTION ?>",
@@ -135,10 +135,10 @@ function is_userdata_formpart1_ok(){
         $.jAlert({
             'title': "<?php echo $INSPECTION ?>",
             'content': "<?php echo $ERROR_INSPECTION_COSTS ?>!"
-        });        
+        });
         return false;
     }
-    
+
     /*taxes*/
     if(!isNumber(f.roadTaxes.value)) {
         $.jAlert({
@@ -156,7 +156,7 @@ function is_userdata_formpart1_ok(){
 /* *** CHECK FORM PART 2 ***** */
 /*check if data from form 2 (running costs) is correctly filled*/
 function is_userdata_formpart2_ok(){
-    
+
     var f = document.costs_form; //form
 
     /*fuel*/
@@ -166,7 +166,7 @@ function is_userdata_formpart2_ok(){
         $.jAlert({
             'title': "<?php echo $FUEL ?>",
             'content': "<?php echo $ERROR_FUEL_CURR_DIST ?>!"
-        });        
+        });
         return false;
     }
 
@@ -178,14 +178,14 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $FUEL ?>",
                 'content': "<?php echo $ERROR_FUEL_CAR_EFF ?>!"
-            });            
+            });
             return false;
         }
         if(!isNumber(f.fuel_price.value)){
             $.jAlert({
                 'title': "<?php echo $FUEL ?>",
                 'content': "<?php echo $ERROR_FUEL_PRICE ?>!"
-            });            
+            });
             return false;
         }
 
@@ -195,7 +195,7 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $FUEL ?>",
                 'content': "<?php echo $ERROR_CAR_JOB ?>!"
-            });            
+            });
             return false;
         }
 
@@ -205,7 +205,7 @@ function is_userdata_formpart2_ok(){
                 $.jAlert({
                     'title': "<?php echo $FUEL ?>",
                     'content': "<?php echo $ERROR_FUEL_DIST ?>!"
-                });                
+                });
                 return false;
             }
 
@@ -216,21 +216,21 @@ function is_userdata_formpart2_ok(){
                 $.jAlert({
                     'title': "<?php echo $FUEL ?>",
                     'content': "<?php echo $ERROR_DAYS_PER_WEEK ?>!"
-                });                
+                });
                 return false;
             }
             if(!isNumber(f.km_entre_casa_trabalho.value)){
                 $.jAlert({
                     'title': "<?php echo $FUEL ?>",
                     'content': "<?php echo $ERROR_DIST_HOME_WORK ?>!"
-                });                 
+                });
                 return false;
             }
             if(!isNumber(f.km_fds.value)){
                 $.jAlert({
                     'title': "<?php echo $FUEL ?>",
                     'content': "<?php echo $ERROR_DIST_NO_JOB ?>!"
-                });                 
+                });
                 return false;
             }
 
@@ -243,7 +243,7 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $FUEL ?>",
                 'content': "<?php echo $ERROR_CURRENCY ?>!"
-            });             
+            });
             return false;
         }
         break;
@@ -263,16 +263,16 @@ function is_userdata_formpart2_ok(){
         $.jAlert({
             'title': "<?php echo $REP_IMPROV ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"
-        });        
+        });
         return false;
     }
-    
+
     /*parking*/
     if(!isNumber(f.parqueamento.value)){
         $.jAlert({
             'title': "<?php echo $PARKING ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"
-        });        
+        });
         return false;
     }
 
@@ -285,7 +285,7 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
                 'content': "<?php echo $INVALID_AMOUNT ?>!"
-            });            
+            });
             return false;
         }
 
@@ -294,7 +294,7 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
                 'content': "<?php echo $TOLLS_DAY_CALC1 ?> - <?php echo $INVALID_AMOUNT ?>!"
-            });            
+            });
             return false;
         }
         var toll_days_pmonth=f.number_days_tolls.value;
@@ -302,30 +302,30 @@ function is_userdata_formpart2_ok(){
             $.jAlert({
                 'title': "<?php echo $TOLLS ?>",
                 'content': "<?php echo $DAYS ?> - <?php echo $INVALID_AMOUNT ?>!"
-            });            
+            });
             return false;
         }
 
     }
-    
+
     /*fines*/
     if(!isNumber(f.tickets_value.value)){
         $.jAlert({
             'title': "<?php echo $FINES ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"
-        });        
+        });
         return false;
     }
-    
+
     /*washing*/
     if(!isNumber(f.washing_value.value)){
         $.jAlert({
             'title': "<?php echo $WASHING ?>",
             'content': "<?php echo $INVALID_AMOUNT ?>!"
-        });        
+        });
         return false;
     }
-    
+
     return true;
 }
 
@@ -335,7 +335,7 @@ function is_userdata_formpart2_ok(){
 function is_userdata_formpart3_ok(){
 
     var f = document.costs_form; //form
-    
+
     var public_transport = getCheckedSliderValue(f.slider1);
 
     if(public_transport){
@@ -346,7 +346,7 @@ function is_userdata_formpart3_ok(){
             $.jAlert({
                 'title': "<?php echo $EXTRA_DATA1 ?>",
                 'content': "<?php echo $INVALID_NBR_PP ?>!"
-            });           
+            });
             return false;
         }
 
@@ -354,7 +354,7 @@ function is_userdata_formpart3_ok(){
             $.jAlert({
                 'title': "<?php echo $EXTRA_DATA1 ?>",
                 'content': "<?php echo $ERROR_PASS_AMOUNT ?>!"
-            });            
+            });
             return false;
         }
     }
@@ -370,41 +370,41 @@ function is_userdata_formpart3_ok(){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_INCOME ?>",
                     'content': "<?php echo $ERROR_INCOME ?>!"
-                });                 
+                });
                 return false;
-            }			
+            }
             break;
         case 'month':
             if(!isNumber(f.income_per_month.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_INCOME ?>",
                     'content': "<?php echo $ERROR_INCOME ?>!"
-                });                 
+                });
                 return false;
             }
             if(!isNumber(f.income_months_per_year.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_INCOME ?>",
                     'content': "<?php echo $ERROR_MONTHS_PER_YEAR ?>!"
-                });                 
+                });
                 return false;
-            }			
+            }
             break;
         case 'week':
             if(!isNumber(f.income_per_week.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_INCOME ?>",
                     'content': "<?php echo $ERROR_INCOME ?>!"
-                });                 
+                });
                 return false;
             }
             if(!isNumber(f.income_weeks_per_year.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_INCOME ?>",
                     'content': "<?php echo $ERROR_WEEKS_PER_YEAR ?>!"
-                });                 
+                });
                 return false;
-            }			
+            }
             break;
         }
         /*working time*/
@@ -414,19 +414,19 @@ function is_userdata_formpart3_ok(){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_WORKING_TIME ?>",
                     'content': "<?php echo $ERROR_HOURS_PER_WEEK ?>!"
-                });                 
+                });
                 return false;
             }
             if(!isNumber(f.time_month_per_year.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_WORKING_TIME ?>",
                     'content': "<?php echo $ERROR_MONTHS_PER_YEAR ?>!"
-                });                 
+                });
                 return false;
             }
         }
     }
-     
+
     if(public_transport || fin_effort){
         /*distance*/
         if($('#distance_form3').css('display')!='none'){
@@ -436,21 +436,21 @@ function is_userdata_formpart3_ok(){
                     $.jAlert({
                         'title': "<?php echo $DISTANCE ?>",
                         'content': "<?php echo $ERROR_DAYS_PER_WEEK ?>!"
-                    }); 
+                    });
                     return false;
                 }
                 if(!isNumber(f.dist_home_job.value)){
                     $.jAlert({
                         'title': "<?php echo $DISTANCE ?>",
                         'content': "<?php echo $ERROR_DIST_HOME_WORK ?>!"
-                    });                     
+                    });
                     return false;
                 }
                 if(!isNumber(f.journey_weekend.value)){
                     $.jAlert({
                         'title': "<?php echo $DISTANCE ?>",
                         'content': "<?php echo $ERROR_DIST_NO_JOB ?>!"
-                    });                     
+                    });
                     return false;
                 }
             }
@@ -459,26 +459,26 @@ function is_userdata_formpart3_ok(){
                     $.jAlert({
                         'title': "<?php echo $DISTANCE ?>",
                         'content': "<?php echo $ERROR_FUEL_DIST ?>!"
-                    });                     
+                    });
                     return false;
                 }
             }
         }
-        
+
         /*time spent in driving*/
-        if (isVisible('.time_spent_part1_form3')){        
+        if (isVisible('.time_spent_part1_form3')){
             if(!isNumber(f.time_home_job.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>",
                     'content': "<?php echo $ERROR_MIN_DRIVE_HOME_JOB ?>!"
-                });                 
+                });
                 return false;
             }
             if(!isNumber(f.time_weekend.value)){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>",
                     'content': "<?php echo $ERROR_MIN_DRIVE_WEEKEND ?>!"
-                });                 
+                });
                 return false;
             }
         }
@@ -487,7 +487,7 @@ function is_userdata_formpart3_ok(){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>",
                     'content': "<?php echo $ERROR_MIN_DRIVE ?>!"
-                });                 
+                });
                 return false;
             }
             var days_drive_per_month = f.days_drive_per_month.value;
@@ -495,7 +495,7 @@ function is_userdata_formpart3_ok(){
                 $.jAlert({
                     'title': "<?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?>",
                     'content': "<?php echo $ERROR_DAYS_PER_MONTH ?>!"
-                });                 
+                });
                 return false;
             }
         }

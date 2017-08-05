@@ -2,37 +2,38 @@
 window.onload = initialize;
 
 function initialize() {
+
     //detects old versions of Internet Explorer
     oldIE();
-    
+
     CurrentFormPart=1;
-    
+
     TimeCounter.resetStopwatch();
-    ResultIsShowing=false; //global variable indicating whether the results are being shown
-    
-    //divs that need to be hidden    
-    frame_witdh = document.getElementById('monthly_costs').offsetWidth;
-    
-    DescriptionHTML = $('#description').html();
+    DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
+
+    //divs that need to be hidden
+    DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;
+
+    DISPLAY.descriptionHTML = $('#description').html();
 
     setRadioButton("insurancePaymentPeriod", "semestral");
     $("#main_form select").val('1'); //set all the selects to "month"
     $("#tickets_period_select").val('5'); //set fines period to year
     $("#washing_period_select").val('3'); //set washing period to trimester
-    
+
     //make some initial settings in the options of the form
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();
-    
+
     tolls_daily(false);
-    
+
     document.getElementById("radio_fuel_euros").checked = true;
     $('#currency_div_form2').show();
     $('#distance_div_form2').hide();
     document.getElementById("cred_auto_false").checked = true;
     $('#sim_credDiv').hide();
-    
-    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No 
+
+    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
     driveToJob(false);
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
     fuelCalculationMethodChange('currency');
@@ -47,18 +48,26 @@ function initialize() {
 
     //align radio button text
     $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
-    
+
     //defaults for the alert box
     $.fn.jAlert.defaults.size = 'sm';
     $.fn.jAlert.defaults.theme = 'default';
     $.fn.jAlert.defaults.closeOnClick = 'true';
-    
+
     //Google recaptcha
-    isHumanConfirmed = false; 
+    IS_HUMAN_CONFIRMED = false;
     $('#run_button').show();
     $('#run_button_noCapctha').hide();
-    
-    scrollPage();  
+
+    //renders according to Global swicthes
+    if(!SWITCHES.print){
+        $("#print_button").hide();
+    }
+    if(!SWITCHES.pdf){
+        $("#generate_PDF").hide();
+    }
+
+    scrollPage();
 }
 
 //function that runs when the page is resized
