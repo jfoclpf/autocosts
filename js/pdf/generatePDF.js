@@ -1,22 +1,27 @@
 function generatePDF(main_title){
 
-    var body0, body11, body12, body13, body2, body3, body4, body5;
-    var data;
+    var body0,
+        body11, body12, body13, body14,
+        body21, body22, body23, body24, body25,
+        body31, body32, body33, body34, body35, body36, body37,
+        body41, body42;
+    var title1, title2, title3, title4;
+    var chartData1, chartData2, chartData3, chartData4;  //chart images
 
     //main top table with total costs
     body0 = get_main_table("#result_table0");
 
     //monthly costs title and table
-    var monthly_costs_title = gstr($('#monthly_costs_title').html());
-    var costs_title_body = [[{text: monthly_costs_title, style: "header"}]];
+    title1 = gstr($('#monthly_costs_title').html());
+    body11 = [[{text: title1, style: "header"}]];
 
     //monthly costs tables
-    body11 = get_monthly_costs_table("#standing_costs_table");
-    body12 = get_monthly_costs_table("#running_costs_table");
-    body13 = get_monthly_costs_table("#total_costs_table");
+    body12 = get_monthly_costs_table("#standing_costs_table");
+    body13 = get_monthly_costs_table("#running_costs_table");
+    body14 = get_monthly_costs_table("#total_costs_table");
 
-    var imageData1 = $('#img_pie_chart_div').find('img').attr('src');
-    var imageData2 = $('#img_bar_chart_div').find('img').attr('src');
+    chartData1 = $('#img_pie_chart_div').find('img').attr('src');
+    chartData2 = $('#img_bar_chart_div').find('img').attr('src');
 
     var docDefinition = {
         header: {
@@ -37,29 +42,21 @@ function generatePDF(main_title){
                 table:{
                     headerRows: 0,
                     widths: ['*'],
-                    body: costs_title_body
+                    body: body11
                 }
             },
             {
-                image: imageData1,
+                image: chartData1,
                 width: 400,
                 height: 267,
                 style: 'img_style'
             },
             {
-                image: imageData2,
+                image: chartData2,
                 width: 400,
                 height: 300,
                 style: 'img_style',
                 pageBreak: 'after'
-            },
-            {
-                style: 'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: [ 390, '*' ],
-                    body: body11
-                }
             },
             {
                 style: 'tableMarging',
@@ -75,6 +72,14 @@ function generatePDF(main_title){
                     headerRows: 0,
                     widths: [ 390, '*' ],
                     body: body13
+                }
+            },
+            {
+                style: 'tableMarging',
+                table:{
+                    headerRows: 0,
+                    widths: [ 390, '*' ],
+                    body: body14
                 }
             }
         ],
@@ -133,98 +138,115 @@ function generatePDF(main_title){
 
     //financial effort title and table
     if(DISPLAY.result.fin_effort){
-        var fin_effort_title = gstr($('#fin_effort_title').html());
-        var fin_effort_title_body = [[{text: fin_effort_title, style: "header"}]];
+        //header
+        title2 = gstr($('#fin_effort_title').html());
+        body21 = [[{text: title2, style: "header"}]];
+        body22 = {
+                    style: 'tableMarging',
+                    table:{
+                        headerRows: 0,
+                        widths: ['*'],
+                        body: body21
+                    },
+                    pageBreak: 'before'
+                };
+        docDefinition.content.push(body22);
 
-        body2 = getBodyFinEffort("#result_table3");
-        var imageData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
+        //chart
+        if(DISPLAY.charts.isFinEffortChart){
+            chartData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
+            body23 = {
+                        image: chartData3,
+                        width: 400,
+                        height: 200,
+                        style: 'img_style'
+                    };
+            docDefinition.content.push(body23);
+        }
 
-        var body2_objA = {
-                style: 'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: ['*'],
-                    body: fin_effort_title_body
-                },
-                pageBreak: 'before'
-            };
-        var body2_objB = {
-                image: imageData3,
-                width: 400,
-                height: 200,
-                style: 'img_style'
-            };
-        var body2_objC = {
-                style:'tableMarging',
-                table:{
-                    headerRows: 1,
-                    widths: [ 390, '*' ],
-                    body: body2
-                }
-            };
+        //table
+        body24 = getBodyFinEffort("#result_table3");
+        body25 = {
+                    style:'tableMarging',
+                    table:{
+                        headerRows: 1,
+                        widths: [ 390, '*' ],
+                        body: body24
+                    }
+                };
+        docDefinition.content.push(body25);
 
-        docDefinition.content.push(body2_objA);
-        docDefinition.content.push(body2_objB);
-        docDefinition.content.push(body2_objC);
     }
 
     //optional public transports table
     if (DISPLAY.result.public_transports || DISPLAY.result.uber){
-        //section title
-        var p_t_title = gstr($('#alternative_to_carcosts_section').html());
-        var p_t_title_body = [[{text: p_t_title, style: "header"}]];
-        var p_t_title_obj = {
-            style: 'tableMarging',
-            table:{
-                    headerRows: 0,
-                    widths: ['*'],
-                    body: p_t_title_body
-                },
-                pageBreak: 'before'
-            };
-        docDefinition.content.push(p_t_title_obj);
+        //header
+        title3 = gstr($('#alternative_to_carcosts_section').html());
+        body31 = [[{text: title3, style: "header"}]];
+        body32 =  {
+                                style: 'tableMarging',
+                                table:{
+                                        headerRows: 0,
+                                        widths: ['*'],
+                                        body: body31
+                                    },
+                                    pageBreak: 'before'
+                            };
+        docDefinition.content.push(body32);
+
+        //chart
+        if(DISPLAY.charts.isAlterToCarChart){
+            chartData4 = $('#img_alternative_carcosts_chart_div').find('img').attr('src');
+            body33 = {
+                        image: chartData4,
+                        width: 400,
+                        height: 350,
+                        style: 'img_style'
+                    };
+            docDefinition.content.push(body33);
+        }
 
         if(DISPLAY.result.public_transports){
-            body3 = get_publict_table("#result_table2");
-            body3_obj = {
+            body34 = get_publict_table("#result_table2");
+            body35 = {
                 style:'tableMarging',
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body3
+                    body: body34
                 }
             };
-            docDefinition.content.push(body3_obj);
+            docDefinition.content.push(body35);
         }
 
         //uber
         if(DISPLAY.result.uber){
-            body5 = get_uber_table("#result_table_uber");
-            body5_obj = {
+            body36 = get_uber_table("#result_table_uber");
+            body37 = {
                 style:'tableMarging',
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body5
+                    body: body36
                 }
             };
-            docDefinition.content.push(body5_obj);
+            docDefinition.content.push(body37);
         }
     }
 
     //optional external costs table
     if(DISPLAY.result.ext_costs){
-        body4 = get_publict_table("#result_table4");
-        body4_obj = {
+        body41 = get_publict_table("#result_table4");
+        body42 = {
                         style:'tableMarging',
                         table:{
                             headerRows: 0,
                             widths: [ 390, '*' ],
-                            body: body4
+                            body: body41
                         },
                         pageBreak: 'before'
                     };
-        docDefinition.content.push(body4_obj);
+        docDefinition.content.push(body42);
     }
 
     //Languages/alphabets that need special fonts, load such fonts from different files

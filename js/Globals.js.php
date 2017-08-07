@@ -24,6 +24,7 @@ var CALCULATED = {
 var DISPLAY = {
     centralFrameWidth :  0,  //width of central frame #div2
     descriptionHTML :   "",
+    //result information got after user click "run"
     result: {
         isShowing          : false,  //tells whether the result with result tables is being shown
         fin_effort         : false,
@@ -35,7 +36,11 @@ var DISPLAY = {
         WIDTH_PX_OFF:    280, //client width in px under which the charts are not shown
         MIN_RATIO:       0.7, //minimum ratio width of charts as frame_witdh becomes too wide
         MIN_RATIO_WIDTH: 750, //width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO
-        MIN_LEGEND:      425  //window width value under which the legends of the charts are hidden
+        MIN_LEGEND:      425, //window width value under which the legends of the charts are hidden
+        isMonthlyCostsPieChart: false, //prints chart bool variable
+        isMonthlyCostsBarChart: false, //prints chart bool variable
+        isFinEffortChart:       false, //prints chart bool variable
+        isAlterToCarChart:      false  //prints chart bool variable
     },
     RunButtonStr: '<?php echo $BUTTON_RUN; ?>'
 };

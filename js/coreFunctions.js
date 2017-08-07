@@ -12,6 +12,15 @@ function isDef(variable){
     }
 }
 
+function isObjDef(Obj){
+    if (Obj === null || Obj == "null" || typeof Obj !== 'object' || $.isEmptyObject(Obj)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
 function date_diff(date1, date2) {//return the difference in months between two dates date2-date1
     var m2, y2, m1, y1;
     m2 = date2.getUTCMonth() + 1;
@@ -726,7 +735,7 @@ function get_uber(uber_obj, data, country){
     }
 
     //checks if uber_obj is an object
-    if (uber_obj === null || typeof uber_obj !== 'object' || uber_obj == "null"){
+    if (!isObjDef(uber_obj)){
         return false;
     }
 
@@ -769,13 +778,13 @@ function get_uber(uber_obj, data, country){
 
     //1st case, in which driver can replace every journey by uber
     if (tuc<tcpm){
-        result_type=1;
+        result_type = 1;
         delta = tcpm-tuc;
     }
     //2nd case, where uber equivalent is more expensive
     //tries to combine uber with other public transports less expensive per unit-distance
     else {
-        result_type=2;
+        result_type = 2;
 
         //if public transports (with monthly pass) are not an option
         if(!data.public_transports.display_pt()) {
@@ -784,12 +793,16 @@ function get_uber(uber_obj, data, country){
 
         //amount that is left after public transports (monthly passes) are paid
         delta = tcpm - tcpt;
-        if(delta<0){
+        if(delta < 0){
             return false;
         }
 
         //how many distance (km or miles) can be done by uber with delta
         dist_uber = delta /(ucd-ucm*data.kinetic_speed/60);
+
+        if (dist_uber < 0){
+            return false;
+        }
     }
 
     //object to be returned by this function

@@ -51,6 +51,8 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
     });
 
     chart.draw(char_data, options);
+
+    DISPLAY.charts.isMonthlyCostsPieChart = true;
 }
 
 //draw bar chart
@@ -110,7 +112,6 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
                             ''
                         ]
                     ];
-    console.log("drawMonthlyCostsBarChart", JSON.stringify(chart_content, null, 4));
 
     char_data = google.visualization.arrayToDataTable(chart_content);
 
@@ -149,6 +150,8 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     };
 
     chart1.draw(char_data, options);
+
+    DISPLAY.charts.isMonthlyCostsBarChart = true;
 }
 
 //draws horizontal bars chart for Financial Effort
@@ -199,15 +202,25 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     });
 
     chart.draw(data, options);
+
+    DISPLAY.charts.isFinEffortChart = true;
 }
 
 //draw bar chart
 function drawAlterToCarChart(chartWidth, chartHeight) {
 
     var char_data, chart_legend, chart_inner_width, bar_width, options, chart_content;
+
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
     var pt = CALCULATED.data.public_transports;
     var u = CALCULATED.uber;
+    //boolean variables
+    var pt_bool = isObjDef(pt) && pt.display_pt() && DISPLAY.result.public_transports;
+    var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber;
+
+    if(!pt_bool && !u_bool){
+        return;
+    }
 
     //it makes some strange arrays operations, because according to Google Charts
     //when one has stacked vertical bar charts, all the arrays, for each column must be the same size
@@ -244,8 +257,10 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                             c.washing
                         ];
 
+
+
     //Public Transports
-    if(pt.display_pt()) {
+    if(pt_bool) {
 
         var taxi_text = "<?php echo $TAXI_DESL ?>" + " - " +
                         CALCULATED.data.public_transports.km_by_taxi.toFixed(1) + " " +
@@ -285,13 +300,16 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     }
 
     //UBER
-    if(SWITCHES.uber && u){
+    if(u_bool){
         var uber_array =
                         [
                             "UBER",
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ];
-        if(pt.display_pt()) {
+
+        if(pt_bool) {
+            pt_array.push(0, 0);
+
             if(pt.display_other_pt) {
                 uber_array.push(0, 0, 0);
             }
@@ -299,8 +317,6 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                 uber_array.push(0, 0);
             }
         }
-
-        pt_array.push(0, 0);
 
         if(u.result_type == 1){
             legend.push(
@@ -328,7 +344,6 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
         }
     }
 
-
     legend.push({ role: 'annotation' });
     monthly_costs.push("");
 
@@ -354,12 +369,12 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     char_data = google.visualization.arrayToDataTable(chart_content);
     // Create and draw the visualization.
 	var chart_div = document.getElementById('alternative_carcosts_chart_div');
-    var chart1 = new google.visualization.ColumnChart(chart_div);
+    var chart = new google.visualization.ColumnChart(chart_div);
 
 	//Wait for the chart to finish drawing before calling the getImageURI() method.
-    google.visualization.events.addListener(chart1, 'ready', function () {
+    google.visualization.events.addListener(chart, 'ready', function () {
 		var img_div =  document.getElementById('img_alternative_carcosts_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart1.getImageURI() + '">';
+        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';
     });
 
     //cross browser solution; if the window width is too small hides legend of chart
@@ -375,8 +390,8 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     options = {
                 title: "<? echo $COSTS; ?>",
                 backgroundColor: {fill: 'transparent'},
-                chartArea: {top: 0, width: chart_inner_width, height: "85%"},
-                vAxis: { minValue: 0},
+                chartArea: {top: 5, width: chart_inner_width, height: "85%"},
+                vAxis: { minValue: 0, textPosition: 'none'},
                 legend: {position: "none"},
                 bar: { groupWidth: bar_width },
                 isStacked: true,
@@ -384,7 +399,9 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                 height: chartHeight
               };
 
-    chart1.draw(char_data, options);
+    chart.draw(char_data, options);
+
+    DISPLAY.charts.isAlterToCarChart = true;
 }
 
 //for chart display numeric purposes (value)

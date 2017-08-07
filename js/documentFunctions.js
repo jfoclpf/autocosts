@@ -285,6 +285,18 @@ function reload() {
     TimeCounter.resetStopwatch();
     DISPLAY.result.isShowing = false;
 
+    //set result sections as not being shown
+    DISPLAY.result.fin_effort = false;
+    DISPLAY.result.public_transports = false;
+    DISPLAY.result.uber = false;
+    DISPLAY.result.ext_costs = false;
+
+    //set charts as not being shown
+    DISPLAY.charts.isMonthlyCostsPieChart = false;
+    DISPLAY.charts.isMonthlyCostsBarChart = false;
+    DISPLAY.charts.isFinEffortChart = false;
+    DISPLAY.charts.isAlterToCarChart = false;
+
     //if the results were already shown, it means user went already through ReCaptcha
     IS_HUMAN_CONFIRMED = true;
 

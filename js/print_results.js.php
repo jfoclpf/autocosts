@@ -57,13 +57,15 @@ function Run2(callback){
         DISPLAY.result.fin_effort = false;
     }
 
-    //public transports and alternative to car costs tables
-    if(data.public_transports_calculated){
+    //Alternative to car costs tables: public transports and uber
+    if(data.public_transports.display_pt() || isObjDef(UBER_API)){
+
         CALCULATED.uber = get_uber(UBER_API, data, country);
-        var public_transport_table_HTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, CALCULATED.uber, country);
-        if(public_transport_table_HTML !== ""){
+        var alternToCarCostsTableHTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, CALCULATED.uber, country);
+
+        if(alternToCarCostsTableHTML !== ""){
             $("#alternative_to_carcosts, #alternative_to_carcosts_section").show("slow");
-            $("#alternative_to_carcosts").html(public_transport_table_HTML);
+            $("#alternative_to_carcosts").html(alternToCarCostsTableHTML);
         }
         else{
             $("#alternative_to_carcosts_section").hide();
@@ -111,6 +113,7 @@ function Run2(callback){
 
     //gets result frame width to draw charts within it
     DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;
+
     drawChartResult();
 
     //hides description, left and right columns
@@ -709,18 +712,22 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
 
     //UBER
     if(SWITCHES.uber && !$.isEmptyObject(res_uber_obj)){
-        console.log("UBER: ", JSON.stringify(res_uber_obj, null, 4));
         DISPLAY.result.uber = true; //says uber table is to be printed; global variable
 
         //add source in table for uber URL
         var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
         var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
 
+        //if previous table is printed, add a breakline
+        if (data.public_transports.display_pt()){
+            varResult+="<br>";
+        }
+
         //in which driver can replace every km by uber
         //the remaining money is applied to public transport
-        if(res_uber_obj.result_type==1){
+        if(res_uber_obj.result_type == 1){
             //starts HTML table
-            varResult+="<br><table class=\"result_table uber_table\" id=\"result_table_uber\">";
+            varResult+="<table class=\"result_table uber_table\" id=\"result_table_uber\">";
 
             varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" +
                        "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
@@ -748,9 +755,9 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
 
         //the case where uber equivalent is more expensive
         //the driver shall spend the equivalent car money in public transports and the remaining in uber
-        else if(res_uber_obj.result_type==2){
+        else if(res_uber_obj.result_type == 2){
             //starts HTML table
-            varResult+="<br><table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
+            varResult+="<table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
 
             varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
                        "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" +
@@ -775,9 +782,6 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
                        "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
 
             varResult+="</table>";
-        }
-        else{
-            DISPLAY.result.uber = false;
         }
     }
     else{
@@ -920,7 +924,7 @@ function drawChartResult(){
     }
 
     //draw Alternative to Car Costs Chart
-    if(CALCULATED.data.public_transports_calculated){//if the public alternative transports were calculated
+    if(CALCULATED.data.public_transports_calculated){//if the alternative to car transports were calculated
         var alter_to_car_chart_width=parseInt(frameWidth * 0.8);
         var alter_to_car_chart_height=parseInt(alter_to_car_chart_width*55/50);
 
