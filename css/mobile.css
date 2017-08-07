@@ -3,7 +3,7 @@
 /*==================================================================================================*/
 
 @media all and (max-width: 1024px) {
-    
+
     #div3_td, #div1_td {
         width:25%;
     }
@@ -16,7 +16,7 @@
     #country_box input[type="text"] {
         width: 80%;
     }
-    #div13, 
+    #div13,
     #div3a {
         margin: 2%;
     }
@@ -39,11 +39,11 @@
 
 /*The treshold from which the blocks are vertically aligned*/
 @media all and (max-width: 768px) {
-    
+
     #container_table{
         display: block;
     }
-    
+
     #main_div{
         padding: 2.5%;
     }
@@ -104,10 +104,19 @@
     }
 }
 
-@media all and (max-width: 500px) {
+/*most popular smartphones have a screen width of 640px */
+/*https://deviceatlas.com/blog/most-popular-smartphone-screen-resolutions-2015 */
+@media all and (max-width: 645px) {
     .result_div {
-        font-size: 80%;
-        margin: 0 2%;
+        font-size: 90%;
+        margin: 5px !important;
+    }
+    .result_section{
+        background: none;
+        border: none;
+    }
+    .hr {
+        display: block !important;
     }
     #input_div table td:nth-child(2n){
         width: 35%;
@@ -129,7 +138,7 @@
         width: auto;
         margin: 20px 0 20px 0;
     }
-    
+
     #input_div table td:nth-child(2n){
         width: 40%;
     }
@@ -137,11 +146,11 @@
     .result_div {
         font-size: 105%;
     }
-    
+
     .result_table {
         margin: 6px auto;
     }
-    
+
     .result_table,
     #result_table0,
     .costs_table,
@@ -173,7 +182,7 @@
     .result_table tr:last-child {
         background-color: transparent;
     }
-    .costs_table tr:last-child, 
+    .costs_table tr:last-child,
     #result_table2 tr:first-child,
     #result_table2 tr:last-child,
     #result_table_uber tr:first-child,
@@ -183,7 +192,7 @@
         background-color: #fff;
         border-radius: 0 !important;
     }
-    
+
     .result_table td {
         display: block;
         margin: 0 auto;
@@ -193,9 +202,9 @@
         border-left: 0;
         border-right: 0;
         border-bottom: solid 1px #b6b6b6;
-        border-radius: 0 !important; 
+        border-radius: 0 !important;
     }
-    
+
     .result_table tr td:nth-child(2),
     #result_table0 tr:nth-child(2) td:last-child,
     .costs_table tr:nth-child(2) td+td,
@@ -207,7 +216,7 @@
     #result_table_uber tr:nth-last-child(2) td:last-child {
         border:0;
     }
-    
+
     #result_table0 tr:nth-child(2) td:nth-child(2),
     #result_table0 tr:nth-child(2) td:nth-child(3),
     #result_table0 tr:nth-child(2) td:nth-child(4),
@@ -223,18 +232,18 @@
     #result_table4 tr:nth-last-child(2) td:first-child,
     #result_table_uber tr:last-child td:first-child,
     #result_table_uber tr:nth-last-child(2) td:first-child {
-        text-align: center; 
+        text-align: center;
     }
     #result_table2 tr:first-child td:first-child,
     #result_table4 tr:first-child td:first-child {
         border-bottom: 1px solid #b4b4b4;
     }
-    
+
     .costs_table tr:last-child td:last-child {
         border-top: 0;
         padding-left: 0;
     }
-   
+
     .costs_table tr:last-child td:last-child,
     #result_table2 tr:last-child td:last-child,
     #result_table_uber tr:last-child td:last-child    {

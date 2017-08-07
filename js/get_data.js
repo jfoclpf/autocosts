@@ -67,7 +67,7 @@ function get_form_part3(){
     var d = document.costs_form; //main form document variable
     var data = {
         //public transports section
-        IsAlternativeToCarCosts:          getCheckedSliderValue(d.slider1),
+        IsAlternativeToCarCosts:     getCheckedSliderValue(d.slider1),
         n_pess_familia:              d.pessoas_agregado.value,
         monthly_pass_cost:           d.preco_passe.value,
 

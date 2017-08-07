@@ -1,4 +1,7 @@
 /*************** RESULTS, TABLES and CHARTS ***************/
+.hr {
+    display: none;
+}
 
 .result_div {
     margin: 15px;
@@ -35,13 +38,13 @@
     border-radius:12px;
     border-width:5px;
     margin: 10px;
-    display: inline-block; 
-    padding:2%; 
-    font-size:350%; 
-    width:auto; 
-    font-family:Impact; 
-    color:red; 
-    border-style:solid;  
+    display: inline-block;
+    padding:2%;
+    font-size:350%;
+    width:auto;
+    font-family:Impact;
+    color:red;
+    border-style:solid;
 }
 
 
@@ -69,11 +72,11 @@
 .costs_table tr:last-child td + td,
 .total_costs_table td + td,
 .total_costs_table tr:nth-child(2) td,
-.total_costs_table tr:nth-child(3) td {    
-    text-align: left !important; 
+.total_costs_table tr:nth-child(3) td {
+    text-align: left !important;
 }
 
-.costs_table tr:last-child td, 
+.costs_table tr:last-child td,
 #result_table2 tr:last-child td,
 #result_table3 tr:last-child td,
 .uber_table tr:last-child td {
@@ -112,7 +115,7 @@
 }
 .costs_table tr:nth-child(9) td+td {
     padding-bottom: 4px;
-    padding-top: 4px; 
+    padding-top: 4px;
 }
 
 .uber_table tr:first-child td,
@@ -128,7 +131,7 @@
 }
 
 .costs_table tr:nth-child(2) td {
-    text-align: center; 
+    text-align: center;
 }
 
 #result_table0 tr:nth-child(3) td,

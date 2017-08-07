@@ -384,11 +384,8 @@ function resized(callback){
 
     //if the result are showing resizes the charts
     if(DISPLAY.result.isShowing){
-        FRAME_WIDTH = document.getElementById("div2").offsetWidth;
+        DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;
         drawChartResult();
-
-        //prints final text accordingly
-        var text_msg = print_result_final_text();
     }
 
     if (typeof callback === 'function'){

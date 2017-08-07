@@ -17,7 +17,7 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
 
     chart_content = [
                         ["<?php echo $PARCEL; ?>", "<?php echo $COSTS; ?>" ],
-                        [COUNTRY=='RU' || COUNTRY=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>", c.insurance],
+                        [COUNTRY=='RU' || COUNTRY=="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>", c.insurance],
                         ["<?php echo $FUEL; ?>",                    c.fuel],
                         ["<?php echo $DEPRECIATION; ?>",            c.depreciation],
                         ["<?php echo $CREDIT_INTERESTS; ?>",        c.credit],
@@ -65,7 +65,7 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     chart_content = [
                         [
                             "<?php echo $PARCEL; ?>",
-                            COUNTRY=="RU" || COUNTRY=="UA" ? "<? echo $INSURANCE_CHART; ?>" : "<? echo $INSURANCE_SHORT; ?>",
+                            COUNTRY=="RU" || COUNTRY=="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>",
                             "<?php echo $FUEL; ?>",
                             "<?php echo $DEPRECIATION; ?>",
                             "<?php echo $CREDIT_INTERESTS; ?>",
@@ -138,7 +138,7 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     }
 
     options = {
-        title: "<? echo $COSTS; ?>",
+        title: "<?php echo $COSTS; ?>",
         backgroundColor: {fill: 'transparent'},
         chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
         vAxis: { minValue: 0},
@@ -160,7 +160,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     var chart_data, data, options, chart, br_html, top_var, chart_inner_height;
 
     chart_data = [
-         ['','<? echo $NET_INCOME_PER." ".$YEAR; ?>', '<? echo $TOTAL_COSTS_PER_YEAR; ?>'],
+         ['','<?php echo $NET_INCOME_PER." ".$YEAR; ?>', '<?php echo $TOTAL_COSTS_PER_YEAR; ?>'],
          ['', net_income_per_year, total_cost_per_year],
     ];
 
@@ -175,7 +175,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     }
     else{
         br_html = '';
-        chart_inner_height = "90%";
+        chart_inner_height = "80%";
         top_var = 10;
     }
 
@@ -388,7 +388,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     }
 
     options = {
-                title: "<? echo $COSTS; ?>",
+                title: "<?php echo $COSTS; ?>",
                 backgroundColor: {fill: 'transparent'},
                 chartArea: {top: 5, width: chart_inner_width, height: "85%"},
                 vAxis: { minValue: 0, textPosition: 'none'},

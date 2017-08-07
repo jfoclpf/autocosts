@@ -158,7 +158,7 @@ function generatePDF(main_title){
             body23 = {
                         image: chartData3,
                         width: 400,
-                        height: 200,
+                        height: 220,
                         style: 'img_style'
                     };
             docDefinition.content.push(body23);

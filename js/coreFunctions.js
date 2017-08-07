@@ -654,7 +654,7 @@ function calculate_costs(f1, f2, f3, country){
         monthly_costs: monthly_costs,                    //object with the calculated monthly costs
 
         public_transports: undefined,                    //object with the car-alternative public transports costs
-        public_transports_calculated: false,
+        alternative_to_car_costs_calculated: false,
 
         fin_effort: undefined,                           //object with financial effort variables
         fin_effort_calculated: false,
@@ -697,7 +697,7 @@ function calculate_costs(f1, f2, f3, country){
     };
 
     if (f3.IsAlternativeToCarCosts){
-        output.public_transports_calculated = true;
+        output.alternative_to_car_costs_calculated = true;
         output.public_transports = public_transports;
     }
     if (f3.IsFinancialEffort){
@@ -725,7 +725,7 @@ function get_uber(uber_obj, data, country){
 
     //if public transporst information was not obtained from user
     //in form part 3, then leaves by returning false
-    if(!(data.public_transports_calculated)){
+    if(!(data.alternative_to_car_costs_calculated)){
         return false;
     }
 

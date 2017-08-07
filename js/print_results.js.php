@@ -58,7 +58,7 @@ function Run2(callback){
     }
 
     //Alternative to car costs tables: public transports and uber
-    if(data.public_transports.display_pt() || isObjDef(UBER_API)){
+    if(data.alternative_to_car_costs_calculated){
 
         CALCULATED.uber = get_uber(UBER_API, data, country);
         var alternToCarCostsTableHTML = print_AlternativeToCarCosts_table(f1, f2, f3, data, CALCULATED.uber, country);
@@ -924,7 +924,7 @@ function drawChartResult(){
     }
 
     //draw Alternative to Car Costs Chart
-    if(CALCULATED.data.public_transports_calculated){//if the alternative to car transports were calculated
+    if(CALCULATED.data.alternative_to_car_costs_calculated){//if the alternative to car transports were calculated
         var alter_to_car_chart_width=parseInt(frameWidth * 0.8);
         var alter_to_car_chart_height=parseInt(alter_to_car_chart_width*55/50);
 
