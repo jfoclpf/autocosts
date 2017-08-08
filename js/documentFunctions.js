@@ -7,6 +7,10 @@ var hasLoadedPart = [false, false, false, false]; //global array variable for fu
 var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
 var CurrentFormPart; //global variable for the current Form Part
 
+function gChartsCallback(){
+    console.log("2");
+}
+
 /*functions which is used to change the form parts*/
 function openForm_part(part_number_origin, part_number_destiny) {
 
@@ -15,23 +19,7 @@ function openForm_part(part_number_origin, part_number_destiny) {
 
         if (!hasLoadedPart[0]){
             $.getScript("js/coreFunctions.js", function(){
-
-                if (SWITCHES.g_charts){
-                    //Tries to load Google chart JS files
-                    $.getScript("https://www.gstatic.com/charts/loader.js")
-                        .done(function(){
-                            SERVICE_AVAILABILITY.g_charts = true;
-                        })
-                        .fail(function(){
-                            SERVICE_AVAILABILITY.g_charts = false; //can't load google charts
-                    });
-                }
-                else {
-                    SERVICE_AVAILABILITY.g_charts = false;
-                }
-
                 hasLoadedPart[0] = true;
-
                 if (!is_userdata_formpart1_ok()){
                     return;
                 }
@@ -72,14 +60,14 @@ function openForm_part(part_number_origin, part_number_destiny) {
                 if (SWITCHES.g_captcha){
                     $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE)
                         .done(function(){
-                            SERVICE_AVAILABILITY.g_charts = true;
+                            SERVICE_AVAILABILITY.g_captcha = true;
                         })
                         .fail(function(){
-                            SERVICE_AVAILABILITY.g_charts = false;
+                            SERVICE_AVAILABILITY.g_captcha = false;
                     });
                 }
                 else{
-                    SERVICE_AVAILABILITY.g_charts = false;
+                    SERVICE_AVAILABILITY.g_captcha = false;
                 }
             });
 
@@ -99,29 +87,23 @@ function openForm_part(part_number_origin, part_number_destiny) {
 
             hasLoadedPart[1] = true;
         }
-    }
-
-    //change from form part 2 to 3
-    if (part_number_origin==2 && part_number_destiny==3){
-        if (!is_userdata_formpart2_ok()){
-            return;
-        }
 
         if (!hasLoadedPart[2]){
-            //If Google Charts JS files are available
-            if(SERVICE_AVAILABILITY.g_charts && SWITCHES.g_charts){
-                google.charts.load('current', {"packages": ["corechart"], "language": LANGUAGE, "callback": function(){
-                    hasLoadedPart[2]=true;
-                    shows_part(2, 3);
-                }});
+            if (SWITCHES.g_charts){
+                //Tries to load Google chart JS files
+                $.getScript("https://www.gstatic.com/charts/loader.js")
+                    .done(function(){
+                        SERVICE_AVAILABILITY.g_charts = true;
+                        google.charts.load( 'current', {"packages": ["corechart"], "language": LANGUAGE });
+                        hasLoadedPart[2] = true;
+                    })
+                    .fail(function(){
+                        SERVICE_AVAILABILITY.g_charts = false; //can't load google charts
+                });
             }
-            else{
-                hasLoadedPart[2]=true;
-                shows_part(2, 3);
+            else {
+                SERVICE_AVAILABILITY.g_charts = false;
             }
-        }
-        else{
-            shows_part(2, 3);
         }
 
         if (!hasLoadedPart[3]){
@@ -170,6 +152,14 @@ function openForm_part(part_number_origin, part_number_destiny) {
         }
     }
 
+    //change from form part 2 to 3
+    if (part_number_origin==2 && part_number_destiny==3){
+        if (!is_userdata_formpart2_ok()){
+            return;
+        }
+        shows_part(2, 3);
+    }
+
     //change from form part 3 to 2
     if (part_number_origin==3 && part_number_destiny==2){
         shows_part(3, 2);
@@ -190,7 +180,7 @@ function shows_part(part_number_origin, part_number_destiny){
     var d=part_number_destiny;
 
     //if not a test triggers event for Google Analytics accordingly
-    if(!IsThisAtest() && SERVICE_AVAILABILITY.g_analytics && SWITCHES.g_analytics){
+    if(!IsThisAtest() && SWITCHES.g_analytics && SERVICE_AVAILABILITY.g_analytics){
         if(d==2 && !hasShownPart2){
             ga("send", "event", "form_part", "form_part_2");
             hasShownPart2=true;

@@ -7,9 +7,9 @@
     //Tries to load Google Analytics JS file
     $.getScript("https://www.google-analytics.com/analytics.js")
         .done(function(){
-            IsGoogleAnalytics = true;
+            SERVICE_AVAILABILITY.g_analytics = true;
         })
         .fail(function(){
-            IsGoogleAnalytics = false;
+            SERVICE_AVAILABILITY.g_analytics = false;
     });
 </script>

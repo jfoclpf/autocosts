@@ -1,12 +1,13 @@
 <?php Header("content-type: application/x-javascript");
 if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 $GLOBALS['country'] = $_GET['country'];?>
 
 //Define GLOBAL Javascript variables
 var COUNTRY = '<?php echo $GLOBALS["country"]; ?>';
 //Language code according to ISO_639-1 codes
-var LANGUAGE = '<?php echo $lang_CT[$GLOBALS['country']]; ?>';
+var LANGUAGE = '<?php echo $lang_CT[$GLOBALS["country"]]; ?>';
 //List of domains in a Javascript Object
 var DOMAIN_LIST = <?php echo json_encode($domain_CT); ?>;
 //global variable for Google reCaptcha
