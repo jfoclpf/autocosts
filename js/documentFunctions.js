@@ -2,177 +2,58 @@
 /*====================================================*/
 /*Functions which work on the page*/
 
-/*Globals*/
-var hasLoadedPart = [false, false, false, false]; //global array variable for function openForm_part
-var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
-var CurrentFormPart; //global variable for the current Form Part
-
-function gChartsCallback(){
-    console.log("2");
-}
-
 /*functions which is used to change the form parts*/
-function openForm_part(part_number_origin, part_number_destiny) {
+var openForm_part = (function(part_number_origin, part_number_destiny) {
 
-    //change from form part 1 to 2
-    if (part_number_origin===1 && part_number_destiny===2){
+    var hasLoadedCoreFunctions = false; //local variable
 
-        if (!hasLoadedPart[0]){
-            $.getScript("js/coreFunctions.js", function(){
-                hasLoadedPart[0] = true;
+    return function (part_number_origin, part_number_destiny) {
+
+        //change from form part 1 to 2
+        if (part_number_origin===1 && part_number_destiny===2){
+
+            if (!hasLoadedCoreFunctions){
+                $.getScript("js/coreFunctions.js", function(){
+                    hasLoadedCoreFunctions = true;
+                    if (!is_userdata_formpart1_ok()){
+                        return;
+                    }
+                    shows_part(1, 2);
+                });
+            }
+            else{
                 if (!is_userdata_formpart1_ok()){
                     return;
                 }
                 shows_part(1, 2);
-            });
+            }
+
+            loadExtraFiles();
         }
-        else{
-            if (!is_userdata_formpart1_ok()){
+
+        //change from form part 2 to 3
+        if (part_number_origin==2 && part_number_destiny==3){
+            if (!is_userdata_formpart2_ok()){
                 return;
             }
-            shows_part(1, 2);
+            shows_part(2, 3);
         }
 
-        if (!hasLoadedPart[1]){
-            $.getScript("js/conversionFunctions.js");
-            $.getScript("db_stats/statsFunctions.js");
-            $.getScript("js/get_data.js");
-
-            if (SWITCHES.print){
-                $.getScript("js/print.js");
-            }
-
-            if (SWITCHES.g_charts){
-                $.getScript("js/charts.js.php?country="+COUNTRY, function() {
-                    $.getScript("js/print_results.js.php?country="+COUNTRY);
-                });
-            }
-            else{
-                $.getScript("js/print_results.js.php?country="+COUNTRY);
-            }
-
-            if (SWITCHES.data_base){
-                $.getScript("js/dbFunctions.js");
-            }
-
-            $.getScript("js/g-recaptcha.js", function() {
-
-                if (SWITCHES.g_captcha){
-                    $.getScript("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE)
-                        .done(function(){
-                            SERVICE_AVAILABILITY.g_captcha = true;
-                        })
-                        .fail(function(){
-                            SERVICE_AVAILABILITY.g_captcha = false;
-                    });
-                }
-                else{
-                    SERVICE_AVAILABILITY.g_captcha = false;
-                }
-            });
-
-            if (SWITCHES.social){
-                //Jquery social media share plugins
-                $.getScript("js/social/jssocials.min.js");
-
-                $('<link/>', {
-                   rel: 'stylesheet', type: 'text/css',
-                   href: 'css/social/jssocials.css'
-                }).appendTo('head');
-                $('<link/>', {
-                   rel: 'stylesheet', type: 'text/css',
-                   href: 'css/social/jssocials-theme-classic.css'
-                }).appendTo('head');
-            }
-
-            hasLoadedPart[1] = true;
+        //change from form part 3 to 2
+        if (part_number_origin==3 && part_number_destiny==2){
+            shows_part(3, 2);
         }
 
-        if (!hasLoadedPart[2]){
-            if (SWITCHES.g_charts){
-                //Tries to load Google chart JS files
-                $.getScript("https://www.gstatic.com/charts/loader.js")
-                    .done(function(){
-                        SERVICE_AVAILABILITY.g_charts = true;
-                        google.charts.load( 'current', {"packages": ["corechart"], "language": LANGUAGE });
-                        hasLoadedPart[2] = true;
-                    })
-                    .fail(function(){
-                        SERVICE_AVAILABILITY.g_charts = false; //can't load google charts
-                });
-            }
-            else {
-                SERVICE_AVAILABILITY.g_charts = false;
-            }
-        }
-
-        if (!hasLoadedPart[3]){
-            $.getScript("google/rgbcolor.js");
-            $.getScript("google/canvg.js");
-
-            //uber
-            if (SWITCHES.uber){
-                if(COUNTRY!="XX"){//if not test version
-                    //gets asynchronously UBER information
-                    $.get( "php/get_uber.php?c=" + COUNTRY, function(data) {
-                        //alert(JSON.stringify(data, null, 4));
-                        UBER_API =  data; //UBER_API is a global variable
-                    });
-                }
-                else{//test version (London city, in Pounds)
-                    UBER_API.cost_per_distance = 1.25;
-                    UBER_API.cost_per_minute = 0.15;
-                    UBER_API.currency_code = "GBP";
-                    UBER_API.distance_unit = "mile";
-                }
-            }
-
-            if(SWITCHES.pdf){
-                //wait until all PDF related files are loaded
-                //to activate the downloadPDF button
-                $.getScript("js/pdf/generatePDF.js", function() {
-                    $.getScript("js/pdf/pdfmake.js", function() {
-                        //path where the fonts for PDF are stored
-                        var pdf_fonts_path;
-                        if (COUNTRY=='CN' || COUNTRY=='JP' || COUNTRY=='IN'){
-                            pdf_fonts_path = "js/pdf/" + COUNTRY + "/vfs_fonts.js";
-                        }else{
-                            pdf_fonts_path = "js/pdf/vfs_fonts.js";
-                        }
-                        $.getScript(pdf_fonts_path, function() {
-                             $("#generate_PDF").prop("disabled",false).removeClass("buttton_disabled");
-                             hasLoadedPart[3]=true;
-                        });
-                    });
-                });
-            }
-            else{
-                hasLoadedPart[3]=true;
-            }
+        //change from form part 2 to 1
+        if (part_number_origin==2 && part_number_destiny==1){
+            shows_part(2, 1);
         }
     }
+}());
 
-    //change from form part 2 to 3
-    if (part_number_origin==2 && part_number_destiny==3){
-        if (!is_userdata_formpart2_ok()){
-            return;
-        }
-        shows_part(2, 3);
-    }
-
-    //change from form part 3 to 2
-    if (part_number_origin==3 && part_number_destiny==2){
-        shows_part(3, 2);
-    }
-
-    //change from form part 2 to 1
-    if (part_number_origin==2 && part_number_destiny==1){
-        shows_part(2, 1);
-    }
-
-    return;
-}
-
+/*Globals*/
+var CurrentFormPart; //global variable for the current Form Part
+var hasShownPart2 = false; var hasShownPart3 = false; //put to true when form part is FIRST shown
 //shows form part {d} coming from form part {o} hiding the remaining part
 function shows_part(part_number_origin, part_number_destiny){
     //origin and destiny form parts
@@ -269,6 +150,149 @@ function shows_part(part_number_origin, part_number_destiny){
                 });
     }
 }
+
+/*function that loads extra files and features, that are not loaded imediately after the page is opened
+because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
+function loadExtraFiles() {
+
+    getScriptOnce("js/conversionFunctions.js");
+    getScriptOnce("db_stats/statsFunctions.js");
+    getScriptOnce("js/get_data.js");
+
+    if (SWITCHES.print){
+        getScriptOnce("js/print.js");
+    }
+
+    if (SWITCHES.g_charts){
+        getScriptOnce("js/charts.js.php?country="+COUNTRY, function() {
+            getScriptOnce("js/print_results.js.php?country="+COUNTRY);
+        });
+    }
+    else{
+        getScriptOnce("js/print_results.js.php?country="+COUNTRY);
+    }
+
+    if (SWITCHES.data_base){
+        getScriptOnce("js/dbFunctions.js");
+    }
+
+    getScriptOnce("js/g-recaptcha.js", function() {
+        if (SWITCHES.g_captcha){
+            getScriptOnce("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE)
+                .done(function(){
+                    SERVICE_AVAILABILITY.g_captcha = true;
+                })
+                .fail(function(){
+                    SERVICE_AVAILABILITY.g_captcha = false;
+            });
+        }
+        else{
+            SERVICE_AVAILABILITY.g_captcha = false;
+        }
+    });
+
+    if (SWITCHES.social){
+        //Jquery social media share plugins
+        getScriptOnce("js/social/jssocials.min.js", function(){
+            $('<link/>', {
+               rel: 'stylesheet', type: 'text/css',
+               href: 'css/social/jssocials.css'
+            }).appendTo('head');
+            $('<link/>', {
+               rel: 'stylesheet', type: 'text/css',
+               href: 'css/social/jssocials-theme-classic.css'
+            }).appendTo('head');
+        });
+    }
+
+
+    if (SWITCHES.g_charts){
+        //Tries to load Google chart JS files
+        getScriptOnce("https://www.gstatic.com/charts/loader.js")
+            .done(function(){
+                SERVICE_AVAILABILITY.g_charts = true;
+                google.charts.load( 'current', {"packages": ["corechart"], "language": LANGUAGE });
+            })
+            .fail(function(){
+                SERVICE_AVAILABILITY.g_charts = false; //can't load google charts
+        });
+    }
+    else {
+        SERVICE_AVAILABILITY.g_charts = false;
+    }
+
+    getScriptOnce("google/rgbcolor.js");
+    getScriptOnce("google/canvg.js");
+
+    //uber
+    if (SWITCHES.uber){
+        if(COUNTRY!="XX"){//if not test version
+            //gets asynchronously UBER information
+            $.get( "php/get_uber.php?c=" + COUNTRY, function(data) {
+                //alert(JSON.stringify(data, null, 4));
+                UBER_API =  data; //UBER_API is a global variable
+            });
+        }
+        else{//test version (London city, in Pounds)
+            UBER_API.cost_per_distance = 1.25;
+            UBER_API.cost_per_minute = 0.15;
+            UBER_API.currency_code = "GBP";
+            UBER_API.distance_unit = "mile";
+        }
+    }
+
+    if(SWITCHES.pdf){
+        //wait until all PDF related files are loaded
+        //to activate the downloadPDF button
+        getScriptOnce("js/pdf/generatePDF.js", function() {
+            getScriptOnce("js/pdf/pdfmake.js", function() {
+                //path where the fonts for PDF are stored
+                var pdf_fonts_path;
+                if (COUNTRY=='CN' || COUNTRY=='JP' || COUNTRY=='IN'){
+                    pdf_fonts_path = "js/pdf/" + COUNTRY + "/vfs_fonts.js";
+                }else{
+                    pdf_fonts_path = "js/pdf/vfs_fonts.js";
+                }
+                getScriptOnce(pdf_fonts_path, function() {
+                    $('#generate_PDF').prop('disabled', false).removeClass('buttton_disabled');
+                });
+            });
+        });
+    }
+}
+
+//function that loads the scripts only once
+//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
+//this works like a module, like a singleton function
+var getScriptOnce = (function(url, callback){
+    var ScriptArray = []; //array of urls
+    return function (url, callback) {
+        //the array doesn't have such url
+        if (ScriptArray.indexOf(url) === -1){
+            if (typeof callback === 'function') {
+                return $.getScript(url, function(script, textStatus, jqXHR) {
+                    ScriptArray.push(url);
+                    callback(script, textStatus, jqXHR);
+                });
+            } else {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                });
+            }
+        }
+        //the file is already there, it does nothing
+        //to support as of jQuery 1.5 methods .done().fail()
+        else{
+            return {
+                done: function () {
+                    return {
+                        fail: function () {}
+                    };
+                }
+            };
+        }
+    }
+}());
 
 /*function that is run when the button Reload/Rerun is clicked*/
 function reload() {

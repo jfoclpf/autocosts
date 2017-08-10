@@ -63,8 +63,9 @@ function initialize() {
     if(!SWITCHES.print){
         $("#print_button").hide();
     }
+    //deactivates pdf download button, to be activated only after pdf files are available
     if(!SWITCHES.pdf){
-        $("#generate_PDF").hide();
+        $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
 
     scrollPage();

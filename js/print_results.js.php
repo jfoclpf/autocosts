@@ -102,11 +102,6 @@ function Run2(callback){
         });
     }
 
-    //deactivates downloadPDF button until PDF files are loaded
-    if (!hasLoadedPart[3] && SWITCHES.pdf){
-        $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
-    }
-
     //enlarges center div
     $("#div1_td").css("width", "15%");
     $("#div3_td").css("width", "15%");
