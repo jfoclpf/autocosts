@@ -44,7 +44,7 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
     chart_div = document.getElementById('pie_chart_div');
     chart = new google.visualization.PieChart(chart_div);
 
-    // Wait for the chart to finish drawing before calling the getImageURI() method.
+    //wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
         DISPLAY.charts.URIs.pieChart = chart.getImageURI();
     });
