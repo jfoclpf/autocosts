@@ -7,7 +7,7 @@ $GLOBALS['country'] = $_GET['country'];
 //draw Pie Chart
 function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
 
-    var char_data, options, chart, chart_content;
+    var chart, chart_div, char_data, options, chart_content;
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
 
     //checks if depreciation is greater or equal to zero, to print chart with no error
@@ -41,24 +41,22 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
         height: chartHeight
     };
 
-    var chart_div = document.getElementById('pie_chart_div');
+    chart_div = document.getElementById('pie_chart_div');
     chart = new google.visualization.PieChart(chart_div);
 
     // Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
-		var img_div =  document.getElementById('img_pie_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';
+        DISPLAY.charts.URIs.pieChart = chart.getImageURI();
     });
 
     chart.draw(char_data, options);
-
     DISPLAY.charts.isMonthlyCostsPieChart = true;
 }
 
 //draw bar chart
 function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
 
-    var char_data, chart_legend, chart_inner_width, bar_width, chart_content, options;
+    var chart, chart_div, char_data, chart_legend, chart_inner_width, bar_width, chart_content, options;
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
 
     // Create and populate the data table.
@@ -116,22 +114,22 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     char_data = google.visualization.arrayToDataTable(chart_content);
 
     // Create and draw the visualization.
-	var chart_div = document.getElementById('bar_chart_div');
-    var chart1 = new google.visualization.ColumnChart(chart_div);
+	chart_div = document.getElementById('bar_chart_div');
+    chart = new google.visualization.ColumnChart(chart_div);
 
 	//Wait for the chart to finish drawing before calling the getImageURI() method.
-    google.visualization.events.addListener(chart1, 'ready', function () {
-		var img_div =  document.getElementById('img_bar_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart1.getImageURI() + '">';
+    google.visualization.events.addListener(chart, 'ready', function () {
+        DISPLAY.charts.URIs.barChart = chart.getImageURI();
     });
 
     //cross browser solution; if the window width is too small hides legend of chart
     var window_width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    if(window_width < DISPLAY.charts.MIN_LEGEND){
+
+    if( window_width < DISPLAY.charts.MIN_LEGEND ){
         chart_legend = "none";
         chart_inner_width = "100%";
     }
-    else{
+    else {
         chart_legend = "right";
         chart_inner_width = "60%";
         bar_width = "61.8%"; //default value
@@ -149,15 +147,14 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
         height: chartHeight
     };
 
-    chart1.draw(char_data, options);
-
+    chart.draw(char_data, options);
     DISPLAY.charts.isMonthlyCostsBarChart = true;
 }
 
 //draws horizontal bars chart for Financial Effort
 function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth, chartHeight){
 
-    var chart_data, data, options, chart, br_html, top_var, chart_inner_height;
+    var chart, chart_div, chart_data, data, options, br_html, top_var, chart_inner_height;
 
     chart_data = [
          ['','<?php echo $NET_INCOME_PER." ".$YEAR; ?>', '<?php echo $TOTAL_COSTS_PER_YEAR; ?>'],
@@ -192,31 +189,30 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
         height: chartHeight
     };
 
-    var chart_div = document.getElementById('fin_effort_chart_div');
+    chart_div = document.getElementById('fin_effort_chart_div');
     chart = new google.visualization.BarChart(chart_div);
 
     // Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
-		var img_div =  document.getElementById('img_fin_effort_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';
+        DISPLAY.charts.URIs.finEffort = chart.getImageURI();
     });
 
     chart.draw(data, options);
-
     DISPLAY.charts.isFinEffortChart = true;
 }
 
 //draw bar chart
 function drawAlterToCarChart(chartWidth, chartHeight) {
 
-    var char_data, chart_legend, chart_inner_width, bar_width, options, chart_content;
+    var chart, chart_div, char_data, chart_legend, chart_inner_width, bar_width, options, chart_content;
 
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
     var pt = CALCULATED.data.public_transports;
     var u = CALCULATED.uber;
+
     //boolean variables
-    var pt_bool = isObjDef(pt) && pt.display_pt() && DISPLAY.result.public_transports;
-    var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber;
+    var pt_bool = isObjDef(pt) && pt.display_pt() && DISPLAY.result.public_transports; //public transports
+    var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
 
     if(!pt_bool && !u_bool){
         return;
@@ -368,13 +364,12 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
 
     char_data = google.visualization.arrayToDataTable(chart_content);
     // Create and draw the visualization.
-	var chart_div = document.getElementById('alternative_carcosts_chart_div');
-    var chart = new google.visualization.ColumnChart(chart_div);
+	chart_div = document.getElementById('alternative_carcosts_chart_div');
+    chart = new google.visualization.ColumnChart(chart_div);
 
 	//Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
-		var img_div =  document.getElementById('img_alternative_carcosts_chart_div');
-        img_div.innerHTML = '<img alt="chart" src="' + chart.getImageURI() + '">';
+        DISPLAY.charts.URIs.alterToCar = chart.getImageURI();
     });
 
     //cross browser solution; if the window width is too small hides legend of chart
@@ -400,7 +395,6 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
               };
 
     chart.draw(char_data, options);
-
     DISPLAY.charts.isAlterToCarChart = true;
 }
 

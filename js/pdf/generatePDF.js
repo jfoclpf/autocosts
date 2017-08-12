@@ -20,8 +20,8 @@ function generatePDF(main_title){
     body13 = get_monthly_costs_table("#running_costs_table");
     body14 = get_monthly_costs_table("#total_costs_table");
 
-    chartData1 = $('#img_pie_chart_div').find('img').attr('src');
-    chartData2 = $('#img_bar_chart_div').find('img').attr('src');
+    chartData1 = DISPLAY.charts.URIs.pieChart;
+    chartData2 = DISPLAY.charts.URIs.barChart;;
 
     var docDefinition = {
         header: {
@@ -154,7 +154,7 @@ function generatePDF(main_title){
 
         //chart
         if(DISPLAY.charts.isFinEffortChart){
-            chartData3 = $('#img_fin_effort_chart_div').find('img').attr('src');
+            chartData3 = DISPLAY.charts.URIs.finEffort;
             body23 = {
                         image: chartData3,
                         width: 400,
@@ -196,7 +196,7 @@ function generatePDF(main_title){
 
         //chart
         if(DISPLAY.charts.isAlterToCarChart){
-            chartData4 = $('#img_alternative_carcosts_chart_div').find('img').attr('src');
+            chartData4 = DISPLAY.charts.URIs.alterToCar;
             body33 = {
                         image: chartData4,
                         width: 400,

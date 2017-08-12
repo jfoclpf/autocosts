@@ -104,30 +104,107 @@
     }
 }
 
-/*most popular smartphones have a screen width of 640px */
-/*https://deviceatlas.com/blog/most-popular-smartphone-screen-resolutions-2015 */
+/*******************************************************************************/
+/*               The treshold from which is mobile device suitable             */
+/*******************************************************************************/
+/*from here the background is removed and the tables are neated*/
+
 @media all and (max-width: 645px) {
+    #div2_td{
+        text-transform: uppercase;
+    }
+    #div13,
+    #div3a {
+        margin: 0;
+    }
+    #input_div{
+        margin: 0;
+    }
+    select,
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"],
+    .uneditable-input {
+        font-size: 16px;
+        line-height: 25px;
+    }
+    input[type="radio"] {
+        -ms-transform: scale(1.5); /* IE 9 */
+        -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+        transform: scale(1.5);
+        margin-right: 6px;
+        margin-top: 10px;
+    }
+    .button{
+        padding: 18px 24px;
+        text-transform: uppercase;
+    }
+    .step{
+        font-size: 150%;
+    }
     .result_div {
-        font-size: 90%;
-        margin: 5px !important;
+        font-size: 110%;
+        margin: 0 !important;
     }
     .result_section{
         background: none;
         border: none;
     }
+    #result_table0 td {
+        padding: 4px;
+    }
+    #result_table0 tr:nth-child(2) td {
+        font-size:85%;
+        padding:3px;
+    }
+    #input_div table tr td:nth-child(2n){
+        width: 35%;
+    }
     .hr {
         display: block !important;
     }
-    #input_div table td:nth-child(2n){
-        width: 35%;
+    .switch{
+        width:80px;
+        height: 45px;
+    }
+    .slider:before{
+        width: 35px;
+        height: 35px;
+        left: 5px;
+        bottom: 5px;
+    }
+    input:checked + .slider:before{
+        -webkit-transform: translateX(35px);
+        -ms-transform: translateX(35px);
+        transform: translateX(35px);
+    }
+    .per_month_wording{
+        display: none;
+    }
+    .jssocials-share-logo{
+        font-size: 4em !important;
     }
 }
 
 /*******************************************************************************/
 /*The treshold from which the cells on the result tables are vertically aligned*/
 /*******************************************************************************/
+/*the common CSS width of mobile phones is 320px*/
+/*see more at: https://mydevice.io/devices/ */
 
-@media all and (max-width: 425px) {
+@media all and (max-width: 315px) {
 
     #main_title, h1 {
         font-size: 18px;
@@ -152,28 +229,12 @@
     }
 
     .result_table,
-    #result_table0,
     .costs_table,
-    #result_table2,
-    #result_table3,
-    #result_table4,
-    #result_table_uber,
     .result_table td,
-    #result_table0 td,
-    .costs_table td,
-    #result_table2 td,
-    #result_table3 td,
-    #result_table4 td,
-    #result_table_uber td,
-    #result_table0 tr:nth-child(4) td:last-child,
-    .costs_table tr:last-child td:first-child,
-    #result_table2 tr:last-child td:first-child,
-    #result_table2 tr:first-child td+td,
-    #result_table_uber tr:last-child td:first-child,
-    #result_table_uber tr:first-child td+td,
-    #result_table3 tr:last-child td:first-child {
+    .costs_table td {
         border-radius: 0 !important;
     }
+
     .result_table tr {
         background-color: #fff;
         border-radius: 0 !important;
@@ -227,7 +288,6 @@
     }
 
     .costs_table tr:last-child td:first-child,
-    .costs_table tr:nth-last-child(4) td:first-child,
     #result_table2 tr:last-child td:first-child,
     #result_table4 tr:nth-last-child(2) td:first-child,
     #result_table_uber tr:last-child td:first-child,
@@ -251,6 +311,9 @@
     }
     .red_bold_text {
         font-size: 250%
+    }
+    .per_month_wording{
+        display: inline;
     }
 
 }

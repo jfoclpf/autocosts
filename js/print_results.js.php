@@ -193,9 +193,9 @@ function print_result_final_text(data){
 //******************************************************************************************************************************************************
 
 //use for varible double quotes " instead of ' because some text varuiables might contain ' such as the English word "don't"
-//Example varResult+= "<table class=\"result_table\" id=\"result_table1\">"
+//Example varResult+= "<table class=\"result_table\" id=\"result_table\">"
 
-/*Montlhy costs table (result_table1)*/
+/*Montlhy costs table*/
 function print_costs_table(f1, f2, f3, data) {
 
     //Depreciation
@@ -438,7 +438,7 @@ function print_costs_table(f1, f2, f3, data) {
 
     //TOTAL - Standing costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_FIXED ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
     varResult+="</table>";
 
@@ -479,7 +479,7 @@ function print_costs_table(f1, f2, f3, data) {
 
     //TOTAL - Running costs
     varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_VARIABLE ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
     varResult+="</table>";
 
@@ -501,13 +501,13 @@ function print_costs_table(f1, f2, f3, data) {
     }
 
     varResult+= "<tr><td><b><?php echo $FIXED_COSTS ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
     varResult+= "<tr><td><b><?php echo $RUNNING_COSTS ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
     varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-               "<td>&nbsp;<b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+               "<td>&nbsp;<b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
     varResult+="</table>";
 
@@ -697,7 +697,7 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
                        "<td>&nbsp;"+currencyShow(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
         }
         varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                   "<td><b>" + currencyShow(data.public_transports.total_altern.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                   "<td><b>" + currencyShow(data.public_transports.total_altern.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
         varResult+="</table>";
     }
@@ -743,7 +743,7 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
                        "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
 
             varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
             varResult+="</table>";
         }
@@ -774,7 +774,7 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
                        "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
 
             varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "/<?php echo $MONTH ?></b></td></tr>";
+                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
             varResult+="</table>";
         }
@@ -832,7 +832,7 @@ function print_extern_table(f1, f2, f3, data){
 
          //total
         varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>" +
-                   "<td><b><?php echo $CURR_SYMBOL ?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"/<?php echo $MONTH ?></b></td></tr>";
+                   "<td><b><?php echo $CURR_SYMBOL ?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
         //reference to source
         varResult+="<tr><td colspan=\"2\">"+ source_ext_costs +"</td></tr>";

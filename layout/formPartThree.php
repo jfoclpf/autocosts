@@ -1,6 +1,6 @@
-<!--************************** DADOS ADICIONAIS ***************************************************--> 
+<!--************************** DADOS ADICIONAIS ***************************************************-->
 <div class="form_part" id="form_part3">
-        
+
     <div class="form_part_head_title">
         <header>
             <h2>
@@ -8,7 +8,7 @@
             </h2>
         </header>
     </div>
-    
+
     <!-- PUBLIC TRANSPORTS SLIDER -->
     <table class="form_section_question">
         <tr>
@@ -25,7 +25,7 @@
             </td>
         </tr>
     </table>
-    
+
     <!-- FINANCIAL EFFORT SLIDER -->
     <table class="form_section_question">
         <tr>
@@ -42,7 +42,7 @@
             </td>
         </tr>
     </table>
-    
+
     <!-- PUBLIC TRANSPORTS SECTION -->
     <div id="public_transp_Div_form3">
     <span class="form_section_title">
@@ -54,7 +54,7 @@
                 <?php echo $EXTRA_DATA_FAMILY_NBR ?>
             </td>
             <td>
-                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6" 
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6"
                        value="<?php echo $STD_NR_PPL_FAMILY ?>">
                 <?php echo $WORD_PEOPLE ?>
             </td>
@@ -66,7 +66,7 @@
                 <?php echo $EXTRA_DATA_PRICE_PASS ?>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" 
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6"
                        value="<?php echo $STD_PASS_PRICE ?>">
                 <?php echo $CURR_SYMBOL ?>
             </td>
@@ -74,9 +74,9 @@
     </table>
     </div>
     <!-- EOF PUBLIC TRANSPORTS SECTION -->
-    
-    
-    <!-- FINANCIAL EFFORT SECTION -->        
+
+
+    <!-- FINANCIAL EFFORT SECTION -->
     <div id="fin_effort_Div_form3">
         <span class="form_section_title">
             <?php echo $EXTRA_DATA_INCOME ?>
@@ -115,14 +115,14 @@
                 </td>
                 <td>
                     <div id="income_per_year_form3" class="div_element">
-                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6" 
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6"
                                value="<?php echo $STD_INCOME_YEAR ?>"/>
                         <?php echo $CURR_SYMBOL ?>/<?php echo $YEAR ?>
                     </div>
                     <div id="income_per_month_form3" class="div_element hidden">
                         <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
                                value="<?php echo $STD_INCOME_MONTH ?>"/>
-                        <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH ?>
+                        <?php echo $CURR_SYMBOL ?>/<?php echo $MONTH.' '.$WORD_TIMES ?>
                         <br>
                         <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
                                value="<?php echo $STD_MONTHS_YEAR ?>"/>
@@ -131,7 +131,7 @@
                     <div id="income_per_week_form3" class="div_element hidden">
                         <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
                                value="<?php echo $STD_INCOME_WEEK ?>"/>
-                        <?php echo $CURR_SYMBOL ?>/<?php echo $WEEK ?>
+                        <?php echo $CURR_SYMBOL ?>/<?php echo $WEEK.' '.$WORD_TIMES ?>
                         <br>
                         <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
                                value="<?php echo $STD_WEEKS_YEAR ?>"/>
@@ -140,11 +140,11 @@
                     <div id="income_per_hour_form3" class="div_element hidden">
                         <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
                                value="<?php echo $STD_INCOME_HOUR ?>"/>
-                        <?php echo $CURR_SYMBOL ?>/<?php echo $HOUR ?>
+                        <?php echo $CURR_SYMBOL ?>/<?php echo $HOUR.' '.$WORD_TIMES ?>
                         <br>
                         <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
                                value="<?php echo $STD_HOURS_WEEK ?>"/>
-                        <?php echo $HOURS ?>/<?php echo $WEEK ?>
+                        <?php echo $HOURS ?>/<?php echo $WEEK.' '.$WORD_TIMES ?>
                         <br>
                         <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
                                value="<?php echo $STD_WEEKS_YEAR ?>"/>
@@ -317,16 +317,16 @@
             </tr>
         </table>
     </div>
-    
+
     <!-- BUTTONS -->
-    <div class="b-bottom">      
-        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>        
+    <div class="b-bottom">
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>
         <!--Run button-->
         <div id="run_button_div">
             <input id="run_button" class="button" type="submit" onclick="Run1()" value="<?php echo $BUTTON_RUN; ?>"/>
             <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="<?php echo $BUTTON_RUN; ?>"/>
         </div>
     </div>
-    
+
     </div>
 <!-- end of form_part3-->

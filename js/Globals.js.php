@@ -41,7 +41,14 @@ var DISPLAY = {
         isMonthlyCostsPieChart: false, //prints chart bool variable
         isMonthlyCostsBarChart: false, //prints chart bool variable
         isFinEffortChart:       false, //prints chart bool variable
-        isAlterToCarChart:      false  //prints chart bool variable
+        isAlterToCarChart:      false, //prints chart bool variable
+        //the charts images data URI
+        URIs: {
+            pieChart: 0,
+            barChart: 0,
+            finEffort: 0,
+            alterToCar: 0
+        }
     },
     RunButtonStr: '<?php echo $BUTTON_RUN; ?>'
 };
