@@ -21,7 +21,7 @@ function generatePDF(main_title){
     body14 = get_monthly_costs_table("#total_costs_table");
 
     chartData1 = DISPLAY.charts.URIs.pieChart;
-    chartData2 = DISPLAY.charts.URIs.barChart;;
+    chartData2 = DISPLAY.charts.URIs.barChart;
 
     var docDefinition = {
         header: {

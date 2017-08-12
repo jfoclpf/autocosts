@@ -31,7 +31,6 @@ function displayPieChart(){
     //always creates a new chart
     if (typeof PIE_CHART !== 'undefined'){
         PIE_CHART.destroy();
-        delete PIE_CHART;
     }
 
     var labels = [
@@ -110,7 +109,6 @@ function displayBarChart(){
     //always creates a new chart
     if (typeof BAR_CHART !== 'undefined'){
         BAR_CHART.destroy();
-        delete BAR_CHART;
     }
 
     var labels = [L.fixed_costs, L.running_costs];
@@ -216,7 +214,6 @@ function displayFinEffChart(){
     //always creates a new chart
     if (typeof FINEFF_CHART !== 'undefined'){
         FINEFF_CHART.destroy();
-        delete FINEFF_CHART;
     }
 
     var labels = [formatLabel(L.net_income_per + " " + L.year, 20), formatLabel(L.total_costs_per_year, 20)];
@@ -283,7 +280,6 @@ function displayAlternToCarCostsChart(){
     //always creates a new chart
     if (typeof ALTERN_TO_CARCOSTS !== 'undefined'){
         ALTERN_TO_CARCOSTS.destroy();
-        delete ALTERN_TO_CARCOSTS;
     }
 
     var labels = [formatLabel(L.your_car_costs_you + " " + L.word_per + " " + L.month, 25), formatLabel(L.publ_tra_equiv, 25)];

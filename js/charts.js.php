@@ -205,6 +205,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
 function drawAlterToCarChart(chartWidth, chartHeight) {
 
     var chart, chart_div, char_data, chart_legend, chart_inner_width, bar_width, options, chart_content;
+    var pt_array, uber_array;
 
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
     var pt = CALCULATED.data.public_transports;
@@ -264,7 +265,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                         CALCULATED.data.public_transports.taxi_price_per_km.toFixed(1) + " " +
                         "<?php echo $CURR_NAME_PLURAL.' '.$WORD_PER.' '.$STD_DIST_FULL ?>";
 
-        var pt_array =
+        pt_array =
                         [
                             "<?php echo $PUBL_TRA_EQUIV; ?>",
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -297,7 +298,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
 
     //UBER
     if(u_bool){
-        var uber_array =
+        uber_array =
                         [
                             "UBER",
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

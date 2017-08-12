@@ -78,6 +78,7 @@ $(window).resize(function() {
 $(window).trigger('resize');
 
 /*Timer function*/
+/* jshint ignore:start */
 var TimeCounter = new (function () {
     var incrementTime = 500;
     var currentTime = 0;
@@ -94,6 +95,7 @@ var TimeCounter = new (function () {
         return currentTime / 1000;
     };
 });
+/* jshint ignore:end */
 
 /*User Unique Identifier functions*/
 function S4() {
