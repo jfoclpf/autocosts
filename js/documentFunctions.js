@@ -469,7 +469,10 @@ $('#form_part1').on({
                 $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 1);
             }
         }
-    });
+    },{
+        passive: true
+    }
+);
 
 //highlights the form area on which the mouse is hover
 $('#form_part1 tr, #form_part2 tr').hover(
@@ -484,7 +487,11 @@ $('#form_part1 tr, #form_part2 tr').hover(
         $(this).find('td').filter(function(){return this.rowSpan > 1;}).parent().next().find('td').css('background-color','');
         var nth_parent=$(this).parentsUntil('.form_part').length - 1;
         $(this).parents().eq(nth_parent).prevAll('h3:first').css('background-color','');
-});
+    },{
+        passive: true
+    }
+);
+
 $('#form_part3 tr').hover(
     function(){
         $(this).find('td').css('background-color','#fff8dc');
@@ -495,7 +502,10 @@ $('#form_part3 tr').hover(
         $(this).find('td').css('background-color','');
         var nth_parent=$(this).parentsUntil('.form_part').length - 2;
         $(this).parents().eq(nth_parent).prevAll('.form_section_title:first').css('background-color','');
-});
+    },{
+        passive: true
+    }
+);
 
 //some particularities on form_part3
 $('#distance_form3 tr').hover(
@@ -508,7 +518,11 @@ $('#distance_form3 tr').hover(
         $(this).find('td').css('background-color','');
         var nth_parent=$(this).parentsUntil('.form_part').length - 3;
         $(this).parents().eq(nth_parent).prevAll('.form_section_title:first').css('background-color','');
-});
+    },{
+        passive: true
+    }
+);
+
 $('#working_time_form3 tr').hover(
     function(){
         $(this).find('td').css('background-color','#fff8dc');
@@ -518,14 +532,20 @@ $('#working_time_form3 tr').hover(
     function(){
         $(this).find('td').css('background-color','');
         $('#working_time_form3').children(".form_section_title:first").css('background-color','');
-});
+    },{
+        passive: true
+    }
+);
 
 //when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
 $('#tbl_statistics').click(function(){
     var domain = window.location.hostname;
     var url2open = "http://" + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
     window.open(url2open);
-});
+    },{
+        passive: true
+    }
+);
 
 //Loader after the run button is clicked
 function runButtonLoader() {
