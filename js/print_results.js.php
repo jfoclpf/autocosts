@@ -3,8 +3,10 @@ if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that 
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
 $GLOBALS['country'] = $_GET['country'];
-$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);?>
+$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+ob_start();?>
 
 //function that is run when user clicks "run/calculate"
 function Run2(callback){
@@ -944,3 +946,10 @@ function currencyShow(value){
 
     return res;
 }
+    
+<?php
+use MatthiasMullie\Minify;
+$javascriptContent = ob_get_clean();
+$minifier = new Minify\JS($javascriptContent);
+echo $minifier->minify();
+?>

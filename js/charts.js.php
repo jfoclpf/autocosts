@@ -1,8 +1,9 @@
 <?php Header("content-type: application/x-javascript");
 if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
 $GLOBALS['country'] = $_GET['country'];
-?>
+ob_start();?>
 
 //draw Pie Chart
 function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
@@ -414,3 +415,10 @@ function pfto(obj){
     }
     return obj;
 }
+        
+<?php
+use MatthiasMullie\Minify;
+$javascriptContent = ob_get_clean();
+$minifier = new Minify\JS($javascriptContent);
+echo $minifier->minify();
+?>

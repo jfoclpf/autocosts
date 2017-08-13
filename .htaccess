@@ -18,6 +18,17 @@ DirectoryIndex i.php index.php index.html index.htm
 # Disable server signature
 ServerSignature Off
 
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
 RewriteEngine On
 
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
@@ -35,33 +46,6 @@ RewriteRule ^index.php$ /%1%2? [R=301,L]
 RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
 
 #Domain Name Policy (DNP) in: http://github.com/jfoclpf/autocosts/wiki/Domain-name-policy
-
-#Forward rules of Domains that fulfill Rule 1 of the Domain Name Policy
-
-RewriteCond %{HTTP_HOST} ^autocustos\.pt$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocustos\.pt$
-RewriteRule ^/?$ "http\:\/\/autocustos\.info\/PT" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocostes\.es$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocostes\.es$
-RewriteRule ^/?$ "http\:\/\/autocostos\.info\/ES" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocouts\.fr$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocouts\.fr$
-RewriteRule ^/?$ "http\:\/\/autocouts\.info\/FR" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocosti\.it$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocosti\.it$
-RewriteRule ^/?$ "http\:\/\/autocosti\.info\/IT" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocosturi\.ro$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocosturi\.ro$
-RewriteRule ^/?$ "http\:\/\/autocosts\.info\/RO" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^exodaautokinitou\.gr$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.exodaautokinitou\.gr$
-RewriteRule ^/?$ "http\:\/\/autocosts\.info\/GR" [R=301,L]
-
 
 #General broad rules
 RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
