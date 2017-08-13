@@ -3,7 +3,7 @@ include_once("./php/functions.php");
 include_once("./countries/_list.php");
 include_once("./countries/_url_selector.php");
 if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); 
-else ob_start(); ?><!DOCTYPE html>
+else ob_start("sanitize_output");?><!DOCTYPE html>
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 <head>
