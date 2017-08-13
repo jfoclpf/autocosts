@@ -119,5 +119,31 @@ function isTest(){
     }
 }
 
+//sanitize HTML output
+function sanitize_output($buffer)
+{
+    $search = array(
+        '/\>[^\S ]+/s', //strip whitespaces after tags, except space
+        '/[^\S ]+\</s', //strip whitespaces before tags, except space
+        '/(\s)+/s'  // shorten multiple whitespace sequences
+        );
+    $replace = array(
+        '>',
+        '<',
+        '\\1'
+        );
+
+    $blocks = preg_split('/(<\/?pre[^>]*>)/', $buffer, null, PREG_SPLIT_DELIM_CAPTURE);
+    $buffer = '';
+    foreach($blocks as $i => $block)
+    {
+      if($i % 4 == 2)
+        $buffer .= $block; //break out <pre>...</pre> with \n's
+      else 
+        $buffer .= preg_replace($search, $replace, $block);
+    }
+
+    return $buffer;
+}
 
 ?>
