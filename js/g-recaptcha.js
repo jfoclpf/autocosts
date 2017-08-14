@@ -1,4 +1,5 @@
 function grecaptcha_solved(){
+    console.log("grecaptcha_solved()");
     Run1();
 }
 
@@ -15,7 +16,7 @@ function grecaptcha_callback() {
 //creates the grecaptcha after the API Google function was loaded
 //runs when grecaptcha was solved
 function Run1(){
-    //Loader after the run button is clicked
+    //Loader after the run button is clicked    
     runButtonLoader();
 
     //In test version doesn't run Captcha

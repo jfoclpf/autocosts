@@ -548,7 +548,7 @@ $('#tbl_statistics').click(function(){
 );
 
 //Loader after the run button is clicked
-function runButtonLoader() {
+function runButtonLoader() {    
     $('#run_button, #run_button_noCapctha').addClass('button_loader').attr("value","");
 }
 //reset the run buttons, i.e., removes the loader of the button
