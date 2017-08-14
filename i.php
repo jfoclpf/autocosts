@@ -13,7 +13,7 @@ ob_start("sanitize_output");
     <meta name="keywords" content="<?php echo get_keywords($WEB_PAGE_TITLE, $FIXED_COSTS, $RUNNING_COSTS); ?>">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
-
+ 
     <meta name="robots" content="<?php echo (!isTest()?'index, follow':'noindex, nofollow')?>" />
 
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>

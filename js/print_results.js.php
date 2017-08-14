@@ -15,6 +15,20 @@ function Run2(callback){
     if (!is_userdata_formpart1_ok()){ return false;}
     if (!is_userdata_formpart2_ok()){ return false;}
     if (!is_userdata_formpart3_ok()){ return false;}
+    
+    //from here the form inputs are correct
+    
+    //hides the form input
+    $("#input_div").hide();
+    
+    //enlarges center div
+    $("#div1_td").css("width", "15%");
+    $("#div3_td").css("width", "15%");
+    
+    //hides description, left and right columns
+    $("#div1").css("display", "none");
+    $("#div3").css("display", "none");
+    $("#description").html("");    
 
     //for each form part gets object with content
     var f1 = get_form_part1();
@@ -33,9 +47,6 @@ function Run2(callback){
     //calculate costs
     var data = calculate_costs(f1, f2, f3, country);
     CALCULATED.data = data; //assigns to global variable
-
-    //hides the form input
-    $("#input_div").hide();
 
     //main table
     var main_table_HTML = print_main_table(f1, f2, f3, data);
@@ -104,30 +115,21 @@ function Run2(callback){
         });
     }
 
-    //enlarges center div
-    $("#div1_td").css("width", "15%");
-    $("#div3_td").css("width", "15%");
-
     //gets result frame width to draw charts within it
     DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;
 
     drawChartResult();
-
-    //hides description, left and right columns
-    $("#div1").css("display", "none");
-    $("#div3").css("display", "none");
-    $("#description").html("");
-
-    //global variable indicating the results are being shown
-    DISPLAY.result.isShowing = true;
-
-    //calls the callback() if it's a function
-    if (typeof callback === 'function'){
-
-        $("*").promise().done(function(){
-                    callback();
-                });
-    }
+    
+    $("*").promise().done(function(){    
+        
+        //global variable indicating the results are being shown
+        DISPLAY.result.isShowing = true;        
+        
+        //calls the callback() if it's a function
+        if (typeof callback === 'function'){
+            callback();
+        }
+    });
 
     return true;
 }

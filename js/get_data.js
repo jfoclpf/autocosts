@@ -107,8 +107,8 @@ function get_form_part3(){
 function get_DB_part1(datab){
     var data = {
         //depreciation
-        auto_mes:              datab.acquisition_month,
-        auto_ano:              datab.acquisition_year,
+        acquisitionMonth:      datab.acquisition_month,
+        acquisitionYear:       datab.acquisition_year,
         auto_initial_cost:     datab.commercial_value_at_acquisition,
         auto_final_cost:       datab.commercial_value_at_now,
         //insurance

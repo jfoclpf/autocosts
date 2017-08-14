@@ -37,7 +37,12 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
     options = {
         title: "<?php echo $COSTS; ?>",
         backgroundColor: {fill: "transparent"},
-        chartArea: {left: 0, top: 0, width: "90%", height: "90%"},
+        chartArea: {
+            left: 0, 
+            top: 0, 
+            width: "90%", 
+            height: "90%"
+        },       
         width: chartWidth,
         height: chartHeight
     };
@@ -139,11 +144,22 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     options = {
         title: "<?php echo $COSTS; ?>",
         backgroundColor: {fill: 'transparent'},
-        chartArea: { left: 0, top: 0, width: chart_inner_width, height: "90%"},
-        vAxis: { minValue: 0},
-        legend: {position: chart_legend },
-        bar: { groupWidth: bar_width },
-        isStacked: true,
+        chartArea: { 
+            left: 0, 
+            top: 0, 
+            width: chart_inner_width, 
+            height: "90%"
+        },
+        vAxis: { 
+            minValue: 0
+        },
+        legend: {
+            position: chart_legend 
+        },
+        bar: { 
+            groupWidth: bar_width 
+        },
+        isStacked: true,      
         width: chartWidth,
         height: chartHeight
     };
@@ -178,14 +194,24 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     }
 
     options = {
-        backgroundColor: {fill: 'transparent'},
-        chartArea: {top: top_var, width: "90%", height: chart_inner_height},
-        legend: { position: 'none' },
-        vAxis: { textPosition: 'none' },
-        hAxis: {
-          title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ' + br_html + '".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
-          minValue: 0,
+        backgroundColor: {
+            fill: 'transparent'
         },
+        chartArea: {
+            top: top_var, 
+            width: "90%", 
+            height: chart_inner_height
+        },
+        legend: { 
+            position: 'none' 
+        },
+        vAxis: { 
+            textPosition: 'none' 
+        },
+        hAxis: {
+            title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ' + br_html + '".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
+            minValue: 0,
+        },       
         width: chartWidth,
         height: chartHeight
     };
@@ -386,12 +412,25 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
 
     options = {
                 title: "<?php echo $COSTS; ?>",
-                backgroundColor: {fill: 'transparent'},
-                chartArea: {top: 5, width: chart_inner_width, height: "85%"},
-                vAxis: { minValue: 0, textPosition: 'none'},
-                legend: {position: "none"},
-                bar: { groupWidth: bar_width },
-                isStacked: true,
+                backgroundColor: {
+                    fill: 'transparent'
+                },
+                chartArea: {
+                    top: 5, 
+                    width: chart_inner_width, 
+                    height: "85%"
+                },
+                vAxis: { 
+                    minValue: 0, 
+                    textPosition: 'none'
+                },
+                legend: {
+                    position: "none"
+                },
+                bar: { 
+                    groupWidth: bar_width 
+                },
+                isStacked: true,       
                 width: chartWidth,
                 height: chartHeight
               };
