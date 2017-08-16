@@ -2,19 +2,19 @@
 
 if [ -z "$1" ]
 then
-  echo "Error. No input!"
+  echo "Error. No input! Define 'work' or 'prod'"
   exit
 fi
 
-if [ $1 = "work" ] || [ $1 = "main" ]
+if [ $1 = "work" ] || [ $1 = "prod" ]
 then
   echo "Aceptable answer"
 else
-  echo "Error in input"
+  echo "Valid input! Define 'work' or 'prod'"
   exit
 fi
 
-if [ $1 = "main" ]
+if [ $1 = "prod" ]
 then
   dir="public_html"
 fi
@@ -23,9 +23,6 @@ if [ $1 = "work" ]
 then
   dir="work"
 fi
-
-
-cd "${0%/*}"
 
 cd ..
 
