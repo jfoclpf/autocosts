@@ -25,6 +25,9 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 #The countries list
 RewriteRule ^list$ list.php [L]
 
+#The domains list
+RewriteRule ^domains$ domains.php [L]
+
 RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L]

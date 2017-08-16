@@ -63,13 +63,13 @@
         </tr>
         <tr>
         <?php
-            include_once("./_list.php");
+            include_once("./countries/_list.php");
             asort($avail_CT); //sorts alphabetically the counties list
             
             $i=1;
             foreach ($avail_CT as $key => $value) {
                 if (strtoupper($key) != "XX"){
-                    include_once('./' . $key . '.php');
+                    include_once('./countries/' . $key . '.php');
                     echo '<tr>';
                     echo '<td>'.$i.'</td>'; $i++;
                     echo '<td>'.$value.'</td>';
