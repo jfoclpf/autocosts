@@ -23,7 +23,7 @@ RewriteEngine On
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 #The countries list
-RewriteRule ^list$ countries/_index.php [L]
+RewriteRule ^list$ list.php [L]
 
 RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
