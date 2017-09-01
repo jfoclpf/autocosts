@@ -270,9 +270,9 @@ var getScriptOnce = (function(url, callback){
         //the array doesn't have such url
         if (ScriptArray.indexOf(url) === -1){
             if (typeof callback === 'function') {
-                return $.getScript(url, function(script, textStatus, jqXHR) {
+                return $.getScript(url, function(){
                     ScriptArray.push(url);
-                    callback(script, textStatus, jqXHR);
+                    callback();
                 });
             } else {
                 return $.getScript(url, function(){
