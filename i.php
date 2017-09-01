@@ -54,7 +54,7 @@ ob_start("sanitize_output");
     </div>
     <!--jQuery-->
     <script src="js/jquery/jquery.min.js"></script>
-    <script src="js/jquery/js_timer.js"></script>
+    <script src="js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
     <script src="GlobalSwitches.js"></script>
     <script src="js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
@@ -65,6 +65,6 @@ ob_start("sanitize_output");
     <!--Popup alert window-->
     <script src="js/jAlert/jAlert.js"></script>
     <!--Google Analytics-->
-    <?php include_once("google/analytics.php"); ?>
+    <script type="text/javascript" src="google/analytics.js"></script>    
 </body>
 </html>

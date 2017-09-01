@@ -68,7 +68,26 @@ function initialize() {
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
 
+    //detects whether Google Analytics has loaded
+    check_ga();
+    
     scrollPage();
+}
+
+//detects whether Google Analytics has loaded
+function check_ga() {
+  
+    if(IsThisAtest()){
+        SERVICE_AVAILABILITY.g_analytics = false;
+        return;
+    }
+
+    if (typeof ga === 'function') {
+        SERVICE_AVAILABILITY.g_analytics = true;
+    } else {
+        SERVICE_AVAILABILITY.g_analytics = false;
+        setTimeout(check_ga, 1000);
+    }
 }
 
 //function that runs when the page is resized
