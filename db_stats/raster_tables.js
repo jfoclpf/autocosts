@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = fs.absolute("./tables/");
 console.log("The tables HTML files are in: " + path);
-var css_file = fs.absolute("../css/") + "main.css";
+var css_file = fs.absolute("../css/") + "right.css";
 console.log("The CSS main file is in: " + css_file);
 
 // Get a list all files in directory

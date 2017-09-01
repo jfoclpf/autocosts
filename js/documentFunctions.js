@@ -542,8 +542,6 @@ $('#tbl_statistics').click(function(){
     var domain = window.location.hostname;
     var url2open = "http://" + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
     window.open(url2open);
-    },{
-        passive: true
     }
 );
 

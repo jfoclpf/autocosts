@@ -3,6 +3,7 @@
 /**************************************************************************************************/
 
 #tbl_statistics {
+    font-family: "Verdana", Helvetica, Arial, sans-serif;
     border: 2px solid #b4b4b4;
     border-radius: 10px;
     border-collapse: separate;
