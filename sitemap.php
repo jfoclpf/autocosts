@@ -5,7 +5,7 @@ include_once('./countries/_list.php');?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-<!-- Domain Name Policy (DNP) in: http://github.com/jfoclpf/autocosts/wiki/Domain-name-policy -->
+<!-- Domain Name Policy (DNP) in: https://github.com/jfoclpf/autocosts/wiki/Domain-name-policy -->
 
 <?php
     //removes XX element from country list
@@ -14,7 +14,7 @@ include_once('./countries/_list.php');?>
     //creates an array with all domains and all languages
     $domain_list = []; $language_list = [];
     foreach ($avail_CT as $key => $value){
-        $domain_list[$key] = 'http://'.strtolower($domain_CT[$key]).'/'.strtoupper($key);
+        $domain_list[$key] = 'https://'.strtolower($domain_CT[$key]).'/'.strtoupper($key);
         $language_list[$key] = mb_substr($lang_CT[$key], 0, 2);
     }
     
@@ -24,7 +24,7 @@ include_once('./countries/_list.php');?>
         echo $domain_list[$key1];
         echo "</loc>\xA";
         echo "\t\t<changefreq>weekly</changefreq>\xA";
-        echo "\t\t\t".'<xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.info/" />'."\xA";
+        echo "\t\t\t".'<xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />'."\xA";
         
         foreach ($avail_CT as $key2 => $value2){
             if($key2 != $key1){
@@ -54,11 +54,11 @@ include_once('./countries/_list.php');?>
         //sets English language to US
         $key = array_search("en", $language_list2);
         unset($language_list2[$key]);
-        echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="en" href="http://' . $domain_CT['US'] . '/US" />' . "\xA";
+        echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="en" href="https://' . $domain_CT['US'] . '/US" />' . "\xA";
         //sets Ukranian language to UA
         $key = array_search("uk", $language_list2);
         unset($language_list2[$key]);
-        echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="uk" href="http://' . $domain_CT['UA'] . '/UA" />' . "\xA";
+        echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="uk" href="https://' . $domain_CT['UA'] . '/UA" />' . "\xA";
         foreach ($language_list2 as $key => $value){
             
             //case where languge code equal country code, ex: PT and PT
@@ -75,18 +75,18 @@ include_once('./countries/_list.php');?>
             
             echo "\t\t\t" . '<xhtml:link rel="alternate" '. 
                  'hreflang="'. $value . '" '.
-                 'href="http://'. $href .'" />'.
+                 'href="https://'. $href .'" />'.
                  "\xA";
         }
         echo "\t</url>\xA";
     }
     
     
-    //THE LAST PAGE http://autocosts.info/
+    //THE LAST PAGE https://autocosts.info/
     echo "\t<url>\xA";
-    echo "\t\t<loc>http://autocosts.info/</loc>\xA";
+    echo "\t\t<loc>https://autocosts.info/</loc>\xA";
     echo "\t\t<changefreq>weekly</changefreq>\xA";
-    echo "\t\t\t".'<xhtml:link rel="alternate" hreflang="x-default" href="http://autocosts.info/" />'."\xA";
+    echo "\t\t\t".'<xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />'."\xA";
     
     foreach ($avail_CT as $key2 => $value2){
         if($key2 != $key1){
@@ -115,11 +115,11 @@ include_once('./countries/_list.php');?>
     //sets English language to US
     $key = array_search("en", $language_list2);
     unset($language_list2[$key]);
-    echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="en" href="http://' . $domain_CT['US'] . '/US" />' . "\xA";
+    echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="en" href="https://' . $domain_CT['US'] . '/US" />' . "\xA";
     //sets Ukranian language to UA
     $key = array_search("uk", $language_list2);
     unset($language_list2[$key]);
-    echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="uk" href="http://' . $domain_CT['UA'] . '/UA" />' . "\xA";
+    echo "\t\t\t" . '<xhtml:link rel="alternate" hreflang="uk" href="https://' . $domain_CT['UA'] . '/UA" />' . "\xA";
     foreach ($language_list2 as $key => $value){
         
         //case where languge code equal country code, ex: PT and PT
@@ -136,7 +136,7 @@ include_once('./countries/_list.php');?>
         
         echo "\t\t\t" . '<xhtml:link rel="alternate" '. 
              'hreflang="'. $value . '" '.
-             'href="http://'. $href .'" />'.
+             'href="https://'. $href .'" />'.
              "\xA";
     }
         

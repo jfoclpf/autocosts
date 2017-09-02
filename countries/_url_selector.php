@@ -36,14 +36,14 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
         $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);  
     }
     else{
-        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
     }
     
     header('Location: '.$URLtoRedirect, true, 302); 
     //302 redirects are temporary
     //it's temporary because the redirect might, from a defined starting URL, 
     //redirect to different URLs according to the locale of the user
-    exit;
+    exit();
 }
 //if the CC characters after domain.info/cc ARE recognized as being in the list 
 //But if the two-letter code are NOT all in upper case domain.info/CC 
@@ -59,17 +59,17 @@ elseif (strtoupper($_GET["c"]) != $_GET["c"]){
     }
     //if test version in any domain
     elseif($GLOBALS['country'] == "XX"){
-        $URLtoRedirect = 'http://'.$domain_client.'/XX';
+        $URLtoRedirect = 'https://'.$domain_client.'/XX';
         $redir = 302; //302 redirects are temporary (test version)
     }
     //example: autocosts.info/pt (is not valid) shall forward to autocustos.info/PT
     else{
-        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
+        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
         $redir = 301; //301 redirects are permanent
     }
     
     header('Location: '.$URLtoRedirect, true, $redir); //302 redirects are temporary
-    exit;
+    exit();
 }
 //the CC is reconginzed and it's in uppercase
 else {
@@ -79,19 +79,27 @@ else {
     //if the URL is not the valid URL  
     //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT
     if(!crawlByBot() && !isTest()){
-        $URLtoRedirect = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
         header('Location: '.$URLtoRedirect, true, 301); //301 redirects are permanent
-        exit;
+        exit();
     }
 }
 //from here the /CC is recognized 
 //AND the URL is correct
 
+//forwards http to https
+if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
+    $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    header('HTTP/1.1 301 Moved Permanently');
+    header('Location: ' . $redirect);
+    exit();
+}
+
 //loads the correspondent country file
 include_once('./countries/' . $GLOBALS['country'] . '.php');
 
 //full URL for this page
-$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+$PageURL = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
 
 //removes XX from array
 unset($avail_CT['XX']);
