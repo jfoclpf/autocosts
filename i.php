@@ -56,7 +56,6 @@ ob_start("sanitize_output");
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
-    <script src="GlobalSwitches.js"></script>
     <script src="js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
     <script src="js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
     <script src="js/documentFunctions.js"></script>

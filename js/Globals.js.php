@@ -6,6 +6,27 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
 $GLOBALS['country'] = $_GET['country'];
 ob_start();?>
 
+/*GLOBAL switches
+Change the values in GlobalSwitches.json accordingly
+var SWITCHES = {
+    uber:        true, //Uber
+    social:      true, //Social media pulgins
+    g_charts:    true, //Google Charts
+    g_captcha:   true, //Google Captcha
+    g_analytics: true, //Google Analytics
+    data_base:   true, //Inserts user input data into DataBase
+    print:       true, //Print option
+    pdf:         true, //Download PDF report option
+    https:       true  //true for https, false for http
+};*/
+var SWITCHES;
+$.getJSON("GlobalSwitches.json", function(data) {         
+    SWITCHES = data;
+    console.log(data);
+});
+
+
+
 /*Define GLOBAL Javascript variables*/
 var COUNTRY = "<?php echo $GLOBALS["country"]; ?>";
 /*Language code according to ISO_639-1 codes*/

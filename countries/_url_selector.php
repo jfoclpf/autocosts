@@ -88,7 +88,7 @@ else {
 //AND the URL is correct
 
 //forwards http to https
-if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
+if(!isTest() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off")){
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header('HTTP/1.1 301 Moved Permanently');
     header('Location: ' . $redirect);

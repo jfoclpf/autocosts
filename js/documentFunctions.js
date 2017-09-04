@@ -369,7 +369,7 @@ function onCountrySelect(country) {
         url2go = "http://autocosts.work/" + country.toUpperCase();
     }
     else{
-        url2go = "https://" + DOMAIN_LIST[country] + "/" + country.toUpperCase();
+        url2go = getProtocol() + DOMAIN_LIST[country] + "/" + country.toUpperCase();
     }
     window.location.href = url2go;
 }
@@ -540,7 +540,7 @@ $('#working_time_form3 tr').hover(
 //when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
 $('#tbl_statistics').click(function(){
     var domain = window.location.hostname;
-    var url2open = "https://" + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
+    var url2open = getProtocol() + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
     window.open(url2open);
     }
 );
@@ -566,6 +566,17 @@ function numberWithSpaces(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "&#160;");
     return parts.join(".");
+}
+
+//gets default protocol defined by Global Variable
+function getProtocol(){
+    
+    if (SWITCHES.https){
+        return "https://";
+    }
+    else{
+        return "http://";
+    }
 }
 
 //detects old versions of Internet Explorer

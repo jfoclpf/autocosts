@@ -1,0 +1,11 @@
+{
+	"uber": true,
+	"social": true,
+	"g_charts": true,
+	"g_captcha": true,
+	"g_analytics": true,
+	"data_base": true,
+	"print": true,
+	"pdf": true,
+	"https": true
+}

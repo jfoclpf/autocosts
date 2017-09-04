@@ -54,9 +54,12 @@ DirectoryIndex i.php index.php index.html index.htm
 # Disable server signature
 ServerSignature Off
 
+#inform about HSTS to the browser
+Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
+
 RewriteEngine On
 
-#forward http to https
+#forward http to https, remove if https is not available
 RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
