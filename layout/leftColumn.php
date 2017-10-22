@@ -14,6 +14,15 @@
         <div class="roundCorner">
             <img alt="Picture" src="<?php echo get_picture_file_name($CURR_CODE); ?>">
         </div>
+        
+        <br>
+        
+        <a class="display_block" target="_blank" href="https://play.google.com/store/apps/details?id=info.autocosts">
+            <div id="div31" class="roundCorner">
+                <img alt="Android logo" src="images/android/android_robot.svg">
+                <img alt="Android logo" src="images/android/android_text.svg">
+            </div>
+        </a>
 
         <div id="div32" class="roundCorner">
             <!-- Contact block -->

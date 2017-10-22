@@ -460,7 +460,7 @@ function scrollPage(callback){
 $('#form_part1').on({
     mouseenter: function(){//when mouse pointer enters div
         if (CurrentFormPart==1){
-                $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 0.2);
+                $('#description, #div1_td, #div3_td').clearQueue().fadeTo( "slow" , 0.1);
                 scrollPage();
             }
         },

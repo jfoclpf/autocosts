@@ -35,43 +35,55 @@
             </th>
             <th>
                 CC
-            </th>      
+            </th>
         </tr>
         <tr>
         <?php
             include_once("./countries/_list.php");
-            
+
+            //array where domain duplicates are removed
             $domain_unique = array_unique($domain_CT);
             
+            //count in the orignal domains array, of many entries are for each domain
             $domain_count_values = array_count_values($domain_CT);
-                        
+
+            //loops through an array of unique domains (no duplicates)
             foreach ($domain_unique as $key => $value) {
-                                
-                if (strtoupper($key) != "XX"){
+
+                //how many entries are for this domain?
+                $nbrEle = $domain_count_values[$value];
+
+                //if it is a domain associated with only one country (for example autocosti.info is only for Italy)
+                if($nbrEle == 1){
+                    echo '<tr>';
+                        echo '<td>1</td>';
+                        echo '<td>'.$value.'</td>';
+                        echo '<td>'.$avail_CT[$key].'</td>';
+                        echo '<td>'.$key.'</td>';
+                    echo '</tr>';
+                }
+                
+                //if for this domain there are several countries associated (for example autocosts.info for US and UK)
+                else{
                     
-                    $nbrEle = $domain_count_values[$value];                    
-                    
-                    if($nbrEle == 1){
-                        echo '<tr>';
-                            echo '<td>1</td>';
-                            echo '<td>'.$value.'</td>';
-                            echo '<td>'.$avail_CT[$key].'</td>';
-                            echo '<td>'.$key.'</td>';
-                        echo '</tr>';         
+                    //array of countries (keys) for each single domain ($value)
+                    $array_keys = array_keys($domain_CT, $value);
+
+                    if(in_array("XX",$array_keys)){
+                        $nbrEle--;
                     }
                     
-                    else{                        
-                        $array_keys = array_keys($domain_CT, $value);
-                                                
-                        $i=0;
-                        foreach ($array_keys as $key2 => $value2){
-                            
+                    $i=0;
+                    foreach ($array_keys as $key2 => $value2){
+
+                       if (strtoupper($value2) != "XX"){
+
                             echo '<tr>';
                             if($i==0){
                                 echo '<td rowspan="'.$nbrEle.'">'.$nbrEle.'</td>';
                                 echo '<td rowspan="'.$nbrEle.'">'.$value.'</td>';
                                 echo '<td>'.$avail_CT[$value2].'</td>';
-                                echo '<td>'.$value2.'</td>';                                
+                                echo '<td>'.$value2.'</td>';
                             }
                             else{
                                 echo '<td>'.$avail_CT[$value2].'</td>';
@@ -80,7 +92,7 @@
                             echo '</tr>';
                             $i++;
                         }
-                    }                                        
+                    }
                 }
             }
         ?>

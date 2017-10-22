@@ -2,6 +2,10 @@
 /*** MAIN LEFT COLUMN DIV (#div3), as viewed on a large PC screen (more than 1024 px width) ********/
 /**************************************************************************************************/
 
+#div31 {
+    padding: 20px 70px;
+}
+
 #div32 {
     background: #fff;
     padding: 15px;
@@ -24,4 +28,8 @@ span.codedirection{
     padding:4px 0 8px 0;
     width:100%;
     font-size:95%;
+}
+
+.display_block {
+    display: block;
 }
