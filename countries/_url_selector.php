@@ -1,42 +1,51 @@
 <?php
 
 asort($avail_CT); //sorts alphabetically the counties list
-
 $url_cc=strtoupper($_GET["c"]); //uppercase
+
+//get information from HTTP or HTTPS from the file GlobalSwitches.json
+$string = file_get_contents("./GlobalSwitches.json");
+$SWITCHES = json_decode($string, true);
+if($SWITCHES["https"]){
+    $HTTP_Protocol = "https://";
+}
+else{
+    $HTTP_Protocol = "http://";
+}
 
 //if no country is defined or the country isn't in the list
 //i.e, if the CC characters in domain.info/CC are not recognized
 if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
-	
+
     //gets the country by IP 
     include_once("./php/geo_functions.php");
     $geo_cc = ip_info("Visitor", "Country Code");
     $geo_cc=strtoupper($geo_cc); //uppercase
     
     //gets the country by the browser language information
-	$lang_cty = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 3, 2);
-	$lang_cty=strtoupper($lang_cty);//the country
+    $lang_cty = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 3, 2);
+    $lang_cty=strtoupper($lang_cty);//the country
     
     //gets the language by the browser information
     $lang1 = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     $lang1=strtoupper($lang1);//the language
     
     if (is_cty_inlist($geo_cc, $avail_CT)) {
-		$GLOBALS['country'] = $geo_cc;
-	} elseif (is_cty_inlist($lang_cty, $avail_CT)) {
-		$GLOBALS['country'] = $lang_cty;
-	} elseif (is_cty_inlist($lang1, $avail_CT)) {
-		$GLOBALS['country'] = $lang1;
-	} else {
-		$GLOBALS['country'] = "UK";
-	}
+        $GLOBALS['country'] = $geo_cc;
+    } elseif (is_cty_inlist($lang_cty, $avail_CT)) {
+        $GLOBALS['country'] = $lang_cty;
+    } elseif (is_cty_inlist($lang1, $avail_CT)) {
+        $GLOBALS['country'] = $lang1;
+    } else {
+    $GLOBALS['country'] = "UK";
+    }
     
-    //if .work domain
+    //if .work domain - work domain uses http
     if(explode('.', strtolower($_SERVER['HTTP_HOST']))[1]=="work"){
         $URLtoRedirect = 'http://autocosts.work/'.strtoupper($GLOBALS['country']);  
     }
     else{
-        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+        $URLtoRedirect = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
     }
     
     header('Location: '.$URLtoRedirect, true, 302); 
@@ -52,19 +61,19 @@ elseif (strtoupper($_GET["c"]) != $_GET["c"]){
     $GLOBALS['country'] = $url_cc; //it's already uppercase
     $domain_client = strtolower($_SERVER['HTTP_HOST']);
     
-    //if .work domain
+    //if .work domain; work domain uses http
     if(explode('.', strtolower($domain_client))[1]=="work"){
         $URLtoRedirect = 'http://autocosts.work/'.$GLOBALS['country'];
         $redir = 302; //302 redirects are temporary (test version)
     }
     //if test version in any domain
     elseif($GLOBALS['country'] == "XX"){
-        $URLtoRedirect = 'https://'.$domain_client.'/XX';
+        $URLtoRedirect = $HTTP_Protocol.$domain_client.'/XX';
         $redir = 302; //302 redirects are temporary (test version)
     }
     //example: autocosts.info/pt (is not valid) shall forward to autocustos.info/PT
     else{
-        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
+        $URLtoRedirect = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.$GLOBALS['country'];
         $redir = 301; //301 redirects are permanent
     }
     
@@ -73,13 +82,13 @@ elseif (strtoupper($_GET["c"]) != $_GET["c"]){
 }
 //the CC is reconginzed and it's in uppercase
 else {
-	$GLOBALS['country'] = $url_cc; //it's already uppercase
+    $GLOBALS['country'] = $url_cc; //it's already uppercase
     $GLOBALS['domain_for_CT'] = $domain_CT[$GLOBALS['country']];
 
     //if the URL is not the valid URL  
     //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT
     if(!crawlByBot() && !isTest()){
-        $URLtoRedirect = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+        $URLtoRedirect = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
         header('Location: '.$URLtoRedirect, true, 301); //301 redirects are permanent
         exit();
     }
@@ -88,7 +97,7 @@ else {
 //AND the URL is correct
 
 //forwards http to https
-if(!isTest() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off")){
+if(!isTest() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") && $SWITCHES["https"]){
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header('HTTP/1.1 301 Moved Permanently');
     header('Location: ' . $redirect);
@@ -99,7 +108,7 @@ if(!isTest() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off")){
 include_once('./countries/' . $GLOBALS['country'] . '.php');
 
 //full URL for this page
-$PageURL = 'https://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+$PageURL = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
 
 //removes XX from array
 unset($avail_CT['XX']);

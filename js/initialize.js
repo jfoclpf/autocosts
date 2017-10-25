@@ -59,14 +59,20 @@ function initialize() {
     $('#run_button').show();
     $('#run_button_noCapctha').hide();
 
-    //renders according to Global swicthes
-    if(!SWITCHES.print){
-        $("#print_button").hide();
-    }
-    //deactivates pdf download button, to be activated only after pdf files are available
-    if(!SWITCHES.pdf){
-        $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
-    }
+    //GLOBAL SWITCHES are loaded from file GlobalSwitches.json
+    $.getJSON("GlobalSwitches.json", function(data) {         
+        SWITCHES = data;
+        //console.log(SWITCHES);
+        
+        //renders according to Global swicthes
+        if(!SWITCHES.print){
+            $("#print_button").hide();
+        }
+        //deactivates pdf download button, to be activated only after pdf files are available
+        if(!SWITCHES.pdf){
+            $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
+        }       
+    });    
 
     //detects whether Google Analytics has loaded
     check_ga();
