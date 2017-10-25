@@ -185,7 +185,7 @@ $currency_logo = "";
     <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
     
     <!-- these are JS autocosts WEB generic files-->
-    <script src="js/coreFunctions.js"></script>
+    <script src="js/core/coreFunctions.js"></script>
     <script src="js/conversionFunctions.js"></script>
     <script src="js/dbFunctions.js"></script>
     <script src="js/get_data.js"></script>    
