@@ -6,6 +6,9 @@ suPHP_ConfigPath /home4/jfolpf
  BrowserMatch ^Mozilla/4 gzip-only-text/html
  BrowserMatch ^Mozilla/4\.0[678] no-gzip
  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+ 
+ AddType image/svg+xml .svg
+ AddOutputFilterByType DEFLATE image/svg+xml 
 </ifmodule>
 
 # Expires Headers - 2678400s = 31 days
@@ -16,6 +19,7 @@ suPHP_ConfigPath /home4/jfolpf
   ExpiresByType image/gif "access plus 2678400 seconds"
   ExpiresByType image/jpeg "access plus 2678400 seconds"
   ExpiresByType image/png "access plus 2678400 seconds"
+  ExpiresByType image/svg+xml "access plus 2678400 seconds"
   ExpiresByType text/css "access plus 518400 seconds"
   ExpiresByType text/javascript "access plus 2678400 seconds"
   ExpiresByType application/x-javascript "access plus 2678400 seconds"
@@ -24,7 +28,7 @@ suPHP_ConfigPath /home4/jfolpf
 # Cache Headers
 <ifmodule mod_headers.c>
   # Cache specified files for 31 days
-  <filesmatch "\.(ico|flv|jpg|jpeg|png|gif|css|swf)$">
+  <filesmatch "\.(ico|flv|jpg|jpeg|svg|png|gif|css|json|swf)$">
   Header set Cache-Control "max-age=2678400, public"
   </filesmatch>
   # Cache HTML files for a couple hours
