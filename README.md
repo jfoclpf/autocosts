@@ -20,14 +20,15 @@ The available services are defined in the file <a href="https://github.com/jfocl
 ## Android APP<br>
 https://play.google.com/store/apps/details?id=info.autocosts
 
-## Related projects
+## Projects used
 
 Stored in folder php/<br>
-* <a href="https://github.com/matthiasmullie/minify">matthiasmullie/minify</a>
+* <a href="https://github.com/matthiasmullie/minify">matthiasmullie/minify</a> to minify php generated code on client demand
 * <a href="https://github.com/matthiasmullie/path-converter">matthiasmullie/path-converter</a>
 
 Other<br>
-* <a href="http://www.chartjs.org/">chartjs.org</a>
+* <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
+* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons  
 
 ## Contributions
 * Use four spaces for indentations
