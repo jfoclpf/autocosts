@@ -2,15 +2,15 @@
 
 //function that informs if a country is in the list of available countries
 function is_cty_inlist($cc, $c_array){ //cc=country code
-	if ($cc == null) {
-		return false;
-	}
-	foreach ($c_array as $key => $value) {
-		if ($key == $cc) {
-			return true;
-		}
-	}
-	return false;
+    if ($cc == null) {
+        return false;
+    }
+    foreach ($c_array as $key => $value) {
+        if ($key == $cc) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //function that cleans the string of HTML tags a gets only the first sentence of $string

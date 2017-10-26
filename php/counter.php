@@ -22,10 +22,10 @@ $counter_connected = true;
 $link = mysqli_connect($counter_host, $counter_user, $counter_password, $counter_database);
 if (!$link) 
 {
- 	// can't connect to database
-	$counter_connected = false;
-	die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
-	exit;
+     // can't connect to database
+    $counter_connected = false;
+    die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
+    exit;
 }
 
 if ($counter_connected == true) 
@@ -38,15 +38,15 @@ if ($counter_connected == true)
    
    // fill when empty
    if (mysqli_num_rows($res) == 0)
-   {	  
-	  $sql = "INSERT INTO `counter_values` (`id`, `day_id`, `day_value`, `yesterday_id`, `yesterday_value`, `week_id`, `week_value`, `month_id`, `month_value`, `year_id`, `year_value`, `all_value`, `record_date`, `record_value`) VALUES ('1', '" . date("z") . "',  '1', '" . (date("z")-1) . "',  '0', '" . date("W") . "', '1', '" . date("n") . "', '1', '" . date("Y") . "',  '1',  '1',  NOW(),  '1')";
-	  mysqli_query($link, $sql);
+   {      
+      $sql = "INSERT INTO `counter_values` (`id`, `day_id`, `day_value`, `yesterday_id`, `yesterday_value`, `week_id`, `week_value`, `month_id`, `month_value`, `year_id`, `year_value`, `all_value`, `record_date`, `record_value`) VALUES ('1', '" . date("z") . "',  '1', '" . (date("z")-1) . "',  '0', '" . date("W") . "', '1', '" . date("n") . "', '1', '" . date("Y") . "',  '1',  '1',  NOW(),  '1')";
+      mysqli_query($link, $sql);
 
-	  // reload with settings
-	  $sql = "SELECT * FROM counter_values LIMIT 1";
+      // reload with settings
+      $sql = "SELECT * FROM counter_values LIMIT 1";
       $res = mysqli_query($link, $sql);
-	  
-	  $ignore = true;
+      
+      $ignore = true;
    }   
    $row = mysqli_fetch_assoc($res);
    
@@ -69,46 +69,46 @@ if ($counter_connected == true)
    $length = sizeof($counter_ignore_agents);
    for ($i = 0; $i < $length; $i++)
    {
-	  if (substr_count($counter_agent, strtolower($counter_ignore_agents[$i])))
-	  {
-	     $ignore = true;
-		 break;
-	  }
+      if (substr_count($counter_agent, strtolower($counter_ignore_agents[$i])))
+      {
+         $ignore = true;
+         break;
+      }
    }
    
    $length = sizeof($counter_ignore_ips);
    for ($i = 0; $i < $length; $i++)
    {
-	  if ($counter_ip == $counter_ignore_ips[$i])
-	  {
-	     $ignore = true;
-		 break;
-	  }
+      if ($counter_ip == $counter_ignore_ips[$i])
+      {
+         $ignore = true;
+         break;
+      }
    }
      
    // delete free ips
    if ($ignore == false)
    {
       $sql = "DELETE FROM counter_ips WHERE unix_timestamp(NOW())-unix_timestamp(visit) >= $counter_expire"; 
-      mysqli_query($link, $sql);	  
+      mysqli_query($link, $sql);      
    }
       
    // check for entry
    if ($ignore == false)
    {
       $sql = "update counter_ips set visit = NOW() where ip = '$counter_ip'";
-	  mysqli_query($link, $sql);
-	  
-	  if (mysqli_affected_rows($link) > 0)
-	  {
-		 $ignore = true;						   		 
-	  }
-	  else
-	  {
-		 // insert ip
-	     $sql = "INSERT INTO counter_ips (ip, visit) VALUES ('$counter_ip', NOW())";
-   	     mysqli_query($link, $sql); 
-	  }	  	  
+      mysqli_query($link, $sql);
+      
+      if (mysqli_affected_rows($link) > 0)
+      {
+         $ignore = true;                                    
+      }
+      else
+      {
+         // insert ip
+         $sql = "INSERT INTO counter_ips (ip, visit) VALUES ('$counter_ip', NOW())";
+            mysqli_query($link, $sql); 
+      }            
    }
    
    // online?
@@ -118,80 +118,80 @@ if ($counter_connected == true)
       
    // add counter
    if ($ignore == false)
-   {     	  
+   {           
       // yesterday
-	  if ($day_id == (date("z")-1)) 
-	  {
-	     $yesterday_value = $day_value; 
-	  }
-	  else
-	  {
-	     if ($yesterday_id != (date("z")-1))
-		 {
-		    $yesterday_value = 0; 
-		 }
-	  }
-	  $yesterday_id = (date("z")-1);
-	  
-	  // day
-	  if ($day_id == date("z")) 
-	  {
-	     $day_value++; 
-	  }
-	  else 
-	  {
-	     $day_value = 1;
-		 $day_id = date("z");
-	  }
-	  
-	  // week
-	  if ($week_id == date("W")) 
-	  {
-	     $week_value++; 
-	  }
-	  else 
-	  { 
-	     $week_value = 1;
-		 $week_id = date("W");
+      if ($day_id == (date("z")-1)) 
+      {
+         $yesterday_value = $day_value; 
       }
-	  
+      else
+      {
+         if ($yesterday_id != (date("z")-1))
+         {
+            $yesterday_value = 0; 
+         }
+      }
+      $yesterday_id = (date("z")-1);
+      
+      // day
+      if ($day_id == date("z")) 
+      {
+         $day_value++; 
+      }
+      else 
+      {
+         $day_value = 1;
+         $day_id = date("z");
+      }
+      
+      // week
+      if ($week_id == date("W")) 
+      {
+         $week_value++; 
+      }
+      else 
+      { 
+         $week_value = 1;
+         $week_id = date("W");
+      }
+      
       // month
-	  if ($month_id == date("n")) 
-	  {
-	     $month_value++; 
-	  }
-	  else 
-	  {
-	     $month_value = 1;
-		 $month_id = date("n");
+      if ($month_id == date("n")) 
+      {
+         $month_value++; 
       }
-	  
-	  // year
-	  if ($year_id == date("Y")) 
-	  {
-	     $year_value++; 
-	  }
-	  else 
-	  {
-	     $year_value = 1;
-		 $year_id = date("Y");
+      else 
+      {
+         $month_value = 1;
+         $month_id = date("n");
       }
-	  
-	  // all
-	  $all_value++;
-		 
-	  // neuer record?
-	  if ($day_value > $record_value)
-	  {
-	     $record_value = $day_value;
-	     $record_date = date("Y-m-d H:i:s");
-	  }
-		 
-	  // speichern und aufräumen
-	  $sql = "UPDATE counter_values SET day_id = '$day_id', day_value = '$day_value', yesterday_id = '$yesterday_id', yesterday_value = '$yesterday_value', week_id = '$week_id', week_value = '$week_value', month_id = '$month_id', month_value = '$month_value', year_id = '$year_id', year_value = '$year_value', all_value = '$all_value', record_date = '$record_date', record_value = '$record_value' WHERE id = 1";
-	  mysqli_query($link, $sql);  	  
-   }	  
-	  	
+      
+      // year
+      if ($year_id == date("Y")) 
+      {
+         $year_value++; 
+      }
+      else 
+      {
+         $year_value = 1;
+         $year_id = date("Y");
+      }
+      
+      // all
+      $all_value++;
+         
+      // neuer record?
+      if ($day_value > $record_value)
+      {
+         $record_value = $day_value;
+         $record_date = date("Y-m-d H:i:s");
+      }
+         
+      // speichern und aufräumen
+      $sql = "UPDATE counter_values SET day_id = '$day_id', day_value = '$day_value', yesterday_id = '$yesterday_id', yesterday_value = '$yesterday_value', week_id = '$week_id', week_value = '$week_value', month_id = '$month_id', month_value = '$month_value', year_id = '$year_id', year_value = '$year_value', all_value = '$all_value', record_date = '$record_date', record_value = '$record_value' WHERE id = 1";
+      mysqli_query($link, $sql);        
+   }      
+          
 ?>
     <table id="visitors_table">
       <tr><td><?php echo number_format($online,      0, ',', '&thinsp;'); ?></td><td><?php echo isset($ONLINE) ? $ONLINE : 'online'; ?></td></tr>
