@@ -1,8 +1,15 @@
 autocosts
 =========
 
-Automobile costs calculator<br>
+##Automobile costs calculator<br>
 http://autocosts.info<br>
+
+##Android APP
+https://play.google.com/store/apps/details?id=info.autocosts
+
+##Contributions
+* Use four spaces for indentations
+* Always comment the code in English
 
 Licensed under:<br>
 GNU GPLv3<br>
