@@ -2,7 +2,7 @@
     <!-- in case of XX shows no stats table -->
     <?php if ($GLOBALS['country'] != "XX") { ?>
         <div id="div13">
-            <?php include "db_stats/tables/".$GLOBALS['country'].".html" ?>
+            <?php include $CDN_URL."db_stats/tables/".$GLOBALS['country'].".html" ?>
         </div>
         <div id="br3">
           <br>

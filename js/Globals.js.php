@@ -32,6 +32,8 @@ var IS_HUMAN_CONFIRMED = false;
 /*object from UBER API, with UBER city data*/
 var UBER_API = {};
 
+var CDN_URL = "<?php echo $CDN_URL ?>";
+
 /*calculated information after user clicks "Run", calculated from coreFunctions.js*/
 var CALCULATED = {
     data:     {},  /*calculated data (costs, financial effort, etc.)*/

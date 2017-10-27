@@ -3,6 +3,10 @@ include_once("./php/functions.php");
 include_once("./countries/_list.php");
 include_once("./countries/_url_selector.php");
 ob_start("sanitize_output");
+
+//CDN configuration at https://app.keycdn.com/zones
+//$CDN_URL="https://zone1-9a38.kxcdn.com/"; //preserve the bar / at the end
+$CDN_URL=""; //apply this option when there is no CDN
 ?><!DOCTYPE html>
 
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
@@ -53,17 +57,17 @@ ob_start("sanitize_output");
         <br>
     </div>
     <!--jQuery-->
-    <script src="js/jquery/jquery.min.js"></script>
-    <script src="js/jquery/js_timer.js"></script>   
+    <script src="<?php echo $CDN_URL ?>js/jquery/jquery.min.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
-    <script src="js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script src="js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script src="js/documentFunctions.js"></script>
-    <script src="js/formFunctions.js"></script>
-    <script src="js/initialize.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
+    <script src="<?php echo $CDN_URL ?>js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
+    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/formFunctions.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/initialize.js"></script>
     <!--Popup alert window-->
-    <script src="js/jAlert/jAlert.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/jAlert/jAlert.js"></script>
     <!--Google Analytics-->
-    <script type="text/javascript" src="google/analytics.js"></script>    
+    <script type="text/javascript" src="<?php echo $CDN_URL ?>google/analytics.js"></script>    
 </body>
 </html>
