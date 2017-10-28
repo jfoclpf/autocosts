@@ -1,19 +1,25 @@
 <?php
+/************************************************
+**                                             **
+**              AUTOCOSTS.INFO                 **
+**      the automobile costs calculator        **
+**                                             **
+************************************************/
+//$startTime = microtime(true);
 include_once("./php/functions.php");
 include_once("./countries/_list.php");
 include_once("./countries/_url_selector.php");
+include_once("./php/minifier.php");
+
+/*sanitize_output is a function in file php/functions.php that minifies the echoed php*/
 ob_start("sanitize_output");
 
-//CDN configuration at https://app.keycdn.com/zones
-//$CDN_URL="https://zone1-9a38.kxcdn.com/"; //preserve the bar / at the end
-$CDN_URL=""; //apply this option when there is no CDN
 ?><!DOCTYPE html>
-
 <html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
 <head>
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
-	<meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
+    <meta name="description" content="<?php echo meta_description($INITIAL_TEXT); ?>">
     <meta name="keywords" content="<?php echo get_keywords($WEB_PAGE_TITLE, $FIXED_COSTS, $RUNNING_COSTS); ?>">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
@@ -60,14 +66,17 @@ $CDN_URL=""; //apply this option when there is no CDN
     <script src="<?php echo $CDN_URL ?>js/jquery/jquery.min.js"></script>
     <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
-    <script src="<?php echo $CDN_URL ?>js/Globals.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script src="<?php echo $CDN_URL ?>js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>"></script>
-    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/formFunctions.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/initialize.js"></script>
-    <!--Popup alert window-->
-    <script src="<?php echo $CDN_URL ?>js/jAlert/jAlert.js"></script>
-    <!--Google Analytics-->
-    <script type="text/javascript" src="<?php echo $CDN_URL ?>google/analytics.js"></script>    
+    <script>
+        <?php include('./js/Globals.js.php'); ?>
+    </script>
+    <script src="js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>" async></script>    
+    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js" async></script>
+    <script src="<?php echo $CDN_URL ?>js/formFunctions.js" async></script>
+    <script src="<?php echo $CDN_URL ?>js/initialize.js" async></script>
+    <!-- Popup alert window -->
+    <script src="<?php echo $CDN_URL ?>js/jAlert/jAlert.js" async></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="<?php echo $CDN_URL ?>google/analytics.js" async></script>
+    <?php /*echo "Elapsed time is: ". (microtime(true) - $startTime)*1000 ." ms";*/?>
 </body>
 </html>

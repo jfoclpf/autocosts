@@ -2,13 +2,13 @@ suPHP_ConfigPath /home4/jfolpf
 
 # Enable GZIP
 <ifmodule mod_deflate.c>
- AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
- BrowserMatch ^Mozilla/4 gzip-only-text/html
- BrowserMatch ^Mozilla/4\.0[678] no-gzip
- BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
  
- AddType image/svg+xml .svg
- AddOutputFilterByType DEFLATE image/svg+xml 
+  AddType image/svg+xml .svg
+  AddOutputFilterByType DEFLATE image/svg+xml 
 </ifmodule>
 
 # Expires Headers - 2678400s = 31 days

@@ -2,8 +2,8 @@
 
 //***********************************************
 //                                             **
-//              AUTOCOSTS.ORG                  **
-//      the automobile costs simulator         **
+//              AUTOCOSTS.INFO                 **
+//      the automobile costs calculator        **
 //                                             **
 //**********************************************/
 //List of available countries

@@ -119,14 +119,29 @@ function isTest(){
     }
 }
 
+//detect if is .work domain
+function isWorkDomain(){
+
+    $domain_client = strtolower($_SERVER['HTTP_HOST']);
+   
+    if(explode('.',$domain_client)[1]=="work"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 //sanitize HTML output
 function sanitize_output($buffer)
 {
     $search = array(
-        '/\>[^\S ]+/s', //strip whitespaces after tags, except space
-        '/[^\S ]+\</s', //strip whitespaces before tags, except space
-        '/(\s)+/s'  // shorten multiple whitespace sequences
-        );
+        '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
+        '/[^\S ]+\</s',     // strip whitespaces before tags, except space
+        '/(\s)+/s',         // shorten multiple whitespace sequences
+        '/<!--(.|\s)*?-->/' // Remove HTML comments
+    );
+    
     $replace = array(
         '>',
         '<',

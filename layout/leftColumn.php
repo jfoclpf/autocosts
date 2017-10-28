@@ -12,7 +12,7 @@
         <?php if ($is_logo) { ?><div class="is_logo"></div><?php } ?>
 
         <div class="roundCorner">
-            <img alt="Picture" src="<?php echo get_picture_file_name($CURR_CODE); ?>">
+            <img alt="Picture" src="<?php echo $CDN_URL.get_picture_file_name($CURR_CODE); ?>">
         </div>
         
         <br>

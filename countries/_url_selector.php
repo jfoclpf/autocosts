@@ -1,17 +1,37 @@
 <?php
 
-asort($avail_CT); //sorts alphabetically the counties list
-$url_cc=strtoupper($_GET["c"]); //uppercase
+//change accordingly
+$IS_HTTPS = true; //false for simple http
+$IS_CDN = true; //Content delivery network
 
-//get information from HTTP or HTTPS from the file GlobalSwitches.json
-$string = file_get_contents("./GlobalSwitches.json");
-$SWITCHES = json_decode($string, true);
-if($SWITCHES["https"]){
+//#############################################
+
+//CDN configuration at https://app.keycdn.com/zones
+//CDN provider: https://app.keycdn.com/zones
+$CDN_URL_PROD="https://prod-9a38.kxcdn.com"."/"; //preserve the bar "/" at the end
+$CDN_URL_WORK="http://work-9a38.kxcdn.com"."/"; //preserve the bar "/" at the end
+
+if($IS_CDN){
+    if(isWorkDomain()){
+        $CDN_URL = $CDN_URL_WORK;
+    }
+    else{
+        $CDN_URL = $CDN_URL_PROD;
+    }
+}
+else{
+    $CDN_URL = "";
+}
+
+if($IS_HTTPS && !isWorkDomain()){
     $HTTP_Protocol = "https://";
 }
 else{
     $HTTP_Protocol = "http://";
 }
+
+asort($avail_CT); //sorts alphabetically the counties list
+$url_cc=strtoupper($_GET["c"]); //uppercase
 
 //if no country is defined or the country isn't in the list
 //i.e, if the CC characters in domain.info/CC are not recognized
@@ -97,7 +117,7 @@ else {
 //AND the URL is correct
 
 //forwards http to https
-if(!isTest() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") && $SWITCHES["https"]){
+if(!isWorkDomain() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") && $IS_HTTPS){
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header('HTTP/1.1 301 Moved Permanently');
     header('Location: ' . $redirect);

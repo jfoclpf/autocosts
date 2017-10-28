@@ -155,12 +155,12 @@ function shows_part(part_number_origin, part_number_destiny){
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
 function loadExtraFiles() {
 
-    getScriptOnce("js/conversionFunctions.js");
-    getScriptOnce("db_stats/statsFunctions.js");
-    getScriptOnce("js/get_data.js");
+    getScriptOnce(CDN_URL + "js/conversionFunctions.js");
+    getScriptOnce(CDN_URL + "db_stats/statsFunctions.js");
+    getScriptOnce(CDN_URL + "js/get_data.js");
 
     if (SWITCHES.print){
-        getScriptOnce("js/print.js");
+        getScriptOnce(CDN_URL + "js/print.js");
     }
 
     if (SWITCHES.g_charts){
@@ -173,10 +173,10 @@ function loadExtraFiles() {
     }
 
     if (SWITCHES.data_base){
-        getScriptOnce("js/dbFunctions.js");
+        getScriptOnce(CDN_URL + "js/dbFunctions.js");
     }
 
-    getScriptOnce("js/g-recaptcha.js", function() {
+    getScriptOnce(CDN_URL + "js/g-recaptcha.js", function() {
         if (SWITCHES.g_captcha){
             getScriptOnce("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE)
                 .done(function(){
@@ -193,7 +193,7 @@ function loadExtraFiles() {
 
     if (SWITCHES.social){
         //Jquery social media share plugins
-        getScriptOnce("js/social/jssocials.min.js", function(){
+        getScriptOnce(CDN_URL + "js/social/jssocials.min.js", function(){
             $('<link/>', {
                rel: 'stylesheet', type: 'text/css',
                href: 'css/social/jssocials.css'
@@ -221,8 +221,8 @@ function loadExtraFiles() {
         SERVICE_AVAILABILITY.g_charts = false;
     }
 
-    getScriptOnce("google/rgbcolor.js");
-    getScriptOnce("google/canvg.js");
+    getScriptOnce(CDN_URL + "google/rgbcolor.js");
+    getScriptOnce(CDN_URL + "google/canvg.js");
 
     //uber
     if (SWITCHES.uber){
@@ -244,14 +244,14 @@ function loadExtraFiles() {
     if(SWITCHES.pdf){
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
-        getScriptOnce("js/pdf/generatePDF.js", function() {
-            getScriptOnce("js/pdf/pdfmake.min.js", function() {
+        getScriptOnce(CDN_URL + "js/pdf/generatePDF.js", function() {
+            getScriptOnce(CDN_URL + "js/pdf/pdfmake.min.js", function() {
                 //path where the fonts for PDF are stored
                 var pdf_fonts_path;
                 if (COUNTRY=='CN' || COUNTRY=='JP' || COUNTRY=='IN'){
-                    pdf_fonts_path = "js/pdf/" + COUNTRY + "/vfs_fonts.js";
+                    pdf_fonts_path = CDN_URL + "js/pdf/" + COUNTRY + "/vfs_fonts.js";
                 }else{
-                    pdf_fonts_path = "js/pdf/vfs_fonts.js";
+                    pdf_fonts_path = CDN_URL + "js/pdf/vfs_fonts.js";
                 }
                 getScriptOnce(pdf_fonts_path, function() {
                     $('#generate_PDF').prop('disabled', false).removeClass('buttton_disabled');
@@ -542,8 +542,7 @@ $('#tbl_statistics').click(function(){
     var domain = window.location.hostname;
     var url2open = getProtocol() + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
     window.open(url2open);
-    }
-);
+});
 
 //Loader after the run button is clicked
 function runButtonLoader() {    
@@ -570,6 +569,15 @@ function numberWithSpaces(x) {
 
 //gets default protocol defined by Global Variable
 function getProtocol(){
+ 
+    //verifies top level domain
+    var hostName = window.location.hostname;
+    var hostNameArray = hostName.split(".");
+    var posOfTld = hostNameArray.length - 1;
+    var tld = hostNameArray[posOfTld];
+    if(tld=="work"){
+        return "http://";
+    }    
     
     if (SWITCHES.https){
         return "https://";

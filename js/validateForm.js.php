@@ -5,12 +5,24 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
 $GLOBALS['country'] = $_GET['country'];
 ob_start();?>
 
+/************************************************
+**                                             **
+**              AUTOCOSTS.INFO                 **
+**      the automobile costs calculator        **
+**                                             **
+************************************************/
+/*File with Javascript functions that check weather the form parts are correctly inserted */
+
+/*In this file for comments ALWAYS use bar-star star-bar / * comments * / */
+/*the minification tool removes newlines and thus double-bar-comments break the code */
+
 /* *** CHECK FORM PART 1 ***** */
 /*check if data from form 1 (standing costs) is correctly filled*/
+
 function is_userdata_formpart1_ok(){
 
-    var f = document.costs_form; //form
-    var minCarYear = 1910; //the year of the first produced car
+    var f = document.costs_form; /*form*/
+    var minCarYear = 1910; /*the year of the first produced car*/
 
     /*depreciation*/
     var acquisitionMonth = f.acquisitionMonth.value; /*car acquisition month*/
@@ -159,7 +171,7 @@ function is_userdata_formpart1_ok(){
 /*check if data from form 2 (running costs) is correctly filled*/
 function is_userdata_formpart2_ok(){
 
-    var f = document.costs_form; //form
+    var f = document.costs_form; /*form*/
 
     /*fuel*/
     var tipo_calc_combustiveis=getCheckedValue(f.calc_combustiveis);
@@ -336,7 +348,7 @@ function is_userdata_formpart2_ok(){
 /* *** CHECK FORM PART 3 ***** */
 function is_userdata_formpart3_ok(){
 
-    var f = document.costs_form; //form
+    var f = document.costs_form; /*form*/
 
     var public_transport = getCheckedSliderValue(f.slider1);
 

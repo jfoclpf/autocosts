@@ -1,23 +1,29 @@
-<?php Header("content-type: application/x-javascript");
-if(strlen($_GET['country']) != 2){ exit;}
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
-$GLOBALS['country'] = $_GET['country'];
-ob_start();?>
+<?php ob_start();?>
 
-//GLOBAL switches are loaded from file GlobalSwitches.json in file initialize.js
-//SWITCHES
-//uber:        Uber
-//social:      Social media pulgins
-//g_charts:    Google Charts
-//g_captcha:   Google Captcha
-//g_analytics: Google Analytics
-//data_base:   Inserts user input data into DataBase
-//print:       Print option
-//pdf:         Download PDF report option
-//https:       true for https, false for http
-var SWITCHES;
+/************************************************
+**                                             **
+**              AUTOCOSTS.INFO                 **
+**      the automobile costs calculator        **
+**                                             **
+************************************************/
+
+/*File with Javascript Global variables */
+
+/*In this file for comments ALWAYS use bar-star star-bar / * comments * / */
+/*the minification tool removes newlines and thus double-bar-comments break the code */
+
+/*GLOBAL switches*/
+var SWITCHES = {
+    "uber": true,        /*Uber*/
+    "social": true,      /*Social media pulgins*/
+    "g_charts": true,    /*Google Charts*/
+    "g_captcha": true,   /*Google Captcha*/
+    "g_analytics": true, /*Google Analytics*/
+    "data_base": true,   /*Inserts user input data into DataBase*/
+    "print": true,       /*Print option*/
+    "pdf": true,         /*Download PDF report option*/
+    "https": true        /*true for https, false for http*/
+};
 
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
 
@@ -72,8 +78,8 @@ var DISPLAY = {
     RunButtonStr: "<?php echo $BUTTON_RUN; ?>"
 };
 
-/*Service availability. Later on in the code, the variables might be set to TRUE
-if the services are available. Therefore do not change these values here*/
+/*Service availability. Later on in the code, the variables might be set to TRUE*/
+/*if the services are available. Therefore do not change these values here*/
 var SERVICE_AVAILABILITY = {
     g_charts      : false,   /*variable that says whether Google Charts JS files are available*/
     g_captcha     : false,   /*variable that says whether Google Captcha JS files are available*/
@@ -86,4 +92,3 @@ $javascriptContent = ob_get_clean();
 $minifier = new Minify\JS($javascriptContent);
 echo $minifier->minify();
 ?>
-
