@@ -15,7 +15,7 @@ https://autocustos.info/list
 https://autocosts.info/domains
 
 ## Available services
-The available services are defined in the global SWITCH JS object in the file <a href="https://github.com/jfoclpf/autocosts/blob/master/js/Globals.js.php">Globals.js.php</a>
+The available services are defined in the global `SWITCH` JS object in the file <a href="https://github.com/jfoclpf/autocosts/blob/master/js/Globals.js.php">Globals.js.php</a>
 
 ## Android APP<br>
 https://play.google.com/store/apps/details?id=info.autocosts
