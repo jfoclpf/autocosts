@@ -24,12 +24,12 @@ then
   dir="work"
 fi
 
-cd ..
+cd ../website
 
 scp -P 2222 -r countries/ css/ db_stats/ google/ images/ js/ layout/ php/ jfolpf@autocosts.info:/home4/jfolpf/$dir
 
-scp -P 2222 *.js *.php favicon.ico jfolpf@autocosts.info:/home4/jfolpf/$dir
+scp -P 2222 *.php favicon.ico jfolpf@autocosts.info:/home4/jfolpf/$dir
 
-cd scripts/
+cd ../scripts/
 
 
