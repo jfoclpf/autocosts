@@ -10,17 +10,17 @@ export ANDROID_HOME=/usr/local/android-sdk/
 
 cd "${0%/*}"
 
-cd ..
+cd ../src/
 
-cp -f css/flags.css css/main.css css/central.css css/header.css css/form.css css/results.css app/autocosts/www/css/
-cp -f js/core/coreFunctions.js js/conversionFunctions.js js/dbFunctions.js app/autocosts/www/js/
+cp -f css/flags.css css/main.css css/central.css css/header.css css/form.css css/results.css ../app/autocosts/www/css/
+cp -f js/core/coreFunctions.js js/conversionFunctions.js js/dbFunctions.js ../app/autocosts/www/js/
 
-cp -f images/flags24.png app/autocosts/www/css/images/
-cp -f js/get_data.js app/autocosts/www/js/
-cp -f js/formFunctions.js app/autocosts/www/js/
-cp -f favicon.ico app/autocosts/www/
+cp -f images/flags24.png ../app/autocosts/www/css/images/
+cp -f js/get_data.js ../app/autocosts/www/js/
+cp -f js/formFunctions.js ../app/autocosts/www/js/
+cp -f favicon.ico ../app/autocosts/www/
 
-cd app/
+cd ../app/
 
 cp -f APPjs/* autocosts/www/js/
 cp -f APPcss/* autocosts/www/css/

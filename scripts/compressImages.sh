@@ -1,6 +1,6 @@
 
 
-cd ../website/images/
+cd ../src/images/
 
 for f in $(find . -name '*.jpg')
 do 
