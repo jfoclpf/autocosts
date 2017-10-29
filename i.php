@@ -8,7 +8,7 @@
 //$startTime = microtime(true);
 include_once("./php/functions.php");
 include_once("./countries/_list.php");
-include_once("./countries/_url_selector.php");
+include_once("./php/url_selector.php");
 include_once("./php/minifier.php");
 
 /*sanitize_output is a function in file php/functions.php that minifies the echoed php*/
