@@ -29,12 +29,14 @@ Stored in folder php/<br>
 Other<br>
 * <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
 * <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons
-* <a href="https://www.imagemagick.org/script/index.php">ImageMagick</a> for the compression of images in the script `compressImages.sh`
-* <a href="https://github.com/jshint/jshint">JShint</a> to detect if the Javascript code has errors
+
+To be run from the command line<br>
+* <a href="https://www.imagemagick.org/script/index.php">ImageMagick</a> to compress images (see script `compressImages.sh`)
+* <a href="http://jshint.com/install/">JShint</a> to detect if Javascript code has errors
 * <a href="https://www.npmjs.com/package/minifyjs">minifyjs</a> to minify deployed Javascript code
+* <a href="https://www.npmjs.com/package/html-minifier">html-minifier</a> to minify deployed static HTML
 
 APP<br>
-
 * it uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code inyo APP built files (for example APK files in Android)
 
 ## Contributions
