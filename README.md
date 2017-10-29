@@ -1,12 +1,12 @@
-autocosts
+Automobile costs calculator
 =========
-
-## Automobile costs calculator<br>
-https://autocosts.info<br>
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. By default, these values are calculated on a monthly basis. 
 
 This calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
+
+### Website
+https://autocosts.info<br>
 
 ### The list of available countries
 https://autocustos.info/list
@@ -28,7 +28,16 @@ Stored in folder php/<br>
 
 Other<br>
 * <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
-* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons  
+* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons
+
+To be run from the command line<br>
+* <a href="https://www.imagemagick.org/script/index.php">ImageMagick</a> to compress images (see script `compressImages.sh`)
+* <a href="http://jshint.com/install/">JShint</a> to detect if Javascript code has errors
+* <a href="https://www.npmjs.com/package/minifyjs">minifyjs</a> to minify deployed Javascript code
+* <a href="https://www.npmjs.com/package/html-minifier">html-minifier</a> to minify deployed static HTML
+
+APP<br>
+* it uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code inyo APP built files (for example APK files in Android)
 
 ## Contributions
 * Use four spaces for indentations
