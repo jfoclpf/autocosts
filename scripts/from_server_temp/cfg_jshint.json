@@ -1,0 +1,9 @@
+{
+  "-W041": true,
+  "multistr": true,
+  "asi": true,
+  "expr": true,
+  "evil": true,
+  "funcscope": false
+}
+

@@ -1,6 +1,6 @@
 <?php
 
-    include_once('../countries/_list.php');
+    include_once('../src/countries/_list.php');
     unset($avail_CT["XX"]);
     $language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
     $LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
@@ -8,7 +8,7 @@
     //for each available country language file, creates a HTML layout language file
     foreach ($avail_CT as $key => $value){
         
-        include("../countries/".$key.".php");
+        include("../src/countries/".$key.".php");
         
         //#######################################
         //creates form files
@@ -25,9 +25,9 @@
         echo "</head>"."\r\n";
         echo "<body>"."\r\n";
         
-        include("../layout/formPartOne.php"); 
-        include("../layout/formPartTwo.php");
-        include("../layout/formPartThree.php");
+        include("../src/layout/formPartOne.php"); 
+        include("../src/layout/formPartTwo.php");
+        include("../src/layout/formPartThree.php");
         
         echo "\r\n"."</body>"."\r\n";
         echo "</html>"."\r\n";
@@ -47,7 +47,7 @@
         file_put_contents($fileName, $htmlStr);
         ob_start();
         
-        include("../js/validateForm.js.php"); 
+        include("../src/js/validateForm.js.php"); 
                                 
         //  Return the contents of the output buffer
         $htmlStr = ob_get_contents();
@@ -67,7 +67,7 @@
         //define the variables to pass into the include php file
         $_GET['country'] = $key;
         $_SERVER['DOCUMENT_ROOT'] = "..";
-        include("../js/print_results.js.php"); 
+        include("../src/js/print_results.js.php"); 
                                 
         //  Return the contents of the output buffer
         $htmlStr = ob_get_contents();
@@ -106,7 +106,7 @@
     //for each available country language file, creates a Javascript Object
     foreach ($avail_CT as $key => $valueCT){
             
-        include("../countries/".$key.".php");
+        include("../src/countries/".$key.".php");
         $var_array = get_defined_vars(); //gets all defined variables
         
         //gets all the variables from the file and puts them in an array in string format
@@ -151,3 +151,4 @@
     file_put_contents($fileName, $js_string);
 
 ?>
+

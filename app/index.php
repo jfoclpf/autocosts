@@ -12,14 +12,14 @@ $fileName = "autocosts/www/index.html";
 file_put_contents($fileName, $htmlStr);
 ob_start();
 
-include_once("../php/functions.php");
-include_once("../countries/_list.php");
+include_once("../src/php/functions.php");
+include_once("../src/countries/_list.php");
 asort($avail_CT); //alphabetically sorts the country list
 $language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
 $LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
 
 //loads the correspondent country file
-include('../countries/' . $GLOBALS['country'] . '.php');
+include('../src/countries/' . $GLOBALS['country'] . '.php');
 
 //removes XX from array
 unset($avail_CT['XX']);
