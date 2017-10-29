@@ -63,7 +63,7 @@ ob_start("sanitize_output");
         <br>
     </div>
     <!--jQuery-->
-    <script src="<?php echo $CDN_URL ?>js/jquery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
     <script>
