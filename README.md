@@ -36,7 +36,9 @@ To be run from scripts stored in `scripts/` folder<br>
 * <a href="http://jshint.com/install/">JShint</a> to detect if Javascript code has errors
 * <a href="https://www.npmjs.com/package/minifyjs">minifyjs</a> to minify deployed Javascript code
 * <a href="https://www.npmjs.com/package/html-minifier">html-minifier</a> to minify deployed static HTML
+* <a href="https://www.npmjs.com/package/minifier">minifier</a> to minify CSS files
 * <a href="http://phantomjs.org/">phantomjs</a> to rasterize HTML tables (costs tables) into JPG images, to be sharable with a link
+
 
 APP<br>
 * it uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
