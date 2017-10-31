@@ -2,7 +2,7 @@
 set -e
 
 cd ../build
-rm -R *
+rm -R -f *
 cd ..
 cp -R src/* build/
 

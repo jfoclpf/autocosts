@@ -8,7 +8,7 @@ $IS_CDN = true; //Content delivery network
 
 //CDN configuration at https://app.keycdn.com/zones
 //CDN provider: https://app.keycdn.com/zones
-$CDN_URL_PROD="https://prod-9a38.kxcdn.com"."/"; //preserve the bar "/" at the end
+$CDN_URL_PROD="https://cdn.autocosts.info"."/"; //preserve the bar "/" at the end
 $CDN_URL_WORK="http://cdn.autocosts.work"."/"; //preserve the bar "/" at the end
 
 if($IS_CDN){
