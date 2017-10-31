@@ -22,14 +22,13 @@ https://play.google.com/store/apps/details?id=info.autocosts
 
 ## Projects used
 
+* <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
+* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons
+* <a href="http://pdfmake.org/#/">pdfmake</a> to export the final report to a pdf file. See folder `src/js/pdf`
+
 Stored in folder php/<br>
 * <a href="https://github.com/matthiasmullie/minify">matthiasmullie/minify</a> to minify php generated code on client demand
 * <a href="https://github.com/matthiasmullie/path-converter">matthiasmullie/path-converter</a>
-* <a href="http://pdfmake.org/#/">pdfmake</a> to export the final report to a pdf file. See folder `src/js/pdf`
-
-Other<br>
-* <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
-* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons
 
 To be run from scripts stored in `scripts/` folder<br>
 * <a href="https://www.imagemagick.org/script/index.php">ImageMagick</a> to compress images (see script `compressImages.sh`)
