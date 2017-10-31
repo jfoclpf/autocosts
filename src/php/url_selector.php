@@ -2,7 +2,7 @@
 
 //change accordingly
 $IS_HTTPS = true; //false for simple http
-$IS_CDN = true; //Content delivery network
+$IS_CDN = false; //Content delivery network
 
 //#############################################
 
