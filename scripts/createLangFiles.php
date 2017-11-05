@@ -48,54 +48,7 @@
         ob_end_clean(); 
         // Write final string to file
         file_put_contents($fileName, $htmlStr);
-        
-        
-        //#######################################
-        //creates Validate Form file for each language
-        $htmlStr = "";
-        
-        //creates directory if it doesn't exist
-        if(!file_exists($BUILD_FOLDER."js/validateForm")){
-            mkdir ($BUILD_FOLDER."js/validateForm", 0777, true);
-        }
-        $fileName = $BUILD_FOLDER."js/validateForm/".$key.".js";
-        file_put_contents($fileName, $htmlStr);
-        ob_start();
-        
-        include($SRC_FOLDER."js/validateForm_.js.php"); 
-                                
-        //  Return the contents of the output buffer
-        $htmlStr = ob_get_contents();
-        // Clean (erase) the output buffer and turn off output buffering
-        ob_end_clean(); 
-        // Write final string to file
-        file_put_contents($fileName, $htmlStr);
-        
-        
-        //#######################################
-        //creates print_results file for each language
-        $htmlStr = "";
-        //creates directory if it doesn't exist
-        if(!file_exists($BUILD_FOLDER."js/print_results")){
-            mkdir ($BUILD_FOLDER."js/print_results", 0777, true);
-        }        
-        $fileName = $BUILD_FOLDER."js/print_results/".$key.".js";
-        file_put_contents($fileName, $htmlStr);
-        ob_start();
-        
-        //define the variables to pass into the include php file
-        $_GET['country'] = $key;
-        $_SERVER['DOCUMENT_ROOT'] = $SRC_FOLDER;
-        $PageURL = $domain_CT[$key].'/'.strtoupper($key);
-        $LANGUAGE_CODE = $lang_CT[$key];
-        include($SRC_FOLDER."js/print_results_.js.php"); 
-                                
-        //  Return the contents of the output buffer
-        $htmlStr = ob_get_contents();
-        // Clean (erase) the output buffer and turn off output buffering
-        ob_end_clean(); 
-        // Write final string to file
-        file_put_contents($fileName, $htmlStr);
+
     }
     $htmlStr="";
     
@@ -104,42 +57,47 @@
 
 //Builds the Javascript file with a JS object for each country
     
-    $js_string = "";
-    $fileName = $BUILD_FOLDER."js/languages.js";
-    file_put_contents($fileName, $js_string);
-    ob_start(); 
 
-    //creates array of available countries
-    $array_keys = array_keys($avail_CT);
-    $last_key = end($array_keys);
-    echo "var CountryList = ["."\xA";
-    foreach ($avail_CT as $key => $valueCT){
-        echo "\t".'"'.$key.'"';
-        if ($key != $last_key) {
-            echo ","."\xA";
-        } else {
-            echo "\xA";
-        }        
+    //creates directory if it doesn't exist
+    if(!file_exists($BUILD_FOLDER."js/languages")){
+        mkdir ($BUILD_FOLDER."js/languages", 0777, true);
     }
-    echo "];";
-    echo "\xA"."\xA";
 
-    //********************* list of objects ****************************
-    //for each available country language file, creates a Javascript Object
+
+    //for each available country language file, creates a language JS file
     foreach ($avail_CT as $key => $valueCT){
             
         include($SRC_FOLDER."countries/".$key.".php");
         $var_array = get_defined_vars(); //gets all defined variables
         
+        $js_string = "";
+        $fileName = $BUILD_FOLDER."js/languages/".$key.".js";
+        file_put_contents($fileName, $js_string);
+        ob_start(); 
+                       
+        //creates array of available countries
+        $array_keys = array_keys($avail_CT);
+        $last_key = end($array_keys);
+        echo "var CountryList = ["."\xA";
+        foreach ($avail_CT as $key3 => $valueCT3){
+            echo "\t".'"'.$key3.'"';
+            if ($key3 != $last_key) {
+                echo ","."\xA";
+            } else {
+                echo "\xA";
+            }        
+        }
+        echo "];";
+        echo "\xA"."\xA";
+        
         //gets all the variables from the file and puts them in an array in string format
         $file = file_get_contents($SRC_FOLDER."countries/".$key.".php"); 
         preg_match_all('/\$[A-Za-z0-9-_]+/', $file, $vars);
-        $var_array_string = array_unique($vars[0]);
-        
-        echo "var ".$key." = {"."\xA";
-        
+        $var_array_string = array_unique($vars[0]);                      
         $array_keys = array_keys($var_array_string);
         $last_key = end($array_keys);
+        
+        echo "var WORDS = {"."\xA";        
         foreach ($var_array_string as $key2 => $value){
             
             //the JS object entry( tolls: "text", )
@@ -163,15 +121,15 @@
         }
         echo "};";
         echo "\xA"."\xA";
+        
+        //Return the contents of the output buffer
+        $js_string = ob_get_contents();
+        // Clean (erase) the output buffer and turn off output buffering
+        ob_end_clean(); 
+        // Write final string to file
+        file_put_contents($fileName, $js_string);        
     }
     
     
-    //Return the contents of the output buffer
-    $js_string = ob_get_contents();
-    // Clean (erase) the output buffer and turn off output buffering
-    ob_end_clean(); 
-    // Write final string to file
-    file_put_contents($fileName, $js_string);
-
 ?>
 
