@@ -140,7 +140,7 @@ function is_userdata_formpart1_ok(){
 
     if(numberInspections!=0 && !isNumber(f.averageInspectionCost.value)) {
         $.jAlert({
-            'title': WORDS.inspection",
+            'title': WORDS.inspection,
             'content': WORDS.error_inspection_costs + "!"
         });
         return false;
@@ -375,8 +375,8 @@ function is_userdata_formpart3_ok(){
         case 'year':
                 if(!isNumber(f.income_per_year.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_INCOME ?>",
-                    'content': "<?php echo $ERROR_INCOME ?>!"
+                    'title': WORDS.extra_data_income,
+                    'content': WORDS.error_income + "!"
                 });
                 return false;
             }
@@ -384,15 +384,15 @@ function is_userdata_formpart3_ok(){
         case 'month':
             if(!isNumber(f.income_per_month.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_INCOME ?>",
-                    'content': "<?php echo $ERROR_INCOME ?>!"
+                    'title': WORDS.extra_data_income,
+                    'content': WORDS.error_income + "!"
                 });
                 return false;
             }
             if(!isNumber(f.income_months_per_year.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_INCOME ?>",
-                    'content': "<?php echo $ERROR_MONTHS_PER_YEAR ?>!"
+                    'title': WORDS.extra_data_income,
+                    'content': WORDS.error_months_per_year + "!"
                 });
                 return false;
             }
@@ -400,15 +400,15 @@ function is_userdata_formpart3_ok(){
         case 'week':
             if(!isNumber(f.income_per_week.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_INCOME ?>",
-                    'content': "<?php echo $ERROR_INCOME ?>!"
+                    'title': WORDS.extra_data_income,
+                    'content': WORDS.error_income + "!"
                 });
                 return false;
             }
             if(!isNumber(f.income_weeks_per_year.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_INCOME ?>",
-                    'content': "<?php echo $ERROR_WEEKS_PER_YEAR ?>!"
+                    'title': WORDS.extra_data_income,
+                    'content': WORDS.error_weeks_per_year + "!"
                 });
                 return false;
             }
@@ -419,15 +419,15 @@ function is_userdata_formpart3_ok(){
         if(is_working_time == 'true' && income_type!='hour'){
             if(!isNumber(f.time_hours_per_week.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_WORKING_TIME ?>",
-                    'content': "<?php echo $ERROR_HOURS_PER_WEEK ?>!"
+                    'title': WORDS.extra_data_working_time,
+                    'content': WORDS.error_hours_per_week + "!"
                 });
                 return false;
             }
             if(!isNumber(f.time_month_per_year.value)){
                 $.jAlert({
-                    'title': "<?php echo $EXTRA_DATA_WORKING_TIME ?>",
-                    'content': "<?php echo $ERROR_MONTHS_PER_YEAR ?>!"
+                    'title': WORDS.extra_data_working_time,
+                    'content': WORDS.error_months_per_year + "!"
                 });
                 return false;
             }
@@ -441,22 +441,22 @@ function is_userdata_formpart3_ok(){
             if(drive_to_work == 'true'){
                 if(!isNumber(f.drive_to_work_days_per_week.value) || f.drive_to_work_days_per_week.value > 7){
                     $.jAlert({
-                        'title': "<?php echo $DISTANCE ?>",
-                        'content': "<?php echo $ERROR_DAYS_PER_WEEK ?>!"
+                        'title': WORDS.distance,
+                        'content': WORDS.error_days_per_week + "!"
                     });
                     return false;
                 }
                 if(!isNumber(f.dist_home_job.value)){
                     $.jAlert({
-                        'title': "<?php echo $DISTANCE ?>",
-                        'content': "<?php echo $ERROR_DIST_HOME_WORK ?>!"
+                        'title': WORDS.distance,
+                        'content': WORDS.error_dist_home_work + "!"
                     });
                     return false;
                 }
                 if(!isNumber(f.journey_weekend.value)){
                     $.jAlert({
-                        'title': "<?php echo $DISTANCE ?>",
-                        'content': "<?php echo $ERROR_DIST_NO_JOB ?>!"
+                        'title': WORDS.distance,
+                        'content': WORDS.error_dist_no_job + "!"
                     });
                     return false;
                 }
@@ -464,8 +464,8 @@ function is_userdata_formpart3_ok(){
             else{
                 if(!isNumber(f.km_per_month.value)){
                     $.jAlert({
-                        'title': "<?php echo $DISTANCE ?>",
-                        'content': "<?php echo $ERROR_FUEL_DIST ?>!"
+                        'title': WORDS.distance,
+                        'content': WORDS.error_fuel_dist + "!"
                     });
                     return false;
                 }
@@ -477,14 +477,14 @@ function is_userdata_formpart3_ok(){
             if(!isNumber(f.time_home_job.value)){
                 $.jAlert({
                     'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': "<?php echo $ERROR_MIN_DRIVE_HOME_JOB ?>!"
+                    'content': WORDS.error_min_drive_home_job + "!"
                 });
                 return false;
             }
             if(!isNumber(f.time_weekend.value)){
                 $.jAlert({
                     'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': "<?php echo $ERROR_MIN_DRIVE_WEEKEND ?>!"
+                    'content': WORDS.error_min_drive_weekend + "!"
                 });
                 return false;
             }

@@ -1,5 +1,3 @@
-<?php ob_start();?>
-
 /************************************************
 **                                             **
 **              AUTOCOSTS.INFO                 **
@@ -27,18 +25,10 @@ var SWITCHES = {
 
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
 
-/*Define GLOBAL Javascript variables*/
-var COUNTRY = "<?php echo $GLOBALS["country"]; ?>";
-/*Language code according to ISO_639-1 codes*/
-var LANGUAGE = "<?php echo $lang_CT[$GLOBALS["country"]]; ?>";
-/*List of domains in a Javascript Object*/
-var DOMAIN_LIST = (<?php echo json_encode($domain_CT); ?>);
 /*global variable for Google reCaptcha*/
 var IS_HUMAN_CONFIRMED = false;
 /*object from UBER API, with UBER city data*/
 var UBER_API = {};
-
-var CDN_URL = "<?php echo $CDN_URL ?>";
 
 /*calculated information after user clicks "Run", calculated from coreFunctions.js*/
 var CALCULATED = {
@@ -75,7 +65,7 @@ var DISPLAY = {
             alterToCar: 0
         }
     },
-    RunButtonStr: "<?php echo $BUTTON_RUN; ?>"
+    RunButtonStr: WORDS.button_run
 };
 
 /*Service availability. Later on in the code, the variables might be set to TRUE*/
@@ -86,9 +76,3 @@ var SERVICE_AVAILABILITY = {
     g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
 };
 
-<?php
-use MatthiasMullie\Minify;
-$javascriptContent = ob_get_clean();
-$minifier = new Minify\JS($javascriptContent);
-echo $minifier->minify();
-?>
