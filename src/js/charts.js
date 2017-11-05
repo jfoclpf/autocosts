@@ -1,9 +1,11 @@
-<?php Header("content-type: application/x-javascript");
-if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/' . $_GET['country'] . '.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
-$GLOBALS['country'] = $_GET['country'];
-ob_start();?>
+/************************************************
+**                                             **
+**              AUTOCOSTS.INFO                 **
+**      the automobile costs calculator        **
+**                                             **
+************************************************/
+
+/*File with Javascript Charts Functions */
 
 //draw Pie Chart
 function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
@@ -12,30 +14,30 @@ function drawMonthlyCostsPieChart(chartWidth, chartHeight) {
     var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
 
     //checks if depreciation is greater or equal to zero, to print chart with no error
-	if (c.depreciation < 0){
+    if (c.depreciation < 0){
         c.depreciation = 0;
     }
 
     chart_content = [
-                        ["<?php echo $PARCEL; ?>", "<?php echo $COSTS; ?>" ],
-                        [COUNTRY=='RU' || COUNTRY=="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>", c.insurance],
-                        ["<?php echo $FUEL; ?>",                    c.fuel],
-                        ["<?php echo $DEPRECIATION; ?>",            c.depreciation],
-                        ["<?php echo $CREDIT_INTERESTS; ?>",        c.credit],
-                        ["<?php echo $INSPECTION_SHORT; ?>",        c.inspection],
-                        ["<?php echo $MAINTENANCE; ?>",             c.maintenance],
-                        ["<?php echo $REP_IMPROV; ?>",              c.repairs_improv],
-                        ["<?php echo $ROAD_TAXES_SHORT; ?>",        c.car_tax],
-                        ["<?php echo $PARKING; ?>",                 c.parking],
-                        ["<?php echo $TOLLS; ?>",                   c.tolls],
-                        ["<?php echo $FINES; ?>",                   c.fines],
-                        ["<?php echo $WASHING; ?>",                 c.washing]
+                        [WORDS.parcel, WORDS.costs],
+                        [COUNTRY=='RU' || COUNTRY=="UA" ? WORDS.insurance_chart : WORDS.short, c.insurance],
+                        [WORDS.fuel,                    c.fuel],
+                        [WORDS.depreciation,            c.depreciation],
+                        [WORDS.credit_interests,        c.credit],
+                        [WORDS.inspection_short,        c.inspection],
+                        [WORDS.maintenance,             c.maintenance],
+                        [WORDS.rep_improv,              c.repairs_improv],
+                        [WORDS.road_taxes_short,        c.car_tax],
+                        [WORDS.parking,                 c.parking],
+                        [WORDS.tolls,                   c.tolls],
+                        [WORDS.fines,                   c.fines],
+                        [WORDS.washing,                 c.washing]
                     ];
 
     char_data = google.visualization.arrayToDataTable(chart_content);
 
     options = {
-        title: "<?php echo $COSTS; ?>",
+        title: WORDS.costs,
         backgroundColor: {fill: "transparent"},
         chartArea: {
             left: 0, 
@@ -68,23 +70,23 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     // Create and populate the data table.
     chart_content = [
                         [
-                            "<?php echo $PARCEL; ?>",
-                            COUNTRY=="RU" || COUNTRY=="UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>",
-                            "<?php echo $FUEL; ?>",
-                            "<?php echo $DEPRECIATION; ?>",
-                            "<?php echo $CREDIT_INTERESTS; ?>",
-                            "<?php echo $INSPECTION_SHORT; ?>",
-                            "<?php echo $MAINTENANCE; ?>",
-                            "<?php echo $REP_IMPROV; ?>",
-                            "<?php echo $ROAD_TAXES_SHORT; ?>",
-                            "<?php echo $PARKING; ?>",
-                            "<?php echo $TOLLS; ?>",
-                            "<?php echo $FINES; ?>",
-                            "<?php echo $WASHING; ?>",
+                            WORDS.parcel,
+                            COUNTRY=="RU" || COUNTRY=="UA" ? WORDS.insurance_chart : WORDS.insurance_short,
+                            WORDS.fuel,
+                            WORDS.depreciation,
+                            WORDS.credit_interests,
+                            WORDS.inspection_short,
+                            WORDS.maintenance,
+                            WORDS.rep_improv,
+                            WORDS.road_taxes_short,
+                            WORDS.parking,
+                            WORDS.tolls,
+                            WORDS.fines,
+                            WORDS.washing,
                             { role: 'annotation' }
                         ],
                         [
-                            "<?php echo $FIXED_COSTS; ?>",
+                            WORDS.fixed_costs,
                             c.insurance,
                             0,
                             c.depreciation,
@@ -100,7 +102,7 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
                             ''
                         ],
                         [
-                            "<?php echo $RUNNING_COSTS; ?>",
+                            WORDS.running_costs,
                             0,
                             c.fuel,
                             0,
@@ -142,7 +144,7 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     }
 
     options = {
-        title: "<?php echo $COSTS; ?>",
+        title: WORDS.costs,
         backgroundColor: {fill: 'transparent'},
         chartArea: { 
             left: 0, 
@@ -174,7 +176,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     var chart, chart_div, chart_data, data, options, br_html, top_var, chart_inner_height;
 
     chart_data = [
-         ['','<?php echo $NET_INCOME_PER." ".$YEAR; ?>', '<?php echo $TOTAL_COSTS_PER_YEAR; ?>'],
+         ['', WORDS.net_income_per + ' ' + WORDS.year, WORDS.total_costs_per_year],
          ['', net_income_per_year, total_cost_per_year],
     ];
 
@@ -209,7 +211,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
             textPosition: 'none' 
         },
         hAxis: {
-            title: '<?php echo $NET_INCOME_PER." ".$YEAR." vs. ' + br_html + '".$TOTAL_COSTS_PER_YEAR." "."(".$CURR_NAME_PLURAL.")" ?>',
+            title: WORDS.net_income_per + ' ' + WORDS.year + ' vs. ' + br_html + WORDS.total_costs_per_year + ' (' + WORDS.curr_name_plural + ')',
             minValue: 0,
         },       
         width: chartWidth,
@@ -250,23 +252,23 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     //when one has stacked vertical bar charts, all the arrays, for each column must be the same size
 
     var legend = [
-                    "<?php echo $PARCEL; ?>",
-                    COUNTRY == "RU" || COUNTRY == "UA" ? "<?php echo $INSURANCE_CHART; ?>" : "<?php echo $INSURANCE_SHORT; ?>",
-                    "<?php echo $FUEL; ?>",
-                    "<?php echo $DEPRECIATION; ?>",
-                    "<?php echo $CREDIT_INTERESTS; ?>",
-                    "<?php echo $INSPECTION_SHORT; ?>",
-                    "<?php echo $MAINTENANCE; ?>",
-                    "<?php echo $REP_IMPROV; ?>",
-                    "<?php echo $ROAD_TAXES_SHORT; ?>",
-                    "<?php echo $PARKING; ?>",
-                    "<?php echo $TOLLS; ?>",
-                    "<?php echo $FINES; ?>",
-                    "<?php echo $WASHING; ?>"
+                    WORDS.parcel,
+                    COUNTRY=="RU" || COUNTRY=="UA" ? WORDS.insurance_chart : WORDS.insurance_short,
+                    WORDS.fuel,
+                    WORDS.depreciation,
+                    WORDS.interests,
+                    WORDS.inspection_short,
+                    WORDS.maintenance,
+                    WORDS.rep_improv,
+                    WORDS.road_taxes_short,
+                    WORDS.parking,
+                    WORDS.tolls,
+                    WORDS.fines,
+                    WORDS.washing
                  ];
 
     var monthly_costs = [
-                            "<?php echo $YOUR_CAR_COSTS_YOU." ".$WORD_PER." ".$MONTH ?>",
+                            WORDS.your_car_costs_you + ' ' + WORDS.word_per + ' ' + WORDS.month,
                             c.insurance,
                             c.fuel,
                             c.depreciation,
@@ -286,22 +288,22 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     //Public Transports
     if(pt_bool) {
 
-        var taxi_text = "<?php echo $TAXI_DESL ?>" + " - " +
+        var taxi_text = WORDS.taxi_desl + " - " +
                         CALCULATED.data.public_transports.km_by_taxi.toFixed(1) + " " +
-                        "<?php echo $STD_DIST_FULL .' '.$ON_TAXI_PAYING ?>" + " " +
+                        WORDS.std_dist_full + ' ' + WORDS.on_taxi_paying + " " +
                         CALCULATED.data.public_transports.taxi_price_per_km.toFixed(1) + " " +
-                        "<?php echo $CURR_NAME_PLURAL.' '.$WORD_PER.' '.$STD_DIST_FULL ?>";
+                        WORDS.curr_name_plural + ' ' + WORDS.word_per + ' ' + WORDS.std_dist_full;
 
         pt_array =
                         [
-                            "<?php echo $PUBL_TRA_EQUIV; ?>",
+                            WORDS.publ_tra_equiv,
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ];
         if(pt.display_other_pt) {
             legend.push(
-                            "<?php echo $PUB_TRANS_TEXT ?>",
+                            WORDS.pub_trans_text,
                             taxi_text,
-                            "<?php echo $OTHER_PUB_TRANS ?>"
+                            WORDS.other_pub_trans
                         );
             monthly_costs.push(0, 0, 0);
             pt_array.push(
@@ -312,7 +314,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
         }
         else{
             legend.push(
-                            "<?php echo $PUB_TRANS_TEXT ?>",
+                            WORDS.pub_trans_text,
                             taxi_text
                         );
             monthly_costs.push(0, 0);
@@ -344,8 +346,8 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
 
         if(u.result_type == 1){
             legend.push(
-                            CALCULATED.uber.dpm.toFixed(0) + " " + "<?php echo $FUEL_DIST.' '.$WORD_PER.' '.$MONTH ?>",
-                            "<?php echo $OTHER_PUB_TRANS ?>"
+                            CALCULATED.uber.dpm.toFixed(0) + " " + WORDS.fuel_dist + ' ' + WORDS.word_per + ' ' + WORDS.month,
+                            WORDS.other_pub_trans
                         );
             monthly_costs.push(0, 0);
             uber_array.push(
@@ -357,8 +359,8 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
         //the case where uber equivalent is more expensive
         else if(u.result_type == 2){
             legend.push(
-                            "<?php echo $PUB_TRANS_TEXT ?>",
-                            CALCULATED.uber.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?>"
+                            WORDS.pub_trans_text,
+                            CALCULATED.uber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + ' ' + WORDS.word_per + ' ' + WORDS.month
                         );
             monthly_costs.push(0, 0);
             uber_array.push(
@@ -411,7 +413,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     }
 
     options = {
-                title: "<?php echo $COSTS; ?>",
+                title: WORDS.costs,
                 backgroundColor: {
                     fill: 'transparent'
                 },
@@ -455,9 +457,3 @@ function pfto(obj){
     return obj;
 }
         
-<?php
-use MatthiasMullie\Minify;
-$javascriptContent = ob_get_clean();
-$minifier = new Minify\JS($javascriptContent);
-echo $minifier->minify();
-?>

@@ -5,7 +5,7 @@
 **      the automobile costs calculator        **
 **                                             **
 ************************************************/
-//$startTime = microtime(true);
+/*$startTime = microtime(true);*/
 include_once("./php/functions.php");
 include_once("./countries/_list.php");
 include_once("./php/url_selector.php");
@@ -67,9 +67,20 @@ ob_start("sanitize_output");
     <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>   
     <!--Autocosts JavaScript files-->
     <script>
-        <?php include('./js/Globals.js.php'); ?>
+        /*Define GLOBAL Javascript variables*/
+        var COUNTRY = "<?php echo $GLOBALS["country"]; ?>";
+        /*Language code according to ISO_639-1 codes*/
+        var LANGUAGE = "<?php echo $lang_CT[$GLOBALS["country"]]; ?>";
+        /*List of domains in a Javascript Object*/
+        var DOMAIN_LIST = (<?php echo json_encode($domain_CT); ?>);
+        
+        var CDN_URL = "<?php echo $CDN_URL ?>";
+        var PAGE_URL = "<?php echo $PageURL ?>";
+        var INITIAL_TEX = "<?php echo meta_description($INITIAL_TEXT) ?>";
     </script>
-    <script src="js/validateForm.js.php?country=<?php echo $GLOBALS['country'] ?>" async></script>    
+    <script src="<?php echo $CDN_URL.'js/languages/'.$GLOBALS["country"].'.js' ?>"></script>
+    <script src="<?php echo $CDN_URL ?>js/Globals.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/validateForm.js" async></script>    
     <script src="<?php echo $CDN_URL ?>js/documentFunctions.js" async></script>
     <script src="<?php echo $CDN_URL ?>js/formFunctions.js" async></script>
     <script src="<?php echo $CDN_URL ?>js/initialize.js" async></script>

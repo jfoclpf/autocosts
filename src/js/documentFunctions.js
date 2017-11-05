@@ -164,12 +164,12 @@ function loadExtraFiles() {
     }
 
     if (SWITCHES.g_charts){
-        getScriptOnce("js/charts.js.php?country="+COUNTRY, function() {
-            getScriptOnce("js/print_results.js.php?country="+COUNTRY);
+        getScriptOnce("js/charts.js", function() {
+            getScriptOnce("js/printResults.js");
         });
     }
     else{
-        getScriptOnce("js/print_results.js.php?country="+COUNTRY);
+        getScriptOnce("js/printResults.js");
     }
 
     if (SWITCHES.data_base){

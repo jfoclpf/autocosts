@@ -1,12 +1,11 @@
-<?php Header("content-type: application/x-javascript");
-if(strlen($_GET['country']) != 2){ exit;} //avoids code injection ensuring that input has only two characters (country code)
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
-$GLOBALS['country'] = $_GET['country'];
-$PageURL = 'http://'.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
-ob_start();?>
+/************************************************
+**                                             **
+**              AUTOCOSTS.INFO                 **
+**      the automobile costs calculator        **
+**                                             **
+************************************************/
+
+/*File with functions that are used to print the final result*/
 
 //function that is run when user clicks "run/calculate"
 function Run2(callback){
@@ -37,11 +36,11 @@ function Run2(callback){
 
     //country object with country specific variables
     var country = {
-        currency: "<?php echo $CURR_CODE ?>",
-        distance_std: <?php echo $distance_std_option; ?>,
-        fuel_efficiency_std: <?php echo $fuel_efficiency_std_option; ?>,
-        fuel_price_volume_std: <?php echo $fuel_price_volume_std; ?>,
-        taxi_price: <?php echo $TAXI_PRICE_PER_DIST ?>
+        currency: WORDS.curr_code,
+        distance_std: WORDS.distance_std_option,
+        fuel_efficiency_std: WORDS.fuel_efficiency_std_option,
+        fuel_price_volume_std: WORDS.fuel_price_volume_std,
+        taxi_price: WORDS.taxi_price_per_dist
     };
 
     //calculate costs
@@ -107,8 +106,8 @@ function Run2(callback){
     //shows social media buttons
     if(SWITCHES.social){
         $("#shareIcons").jsSocials({
-            url: '<?php echo $PageURL ?>',
-            text: '<?php echo meta_description($INITIAL_TEXT) ?>',
+            url: PAGE_URL,
+            text: INITIAL_TEX,
             showLabel: false,
             showCount: false,
             shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
@@ -144,26 +143,26 @@ function print_main_table(f1, f2, f3, data) {
     //main table
     varResult+= '<table class="result_table" id="result_table0">';
     //header
-    varResult+= '<tr><td style="padding:7px;" colspan="4"><b><?php echo mb_convert_case($YOUR_CAR_COSTS_YOU, MB_CASE_UPPER, "UTF-8") ?></b></td></tr>';
+    varResult+= '<tr><td style="padding:7px;" colspan="4"><b> ' + (WORDS.your_car_costs_you).toUpperCase() + '</b></td></tr>';
 
     varResult+= '<tr>';
 
     varResult+= '<td><b>' + currencyShow(data.total_costs_month.toFixed(0)) + '</b><br>';
-    varResult+= '<?php echo $WORD_PER."<br>".$MONTH ?></td>';
+    varResult+= WORDS.word_per + '<br>' + WORDS.month + '</td>';
 
     varResult+= '<td><b>' + currencyShow((data.total_costs_month*3).toFixed(0)) + '</b><br>';
-    varResult+= '<?php echo $WORD_PER."<br>".$TRIMESTER ?>';
+    varResult+= WORDS.word_per + '<br>' + WORDS.trimester + '</td>';
 
     varResult+= '<td><b>' + currencyShow((data.total_costs_month*6).toFixed(0)) + '</b><br>';
-    varResult+= '<?php echo $WORD_PER."<br>".$SEMESTER ?></td>';
+    varResult+= WORDS.word_per + '<br>' + WORDS.semester + '</td>';
 
     varResult+= '<td><b>' + currencyShow(data.total_costs_year.toFixed(0)) + '</b><br>';
-    varResult+= '<?php echo $WORD_PER."<br>".$YEAR ?></td>';
+    varResult+= WORDS.word_per + '<br>' + WORDS.year + '</td>';
 
     varResult+= '</tr>';
 
     if(f3.IsFinancialEffort){
-        varResult+= '<tr><td colspan="4"><b><?php echo mb_convert_case($FINANCIAL_EFFORT, MB_CASE_UPPER, "UTF-8") ?>'+
+        varResult+= '<tr><td colspan="4"><b>' + (WORDS.financial_effort).toUpperCase() +
                     ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) +
                     '&#37;' + '</b></tr>';
     }
@@ -181,11 +180,11 @@ function print_result_final_text(data){
 
     if(data.total_costs_month >= 150 && data.age_months > 6) {
 
-        var text_msg = '<div><?php echo $WITH_THIS_LEVEL_OF_COSTS ?> '+
-                       '<b>' + data.age_months + '</b> <?php echo $MONTHS_POSS.":" ?></div>'+
+        var text_msg = '<div>' + WORDS.with_this_level_of_costs + ' ' +
+                       '<b>' + data.age_months + '</b>' + WORDS.months_poss + ':' + '</div>'+
                        '<div class="red_bold_text">'+
                        numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100)+
-                       ' ' + '<?php echo $CURR_NAME_BIG_PLURAL ?></div></div>';
+                       ' ' + WORDS.curr_name_big_plural + '</div></div>';
         return text_msg;
     }
     else{
@@ -205,73 +204,78 @@ function print_costs_table(f1, f2, f3, data) {
     //Depreciation
     var depreciation_text;
     if (data.age_months === 0) {
-        depreciation_text = "<?php echo $ERROR_DEPRECIATION_NEW_CAR ?>&nbsp;&nbsp;";
+        depreciation_text = WORDS.error_depreciation_new_car + "&nbsp;&nbsp;";
     } else {
-        depreciation_text = "<b><?php echo $DEPRECIATION ?></b>&nbsp;&nbsp;<br><?php echo $AQ_VALUE ?>: "+
-            f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $FINAL_VALUE ?>: "+
-            f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?><br><?php echo $PERIOD_OWN ?>: "+
-            data.age_months + " <?php echo $MONTHS ?><br>("+
-            f1.auto_initial_cost + "<?php echo $CURR_SYMBOL ?>-"+
-            f1.auto_final_cost + "<?php echo $CURR_SYMBOL ?>)/"+
-            data.age_months + " <?php echo $MONTHS ?>";
+        depreciation_text = "<b>" + WORDS.depreciation + "</b>&nbsp;&nbsp;<br>" + WORDS.aq_value + ": " +
+            f1.auto_initial_cost + WORDS.curr_symbol + "<br>" + WORDS.final_value ": " +
+            f1.auto_final_cost + WORDS.curr_symbol + "<br>" + WORDS.period_own ": " +
+            data.age_months + " " + WORDS.months + "<br>(" +
+            f1.auto_initial_cost + WORDS.curr_symbol + "-" +
+            f1.auto_final_cost + WORDS.curr_symbol + ")/" +
+            data.age_months + " " + WORDS.months;
     }
 
     //Insurance
     var insurance_text;
-    switch(f1.insurance_type)
-    {
-        case "semestral":
-            insurance_text = f1.insurance_value + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
-            break;
-        case "anual":
-            insurance_text = f1.insurance_value + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
-            break;
+    switch(f1.insurance_type){
+
         case "mensal":
-            insurance_text = data.monthly_costs.insurance + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+            insurance_text = data.monthly_costs.insurance + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month;
             break;
         case "trimestral":
-            insurance_text = f1.insurance_value + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+            insurance_text = f1.insurance_value + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester;
+            break;
+        case "semestral":
+            insurance_text = f1.insurance_value + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester;
+            break;
+        case "anual":
+            insurance_text = f1.insurance_value + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
             break;
     }
 
     //Credit interests
-    var interests_text="<b><?php echo $CREDIT_INTERESTS ?><\/b>&nbsp;&nbsp;";
+    var interests_text="<b>" + WORDS.credit_interests + "<\/b>&nbsp;&nbsp;";
 
     if(f1.cred_auto_s_n == "true") {
 
-        interests_text = "<b><?php echo $CREDIT_INTERESTS ?></b>&nbsp;&nbsp;<br><?php echo $CREDIT_LOAN2 ?>: " +
+        interests_text = "<b>" + WORDS.credit_interests + "</b>&nbsp;&nbsp;<br>" + WORDS.credit_loan2 + ": " +
                          f1.credit_amount +
-                         "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_PERIOD ?>: " +
+                         WORDS.curr_symbol + "<br>" + WORDS.credit_period + ": " +
                          f1.credit_period +
-                         " <?php echo $MONTHS ?><br><?php echo $CREDIT_INSTALMENT ?>: " +
+                         " " + WORDS.months + "<br>" + WORDS.credit_instalment + ": " +
                          f1.credit_value_p_month +
-                         "<?php echo $CURR_SYMBOL ?><br><?php echo $CREDIT_RESIDUAL_VALUE1 ?>: " +
+                         WORDS.curr_symbol + "<br>" + WORDS.credit_residual_value1 + ": " +
                          f1.credit_residual_value +
-                         "<?php echo $CURR_SYMBOL ?><br>";
+                         WORDS.curr_symbol + "<br>";
 
-        interests_text += "<?php echo $CREDIT_TOTAL_INTERESTS ?>: "+data.total_interests+"<?php echo $CURR_SYMBOL ?><br>(" + data.month_cred + "*"+ f1.credit_value_p_month + ")+" + f1.credit_residual_value + "-" + f1.credit_amount;
+        interests_text += WORDS.credit_total_interests + ": " + data.total_interests + WORDS.curr_symbol + 
+                          "<br>(" + data.month_cred + "*" + f1.credit_value_p_month + ")+" + 
+                          f1.credit_residual_value + "-" + f1.credit_amount;
 
-        if(data.age_months >= data.month_cred)
-            interests_text += "<br><?php echo $CREDIT_INTERESTS_MONTH ?>: "+data.monthly_costs.credit.toFixed(2)+"<?php echo $CURR_SYMBOL ?>";
+        if(data.age_months >= data.month_cred){
+            interests_text += "<br>" + WORDS.credit_interests_month + ": " + 
+                              data.monthly_costs.credit.toFixed(2) + WORDS.curr_symbol;
+        }
         interests_text += "";
     }
 
     //Inspection
     var inspection_text;
     if (f1.nmr_times_inspec !== 0){
-        inspection_text = "<b><?php echo $INSPECTION ?></b><br>" +
+        inspection_text = "<b>" + WORDS.inspection + "</b><br>" +
                           f1.nmr_times_inspec +
-                          " <?php echo $TIMES_COSTING ?> " +
+                          " " + WORDS.times_costing + " " +
                           f1.inspec_price +
-                          " <?php echo $CURR_SYMBOL ?> <?php echo $EACH_ONE_DURING ?> " +
-                          data.age_months + " <?php echo $MONTHS ?>&nbsp;";
+                          " " + WORDS.curr_symbol + " " + WORDS.each_one_during + " " +
+                          data.age_months + " " + WORDS.months "&nbsp;";
     }
-    else
-        inspection_text = "<b><?php echo $INSPECTION ?></b><br>";
-
+    else{
+        inspection_text = "<b>" + WORDS.inspection + "</b><br>";
+    }
+    
     //Taxes
-    var cartax_text = "<b><?php echo $ROAD_TAXES ?></b><br>" +
-                      f1.car_tax + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var cartax_text = "<b>" + WORDS.road_taxes + "</b><br>" +
+                      f1.car_tax + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year";
 
     //Fuel
     var fuel_text;
@@ -281,239 +285,244 @@ function print_costs_table(f1, f2, f3, data) {
                 switch(data.fuel_period_km)
                 {
                     case "1":
-                        fuel_text = f2.distance + " <?php echo $STD_DIST ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+                        fuel_text = f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.month;
                         break;
                     case "2":
-                        fuel_text = f2.distance + " <?php echo $DIST_EACH_TWO_MONTHS ?>";
+                        fuel_text = f2.distance + " " + WORDS.dist_each_two_months;
                         break;
                     case "3":
-                        fuel_text = f2.distance + " <?php echo $STD_DIST ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+                        fuel_text = f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.trimester;
                         break;
                     case "4":
-                        fuel_text = f2.distance + " <?php echo $STD_DIST ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
+                        fuel_text = f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.semester;
                         break;
                     case "5":
-                        fuel_text = f2.distance + " <?php echo $STD_DIST ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+                        fuel_text = f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.year;
                         break;
                 }
-                fuel_text = fuel_text + "<br>" + "<?php echo $FUEL_CAR_EFF ?>: " + f2.car_consumption + " <?php echo $STD_FUEL_CALC ?>&nbsp;";
-                fuel_text = fuel_text + "<br>" + "<?php echo $FUEL_PRICE1 ?>: " + f2.fuel_price + " <?php echo $CURR_SYMBOL ?>/<?php echo $STD_VOLUME_SHORT ?>&nbsp;&nbsp;";
+                fuel_text += "<br>" + WORDS.fuel_car_eff + ": " + f2.car_consumption + " " + WORDS.std_fuel_calc + "&nbsp;";
+                fuel_text += "<br>" + WORDS.fuel_price1 + ": " + f2.fuel_price + " " + WORDS.curr_symbol + "/" + WORDS.std_volume_short +  "&nbsp;&nbsp;";
             }
             else{
-                fuel_text = f2.days_p_week + " <?php echo $FUEL_JOB_CALC1 ?> <br>";
-                fuel_text = fuel_text + "<?php echo $YOU_DRIVE ?> " + f2.distance_home2job + " <?php echo $FUEL_DIST_HOME_JOB1 ?> <br>";
-                fuel_text = fuel_text + "<?php echo $YOU_DRIVE ?> " + f2.distance_weekend + " <?php echo $FUEL_DIST_NO_JOB1 ?>&nbsp;<br>";
-                fuel_text = fuel_text + "<?php echo $YOU_DRIVE_TOTTALY_AVG ?> " + data.distance_per_month.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?> (~30.5 <?php echo $DAYS ?>) <br>";
-                fuel_text = fuel_text + "<?php echo $FUEL_CAR_EFF ?>: " + f2.car_consumption + " <?php echo $STD_FUEL_CALC ?>";
-                fuel_text = fuel_text + "<br>" + "<?php echo $FUEL_PRICE ?>: " + f2.fuel_price + " <?php echo $CURR_SYMBOL ?>/<?php echo $STD_VOLUME_SHORT ?>";
+                fuel_text = f2.days_p_week + " " + WORDS.fuel_job_calc1 + "<br>";
+                fuel_text += WORDS.you_drive + " " + f2.distance_home2job + " " + WORDS.fuel_dist_home_job1 + "<br>";
+                fuel_text += WORDS.you_drive + " " + f2.distance_weekend + " " + WORDS.fuel_dist_no_job1 + "&nbsp;<br>";
+                fuel_text += WORDS.you_drive_totally_avg + " " + data.distance_per_month.toFixed(1) + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.month + " (~30.5 " + WORDS.days + ") <br>";
+                fuel_text += WORDS.fuel_car_eff + ": " + f2.car_consumption + " " + WORDS.std_fuel_calc + "<br>";
+                fuel_text += WORDS.fuel_price + ": " + f2.fuel_price + " " + WORDS.curr_symbol + "/" + WORDS.std_volume_short;
             }
             break;
         case "euros":
             switch(data.fuel_cost_period)
             {
                 case "1":
-                    fuel_text = f2.fuel_money + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+                    fuel_text = f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month;
                     break;
                 case "2":
-                    fuel_text = f2.fuel_money + " <?php echo $DIST_EACH_TWO_MONTHS ?>";
+                    fuel_text = f2.fuel_money + " " + WORDS.dist_each_two_months;
                     break;
                 case "3":
-                    fuel_text = f2.fuel_money + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+                    fuel_text = f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester;
                     break;
                 case "4":
-                    fuel_text = f2.fuel_money + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
+                    fuel_text = f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester;
                     break;
                 case "5":
-                    fuel_text = f2.fuel_money + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+                    fuel_text = f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
                     break;
             }
             break;
     }
 
     //Maintenance
-    var maintenance_text = "<b>1/2 <?php echo $MAINTENANCE ?></b><br>" +
-                           f2.maintenance + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var maintenance_text = "<b>1/2 " + WORDS.maintenance + "</b><br>" +
+                           f2.maintenance + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
 
     //Repairs
-    var repairs_text = "<b><?php echo $REP_IMPROV ?></b><br>" +
-                       f2.repairs + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+    var repairs_text = "<b>" + WORDS.rep_improv + "</b><br>" +
+                       f2.repairs + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
 
     //Tolls
-    var tolls_text="<b><?php echo $TOLLS ?></b><br>";
+    var tolls_text="<b>" + WORDS.tolls + "</b><br>";
     if(f2.type_calc_tolls == "false") {
         switch(data.tolls_period) {
             case "1":
-                tolls_text += f2.tolls + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+                tolls_text += f2.tolls + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month;
                 break;
             case "2":
-                tolls_text += f2.tolls + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORDS_PER_EACH ?> <?php echo $TWO_MONTHS ?>";
+                tolls_text += f2.tolls + " " + WORDS.curr_name_plural + " " + WORDS.words_per_each + " " + WORDS.two_months;
                 break;
             case "3":
-                tolls_text += f2.tolls + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+                tolls_text += f2.tolls + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester;
                 break;
             case "4":
-                tolls_text += f2.tolls + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
+                tolls_text += f2.tolls + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester;
                 break;
             case "5":
-                tolls_text += f2.tolls + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+                tolls_text += f2.tolls + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
                 break;
         }
     }
-    else
-        tolls_text+=f2.price_tolls_p_day + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $DURING ?> " + f2.tolls_days_p_month + " <?php echo $DAYS ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+    else{
+        tolls_text += f2.price_tolls_p_day + " " + WORDS.curr_name_plural + " " + 
+                      WORDS.during + " " + f2.tolls_days_p_month + " " + WORDS.days + " " + 
+                      WORDS.word_per + " " + WORDS.month;
+    }
     tolls_text += "";
 
     //Fines
-    var fines_text="<b><?php echo $FINES ?></b><br>";
+    var fines_text="<b>" + WORDS.fines + "</b><br>";
     switch(data.fines_period) {
         case "1":
-            fines_text += f2.fines + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+            fines_text += f2.fines + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month;
             break;
         case "2":
-            fines_text += f2.fines + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORDS_PER_EACH ?> <?php echo $TWO_MONTHS ?>";
+            fines_text += f2.fines + " " + WORDS.curr_name_plural + " " + WORDS.words_per_each + " " + WORDS.two_months;
             break;
         case "3":
-            fines_text += f2.fines+" <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+            fines_text += f2.fines + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester;
             break;
         case "4":
-            fines_text += f2.fines + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
+            fines_text += f2.fines + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester;
             break;
         case "5":
-            fines_text += f2.fines + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+            fines_text += f2.fines + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
             break;
         }
     fines_text+="";
 
     //washing
-    var washing_text="<b><?php echo $WASHING ?></b><br>";
+    var washing_text = "<b>" + WORDS.washing + "</b><br>";
     switch(data.washing_period) {
         case "1":
-            washing_text += f2.washing + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $MONTH ?>";
+            washing_text += f2.washing + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month;
             break;
         case "2":
-            washing_text += f2.washing + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORDS_PER_EACH ?> <?php echo $TWO_MONTHS ?>";
+            washing_text += f2.washing + " " + WORDS.curr_name_plural + " " + WORDS.words_per_each + " " + WORDS.two_months;
             break;
         case "3":
-            washing_text += f2.washing +" <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $TRIMESTER ?>";
+            washing_text += f2.washing + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester;
             break;
         case "4":
-            washing_text += f2.washing + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $SEMESTER ?>";
+            washing_text += f2.washing + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester;
             break;
         case "5":
-            washing_text += f2.washing + " <?php echo $CURR_NAME_PLURAL ?> <?php echo $WORD_PER ?> <?php echo $YEAR ?>";
+            washing_text += f2.washing + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
             break;
         }
     washing_text+="";
 
-    //*************************************************
-    //*************************************************
+    /*************************************************/
+    /*************************************************/
 
     //############
     //Standing/fixed costs table
     var varResult= "";
-    varResult+= "<table class=\"result_table costs_table\"  id=\"standing_costs_table\">";
+    varResult += "<table class=\"result_table costs_table\"  id=\"standing_costs_table\">";
 
     //Standing Costs Header
-    varResult+= "<tr><td style=\"padding:10px 50px;\" colspan=\"2\"><b><?php echo $FIXED_COSTS ?></b><br>" +
-                "<i><?php echo $TOTAL_FIXED_DESCR ?></i></td></tr>";
+    varResult += "<tr><td style=\"padding:10px 50px;\" colspan=\"2\"><b>" + WORDS.fixed_costs + "</b><br>" +
+                 "<i>" + WORDS.total_fixed_descr + "</i></td></tr>";
 
     //Costs || Monthly amount
-    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
-                "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+    varResult += "<tr><td style=\"padding:10px 15px 10px 15px;\"><b>" + WORDS.costs + "</b></td>" +
+                 "<td><b>" + WORDS.monthly_amount + "</b></td></tr>";
 
     //standing costs items
-    varResult+= "<tr><td>" + depreciation_text + "&nbsp;</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.depreciation.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + depreciation_text + "&nbsp;</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.depreciation.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td><b><?php echo $INSURANCE ?></b><br>" + insurance_text + "</td>" +
+    varResult += "<tr><td><b>" + WORDS.insurance + "</b><br>" + insurance_text + "</td>" +
                 "<td>&nbsp;" + currencyShow(data.monthly_costs.insurance.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + interests_text + "&nbsp;</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.credit.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + interests_text + "&nbsp;</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.credit.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + inspection_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.inspection.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + inspection_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.inspection.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + cartax_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.car_tax.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + cartax_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.car_tax.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + maintenance_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + maintenance_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
 
     //TOTAL - Standing costs
-    varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_FIXED ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+    varResult += "<tr><td style=\"padding:4px 10px 4px 0;\"><b>" + WORDS.total_fixed + "</b></td>"+
+                 "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + 
+                 "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-    varResult+="</table>";
+    varResult +="</table>";
 
-    varResult+="<br>";
+    varResult +="<br>";
 
     //#############
     //Running costs table
-    varResult+= "<table class=\"result_table costs_table\" id=\"running_costs_table\">";
+    varResult += "<table class=\"result_table costs_table\" id=\"running_costs_table\">";
 
     //Running Costs Header
-    varResult+= "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b><?php echo $RUNNING_COSTS ?></b><br>" +
-                "<i><?php echo $TOTAL_VARIABLE_DESCR ?></i></td></tr>";
+    varResult += "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b>" + WORDS.running_costs + "</b><br>" +
+                "<i>" + WORDS.total_variable_descr + "</i></td></tr>";
 
     //Costs || Monthly amount
-    varResult+= "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
-                "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+    varResult += "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
+                "<td><b>" + WORDS.monthly_amount + "</b></td></tr>";
 
-    varResult+= "<tr><td><b><?php echo $FUEL ?></b><br>" + fuel_text + "</td>" +
+    varResult += "<tr><td><b>" WORDS.fuel + "</b><br>" + fuel_text + "</td>" +
                 "<td>&nbsp;" + currencyShow(data.monthly_costs.fuel.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + maintenance_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + maintenance_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + repairs_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.repairs_improv.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + repairs_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.repairs_improv.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td><b><?php echo $PARKING ?></b></td>"+
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.parking.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td><b>" + WORDS.parking + "</b></td>"+
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.parking.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + tolls_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.tolls.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + tolls_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.tolls.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + fines_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.fines.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + fines_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.fines.toFixed(1)) + "</td></tr>";
 
-    varResult+= "<tr><td>" + washing_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.washing.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + washing_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.washing.toFixed(1)) + "</td></tr>";
 
     //TOTAL - Running costs
-    varResult+= "<tr><td style=\"padding:4px 10px 4px 0;\"><b><?php echo $TOTAL_VARIABLE ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+    varResult += "<tr><td style=\"padding:4px 10px 4px 0;\"><b>" + WORDS.total_variance + "</b></td>"+
+                 "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + 
+                 "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-    varResult+="</table>";
+    varResult += "</table>";
 
-    varResult+="<br>";
+    varResult += "<br>";
 
     //############
     //Costs per unit distance and TOTAL
-    varResult+= "<table class=\"result_table costs_table total_costs_table\" id=\"total_costs_table\">";
+    varResult += "<table class=\"result_table costs_table total_costs_table\" id=\"total_costs_table\">";
 
-    varResult+= "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b><?php echo $WORD_TOTAL_CAP ?></b><br></td></tr>";
+    varResult += "<tr><td style=\"padding:10px 15px;\" colspan=\"2\"><b>" + WORDS.word_total_cap + "</b><br></td></tr>";
 
     if((typeof data.distance_per_month) !== 'undefined' && data.distance_per_month !== 0){
 
-        varResult+= "<tr><td><b><?php echo $RUN_CP_DIST ?></b></td>"+
-                    "<td>&nbsp;" + currencyShow(data.running_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
+        varResult += "<tr><td><b>" + WORDS.run_cp_dist + "</b></td>" +
+                    "<td>&nbsp;" + currencyShow(data.running_costs_p_unit_distance.toFixed(2)) + "/" + WORDS.std_dist + "</td></tr>";
 
-        varResult+= "<tr><td class=\"border_bottom_2px\"><b><?php echo $TOTAL_CP_DIST ?></b></td>" +
-                    "<td class=\"border_bottom_2px\">&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/<?php echo $STD_DIST ?> </td></tr>";
+        varResult += "<tr><td class=\"border_bottom_2px\"><b>" + WORDS.total_cp_dist + "</b></td>" +
+                     "<td class=\"border_bottom_2px\">&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/" + WORDS.std_dist + "</td></tr>";
     }
 
-    varResult+= "<tr><td><b><?php echo $FIXED_COSTS ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+    varResult += "<tr><td><b>" + WORDS.fixed + "</b></td>"+
+                 "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-    varResult+= "<tr><td><b><?php echo $RUNNING_COSTS ?></b></td>"+
-                "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+    varResult += "<tr><td><b>" + WORDS.running_costs + "</b></td>"+
+                 "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-    varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-               "<td>&nbsp;<b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+    varResult += "<tr><td style=\"padding:6px 10px 6px 0;\"><b>" + WORDS.word_total_cap + "</b></td>"+
+                 "<td>&nbsp;<b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-    varResult+="</table>";
+    varResult += "</table>";
 
 
     return varResult;
@@ -528,34 +537,34 @@ function print_feffort_table(f1, f2, f3, data){
 
     var varResult = "";
     varResult+="<table class=\"result_table\" id=\"result_table3\">";
-    varResult+="<tr><td colspan=\"2\"><b><?php echo $FINANCIAL_EFFORT ?></b></td></tr>";
+    varResult+="<tr><td colspan=\"2\"><b>" + WORDS.financial_effort + "</b></td></tr>";
     //income
-    varResult+="<tr><td colspan=\"2\"><b><?php echo $EXTRA_DATA_INCOME ?></b></tr>";
+    varResult+="<tr><td colspan=\"2\"><b>" + WORDS.extra_data_income + "</b></tr>";
     switch(f3.income_type){
         case 'year':
-            varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $YEAR ?></td>" +
+            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.year + "</td>" +
                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" +
+                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>";
             break;
         case 'month':
-            varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $MONTH ?></td>" +
+            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.month + "</td>" +
                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
-                        "<tr><td><?php echo $NUMBER_OF_MONTHS ?></td>" +
+                        "<tr><td>" + WORDS.number_of_months + "</td>" +
                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" +
+                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>" +
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" +
+                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
                         "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
         case 'week':
-            varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $WEEK ?></td>" +
+            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.week + "</td>" +
                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
-                        "<tr><td><?php echo $NUMBER_OF_WEEKS ?></td>" +
+                        "<tr><td>" + WORDS.number_of_weeks + "</td>" +
                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" +
+                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" +
+                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
                         "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
         case 'hour':
@@ -896,8 +905,8 @@ function drawChartResult(){
     drawMonthlyCostsPieChart(pie_chart_width,  pie_chart_height);
 
     //draw Bar Chart
-    var bar_chart_width=parseInt(frameWidth * 0.8);
-    var bar_chart_height=parseInt(bar_chart_width*45/50);
+    var bar_chart_width = parseInt(frameWidth * 0.8);
+    var bar_chart_height = parseInt(bar_chart_width*45/50);
 
     drawMonthlyCostsBarChart(bar_chart_width, bar_chart_height);
 
@@ -948,10 +957,4 @@ function currencyShow(value){
 
     return res;
 }
-    
-<?php
-use MatthiasMullie\Minify;
-$javascriptContent = ob_get_clean();
-$minifier = new Minify\JS($javascriptContent);
-echo $minifier->minify();
-?>
+
