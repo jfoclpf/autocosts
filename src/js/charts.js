@@ -294,11 +294,11 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                         CALCULATED.data.public_transports.taxi_price_per_km.toFixed(1) + " " +
                         WORDS.curr_name_plural + ' ' + WORDS.word_per + ' ' + WORDS.std_dist_full;
 
-        pt_array =
-                        [
-                            WORDS.publ_tra_equiv,
-                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                        ];
+        pt_array = [
+                    WORDS.publ_tra_equiv,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                   ];
+        
         if(pt.display_other_pt) {
             legend.push(
                             WORDS.pub_trans_text,
@@ -358,10 +358,9 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
         }
         //the case where uber equivalent is more expensive
         else if(u.result_type == 2){
-            legend.push(
-                            WORDS.pub_trans_text,
-                            CALCULATED.uber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + ' ' + WORDS.word_per + ' ' + WORDS.month
-                        );
+            legend.push( WORDS.pub_trans_text,
+                         CALCULATED.uber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + " " + WORDS.word_per + " " + WORDS.month );
+            
             monthly_costs.push(0, 0);
             uber_array.push(
                                 pft(u.tcpt),
@@ -374,7 +373,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
     monthly_costs.push("");
 
     // Create and populate the data table
-    chart_content = [legend, monthly_costs ];
+    chart_content = [legend, monthly_costs];
     if(pt.display_pt()) {
         pt_array.push("");
         chart_content.push(pt_array);
@@ -392,12 +391,13 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
         }
     }
 
+    console.log(chart_content);
     char_data = google.visualization.arrayToDataTable(chart_content);
     // Create and draw the visualization.
-	chart_div = document.getElementById('alternative_carcosts_chart_div');
+    chart_div = document.getElementById('alternative_carcosts_chart_div');
     chart = new google.visualization.ColumnChart(chart_div);
 
-	//Wait for the chart to finish drawing before calling the getImageURI() method.
+    //Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
         DISPLAY.charts.URIs.alterToCar = chart.getImageURI();
     });

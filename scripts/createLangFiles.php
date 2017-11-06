@@ -7,7 +7,7 @@
 
     include_once($SRC_FOLDER.'php/functions.php');
     include_once($SRC_FOLDER.'countries/_list.php');
-    unset($avail_CT["XX"]);
+
     //$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
     //$LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
     
