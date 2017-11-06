@@ -542,129 +542,131 @@ function print_feffort_table(f1, f2, f3, data){
     varResult+="<tr><td colspan=\"2\"><b>" + WORDS.extra_data_income + "</b></tr>";
     switch(f3.income_type){
         case 'year':
-            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.year + "</td>" +
-                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
-                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
-                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>";
+            varResult += "<tr><td>" + WORDS.net_income_per + " " + WORDS.year + "</td>" +
+                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>";
             break;
         case 'month':
-            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.month + "</td>" +
-                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
-                        "<tr><td>" + WORDS.number_of_months + "</td>" +
-                        "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
-                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
-                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>" +
-                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
-                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
+            varResult += "<tr><td>" + WORDS.net_income_per + " " + WORDS.month + "</td>" +
+                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>" +
+                         "<tr><td>" + WORDS.number_of_months + "</td>" +
+                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>" +
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
         case 'week':
-            varResult+= "<tr><td>" + WORDS.net_income_per + " " + WORDS.week + "</td>" +
-                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
-                        "<tr><td>" + WORDS.number_of_weeks + "</td>" +
-                        "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
-                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
-                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
-                        "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
-                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
+            varResult += "<tr><td>" + WORDS.net_income_per + " " + WORDS.week + "</td>" +
+                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
+                         "<tr><td>" + WORDS.number_of_weeks + "</td>" +
+                         "<td>" + data.fin_effort.income_per_type + "</td></tr>" +
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.month + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
         case 'hour':
-            varResult+= "<tr><td><?php echo $NET_INCOME_PER ?> <?php echo $HOUR ?></td>" +
-                        "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
-                        "<tr><td><?php echo $NUMBER_OF_HOURS ?></td>" +
-                        "<td>" + data.fin_effort.income_hours_per_week + " <?php echo $HOUR_ABBR ?></td></tr>"+
-                        "<tr><td><?php echo $NUMBER_OF_WEEKS ?></td>" +
-                        "<td>" + data.fin_effort.income_per_type + "</td></tr>"+
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $MONTH ?></td>" +
-                        "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
-                        "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $YEAR ?></td>" +
-                        "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
+            varResult += "<tr><td>" + WORDS.net_income_per + " " + WORDS.hour + "</td>" +
+                         "<td style=\"width:20%\">" + currencyShow(data.fin_effort.income) + "</td></tr>"+
+                         "<tr><td>" + WORDS.number_of_hours + "</td>" +
+                         "<td>" + data.fin_effort.income_hours_per_week + " " + WORDS.hour_abbr + "</td></tr>"+
+                         "<tr><td>" + WORDS.number_of_weeks + "</td>" +
+                         "<td>" + data.fin_effort.income_per_type + "</td></tr>"+
+                         "<tr><td>" + WORDS.average_net_income + " " + WORDS.month + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.aver_income_per_month.toFixed(1)) + "</td></tr>"+
+                         "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.year + "</td>" +
+                         "<td>" + currencyShow(data.fin_effort.income_per_year.toFixed(1)) + "</td></tr>";
             break;
     }
     //working time
     if(f3.income_type != 'hour'){
-        varResult+=     "<tr><td colspan=\"2\"><b><?php echo $EXTRA_DATA_WORKING_TIME ?></b></tr>";
+        varResult+=     "<tr><td colspan=\"2\"><b>" + WORDS.extra_data_working_time + "</b></tr>";
         if(f3.is_working_time == 'true'){
-            varResult+= "<tr><td><?php echo $HOURS_PER ?> <?php echo $WEEK ?></td>" +
-                        "<td>"+data.fin_effort.time_hours_per_week+" <?php echo $HOUR_ABBR ?></td></tr>" +
-                        "<tr><td><?php echo $MONTHS_PER ?> <?php echo $YEAR ?></td>" +
-                        "<td>"+data.fin_effort.time_month_per_year+"</td></tr>" +
-                        "<tr><td><?php echo $AVERAGE_WORKING_HOURS_PER ?> <?php echo $MONTH ?></td>" +
-                        "<td>"+data.fin_effort.aver_work_time_per_m.toFixed(1)+" <?php echo $HOUR_ABBR ?></td></tr>" +
-                        "<tr><td><?php echo $WORKING_HOURS_PER ?> <?php echo $YEAR ?></td>" +
-                        "<td>"+data.fin_effort.work_hours_per_y.toFixed(1)+" <?php echo $HOUR_ABBR ?></td></tr>";
+            varResult += "<tr><td>" + WORDS.hours_per + " " + WORDS.week + "</td>" +
+                         "<td>" + data.fin_effort.time_hours_per_week + " " + WORDS.hour_abbr + "</td></tr>" +
+                         "<tr><td>" + WORDS.months_per + " " + WORDS.year + "</td>" +
+                         "<td>" + data.fin_effort.time_month_per_year+"</td></tr>" +
+                         "<tr><td>" + WORDS.average_working_hours_per + " " + WORDS.month + "</td>" +
+                         "<td>" + data.fin_effort.aver_work_time_per_m.toFixed(1) + " " + WORDS.hour_abbr + "</td></tr>" +
+                         "<tr><td>" + WORDS.working_hours_per + " " + WORDS.year + "</td>" +
+                         "<td>" + data.fin_effort.work_hours_per_y.toFixed(1) + " " + WORDS.hour_abbr + "</td></tr>";
         }
         else{
-            varResult+= "<tr><td colspan=\"2\"><?php echo $WORKING_TIME_MESSAGE ?></td></tr>";
+            varResult += "<tr><td colspan=\"2\">" + WORDS.working_time_message + "</td></tr>";
         }
     }
-    varResult+= "<tr><td><?php echo $AVERAGE_NET_INCOME_PER ?> <?php echo $HOUR ?></td>" +
-                "<td>&nbsp;" + currencyShow(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td>" + WORDS.average_net_income_per + " " + WORDS.hour + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.fin_effort.aver_income_per_hour.toFixed(1)) + "</td></tr>";
 
     //distance
-    varResult+= "<tr><td colspan=\"2\"><b><?php echo $DISTANCE ?></b></td></tr>";
+    varResult+= "<tr><td colspan=\"2\"><b>" + WORDS.distance + "</b></td></tr>";
     if((f2.type_calc_fuel != 'km' && f3.drive_to_work == 'true') || (f2.type_calc_fuel != 'km' && f2.take_car_to_job == 'true')){
-        varResult+=  "<tr><td><?php echo $DIST_HOME_JOB ?></td>"  +
-                     "<td>" + parseInt(f3.dist_home_job).toFixed(1) + " <?php echo $STD_DIST ?></td></tr>"+
-                     "<tr><td><?php echo $DAYS_DRIVE_JOB ?></td>"  +
-                     "<td>" + f3.drive_to_work_days_per_week + " <?php echo $DAYS ?></td></tr>" +
-                     "<tr><td><?php echo $DIST_JORNEY_WEEKEND ?></td>" +
-                     "<td>" + parseInt(f3.journey_weekend).toFixed(1) + " <?php echo $STD_DIST ?></td></tr>"+
-                     "<tr><td><?php echo $AVERAGE_DIST_PER_WEEK ?></td>" +
-                     "<td>" + data.driving_distance.aver_drive_per_week.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";
+        varResult +=  "<tr><td>" + WORDS.dist_home_job + "</td>"  +
+                      "<td>" + parseInt(f3.dist_home_job).toFixed(1) + " " + WORDS.std_dist + "</td></tr>"+
+                      "<tr><td>" + WORDS.days_drive_job + "</td>"  +
+                      "<td>" + f3.drive_to_work_days_per_week + " " + WORDS.days + "</td></tr>" +
+                      "<tr><td>" + WORDS.dist_jorney_weekend + "</td>" +
+                      "<td>" + parseInt(f3.journey_weekend).toFixed(1) + " " + WORDS.std_dist + "</td></tr>"+
+                      "<tr><td>" + WORDS.average_dist_per_week + "</td>" +
+                      "<td>" + data.driving_distance.aver_drive_per_week.toFixed(1) + " " + WORDS.std_dist + "</td></tr>";
     }
 
-    varResult+=  "<tr><td><?php echo $YOU_DRIVE_PER ?> <?php echo $MONTH ?></td>" +
-                 "<td>" + data.distance_per_month.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>" +
-                 "<tr><td><?php echo $YOU_DRIVE_PER ?> <?php echo $YEAR ?></td>" +
-                 "<td>" + data.driving_distance.drive_per_year.toFixed(1) + " <?php echo $STD_DIST ?></td></tr>";
+    varResult +=  "<tr><td>" + WORDS.you_drive_per + " " + WORDS.month + "</td>" +
+                  "<td>" + data.distance_per_month.toFixed(1) + " " + WORDS.std_dist + "</td></tr>" +
+                  "<tr><td>" + WORDS.you_drive_per + " " + WORDS.year + "</td>" +
+                  "<td>" + data.driving_distance.drive_per_year.toFixed(1) + " " + WORDS.std_dist + "</td></tr>";
 
     //time spent in driving
-    varResult+=  "<tr><td colspan=\"2\"><b><?php echo $EXTRA_DATA_TIME_SPENT_IN_DRIVING ?></b></td></tr>";
+    varResult +=  "<tr><td colspan=\"2\"><b>" + WORDS.extra_data_time_spent_in_driving + "</b></td></tr>";
 
     if(f3.drive_to_work == 'true' || f2.take_car_to_job == 'true'){
-        varResult+= "<tr><td><?php echo $MINUTES_HOME_JOB ?></td>" +
-                    "<td>" + f3.time_home_job + " <?php echo $MIN ?></td></tr>" +
-                    "<tr><td><?php echo $DAYS_DRIVE_TO_JOB ?></td>" +
-                    "<td>" + f3.drive_to_work_days_per_week + " <?php echo $DAYS ?></td></tr>" +
-                    "<tr><td><?php echo $TIME_DRIVE_WEEKEND ?></td>" +
-                    "<td>" + f3.time_weekend + " <?php echo $MIN ?></td></tr>" +
-                    "<tr><td><?php echo $MINUTES_DRIVE_PER ?> <?php echo $WEEK ?></td>" +
-                    "<td>" + data.time_spent_driving.min_drive_per_week + " <?php echo $MIN ?></td></tr>";
+        varResult += "<tr><td>" + WORDS.minutes_home_job + "</td>" +
+                     "<td>" + f3.time_home_job + " " + WORDS.min + "</td></tr>" +
+                     "<tr><td>" + WORDS.days_drive_to_job + "</td>" +
+                     "<td>" + f3.drive_to_work_days_per_week + " " + WORDS.days + "</td></tr>" +
+                     "<tr><td>" + WORDS.time_drive_weekend + "</td>" +
+                     "<td>" + f3.time_weekend + " " + WORDS.min + "</td></tr>" +
+                     "<tr><td>" + WORDS.minutes_drive_per + " " + WORDS.week + "</td>" +
+                     "<td>" + data.time_spent_driving.min_drive_per_week + " " + WORDS.min + "</td></tr>";
     }
     else{
-        varResult+= "<tr><td><?php echo $MINUTES_DRIVE_PER ?> <?php echo $DAY ?></td>" +
-                    "<td>" + f3.min_drive_per_day + " <?php echo $MIN ?></td></tr>" +
-                    "<tr><td><?php echo $DAYS_DRIVE_PER_MONTH ?></td>" +
-                    "<td>" + f3.days_drive_per_month + " <?php echo $DAYS ?></td></tr>";
+        varResult += "<tr><td>" + WORDS.minutes_drive_per + " " + WORDS.day + "</td>" +
+                     "<td>" + f3.min_drive_per_day + " " + WORDS.min + "</td></tr>" +
+                     "<tr><td>" + WORDS.days_drive_per_month + "</td>" +
+                     "<td>" + f3.days_drive_per_month + " " + WORDS.days + "</td></tr>";
     }
 
-    varResult+= "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $MONTH ?></td>" +
-                "<td>" + data.time_spent_driving.hours_drive_per_month.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
-                "<tr><td><?php echo $HOURS_DRIVE_PER ?> <?php echo $YEAR ?></td>" +
-                "<td>" + data.time_spent_driving.hours_drive_per_year.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>";
+    varResult += "<tr><td>" + WORDS.hours_drive_per + " " + WORDS.month + "</td>" +
+                 "<td>" + data.time_spent_driving.hours_drive_per_month.toFixed(1) + " " + WORDS.hour_abbr + "</td></tr>"+
+                 "<tr><td>" + WORDS.hours_drive_per + " " + WORDS.year + "</td>" +
+                 "<td>" + data.time_spent_driving.hours_drive_per_year.toFixed(1) + " " + WORDS.hour_abbr + "</td></tr>";
 
     //financial effort
-    varResult+= "<tr><td colspan=\"2\"><b><?php echo $FINANCIAL_EFFORT ?>" +
-                ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) +
-                '&#37;</b>' +
-                "<tr><td><?php echo $TOTAL_COSTS_PER_YEAR ?></td>" +
-                "<td>" + currencyShow(data.fin_effort.total_costs_year.toFixed(1)) + "</td></tr>" +
-                "<tr><td><?php echo $HOURS_TO_AFFORD_CAR ?></td>"  +
-                "<td>" + data.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " <?php echo $HOUR_ABBR ?></td></tr>"+
-                "<tr><td><?php echo $MONTHS_TO_AFFORD_CAR ?></td>" +
-                "<td>" + data.fin_effort.month_per_year_to_afford_car.toFixed(2)+"</td></tr>"+
-                "<tr><td><?php echo $DAYS_CAR_PAID ?></td>" +
-                "<td>" + Math.ceil(data.fin_effort.days_car_paid) + " <?php echo $DAYS ?></td></tr>";
+    varResult += "<tr><td colspan=\"2\"><b>" + WORDS.financial_effort +
+                 ': ' + (data.total_costs_year/data.fin_effort.income_per_year*100).toFixed(0) +
+                 '&#37;</b>' +
+                 "<tr><td>" + WORDS.total_costs_per_year + "</td>" +
+                 "<td>" + currencyShow(data.fin_effort.total_costs_year.toFixed(1)) + "</td></tr>" +
+                 "<tr><td>" + WORDS.hours_to_afford_car + "</td>"  +
+                 "<td>" + data.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " " + WORDS.hour_abbr + "</td></tr>"+
+                 "<tr><td>" + WORDS.months_to_afford_car + "</td>" +
+                 "<td>" + data.fin_effort.month_per_year_to_afford_car.toFixed(2)+"</td></tr>"+
+                 "<tr><td>" + WORDS.days_car_paid + "</td>" +
+                 "<td>" + Math.ceil(data.fin_effort.days_car_paid) + " " + WORDS.days + "</td></tr>";
 
 
     //speed
-    varResult+= "<tr><td><?php echo $AVER_YEARLY ?> <?php echo $KINETIC_SPEED ?></td>"+
-                "<td>" + data.kinetic_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
+    varResult += "<tr><td>" + WORDS.aver_yearly + " " + WORDS.kinetic_speed + "</td>"+
+                 "<td>" + data.kinetic_speed.toFixed(1) + " " + WORDS.std_dist + "/h</td></tr>";
 
-    varResult+= "<tr><td><?php echo $AVER_YEARLY ?> <a href=\"./docs/consumer_speed.html\" target=\"_blank\"><?php echo $VIRTUAL_SPEED ?></a></td>"+
-                "<td>" + data.virtual_speed.toFixed(1) + " <?php echo $STD_DIST ?>/h</td></tr>";
+    varResult += "<tr><td>" + WORDS.aver_yearly + " " + 
+                 "<a href=\"./docs/consumer_speed.html\" target=\"_blank\">" + 
+                 WORDS.virtual_speed + "</a></td>" +
+                 "<td>" + data.virtual_speed.toFixed(1) + " " + WORDS.std_dist + "/h</td></tr>";
 
-    varResult+="</table>";
+    varResult += "</table>";
 
     return varResult;
 }
