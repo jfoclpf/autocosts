@@ -205,14 +205,15 @@ function print_costs_table(f1, f2, f3, data) {
     var depreciation_text;
     if (data.age_months === 0) {
         depreciation_text = WORDS.error_depreciation_new_car + "&nbsp;&nbsp;";
-    } else {
+    } 
+    else {
         depreciation_text = "<b>" + WORDS.depreciation + "</b>&nbsp;&nbsp;<br>" + WORDS.aq_value + ": " +
-            f1.auto_initial_cost + WORDS.curr_symbol + "<br>" + WORDS.final_value ": " +
-            f1.auto_final_cost + WORDS.curr_symbol + "<br>" + WORDS.period_own ": " +
-            data.age_months + " " + WORDS.months + "<br>(" +
-            f1.auto_initial_cost + WORDS.curr_symbol + "-" +
-            f1.auto_final_cost + WORDS.curr_symbol + ")/" +
-            data.age_months + " " + WORDS.months;
+                            f1.auto_initial_cost + WORDS.curr_symbol + "<br>" + WORDS.final_value + ": " +
+                            f1.auto_final_cost + WORDS.curr_symbol + "<br>" + WORDS.period_own + ": " +
+                            data.age_months + " " + WORDS.months + "<br>(" +
+                            f1.auto_initial_cost + WORDS.curr_symbol + "-" +
+                            f1.auto_final_cost + WORDS.curr_symbol + ")/" +
+                            data.age_months + " " + WORDS.months;
     }
 
     //Insurance
@@ -267,7 +268,7 @@ function print_costs_table(f1, f2, f3, data) {
                           " " + WORDS.times_costing + " " +
                           f1.inspec_price +
                           " " + WORDS.curr_symbol + " " + WORDS.each_one_during + " " +
-                          data.age_months + " " + WORDS.months "&nbsp;";
+                          data.age_months + " " + WORDS.months + "&nbsp;";
     }
     else{
         inspection_text = "<b>" + WORDS.inspection + "</b><br>";
@@ -275,7 +276,7 @@ function print_costs_table(f1, f2, f3, data) {
     
     //Taxes
     var cartax_text = "<b>" + WORDS.road_taxes + "</b><br>" +
-                      f1.car_tax + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year";
+                      f1.car_tax + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year;
 
     //Fuel
     var fuel_text;
@@ -468,8 +469,8 @@ function print_costs_table(f1, f2, f3, data) {
     varResult += "<tr><td style=\"padding:10px 15px 10px 15px;\"><b><?php echo $COSTS ?></b></td>" +
                 "<td><b>" + WORDS.monthly_amount + "</b></td></tr>";
 
-    varResult += "<tr><td><b>" WORDS.fuel + "</b><br>" + fuel_text + "</td>" +
-                "<td>&nbsp;" + currencyShow(data.monthly_costs.fuel.toFixed(1)) + "</td></tr>";
+    varResult += "<tr><td><b>" + WORDS.fuel + "</b><br>" + fuel_text + "</td>" +
+                 "<td>&nbsp;" + currencyShow(data.monthly_costs.fuel.toFixed(1)) + "</td></tr>";
 
     varResult += "<tr><td>" + maintenance_text + "</td>" +
                  "<td>&nbsp;" + currencyShow(((data.monthly_costs.maintenance)/2).toFixed(1)) + "</td></tr>";
@@ -684,37 +685,37 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
         DISPLAY.result.public_transports = true; //global variable
         var tp_text, outros_tp_text, taxi_text;
 
-        tp_text = "<b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " +
-                  f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
-                  "<br><?php echo $PASS_MONTH_AVG ?>: " +
-                  f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?>";
+        tp_text = "<b>" + WORDS.pub_trans_text + "</b><br>" + WORDS.fam_nbr + ": " +
+                  f3.n_pess_familia + " " + WORDS.person_or_people +
+                  "<br>" + WORDS.pass_month_avg + ": " +
+                  f3.monthly_pass_cost + WORDS.curr_symbol;
 
         if(data.public_transports.display_other_pt){
-            outros_tp_text="<b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?> ";
+            outros_tp_text="<b>" + WORDS.other_pub_trans + "</b><br>" + WORDS.other_pub_trans_desc + " ";
         }
-        taxi_text="<b><?php echo $TAXI_DESL ?><\/b><br>" + data.public_transports.km_by_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
+        taxi_text = "<b>" + WORDS.taxi_desl + "<\/b><br>" + data.public_transports.km_by_taxi.toFixed(1) + " <?php echo $STD_DIST ?> <?php echo $ON_TAXI_PAYING ?> " + data.public_transports.taxi_price_per_km.toFixed(1) + WORDS.curr_symbol + "/" + WORDS.std_dist;
 
         //starts HTML table
-        varResult+="<table class=\"result_table\" id=\"result_table2\">";
+        varResult += "<table class=\"result_table\" id=\"result_table2\">";
         //header
-        varResult+="<tr><td><b><?php echo $COSTS ?></b><br></td>"+
-                   "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+        varResult += "<tr><td><b>" + WORDS.costs + "</b><br></td>"+
+                     "<td><b>" + WORDS.monthly_amount + "</b></td></tr>";
         //items
-        varResult+="<tr><td>" + tp_text + "</td>" +
-                   "<td>&nbsp;" + currencyShow(data.public_transports.total_price_pt.toFixed(1)) + "</td></tr>";
+        varResult += "<tr><td>" + tp_text + "</td>" +
+                     "<td>&nbsp;" + currencyShow(data.public_transports.total_price_pt.toFixed(1)) + "</td></tr>";
 
-        varResult+="<tr><td>" + taxi_text + "</td>" +
-                   "<td>&nbsp;" + currencyShow(data.public_transports.taxi_cost.toFixed(1)) + "</td></tr>";
+        varResult += "<tr><td>" + taxi_text + "</td>" +
+                     "<td>&nbsp;" + currencyShow(data.public_transports.taxi_cost.toFixed(1)) + "</td></tr>";
 
         //in case other means of transport are shown besides taxi and urban public transports
         if(data.public_transports.display_other_pt) {
-            varResult+="<tr><td>" + outros_tp_text + "</td>" +
-                       "<td>&nbsp;"+currencyShow(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
+            varResult += "<tr><td>" + outros_tp_text + "</td>" +
+                         "<td>&nbsp;"+currencyShow(data.public_transports.other_pt.toFixed(1))+"</td></tr>";
         }
-        varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                   "<td><b>" + currencyShow(data.public_transports.total_altern.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+        varResult += "<tr><td style=\"padding:6px 10px 6px 0;\"><b>" + WORDS.word_total_cap + "</b></td>"+
+                     "<td><b>" + currencyShow(data.public_transports.total_altern.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
-        varResult+="</table>";
+        varResult += "</table>";
     }
     else{
         DISPLAY.result.public_transports = false; //global variable
@@ -725,73 +726,73 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
         DISPLAY.result.uber = true; //says uber table is to be printed; global variable
 
         //add source in table for uber URL
-        var uber_url = "http://www.uber.com/" + '<?php echo $LANGUAGE_CODE ?>' + "/cities/";
+        var uber_url = "http://www.uber.com/" + LANGUAGE + "/cities/";
         var uber_url_HTML = "<sup><a href=\"" + uber_url + "\">[*]</a></sup>";
 
         //if previous table is printed, add a breakline
         if (data.public_transports.display_pt()){
-            varResult+="<br>";
+            varResult += "<br>";
         }
 
         //in which driver can replace every km by uber
         //the remaining money is applied to public transport
         if(res_uber_obj.result_type == 1){
             //starts HTML table
-            varResult+="<table class=\"result_table uber_table\" id=\"result_table_uber\">";
+            varResult += "<table class=\"result_table uber_table\" id=\"result_table_uber\">";
 
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" +
-                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+            varResult += "<tr><td><b>UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.std_dist_full + "</b>" + uber_url_HTML + "</td>" +
+                         "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + WORDS.std_dist + "</td></tr>";
 
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" +
-                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+            varResult += "<tr><td><b>UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.minutes + "</b>" + uber_url_HTML + "</td>" +
+                         "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
-            varResult+="<tr><td><b><?php echo $FUEL_DIST.' '.$WORD_PER.' '.$MONTH ?></b><br></td>"+
-                       "<td>" + res_uber_obj.dpm.toFixed(0) + " " +"<?php echo $STD_DIST_FULL?></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.fuel_dist + " " + WORDS.word_per + " " + WORDS.month + "</b><br></td>"+
+                         "<td>" + res_uber_obj.dpm.toFixed(0) + " " + WORDS.std_dist_full + "</td></tr>";
 
-            varResult+="<tr><td><b><?php echo $MINUTES_DRIVE_PER.' '.$MONTH ?></b></td>" +
-                       "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + "<?php echo $MINUTES ?></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.minutes_drive_per + " " + WORDS.month + "</b></td>" +
+                         "<td>" + res_uber_obj.mdpm.toFixed(0) + " " + WORDS.minutes + "</td></tr>";
 
-            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" +
-                       "<td><b>" + currencyShow(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";
+            varResult += "<tr><td><b>UBER: " + WORDS.costs + " - " + WORDS.word_total_cap + "</b></td>" +
+                         "<td><b>" + currencyShow(res_uber_obj.tuc.toFixed(0)) + "</b></td></tr>";
 
-            varResult+="<tr><td><b><?php echo $OTHER_PUB_TRANS ?></b><br><?php echo $OTHER_PUB_TRANS_DESC ?></td>" +
-                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.other_pub_trans + "</b><br>" + WORDS.other_pub_trans_desc + "</td>" +
+                         "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
 
-            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.word_total_cap + "</b></td>"+
+                         "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
-            varResult+="</table>";
+            varResult += "</table>";
         }
 
         //the case where uber equivalent is more expensive
         //the driver shall spend the equivalent car money in public transports and the remaining in uber
         else if(res_uber_obj.result_type == 2){
             //starts HTML table
-            varResult+="<table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
+            varResult += "<table class=\"result_table uber_table uber_table2\" id=\"result_table_uber\">";
 
-            varResult+="<tr><td><b><?php echo $PUB_TRANS_TEXT ?></b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " <?php echo $PERSON_OR_PEOPLE ?>" +
-                       "<br><?php echo $PASS_MONTH_AVG ?>: " + f3.monthly_pass_cost + "<?php echo $CURR_SYMBOL ?></td>" +
-                       "<td><b>" + currencyShow(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.pub_trans_text + "</b><br><?php echo $FAM_NBR ?>: " + f3.n_pess_familia + " " + WORDS.person_or_people +
+                         "<br>" + WORDS.pass_month_avg + ": " + f3.monthly_pass_cost + WORDS.curr_symbol + "</td>" +
+                         "<td><b>" + currencyShow(res_uber_obj.tcpt.toFixed(0)) + "</b></td></tr>";
 
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$STD_DIST_FULL ?></b>" + uber_url_HTML + "</td>" +
-                       "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
+            varResult += "<tr><td><b>UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.std_dist_full + "</b>" + uber_url_HTML + "</td>" +
+                         "<td>" + currencyShow(res_uber_obj.ucd.toFixed(2)) + "/" + "<?php echo $STD_DIST ?></td></tr>";
 
-            varResult+="<tr><td><b>UBER - <?php echo $COSTS.' '.$WORD_PER.' '.$MINUTES ?></b>" + uber_url_HTML + "</td>" +
-                       "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
+            varResult += "<tr><td><b>UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.minutes + "</b>" + uber_url_HTML + "</td>" +
+                         "<td>" + currencyShow(res_uber_obj.ucm.toFixed(2)) + "/" + "<?php echo $MIN ?></td></tr>";
 
-            varResult+="<tr><td><b><?php echo $KINETIC_SPEED_TITLE ?></b></td>" +
-                       "<td>" + data.kinetic_speed.toFixed(2) + " " +"<?php echo $STD_DIST.'/'.$HOUR_ABBR ?></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.kinetic_speed_title + "</b></td>" +
+                         "<td>" + data.kinetic_speed.toFixed(2) + " " + WORDS.std_dist + "/" + WORDS.hour_abbr + "</td></tr>";
 
-            varResult+="<tr><td><b>UBER - <?php echo $STD_DIST_FULL.' '.$WORD_PER.' '.$MONTH ?></b></td>" +
-                       "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
+            varResult += "<tr><td><b>UBER - " + WORDS.std_dist_full + " " + WORDS.word_per + " " + WORDS.month + "</b></td>" +
+                         "<td>" + res_uber_obj.dist_uber.toFixed(0) + " " + "<?php echo $STD_DIST_FULL ?></td></tr>";
 
-            varResult+="<tr><td><b>UBER: <?php echo $COSTS.' - '.$WORD_TOTAL_CAP ?></b></td>" +
-                       "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
+            varResult += "<tr><td><b>UBER: " + WORDS.costs + " - " + WORDS.word_total_cap + "</b></td>" +
+                         "<td><b>" + currencyShow(res_uber_obj.delta.toFixed(0)) + "</b></td></tr>";
 
-            varResult+="<tr><td><b><?php echo $WORD_TOTAL_CAP ?></b></td>"+
-                       "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+            varResult += "<tr><td><b>" + WORDS.word_total_cap + "</b></td>"+
+                         "<td><b>" + currencyShow(data.total_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
 
-            varResult+="</table>";
+            varResult += "</table>";
         }
     }
     else{
@@ -808,13 +809,13 @@ function print_AlternativeToCarCosts_table(f1, f2, f3, data, res_uber_obj, count
 /*External costs table (result_table4)*/
 function print_extern_table(f1, f2, f3, data){
 
-    var epa_text      = "<b>Emissões de poluentes atmosféricos</b><br>Valor aproximado: " + data.external_costs.polution + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var egee_text     = "<b>Emissões de gases de efeito de estufa</b><br>Valor aproximado: " + data.external_costs.ghg + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var ruido_text    = "<b>Poluição sonora</b><br>Valor aproximado: " + data.external_costs.noise + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var sr_text       = "<b>Sinistralidade rodoviária</b><br>Valor aproximado: " + data.external_costs.fatalities + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var cgstn_text    = "<b>Congestionamento</b><br>Valor aproximado: " + data.external_costs.congestion + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var ifr_estr_text = "<b>Desgaste das infraestruturas rodoviárias</b><br>Valor aproximado: " + data.external_costs.infrastr + "<?php echo $CURR_SYMBOL ?>/<?php echo $STD_DIST ?>";
-    var source_ext_costs  = "<b>Fonte dos dados:</b><br><i><a href=\"" + data.external_costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia";
+    var epa_text      = "<b>Emissões de poluentes atmosféricos</b><br>Valor aproximado: " + data.external_costs.polution + WORDS.curr_symbol + "/" + WORDS.std_dist;                 
+    var egee_text     = "<b>Emissões de gases de efeito de estufa</b><br>Valor aproximado: " + data.external_costs.ghg + WORDS.curr_symbol + "/" + WORDS.std_dist;
+    var ruido_text    = "<b>Poluição sonora</b><br>Valor aproximado: " + data.external_costs.noise + WORDS.curr_symbol + "/" + WORDS.std_dist;
+    var sr_text       = "<b>Sinistralidade rodoviária</b><br>Valor aproximado: " + data.external_costs.fatalities + WORDS.curr_symbol + "/" + WORDS.std_dist;
+    var cgstn_text    = "<b>Congestionamento</b><br>Valor aproximado: " + data.external_costs.congestion + WORDS.curr_symbol + "/" + WORDS.std_dist;
+    var ifr_estr_text = "<b>Desgaste das infraestruturas rodoviárias</b><br>Valor aproximado: " + data.external_costs.infrastr + WORDS.curr_symbol + "/" + WORDS.std_dist;
+    var source_ext_costs  = "<b>Fonte dos dados:</b><br><i><a href=\"" + data.external_costs.handbook_extern_URL + "\">Handbook on estimation of external costs in the transport sector</a>, </i>Comissão Europeia";         
 
     var varResult     = "";
 
@@ -823,36 +824,36 @@ function print_extern_table(f1, f2, f3, data){
         varResult+="<table class=\"result_table\" id=\"result_table4\">";
 
         //header
-        varResult+="<tr><td><b>Custos externos</b><br>Percorre " +(1 * data.distance_per_month).toFixed(1)+" <?php echo $STD_DIST ?>/<?php echo $MONTH ?></td>" +
-                   "<td><b><?php echo $MONTHLY_AMOUNT ?></b></td></tr>";
+        varResult += "<tr><td><b>Custos externos</b><br>Percorre " + (1 * data.distance_per_month).toFixed(1) + " " + WORDS.std_dist + "/" + WORDS.month + "</td>" +
+                     "<td><b>" +  WORDS.monthly_amount + "</b></td></tr>";
 
         //external costs items
-        varResult+="<tr><td>" + epa_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.polution * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + epa_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.polution * data.distance_per_month).toFixed(1) + "</td></tr>";
 
-        varResult+="<tr><td>" + egee_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.ghg * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + egee_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.ghg * data.distance_per_month).toFixed(1) + "</td></tr>";
 
-        varResult+="<tr><td>" + ruido_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.noise * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + ruido_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.noise * data.distance_per_month).toFixed(1) + "</td></tr>";
 
-        varResult+="<tr><td>" + sr_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.fatalities * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + sr_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.fatalities * data.distance_per_month).toFixed(1) + "</td></tr>";
 
-        varResult+="<tr><td>" + cgstn_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.congestion * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + cgstn_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.congestion * data.distance_per_month).toFixed(1) + "</td></tr>";
 
-        varResult+="<tr><td>" + ifr_estr_text + "</td>" +
-                   "<td>&nbsp;<?php echo $CURR_SYMBOL ?> " + (data.external_costs.infrastr * data.distance_per_month).toFixed(1)+"</td></tr>";
+        varResult += "<tr><td>" + ifr_estr_text + "</td>" +
+                     "<td>&nbsp;" + WORDS.curr_symbol + " " + (data.external_costs.infrastr * data.distance_per_month).toFixed(1) + "</td></tr>";
 
          //total
-        varResult+="<tr><td style=\"padding:6px 10px 6px 0;\"><b><?php echo $WORD_TOTAL_CAP ?></b></td>" +
-                   "<td><b><?php echo $CURR_SYMBOL ?>&nbsp;"+data.external_costs.total_exter().toFixed(0)+"<span class=\"per_month_wording\">/<?php echo $MONTH ?></span></b></td></tr>";
+        varResult += "<tr><td style=\"padding:6px 10px 6px 0;\"><b>" + WORDS.word_total_cap + "</b></td>" +
+                     "<td><b>" + WORDS.curr_symbol + "&nbsp;" + data.external_costs.total_exter().toFixed(0) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
         //reference to source
-        varResult+="<tr><td colspan=\"2\">"+ source_ext_costs +"</td></tr>";
+        varResult += "<tr><td colspan=\"2\">"+ source_ext_costs +"</td></tr>";
 
-        varResult+="</table>";
+        varResult += "</table>";
     }
 
     return varResult;
@@ -948,15 +949,13 @@ function drawChartResult(){
 //puts the currency symbol after the money value, for certain countries
 function currencyShow(value){
 
-    <?php
-    if (isset($INVERT_CURRENCY) && $INVERT_CURRENCY){
-        echo 'res = value + "&nbsp;'.$CURR_SYMBOL.'";';
+    if (typeof WORDS.invert_currency !== 'undefined' && 
+            (WORDS.invert_currency == "true" || WORDS.invert_currency === true || WORDS.invert_currency=="1"))
+    {
+        return (value + "&nbsp;" + WORDS.curr_symbol);
     }
     else{
-        echo 'res = "'.$CURR_SYMBOL.'&nbsp;" + value;';
+        return (WORDS.curr_symbol + "&nbsp;" + value);
     }
-    ?>
-
-    return res;
 }
 
