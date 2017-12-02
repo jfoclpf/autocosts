@@ -1,6 +1,6 @@
 <?php header('Content-type: application/xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="UTF-8"?>';
-include_once('./countries/_list.php');?>
+include_once('./countries/list.php');?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">

@@ -1,6 +1,6 @@
 <?php Header("content-type: application/x-javascript");
 if(strlen($_GET['country']) != 2){ exit;}
-include_once($_SERVER['DOCUMENT_ROOT'].'/countries/_list.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/countries/list.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/countries/'.$_GET['country'].'.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
 $GLOBALS['country'] = $_GET['country'];

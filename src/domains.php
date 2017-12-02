@@ -39,7 +39,7 @@
         </tr>
         <tr>
         <?php
-            include_once("./countries/_list.php");
+            include_once("./countries/list.php");
 
             //array where domain duplicates are removed
             $domain_unique = array_unique($domain_CT);

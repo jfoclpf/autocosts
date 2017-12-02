@@ -7,14 +7,32 @@ function initialize() {
     oldIE();
 
     CurrentFormPart=1;
-
+    
     TimeCounter.resetStopwatch();
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
+    //loads Countries Select dropdown box
+    loadsCountriesSelectBox(); 
+    
+    //sets some language variables
+    setLanguageVars();
+   
     //divs that need to be hidden
     DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;
 
     DISPLAY.descriptionHTML = $('#description').html();
+
+    $("#input_div").load("build/form/" + COUNTRY + ".html", initializeForm);
+    $("#div13").load("db_stats/tables/" + COUNTRY + ".html");
+
+    //detects whether Google Analytics has loaded
+    check_ga();
+    
+    scrollPage();
+}
+
+
+function initializeForm(){
 
     setRadioButton("insurancePaymentPeriod", "semestral");
     $("#main_form select").val('1'); //set all the selects to "month"
@@ -67,13 +85,27 @@ function initialize() {
     //deactivates pdf download button, to be activated only after pdf files are available
     if(!SWITCHES.pdf){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
-    }  
-
-    //detects whether Google Analytics has loaded
-    check_ga();
-    
-    scrollPage();
+    } 
 }
+
+//loads Countries Select Box
+function loadsCountriesSelectBox(){
+
+    $.each(CountryList, function(key, value) {   
+        $("#country_select")
+        .append($("<option></option>")
+            .attr("value",key)
+            .text(value); 
+    });
+
+    $("#country_select").val(COUNTRY);
+    $("#banner_flag").addClass(COUNTRY + ' ' + 'flag');
+}
+           
+//function that sets the JS language variables to the correspondent HTML divs
+function setLanguageVars(){
+    $("#main_title").text(WORDS.main_title);
+}           
 
 //detects whether Google Analytics has loaded
 function check_ga() {
