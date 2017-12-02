@@ -63,7 +63,7 @@
         </tr>
         <tr>
         <?php
-            include_once("./countries/_list.php");
+            include_once("./countries/list.php");
             asort($avail_CT); //sorts alphabetically the counties list
             
             $i=1;

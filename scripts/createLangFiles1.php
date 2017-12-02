@@ -97,29 +97,26 @@
         $array_keys = array_keys($var_array_string);
         $last_key = end($array_keys);
         
-        echo "var WORDS = {"."\xA";        
+             
         foreach ($var_array_string as $key2 => $value){
             
             //the JS object entry( tolls: "text", )
             //removes leading $ character and makes lowercase
-            echo "\t".strtolower(ltrim($value, '$')).": ";
+            echo $value." = '";
+            echo '<span id="lang-';
             
             $var = $var_array[ltrim($value, '$')];
             
             if (!is_numeric($var)){
-                echo '"'.preg_replace( "/\r|\n/", "", $var_array[ltrim($value, '$')] ).'"';
-            }
-            else{
-                echo $var_array[ltrim($value, '$')];
+                echo strtolower(preg_replace( "/\r|\n/", "", ltrim($value, '$') ));
             }
             
-            if ($key2 != $last_key) {
-                echo ","."\xA";
-            } else {
-                echo "\xA";
-            }        
+                        
+            echo '"></span>';
+            echo "';"."\xA";
+            
         }
-        echo "};";
+        
         echo "\xA"."\xA";
         
         //Return the contents of the output buffer

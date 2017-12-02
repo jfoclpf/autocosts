@@ -11,7 +11,7 @@ function fixNmbr($i,$n){
 }
 
 include("../keys/db_credentials.php"); //DB credentials
-include("../countries/_list.php");
+include("../countries/list.php");
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);

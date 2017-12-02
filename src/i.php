@@ -7,7 +7,7 @@
 ************************************************/
 /*$startTime = microtime(true);*/
 include_once("./php/functions.php");
-include_once("./countries/_list.php");
+include_once("./countries/list.php");
 include_once("./php/url_selector.php");
 include_once("./php/minifier.php");
 
@@ -40,7 +40,7 @@ ob_start("sanitize_output");
 
 <body>
     <div id="main_div">
-        <?php include_once './layout/header.php'; ?>
+        <?php include_once './layout/header.html'; ?>
         <div id="container">
             <div id="description">
                 <?php echo $INITIAL_TEXT; if(isset($DISCLAIMER)){echo " ".$DISCLAIMER;} ?>
@@ -48,15 +48,32 @@ ob_start("sanitize_output");
             <div id="container_table">
                 <!-- div3 = LEFT layout column-->
                 <div id="div3_td">
-                    <?php include_once './layout/leftColumn.php'; ?>
+                    <div id="div3">
+                        <div id="div3a" class="roundCornerSlight">
+                            <div id="div32" class="roundCorner">
+                                <!-- Contact block -->
+                                <div id="contact_div">
+                                    <!--hides email from bot spamers-->
+                                    <span class="codedirection">.stso<!-- >@. -->cotua<!-- >@. -->@<!-- >@. -->ofni</span>info
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <!-- div2 = CENTRE layout column-->
                 <div id="div2_td">
-                    <?php include_once './layout/centralColumn.php'; ?>
+                    <?php include_once './layout/centralColumn.html'; ?>
                 </div>
                 <!-- div1 = RIGHT layout column-->
                 <div id="div1_td">
-                    <?php include_once './layout/rightColumn.php'; ?>
+                    <div id="div1" class="roundCornerSlight">
+                        <div id="div13">        
+                        </div>
+                        <div id="br3">
+                          <br>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,9 +97,9 @@ ob_start("sanitize_output");
     </script>
     <script src="<?php echo $CDN_URL.'js/languages/'.$GLOBALS["country"].'.js' ?>"></script>
     <script src="<?php echo $CDN_URL ?>js/Globals.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/validateForm.js" async></script>    
-    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js" async></script>
-    <script src="<?php echo $CDN_URL ?>js/formFunctions.js" async></script>
+    <script src="<?php echo $CDN_URL ?>js/validateForm.js"></script>    
+    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js"></script>
+    <script src="<?php echo $CDN_URL ?>js/formFunctions.js"></script>
     <script src="<?php echo $CDN_URL ?>js/initialize.js" async></script>
     <!-- Popup alert window -->
     <script src="<?php echo $CDN_URL ?>js/jAlert/jAlert.js" async></script>

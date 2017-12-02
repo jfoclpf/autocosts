@@ -276,4 +276,3 @@ function setRadioButton(name, option){
 function getCheckedSliderValue(ObjName) {
     return ObjName.checked;
 }
-

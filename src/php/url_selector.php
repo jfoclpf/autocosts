@@ -124,9 +124,6 @@ if(!isWorkDomain() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") &
     exit();
 }
 
-//loads the correspondent country file
-include_once('./countries/' . $GLOBALS['country'] . '.php');
-
 //full URL for this page
 $PageURL = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
 
