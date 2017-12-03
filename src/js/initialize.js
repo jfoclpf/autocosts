@@ -38,6 +38,7 @@ function loadsHTMLLayout(){
             });
         });
     });
+    
 }
 
 //function that sets the JS language variables to the correspondent HTML divs
@@ -73,9 +74,12 @@ function setLanguageVars(){
             $dropdown.append($("<option/>").val(key).text(value));
         });
     });
-    
+   
     initializeForm();
     loadsDefaultValues();
+    loadsButtonsSettings();
+    
+    scrollPage(resized);
 }
 
 function initializeForm(){
@@ -133,7 +137,6 @@ function initializeForm(){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
     
-    scrollPage();
 }
 
 //loads Countries Select Box
@@ -145,7 +148,7 @@ function loadsCountriesSelectBox(){
     });
 
     $("#country_select").val(COUNTRY);
-    $("#banner_flag").addClass(COUNTRY + ' ' + 'flag');
+    $("#banner_flag").addClass(COUNTRY.toLowerCase() + ' ' + 'flag');
 }
 
 function loadsDefaultValues(){
@@ -200,6 +203,17 @@ function loadsDefaultValues(){
     });
 
 }
+
+function loadsButtonsSettings(){
+    
+    //associate click functions with buttons 
+    $("#run_button, #run_button_noCapctha").attr("onclick", "Run1()");
+    //associate click functions with buttons     
+    $("#rerun_button").attr("onclick", "reload()");
+    $("#print_button").attr("onclick", "PrintElem()");
+    $("#generate_PDF").attr("onclick", "generatePDF()"); 
+}
+
 
 //detects whether Google Analytics has loaded
 function check_ga() {
@@ -329,5 +343,3 @@ function IsThisAtest() {
 
     return false;
 }
-
-

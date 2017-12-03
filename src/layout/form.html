@@ -200,10 +200,14 @@
     </table>
     <div class="b-bottom">
         <span class="step">1/3</span>
-        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);" value="&raquo;" />
+        <button id="form_part1_button_next" class="button" onclick="openForm_part(1, 2)">
+            &raquo;
+        </button>
     </div>
 </div>
 <!-- end of form_part1-->
+
+
 <div class="form_part" id="form_part2">
     <div class="form_part_head_title">
         <header>
@@ -509,9 +513,13 @@
         </tr>
     </table>
     <div class="b-bottom">
-        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;" />
+        <button id="form_part2_button_back" class="button" onclick="openForm_part(2, 1)">
+            &laquo;
+        </button>
         <span class="step">2/3</span>
-        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;" />
+        <button id="form_part2_button_next" class="button" onclick="openForm_part(2, 3)">
+            &raquo;
+        </button>
     </div>
 </div>
 <!-- end of form_part2-->
@@ -832,11 +840,17 @@
 
     <!-- BUTTONS -->
     <div class="b-bottom">
-        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;" />
+        <button id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)">
+            &laquo;
+        </button>            
         <!--Run button-->
         <div id="run_button_div">
-            <input id="run_button" class="button" type="submit" onclick="Run1()" />
-            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" />
+            <button id="run_button" class="button">
+                <span class="lang-button_run"></span>
+            </button>
+            <button id="run_button_noCapctha" class="button">
+                <span class="lang-button_run"></span>
+            </button>
         </div>
     </div>
 

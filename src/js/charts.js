@@ -122,10 +122,10 @@ function drawMonthlyCostsBarChart(chartWidth, chartHeight) {
     char_data = google.visualization.arrayToDataTable(chart_content);
 
     // Create and draw the visualization.
-	chart_div = document.getElementById('bar_chart_div');
+    chart_div = document.getElementById('bar_chart_div');
     chart = new google.visualization.ColumnChart(chart_div);
 
-	//Wait for the chart to finish drawing before calling the getImageURI() method.
+    //Wait for the chart to finish drawing before calling the getImageURI() method.
     google.visualization.events.addListener(chart, 'ready', function () {
         DISPLAY.charts.URIs.barChart = chart.getImageURI();
     });
@@ -256,7 +256,7 @@ function drawAlterToCarChart(chartWidth, chartHeight) {
                     COUNTRY=="RU" || COUNTRY=="UA" ? WORDS.insurance_chart : WORDS.insurance_short,
                     WORDS.fuel,
                     WORDS.depreciation,
-                    WORDS.interests,
+                    WORDS.credit_interests,
                     WORDS.inspection_short,
                     WORDS.maintenance,
                     WORDS.rep_improv,
