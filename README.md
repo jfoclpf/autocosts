@@ -7,6 +7,7 @@ This calculator is completely anonymous, as it doesn't request nor permanently s
 
 ### Website
 https://autocosts.info<br>
+To test and play: https://autocosts.info/XX 
 
 The folder that corresponds to the website public HTML folder is `src/`. Nonetheless one must build it using the script `build.sh` creating therefore a `build/` folder ready to be used as a main public HTML folder
 
