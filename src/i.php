@@ -23,7 +23,13 @@ ob_start("sanitize_output");
     <meta name="keywords" content="<?php echo get_keywords($WEB_PAGE_TITLE, $FIXED_COSTS, $RUNNING_COSTS); ?>">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
- 
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        img-src 'self' *.autocosts.info;
+    ">
+    
     <meta name="robots" content="<?php echo (!isTest()?'index, follow':'noindex, nofollow')?>" />
 
     <title><?php echo adapt_title($WEB_PAGE_TITLE); ?></title>
@@ -43,7 +49,7 @@ ob_start("sanitize_output");
     <div id="mainHTMLdiv"></div>
     
     <!--jQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>
     
     <!--Autocosts JavaScript files-->

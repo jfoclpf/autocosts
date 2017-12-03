@@ -1,5 +1,5 @@
 /*Printing functions; functions that are run when user clicks Print button*/
-function PrintElem(title)
+PrintElem = function PrintElem(title)
 {
     var mywindow = window.open('', title, 'height=600,width=600');
     mywindow.document.write('<html><head>');
@@ -24,7 +24,7 @@ function PrintElem(title)
         mywindow.document.write('<br><br>');
     }
 
-    if(DISPLAY.result.public_transports || UBER_BOOL){
+    if(DISPLAY.result.public_transports || SWITCHES.uber){
         mywindow.document.write('<p style="page-break-before: always;"> </p><br><br>');
         mywindow.document.write($('#alternative_to_carcosts_section').html());
         mywindow.document.write('<br><br>');

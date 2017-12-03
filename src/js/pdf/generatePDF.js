@@ -1,4 +1,6 @@
-function generatePDF(main_title){
+generatePDF = function generatePDF(){
+    
+    var main_title = WORDS.main_title;
 
     var body0,
         body11, body12, body13, body14,
@@ -287,6 +289,7 @@ function generatePDF(main_title){
     }
 
     //creates PDF file
+    console.log(docDefinition);
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
 
 }

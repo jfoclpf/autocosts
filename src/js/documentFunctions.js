@@ -154,31 +154,31 @@ function shows_part(part_number_origin, part_number_destiny){
 /*function that loads extra files and features, that are not loaded imediately after the page is opened
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
 function loadExtraFiles() {
-
-    getScriptOnce(CDN_URL + "js/conversionFunctions.js");
-    getScriptOnce(CDN_URL + "db_stats/statsFunctions.js");
-    getScriptOnce(CDN_URL + "js/get_data.js");
+    
+    getScriptOnce(JS_FILES.conversionFunctions);
+    getScriptOnce(JS_FILES.statsFunctions);
+    getScriptOnce(JS_FILES.getData);
 
     if (SWITCHES.print){
-        getScriptOnce(CDN_URL + "js/print.js");
+        getScriptOnce(JS_FILES.print);
     }
 
     if (SWITCHES.g_charts){
-        getScriptOnce("js/charts.js", function() {
-            getScriptOnce("js/printResults.js");
+        getScriptOnce(JS_FILES.charts, function() {
+            getScriptOnce(JS_FILES.printResults);
         });
     }
     else{
-        getScriptOnce("js/printResults.js");
+        getScriptOnce(JS_FILES.printResults);
     }
 
     if (SWITCHES.data_base){
-        getScriptOnce(CDN_URL + "js/dbFunctions.js");
+        getScriptOnce(JS_FILES.dbFunctions);
     }
 
-    getScriptOnce(CDN_URL + "js/g-recaptcha.js", function() {
+    getScriptOnce(JS_FILES.g_recaptcha, function() {
         if (SWITCHES.g_captcha){
-            getScriptOnce("https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE)
+            getScriptOnce(JS_FILES.Google.recaptchaAPI)
                 .done(function(){
                     SERVICE_AVAILABILITY.g_captcha = true;
                 })
@@ -193,7 +193,7 @@ function loadExtraFiles() {
 
     if (SWITCHES.social){
         //Jquery social media share plugins
-        getScriptOnce(CDN_URL + "js/social/jssocials.min.js", function(){
+        getScriptOnce(JS_FILES.jssocials, function(){
             $('<link/>', {
                rel: 'stylesheet', type: 'text/css',
                href: 'css/social/jssocials.css'
@@ -208,7 +208,7 @@ function loadExtraFiles() {
 
     if (SWITCHES.g_charts){
         //Tries to load Google chart JS files
-        getScriptOnce("https://www.gstatic.com/charts/loader.js")
+        getScriptOnce(JS_FILES.Google.chartsAPI)
             .done(function(){
                 SERVICE_AVAILABILITY.g_charts = true;
                 google.charts.load( 'current', {"packages": ["corechart"], "language": LANGUAGE });
@@ -221,16 +221,22 @@ function loadExtraFiles() {
         SERVICE_AVAILABILITY.g_charts = false;
     }
 
-    getScriptOnce(CDN_URL + "google/rgbcolor.js");
-    getScriptOnce(CDN_URL + "google/canvg.js");
+    getScriptOnce(JS_FILES.Google.rgbcolor);
+    getScriptOnce(JS_FILES.Google.canvg);
 
     //uber
     if (SWITCHES.uber){
         if(COUNTRY!="XX"){//if not test version
             //gets asynchronously UBER information
-            $.get( "php/get_uber.php?c=" + COUNTRY, function(data) {
+            $.get(UBER_FILE, function(data) {
                 //alert(JSON.stringify(data, null, 4));
-                UBER_API =  data; //UBER_API is a global variable
+                if(data && !$.isEmptyObject(data)){
+                    UBER_API =  data; //UBER_API is a global variable
+                }
+                else{
+                    console.error("Error getting uber info");
+                    SWITCHES.uber = false;
+                }
             });
         }
         else{//test version (London city, in Pounds)
@@ -244,14 +250,21 @@ function loadExtraFiles() {
     if(SWITCHES.pdf){
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
-        getScriptOnce(CDN_URL + "js/pdf/generatePDF.js", function() {
-            getScriptOnce(CDN_URL + "js/pdf/pdfmake.min.js", function() {
+        getScriptOnce(JS_FILES.PDF.generatePDF, function() {
+            getScriptOnce(JS_FILES.PDF.padfmake, function() {
                 //path where the fonts for PDF are stored
                 var pdf_fonts_path;
-                if (COUNTRY=='CN' || COUNTRY=='JP' || COUNTRY=='IN'){
-                    pdf_fonts_path = CDN_URL + "js/pdf/" + COUNTRY + "/vfs_fonts.js";
-                }else{
-                    pdf_fonts_path = CDN_URL + "js/pdf/vfs_fonts.js";
+                if (COUNTRY == 'CN'){
+                    pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
+                }
+                else if (COUNTRY == 'JP'){
+                    pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
+                }
+                else if (COUNTRY == 'IN'){
+                    pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
+                }
+                else{
+                    pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
                 }
                 getScriptOnce(pdf_fonts_path, function() {
                     $('#generate_PDF').prop('disabled', false).removeClass('buttton_disabled');

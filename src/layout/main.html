@@ -131,9 +131,15 @@
                         <hr><hr>
                     </div>
                     <div class="result_div" id="result_buttons_div">
-                        <input type="submit" class="button" onclick="reload();"/>&nbsp;
-                        <input type="submit" id="print_button" class="button" onclick="PrintElem();" />&nbsp;
-                        <input id="generate_PDF" type="submit" class="button" onclick="generatePDF()" />
+                        <button  id="rerun_button" class="button">
+                            <span class="lang-button_rerun"></span>
+                        </button>&nbsp;
+                        <button  id="print_button" class="button">
+                            <span class="lang-word_print"></span>
+                        </button>&nbsp;
+                        <button  id="generate_PDF" class="button">
+                            <span class="lang-word_download_pdf"></span>
+                        </button>
                         <div id="shareIcons"></div>
                     </div>
                 </div>
@@ -151,6 +157,7 @@
                         <br>
                     </div>
                 </div>
+             </div>
         </div>
     </div>
     <br>

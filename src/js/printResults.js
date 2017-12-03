@@ -103,6 +103,7 @@ function Run2(callback){
     //shows buttons
     $("#result_buttons_div, #buttons_section").show("slow");
 
+
     //shows social media buttons
     if(SWITCHES.social){
         $("#shareIcons").jsSocials({
