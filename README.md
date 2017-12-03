@@ -8,14 +8,19 @@ This calculator is completely anonymous, as it doesn't request nor permanently s
 ### Website
 https://autocosts.info<br>
 
+The folder that corresponds to the website public HTML folder is `src/`. Nonetheless one must build it using the script `build.sh` creating therefore a `build/` folder ready to be used as a main public HTML folder
+
 ### The list of available countries
 https://autocustos.info/list
+
+The translations are in corresponding php files, namely in the folder `src/countries/`.<br>
+The list of available countries is from the file `src/countries/list.php`
 
 ### The registered associated domains
 https://autocosts.info/domains
 
 ## Available services
-The available services are defined in the global `SWITCH` JS object in the file <a href="https://github.com/jfoclpf/autocosts/blob/master/js/Globals.js.php">Globals.js.php</a>
+The available services are defined in the global `SWITCH` JS object in the file `Globals.js`
 
 ## Android APP<br>
 https://play.google.com/store/apps/details?id=info.autocosts
