@@ -261,38 +261,7 @@ function loadExtraFiles() {
     }
 }
 
-//function that loads the scripts only once
-//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
-//this works like a module, like a singleton function
-var getScriptOnce = (function(url, callback){
-    var ScriptArray = []; //array of urls
-    return function (url, callback) {
-        //the array doesn't have such url
-        if (ScriptArray.indexOf(url) === -1){
-            if (typeof callback === 'function') {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                    callback();
-                });
-            } else {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                });
-            }
-        }
-        //the file is already there, it does nothing
-        //to support as of jQuery 1.5 methods .done().fail()
-        else{
-            return {
-                done: function () {
-                    return {
-                        fail: function () {}
-                    };
-                }
-            };
-        }
-    }
-}());
+
 
 /*function that is run when the button Reload/Rerun is clicked*/
 function reload() {
@@ -374,6 +343,12 @@ function onCountrySelect(country) {
     window.location.href = url2go;
 }
 
+//function that runs when the page is resized
+$(window).resize(function() {
+    resized();
+});
+$(window).trigger('resize');
+
 /*function that runs when the browser window is resized*/
 function resized(callback){
     //adapts the margin-top CSS value according to the window width
@@ -407,6 +382,7 @@ function resized(callback){
     }
 }
 
+
 /*function that scrolls the page to the beggining of the form*/
 function scrollPage(callback){
 
@@ -435,26 +411,6 @@ function scrollPage(callback){
         });
 
 }
-
- /*function which returns whether this session is a (test/develop version) or a prod version */
- function IsThisAtest() {
-
-    if(COUNTRY=="XX"){
-        return true;
-    }
-
-    //verifies top level domain
-    var hostName = window.location.hostname;
-    var hostNameArray = hostName.split(".");
-    var posOfTld = hostNameArray.length - 1;
-    var tld = hostNameArray[posOfTld];
-    if(tld=="work"){
-        return true;
-    }
-
-    return false;
- }
-
 
 //fade out lateral and top divs when mouse over central main div
 $('#form_part1').on({
@@ -565,35 +521,4 @@ function numberWithSpaces(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "&#160;");
     return parts.join(".");
-}
-
-//gets default protocol defined by Global Variable
-function getProtocol(){
- 
-    //verifies top level domain
-    var hostName = window.location.hostname;
-    var hostNameArray = hostName.split(".");
-    var posOfTld = hostNameArray.length - 1;
-    var tld = hostNameArray[posOfTld];
-    if(tld=="work"){
-        return "http://";
-    }    
-    
-    if (SWITCHES.https){
-        return "https://";
-    }
-    else{
-        return "http://";
-    }
-}
-
-//detects old versions of Internet Explorer
-function oldIE(){
-    var div = document.createElement("div");
-    div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
-    var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
-    if (isIeLessThan9) {
-        document.getElementById("main_div").innerHTML = "Please update your browser!";
-        alert("Please update your browser!");
-    }
 }

@@ -1,33 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Forms for AR</title>
-</head>
-<body>
+
 <div class="form_part" id="form_part1">
     <div class="form_part_head_title">
         <header>
             <h2>
                 <b>
-                    <span id="lang-fixed_costs_header_1"></span>
+                    <span class="lang-fixed_costs_header_1"></span>
                 </b>
             </h2>
             <h4>
-                <span id="lang-fixed_costs_header_2"></span>
+                <span class="lang-fixed_costs_header_2"></span>
             </h4>
         </header>
     </div>
     <!--************************** DEPRECIATION ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-depreciation"></span>
+            <span class="lang-depreciation"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-aq_date"></span>
+                <span class="lang-aq_date"></span>
             </td>
             <td id="depr_input_td">
                 <input type="number" min="1" max="12" step="1" id="acquisitionMonth" name="acquisitionMonth" size="3" value="01">
@@ -37,27 +31,27 @@
         </tr>
         <tr>
             <td class="p2">
-                <span id="lang-com_value"></span>
+                <span class="lang-com_value"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput" name="commercialValueAtAcquisition" size="10" value="">
-                <span id="lang-curr_symbol"></span>
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput" name="commercialValueAtAcquisition" size="10">
+                <span class="lang-curr_symbol"></span>
             </td>
         </tr>
         <tr>
             <td class="p2">
-                <span id="lang-com_value_today"></span>
+                <span class="lang-com_value_today"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput" name="commercialValueAtNow" size="10" value="">
-                <span id="lang-curr_symbol"></span>
+                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput" name="commercialValueAtNow" size="10">
+                <span class="lang-curr_symbol"></span>
             </td>
         </tr>
     </table>
     <!--************************** INSURANCE ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-insurance"></span>
+            <span class="lang-insurance"></span>
         </span>
     </h3>
     <table>
@@ -66,57 +60,56 @@
                 <div class="col">
                     <input type="radio" name="insurancePaymentPeriod" value="mensal">
                     <span>
-                        <span id="lang-monthly"></span>
+                        <span class="lang-monthly"></span>
                     </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="insurancePaymentPeriod" value="trimestral">
                     <span>
-                        <span id="lang-trimesterly"></span>
+                        <span class="lang-trimesterly"></span>
                     </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="insurancePaymentPeriod" value="semestral">
                     <span>
-                        <span id="lang-semesterly"></span>
+                        <span class="lang-semesterly"></span>
                     </span>
                 </div>
                 <div class="col">
                     <input type="radio" name="insurancePaymentPeriod" value="anual">
                     <span>
-                        <span id="lang-yearly"></span>
+                        <span class="lang-yearly"></span>
                     </span>
                 </div>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput" name="insuranceValue" size="9"
-                    value="">
-                <span id="lang-curr_symbol"></span>
+                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput" name="insuranceValue" size="9" />
+                <span class="lang-curr_symbol"></span>
             </td>
         </tr>
     </table>
     <!--************************** CREDIT ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-credit"></span>
+            <span class="lang-credit"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-credit_question"></span>
+                <span class="lang-credit_question"></span>
             </td>
             <td>
                 <span class="nowrap">
                     <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
                     <span class="set_right_margin">
-                        <span id="lang-yes"></span>
+                        <span class="lang-yes"></span>
                     </span>
                 </span>
                 <span class="nowrap">
                     <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
                     <span>
-                        <span id="lang-no"></span>
+                        <span class="lang-no"></span>
                     </span>
                 </span>
             </td>
@@ -126,39 +119,38 @@
         <table>
             <tr>
                 <td>
-                    <span id="lang-credit_loan"></span>
+                    <span class="lang-credit_loan"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput" name="borrowedAmount" size="9" value="">
-                    <span id="lang-curr_symbol"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span id="lang-credit_period"></span>
-                </td>
-                <td>
-                    <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" size="9" value="">
-                    <span id="lang-months"></span>
+                    <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput" name="borrowedAmount" size="9" />
+                    <span class="lang-curr_symbol"></span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span id="lang-credit_average_value"></span>
+                    <span class="lang-credit_period"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput" name="amountInstallment" size="9" value="">
-                    <span id="lang-curr_symbol"></span>
-/<span id="lang-month"></span>
+                    <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" size="9" />
+                    <span class="lang-months"></span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span id="lang-credit_residual_value"></span>
+                    <span class="lang-credit_average_value"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput" name="residualValue" size="9" value="">
-                    <span id="lang-curr_symbol"></span>
+                    <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput" name="amountInstallment" size="9" />
+                    <span class="lang-curr_symbol"></span>/<span class="lang-month"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="lang-credit_residual_value"></span>
+                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput" name="residualValue" size="9" />
+                    <span class="lang-curr_symbol"></span>
                 </td>
             </tr>
         </table>
@@ -166,50 +158,49 @@
     <!--************************** INSPECTION ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-inspection"></span>
+            <span class="lang-inspection"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-inspection_nbmr_times"></span>
+                <span class="lang-inspection_nbmr_times"></span>
             </td>
             <td>              
-                <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" value="">
-                <span id="lang-word_times"></span>
+                <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" />
+                <span class="lang-word_times"></span>
             </td>
         </tr>
         <tr id="InspectionCost_tr">
             <td>
-                <span id="lang-inspection_price"></span>
+                <span class="lang-inspection_price"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput" name="averageInspectionCost" size="6" value="">
-                <span id="lang-curr_symbol"></span>
+                <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput" name="averageInspectionCost" size="6" />
+                <span class="lang-curr_symbol"></span>
             </td>
         </tr>
     </table>
     <!--************************** ROAD TAX ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-road_taxes"></span>
+            <span class="lang-road_taxes"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td class="p2">
-                <span id="lang-road_taxes_value"></span>
+                <span class="lang-road_taxes_value"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput" name="roadTaxes" size="6" value="">
-                <span id="lang-curr_symbol"></span>/<span id="lang-year"></span>
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput" name="roadTaxes" size="6" />
+                <span class="lang-curr_symbol"></span>/<span class="lang-year"></span>
             </td>
         </tr>
     </table>
     <div class="b-bottom">
         <span class="step">1/3</span>
-        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
-            value="&raquo;"/>
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);" value="&raquo;" />
     </div>
 </div>
 <!-- end of form_part1-->
@@ -218,38 +209,38 @@
         <header>
             <h2>
                 <b>
-                    <span id="lang-running_costs_header_1"></span>
+                    <span class="lang-running_costs_header_1"></span>
                 </b>
             </h2>
             <h4>
-                <span id="lang-running_costs_header_2"></span>
+                <span class="lang-running_costs_header_2"></span>
             </h4>
         </header>
     </div>
     <!--************************** FUELS ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-fuel"></span>
+            <span class="lang-fuel"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td rowspan="2">
-                <span id="lang-fuel_desc"></span>
+                <span class="lang-fuel_desc"></span>
             </td>
             <td>
-                <span id="lang-fuel_calc"></span>
+                <span class="lang-fuel_calc"></span>
 :                 <br>
                 <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
                     <span class="set_right_margin">
-                        <span id="lang-std_dist"></span>
+                        <span class="lang-std_dist"></span>
                     </span>
                 </span>
                 <span class="nowrap">
                     <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
                     <span>
-                        <span id="lang-curr_name_plural"></span>
+                        <span class="lang-curr_name_plural"></span>
                     </span>
                 </span>
              </td>
@@ -257,29 +248,12 @@
         <tr>
             <td>
                 <div id="currency_div_form2">
-                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput"
-                        value="" name="combustiveis_euro">
+                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput" name="combustiveis_euro" />
                     <span class="nowrap">
-                        <span id="lang-curr_symbol"></span>
-                        <span id="lang-word_per"></span>
+                        <span class="lang-curr_symbol"></span>
+                        <span class="lang-word_per"></span>
                     </span>
-                    <select id="combustiveis_periodo_euro">
-                        <option value="1">
-                            <span id="lang-month"></span>                        
-                        </option>
-                        <option value="2">
-                            <span id="lang-two_months"></span>                        
-                        </option>
-                        <option value="3">
-                            <span id="lang-trimester"></span>                        
-                        </option>
-                        <option value="4">
-                            <span id="lang-semester"></span>                        
-                        </option>
-                        <option value="5">
-                            <span id="lang-year"></span>                        
-                        </option>
-                    </select>
+                    <select class="time_period" id="combustiveis_periodo_euro"></select>
                 </div>
             </td>
         </tr>
@@ -288,19 +262,19 @@
         <table>
             <tr>
                 <td>
-                    <span id="lang-fuel_job_calc"></span>
+                    <span class="lang-fuel_job_calc"></span>
                 </td>
                 <td>
                     <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
                         <span class="set_right_margin">
-                            <span id="lang-yes"></span>
+                            <span class="lang-yes"></span>
                         </span>
                     </span>
                     <span class="nowrap">
                         <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
                         <span>
-                            <span id="lang-no"></span>
+                            <span class="lang-no"></span>
                         </span>
                     </span>
                 </td>
@@ -310,31 +284,31 @@
             <table>
                 <tr>
                     <td>
-                        <span id="lang-fuel_days"></span>
+                        <span class="lang-fuel_days"></span>
                     </td>
                     <td>
-                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" value="">
-                        <span id="lang-days_per_week_short"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span id="lang-fuel_dist_home_job"></span>
-                        &nbsp;
-                    </td>
-                    <td>
-                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="">
-                        <span id="lang-std_dist"></span>
+                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" />
+                        <span class="lang-days_per_week_short"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span id="lang-fuel_dist_no_job"></span>
+                        <span class="lang-fuel_dist_home_job"></span>
                         &nbsp;
                     </td>
                     <td>
-                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" value="">
-                        <span id="lang-std_dist"></span>
+                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" />
+                        <span class="lang-std_dist"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="lang-fuel_dist_no_job"></span>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" />
+                        <span class="lang-std_dist"></span>
                     </td>
                 </tr>
             </table>
@@ -343,24 +317,12 @@
             <table>
                 <tr>
                     <td>
-                        <span id="lang-fuel_dist"></span>
+                        <span class="lang-fuel_dist"></span>
                     </td>
                     <td>
-                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" value="">
-                        <span id="lang-std_dist"></span>
-&nbsp;<span id="lang-word_per"></span>
-                        <select id="combustivel_period_km">
-                            <option value="1"><span id="lang-month"></span>
-</option>
-                            <option value="2"><span id="lang-two_months"></span>
-</option>
-                            <option value="3"><span id="lang-trimester"></span>
-</option>
-                            <option value="4"><span id="lang-semester"></span>
-</option>
-                            <option value="5"><span id="lang-year"></span>
-</option>
-                        </select>
+                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" />
+                        <span class="lang-std_dist"></span>&nbsp;<span class="lang-word_per"></span>
+                        <select class="time_period" id="combustivel_period_km"></select>
                     </td>
                 </tr>
             </table>
@@ -368,21 +330,20 @@
         <table>
             <tr>
                 <td>
-                    <span id="lang-fuel_car_eff"></span>
+                    <span class="lang-fuel_car_eff"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" value="">
-                    <span id="lang-std_fuel_calc"></span>
+                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" />
+                    <span class="lang-std_fuel_calc"></span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span id="lang-fuel_price"></span>
+                    <span class="lang-fuel_price"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="">
-                    <span id="lang-curr_symbol"></span>
-/<span id="lang-std_volume_short"></span>
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" />
+                    <span class="lang-curr_symbol"></span>/<span class="lang-std_volume_short"></span>
                 </td>
             </tr>
         </table>
@@ -390,85 +351,79 @@
     <!--************************** MAINTENANCE  ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-maintenance"></span>
+            <span class="lang-maintenance"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td class="p2">
-                <span id="lang-maintenance_desc"></span>
+                <span class="lang-maintenance_desc"></span>
                 <br>
             </td>
             <td class="va-middle">
-                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput"
-                       value="">
-                <span id="lang-curr_symbol"></span>
-/<span id="lang-year"></span>
+                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput">
+                <span class="lang-curr_symbol"></span>/<span class="lang-year"></span>
             </td>
         </tr>
     </table>
     <!--************************** REPAIRS AND IMPROVEMENTS ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-rep_improv"></span>
+            <span class="lang-rep_improv"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-rep_improv_desc"></span>
+                <span class="lang-rep_improv_desc"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput"
-                       value="">
-                <span id="lang-curr_symbol"></span>
-/<span id="lang-year"></span>
+                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput">
+                <span class="lang-curr_symbol"></span>/<span class="lang-year"></span>
             </td>
         </tr>
     </table>
     <!--************************** PARKING ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-parking"></span>
+            <span class="lang-parking"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-parking_desc"></span>
+                <span class="lang-parking_desc"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput"
-                       value="">
-                <span id="lang-curr_symbol"></span>
-/<span id="lang-month"></span>
+                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput">
+                <span class="lang-curr_symbol"></span>/<span class="lang-month"></span>
             </td>
         </tr>
     </table>
     <!--************************** TOLLS ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-tolls"></span>
+            <span class="lang-tolls"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-tolls_desc"></span>
+                <span class="lang-tolls_desc"></span>
             </td>
             <td>
-                <span id="lang-tolls_day_calc"></span>
+                <span class="lang-tolls_day_calc"></span>
                 <div>
                     <span class="nowrap">
                         <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
                         <span class="set_right_margin">
-                            <span id="lang-yes"></span>
+                            <span class="lang-yes"></span>
                         </span>
                     </span>
                     <span class="nowrap">
                         <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
                         <span>
-                            <span id="lang-no"></span>
+                            <span class="lang-no"></span>
                         </span>
                     </span>
                 </div>
@@ -481,26 +436,14 @@
             <tr>
                 <td>
                     <i>
-                        <span id="lang-tolls_day_calc_desc"></span>
+                        <span class="lang-tolls_day_calc_desc"></span>
                     </i>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
-                           value="">
-                    <span id="lang-curr_symbol"></span>
- <span id="lang-word_per"></span>
-                    <select id="tolls_period_select">
-                        <option value="1"><span id="lang-month"></span>
-</option>
-                        <option value="2"><span id="lang-two_months"></span>
-</option>
-                        <option value="3"><span id="lang-trimester"></span>
-</option>
-                        <option value="4"><span id="lang-semester"></span>
-</option>
-                        <option value="5"><span id="lang-year"></span>
-</option>
-                    </select>
+                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" />
+                    <span class="lang-curr_symbol"></span>
+                    <span class="lang-word_per"></span>
+                    <select class="time_period" id="tolls_period_select"></select>
                 </td>
             </tr>
         </table>
@@ -510,19 +453,17 @@
         <table>
             <tr>
                 <td>
-                    <span id="lang-tolls_day_calc1"></span>
+                    <span class="lang-tolls_day_calc1"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
-                           value="">
-                    <span id="lang-curr_symbol"></span>
- <span id="lang-during"></span>
+                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" />
+                    <span class="lang-curr_symbol"></span>
+                    <span class="lang-during"></span>
                     <br>
-                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" 
-                           value="">
-                    <span id="lang-days"></span>
- <span id="lang-word_per"></span>
- <span id="lang-month"></span>
+                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" />
+                    <span class="lang-days"></span>
+                    <span class="lang-word_per"></span>
+                    <span class="lang-month"></span>
                 </td>
             </tr>
         </table>
@@ -530,79 +471,57 @@
     <!--************************** FINES / TICKETS ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-fines"></span>
+            <span class="lang-fines"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-fines_desc"></span>
+                <span class="lang-fines_desc"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
-                       value="">
-                <span id="lang-curr_symbol"></span>
- <span id="lang-word_per"></span>
-                <select id="tickets_period_select">
-                    <option value="1"><span id="lang-month"></span>
-</option>
-                    <option value="2"><span id="lang-two_months"></span>
-</option>
-                    <option value="3"><span id="lang-trimester"></span>
-</option>
-                    <option value="4"><span id="lang-semester"></span>
-</option>
-                    <option value="5"><span id="lang-year"></span>
-</option>
-                </select>
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" />
+                <span class="lang-curr_symbol"></span>
+                <span class="lang-word_per"></span>
+                
+                <select class="time_period" id="tickets_period_select"></select>
             </td>
         </tr>
     </table>
     <!--************************** WASHING ***************************************************-->
     <h3>
         <span class="form_section_title">
-            <span id="lang-washing"></span>
+            <span class="lang-washing"></span>
         </span>
     </h3>
     <table>
         <tr>
             <td>
-                <span id="lang-washing_desc"></span>
+                <span class="lang-washing_desc"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6"
-                       value="">
-                <span id="lang-curr_symbol"></span>
- <span id="lang-word_per"></span>
-                <select id="washing_period_select">
-                    <option value="1"><span id="lang-month"></span>
-</option>
-                    <option value="2"><span id="lang-two_months"></span>
-</option>
-                    <option value="3"><span id="lang-trimester"></span>
-</option>
-                    <option value="4"><span id="lang-semester"></span>
-</option>
-                    <option value="5"><span id="lang-year"></span>
-</option>
-                </select>
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6" />
+                <span class="lang-curr_symbol"></span>
+                <span class="lang-word_per"></span>
+                
+                <select class="time_period" id="washing_period_select"></select>
             </td>
         </tr>
     </table>
     <div class="b-bottom">
-        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;" />
         <span class="step">2/3</span>
-        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;" />
     </div>
 </div>
 <!-- end of form_part2-->
-<!--************************** DADOS ADICIONAIS ***************************************************-->
+<!--************************** ADDITIONAL DATA ***************************************************-->
 <div class="form_part" id="form_part3">
 
     <div class="form_part_head_title">
         <header>
             <h2>
-                <span id="lang-extra_data"></span>
+                <span class="lang-extra_data"></span>
             </h2>
         </header>
     </div>
@@ -612,8 +531,8 @@
         <tr>
             <td>
                 <span class="form_section_title2">
-                    <span id="lang-publ_tra_equiv"></span>
-?                </span>
+                    <span class="lang-publ_tra_equiv"></span>
+                </span>
             </td>
             <td class="switch_td">
                 <label class="switch">
@@ -629,8 +548,8 @@
         <tr>
             <td>
                 <span class="form_section_title2">
-                    <span id="lang-financial_effort"></span>
-?                </span>
+                    <span class="lang-financial_effort"></span>
+                </span>
             </td>
             <td class="switch_td">
                 <label class="switch">
@@ -644,29 +563,27 @@
     <!-- PUBLIC TRANSPORTS SECTION -->
     <div id="public_transp_Div_form3">
     <span class="form_section_title">
-        <span id="lang-extra_data_public_transp"></span>
+        <span class="lang-extra_data_public_transp"></span>
     </span>
     <table>
         <tr>
             <td>
-                <span id="lang-extra_data_family_nbr"></span>
+                <span class="lang-extra_data_family_nbr"></span>
             </td>
             <td>
-                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6"
-                       value="">
-                <span id="lang-word_people"></span>
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6" />
+                <span class="lang-word_people"></span>
             </td>
         </tr>
     </table>
     <table>
         <tr>
             <td>
-                <span id="lang-extra_data_price_pass"></span>
+                <span class="lang-extra_data_price_pass"></span>
             </td>
             <td>
-                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6"
-                       value="">
-                <span id="lang-curr_symbol"></span>
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" />
+                <span class="lang-curr_symbol"></span>
             </td>
         </tr>
     </table>
@@ -677,92 +594,76 @@
     <!-- FINANCIAL EFFORT SECTION -->
     <div id="fin_effort_Div_form3">
         <span class="form_section_title">
-            <span id="lang-extra_data_income"></span>
+            <span class="lang-extra_data_income"></span>
         </span>
         <table>
             <tr>
                 <td>
                     <div id="income_div_form3">
-                        <span id="lang-extra_data_income_question"></span>
+                        <span class="lang-extra_data_income_question"></span>
                         <br/>
                         <div class="col">
                             <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
                             <span>
-                                <span id="lang-word_per"></span>
- <span id="lang-year"></span>
+                                <span class="lang-word_per"></span>
+                                <span class="lang-year"></span>
                             </span>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)" />
                             <span>
-                                <span id="lang-word_per"></span>
- <span id="lang-month"></span>
+                                <span class="lang-word_per"></span>
+                                <span class="lang-month"></span>
                             </span>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)" />
                             <span>
-                                <span id="lang-word_per"></span>
- <span id="lang-week"></span>
+                                <span class="lang-word_per"></span>
+                                <span class="lang-week"></span>
                             </span>
                         </div>
                         <div class="col">
-                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)" />
                             <span>
-                                <span id="lang-word_per"></span>
- <span id="lang-hour"></span>
+                                <span class="lang-word_per"></span>
+                                <span class="lang-hour"></span>
                             </span>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div id="income_per_year_form3" class="div_element">
-                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6"
-                               value=""/>
-                        <span id="lang-curr_symbol"></span>
-/<span id="lang-year"></span>
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6" />
+                        <span class="lang-curr_symbol"></span>/<span class="lang-year"></span>
                     </div>
                     <div id="income_per_month_form3" class="div_element hidden">
-                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
-                               value=""/>
-                        <span id="lang-curr_symbol"></span>
-/<span id="lang-month"></span>
- <span id="lang-word_times"></span>
+                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6" />
+                        <span class="lang-curr_symbol"></span>/<span class="lang-month"></span>
+                        <span class="lang-word_times"></span>
                         <br>
-                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
-                               value=""/>
-                        <span id="lang-months"></span>
-/<span id="lang-year"></span>
+                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6" />
+                        <span class="lang-months"></span>/<span class="lang-year"></span>
                     </div>
                     <div id="income_per_week_form3" class="div_element hidden">
-                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
-                               value=""/>
-                        <span id="lang-curr_symbol"></span>
-/<span id="lang-week"></span>
- <span id="lang-word_times"></span>
+                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6" />
+                        <span class="lang-curr_symbol"></span>/<span class="lang-week"></span>
+                        <span class="lang-word_times"></span>
                         <br>
-                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
-                               value=""/>
-                        <span id="lang-weeks"></span>
-/<span id="lang-year"></span>
+                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6" />
+                        <span class="lang-weeks"></span>/<span class="lang-year"></span>
                     </div>
                     <div id="income_per_hour_form3" class="div_element hidden">
-                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
-                               value=""/>
-                        <span id="lang-curr_symbol"></span>
-/<span id="lang-hour"></span>
- <span id="lang-word_times"></span>
+                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6" />
+                        <span class="lang-curr_symbol"></span>/<span class="lang-hour"></span>
+                        <span class="lang-word_times"></span>
                         <br>
-                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
-                               value=""/>
-                        <span id="lang-hours"></span>
-/<span id="lang-week"></span>
- <span id="lang-word_times"></span>
+                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6" />
+                        <span class="lang-hours"></span>/<span class="lang-week"></span>
+                        <span class="lang-word_times"></span>
                         <br>
-                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
-                               value=""/>
-                        <span id="lang-weeks"></span>
-/<span id="lang-year"></span>
+                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6" />
+                        <span class="lang-weeks"></span>/<span class="lang-year"></span>
                     </div>
                 </td>
             </tr>
@@ -770,43 +671,43 @@
         <!--********************************************************************** -->
         <div id="working_time_form3">
             <span class="form_section_title">
-                <span id="lang-extra_data_working_time"></span>
+                <span class="lang-extra_data_working_time"></span>
             </span>
             <table>
                 <tr>
                     <td>
                         <div id="working_time_part1_form3">
                             <br>
-                            <span id="lang-extra_data_working_time_question"></span>
+                            <span class="lang-extra_data_working_time_question"></span>
                             <br>
                             <span class="nowrap">
-                                <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
+                                <input type="radio" name="radio_work_time" 
+                                       id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
                                 <span>
-                                    <span id="lang-yes"></span>
+                                    <span class="lang-yes"></span>
                                 </span>
                             </span>
                             <span class="nowrap">
-                                <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
+                                <input type="radio" name="radio_work_time" 
+                                       id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
                                 <span>
-                                    <span id="lang-no"></span>
+                                    <span class="lang-no"></span>
                                 </span>
                             </span>
                         </div>
                         <div id="working_time_part2_form3">
-                            <span id="lang-extra_data_working_time"></span>
+                            <span class="lang-extra_data_working_time"></span>
 :
                         </div>
                     </td>
                     <td>
                         <div id="working_time_input_form3" class="div_element">
-                            <input type="number" min="1" max="12" step="1" id="time_month_per_year" name="time_month_per_year" size="6"
-                                value=""/>
-                            <span id="lang-months"></span>
-/<span id="lang-year"></span>
-                            <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" name="time_hours_per_week" size="6"
-                                value=""/>
-                            <span id="lang-hours"></span>
-/<span id="lang-week"></span>
+                            <input type="number" min="1" max="12" step="1" 
+                                   id="time_month_per_year" name="time_month_per_year" size="6" />
+                            <span class="lang-months"></span>/<span class="lang-year"></span>
+                            <input type="number" min="1" max="168" step="Any" 
+                                   id="time_hours_per_week" name="time_hours_per_week" size="6" />
+                            <span class="lang-hours"></span>/<span class="lang-week"></span>
                         </div>
                     </td>
                 </tr>
@@ -819,128 +720,111 @@
     <div id="distance_time_spent_driving_form3">
         <div id="distance_form3">
             <span class="form_section_title">
-                <span id="lang-distance"></span>
+                <span class="lang-distance"></span>
             </span>
             <table>
                 <tr>
                     <td>
-                        <span id="lang-fuel_job_calc"></span>
+                        <span class="lang-fuel_job_calc"></span>
                     </td>
                     <td>
                         <span class="nowrap">
-                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
-                                   onchange="driveToJob(true);">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" 
+                                   value="true" onchange="driveToJob(true);">
                             <span class="set_right_margin">
-                                <span id="lang-yes"></span>
+                                <span class="lang-yes"></span>
                             </span>
                         </span>
                         <span class="nowrap">
                             <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
                                    onchange="driveToJob(false);" checked >
                             <span>
-                                <span id="lang-no"></span>
+                                <span class="lang-no"></span>
                             </span>
                         </span>
                     </td>
                 </tr>
                 <tr class="car_to_job_distance_form3">
                     <td>
-                        <span id="lang-fuel_days"></span>
-&nbsp;
+                        <span class="lang-fuel_days"></span>
+                        &nbsp;
                     </td>
                     <td>
-                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" size="5"
-                               value="">
-                        <span id="lang-days_per_week_short"></span>
-                    </td>
-                </tr>
-                <tr class="car_to_job_distance_form3">
-                    <td>
-                        <span id="lang-fuel_dist_home_job"></span>
-&nbsp;
-                    </td>
-                    <td>
-                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5"
-                            value="">
-                        <span id="lang-std_dist"></span>
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" 
+                               name="drive_to_work_days_per_week" size="5" />
+                        <span class="lang-days_per_week_short"></span>
                     </td>
                 </tr>
                 <tr class="car_to_job_distance_form3">
                     <td>
-                        <span id="lang-fuel_dist_no_job"></span>
-&nbsp;
+                        <span class="lang-fuel_dist_home_job"></span>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5" />
+                        <span class="lang-std_dist"></span>
+                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        <span class="lang-fuel_dist_no_job"></span>
+                        &nbsp;
                     </td>
                     <td class="ta-left">
-                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5"
-                            value="">
-                        <span id="lang-std_dist"></span>
+                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5" />
+                        <span class="lang-std_dist"></span>
                     </td>
                 </tr>
             </table>
             <table>
                 <tr id="car_no_job_distance_form3">
                     <td>
-                        <span id="lang-fuel_dist"></span>
+                        <span class="lang-fuel_dist"></span>
                     </td>
                     <td>
-                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4"
-                            value="">
-                        <span id="lang-std_dist"></span>
- <span id="lang-word_per"></span>
-                        <select id="period_km">
-                            <option value="1"><span id="lang-month"></span>
-</option>
-                            <option value="2"><span id="lang-two_months"></span>
-</option>
-                            <option value="3"><span id="lang-trimester"></span>
-</option>
-                            <option value="4"><span id="lang-semester"></span>
-</option>
-                            <option value="5"><span id="lang-year"></span>
-</option>
-                        </select>
+                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4" />
+                        
+                        <span class="lang-std_dist"></span>
+                        <span class="lang-word_per"></span>
+                        
+                        <select class="time_period" id="period_km"></select>
                     </td>
                 </tr>
             </table>
         </div>
         <!--********************************************************************** -->
         <span class="form_section_title">
-            <span id="lang-extra_data_time_spent_in_driving"></span>
+            <span class="lang-extra_data_time_spent_in_driving"></span>
         </span>
         <table>
             <tr class="time_spent_part1_form3">
                 <td>
-                    <span id="lang-extra_data_time_question1"></span>
+                    <span class="lang-extra_data_time_question1"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job"
-                           value=""/>
-                    <span id="lang-min"></span>
+                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job" />
+                    <span class="lang-min"></span>
                 </td>
             </tr>
             <tr class="time_spent_part1_form3">
                 <td>
-                    <span id="lang-extra_data_time_question2"></span>
+                    <span class="lang-extra_data_time_question2"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" value=""/>
-                    <span id="lang-min"></span>
+                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" />
+                    <span class="lang-min"></span>
                 </td>
             </tr>
             <tr class="time_spent_part2_form3">
                 <td>
-                    <span id="lang-extra_data_time_question3"></span>
+                    <span class="lang-extra_data_time_question3"></span>
                 </td>
                 <td>
-                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day"
-                        value=""/>
-                    <span id="lang-minutes"></span>
-/<span id="lang-day"></span>
+                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day" />
+                    <span class="lang-minutes"></span>/<span class="lang-day"></span>
                     <br>
-                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month"
-                        value=""/>
-                    <span id="lang-days"></span>
-/<span id="lang-month"></span>
+                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month" />
+                    <span class="lang-days"></span>/<span class="lang-month"></span>
                 </td>
             </tr>
         </table>
@@ -948,17 +832,14 @@
 
     <!-- BUTTONS -->
     <div class="b-bottom">
-        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;" />
         <!--Run button-->
         <div id="run_button_div">
-            <input id="run_button" class="button" type="submit" onclick="Run1()" value="<span id="lang-button_run"></span>
-"/>
-            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="<span id="lang-button_run"></span>
-"/>
+            <input id="run_button" class="button" type="submit" onclick="Run1()" />
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" />
         </div>
     </div>
 
     </div>
 <!-- end of form_part3-->
-</body>
-</html>
+

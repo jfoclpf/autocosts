@@ -39,49 +39,13 @@ ob_start("sanitize_output");
 </head>
 
 <body>
-    <div id="main_div">
-        <?php include_once './layout/header.html'; ?>
-        <div id="container">
-            <div id="description">
-                <?php echo $INITIAL_TEXT; if(isset($DISCLAIMER)){echo " ".$DISCLAIMER;} ?>
-            </div>
-            <div id="container_table">
-                <!-- div3 = LEFT layout column-->
-                <div id="div3_td">
-                    <div id="div3">
-                        <div id="div3a" class="roundCornerSlight">
-                            <div id="div32" class="roundCorner">
-                                <!-- Contact block -->
-                                <div id="contact_div">
-                                    <!--hides email from bot spamers-->
-                                    <span class="codedirection">.stso<!-- >@. -->cotua<!-- >@. -->@<!-- >@. -->ofni</span>info
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- div2 = CENTRE layout column-->
-                <div id="div2_td">
-                    <?php include_once './layout/centralColumn.html'; ?>
-                </div>
-                <!-- div1 = RIGHT layout column-->
-                <div id="div1_td">
-                    <div id="div1" class="roundCornerSlight">
-                        <div id="div13">        
-                        </div>
-                        <div id="br3">
-                          <br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-    </div>
+    <!--this HTML is loaded externally-->
+    <div id="mainHTMLdiv"></div>
+    
     <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>   
+    <script src="<?php echo $CDN_URL ?>js/jquery/js_timer.js"></script>
+    
     <!--Autocosts JavaScript files-->
     <script>
         /*Define GLOBAL Javascript variables*/
@@ -97,10 +61,8 @@ ob_start("sanitize_output");
     </script>
     <script src="<?php echo $CDN_URL.'js/languages/'.$GLOBALS["country"].'.js' ?>"></script>
     <script src="<?php echo $CDN_URL ?>js/Globals.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/validateForm.js"></script>    
-    <script src="<?php echo $CDN_URL ?>js/documentFunctions.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/formFunctions.js"></script>
-    <script src="<?php echo $CDN_URL ?>js/initialize.js" async></script>
+    <script src="<?php echo $CDN_URL ?>js/validateForm.js"></script>        
+    <script src="<?php echo $CDN_URL ?>js/initialize.js"></script>
     <!-- Popup alert window -->
     <script src="<?php echo $CDN_URL ?>js/jAlert/jAlert.js" async></script>
     <!-- Google Analytics -->
