@@ -1,3 +1,4 @@
+
 /* runs function initialize() every time the page is loaded */
 window.onload = initialize;
 
@@ -11,26 +12,71 @@ function initialize() {
     TimeCounter.resetStopwatch();
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
-    //loads Countries Select dropdown box
-    loadsCountriesSelectBox(); 
-    
-    //sets some language variables
-    setLanguageVars();
-   
-    //divs that need to be hidden
-    DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;
-
     DISPLAY.descriptionHTML = $('#description').html();
-
-    $("#input_div").load("build/form/" + COUNTRY + ".html", initializeForm);
-    $("#div13").load("db_stats/tables/" + COUNTRY + ".html");
-
-    //detects whether Google Analytics has loaded
-    check_ga();
     
-    scrollPage();
+    //loads layout
+    loadsHTMLLayout();
+    
+    //detects whether Google Analytics has loaded
+    check_ga(); 
 }
 
+//loads HTML Layout
+function loadsHTMLLayout(){
+    
+    $("#mainHTMLdiv").load(CDN_URL + "layout/main.html", function(){
+        
+        //loads Countries Select dropdown box
+        loadsCountriesSelectBox();
+        
+        $("#div13").load(CDN_URL + "db_stats/tables/"+COUNTRY + ".html"); //costs table        
+        //divs that need to be hidden
+        DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;                
+        $("#input_div").load(CDN_URL + "layout/form.html", function(){
+            getScriptOnce(CDN_URL + "js/documentFunctions.js", function(){ 
+                getScriptOnce(CDN_URL + "js/formFunctions.js", setLanguageVars);
+            });
+        });
+    });
+}
+
+//function that sets the JS language variables to the correspondent HTML divs
+function setLanguageVars(){
+    
+    $("#main_title").html(WORDS.main_title);
+    
+    if(WORDS.disclaimer){
+        $("#description").html(WORDS.initial_text + " " + WORDS.disclaimer);
+    }
+    else{
+        $("#description").html(WORDS.initial_text);
+    }    
+    
+    //language HTML span variables
+    $('span[class^="lang"]').each(function(){
+        var LangVar = (this.className).replace('lang-','');
+        var Text = WORDS[LangVar];
+        $(this).html(Text);        
+    });
+    
+    //language HTML select dropdowns
+    var SelectList = {
+        "1" : WORDS.month,
+        "2" : WORDS.two_months,
+        "3" : WORDS.trimester,
+        "4" : WORDS.semester,
+        "5" : WORDS.year
+    };    
+    $('select[class="time_period"]').each(function(){
+        var $dropdown = $(this);    
+        $.each(SelectList, function(key, value) {
+            $dropdown.append($("<option/>").val(key).text(value));
+        });
+    });
+    
+    initializeForm();
+    loadsDefaultValues();
+}
 
 function initializeForm(){
 
@@ -85,27 +131,75 @@ function initializeForm(){
     //deactivates pdf download button, to be activated only after pdf files are available
     if(!SWITCHES.pdf){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
-    } 
+    }
+    
+    scrollPage();
 }
 
 //loads Countries Select Box
 function loadsCountriesSelectBox(){
 
-    $.each(CountryList, function(key, value) {   
-        $("#country_select")
-        .append($("<option></option>")
-            .attr("value",key)
-            .text(value); 
+    var $dropdown = $("#country_select");    
+    $.each(CountryList, function(key, value) {
+        $dropdown.append($("<option/>").val(key).text(value));
     });
 
     $("#country_select").val(COUNTRY);
     $("#banner_flag").addClass(COUNTRY + ' ' + 'flag');
 }
-           
-//function that sets the JS language variables to the correspondent HTML divs
-function setLanguageVars(){
-    $("#main_title").text(WORDS.main_title);
-}           
+
+function loadsDefaultValues(){
+
+    //the key the name of the variable in WORDS
+    //the value is the name of the id in the form
+    var mappingIDs = {        
+        "std_acq_month" : "acquisitionMonth",
+        "std_acq_year" : "acquisitionYear",
+        "std_price_paid" : "commercialValueAtAcquisition",
+        "std_price_today" : "commercialValueAtNow",
+        "std_insurance_sem" : "insuranceValue",
+        "std_loan" : "borrowedAmount",
+        "std_period_of_credit" : "numberInstallments",
+        "std_monthly_pay" : "amountInstallment",
+        "std_residual_value" : "residualValue",
+        "std_nbr_inspection" : "numberInspections",
+        "std_inspection_price" : "averageInspectionCost",
+        "std_road_tax" : "roadTaxes",
+        "std_fuel_paid_per_month" : "fuel_currency_value",
+        "std_days_per_week" : "car_to_work_number_days_week",
+        "std_jorney_2work" : "car_to_work_distance_home_work",
+        "std_jorney_weekend" : "car_to_work_distance_weekend",
+        "std_km_per_month" : "no_car_to_work_distance",
+        "std_car_fuel_efficiency" : "fuel_efficiency",
+        "std_fuel_price" : "fuel_price",
+        "std_maintenance_per_year" : "maintenance",
+        "std_repairs" : "repairs",
+        "std_parking" : "parking",
+        "std_tolls" : "no_daily_tolls_value",
+        "std_tolls_day" : "daily_expense_tolls",
+        "std_tolls_days_per_month" : "number_days_tolls",
+        "std_fines" : "tickets_value",
+        "std_washing" : "washing_value",
+        "std_nr_ppl_family" : "household_number_people",
+        "std_pass_price" : "public_transportation_month_expense",
+        "std_income_year" : "income_per_year",
+        "std_income_month" : "income_per_month",
+        "std_income_week" : "income_per_week",
+        "std_income_hour" : "income_per_hour",
+        "std_months_year" : "income_months_per_year",
+        "std_hours_week" : "income_hours_per_week",
+        "std_weeks_year" : "income_hour_weeks_per_year",
+        "std_time_home_job" : "time_home_job",
+        "std_time_weekend" : "time_weekend",
+        "std_time_in_driving" : "min_drive_per_day",
+        "std_days_month" : "days_drive_per_month"
+    };
+
+    $.each(mappingIDs, function(key, value){
+        $("#"+value).val(WORDS[key]);      
+    });
+
+}
 
 //detects whether Google Analytics has loaded
 function check_ga() {
@@ -123,11 +217,39 @@ function check_ga() {
     }
 }
 
-//function that runs when the page is resized
-$(window).resize(function() {
-    resized();
-});
-$(window).trigger('resize');
+//function that loads the scripts only once
+//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
+//this works like a module, like a singleton function
+var getScriptOnce = (function(url, callback){
+    var ScriptArray = []; //array of urls
+    return function (url, callback) {
+        //the array doesn't have such url
+        if (ScriptArray.indexOf(url) === -1){
+            if (typeof callback === 'function') {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                    callback();
+                });
+            } else {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                });
+            }
+        }
+        //the file is already there, it does nothing
+        //to support as of jQuery 1.5 methods .done().fail()
+        else{
+            return {
+                done: function () {
+                    return {
+                        fail: function () {}
+                    };
+                }
+            };
+        }
+    }
+}());
+
 
 /*Timer function*/
 /* jshint ignore:start */
@@ -157,3 +279,55 @@ function guid() {
     return (S4()+"-"+S4()+"-"+S4());
 }
 uuid = guid();
+
+//gets default protocol defined by Global Variable
+function getProtocol(){
+ 
+    //verifies top level domain
+    var hostName = window.location.hostname;
+    var hostNameArray = hostName.split(".");
+    var posOfTld = hostNameArray.length - 1;
+    var tld = hostNameArray[posOfTld];
+    if(tld=="work"){
+        return "http://";
+    }    
+    
+    if (SWITCHES.https){
+        return "https://";
+    }
+    else{
+        return "http://";
+    }
+}
+
+//detects old versions of Internet Explorer
+function oldIE(){
+    var div = document.createElement("div");
+    div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
+    var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
+    if (isIeLessThan9) {
+        document.getElementById("main_div").innerHTML = "Please update your browser!";
+        alert("Please update your browser!");
+    }
+}
+
+/*function which returns whether this session is a (test/develop version) or a prod version */
+function IsThisAtest() {
+
+    if(COUNTRY=="XX"){
+        return true;
+    }
+
+    //verifies top level domain
+    var hostName = window.location.hostname;
+    var hostNameArray = hostName.split(".");
+    var posOfTld = hostNameArray.length - 1;
+    var tld = hostNameArray[posOfTld];
+    if(tld=="work"){
+        return true;
+    }
+
+    return false;
+}
+
+

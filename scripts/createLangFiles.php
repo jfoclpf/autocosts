@@ -11,46 +11,6 @@
     //$language=mb_substr($lang_CT[$GLOBALS['country']], 0, 2);
     //$LANGUAGE_CODE = $lang_CT[$GLOBALS['country']];
     
-    //for each available country language file, creates a HTML layout language file
-    foreach ($avail_CT as $key => $value){
-        
-        include($SRC_FOLDER."countries/".$key.".php");
-        
-        //#######################################
-        //creates form files
-        $htmlStr = "";
-        //creates directory if it doesn't exist
-        if(!file_exists($BUILD_FOLDER."form")){
-            mkdir ($BUILD_FOLDER."form", 0777, true);
-        }      
-        $fileName = $BUILD_FOLDER."form/".$key.".html";
-        file_put_contents($fileName, $htmlStr);
-        ob_start();
-
-        echo "<!DOCTYPE html>"."\r\n";
-        echo "<html>"."\r\n";
-        echo "<head>"."\r\n";
-        echo '<meta charset="UTF-8">'."\r\n";
-        echo "<title>Forms for ".$key."</title>"."\r\n";
-        echo "</head>"."\r\n";
-        echo "<body>"."\r\n";
-        
-        include($SRC_FOLDER."layout/formPartOne.php"); 
-        include($SRC_FOLDER."layout/formPartTwo.php");
-        include($SRC_FOLDER."layout/formPartThree.php");
-        
-        echo "\r\n"."</body>"."\r\n";
-        echo "</html>"."\r\n";
-                                
-        //  Return the contents of the output buffer
-        $htmlStr = ob_get_contents();
-        // Clean (erase) the output buffer and turn off output buffering
-        ob_end_clean(); 
-        // Write final string to file
-        file_put_contents($fileName, $htmlStr);
-
-    }
-    $htmlStr="";
     
 //##################################################################################
 //##################################################################################
@@ -80,12 +40,14 @@
         $last_key = end($array_keys);
         echo "var CountryList = {"."\xA";
         foreach ($avail_CT as $key3 => $valueCT3){
-            echo "\t".'"'.$key3.'" : "'.$valueCT3.'"';
-            if ($key3 != $last_key) {
-                echo ","."\xA";
-            } else {
-                echo "\xA";
-            }        
+            if($key3 != "XX"){
+                echo "\t".'"'.$key3.'" : "'.$valueCT3.'"';
+                if ($key3 != $last_key) {
+                    echo ","."\xA";
+                } else {
+                    echo "\xA";
+                }
+            }
         }
         echo "};";
         echo "\xA"."\xA";
