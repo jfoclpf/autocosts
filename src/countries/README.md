@@ -1,47 +1,68 @@
                                              
 # Translations
 
-The automobile costs calculator        
+This file explians the meaning of each key and value for each JSON country file.<br> 
+Each file is adapted for each country, and not language, thus US.json is different from CA.json, since they have different standards for fuel efficiency for example.
 
 The language codes for each file name, are according to the two-letter <a href="http:en.wikipedia.org/wiki/List_of_ISO_639-1_codes">language code ISO 639-1</a>
 <br>
+
+## Country
+
+country_name : "United Kingdom"  - Example<br>
+curr_code: "GBP" the 3-letter currency ISO code<br>
+<br>
 IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options<br>
-Fuel efficiency for car engine standard<br>
 
 ## Fuel efficiency 
 
-fuel_efficiency_std_option = <br>
+Fuel efficiency for car engine standard<br>
 <br>
-1 - l/100km - litres per 100 kilometres<br>
-2 - km/l - kilometres per litre<br>
-3 - mpg(imp) - miles per imperial gallon<br>
-4 - mpg(US) - miles per US gallon<br>
-5 - l/mil - litres per 10 kilometers <br>
-6 - km/gal(US) - km per US gallon <br>
+The <b>value</b> of the variable <b>fuel_efficiency_std_option</b> shall be the number according to the table:
+
+<table>
+<tr><th>value </th><th>standard </th><th> description</th></tr>
+<tr><td>1 </td><td> l/100km </td><td> litres per 100 kilometres</td></tr>
+<tr><td>2 </td><td> km/l    </td><td> kilometres per litre</td></tr>
+<tr><td>3 </td><td> mpg(imp) </td><td> miles per imperial gallon</td></tr>
+<tr><td>4 </td><td> mpg(US) </td><td> miles per US gallon</td></tr>
+<tr><td>5 </td><td> l/mil </td><td> litres per 10 kilometers </td></tr>
+<tr><td>6 </td><td> km/gal(US) </td><td> km per US gallon </td></tr>
+</table>
 
 ## Standard distance
 
-distance_std_option = <br>
-<br>
-1 - kilometres<br>
-2 - miles<br>
+The <b>value</b> of the variable <b>distance_std_option</b> shall be the number according to the table:
+
+<table>
+<tr><th>value</th><th>description</th></tr>
+<tr><td>1</td><td>kilometres</td></tr>
+<tr><td>2</td><td>miles</td></tr>
+</table>
 
 ## Standard volume for the price of fuels
 
 ex: Currency(,£,€,etc.)/(Litre, Imp gallon, US gallon) <br>
 <br>
-fuel_price_volume_std = <br>
+
+The <b>value</b> of the variable <b>fuel_price_volume_std</b> shall be the number according to the table:
+
+<table>
+<tr><th>value</th><th>description</th></tr>
+<tr><td>1</td><td>litres</td></tr>
+<tr><td>2</td><td>imperial gallons</td></tr>
+<tr><td>3</td><td>US gallons</td></tr>
+</table>
+
+## standards in text
+
+in text version<br>
 <br>
-1 - litres<br>
-2 - imperial gallons<br>
-3 - US gallons<br>
-<br>
-standards TEXT VERSION<br>
 IMPORTANT: BE COHERENT with the above standards<br>
 <br>
 Example for USA<br>
 <br>
-CURR_CODE = 'USD';<br>
+CURR_CODE = 'USD'; the 3-letter currency ISO code<br>
 CURR_NAME = 'Dollar';<br>
 CURR_NAME_PLURAL = 'Dollars';<br>
 CURR_NAME_BIG_PLURAL = 'DOLLARS';<br>
@@ -63,7 +84,7 @@ NO = 'no';<br>
 BUTTON_RUN = 'Run'; run calculator button <br>
 BUTTON_RERUN = 'Rerun'; run calculator button <br>
 
-## WEB PAGE
+## web page wordings
 
 WEB_PAGE_TITLE = 'Automobile costs calculator';<br>
 MAIN_TITLE = 'AUTOMOBILE COSTS CALCULATOR';<br>
@@ -85,7 +106,7 @@ USERS = 'Users';<br>
 FOR_COUNTRY = 'for USA'; in the sense of "10 users filled in *for Portugal". Replace Portugal accordingly.<br>
 IN_TOTAL = 'in total'; in the sense of "10000 users filled in *in total* the form "<br>
 CONTACT = 'Contact';<br>
-<br>
+
 ## time words
 
 DAYLY = 'daily'; <br>
@@ -245,7 +266,7 @@ FINES_DESC = 'Average amount paid in traffic tickets:<br><i>think in the last fe
 WASHING = 'Washing and cleaning'; <br>
 WASHING_DESC = 'Average car-washing and valet parking expenses:<br><i>in service stations and other places</i>';<br>
 
-## TOTAL 
+## Total 
 
 TOTAL_FIXED = 'TOTAL - Standing costs'; <br>
 TOTAL_FIXED_DESCR = "Costs that don't depend on the traveled distance and those costs which must be paid even if the car is not in use"; <br>
