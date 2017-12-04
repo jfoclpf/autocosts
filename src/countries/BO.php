@@ -5,12 +5,12 @@
 
 $COUNTRY_NAME = 'Bolivia';
 
-//***********************************************
-//											   **
-//      Translation for AUTOCOSTS.INFO          **
-//      the automobile costs calculator		   **
-//	  										   **
-//***********************************************
+//********************************************
+//                                          **
+//      Translation for AUTOCOSTS.INFO      **
+//      the automobile costs calculator     **
+//                                          **
+//********************************************
 
 // IMPORTANT:Preserve always the same standards, BE CHOERENT between the text variables and the standard options
 
