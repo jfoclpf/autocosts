@@ -65,15 +65,19 @@ IMPORTANT: BE COHERENT with the above standards<br>
 <br>
 Example for USA<br>
 <br>
-CURR_CODE = 'USD'; the 3-letter currency ISO code<br>
-CURR_NAME = 'Dollar';<br>
-CURR_NAME_PLURAL = 'Dollars';<br>
-CURR_NAME_BIG_PLURAL = 'DOLLARS';<br>
-CURR_SYMBOL = '&#36;';<br>
-STD_DIST = 'mi'; short text version you'd like to apply<br>
-STD_DIST_FULL = 'miles';<br>
-STD_FUEL_CALC = 'mpg(US)'; text version you'd like to apply<br>
-STD_VOLUME_SHORT = 'gallon'; short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)<br>
+
+<table>
+<tr><th>key name</th><th>value</th><th>description</th></tr>
+<tr><td>CURR_CODE</td><td>'USD'</td><td> the 3-letter currency ISO code</td></tr>
+<tr><td>CURR_NAME</td><td>'Dollar'</td><td> </td></tr>
+<tr><td>CURR_NAME_PLURAL</td><td>'Dollars'</td><td> </td></tr>
+<tr><td>CURR_NAME_BIG_PLURAL</td><td>'DOLLARS'</td><td> </td></tr>
+<tr><td>CURR_SYMBOL</td><td>'&#36;'</td><td> </td></tr>
+<tr><td>STD_DIST</td><td>'mi'</td><td>short text version you'd like to apply </td></tr>
+<tr><td>STD_DIST_FULL</td><td>'miles'</td><td> </td></tr>
+<tr><td>STD_FUEL_CALC</td><td>'mpg(US)'</td><td> text version you'd like to apply</td></tr>
+<tr><td>STD_VOLUME_SHORT</td><td>'gallon'</td><td> short text version you'd like to apply for fuel price per volume unit (litres, imperial gallons or US gallons, be coherent)</td></tr>
+</table>
 
 ## simple words
 
