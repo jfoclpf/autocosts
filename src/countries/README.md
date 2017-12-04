@@ -1,6 +1,5 @@
                                              
-# Translation for AUTOCOSTS.INFO
-
+# Translations
 
 The automobile costs calculator        
 
