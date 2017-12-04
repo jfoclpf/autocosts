@@ -3,11 +3,10 @@
 
 The automobile costs calculator        
 
-The language is according with the two-letter language code ISO 639-1
-http:en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-
-IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options
-Fuel efficiency for car engine standard
+The language codes for each file name, are according to the two-letter <a href="http:en.wikipedia.org/wiki/List_of_ISO_639-1_codes">language code ISO 639-1</a>
+<br>
+IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options<br>
+Fuel efficiency for car engine standard<br>
 
 ## Fuel efficiency 
 
