@@ -9,19 +9,24 @@ The language codes for each file name, are according to the two-letter <a href="
 
 ## Country
 
-country_name : "United Kingdom"  - Example<br>
-curr_code: "GBP" the 3-letter currency ISO code<br>
-<br>
+Example:
+
+<table>
+<tr><th>key name</th><th>value</th><th>description</th></tr>
+<tr><td>country_name</td><td>"United Kingdom"</td><td>The country name in its own language</td></tr>
+<tr><td>curr_code</td><td>"GBP"</td><td><a href="https://en.wikipedia.org/wiki/ISO_4217">The 3-letter ISO currency code</a></td></tr>
+</table>
+
 IMPORTANT: Preserve always the same standards, BE CHOERENT between the text variables and the standard options<br>
 
 ## Fuel efficiency 
 
 Fuel efficiency for car engine standard<br>
 <br>
-The <b>value</b> of the variable <b>fuel_efficiency_std_option</b> shall be the number according to the table:
+The <b>value</b> of the key <b>fuel_efficiency_std_option</b> shall be the number according to the table:
 
 <table>
-<tr><th>value </th><th>standard </th><th> description</th></tr>
+<tr><th>key value </th><th>standard </th><th> description</th></tr>
 <tr><td>1 </td><td> l/100km </td><td> litres per 100 kilometres</td></tr>
 <tr><td>2 </td><td> km/l    </td><td> kilometres per litre</td></tr>
 <tr><td>3 </td><td> mpg(imp) </td><td> miles per imperial gallon</td></tr>
@@ -32,10 +37,10 @@ The <b>value</b> of the variable <b>fuel_efficiency_std_option</b> shall be the 
 
 ## Standard distance
 
-The <b>value</b> of the variable <b>distance_std_option</b> shall be the number according to the table:
+The <b>value</b> of the key <b>distance_std_option</b> shall be the number according to the table:
 
 <table>
-<tr><th>value</th><th>description</th></tr>
+<tr><th>key value</th><th>description</th></tr>
 <tr><td>1</td><td>kilometres</td></tr>
 <tr><td>2</td><td>miles</td></tr>
 </table>
@@ -43,12 +48,10 @@ The <b>value</b> of the variable <b>distance_std_option</b> shall be the number 
 ## Standard volume for the price of fuels
 
 ex: Currency(,£,€,etc.)/(Litre, Imp gallon, US gallon) <br>
-<br>
-
-The <b>value</b> of the variable <b>fuel_price_volume_std</b> shall be the number according to the table:
+The <b>value</b> of the key <b>fuel_price_volume_std</b> shall be the number according to the table:
 
 <table>
-<tr><th>value</th><th>description</th></tr>
+<tr><th>key value</th><th>description</th></tr>
 <tr><td>1</td><td>litres</td></tr>
 <tr><td>2</td><td>imperial gallons</td></tr>
 <tr><td>3</td><td>US gallons</td></tr>
