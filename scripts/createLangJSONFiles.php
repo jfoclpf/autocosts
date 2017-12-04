@@ -31,26 +31,11 @@
         $var_array = get_defined_vars(); //gets all defined variables
         
         $js_string = "";
-        $fileName = $BUILD_FOLDER."js/languages/".$key.".js";
+        $fileName = $BUILD_FOLDER."js/languages/".$key.".json";
         file_put_contents($fileName, $js_string);
         ob_start(); 
                        
-        //creates array of available countries
-        $array_keys = array_keys($avail_CT);
-        $last_key = end($array_keys);
-        echo "var CountryList = {"."\xA";
-        foreach ($avail_CT as $key3 => $valueCT3){
-            if($key3 != "XX"){
-                echo "\t".'"'.$key3.'" : "'.$valueCT3.'"';
-                if ($key3 != $last_key) {
-                    echo ","."\xA";
-                } else {
-                    echo "\xA";
-                }
-            }
-        }
-        echo "};";
-        echo "\xA"."\xA";
+
         
         //gets all the variables from the file and puts them in an array in string format
         $file = file_get_contents($SRC_FOLDER."countries/".$key.".php"); 
@@ -59,20 +44,20 @@
         $array_keys = array_keys($var_array_string);
         $last_key = end($array_keys);
         
-        echo "var WORDS = {"."\xA";        
+        echo "{"."\xA";        
         foreach ($var_array_string as $key2 => $value){
             
             //the JS object entry( tolls: "text", )
             //removes leading $ character and makes lowercase
-            echo "\t".strtolower(ltrim($value, '$')).": ";
+            echo "    ".'"'.strtolower(ltrim($value, '$')).'"'." : ";
             
             $var = $var_array[ltrim($value, '$')];
-            
+                       
             if (!is_numeric($var)){
-                echo '"'.preg_replace( "/\r|\n/", "", $var_array[ltrim($value, '$')] ).'"';
+                echo '"'.preg_replace( "/\r|\n/", "", $var ).'"';
             }
             else{
-                echo $var_array[ltrim($value, '$')];
+                echo ltrim($var, '0');
             }
             
             if ($key2 != $last_key) {
@@ -81,7 +66,7 @@
                 echo "\xA";
             }        
         }
-        echo "};";
+        echo "}";
         echo "\xA"."\xA";
         
         //Return the contents of the output buffer

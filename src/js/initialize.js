@@ -141,7 +141,7 @@ function initializeForm(){
 
 //loads Countries Select Box
 function loadsCountriesSelectBox(){
-
+    
     var $dropdown = $("#country_select");    
     $.each(CountryList, function(key, value) {
         $dropdown.append($("<option/>").val(key).text(value));
