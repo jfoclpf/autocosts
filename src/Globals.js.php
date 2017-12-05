@@ -1,9 +1,28 @@
+<?php Header("content-type: application/x-javascript");
+
 /************************************************
 **                                             **
 **              AUTOCOSTS.INFO                 **
 **      the automobile costs calculator        **
 **                                             **
 ************************************************/
+
+/*avoids code injection ensuring that input has only two characters (country code)*/
+if(strlen($_GET['country']) != 2){ 
+    exit;
+} 
+
+$PageURL = rawurldecode($_GET['url']);
+
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
+loadsCountries($_SERVER['DOCUMENT_ROOT'].'/countries/list.json');
+asort($GLOBALS['avail_CT']);
+//removes XX from array
+unset($GLOBALS['avail_CT']['XX']);
+
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
+
+ob_start();?>
 
 /*File with Javascript Global variables */
 
@@ -23,6 +42,21 @@ var SWITCHES = {
     "https": true        /*true for https, false for http*/
 };
 
+/*Variables to be defined by PHP*/
+/*Define GLOBAL Javascript variables*/
+var COUNTRY = "<?php echo $_GET['country']; ?>";
+/*Language code according to ISO_639-1 codes*/
+var LANGUAGE = "<?php echo $GLOBALS['lang_CT'][$_GET['country']]; ?>";
+/*List of countries and domains in a Javascript Object*/
+var COUNTRY_LIST = (<?php echo json_encode($GLOBALS['avail_CT']); ?>);
+var DOMAIN_LIST = (<?php echo json_encode($GLOBALS['domain_CT']); ?>);
+
+var CDN_URL = "<?php echo $GLOBALS['CDN_URL'] ?>"; /*it's defined in the php*/
+var PAGE_URL = "<?php echo $PageURL ?>";
+
+/*Directory of JSON Translation files, change accordingly*/
+var LANG_JSON_DIR = CDN_URL + "countries/";
+
 /*Location of Javascript Files, change accordingly*/
 var JS_FILES = {
     Google : {
@@ -32,8 +66,7 @@ var JS_FILES = {
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
     
-    documentFunctions :   CDN_URL + "js/documentFunctions.js",
-    Globals :             CDN_URL + "js/Globals.js",
+    documentFunctions :   CDN_URL + "js/documentFunctions.js",    
     formFunctions :       CDN_URL + "js/formFunctions.js",
     validateForm :        CDN_URL + "js/validateForm.js",
     charts :              CDN_URL + "js/charts.js",
@@ -46,6 +79,10 @@ var JS_FILES = {
     print :               CDN_URL + "js/print.js",
     dbFunctions :         CDN_URL + "js/dbFunctions.js",
     
+    statsFunctions :      CDN_URL + "db_stats/statsFunctions.js",
+    get_average_from_db : CDN_URL + "db_stats/get_average_from_db.js",
+    raster_tables :       CDN_URL + "db_stats/raster_tables.js",
+    
     PDF : {
         padfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
         generatePDF :     CDN_URL + "js/pdf/generatePDF.js",
@@ -55,18 +92,17 @@ var JS_FILES = {
         vfs_fonts_CN :    CDN_URL + "js/pdf/CN/vfs_fonts.js"
     },
 
-    jAlert :              "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js",
-
-    jssocials :           CDN_URL + "js/social/jssocials.min.js",
-    statsFunctions :      CDN_URL + "db_stats/statsFunctions.js",
-    get_average_from_db : CDN_URL + "db_stats/get_average_from_db.js",
-    raster_tables :       CDN_URL + "db_stats/raster_tables.js"
+    jAlert :              CDN_URL + "js/jAlert/jAlert.js",
+    jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
 };
 
 var UBER_FILE = "php/get_uber.php?c=" + COUNTRY;
 
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
+
+var WORDS; //JS Object with the words for each country
+var INITIAL_TEX;
 
 /*global function variables for function expressions */
 var Run1, PrintElem, generatePDF;
@@ -111,8 +147,7 @@ var DISPLAY = {
             finEffort: 0,
             alterToCar: 0
         }
-    },
-    RunButtonStr: WORDS.button_run
+    }
 };
 
 /*Service availability. Later on in the code, the variables might be set to TRUE*/
@@ -123,3 +158,9 @@ var SERVICE_AVAILABILITY = {
     g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
 };
 
+<?php
+use MatthiasMullie\Minify;
+$javascriptContent = ob_get_clean();
+$minifier = new Minify\JS($javascriptContent);
+echo $minifier->minify();
+?>

@@ -1,36 +1,10 @@
 <?php
 
-//change accordingly
-$IS_HTTPS = true; //false for simple http
-$IS_CDN = false; //Content delivery network
-
-//#############################################
-
-//CDN configuration at https://app.keycdn.com/zones
-//CDN provider: https://app.keycdn.com/zones
-$CDN_URL_PROD="https://cdn.autocosts.info"."/"; //preserve the bar "/" at the end
-$CDN_URL_WORK="http://cdn.autocosts.work"."/"; //preserve the bar "/" at the end
-
-if($IS_CDN){
-    if(isWorkDomain()){
-        $CDN_URL = $CDN_URL_WORK;
-    }
-    else{
-        $CDN_URL = $CDN_URL_PROD;
-    }
-}
-else{
-    $CDN_URL = "";
-}
-
-if($IS_HTTPS && !isWorkDomain()){
-    $HTTP_Protocol = "https://";
-}
-else{
-    $HTTP_Protocol = "http://";
-}
+$HTTP_Protocol = $GLOBALS["HTTP_Protocol"];
+$avail_CT = $GLOBALS["avail_CT"];
 
 asort($avail_CT); //sorts alphabetically the counties list
+
 $url_cc=strtoupper($_GET["c"]); //uppercase
 
 //if no country is defined or the country isn't in the list
@@ -125,7 +99,7 @@ if(!isWorkDomain() && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off") &
 }
 
 //full URL for this page
-$PageURL = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
+$GLOBALS['PageURL'] = $HTTP_Protocol.$domain_CT[$GLOBALS['country']].'/'.strtoupper($GLOBALS['country']);
 
 //removes XX from array
 unset($avail_CT['XX']);
