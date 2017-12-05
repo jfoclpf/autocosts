@@ -11,7 +11,10 @@ function fixNmbr($i,$n){
 }
 
 include("../keys/db_credentials.php"); //DB credentials
-include("../countries/list.php");
+
+include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
+loadsCountries($_SERVER['DOCUMENT_ROOT'].'/countries/list.json');
+
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
@@ -33,7 +36,8 @@ foreach ($avail_CT as $country => $country_name) {
     $row = $result->fetch_assoc();
 
     //gets country language variables
-    include('../countries/'.$country.'.php');
+    loadsLanguageVars($_SERVER['DOCUMENT_ROOT'].'/countries/'.$country.'.json');
+    $WORDS = $GLOBALS["WORDS"];
 
     //the file name to which the HTML table will be saved
     $file="tables/".$country.".html";
@@ -44,16 +48,16 @@ foreach ($avail_CT as $country => $country_name) {
             <td id="td-top-title" colspan="2" class="center td-title">';
 
     if ($country == "TR") {
-        $content.='<b><span>'.$COUNTRY_NAME.'</span><span class="stat_title"> '.$STATISTIC_TITLE.'</span></b>';
+        $content.='<b><span>'.$WORDS['country_name'].'</span><span class="stat_title"> '.$WORDS['statistic_title'].'</span></b>';
     }
     else{
-        $content.='<b><span>'.$STATISTIC_TITLE.'</span><span class="stat_title"> '.$COUNTRY_NAME.'</span></b>';
+        $content.='<b><span>'.$WORDS['statistic_title'].'</span><span class="stat_title"> '.$WORDS['country_name'].'</span></b>';
     }
 
-    $content.='<br><span>'.$AVERAGE_COSTS_PER_TYPE.'</span>
+    $content.='<br><span>'.$WORDS['average_costs_per_type'].'</span>
             </td>
         </tr>
-        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$FIXED_COSTS.'</span></td></tr>
+        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$WORDS['fixed_costs'].'</span></td></tr>
         <tr><td style="width:50%"><span>'.$DEPRECIATION_ST.'</span></td> <td style="width:25%"><span> '.$CURR_SYMBOL.' </span><span id="txt_depr" class="value-field">'.fixNmbr($row["Depreciation"],1).'</span></td></tr>
         <tr><td><span>'.$INSURANCE_ST.'</span></td>                      <td><span> '.$CURR_SYMBOL.' </span><span id="txt_ins" class="value-field">'.fixNmbr($row["Insurance"],1).'</span></td></tr>
         <tr><td><span>'.$CREDIT_INTERESTS.'</span></td>                  <td><span> '.$CURR_SYMBOL.' </span><span id="txt_cred" class="value-field">'.fixNmbr($row["Loan_interests"],1).'</span></td></tr>

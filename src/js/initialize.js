@@ -4,41 +4,66 @@ window.onload = initialize;
 
 function initialize() {
 
-    //detects old versions of Internet Explorer
-    oldIE();
+    $.getJSON(LANG_JSON_DIR + COUNTRY + ".json", function(json) {
+        //console.log(json); // this will show the info it in firebug console
+        
+        WORDS = json;
+        INITIAL_TEX = WORDS.initial_text;
+        
+        getScriptOnce(JS_FILES.validateForm);
+        
+        //detects old versions of Internet Explorer
+        oldIE();
 
-    CurrentFormPart=1;
-    
-    TimeCounter.resetStopwatch();
-    DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
+        CurrentFormPart=1;
 
-    DISPLAY.descriptionHTML = $('#description').html();
+        TimeCounter.resetStopwatch();
+        DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
+
+        DISPLAY.descriptionHTML = $('#description').html();
+
+        //loads layout
+        loadsHTMLLayout();
+
+        //detects whether Google Analytics has loaded
+        check_ga();
+        
+    });
     
-    //loads layout
-    loadsHTMLLayout();
+    getScriptOnce(JS_FILES.jAlert, function(){  
+        //defaults for the alert box
+        $.fn.jAlert.defaults.size = 'sm';
+        $.fn.jAlert.defaults.theme = 'default';
+        $.fn.jAlert.defaults.closeOnClick = 'true';        
+    });
     
-    //detects whether Google Analytics has loaded
-    check_ga(); 
+    /*Google Analytics*/
+    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() ) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-3421546-6', 'auto');
+        ga('send', 'pageview');
+    }
 }
 
 //loads HTML Layout
 function loadsHTMLLayout(){
-    
-    $("#mainHTMLdiv").load(CDN_URL + "layout/main.html", function(){
-        
-        //loads Countries Select dropdown box
-        loadsCountriesSelectBox();
-        
-        $("#div13").load(CDN_URL + "db_stats/tables/"+COUNTRY + ".html"); //costs table        
-        //divs that need to be hidden
-        DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;                
-        $("#input_div").load(CDN_URL + "layout/form.html", function(){
-            getScriptOnce(CDN_URL + "js/documentFunctions.js", function(){ 
-                getScriptOnce(CDN_URL + "js/formFunctions.js", setLanguageVars);
-            });
+            
+    //loads Countries Select dropdown box
+    loadsCountriesSelectBox();
+
+    $("#div13").load(CDN_URL + "db_stats/tables/"+COUNTRY + ".html"); //costs table        
+    //divs that need to be hidden
+    DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;                
+    $("#input_div").load(CDN_URL + "layout/form.html", function(){
+        getScriptOnce(JS_FILES.documentFunctions, function(){ 
+            getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
         });
     });
-    
+  
 }
 
 //function that sets the JS language variables to the correspondent HTML divs
@@ -117,11 +142,6 @@ function initializeForm(){
     //align radio button text
     $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
 
-    //defaults for the alert box
-    $.fn.jAlert.defaults.size = 'sm';
-    $.fn.jAlert.defaults.theme = 'default';
-    $.fn.jAlert.defaults.closeOnClick = 'true';
-
     //Google recaptcha
     IS_HUMAN_CONFIRMED = false;
     $('#run_button').show();
@@ -143,7 +163,7 @@ function initializeForm(){
 function loadsCountriesSelectBox(){
     
     var $dropdown = $("#country_select");    
-    $.each(CountryList, function(key, value) {
+    $.each(COUNTRY_LIST, function(key, value) {
         $dropdown.append($("<option/>").val(key).text(value));
     });
 
@@ -343,3 +363,4 @@ function IsThisAtest() {
 
     return false;
 }
+

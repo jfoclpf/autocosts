@@ -1,5 +1,52 @@
 <?php
 
+//change accordingly
+$IS_HTTPS = true; //false for simple http
+$IS_CDN = false; //Content delivery network
+
+//#############################################
+//CDN configuration at https://app.keycdn.com/zones
+//CDN provider: https://app.keycdn.com/zones
+$CDN_URL_PROD = "https://cdn.autocosts.info"."/"; //preserve the bar "/" at the end
+$CDN_URL_WORK = "http://cdn.autocosts.work"."/"; //preserve the bar "/" at the end
+
+if($IS_CDN){
+    if(isWorkDomain()){
+        $GLOBALS["CDN_URL"] = $CDN_URL_WORK;
+    }
+    else{
+        $GLOBALS["CDN_URL"] = $CDN_URL_PROD;
+    }
+}
+else{
+    $GLOBALS["CDN_URL"] = "";
+}
+
+if($IS_HTTPS && !isWorkDomain()){
+    $GLOBALS["HTTP_Protocol"] = "https://";
+}
+else{
+    $GLOBALS["HTTP_Protocol"] = "http://";
+}
+
+//function which loads country info into global variables
+function loadsCountries($url){
+    $contents = file_get_contents($url); 
+    //$contents = utf8_encode($contents); 
+    $GLOBALS["Countries_list"] = json_decode($contents, true);
+    
+    $GLOBALS["avail_CT"]  = $GLOBALS["Countries_list"]["available_CT"];
+    $GLOBALS["lang_CT"]   = $GLOBALS["Countries_list"]["lanuages_CT"];
+    $GLOBALS["domain_CT"] = $GLOBALS["Countries_list"]["domains_CT"];    
+}
+
+function loadsLanguageVars($url){
+    
+    $contents = file_get_contents($url); 
+    //$contents = utf8_encode($contents); 
+    $GLOBALS["WORDS"] = json_decode($contents, true);
+}
+
 //function that informs if a country is in the list of available countries
 function is_cty_inlist($cc, $c_array){ //cc=country code
     if ($cc == null) {
