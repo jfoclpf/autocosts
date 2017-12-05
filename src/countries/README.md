@@ -1,7 +1,7 @@
                                              
 # Translations
 
-This file explians the meaning of each key and value for each JSON country file.<br> 
+This file explains the meaning of each key and value for each JSON country file.<br> 
 Each file is adapted for each country, and not language, thus US.json is different from CA.json, since they have different standards for fuel efficiency for example.
 
 The language codes for each file name, are according to the two-letter <a href="http:en.wikipedia.org/wiki/List_of_ISO_639-1_codes">language code ISO 639-1</a>
