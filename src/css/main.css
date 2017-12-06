@@ -20,7 +20,8 @@ body {
 }
 
 /*headings*/
-h1{
+h1
+.lang-main_title{
     font-size: 28px;
     text-align: center;
     margin: 0;

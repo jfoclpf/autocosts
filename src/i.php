@@ -16,7 +16,7 @@ include_once("./php/minifier.php");
 ob_start("sanitize_output");
 
 ?><!DOCTYPE html>
-<html lang="<?php echo HTML_tag_lang($language, $GLOBALS['country']); ?>">
+<html lang="<?php echo HTML_tag_lang($GLOBALS['language'], $GLOBALS['country']); ?>">
 <head>
     <meta charset="UTF-8">
     <!--gets the first sentence of variable $INITIAL_TEXT-->
