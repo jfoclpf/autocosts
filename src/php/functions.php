@@ -36,7 +36,7 @@ function loadsCountries($url){
     $GLOBALS["Countries_list"] = json_decode($contents, true);
     
     $GLOBALS["avail_CT"]  = $GLOBALS["Countries_list"]["available_CT"];
-    $GLOBALS["lang_CT"]   = $GLOBALS["Countries_list"]["lanuages_CT"];
+    $GLOBALS["lang_CT"]   = $GLOBALS["Countries_list"]["languages_CT"];
     $GLOBALS["domain_CT"] = $GLOBALS["Countries_list"]["domains_CT"];    
 }
 
