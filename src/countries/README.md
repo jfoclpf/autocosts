@@ -306,7 +306,7 @@ DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't requ
 <tr><td>PARKING_DESC</td><td>'Average cost with parking:<br><i>parking meters in the city, renting a parking space, underground or overground parking lots in public buildings, shopping centers, airports, bus or train stations or any other infrastructures.</i>'</td><td></td></tr>
 </table>
 
-## Tools
+## Tolls
 
 <table>
 <tr><th>key name</th><th>value</th><th>description</th></tr>
