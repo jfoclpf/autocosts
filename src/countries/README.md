@@ -100,11 +100,10 @@ Example for USA<br>
 <tr><th>key name</th><th>value</th><th>description</th></tr>
 <tr><td>WEB_PAGE_TITLE</td><td>'Automobile costs calculator'</td><td></td></tr>
 <tr><td>MAIN_TITLE</td><td>'AUTOMOBILE COSTS CALCULATOR'</td><td></td></tr>
-<tr><td>INITIAL_TEXT</td><td></td><td></td></tr>
+<tr><td>INITIAL_TEXT</td><td>This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United States</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.";
+DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.</td><td></td></tr>
 </table>
 
-"This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United States</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.";
-DISCLAIMER = "This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.";<br>
 <br>
 
 <table>
