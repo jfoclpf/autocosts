@@ -1,4 +1,5 @@
-<?
+<?php
+
 /*File which generates the statistics tables on a HTML file
 that will be shown in the right column of the main page*/
 
@@ -10,11 +11,12 @@ function fixNmbr($i,$n){
     return number_format($float_num, $n, '.', '');
 }
 
-include("../keys/db_credentials.php"); //DB credentials
+$HOME_DIR = dirname(getcwd())."/";
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
-loadsCountries($_SERVER['DOCUMENT_ROOT'].'/countries/list.json');
+include($HOME_DIR."keys/db_credentials.php"); //DB credentials
 
+include_once($HOME_DIR."php/functions.php");
+loadsCountries($HOME_DIR."countries/list.json");
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
@@ -36,8 +38,10 @@ foreach ($avail_CT as $country => $country_name) {
     $row = $result->fetch_assoc();
 
     //gets country language variables
-    loadsLanguageVars($_SERVER['DOCUMENT_ROOT'].'/countries/'.$country.'.json');
+    loadsLanguageVars($HOME_DIR."countries/".$country.".json");
     $WORDS = $GLOBALS["WORDS"];
+    $CURSymb = $WORDS['curr_symbol'];
+    $STD_DIST = $WORDS['std_dist'];
 
     //the file name to which the HTML table will be saved
     $file="tables/".$country.".html";
@@ -58,52 +62,52 @@ foreach ($avail_CT as $country => $country_name) {
             </td>
         </tr>
         <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$WORDS['fixed_costs'].'</span></td></tr>
-        <tr><td style="width:50%"><span>'.$DEPRECIATION_ST.'</span></td> <td style="width:25%"><span> '.$CURR_SYMBOL.' </span><span id="txt_depr" class="value-field">'.fixNmbr($row["Depreciation"],1).'</span></td></tr>
-        <tr><td><span>'.$INSURANCE_ST.'</span></td>                      <td><span> '.$CURR_SYMBOL.' </span><span id="txt_ins" class="value-field">'.fixNmbr($row["Insurance"],1).'</span></td></tr>
-        <tr><td><span>'.$CREDIT_INTERESTS.'</span></td>                  <td><span> '.$CURR_SYMBOL.' </span><span id="txt_cred" class="value-field">'.fixNmbr($row["Loan_interests"],1).'</span></td></tr>
-        <tr><td><span>'.$INSPECTION_SHORT.'</span></td>                  <td><span> '.$CURR_SYMBOL.' </span><span id="txt_insp" class="value-field">'.fixNmbr($row["Inspection"],1).'</span></td></tr>
-        <tr><td><span>'.$ROAD_TAXES_SHORT.'</span></td>                  <td><span> '.$CURR_SYMBOL.' </span><span id="txt_tax" class="value-field">'.fixNmbr($row["Car_tax"],1).'</span></td></tr>
-        <tr><td><span>50% '.$MAINTENANCE.'</span></td>                   <td><span> '.$CURR_SYMBOL.' </span><span id="txt_maint1" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
+        <tr><td style="width:50%"><span>'.$WORDS['depreciation_ST'].'</span></td> <td style="width:25%"><span> '.$CURSymb.' </span><span id="txt_depr" class="value-field">'.fixNmbr($row["Depreciation"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['insurance_st'].'</span></td>                      <td><span> '.$CURSymb.' </span><span id="txt_ins" class="value-field">'.fixNmbr($row["Insurance"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['credit_interests'].'</span></td>                  <td><span> '.$CURSymb.' </span><span id="txt_cred" class="value-field">'.fixNmbr($row["Loan_interests"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['inspection_short'].'</span></td>                  <td><span> '.$CURSymb.' </span><span id="txt_insp" class="value-field">'.fixNmbr($row["Inspection"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['road_taxes_short'].'</span></td>                  <td><span> '.$CURSymb.' </span><span id="txt_tax" class="value-field">'.fixNmbr($row["Car_tax"],1).'</span></td></tr>
+        <tr><td><span>50% '.$WORDS['maintenance'].'</span></td>                   <td><span> '.$CURSymb.' </span><span id="txt_maint1" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
         <tr class="tr-result">
-            <td><span>'.$WORD_TOTAL_CAP.'<br>'.$FIXED_COSTS.'</span></td>
-            <td><span> '.$CURR_SYMBOL.' </span><span id="txt_standing_costs" class="value-field">'.fixNmbr($row["standing_costs"],0).'</span></td>
+            <td><span>'.$WORDS['word_total_cap'].'<br>'.$WORDS['fixed_costs'].'</span></td>
+            <td><span> '.$CURSymb.' </span><span id="txt_standing_costs" class="value-field">'.fixNmbr($row["standing_costs"],0).'</span></td>
         </tr>
-        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$RUNNING_COSTS.'</span></td></tr>
-        <tr><td><span>'.$FUEL.'</span></td>                              <td><span> '.$CURR_SYMBOL.' </span><span id="txt_fuel" class="value-field">'.fixNmbr($row["Fuel"],1).'</span></td></tr>
-        <tr><td><span>50% '.$MAINTENANCE.'</span></td>                   <td><span> '.$CURR_SYMBOL.' </span><span id="txt_maint2" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
-        <tr><td><span>'.$REP_ST.'</span></td>                            <td><span> '.$CURR_SYMBOL.' </span><span id="txt_rep" class="value-field">'.fixNmbr($row["Repairs"],1).'</span></td></tr>
-        <tr><td><span>'.$PARKING.'</span></td>                           <td><span> '.$CURR_SYMBOL.' </span><span id="txt_park" class="value-field">'.fixNmbr($row["Parking"],1).'</span></td></tr>
-        <tr><td><span>'.$TOLLS.'</span></td>                             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_tolls" class="value-field">'.fixNmbr($row["Tolls"],1).'</span></td></tr>
-        <tr><td><span>'.$FINES.'</span></td>                             <td><span> '.$CURR_SYMBOL.' </span><span id="txt_fines" class="value-field">'.fixNmbr($row["Fines"],1).'</span></td></tr>
-        <tr><td><span>'.$WASHING_ST.'</span></td>                        <td><span> '.$CURR_SYMBOL.' </span><span id="txt_wash" class="value-field">'.fixNmbr($row["Washing"],1).'</span></td></tr>
+        <tr class="tr-sub-title"><td colspan="2" class="center"><span>'.$WORDS['running_costs'].'</span></td></tr>
+        <tr><td><span>'.$WORDS['fuel'].'</span></td>                              <td><span> '.$CURSymb.' </span><span id="txt_fuel" class="value-field">'.fixNmbr($row["Fuel"],1).'</span></td></tr>
+        <tr><td><span>50% '.$WORDS['maintenance'].'</span></td>                   <td><span> '.$CURSymb.' </span><span id="txt_maint2" class="value-field">'.fixNmbr($row["Maintenance"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['rep_st'].'</span></td>                            <td><span> '.$CURSymb.' </span><span id="txt_rep" class="value-field">'.fixNmbr($row["Repairs"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['parking'].'</span></td>                           <td><span> '.$CURSymb.' </span><span id="txt_park" class="value-field">'.fixNmbr($row["Parking"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['tolls'].'</span></td>                             <td><span> '.$CURSymb.' </span><span id="txt_tolls" class="value-field">'.fixNmbr($row["Tolls"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['fines'].'</span></td>                             <td><span> '.$CURSymb.' </span><span id="txt_fines" class="value-field">'.fixNmbr($row["Fines"],1).'</span></td></tr>
+        <tr><td><span>'.$WORDS['washing_st'].'</span></td>                        <td><span> '.$CURSymb.' </span><span id="txt_wash" class="value-field">'.fixNmbr($row["Washing"],1).'</span></td></tr>
         <tr class="tr-result">
-            <td><span>'.$WORD_TOTAL_CAP.'<br>'.$RUNNING_COSTS.'</span></td>
-            <td><span> '.$CURR_SYMBOL.' </span><span id="txt_running_costs" class="value-field">'.fixNmbr($row["running_costs"],0).'</span></td>
+            <td><span>'.$WORDS['word_total_cap'].'<br>'.$WORDS['running_costs'].'</span></td>
+            <td><span> '.$CURSymb.' </span><span id="txt_running_costs" class="value-field">'.fixNmbr($row["running_costs"],0).'</span></td>
         </tr>
         <tr><td colspan="2"></td></tr>
         <tr class="main_total">
-            <td><span>'.$WORD_TOTAL_CAP.'</span></td>
-            <td><span> '.$CURR_SYMBOL.' </span><span id="txt_total_overal" class="value-field">'.fixNmbr($row["total_costs"],0).'</span></td>
+            <td><span>'.$WORDS['word_total_cap'].'</span></td>
+            <td><span> '.$CURSymb.' </span><span id="txt_total_overal" class="value-field">'.fixNmbr($row["total_costs"],0).'</span></td>
         </tr>
         <tr>
-            <td><span>'.$RUN_CP_DIST.'</span></td>
-            <td><span> '.$CURR_SYMBOL.'</span><span id="txt_running_costs_dist" class="value-field">'.fixNmbr($row["running_costs_dist"],2).'</span><span>/'.$STD_DIST.'</span></td>
+            <td><span>'.$WORDS['run_cp_dist'].'</span></td>
+            <td><span> '.$CURSymb.'</span><span id="txt_running_costs_dist" class="value-field">'.fixNmbr($row["running_costs_dist"],2).'</span><span>/'.$STD_DIST.'</span></td>
         </tr>
         <tr>
-            <td><span>'.$TOTAL_CP_DIST.'</span></td>
-            <td><span> '.$CURR_SYMBOL.'</span><span id="txt_total_costs_p_unit" class="value-field">'.fixNmbr($row["total_costs_dist"],2).'</span><span>/'.$STD_DIST.'</span></td>
+            <td><span>'.$WORDS['total_cp_dist'].'</span></td>
+            <td><span> '.$CURSymb.'</span><span id="txt_total_costs_p_unit" class="value-field">'.fixNmbr($row["total_costs_dist"],2).'</span><span>/'.$STD_DIST.'</span></td>
         </tr>
         <tr>
-            <td><span>'.$KINETIC_SPEED_TITLE.'</span></td>
+            <td><span>'.$WORDS['kinetic_speed_title'].'</span></td>
             <td> <span id="txt_kinetic_speed" class="value-field"></span>'.fixNmbr($row["kinetic_speed"],0).'<span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>
-            <td><span><a target="_blank" href="'.$consumer_speed_url.'">'.$VIRTUAL_SPEED_TITLE.'</a></span></td>
+            <td><span><a target="_blank" href="'.$consumer_speed_url.'">'.$WORDS['virtual_speed_title'].'</a></span></td>
             <td><span id="txt_virtual_speed" class="value-field">'.fixNmbr($row["virtual_speed"],0).'</span><span> '.$STD_DIST.'/h</span></td>
         </tr>
         <tr>
-            <td id="table-td-bottom-left"><span>'.$TOTAL_COSTS_PER_YEAR.'</span></td>
-            <td id="table-td-bottom-right">'.$CURR_SYMBOL.' <span id="txt_total_costs_year" class="value-field">'.fixNmbr($row["total_costs_year"],0).'</span></td>
+            <td id="table-td-bottom-left"><span>'.$WORDS['total_costs_per_year'].'</span></td>
+            <td id="table-td-bottom-right">'.$CURSymb.' <span id="txt_total_costs_year" class="value-field">'.fixNmbr($row["total_costs_year"],0).'</span></td>
         </tr>
     </table>
     <div id="tbl_statistics_footer"></div>';
