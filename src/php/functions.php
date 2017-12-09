@@ -22,11 +22,19 @@ else{
     $GLOBALS["CDN_URL"] = "";
 }
 
-if($IS_HTTPS && !isWorkDomain()){
-    $GLOBALS["HTTP_Protocol"] = "https://";
+
+if (isHTTP()){
+    
+    if($IS_HTTPS && !isWorkDomain()){
+        $GLOBALS["HTTP_Protocol"] = "https://";
+    }
+    else{
+        $GLOBALS["HTTP_Protocol"] = "http://";
+    }   
 }
 else{
-    $GLOBALS["HTTP_Protocol"] = "http://";
+    $GLOBALS["CDN_URL"] = "";
+    $GLOBALS["HTTP_Protocol"] = "";
 }
 
 //function which loads country info into global variables
@@ -172,6 +180,16 @@ function isWorkDomain(){
     $domain_client = strtolower($_SERVER['HTTP_HOST']);
    
     if(explode('.',$domain_client)[1]=="work"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function isHTTP(){
+
+    if(isset($_SERVER['HTTP_HOST'])){
         return true;
     }
     else{

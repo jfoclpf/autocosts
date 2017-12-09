@@ -10,7 +10,7 @@
 /*avoids code injection ensuring that input has only two characters (country code)*/
 if(strlen($_GET['country']) != 2){ 
     exit;
-} 
+}
 
 $PageURL = rawurldecode($_GET['url']);
 
@@ -55,7 +55,9 @@ var CDN_URL = "<?php echo $GLOBALS['CDN_URL'] ?>"; /*it's defined in the php*/
 var PAGE_URL = "<?php echo $PageURL ?>";
 
 /*Directory of JSON Translation files, change accordingly*/
-var LANG_JSON_DIR = CDN_URL + "countries/";
+var LANG_JSON_DIR = CDN_URL + "countries" + "/";
+
+var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";
 
 /*Location of Javascript Files, change accordingly*/
 var JS_FILES = {
@@ -66,6 +68,7 @@ var JS_FILES = {
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
     
+    initialize :          CDN_URL + "js/initialize.js",
     documentFunctions :   CDN_URL + "js/documentFunctions.js",    
     formFunctions :       CDN_URL + "js/formFunctions.js",
     validateForm :        CDN_URL + "js/validateForm.js",
@@ -74,15 +77,15 @@ var JS_FILES = {
     conversionFunctions : CDN_URL + "js/conversionFunctions.js",
     coreFunctions :       CDN_URL + "js/core/coreFunctions.js",
     getData :             CDN_URL + "js/getData.js",
-    initialize :          CDN_URL + "js/initialize.js",
     printResults :        CDN_URL + "js/printResults.js",    
     print :               CDN_URL + "js/print.js",
     dbFunctions :         CDN_URL + "js/dbFunctions.js",
     
-    statsFunctions :      CDN_URL + "db_stats/statsFunctions.js",
-    get_average_from_db : CDN_URL + "db_stats/get_average_from_db.js",
-    raster_tables :       CDN_URL + "db_stats/raster_tables.js",
+    statsFunctions :      CDN_URL + "db/statsFunctions.js",
     
+    jQuery : CDN_URL + "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+    jTimer : CDN_URL + "js/jquery/js_timer.js",
+
     PDF : {
         padfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
         generatePDF :     CDN_URL + "js/pdf/generatePDF.js",
@@ -105,8 +108,8 @@ var WORDS; //JS Object with the words for each country
 var INITIAL_TEX;
 
 /*global function variables for function expressions */
-var Run1, PrintElem, generatePDF;
-Run1 = PrintElem = generatePDF = function(){console.error("Function called and not yet loaded")};
+var Run1, PrintElem, generatePDF, TimeCounter;
+Run1 = PrintElem = generatePDF = TimeCounter = function(){console.error("Function called and not yet loaded")};
 
 /*global variable for Google reCaptcha*/
 var IS_HUMAN_CONFIRMED = false;
@@ -157,6 +160,43 @@ var SERVICE_AVAILABILITY = {
     g_captcha     : false,   /*variable that says whether Google Captcha JS files are available*/
     g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
 };
+
+
+//function that loads the scripts only once
+//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
+//this works like a module, like a singleton function
+var getScriptOnce = (function(url, callback){
+    var ScriptArray = []; //array of urls
+    return function (url, callback) {
+        //the array doesn't have such url
+        if (ScriptArray.indexOf(url) === -1){
+            if (typeof callback === 'function') {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                    callback();
+                });
+            } else {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                });
+            }
+        }
+        //the file is already there, it does nothing
+        //to support as of jQuery 1.5 methods .done().fail()
+        else{
+            return {
+                done: function () {
+                    return {
+                        fail: function () {}
+                    };
+                }
+            };
+        }
+    }
+}());
+
+//loads jQuery initializing functions
+getScriptOnce(JS_FILES.initialize);
 
 <?php
 use MatthiasMullie\Minify;

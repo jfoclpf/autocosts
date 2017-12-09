@@ -3,12 +3,12 @@
 
 //includes
 var fs = require('fs');
-eval(fs.readFileSync('../js/conversionFunctions.js')+'');
-eval(fs.readFileSync('../js/core/coreFunctions.js')+'');
-eval(fs.readFileSync('../js/get_data.js')+'');
+eval(fs.readFileSync('../src/js/conversionFunctions.js')+'');
+eval(fs.readFileSync('../src/js/core/coreFunctions.js')+'');
+eval(fs.readFileSync('../src/js/get_data.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
 //include credentials object
-eval(fs.readFileSync('../keys/db_credentials.js')+'');
+eval(fs.readFileSync('../keys/work/db_credentials.js')+'');
 var login_UserInputDB = get_DBcredentials();
 
 //module to allow to execute the queries in series

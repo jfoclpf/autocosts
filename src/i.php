@@ -50,10 +50,8 @@ ob_start("sanitize_output");
     <?php include "./layout/main.html"; ?>    
     <!--jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="<?php echo $GLOBALS["CDN_URL"] ?>js/jquery/js_timer.js"></script>    
     <script src="Globals.js.php?country=<?php echo $GLOBALS['country']?>&url=<?php echo rawurlencode($GLOBALS['PageURL'])?>">
     </script>    
-    <script src="<?php echo $GLOBALS["CDN_URL"] ?>js/initialize.js"></script>    
     <?php /*echo "Elapsed time is: ". (microtime(true) - $startTime)*1000 ." ms";*/?>
 </body>
 </html>
