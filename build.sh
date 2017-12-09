@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+if [ $# -eq 0 ]
+then
+        printf "Missing options!\n"
+        printf "(run $0 -h for help) \n\n"        
+        exit 0
+fi
 
 #string with available options
 optstring='hcetim'
@@ -20,18 +26,18 @@ do
                         ;;
                         
                 h)
-                        echo "Usage:"
-                        echo "build.sh -h "
-                        echo "build.sh -etc "
-                        echo "build.sh -c -m "
-                        echo "build.sh -cetm "
-                        echo ""
-                        echo "   -c     makes [c]lean copy from src/ to build/"
-                        echo "   -e     check for JS syntax [e]rrors"
-                        echo "   -t     generate html and jpeg stats [t]ables"
-                        echo "   -i     compress [i]mages, jpg and png files"                        
-                        echo "   -m     [m]inify js, json, css and html files"                        
-                        echo "   -h     help (this output)"
+                        printf "Usage: \n"
+                        printf "$0 -h \n"
+                        printf "$0 -etc \n"
+                        printf "$0 -c -m \n"
+                        printf "$0 -cetim \n"
+                        printf "\n"
+                        printf "   -c     makes [c]lean copy from src/ to build/ (need to be done on the 1st time) \n"
+                        printf "   -e     check for JS syntax [e]rrors (with npm jshint) \n"
+                        printf "   -t     generate html and jpeg stats [t]ables (connection to DB) \n"
+                        printf "   -i     compress [i]mages, jpg and png files (with ImageMagick) \n"                        
+                        printf "   -m     [m]inify js, json, css and html files (with npm minifier, html-minifier and json-minify) \n"                        
+                        printf "   -h     help (this output) \n\n"
                         exit 0
                         ;;                          
         esac
@@ -113,12 +119,13 @@ do
                         cd countries/
                         for i in *.json; do
                             [ -f "$i" ] || break
-                            echo $i;
+                            printf $i" ";
                             json-minify $i > $i.min;
                             rm $i;
                             mv $i.min $i;
                         done
                         cd ../
+                        printf "\n"
                         
                         cd ../
                         ;;
@@ -130,7 +137,7 @@ do
                         
                         for f in $(find . -type f -name '*.jpg')
                         do 
-                            echo "Compressing $f"
+                            printf "Compressing $f \n"
                             convert $f -sampling-factor 4:2:0 -strip -quality 85 -interlace Plane -colorspace RGB $f.min
                             rm $f
                             mv $f.min $f 
@@ -138,16 +145,16 @@ do
 
                         for f in $(find . -type f -name '*.png')
                         do
-                            echo "Compressing $f"
+                            printf "Compressing $f \n"
                             convert $f -strip $f.min
                             rm $f
                             mv $f.min $f
-                        done
+                        done                        
                         
                         cd ../
                         ;;
         esac
 done
 
-printf "Processed without errors \n"
+printf "\nProcessed without errors \n\n"
 

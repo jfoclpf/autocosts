@@ -1,6 +1,6 @@
-/***** DOCUMENT JS FUNCTIONS *******/
+/************* DOCUMENT JS FUNCTIONS ******************/
 /*====================================================*/
-/*Functions which work on the page*/
+/*         Functions which work on the page           */
 
 /*functions which is used to change the form parts*/
 var openForm_part = (function(part_number_origin, part_number_destiny) {
@@ -508,7 +508,7 @@ $('#working_time_form3 tr').hover(
 //when user clicks on stats table on the right side of screen, it opens the corresponding PNG image file
 $('#tbl_statistics').click(function(){
     var domain = window.location.hostname;
-    var url2open = getProtocol() + domain + "/db_stats/tables/" + COUNTRY + ".jpg";
+    var url2open = STATS_JPG_TABLES_DIR + COUNTRY + ".jpg";
     window.open(url2open);
 });
 

@@ -94,6 +94,25 @@ function createObjToDB(){
 
 }
 
+function submitDataToDB(objectToDb){
+
+    $.ajax({
+        url: 'db/submitUserInput.php',
+        type: 'POST',
+        data: {
+            objectToDb: objectToDb
+        },
+        success: function(data) {
+            console.log("Values inserted into DB for statistical analysis. Returned: ", data);
+            console.log("User took" + " " + objectToDb.time_to_fill_form + " " + "seconds to fill the form");
+        },
+        error: function () {
+            console.error("There was an error submitting the values for statistical analysis");
+        }
+    });
+
+}
+
 //function that is run by the previous submit_data function
 function sanityChecks(objectToDb) {
 
@@ -135,24 +154,6 @@ function sanityChecks(objectToDb) {
     }
 
     return objectToDb;
-}
-
-function submitDataToDB(objectToDb){
-
-    $.ajax({
-        url: 'db/submitUserInput.php',
-        type: 'POST',
-        data: {
-            objectToDb: objectToDb
-        },
-        success: function(data) {
-            console.log(data, "Values inserted into DB for statistical analysis");
-        },
-        error: function () {
-            console.error("There was an error submitting the values for statistical analysis");
-        }
-    });
-
 }
 
 //with a certain form data in a readObj, submits such data to the form inputs

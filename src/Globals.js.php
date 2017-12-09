@@ -56,8 +56,8 @@ var PAGE_URL = "<?php echo $PageURL ?>";
 
 /*Directory of JSON Translation files, change accordingly*/
 var LANG_JSON_DIR = CDN_URL + "countries" + "/";
-
 var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";
+var STATS_JPG_TABLES_DIR = CDN_URL + "tables" + "/";
 
 /*Location of Javascript Files, change accordingly*/
 var JS_FILES = {

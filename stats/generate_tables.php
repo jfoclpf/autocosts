@@ -3,12 +3,12 @@
 /*gets parent directory of current directory where the file is stored*/
 $HOME_DIR = dirname(getcwd())."/";
 
-$COUNTRIES_DIR = $HOME_DIR."src/countries"."/";
-$KEYS_DIR = $HOME_DIR."keys"."/";
-$TABLES_DIR = $HOME_DIR."build/tables"."/";
+$COUNTRIES_DIR  = $HOME_DIR."src/countries"."/";
+$KEYS_DIR       = $HOME_DIR."keys"."/";
+$TABLES_DIR     = $HOME_DIR."build/tables"."/";
 $FUNCTIONS_FILE = $HOME_DIR."src/php/functions.php";
 
-/*############################################################*/
+/*######################################################################*/
 
 /*choses release, version or prod */
 if(sizeof($argv) == 1){    
@@ -71,7 +71,7 @@ if (!file_exists($TABLES_DIR)) {
 //for each country creates a corresponding file
 foreach ($avail_CT as $country => $country_name) {
 
-    echo $country."\n";
+    print $country.".html ";
     
     $query = "SELECT * FROM monthly_costs_statistics WHERE country='".$country."'";
     $result = $connectionDB->query($query);
@@ -155,5 +155,5 @@ foreach ($avail_CT as $country => $country_name) {
     file_put_contents($file, $content);
 }
 
-print "Created countries statistical tables HTML files! \n\n";
+print "\nCreated countries statistical tables HTML files! \n";
 ?>

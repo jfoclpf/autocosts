@@ -85,6 +85,9 @@ function setLanguageVars(){
     $('span[class^="lang"]').each(function(){
         var LangVar = (this.className).replace('lang-','');
         var Text = WORDS[LangVar];
+        if (LangVar == "word_per"){
+            Text += "&#32;"
+        }
         $(this).html(Text);        
     });
     

@@ -181,8 +181,8 @@ function print_result_final_text(data){
 
     if(data.total_costs_month >= 150 && data.age_months > 6) {
 
-        var text_msg = '<div>' + WORDS.with_this_level_of_costs + ' ' +
-                       '<b>' + data.age_months + '</b>' + WORDS.months_poss + ':' + '</div>'+
+        var text_msg = '<div>' + WORDS.with_this_level_of_costs + '&#32;' +
+                       '<b>' + data.age_months + '</b>' + '&nbsp;' + WORDS.months_poss + ':' + '</div>'+
                        '<div class="red_bold_text">'+
                        numberWithSpaces((data.age_months * data.total_costs_month / 100).toFixed(0)*100)+
                        ' ' + WORDS.curr_name_big_plural + '</div></div>';
