@@ -4,11 +4,13 @@
 $IS_HTTPS = true; //false for simple http
 $IS_CDN = false; //Content delivery network
 
-//#############################################
 //CDN configuration at https://app.keycdn.com/zones
 //CDN provider: https://app.keycdn.com/zones
 $CDN_URL_PROD = "https://cdn.autocosts.info"."/"; //preserve the bar "/" at the end
-$CDN_URL_WORK = "http://cdn.autocosts.work"."/"; //preserve the bar "/" at the end
+$CDN_URL_WORK = "http://cdn.autocosts.work"."/";  //preserve the bar "/" at the end
+
+//###############################################################################
+//###############################################################################
 
 if($IS_CDN){
     if(isWorkDomain()){
