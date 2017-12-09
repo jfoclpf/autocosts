@@ -2,34 +2,23 @@
 set -e
 
 if [ -z "$1" ]
-then
-  echo "Error. No input! Define 'work' or 'prod'"
-  exit
-fi
-
-if [ $1 = "work" ] || [ $1 = "prod" ]
-then
-  echo "Aceptable answer"
+then    
+    dir="work"
 else
-  echo "Valid input! Define 'work' or 'prod'"
-  exit
+    if [ $1 = "work" ] || [ $1 = "prod" ]
+    then        
+        dir=$1
+    else
+      echo "Invalid input! Define 'work' or 'prod'"
+      exit
+    fi
 fi
 
-if [ $1 = "prod" ]
-then
-  dir="public_html"
-fi
-
-if [ $1 = "work" ]
-then
-  dir="work"
-fi
+echo "Upload to "$dir
 
 cd ../build/
 
-scp -P 2222 -r countries/ css/ db_stats/ google/ images/ js/ layout/ php/ jfolpf@autocosts.info:/home4/jfolpf/$dir
-
-scp -P 2222 *.php favicon.ico jfolpf@autocosts.info:/home4/jfolpf/$dir
+scp -P 2222 -r * jfolpf@autocosts.info:/home4/jfolpf/$dir
 
 cd ../scripts/
 

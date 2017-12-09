@@ -2,6 +2,10 @@
 
 cd ../src/images/
 
+echo ""
+echo "Compressing images in src/"
+echo ""
+
 for f in $(find . -name '*.jpg')
 do 
   echo "Compressing $f"
@@ -20,31 +24,5 @@ done
 
 echo "All images compressed"
 
-if [ -z "$1" ]
-then
-  exit
-fi
 
-if [ $1 = "upload" ]
-then  
-  
-  if [ -z "$2" ]
-  then
-    echo "Define where to upload: 'work' or 'prod'"
-    exit
-  fi
-  
-  if [ $2 = "prod" ]
-  then
-    dir="public_html"
-  fi
-
-  if [ $2 = "work" ]
-  then
-    dir="work"
-  fi
-
-  rsync -rav -e 'ssh -p 2222' --include '*.png' --include='*.jpg' . jfolpf@autocosts.info:~/$dir/images/
-
-fi
 

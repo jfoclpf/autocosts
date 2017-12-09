@@ -1,8 +1,5 @@
 
-/* runs function initialize() every time the page is loaded */
-window.onload = initialize;
-
-function initialize() {
+(function initialize() {
 
     $.getJSON(LANG_JSON_DIR + COUNTRY + ".json", function(json) {
         //console.log(json); // this will show the info it in firebug console
@@ -16,8 +13,7 @@ function initialize() {
         oldIE();
 
         CurrentFormPart=1;
-
-        TimeCounter.resetStopwatch();
+        
         DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
         DISPLAY.descriptionHTML = $('#description').html();
@@ -39,15 +35,22 @@ function initialize() {
     
     /*Google Analytics*/
     if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() ) {
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function(i, s, o, g, r, a, m) {
+            i.GoogleAnalyticsObject = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-3421546-6', 'auto');
         ga('send', 'pageview');
     }
-}
+})();
 
 //loads HTML Layout
 function loadsHTMLLayout(){
@@ -55,7 +58,7 @@ function loadsHTMLLayout(){
     //loads Countries Select dropdown box
     loadsCountriesSelectBox();
 
-    $("#div13").load(CDN_URL + "db_stats/tables/"+COUNTRY + ".html"); //costs table        
+    $("#div13").load(STATS_HTML_TABLES_DIR + COUNTRY + ".html"); //costs table        
     //divs that need to be hidden
     DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;                
     $("#input_div").load(CDN_URL + "layout/form.html", function(){
@@ -251,57 +254,26 @@ function check_ga() {
     }
 }
 
-//function that loads the scripts only once
-//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
-//this works like a module, like a singleton function
-var getScriptOnce = (function(url, callback){
-    var ScriptArray = []; //array of urls
-    return function (url, callback) {
-        //the array doesn't have such url
-        if (ScriptArray.indexOf(url) === -1){
-            if (typeof callback === 'function') {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                    callback();
-                });
-            } else {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                });
-            }
-        }
-        //the file is already there, it does nothing
-        //to support as of jQuery 1.5 methods .done().fail()
-        else{
-            return {
-                done: function () {
-                    return {
-                        fail: function () {}
-                    };
-                }
-            };
-        }
-    }
-}());
-
-
 /*Timer function*/
 /* jshint ignore:start */
-var TimeCounter = new (function () {
-    var incrementTime = 500;
-    var currentTime = 0;
-    $(function () {
-        TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
-    });
-    function updateTimer() {
-        currentTime += incrementTime;
-    }
-    this.resetStopwatch = function () {
-        currentTime = 0;
-    };
-    this.getCurrentTimeInSeconds = function () {
-        return currentTime / 1000;
-    };
+getScriptOnce(JS_FILES.jTimer, function(){  
+    TimeCounter = new function () {
+        var incrementTime = 500;
+        var currentTime = 0;
+        $(function () {
+            TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
+        });
+        function updateTimer() {
+            currentTime += incrementTime;
+        }
+        this.resetStopwatch = function () {
+            currentTime = 0;
+        };
+        this.getCurrentTimeInSeconds = function () {
+            return currentTime / 1000;
+        };
+    };    
+    TimeCounter.resetStopwatch();
 });
 /* jshint ignore:end */
 

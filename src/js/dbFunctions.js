@@ -4,8 +4,11 @@ function submit_data() {
 
     var objectToDb = createObjToDB();
     objectToDb = sanityChecks(objectToDb);
-
+    
+    //get current time to know how much time the user took to fill the form
     objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
+    
+    //get a user unique generated ID
     objectToDb.client_uuid = uuid;
 
     objectToDb.country = COUNTRY; //Country is a global variable
@@ -137,14 +140,16 @@ function sanityChecks(objectToDb) {
 function submitDataToDB(objectToDb){
 
     $.ajax({
-        url: 'db_stats/SubmitUserInput.php',
+        url: 'db/submitUserInput.php',
         type: 'POST',
         data: {
             objectToDb: objectToDb
         },
-        success: function(data) {},
+        success: function(data) {
+            console.log(data, "Values inserted into DB for statistical analysis");
+        },
         error: function () {
-            console.log("There was an error submitting the values for statistical analysis");
+            console.error("There was an error submitting the values for statistical analysis");
         }
     });
 

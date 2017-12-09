@@ -1,4 +1,5 @@
 {
+    "country_name" : "test",
     "fuel_efficiency_std_option" : 3,
     "distance_std_option" : 2,
     "fuel_price_volume_std" : 1,
