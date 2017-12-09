@@ -1,11 +1,11 @@
 var fs = require('fs');
-var path = fs.absolute("./tables/");
-console.log("The tables HTML files are in: " + path);
-var css_file = fs.absolute("../css/") + "right.css";
+var TABLES_DIR = fs.absolute("../build/tables/");
+console.log("The tables HTML files are in: " + TABLES_DIR);
+var css_file = fs.absolute("../build/css/") + "right.css";
 console.log("The CSS main file is in: " + css_file);
 
 // Get a list all files in directory
-var list = fs.list(path);
+var list = fs.list(TABLES_DIR);
 // Cycle through the list and creates array of pages
 
 function render_pages(){
@@ -13,10 +13,10 @@ function render_pages(){
     for(var x = 0, n = 0; x < list.length; x++){
       // Note: If you didn't end path with a slash, you need to do so here.
         var file_name = list[x];
-        var file_full_path = path + file_name;
+        var file_path = TABLES_DIR + file_name;
 
         //it must be a file with the format of XX.html
-        if(fs.isFile(file_full_path) && ((file_name.split("."))[0]).length==2 && (file_name.split("."))[1]=="html" ){
+        if(fs.isFile(file_path) && ((file_name.split("."))[0]).length==2 && (file_name.split("."))[1]=="html" ){
             //console.log("Creating page from "+file_name);
 
             pages[n] = require('webpage').create();
@@ -26,13 +26,13 @@ function render_pages(){
             content += '<html><head>';
             content += '<link rel="stylesheet" href="file://'+ css_file + '" type="text/css" media="screen">';
             content += '</head><body>';
-            content += fs.read(path + file_name);
+            content += fs.read(TABLES_DIR + file_name);
             content += '</body></html>';
             pages[n].content = content;
 
             img_fname = (file_name.split("."))[0]+".jpg";
             console.log('Rendering file ' + file_name + ' to ' + img_fname);
-            pages[n].render(path + img_fname, {format: 'jpeg', quality: '100'});
+            pages[n].render(TABLES_DIR + img_fname, {format: 'jpeg', quality: '100'});
             pages[n].close();
 
             n++;
