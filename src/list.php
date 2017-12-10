@@ -1,10 +1,23 @@
-<?php header('Content-Type: text/html; charset=utf-8');?>
-<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-    <HEAD>
-        <TITLE>
+<?php header('Content-Type: text/html; charset=utf-8');
+
+include_once("./php/functions.php");
+
+loadsCountries("./countries/list.json");
+$avail_CT  = $GLOBALS["avail_CT"];  
+$lang_CT   = $GLOBALS["lang_CT"];
+$domain_CT = $GLOBALS["domain_CT"];
+
+asort($avail_CT); /*sorts alphabetically the counties list*/
+
+/*sanitize_output is a function in file php/functions.php that minifies the echoed php*/
+ob_start("sanitize_output");
+
+?><!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>
             List of Countries for the Automobile Costs Calculator
-        </TITLE>
+        </title>
         <style>
             table {
                 border-collapse: collapse;
@@ -14,8 +27,8 @@
                 padding: 4px;
             }
         </style>
-    </HEAD>
-<BODY>
+    </head>
+<body>
 
 <h1 style="text-align:center">
     List of Countries for the Automobile Costs Calculator
@@ -62,24 +75,23 @@
             </th>        
         </tr>
         <tr>
-        <?php
-            include_once("./countries/list.php");
-            asort($avail_CT); //sorts alphabetically the counties list
-            
+        <?php                                    
             $i=1;
             foreach ($avail_CT as $key => $value) {
                 if (strtoupper($key) != "XX"){
-                    include_once('./countries/' . $key . '.php');
+                    loadsLanguageVars("./countries/".$key.".json");
+                    $WORDS = $GLOBALS["WORDS"];                    
+
                     echo '<tr>';
                     echo '<td>'.$i.'</td>'; $i++;
                     echo '<td>'.$value.'</td>';
                     echo '<td>'.$key.'</td>';
                     echo '<td style="text-align:center">'. substr($lang_CT[$key],0,2) .'</td>';
                     echo '<td><a href="http://'.strtolower($domain_CT[$key]).'/'.strtoupper($key).'">'.strtolower($domain_CT[$key]).'</a></td>';
-                    echo '<td style="text-align:center">'.$CURR_CODE.'</td>';
-                    echo '<td>'.$CURR_NAME.'</td>';
-                    echo '<td style="text-align:center">'.$CURR_SYMBOL.'</td>';                
-                    switch($fuel_efficiency_std_option){
+                    echo '<td style="text-align:center">'.$WORDS['curr_code'].'</td>';
+                    echo '<td>'.$WORDS['curr_name'].'</td>';
+                    echo '<td style="text-align:center">'.$WORDS['curr_symbol'].'</td>';                
+                    switch($WORDS['fuel_efficiency_std_option']){
                         case 1:
                             echo '<td>l/100km</td>';
                             break;
@@ -101,7 +113,7 @@
                         default:
                             echo '<td>error</td>';
                     }
-                    switch($distance_std_option){
+                    switch($WORDS['distance_std_option']){
                         case 1:
                             echo '<td>kilometres</td>';
                             break;
@@ -114,7 +126,7 @@
                         default:
                             echo '<td>error</td>';
                     }
-                    switch($fuel_price_volume_std){
+                    switch($WORDS['fuel_price_volume_std']){
                         case 1:
                             echo '<td>litres</td>';
                             break;
@@ -136,5 +148,5 @@
     </table>
 </div>
 <br><br>
-</BODY>
-</HTML>
+</body>
+</html>

@@ -64,8 +64,8 @@ var STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statist
 /*Location of Javascript Files, it may be changed accordingly*/
 var JS_FILES = {
     Google : {
-        rgbcolor : CDN_URL + "google/rgbcolor.js",        
-        canvg:     CDN_URL + "google/canvg.js",
+        rgbcolor : "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js",  /*RGB color parser in JavaScript*/
+        canvg: "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/canvg.min.js",
         recaptchaAPI : "https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE,
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
