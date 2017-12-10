@@ -12,12 +12,11 @@ if(strlen($_GET['country']) != 2){
     exit;
 }
 
-$PageURL = rawurldecode($_GET['url']);
-
 include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
 loadsCountries($_SERVER['DOCUMENT_ROOT'].'/countries/list.json');
+
 asort($GLOBALS['avail_CT']);
-//removes XX from array
+/*removes XX from array*/
 unset($GLOBALS['avail_CT']['XX']);
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
@@ -49,17 +48,20 @@ var COUNTRY = "<?php echo $_GET['country']; ?>";
 var LANGUAGE = "<?php echo $GLOBALS['lang_CT'][$_GET['country']]; ?>";
 /*List of countries and domains in a Javascript Object*/
 var COUNTRY_LIST = (<?php echo json_encode($GLOBALS['avail_CT']); ?>);
-var DOMAIN_LIST = (<?php echo json_encode($GLOBALS['domain_CT']); ?>);
+var DOMAIN_LIST  = (<?php echo json_encode($GLOBALS['domain_CT']); ?>);
 
-var CDN_URL = "<?php echo $GLOBALS['CDN_URL'] ?>"; /*it's defined in the php*/
-var PAGE_URL = "<?php echo $PageURL ?>";
+var CDN_URL       = "<?php echo $GLOBALS['CDN_URL'] ?>"; /*it's defined in the php*/
+var HTTP_Protocol = "<?php echo $GLOBALS['HTTP_Protocol'] ?>"; /*it's defined in the php*/
 
-/*Directory of JSON Translation files, change accordingly*/
-var LANG_JSON_DIR = CDN_URL + "countries" + "/";
-var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";
-var STATS_JPG_TABLES_DIR = CDN_URL + "tables" + "/";
+/*forms present page full url, example 'http://autocosts.info/UK' */
+var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 
 
-/*Location of Javascript Files, change accordingly*/
+/*it may be changed accordingly*/
+var LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
+var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
+var STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
+
+/*Location of Javascript Files, it may be changed accordingly*/
 var JS_FILES = {
     Google : {
         rgbcolor : CDN_URL + "google/rgbcolor.js",        
@@ -104,12 +106,12 @@ var UBER_FILE = "php/get_uber.php?c=" + COUNTRY;
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
 
-var WORDS; //JS Object with the words for each country
+var WORDS; /* JS Object with the words for each country */
 var INITIAL_TEX;
 
 /*global function variables for function expressions */
 var Run1, PrintElem, generatePDF, TimeCounter;
-Run1 = PrintElem = generatePDF = TimeCounter = function(){console.error("Function called and not yet loaded")};
+Run1 = PrintElem = generatePDF = TimeCounter = function(){console.error("Function called and not yet loaded");};
 
 /*global variable for Google reCaptcha*/
 var IS_HUMAN_CONFIRMED = false;
@@ -162,13 +164,13 @@ var SERVICE_AVAILABILITY = {
 };
 
 
-//function that loads the scripts only once
-//for understanding this scope, read http://ryanmorr.com/understanding-scope-and-context-in-javascript/
-//this works like a module, like a singleton function
+/*function that loads the scripts only once */
+/*for understanding this scope, read: ryanmorr.com/understanding-scope-and-context-in-javascript */
+/*this works like a module, like a singleton function */
 var getScriptOnce = (function(url, callback){
-    var ScriptArray = []; //array of urls
+    var ScriptArray = []; /*array of urls*/
     return function (url, callback) {
-        //the array doesn't have such url
+        /*the array doesn't have such url*/
         if (ScriptArray.indexOf(url) === -1){
             if (typeof callback === 'function') {
                 return $.getScript(url, function(){
@@ -181,8 +183,8 @@ var getScriptOnce = (function(url, callback){
                 });
             }
         }
-        //the file is already there, it does nothing
-        //to support as of jQuery 1.5 methods .done().fail()
+        /*the file is already there, it does nothing*/
+        /*to support as of jQuery 1.5 methods .done().fail()*/
         else{
             return {
                 done: function () {
@@ -192,10 +194,10 @@ var getScriptOnce = (function(url, callback){
                 }
             };
         }
-    }
+    };
 }());
 
-//loads jQuery initializing functions
+/*loads jQuery initializing functions*/
 getScriptOnce(JS_FILES.initialize);
 
 <?php
