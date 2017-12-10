@@ -10,7 +10,6 @@ include_once("./php/functions.php");
 loadsCountries("./countries/list.json");
 include_once("./php/url_selector.php");
 loadsLanguageVars("./countries/".$GLOBALS['country'].".json");
-include_once("./php/minifier.php");
 
 /*sanitize_output is a function in file php/functions.php that minifies the echoed php*/
 ob_start("sanitize_output");
