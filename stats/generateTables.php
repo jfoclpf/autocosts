@@ -4,9 +4,11 @@
 $HOME_DIR = dirname(getcwd())."/";
 
 $COUNTRIES_DIR  = $HOME_DIR."src/countries"."/";
-$KEYS_DIR       = $HOME_DIR."keys"."/";
 $TABLES_DIR     = $HOME_DIR."build/tables"."/";
 $FUNCTIONS_FILE = $HOME_DIR."src/php/functions.php";
+
+$KEYS_DIR       = $HOME_DIR."keys"."/";
+$KEY_FILE_NAME  = "db_credentials.php";
 
 /*######################################################################*/
 
@@ -28,9 +30,9 @@ else{
 
 echo "chosen ".$REL."\n";
 
-$FILE_KEYS = $KEYS_DIR.$REL."/db_credentials.php"; 
-include($FILE_KEYS); //DB credentials
-echo "keys obtained from: ".$FILE_KEYS."\n";
+$key_full_path = $KEYS_DIR.$REL."/".$KEY_FILE_NAME; 
+include($key_full_path); //DB credentials
+echo "keys obtained from: ".$key_full_path."\n";
 
 /*File which generates the statistics tables on a HTML file
 that will be shown in the right column of the main page*/
@@ -42,11 +44,6 @@ function fixNmbr($i,$n){
     $float_num = floatval($i);
     return number_format($float_num, $n, '.', '');
 }
-
-
-include_once($FUNCTIONS_FILE);
-loadsCountries($COUNTRIES_DIR."list.json");
-$avail_CT=$GLOBALS["avail_CT"];
 
 $isDBConnectionSane = true;
 $connectionDB = mysqli_connect($autocosts_host, $autocosts_user, $autocosts_password, $autocosts_database);
@@ -60,6 +57,9 @@ if (!$connectionDB)
 
 echo "Connected successfully to DB \n";
 
+include_once($FUNCTIONS_FILE);
+loadsCountries($COUNTRIES_DIR."list.json");
+$avail_CT=$GLOBALS["avail_CT"];
 asort($avail_CT); //sorts alphabetically the counties list
 
 echo "Creating tables \n";

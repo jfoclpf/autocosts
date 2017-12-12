@@ -56,10 +56,10 @@ do
                         printf "\n## Generating statistical tables \n"
                         
                         printf "\n    Extracts stat info from prod and create html tables \n\n"
-                        php -f generate_tables.php prod
+                        php -f generateTables.php prod
 
                         printf "\n    Renders html tables into jpge files \n\n"
-                        phantomjs raster_tables.js
+                        phantomjs rasterTables.js
                         
                         cd ../
                         ;;                                             

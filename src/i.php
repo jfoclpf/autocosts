@@ -25,7 +25,7 @@ ob_start("sanitize_output");
     <meta name="author" content="Autocosts Org">
 
     <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        script-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';         
         style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
         img-src 'self' *.autocosts.info;
     ">
