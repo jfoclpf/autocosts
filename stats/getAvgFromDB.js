@@ -2,19 +2,40 @@
 //the file populating the average DB table
 
 //includes
-var fs = require('fs');
-eval(fs.readFileSync('../src/js/conversionFunctions.js')+'');
-eval(fs.readFileSync('../src/js/core/coreFunctions.js')+'');
-eval(fs.readFileSync('../src/js/get_data.js')+'');
-eval(fs.readFileSync('./statsFunctions.js')+'');
-//include credentials object
-eval(fs.readFileSync('../keys/work/db_credentials.js')+'');
-var login_UserInputDB = get_DBcredentials();
+var fs    = require('fs');
+var path  = require("path");
+var async = require('async'); //module to allow to execute the queries in series
+var mysql = require('mysql'); //module to get info from DB
 
-//module to allow to execute the queries in series
-var async      = require('async');
-//module to get info from DB
-var mysql      = require('mysql');
+var HOME_DIR = path.resolve(__dirname, '..') + "/";
+var SRC_DIR = HOME_DIR + "src" + "/";
+
+eval(fs.readFileSync(SRC_DIR + 'js/conversionFunctions.js')+'');
+eval(fs.readFileSync(SRC_DIR + 'js/core/coreFunctions.js')+'');
+eval(fs.readFileSync(SRC_DIR + 'js/getData.js')+'');
+eval(fs.readFileSync('./statsFunctions.js')+'');
+
+var REL; //release shall be 'work' or 'prod', it's 'work' by default
+if(process.argv.length == 2){    
+    REL = "work";
+}
+else if (process.argv.length > 3){
+    console.log("Just one argument is accepted \n");
+    process.exit();
+}
+else{
+    if (process.argv[2]!="work" && process.argv[2]!="prod"){
+        console.log("work or prod must be chosen \n");
+        process.exit();
+    }
+    REL = process.argv[2];
+}
+console.log("chosen '" + REL + "'");
+//process.exit();
+
+//include credentials object
+eval(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.js')+'');
+var login_UserInputDB = get_DBcredentials();
 
 //database variable
 var db;
@@ -44,7 +65,9 @@ async.series([
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('Connected successfully as id ' + db.threadId);
+            console.log('User ' + login_UserInputDB.user + 
+                        ' connected successfully to DB ' + login_UserInputDB.database + 
+                        ' at ' + login_UserInputDB.host);
         });
 
         db.query('SELECT * FROM country_specs', function(err, results, fields) {
@@ -71,7 +94,9 @@ async.series([
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('Connected successfully as id ' + db.threadId);
+            console.log('User ' + login_UserInputDB.user + 
+                        ' connected successfully to DB ' + login_UserInputDB.database + 
+                        ' at ' + login_UserInputDB.host);
         });
 
         db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
@@ -95,7 +120,9 @@ async.series([
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('Connected successfully as id ' + db.threadId);
+            console.log('User ' + login_UserInputDB.user + 
+                        ' connected successfully to DB ' + login_UserInputDB.database + 
+                        ' at ' + login_UserInputDB.host);
         });
 
         db.query('SELECT * FROM users_insertions', function(err, results, fields) {
@@ -155,7 +182,7 @@ async.series([
         //builds the query to insert all the vaules for each country
         //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
         for (var i = 0; i < countries.length; i++){
-            console.log("Country: " + countries[i].Country);
+            process.stdout.write(countries[i].Country + " ");
 
             country_users = []; //array with unique_users for selected countries[i]
             country_data  = []; //array with everything for selected countries[i]
@@ -257,7 +284,9 @@ async.series([
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('Connected successfully as id ' + db.threadId);
+            console.log('User ' + login_UserInputDB.user + 
+                        ' connected successfully to DB ' + login_UserInputDB.database + 
+                        ' at ' + login_UserInputDB.host);
         });
 
         db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
@@ -278,7 +307,9 @@ async.series([
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('Connected successfully as id ' + db.threadId);
+            console.log('User ' + login_UserInputDB.user + 
+                        ' connected successfully to DB ' + login_UserInputDB.database + 
+                        ' at ' + login_UserInputDB.host);
         });
 
         db.query(queryInsert, function(err, results, fields) {
