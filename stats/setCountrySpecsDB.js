@@ -42,9 +42,13 @@ var country_list = JSON.parse(fs.readFileSync(COUNTRY_LIST_FILE, 'utf8'));
 var available_CT = country_list.available_CT;
 var languages_CT = country_list.languages_CT;
 var domains_CT = country_list.domains_CT;
+var WORDS;
 
 //sorts array of countries
 available_CT = sortObj(available_CT);
+delete available_CT["XX"];
+
+//process.exit();
 
 //database variable
 var db;
@@ -69,8 +73,7 @@ async.series([
 
         db.query('DELETE FROM country_specs', function(err, results, fields) {
             if (err) {console.log(err); throw err;}
-            //console.log(countries);
-            db.end();
+            //console.log(countries);            
             console.log("Previous data deleted from table");
             callback();
         });
@@ -78,53 +81,46 @@ async.series([
     
     function(callback) {
 
+        var queryInsert;
+        for (var key in available_CT){                        
+               
+            WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + key + ".json", 'utf8'));
+            queryInsert = "INSERT INTO country_specs ( \
+                Country, \
+                currency, \
+                distance_std, \
+                fuel_efficiency_std, \
+                fuel_price_volume_std \
+                ) \
+                  \
+                VALUES ( \
+                '" + key + "', \
+                '" + WORDS['curr_code'] + "', \
+                " + WORDS['distance_std_option'] + ", \
+                " + WORDS['fuel_efficiency_std_option'] + ", \
+                " + WORDS['fuel_price_volume_std'] + " \
+                )";
+            
+            
+            var size = Object.keys(available_CT).length;
+            var i=0;
+            db.query(queryInsert ,
+                (function(key2){
+                    return function(err, results, fields) {
+                        if (err) {console.log(err); throw err;}                
+                        process.stdout.write(key2 + " ");
+                        i++;
+                        //last callback
+                        if (i == size){
+                            process.stdout.write("\n" + "Countries specs inserted into respective DB\n\n");
+                            db.end();
+                            callback();
+                        }
+                    };
+                })(key));
+        }            
+        
     }
 ]);
 
-
-
-
-
-
-/*
-include_once($FUNCTIONS_FILE);
-loadsCountries($COUNTRIES_DIR."list.json");
-$avail_CT=$GLOBALS["avail_CT"];
-//removes XX from array
-unset($avail_CT['XX']);
-asort($avail_CT); //sorts alphabetically the counties list
-
-foreach ($avail_CT as $key => $value) {
-    print $key." ";
-    
-    //gets country language variables
-    loadsLanguageVars($COUNTRIES_DIR.$key.".json");
-    $WORDS = $GLOBALS["WORDS"];  
-
-    $queryInsert = "INSERT INTO country_specs (
-        Country,
-        currency,
-        distance_std,
-        fuel_efficiency_std,
-        fuel_price_volume_std
-        )
-
-        VALUES (
-        '".$key."',
-        '".$WORDS['curr_code']."',
-        ".$WORDS['distance_std_option'].",
-        ".$WORDS['fuel_efficiency_std_option'].",
-        ".$WORDS['fuel_price_volume_std']."
-        )";
-
-    //echo $queryInsert;
-
-    $queryResult = mysqli_query($connectionDB, $queryInsert);
-    //echo "\n\n result command insert: ".$queryResult;
-
-}
-mysqli_close($connectionDB);
-
-echo "\nDB repopulated"."\n";
-*/
 
