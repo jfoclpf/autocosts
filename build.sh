@@ -9,7 +9,7 @@ then
 fi
 
 #string with available options
-optstring='hcesrtim'
+optstring=':hcesrtim :l:'
 
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
@@ -30,15 +30,16 @@ do
             printf "$0 -h \n"
             printf "$0 -etc \n"
             printf "$0 -c -m \n"
-            printf "$0 -cetim \n"
+            printf "$0 -l work -cesrtim \n"
             printf "\n"
-            printf "   -c     makes [c]lean copy from src/ to build/ (need to be done on the 1st time) \n"
-            printf "   -e     check for JS syntax [e]rrors in src/ (with npm jshint) \n"
-            printf "   -s     creates DB with countries' [s]pecifcations (connection to DB) \n"
-            printf "   -r     [r]efreshes statistical costs DB (connection to specifcations DB) \n"
-            printf "   -t     generate html and jpeg stats [t]ables (based on statistical costs DB) \n"
-            printf "   -i     compress [i]mages, jpg and png files (with ImageMagick) \n"                        
-            printf "   -m     [m]inify js, json, css and html files (with npm minifier, html-minifier and json-minify) \n"                        
+            printf "   -l     select re[l]ease                                - -l work or -l prod (work by default) \n"            
+            printf "   -c     makes [c]lean copy from src/ to build/          - need to be done on the 1st time \n"
+            printf "   -e     check for JS syntax [e]rrors in src/            - with npm jshint \n"
+            printf "   -s     creates DB with countries' [s]pecifcations      - connection to DB \n"
+            printf "   -r     [r]efreshes statistical costs DB                - connection to specifcations DB \n"
+            printf "   -t     generate html and jpeg stats [t]ables in build/ - based on statistical costs DB \n"
+            printf "   -i     compress [i]mages, jpg and png files in build/  - with ImageMagick \n"                        
+            printf "   -m     [m]inify js, json, css and html files           - with npm: minifier, html-minifier and json-minify \n"
             printf "   -h     help (this output) \n\n"
             exit 0
             ;;                          
@@ -47,6 +48,27 @@ done
 
 OPTIND=1
 
+RELEASE="work" 
+#get release
+while getopts "$optstring" OPTION; 
+do
+    case "$OPTION" in
+
+        l)
+            l=${OPTARG}
+            if [ "$l" == "prod" ]
+            then
+                RELEASE="prod"
+            fi                                    
+            ;;
+        
+    esac
+done
+
+echo "Chosen release: $RELEASE"
+
+
+OPTIND=1
 
 #this needs to be done before the "Refreshes statistical costs DB"
 while getopts "$optstring" OPTION; 
@@ -56,7 +78,7 @@ do
         s)
             cd stats/
             printf "\n## Creates DB with countries' specifcations \n"
-            node setCountrySpecsDB.js
+            node setCountrySpecsDB.js $RELEASE
             cd ../
             ;;
         
@@ -74,7 +96,7 @@ do
                 
             cd stats/
             printf "\n## Refreshes statistical costs DB \n"
-            node getAvgFromDB.js
+            node getAvgFromDB.js $RELEASE
             cd ../
             ;;
     esac
@@ -93,7 +115,7 @@ do
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
-            php -f generateTables.php prod
+            php -f generateTables.php $RELEASE
 
             printf "\n    Renders html tables into jpge files \n\n"
             phantomjs rasterTables.js
