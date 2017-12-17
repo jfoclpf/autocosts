@@ -295,6 +295,30 @@ input:checked + .slider:before {
   border-radius: 15%;
 }
 
+
+.lang-fixed_costs_header_1,
+.lang-running_costs_header_1,
+.lang-extra_data {
+    display: block;
+    font-size: 16px;    
+    font-weight: bold;
+    margin: 2px;
+}
+
+.form_section_title {
+    font-size: 18px;
+    text-align: left;
+    margin: 0;
+}
+
+.lang-fixed_costs_header_2,
+.lang-running_costs_header_2 {
+    display: block;
+    font-size: 15px;
+    font-weight: normal;
+    margin: 2px;
+}
+
 /*******************/
 
 #run_button_div{

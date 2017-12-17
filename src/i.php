@@ -10,6 +10,7 @@ include_once("./php/functions.php");
 loadsCountries("./countries/list.json");
 include_once("./php/url_selector.php");
 loadsLanguageVars("./countries/".$GLOBALS['country'].".json");
+$GLOBALS['HOME_DIR'] = getcwd();/*current home directory*/
 
 /*sanitize_output is a function in file php/functions.php that minifies the echoed php*/
 ob_start("sanitize_output");
@@ -46,7 +47,7 @@ ob_start("sanitize_output");
 
 <body>
     <!--this HTML is loaded externally-->
-    <?php include "./layout/main.html"; ?>    
+    <?php include "./layout/main.php"; ?>
     <!--jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="Globals.js.php?country=<?php echo $GLOBALS['country']?>">

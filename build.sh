@@ -9,7 +9,7 @@ then
 fi
 
 #string with available options
-optstring=':hcesrtim :l:'
+optstring=':hcesrtim :u :l:'
 
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
@@ -39,7 +39,8 @@ do
             printf "   -r     [r]efreshes statistical costs DB                - connection to specifcations DB \n"
             printf "   -t     generate html and jpeg stats [t]ables in build/ - based on statistical costs DB \n"
             printf "   -i     compress [i]mages, jpg and png files in build/  - with ImageMagick \n"                        
-            printf "   -m     [m]inify js, json, css and html files           - with npm: minifier, html-minifier and json-minify \n"
+            printf "   -m     [m]inify js, json, css and html files           - with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "   -u     [u]upload to server                             - -u work or -u prod (work by default) \n"
             printf "   -h     help (this output) \n\n"
             exit 0
             ;;                          
@@ -160,7 +161,7 @@ do
             find css/ -type f \
                 -name *.css ! -name "*.min.*" \
                 -exec echo {} \; \
-                -exec minify -o {}.min {} \; \
+                -exec uglifycss --output {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
 
@@ -192,7 +193,7 @@ do
         i)
             #compress images
             cd build/                        
-            printf "\n## Compress images, jpg and png files \n\n"                            
+            printf "\n## Compress images, jpg and png files \n\n"
 
             for f in $(find . -type f -name '*.jpg')
             do 
@@ -212,6 +213,31 @@ do
 
             cd ../
             ;;
+    esac
+done
+
+OPTIND=1
+
+RELEASE_U="work" 
+#get release
+while getopts "$optstring" OPTION; 
+do
+    case "$OPTION" in
+
+        u)
+            u=${OPTARG}
+            if [ "$u" == "prod" ]
+            then
+                RELEASE_U="prod"
+            fi
+            
+            printf "\n## Upload to server $RELEASE_U \n\n"
+            cd scripts/
+            ./upload2server.sh $RELEASE_U
+            cd ../
+            
+            ;;
+        
     esac
 done
 
