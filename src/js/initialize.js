@@ -58,28 +58,13 @@ function loadsHTMLLayout(){
     //loads Countries Select dropdown box
     loadsCountriesSelectBox();
 
-    $("#div13").load(STATS_HTML_TABLES_DIR + COUNTRY + ".html"); //costs table        
-    //divs that need to be hidden
-    DISPLAY.centralFrameWidth = document.getElementById('div2').offsetWidth;                
-    $("#input_div").load(CDN_URL + "layout/form.html", function(){
-        getScriptOnce(JS_FILES.documentFunctions, function(){ 
-            getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
-        });
-    });
-  
+    getScriptOnce(JS_FILES.documentFunctions, function(){ 
+        getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
+    });    
 }
 
 //function that sets the JS language variables to the correspondent HTML divs
-function setLanguageVars(){
-    
-    $("#main_title").html(WORDS.main_title);
-    
-    if(WORDS.disclaimer){
-        $("#description").html(WORDS.initial_text + " " + WORDS.disclaimer);
-    }
-    else{
-        $("#description").html(WORDS.initial_text);
-    }    
+function setLanguageVars(){   
     
     //language HTML span variables
     $('span[class^="lang"]').each(function(){

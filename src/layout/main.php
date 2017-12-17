@@ -5,8 +5,8 @@
         <!--#####################-->
         <div id="header_main_title">
             <div id="main_title">
-                <header>                    
-                    <span class="lang-main_title"></span>
+                <header>
+                    <?php echo $GLOBALS["WORDS"]["main_title"] ?>
                 </header>
             </div>
         </div>
@@ -25,10 +25,11 @@
     </div> 
     
     <div id="container">
-        <div id="description"></div>
+        <div id="description">
+            <?php echo $GLOBALS["WORDS"]["initial_text"] ?>
+        </div>
         
         <div id="container_table">
-            
             
             <!-- div3 = LEFT layout column-->
             <div id="div3_td">
@@ -43,8 +44,7 @@
 
                         <a class="display_block" target="_blank" href="https://play.google.com/store/apps/details?id=info.autocosts">
                             <div id="div31" class="roundCorner">
-                                <img alt="Android logo" src="images/android/android_robot.svg">
-                                <img alt="Android logo" src="images/android/android_text.svg">
+                                <img alt="Android logo" src="images/android/playstore.svg">                                
                             </div>
                         </a>
 
@@ -68,6 +68,7 @@
                     <form class="roundCorner" id="main_form" enctype="application/x-www-form-urlencoded"
                           action="javascript:void(0);" name="costs_form">
                         <div id="input_div">
+                            <?php include $GLOBALS['HOME_DIR']."/layout/form.html" ?>
                         </div>
                     </form>
                 </div>
@@ -152,6 +153,7 @@
             <div id="div1_td">
                 <div id="div1" class="roundCornerSlight">
                     <div id="div13">
+                        <?php include $GLOBALS['HOME_DIR']."/tables/".$GLOBALS['country'].".html" ?>
                     </div>
                     <div id="br3">
                         <br>

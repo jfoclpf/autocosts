@@ -492,7 +492,7 @@ function print_costs_table(f1, f2, f3, data) {
                  "<td>&nbsp;" + currencyShow(data.monthly_costs.washing.toFixed(1)) + "</td></tr>";
 
     //TOTAL - Running costs
-    varResult += "<tr><td style=\"padding:4px 10px 4px 0;\"><b>" + WORDS.total_variance + "</b></td>"+
+    varResult += "<tr><td style=\"padding:4px 10px 4px 0;\"><b>" + WORDS.total_variable + "</b></td>"+
                  "<td>&nbsp;<b>" + currencyShow(data.total_running_costs_month.toFixed(0)) + 
                  "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
