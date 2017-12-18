@@ -1,5 +1,5 @@
-<?php
-
+<?php 
+     
 echo insertUserInputData($_POST['objectToDb']);
 
 function insertUserInputData($objectToDb){

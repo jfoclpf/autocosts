@@ -26,9 +26,10 @@ ob_start("sanitize_output");
     <meta name="author" content="Autocosts Org">
 
     <meta http-equiv="Content-Security-Policy" content="
-        script-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';         
+        default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com <?php foreach($GLOBALS["domains"] as $key => $val){echo "*.".$val." ";} ?>;
+        script-src 'self' cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
         style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
-        img-src 'self' *.autocosts.info;
+        img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;
     ">
     
     <meta name="robots" content="<?php echo (!isTest()?'index, follow':'noindex, nofollow')?>" />

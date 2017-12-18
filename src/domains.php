@@ -39,7 +39,12 @@
         </tr>
         <tr>
         <?php
-            include_once("./countries/list.php");
+            include_once("./php/functions.php");
+
+            loadsCountries("./countries/list.json");
+            $avail_CT  = $GLOBALS["avail_CT"];  
+            $lang_CT   = $GLOBALS["lang_CT"];
+            $domain_CT = $GLOBALS["domain_CT"];
 
             //array where domain duplicates are removed
             $domain_unique = array_unique($domain_CT);

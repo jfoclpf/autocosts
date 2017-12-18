@@ -9,7 +9,7 @@ then
 fi
 
 #string with available options
-optstring=':hcesrtim :u :l:'
+optstring=':hcesrtim u: l:'
 
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
@@ -30,17 +30,19 @@ do
             printf "$0 -h \n"
             printf "$0 -etc \n"
             printf "$0 -c -m \n"
-            printf "$0 -l work -cesrtim \n"
+            printf "$0 -l prod -cesrtimu \n"
             printf "\n"
-            printf "   -l     select re[l]ease                                - -l work or -l prod (work by default) \n"            
-            printf "   -c     makes [c]lean copy from src/ to build/          - need to be done on the 1st time \n"
-            printf "   -e     check for JS syntax [e]rrors in src/            - with npm jshint \n"
-            printf "   -s     creates DB with countries' [s]pecifcations      - connection to DB \n"
-            printf "   -r     [r]efreshes statistical costs DB                - connection to specifcations DB \n"
-            printf "   -t     generate html and jpeg stats [t]ables in build/ - based on statistical costs DB \n"
-            printf "   -i     compress [i]mages, jpg and png files in build/  - with ImageMagick \n"                        
-            printf "   -m     [m]inify js, json, css and html files           - with npm: minifier, html-minifier, uglifycss and json-minify \n"
-            printf "   -u     [u]upload to server                             - -u work or -u prod (work by default) \n"
+            printf "   -l     selects DB re[l]ease                              -l work or -l prod (work by default) \n"
+            printf "\n"
+            printf "   -c     makes [c]lean copy from src/ to build/            need to be done on the 1st time \n"
+            printf "   -e     check for JS syntax [e]rrors in src/              with npm jshint \n"
+            printf "   -s     creates DB with countries' [s]pecifcations        connection to DB \n"
+            printf "   -r     [r]efreshes statistical costs DB                  connection to specifcations DB \n"
+            printf "   -t     generate html and jpeg stats [t]ables in build/   based on statistical costs DB \n"
+            printf "   -i     compress [i]mages, jpg and png files in build/    with ImageMagick \n"                        
+            printf "   -m     [m]inify js, json, css and html files in build/   with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "\n"
+            printf "   -u     [u]upload to server                               -u work or -u prod (work by default) \n"
             printf "   -h     help (this output) \n\n"
             exit 0
             ;;                          
@@ -135,7 +137,7 @@ do
 
         e)                
             #checks for JS errors
-            cd scripts/
+            cd jshint/
 
             printf "\n## Checking for JS errors in src/ \n\n"                        
             ./jshint.sh
@@ -218,7 +220,7 @@ done
 
 OPTIND=1
 
-RELEASE_U="work" 
+UPLOAD_DIR="work" 
 #get release
 while getopts "$optstring" OPTION; 
 do
@@ -228,14 +230,15 @@ do
             u=${OPTARG}
             if [ "$u" == "prod" ]
             then
-                RELEASE_U="prod"
+                UPLOAD_DIR="public_html"
             fi
             
-            printf "\n## Upload to server $RELEASE_U \n\n"
-            cd scripts/
-            ./upload2server.sh $RELEASE_U
-            cd ../
+            cd build/
+            printf "\n## Upload to server on $UPLOAD_DIR/ directory \n\n"
             
+            scp -P 2222 -r * jfolpf@autocosts.info:/home4/jfolpf/$UPLOAD_DIR
+            
+            cd ../          
             ;;
         
     esac

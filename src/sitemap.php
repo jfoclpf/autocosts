@@ -1,6 +1,10 @@
 <?php header('Content-type: application/xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="UTF-8"?>';
-include_once('./countries/list.php');?>
+include_once("./php/functions.php");
+loadsCountries("./countries/list.json");
+$avail_CT  = $GLOBALS["avail_CT"];  
+$lang_CT   = $GLOBALS["lang_CT"];
+$domain_CT = $GLOBALS["domain_CT"];?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
