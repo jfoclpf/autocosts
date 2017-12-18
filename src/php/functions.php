@@ -48,6 +48,7 @@ function loadsCountries($url){
     $GLOBALS["avail_CT"]  = $GLOBALS["Countries_list"]["available_CT"];
     $GLOBALS["lang_CT"]   = $GLOBALS["Countries_list"]["languages_CT"];
     $GLOBALS["domain_CT"] = $GLOBALS["Countries_list"]["domains_CT"];    
+    $GLOBALS["domains"]   = array_unique($GLOBALS["domain_CT"]);    
 }
 
 function loadsLanguageVars($url){

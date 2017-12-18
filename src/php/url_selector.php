@@ -45,7 +45,9 @@ if ($url_cc == null || !is_cty_inlist($url_cc, $avail_CT)) {
     header('Location: '.$URLtoRedirect, true, 302); 
     //302 redirects are temporary
     //it's temporary because the redirect might, from a defined starting URL, 
-    //redirect to different URLs according to the locale of the user
+    // redirect to different URLs according to the locale of the user,
+    // and we don't want to inform search engines that a page of a country 
+    // makes a permanent redirect to a page of another country
     exit();
 }
 //if the CC characters after domain.info/cc ARE recognized as being in the list 

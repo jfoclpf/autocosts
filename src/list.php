@@ -1,7 +1,6 @@
 <?php header('Content-Type: text/html; charset=utf-8');
 
 include_once("./php/functions.php");
-
 loadsCountries("./countries/list.json");
 $avail_CT  = $GLOBALS["avail_CT"];  
 $lang_CT   = $GLOBALS["lang_CT"];
