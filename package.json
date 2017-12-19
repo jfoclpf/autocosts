@@ -33,7 +33,6 @@
     "jshint": "^2.9.5",
     "json-minify": "^1.0.0",
     "jssocials": "^1.5.0",
-    "minifier": "^0.8.1",
     "mysql": "^2.15.0",
     "node": "^9.3.0",
     "path": "^0.12.7",
