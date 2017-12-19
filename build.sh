@@ -162,7 +162,7 @@ do
             find js/ -type f \
                 -name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
                 -exec echo {} \; \
-                -exec minify -o {}.min {} \; \
+                -exec uglifyjs -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
 
