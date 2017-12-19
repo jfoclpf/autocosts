@@ -20,6 +20,11 @@ do
 
         c)                
             #make clean copy from src/ to build/ 
+            if [ ! -d "build/" ]; then
+                #if directory doesn't exist
+                mkdir build/
+            fi
+            
             cd build/
             printf "\n## Making a clean copy from src/ to build/ \n\n"
             rm -R -f *
