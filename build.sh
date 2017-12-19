@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+PATH=$(npm bin):$PATH
+
 if [ $# -eq 0 ]
 then
     printf "Missing options!\n"
