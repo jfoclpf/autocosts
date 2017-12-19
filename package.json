@@ -1,6 +1,6 @@
 {
   "name": "autocosts",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Automobile Costs Calculator",
   "main": "i.php",
   "scripts": {
