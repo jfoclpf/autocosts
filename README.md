@@ -24,26 +24,8 @@ https://autocosts.info/domains
 The available services are defined in the global `SWITCH` JS object in the file `Globals.js`
 
 ## Android APP<br>
-https://play.google.com/store/apps/details?id=info.autocosts
 
-## Projects used
-
-* <a href="http://www.chartjs.org/">chartjs.org</a> for the Android APP charts
-* <a href="https://developer.uber.com/">UBER API</a> for transports costs comparisons
-* <a href="http://pdfmake.org/#/">pdfmake</a> to export the final report to a pdf file. See folder `src/js/pdf`
-* <a href="https://github.com/matthiasmullie/minify">matthiasmullie/minify</a> to minify php generated code on client demand
-* <a href="https://github.com/matthiasmullie/path-converter">matthiasmullie/path-converter</a>
-* <a href="https://nodejs.org/en/">nodejs</a> for server side DB statistical analysys
-* <a href="https://www.imagemagick.org/script/index.php">ImageMagick</a> to compress images (see script `compressImages.sh`)
-* <a href="http://jshint.com/install/">JShint</a> to detect if Javascript code has errors
-* <a href="https://www.npmjs.com/package/minifyjs">minifyjs</a> to minify deployed Javascript code
-* <a href="https://www.npmjs.com/package/html-minifier">html-minifier</a> to minify deployed static HTML
-* <a href="https://www.npmjs.com/package/minifier">minifier</a> to minify CSS files
-* <a href="http://phantomjs.org/">phantomjs</a> to rasterize HTML tables (costs tables) into JPG images, to be sharable with a link
-
-
-APP<br>
-* it uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
+The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
 
 ## Contributions
 * Use four spaces for indentations
