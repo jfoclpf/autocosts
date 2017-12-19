@@ -89,7 +89,7 @@ var JS_FILES = {
     jTimer : CDN_URL + "js/jquery/js_timer.js",
 
     PDF : {
-        padfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
+        pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
         generatePDF :     CDN_URL + "js/pdf/generatePDF.js",
         vfs_fonts :       "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
         vfs_fonts_IN :    CDN_URL + "js/pdf/IN/vfs_fonts.js",

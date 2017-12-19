@@ -250,7 +250,7 @@ function loadExtraFiles() {
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
         getScriptOnce(JS_FILES.PDF.generatePDF, function() {
-            getScriptOnce(JS_FILES.PDF.padfmake, function() {
+            getScriptOnce(JS_FILES.PDF.pdfmake, function() {
                 //path where the fonts for PDF are stored
                 var pdf_fonts_path;
                 if (COUNTRY == 'CN'){
