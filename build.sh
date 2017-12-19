@@ -25,6 +25,7 @@ do
             rm -R -f *
             cd ../
             cp -R src/* build/ 
+            cp -R node_modules/ build/
             ;;
 
         h)
@@ -171,7 +172,7 @@ do
 
             #minification of html files
             printf "\n    Minifying HTML files in build/ \n\n"
-            find . -name "*.html" \
+            find . -path ./node_modules -prune -o -name "*.html" \
                 -type f \
                 -exec echo {} \;  \
                 -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags -o {}.min {} \; \
@@ -196,7 +197,7 @@ do
 
         i)
             #compress images
-            cd build/                        
+            cd build/images/
             printf "\n## Compress images, jpg and png files \n\n"
 
             for f in $(find . -type f -name '*.jpg')
@@ -215,7 +216,7 @@ do
                 mv $f.min $f
             done                        
 
-            cd ../
+            cd ../../
             ;;
     esac
 done
