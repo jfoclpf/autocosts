@@ -29,8 +29,11 @@ do
             printf "\n## Making a clean copy from src/ to build/ \n\n"
             rm -R -f *
             cd ../
-            cp -R src/* build/ 
-            cp -R node_modules/ build/
+            cp -R src/* build/
+            
+            if [ -d "node_modules/" ]; then
+                cp -R node_modules/ build/
+            fi
             ;;
 
         h)
