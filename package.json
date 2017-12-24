@@ -5,7 +5,7 @@
   "main": "i.php",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "sudo apt-get install -y nodejs imagemagick phantomjs && npm install php uglifycss uglify-js html-minifier jshint nodejs -g"
+    "prepublish": "sudo apt-get install -y php php-mysqli nodejs imagemagick phantomjs && npm install uglifycss uglify-js html-minifier jshint nodejs -g"
   },
   "repository": {
     "type": "git",
