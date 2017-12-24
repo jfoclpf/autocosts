@@ -161,22 +161,22 @@ do
             cd build/
             printf "\n## Minifying files \n"
 
-            printf "\n    Minifying JS files in build/ \n\n"
-            find js/ -type f \
-                -name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
-                -exec echo {} \; \
-                -exec uglifyjs -o {}.min {} \; \
-                -exec rm {} \; \
-                -exec mv {}.min {} \;
+			printf "\n    Minifying JS files in build/ \n\n"
+			find js/ -type f \
+				-name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
+				-exec echo {} \; \
+				-exec uglifyjs -o {}.min {} \; \
+				-exec rm {} \; \
+				-exec mv {}.min {} \;
 
-            #minification of CSS files
-            printf "\n    Minifying CSS files in build/ \n\n"
-            find css/ -type f \
-                -name *.css ! -name "*.min.*" \
-                -exec echo {} \; \
-                -exec uglifycss --output {}.min {} \; \
-                -exec rm {} \; \
-                -exec mv {}.min {} \;
+			#minification of CSS files
+			printf "\n    Minifying CSS files in build/ \n\n"
+			find css/ -type f \
+				-name *.css ! -name "*.min.*" \
+				-exec echo {} \; \
+				-exec uglifycss --output {}.min {} \; \
+				-exec rm {} \; \
+				-exec mv {}.min {} \;
 
             #minification of html files
             printf "\n    Minifying HTML files in build/ \n\n"
