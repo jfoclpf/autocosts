@@ -1,12 +1,12 @@
 {
   "name": "autocosts",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "Automobile Costs Calculator",
   "main": "i.php",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "preinstall": "sudo apt-get install -y php php-mysqli nodejs nodejs-legacy imagemagick phantomjs && npm install uglifycss uglify-js html-minifier jshint nodejs -g",
-    "postinstall" : "./build.sh -cetim"
+    "postinstall": "./build.sh -cetim"
   },
   "repository": {
     "type": "git",
@@ -39,5 +39,3 @@
     "webpage": "^0.3.0"
   }
 }
-
-
