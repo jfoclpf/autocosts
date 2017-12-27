@@ -5,17 +5,22 @@ This calculator allows users to find the true cost of owning a car. It will norm
 
 This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
 
+### Clone it and build it
+
+`git clone https://github.com/jfoclpf/autocosts.git`<br>
+`cd autocosts/ && npm install`
+
 ### Website
 https://autocosts.info<br>
 To test and play: https://autocosts.info/XX 
 
-The folder that corresponds to the website public HTML folder is `src/`. Nonetheless one must build it using the script `build.sh` creating therefore a `build/` folder ready to be used as a main public HTML folder. For more information run `./build.sh -h`.
+The directory that corresponds to the website public HTML directory is `build/`. This directory is built upon installation. For more information run `./build.sh -h`.
 
 ### The list of available countries
 https://autocustos.info/list
 
 The translations are in corresponding php files, namely in the folder `src/countries/`.<br>
-The list of available countries is from the file `src/countries/list.php`
+The list of available countries is from the file `src/countries/list.json`
 
 ### The registered associated domains
 https://autocosts.info/domains
