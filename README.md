@@ -12,14 +12,14 @@ This calculator is and shall be completely anonymous, as it doesn't request nor 
 
 ### Website
 https://autocosts.info<br>
-To test and play: https://autocosts.info/XX 
+Playground: https://autocosts.info/XX 
 
-The directory that corresponds to the website public HTML directory is `build/`. This directory is built upon installation. For more information run `./build.sh -h`.
+The directory that corresponds to the website public HTML is `build/`. This directory is built upon installation. For more information run `./build.sh -h`.
 
 ### The list of available countries
 https://autocustos.info/list
 
-The translations are in corresponding php files, namely in the folder `src/countries/`.<br>
+The translations are in corresponding `json` files, namely in the folder `src/countries/`.<br>
 The list of available countries is from the file `src/countries/list.json`
 
 ### The registered associated domains
