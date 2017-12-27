@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+git pull --no-edit
 npm update
 git add -A
 git commit -m "update"
