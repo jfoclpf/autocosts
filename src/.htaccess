@@ -63,10 +63,6 @@ Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
 
 RewriteEngine On
 
-#forward http to https, remove if https is not available
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
-
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 #The countries list
@@ -74,26 +70,5 @@ RewriteRule ^list$ list.php [L]
 
 #The domains list
 RewriteRule ^domains$ domains.php [L]
-
-RewriteBase /
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
-
-RewriteCond %{QUERY_STRING} ^c=([a-zA-Z][a-zA-Z])$
-RewriteRule ^index.php$ /%1%2? [R=301,L]
-
-RewriteRule ^([a-zA-Z][a-zA-Z])$ /i.php?c=$1$2 [L]
-
-#Domain Name Policy (DNP) in: http://github.com/jfoclpf/autocosts/wiki/Domain-name-policy
-
-#General broad rules
-RewriteCond %{HTTP_HOST} ^autocosts\.org$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocosts\.org$
-RewriteRule ^/?$ "https\:\/\/autocosts\.info" [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^autocost\.org$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.autocost\.org$
-RewriteRule ^/?$ "https\:\/\/autocosts\.info" [R=301,L]
-
 
 
