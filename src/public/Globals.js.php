@@ -70,34 +70,34 @@ var JS_FILES = {
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
     
-    initialize :          CDN_URL + "js/initialize.js",
-    documentFunctions :   CDN_URL + "js/documentFunctions.js",    
-    formFunctions :       CDN_URL + "js/formFunctions.js",
-    validateForm :        CDN_URL + "js/validateForm.js",
-    charts :              CDN_URL + "js/charts.js",
-    g_recaptcha :         CDN_URL + "js/g-recaptcha.js",
-    conversionFunctions : CDN_URL + "js/conversionFunctions.js",
-    coreFunctions :       CDN_URL + "js/core/coreFunctions.js",
-    getData :             CDN_URL + "js/getData.js",
-    printResults :        CDN_URL + "js/printResults.js",    
-    print :               CDN_URL + "js/print.js",
-    dbFunctions :         CDN_URL + "js/dbFunctions.js",
+    initialize :          CDN_URL + "client/initialize.js",
+    documentFunctions :   CDN_URL + "client/documentFunctions.js",    
+    formFunctions :       CDN_URL + "client/formFunctions.js",
+    validateForm :        CDN_URL + "client/validateForm.js",
+    charts :              CDN_URL + "client/charts.js",
+    g_recaptcha :         CDN_URL + "client/g-recaptcha.js",
+    conversionFunctions : CDN_URL + "client/conversionFunctions.js",
+    coreFunctions :       CDN_URL + "client/core/coreFunctions.js",
+    getData :             CDN_URL + "client/getData.js",
+    printResults :        CDN_URL + "client/printResults.js",    
+    print :               CDN_URL + "client/print.js",
+    dbFunctions :         CDN_URL + "client/dbFunctions.js",
     
     statsFunctions :      CDN_URL + "db/statsFunctions.js",
     
     jQuery : CDN_URL + "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
-    jTimer : CDN_URL + "js/jquery/js_timer.js",
+    jTimer : CDN_URL + "client/jquery/js_timer.js",
 
     PDF : {
         pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
         generatePDF :     CDN_URL + "js/pdf/generatePDF.js",
         vfs_fonts :       "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
-        vfs_fonts_IN :    CDN_URL + "js/pdf/IN/vfs_fonts.js",
-        vfs_fonts_JP :    CDN_URL + "js/pdf/JP/vfs_fonts.js",
-        vfs_fonts_CN :    CDN_URL + "js/pdf/CN/vfs_fonts.js"
+        vfs_fonts_IN :    CDN_URL + "client/pdf/IN/vfs_fonts.js",
+        vfs_fonts_JP :    CDN_URL + "client/pdf/JP/vfs_fonts.js",
+        vfs_fonts_CN :    CDN_URL + "client/pdf/CN/vfs_fonts.js"
     },
 
-    jAlert :              CDN_URL + "js/jAlert/jAlert.js",
+    jAlert :              CDN_URL + "client/jAlert/jAlert.js",
     jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
 };
 
