@@ -4,8 +4,8 @@
 $HOME_DIR = dirname(getcwd())."/";
 
 $COUNTRIES_DIR  = $HOME_DIR."src/countries"."/";
-$TABLES_DIR     = $HOME_DIR."build/tables"."/";
-$FUNCTIONS_FILE = $HOME_DIR."src/php/functions.php";
+$TABLES_DIR     = $HOME_DIR."build/views/partials"."/";
+$FUNCTIONS_FILE = $HOME_DIR."src/server/functions.php";
 
 $KEYS_DIR       = $HOME_DIR."keys"."/";
 $KEY_FILE_NAME  = "db_credentials.php";
@@ -71,7 +71,7 @@ if (!file_exists($TABLES_DIR)) {
 //for each country creates a corresponding file
 foreach ($avail_CT as $country => $country_name) {
 
-    print $country.".html ";
+    print $country." ";
     
     $query = "SELECT * FROM monthly_costs_statistics WHERE country='".$country."'";
     $result = $connectionDB->query($query);
@@ -84,7 +84,7 @@ foreach ($avail_CT as $country => $country_name) {
     $STD_DIST = $WORDS['std_dist'];
 
     //the file name to which the HTML table will be saved
-    $file=$TABLES_DIR.$country.".html";
+    $file=$TABLES_DIR.$country."costs.hbs";
 
     //the content of the file
     $content = '<table id="tbl_statistics">

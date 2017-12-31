@@ -18,8 +18,9 @@
 
         DISPLAY.descriptionHTML = $('#description').html();
 
-        //loads layout
-        loadsHTMLLayout();
+        getScriptOnce(JS_FILES.documentFunctions, function(){ 
+            getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
+        });
 
         //detects whether Google Analytics has loaded
         check_ga();
@@ -51,17 +52,6 @@
         ga('send', 'pageview');
     }
 })();
-
-//loads HTML Layout
-function loadsHTMLLayout(){
-            
-    //loads Countries Select dropdown box
-    loadsCountriesSelectBox();
-
-    getScriptOnce(JS_FILES.documentFunctions, function(){ 
-        getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
-    });    
-}
 
 //function that sets the JS language variables to the correspondent HTML divs
 function setLanguageVars(){   
@@ -148,18 +138,6 @@ function initializeForm(){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
     
-}
-
-//loads Countries Select Box
-function loadsCountriesSelectBox(){
-    
-    var $dropdown = $("#country_select");    
-    $.each(COUNTRY_LIST, function(key, value) {
-        $dropdown.append($("<option/>").val(key).text(value));
-    });
-
-    $("#country_select").val(COUNTRY);
-    $("#banner_flag").addClass(COUNTRY.toLowerCase() + ' ' + 'flag');
 }
 
 function loadsDefaultValues(){
