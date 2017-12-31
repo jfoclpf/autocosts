@@ -23,11 +23,10 @@ var SWITCHES = {
     "https": true        /*true for https, false for http*/
 };
 
-/*Variables to be defined by PHP*/
 /*Define GLOBAL Javascript variables*/
-var COUNTRY = "<?php echo $_GET['country']; ?>";
+var COUNTRY = <%= CC %>;
 /*Language code according to ISO_639-1 codes*/
-var LANGUAGE = "";
+var LANGUAGE = <%= LangCode %>;
 /*List of countries and domains in a Javascript Object*/
 var COUNTRY_LIST = "";
 var DOMAIN_LIST  = "";

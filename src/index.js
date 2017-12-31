@@ -4,18 +4,21 @@
 **      the automobile costs calculator        **
 **                                             **
 ************************************************/
-
-//CC stands for 2-letter Country Code
-var CC; 
 				
 const fs = require('fs');
 const express = require('express');
 const exphbs  = require('express-handlebars');
+const ejs = require('ejs');
 const init = require(__dirname + '/server/initialize');
 
-var CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));	
+const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));	
+const available_CT = CountriesInfo.available_CT; //available Countries
+const languages_CT = CountriesInfo.languages_CT; //Language Codes
+const domains_CT   = CountriesInfo.domains_CT;     //Domains
+
 
 var app = express();
+app.enable('case sensitive routing');
 
 var hbs = exphbs.create({
     defaultLayout: 'main',
@@ -43,21 +46,39 @@ app.use('/css', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/js', express.static(__dirname + '/js'));
 
+var CC; //CC stands for 2-letter Country Code
+var LangCode;
+
+
 app.get('/:CC', function (req, res) {
-	CC = req.params.CC;
+	
+    
+    
+    CC = req.params.CC;
 	console.log("Country Code :" + CC);
     
 	var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));	
     words.word_per += "&#32;" //add non-breaking space
     
-	var lang_code = CountriesInfo.languages_CT[CC]; //language codes
-	console.log("Language code: " + lang_code);
+	LangCode = languages_CT[CC]; //language codes
+	console.log("Language code: " + LangCode);
 	
     //add property
     words.country_select = CountriesInfo.available_CT;
 	
 	res.render('home', words);
 });
+
+app.get('/Globals.js', function(req, res) {
+    app.engine('js', ejs.renderFile);
+    res.set('Content-Type', 'application/javascript');
+    
+    res.render('Globals.js', { 
+        CC : CC,
+        LangCode : LangCode
+    });
+});
+
 
 var HTTPport = 3080; 
 var server = app.listen(HTTPport, function () {

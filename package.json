@@ -26,6 +26,7 @@
     "async": "^2.6.0",
     "canvg-fixed": "^1.0.0",
     "chart.js": "^2.7.1",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "fs": "0.0.1-security",
