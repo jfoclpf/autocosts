@@ -1,27 +1,9 @@
-<?php Header("content-type: application/x-javascript");
-
 /************************************************
 **                                             **
 **              AUTOCOSTS.INFO                 **
 **      the automobile costs calculator        **
 **                                             **
 ************************************************/
-
-/*avoids code injection ensuring that input has only two characters (country code)*/
-if(strlen($_GET['country']) != 2){ 
-    exit;
-}
-
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/functions.php');
-loadsCountries($_SERVER['DOCUMENT_ROOT'].'/countries/list.json');
-
-asort($GLOBALS['avail_CT']);
-/*removes XX from array*/
-unset($GLOBALS['avail_CT']['XX']);
-
-include_once($_SERVER['DOCUMENT_ROOT'].'/php/minifier.php');
-
-ob_start();?>
 
 /*File with Javascript Global variables */
 
@@ -45,13 +27,13 @@ var SWITCHES = {
 /*Define GLOBAL Javascript variables*/
 var COUNTRY = "<?php echo $_GET['country']; ?>";
 /*Language code according to ISO_639-1 codes*/
-var LANGUAGE = "<?php echo $GLOBALS['lang_CT'][$_GET['country']]; ?>";
+var LANGUAGE = "";
 /*List of countries and domains in a Javascript Object*/
-var COUNTRY_LIST = (<?php echo json_encode($GLOBALS['avail_CT']); ?>);
-var DOMAIN_LIST  = (<?php echo json_encode($GLOBALS['domain_CT']); ?>);
+var COUNTRY_LIST = "";
+var DOMAIN_LIST  = "";
 
-var CDN_URL       = "<?php echo $GLOBALS['CDN_URL'] ?>"; /*it's defined in the php*/
-var HTTP_Protocol = "<?php echo $GLOBALS['HTTP_Protocol'] ?>"; /*it's defined in the php*/
+var CDN_URL       = "CDN_URL"; /*it's defined in the php*/
+var HTTP_Protocol = "$GLOBALS['HTTP_Protocol']"; /*it's defined in the php*/
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
 var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 
@@ -101,7 +83,7 @@ var JS_FILES = {
     jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
 };
 
-var UBER_FILE = "php/get_uber.php?c=" + COUNTRY;
+var UBER_FILE = "server/get_uber.php?c=" + COUNTRY;
 
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
@@ -199,10 +181,3 @@ var getScriptOnce = (function(url, callback){
 
 /*loads jQuery initializing functions*/
 getScriptOnce(JS_FILES.initialize);
-
-<?php
-use MatthiasMullie\Minify;
-$javascriptContent = ob_get_clean();
-$minifier = new Minify\JS($javascriptContent);
-echo $minifier->minify();
-?>

@@ -171,20 +171,26 @@ do
 				-exec mv {}.min {} \;
 
 			#minification of CSS files
-			printf "\n    Minifying CSS files in build/ \n\n"
+			printf "\n    Minifying and Merging CSS files in build/ \n\n"
 			find css/ -type f \
 				-name *.css ! -name "*.min.*" \
 				-exec echo {} \; \
 				-exec uglifycss --output {}.min {} \; \
 				-exec rm {} \; \
 				-exec mv {}.min {} \;
+            
+            cd css/
+            cat *.css > merged.merged
+            rm *.css
+            mv merged.merged merged.css
+            cd ..
 
             #minification of html files
             printf "\n    Minifying HTML files in build/ \n\n"
             find . -path ./node_modules -prune -o -name "*.hbs" \
                 -type f \
                 -exec echo {} \;  \
-                -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags -o {}.min {} \; \
+                -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
 
@@ -256,5 +262,5 @@ do
     esac
 done
 
-printf "\nProcessed without errors \n\n"
+printf "\nProcessed \n\n"
 
