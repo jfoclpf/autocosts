@@ -47,21 +47,20 @@ app.get('/:CC', function (req, res) {
 	CC = req.params.CC;
 	console.log("Country Code :" + CC);
     
-	var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));
-	
+	var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));	
+    words.word_per += "&#32;" //add non-breaking space
+    
 	var lang_code = CountriesInfo.languages_CT[CC]; //language codes
 	console.log("Language code: " + lang_code);
 	
-	var data = {"title" : words.main_title , 
-				"main_title" : words.main_title, 
-				"initial_text": words.initial_text,
-			    "country_select": CountriesInfo.available_CT
-			   };
+    //add property
+    words.country_select = CountriesInfo.available_CT;
 	
-	res.render('home', data);
+	res.render('home', words);
 });
 
-var HTTPport = 3039; 
-app.listen(HTTPport, function () {
-  console.log('Listening on port ' + HTTPport);
+var HTTPport = 3080; 
+var server = app.listen(HTTPport, function () {
+    console.log('Listening on port ' + HTTPport);
+    //server.close();
 });

@@ -54,17 +54,7 @@
 })();
 
 //function that sets the JS language variables to the correspondent HTML divs
-function setLanguageVars(){   
-    
-    //language HTML span variables
-    $('span[class^="lang"]').each(function(){
-        var LangVar = (this.className).replace('lang-','');
-        var Text = WORDS[LangVar];
-        if (LangVar == "word_per"){
-            Text += "&#32;"
-        }
-        $(this).html(Text);        
-    });
+function setLanguageVars(){
     
     //language HTML select dropdowns
     var SelectList = {
