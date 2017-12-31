@@ -30,6 +30,7 @@ do
             rm -R -f *
             cd ../
             cp -R src/* build/
+			cp src/.htaccess build/
             
             if [ -d "node_modules/" ]; then
                 cp -R node_modules/ build/
@@ -162,7 +163,7 @@ do
             printf "\n## Minifying files \n"
 
 			printf "\n    Minifying JS files in build/ \n\n"
-			find js/ -type f \
+			find client/ -type f \
 				-name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
 				-exec echo {} \; \
 				-exec uglifyjs -o {}.min {} \; \
@@ -180,7 +181,7 @@ do
 
             #minification of html files
             printf "\n    Minifying HTML files in build/ \n\n"
-            find . -path ./node_modules -prune -o -name "*.html" \
+            find . -path ./node_modules -prune -o -name "*.hbs" \
                 -type f \
                 -exec echo {} \;  \
                 -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags -o {}.min {} \; \
