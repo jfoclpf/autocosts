@@ -13,7 +13,7 @@ var openForm_part = (function(part_number_origin, part_number_destiny) {
         if (part_number_origin===1 && part_number_destiny===2){
 
             if (!hasLoadedCoreFunctions){
-                $.getScript("js/core/coreFunctions.js", function(){
+                $.getScript(JS_FILES.coreFunctions, function(){
                     hasLoadedCoreFunctions = true;
                     if (!is_userdata_formpart1_ok()){
                         return;

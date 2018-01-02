@@ -15,7 +15,7 @@ var SWITCHES = {
     "uber": true,        /*Uber*/
     "social": true,      /*Social media pulgins*/
     "g_charts": true,    /*Google Charts*/
-    "g_captcha": true,   /*Google Captcha*/
+    "g_captcha": false,   /*Google Captcha*/
     "g_analytics": true, /*Google Analytics*/
     "data_base": true,   /*Inserts user input data into DataBase*/
     "print": true,       /*Print option*/
@@ -31,10 +31,10 @@ var LANGUAGE = "<%- LangCode %>";
 var COUNTRY_LIST = <%- JSON.stringify(available_CT) %>;
 var DOMAIN_LIST  = <%- JSON.stringify(domains_CT) %>;
 
-var CDN_URL       = <%- JSON.stringify(CDN_URL) %>; /*it's defined in the node server side index.js*/
-var HTTP_Protocol = <%- JSON.stringify(HTTP_Protocol) %>; /*it's defined in node server side index.js*/
+var CDN_URL       = "<%- CDN_URL %>"; /*it's defined in the node server side index.js*/
+var HTTP_Protocol = "<%- HTTP_Protocol %>"; /*it's defined in node server side index.js*/
 
-var clientDir = <%- JSON.stringify(clientDir) %>;
+var clientDir = "<%- clientDir %>";
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
 var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 
@@ -45,6 +45,7 @@ var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statist
 var STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
 
 /*Location of Javascript Files, it may be changed accordingly*/
+var rootClientURL = CDN_URL + clientDir; 
 var JS_FILES = {
     Google : {
         rgbcolor : "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js",  /*RGB color parser in JavaScript*/
@@ -53,32 +54,32 @@ var JS_FILES = {
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
     
-    initialize :          CDN_URL + clientDir + "initialize.js",
-    documentFunctions :   CDN_URL + clientDir + "documentFunctions.js",    
-    formFunctions :       CDN_URL + clientDir + "formFunctions.js",
-    validateForm :        CDN_URL + clientDir + "validateForm.js",
-    charts :              CDN_URL + clientDir + "charts.js",
-    g_recaptcha :         CDN_URL + clientDir + "g-recaptcha.js",
-    conversionFunctions : CDN_URL + clientDir + "conversionFunctions.js",
-    coreFunctions :       CDN_URL + clientDir + "core/coreFunctions.js",
-    getData :             CDN_URL + clientDir + "getData.js",
-    printResults :        CDN_URL + clientDir + "printResults.js",    
-    print :               CDN_URL + clientDir + "print.js",
-    dbFunctions :         CDN_URL + clientDir + "dbFunctions.js",    
+    initialize :          rootClientURL + "initialize.js",
+    documentFunctions :   rootClientURL + "documentFunctions.js",    
+    formFunctions :       rootClientURL + "formFunctions.js",
+    validateForm :        rootClientURL + "validateForm.js",
+    charts :              rootClientURL + "charts.js",
+    g_recaptcha :         rootClientURL + "g-recaptcha.js",
+    conversionFunctions : rootClientURL + "conversionFunctions.js",
+    coreFunctions :       rootClientURL + "core/coreFunctions.js",
+    getData :             rootClientURL + "getData.js",
+    printResults :        rootClientURL + "printResults.js",    
+    print :               rootClientURL + "print.js",
+    dbFunctions :         rootClientURL + "dbFunctions.js",    
     
     jQuery : CDN_URL + "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
-    jTimer : CDN_URL + clientDir + "jquery/js_timer.js",
+    jTimer : rootClientURL + "jquery/js_timer.js",
 
     PDF : {
         pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
-        generatePDF :     CDN_URL + clientDir + "pdf/generatePDF.js",
+        generatePDF :     rootClientURL + "pdf/generatePDF.js",
         vfs_fonts :       "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
-        vfs_fonts_IN :    CDN_URL + clientDir + "pdf/IN/vfs_fonts.js",
-        vfs_fonts_JP :    CDN_URL + clientDir + "pdf/JP/vfs_fonts.js",
-        vfs_fonts_CN :    CDN_URL + clientDir + "pdf/CN/vfs_fonts.js"
+        vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
+        vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
+        vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
     },
 
-    jAlert :              CDN_URL + clientDir + "jAlert/jAlert.js",
+    jAlert :              rootClientURL + "jAlert/jAlert.js",
     jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
 };
 
