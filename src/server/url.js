@@ -6,18 +6,20 @@ For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector *
 module.exports = {
     
     //when there is redirection return true; false otherwise
-    redirectIfNecessary: function (req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC) {  
+    redirectIfNecessary: function (req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC) {                  
         
         const CC = req.params.CC;
         const protocol = req.protocol; 
         const host = req.get('host');
         const originalUrl = req.originalUrl; //  "/PT" for example
         
+        console.log(CC);
+        
         //if no country is defined or the country isn't in the list
         //i.e, if the CC characters in domain.info/CC are not recognized
         //get the Country from locale or HTTP Accept-Language Info
         if (!isCCinCountriesList(CC, available_CT) && !isCCXX(CC)){         
-            console.log("if (!isCCinCountriesList)");
+            console.log("if (!isCCinCountriesList)", CC);
             var url2redirect = getProtocol(host, IS_HTTPS) + '://' + domains_CT[CC] + '/' + getGeoCC(req, host, available_CT, DefaultCC);
             //302 redirects are temporary
             //it's temporary because the redirect might, from a defined starting URL, 

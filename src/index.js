@@ -21,13 +21,12 @@ const express = require('express');
 const exphbs  = require('express-handlebars');
 const ejs = require('ejs');
 const url = require(__dirname + '/server/url');
-const public_dir = __dirname + '/public';
-const clientDir = '/client'; //with respect to public/
+const clientDir = 'client/';
 
-const CountriesInfo = JSON.parse(fs.readFileSync(public_dir + '/countries/list.json', 'utf8'));	
+const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));	
 const available_CT = CountriesInfo.available_CT; //available Countries
 const languages_CT = CountriesInfo.languages_CT; //Language Codes
-const domains_CT   = CountriesInfo.domains_CT;     //Domains
+const domains_CT   = CountriesInfo.domains_CT;   //Domains
 
 /*Global Variables*/
 //merely defaults, they may change later accordingly
@@ -61,7 +60,10 @@ app.engine('.hbs', hbs.engine);
 app.engine('.js', ejs.__express);
 
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/views'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/images', express.static(__dirname + '/images'));
+app.use('/client', express.static(__dirname + '/client'));
+app.use('/countries', express.static(__dirname + '/countries'));
 
 //Routing for HTML layout and forms
 app.get('/:CC', function (req, res, next) {    
@@ -95,7 +97,7 @@ app.get('/:CC', function (req, res, next) {
 
         console.log("Country Code :" + CC);
 
-        var words = JSON.parse(fs.readFileSync(public_dir + '/countries/' + CC + '.json', 'utf8'));	
+        var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));	
         words.word_per += "&#32;" //add non-breaking space
 
         LangCode = languages_CT[CC]; //language codes
