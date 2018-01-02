@@ -515,7 +515,7 @@ function print_costs_table(f1, f2, f3, data) {
                      "<td class=\"border_bottom_2px\">&nbsp;" + currencyShow(data.total_costs_p_unit_distance.toFixed(2)) + "/" + WORDS.std_dist + "</td></tr>";
     }
 
-    varResult += "<tr><td><b>" + WORDS.fixed + "</b></td>"+
+    varResult += "<tr><td><b>" + WORDS.fixed_costs + "</b></td>"+
                  "<td>&nbsp;<b>" + currencyShow(data.total_standing_costs_month.toFixed(0)) + "<span class=\"per_month_wording\">/" + WORDS.month + "</span></b></td></tr>";
 
     varResult += "<tr><td><b>" + WORDS.running_costs + "</b></td>"+
