@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forms for HU</title>
+</head>
+<body>
+<div class="form_part" id="form_part1">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    KÉSZENLÉTI KÖLTSÉGEK                </b>
+            </h2>
+            <h4>
+                Azok, amelyek nem függenek a megtett úttól, de az autó kifogástalan üzemeltetéséhez szükséges megfizetni            </h4>
+        </header>
+    </div>
+    <!--************************** DEPRECIATION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Gépjármű értékcsökkenése        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Autóvásárlás napja            </td>
+            <td id="depr_input_td">
+                <input id="acquisitionMonth" type="number" name="auto_mes" size="3" value="01">
+                &#8209;<!--non breakable hyphen-->
+                <input id="acquisitionYear" type="number" name="auto_ano" size="6" value="2000">
+            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Az autó kereskedelmi értéke a vásárlás pillanatában, <br><i>ha újonnan vette; az ár, amit kifizetett utána, <br>ha használtan vette; az autó kereskedelmi értéke a tulajdonba kerülés pillanatában </i>            </td>
+            <td>
+                <input type="number" id="commercialValueAtAcquisition" class="currencyInput" name="auto_val_inicial" size="10" value="">
+                ft            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Az autó jelenlegi kereskedelmi értéke,<br><i>ha most eladná, mennyit kapna érte?</i>            </td>
+            <td>
+                <input type="number" id="commercialValueAtNow" class="currencyInput" name="auto_val_final" size="10" value="">
+                ft            </td>
+        </tr>
+    </table>
+    <!--************************** INSURANCE ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Gépjármű- és autósegély biztosítás        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                <div class="col">
+                    <input type="radio" name="tipo_seguro" value="mensal">
+                    <span>
+                        havi                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="tipo_seguro" value="trimestral">
+                    <span>
+                        negyedévi                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="tipo_seguro" value="semestral">
+                    <span>
+                        félévi                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="tipo_seguro" value="anual">
+                    <span>
+                        évi                    </span>
+                </div>
+            </td>
+            <td>
+                <input id="insuranceValue" class="currencyInput" type="number" name="seguro_val" size="9"
+                    value="">
+                ft            </td>
+        </tr>
+    </table>
+    <!--************************** CREDIT ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Autóvásárlási hitel        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Használt-e autóhitelt az autó vásárlásához?            </td>
+            <td>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_true" name="cred_auto" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <span class="set_right_margin">
+                        igen                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_false" name="cred_auto" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <span>
+                        nem                    </span>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div id="sim_credDiv">
+        <table>
+            <tr>
+                <td>
+                    Hitel összege:<br><i>Mennyi hitelt vett fel?</i>                </td>
+                <td>
+                    <input id="borrowedAmount" class="currencyInput" type="number" name="cred_auto_montante" size="9" value="">
+                    ft                </td>
+            </tr>
+            <tr>
+                <td>
+                    Hitel futamideje / részletfizetések száma                </td>
+                <td>
+                    <input id="numberInstallments" type="number" name="cred_auto_period" size="9" value="">
+                    hó                </td>
+            </tr>
+            <tr>
+                <td>
+                    Egy-egy részlet átlagos értéke                </td>
+                <td>
+                    <input id="amountInstallment" class="currencyInput" type="number" name="cred_auto_val_mes" size="9" value="">
+                    ft/hónap                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fennmaradó érték:<br><i>Mekkora összeget kell még fizetnie vagy mennyit fizetett a futamido végére?</i>                </td>
+                <td>
+                    <input id="residualValue" class="currencyInput" type="number" name="cred_auto_valresidual" size="9" value="">
+                    ft                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** INSPECTION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Műszaki vizsga        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Hány alkalommal kellett vizsgáztatnia az autót?            </td>
+            <td>              
+                <input id="numberInspections" type="number" name="nr_vezes_inspecao" size="6" value="">
+                alkalommal            </td>
+        </tr>
+        <tr id="InspectionCost_tr">
+            <td>
+                Egy-egy vizsga átlagos költsége            </td>
+            <td>
+                <input id="averageInspectionCost" class="currencyInput" type="number" name="preco_inspecao" size="6" value="">
+                ft            </td>
+        </tr>
+    </table>
+    <!--************************** ROAD TAX ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Gépjárműadók (Járműadó)        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Autójának járműadója:<br><i>az állam felé teljesített befizetés</i>            </td>
+            <td>
+                <input id="vehicleExciseTax" class="currencyInput" type="number" name="IUC" size="6" value="">
+                ft/év            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <span class="step">1/3</span>
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
+            value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part1-->
+<div class="form_part" id="form_part2">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    ÜZEMELTETÉSI KÖLTSÉGEK                </b>
+            </h2>
+            <h4>
+                Amelyek a megtett úttól függenek            </h4>
+        </header>
+    </div>
+    <!--************************** COMBUSTÍVEIS | FUELS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Üzemanyag        </span>
+    </h3>
+    <table>
+        <tr>
+            <td rowspan="2">
+                Benzin, gázolaj, PB-gáz, villany            </td>
+            <td>
+                A kiszámítás alapja:                 <br>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                    <span class="set_right_margin">
+                        km                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                    <span>
+                        Forint                    </span>
+                </span>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="currency_div_form2">
+                    <input type="number" size="5" id="fuel_currency_value" class="currencyInput"
+                        value="" name="combustiveis_euro">
+                    <span class="nowrap">
+                        ft per                    </span>
+                    <select id="combustiveis_periodo_euro">
+                        <option value="1">hónap</option>
+                        <option value="2">két hónap</option>
+                        <option value="3">negyedév</option>
+                        <option value="4">félév</option>
+                        <option value="5">év</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="distance_div_form2">
+        <table>
+            <tr>
+                <td>
+                    Autóval jár munkába?                </td>
+                <td>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <span class="set_right_margin">
+                            igen                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <span>
+                            nem                        </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div id="div_car_job_yes_form2"> 
+            <table>
+                <tr>
+                    <td>
+                        -nap(ok) száma, amikor autóval jár munkába                    </td>
+                    <td>
+                        <input id="car_to_work_number_days_week" type="number" name="dias_por_semana" size="5" value="">
+                        nap/hét                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Távolság kilométerben, amit megtesz a lakása és a munkahelye között (egy nap).&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="">
+                        km                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Átlagosan megtett távolság kilométerben azokon a napokon, amikor nem autóval megy dolgozni:<br><i>például hétvégenként</i>&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" name="km_fds" id="car_to_work_distance_weekend" size="5" value="">
+                        km                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="div_car_job_no_form2">
+            <table>
+                <tr>
+                    <td>
+                        Megtett kilométer                    </td>
+                    <td>
+                        <input type="number" name="km_por_mes" size="4" id="no_car_to_work_distance" value="">
+                        km&nbsp;per                        <select id="combustivel_period_km">
+                            <option value="1">hónap</option>
+                            <option value="2">két hónap</option>
+                            <option value="3">negyedév</option>
+                            <option value="4">félév</option>
+                            <option value="5">év</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    Autójának üzemanyag-fogyasztási hatékonysága                </td>
+                <td>
+                    <input type="number" id="fuel_efficiency" name="consumo_auto" size="5" value="">
+                    l/100km                </td>
+            </tr>
+            <tr>
+                <td>
+                    Átlagosan fizetett üzemanyagár                </td>
+                <td>
+                    <input type="number" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="">
+                    ft/l                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** REVISÕES | MAINTENANCE  ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Karbantartás        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Az átlagos karbantartási és az autómentési költségek:<br><i>olajcsere, szűrök, világítás, abroncsok, fékek, légkondicionálás, futóműbeállítás, stb.</i>                <br>
+            </td>
+            <td class="va-middle">
+                <input type="number" name="revisoes" size="6" id="maintenance" class="currencyInput"
+                       value="">
+                ft/év            </td>
+        </tr>
+    </table>
+    <!--************************** REPARAÇÕES | REPAIRS AND IMPROVEMENTS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Javítások és fejlesztések        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                A javítások és fejlesztések átlagos költsége:<br><i>autóalkatrészek, módosítások, hangolások, horpadások,ütközések, meghibásodások javítása, stb.</i>            </td>
+            <td>
+                <input type="number" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                       value="">
+                ft/év            </td>
+        </tr>
+    </table>
+    <!--************************** PARQUEAMENTO | PARKING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Parkolás        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Autóparkolás átlagos költsége:<br><i>parkolóórák a városban, parkolóhely bérlése, föld alatti vagy föld feletti parkolók középületekben, bevásárló központokban, repülőtereken, busz- és vonatállomásokon és minden más létesítményben.</i>            </td>
+            <td>
+                <input type="number" name="parqueamento" size="6" id="parking" class="currencyInput"
+                       value="">
+                ft/hónap            </td>
+        </tr>
+    </table>
+    <!--************************** PORTAGENS | TOLLS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Díjak        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Átlagosan kifizetett díjak összege<br><i>a városok megközelítéséhez kifizetett dijak hidakon, alagútakon, valamint az autópálya- és dugódijak</i>            </td>
+            <td>
+                Napi kalkuláció?                <div>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_true" name="portagens_ao_dia" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <span class="set_right_margin">
+                            igen                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_false" name="portagens_ao_dia" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <span>
+                            nem                        </span>
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="dia_nao_portag_DIV">
+        <table>
+            <tr>
+                <td>
+                    <i>
+                        Gondoljon továbbá a ritkább kiruccanásaira, amelyeket a város külso területeire vagy vidékre tesz meg, valamint bármilyen elektronikusan érkezo nyugtákra.                    </i>
+                </td>
+                <td>
+                    <input type="number" id="no_daily_tolls_value" class="currencyInput" name="portagens" size="6" 
+                           value="">
+                    ft per                    <select id="portagens_select">
+                        <option value="1">hónap</option>
+                        <option value="2">két hónap</option>
+                        <option value="3" selected="selected">negyedév</option>
+                        <option value="4">félév</option>
+                        <option value="5">év</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dia_sim_portag_DIV">
+        <table>
+            <tr>
+                <td>
+                    Díjakra kifizetett teljes napi összeg                </td>
+                <td>
+                    <input type="number" id="daily_expense_tolls" class="currencyInput" name="preco_portagens_por_dia" size="6" 
+                           value="">
+                    ft alatt                    <br>
+                    <input type="number" id="number_days_tolls" name="dias_portagens_por_mes" size="3" 
+                           value="">
+                    nap per hónap                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** MULTAS | FINES ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Közlekedési bírságok        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Közlekedési bírságokra költött átlagos összeg:<br><i>gondoljon itt arra, hogy mekkora összeget fizetett ki az utolsó pár évben bármilyen közlekedési bírságra(tilosban parkolás, sebességkorlátozás megszegése, mobil használata vezetés közben, stb.)</i>            </td>
+            <td>
+                <input type="number" id="tickets_value" class="currencyInput" name="multas" size="6" 
+                       value="">
+                ft per                <select id="multas_select">
+                    <option value="1">hónap</option>
+                    <option value="2">két hónap</option>
+                    <option value="3">negyedév</option>
+                    <option value="4" selected="selected">félév</option>
+                    <option value="5">év</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <!--************************** LAVAGENS | WASHING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Autómosás és tisztítás        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Autómosásra vagy parkolójegyre kiadott összeg átlaga:<br><i>töltőállomásokon és más helyeken</i>            </td>
+            <td>
+                <input type="number" id="washing_value" class="currencyInput" name="lavagens" size="6"
+                       value="">
+                ft per                <select id="lavagens_select">
+                    <option value="1">hónap</option>
+                    <option value="2">két hónap</option>
+                    <option value="3" selected="selected">negyedév</option>
+                    <option value="4">félév</option>
+                    <option value="5">év</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
+        <span class="step">2/3</span>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part2-->
+<!--************************** DADOS ADICIONAIS ***************************************************--> 
+<div class="form_part" id="form_part3">
+        
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                EGYÉB ADATOK            </h2>
+        </header>
+    </div>
+    
+    <!-- PUBLIC TRANSPORTS SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Megfelelő közlekedési kiadások, amennyiben nincs autója?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider1" name="slider1" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+    
+    <!-- FINANCIAL EFFORT SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Pénzügyi felmérés?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider2" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+    
+    <!-- PUBLIC TRANSPORTS SECTION -->
+    <div id="public_transp_Div_form3">
+    <span class="form_section_title">
+        Tömegközlekedés    </span>
+    <table>
+        <tr>
+            <td>
+                Hány 4 évnél idosebb személy él a háztartásában (Önt is beleértve)            </td>
+            <td>
+                <input type="number" id="household_number_people" name="pessoas_agregado" size="6" 
+                       value="">
+                személy            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                Mekkora az átlagos személyenkénti kiadása a mindennapi életben a tömegközlekedéshez szükséges havi bérletre<br><i>ha a tömegközlekedés nem megoldás az Ön számára, akkor a kockában írjon nullát 0</i>            </td>
+            <td>
+                <input type="number" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6" 
+                       value="">
+                ft            </td>
+        </tr>
+    </table>
+    </div>
+    <!-- EOF PUBLIC TRANSPORTS SECTION -->
+    
+    
+    <!-- FINANCIAL EFFORT SECTION -->        
+    <div id="fin_effort_Div_form3">
+        <span class="form_section_title">
+            Jövedelem        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="income_div_form3">
+                        Mennyi a nettó jövedelme?                        <br/>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
+                            <span>
+                                per év                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
+                            <span>
+                                per hónap                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
+                            <span>
+                                per hét                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
+                            <span>
+                                per óra                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="income_per_year_form3" class="div_element">
+                        <input type="number" id="income_per_year" class="currencyInput" name="income_per_year" size="6" 
+                               value=""/>
+                        ft/év                    </div>
+                    <div id="income_per_month_form3" class="div_element hidden">
+                        <input type="number" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                               value=""/>
+                        ft/hónap                        <br>
+                        <input type="number" id="income_months_per_year" name="income_months_per_year" size="6"
+                               value=""/>
+                        hó/év                    </div>
+                    <div id="income_per_week_form3" class="div_element hidden">
+                        <input type="number" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
+                               value=""/>
+                        ft/hét                        <br>
+                        <input type="number" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
+                               value=""/>
+                        hét/év                    </div>
+                    <div id="income_per_hour_form3" class="div_element hidden">
+                        <input type="number" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                               value=""/>
+                        ft/óra                        <br>
+                        <input type="number" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                               value=""/>
+                        óra/hét                        <br>
+                        <input type="number" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                               value=""/>
+                        hét/év                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--********************************************************************** -->
+        <div id="working_time_form3">
+            <span class="form_section_title">
+                Munkaidő            </span>
+            <table>
+                <tr>
+                    <td>
+                        <div id="working_time_part1_form3">
+                            <br>
+                            Van állása vagy annak megfelelő elfoglaltsága?                            <br>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
+                                <span>
+                                    igen                                </span>
+                            </span>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
+                                <span>
+                                    nem                                </span>
+                            </span>
+                        </div>
+                        <div id="working_time_part2_form3">
+                            Munkaidő:
+                        </div>
+                    </td>
+                    <td>
+                        <div id="working_time_input_form3" class="div_element">
+                            <input type="number" id="time_month_per_year" name="time_month_per_year" size="6"
+                                value=""/>
+                            hó/év                            <input type="number" id="time_hours_per_week" name="time_hours_per_week" size="6"
+                                value=""/>
+                            óra/hét                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- EOF FINANCIAL EFFORT SECTION -->
+
+    <!-- DISTANCE ||| TIME SPENT IN DRIVING ||| SECTION -->
+    <div id="distance_time_spent_driving_form3">
+        <div id="distance_form3">
+            <span class="form_section_title">
+                Távolság            </span>
+            <table>
+                <tr>
+                    <td>
+                        Autóval jár munkába?                    </td>
+                    <td>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
+                                   onchange="driveToJob(true);">
+                            <span class="set_right_margin">
+                                igen                            </span>
+                        </span>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
+                                   onchange="driveToJob(false);" checked >
+                            <span>
+                                nem                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        -nap(ok) száma, amikor autóval jár munkába&nbsp;
+                    </td>
+                    <td>
+                        <input id="drive_to_work_days_per_week" type="number" name="drive_to_work_days_per_week" size="5"
+                               value="">
+                        nap/hét                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Távolság kilométerben, amit megtesz a lakása és a munkahelye között (egy nap).&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" id="dist_home_job" name="dist_home_job" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Átlagosan megtett távolság kilométerben azokon a napokon, amikor nem autóval megy dolgozni:<br><i>például hétvégenként</i>&nbsp;
+                    </td>
+                    <td class="ta-left">
+                        <input type="number" name="journey_weekend" id="journey_weekend" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr id="car_no_job_distance_form3">
+                    <td>
+                        Megtett kilométer                    </td>
+                    <td>
+                        <input type="number" id="dist_per_month" name="km_per_month" size="4"
+                            value="">
+                        km per                        <select id="period_km">
+                            <option value="1">hónap</option>
+                            <option value="2">két hónap</option>
+                            <option value="3">negyedév</option>
+                            <option value="4">félév</option>
+                            <option value="5">év</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--********************************************************************** -->
+        <span class="form_section_title">
+            Vezetéssel töltött idő        </span>
+        <table>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Hány percig tart az út autóval otthonától a munkahelyéig? (csak az odautat számolva)                </td>
+                <td>
+                    <input type="number" size="6" id="time_home_job" name="time_home_job"
+                           value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Hány percet tölt vezetéssel azokon a napokon, amikor nem autóval megy a munkahelyére?                </td>
+                <td>
+                    <input type="number" size="6" id="time_weekend" name="time_weekend" value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part2_form3">
+                <td>
+                    Hány percet tölt vezetéssel?                </td>
+                <td>
+                    <input type="number" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                        value=""/>
+                    percek/nap                    <br>
+                    <input type="number" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                        value=""/>
+                    nap/hónap                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- BUTTONS -->
+    <div class="b-bottom">      
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>        
+        <!--Run button-->
+        <div id="run_button_div">
+            <input id="run_button" class="button" type="submit" onclick="Run1(Country)" value="Futtatás"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1(Country)" value="Futtatás"/>
+        </div>
+    </div>
+    
+    </div>
+<!-- end of form_part3-->
+</body>
+</html>

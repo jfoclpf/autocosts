@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forms for IN</title>
+</head>
+<body>
+<div class="form_part" id="form_part1">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    स्थिर खर्च                </b>
+            </h2>
+            <h4>
+                ऐसे खर्च जो गाड़ी को चलाने के काबिल रखने के लिए हो लेकिन कुल चलाये हुए फ़सलें पर नही            </h4>
+        </header>
+    </div>
+    <!--************************** DEPRECIATION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            वाहन का मूल्य-ह्रास        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                गाड़ी खरीदने कि तारीख            </td>
+            <td id="depr_input_td">
+                <input type="number" min="1" max="12" step="1" id="acquisitionMonth" name="acquisitionMonth" size="3" value="01">
+                &#8209;<!--non breakable hyphen-->
+                <input type="number" min="1910" step="1" id="acquisitionYear" name="acquisitionYear" size="6" value="2000">
+            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                खरीदने के समय पर गाड़ी की व्यावसायिक कीमत  <br><i>अगर आपने नई गाड़ी खरीदी थी तो आपने दी हु़ई कीमत <br>अगर आपने किसी और कि गाड़ी खरीदी थी, तो उस समय पर गाड़ी कि व्यावसायिक कीमत/ मूल्यांकन</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput" name="commercialValueAtAcquisition" size="10" value="">
+                &#8377;            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                गाड़ी कि आज कि व्यावसायिक कीमत<br><i>अगर आज आप अपनी गाड़ी  बेचते है, तो आप को क्या कीमत मिलेगी?</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput" name="commercialValueAtNow" size="10" value="">
+                &#8377;            </td>
+        </tr>
+    </table>
+    <!--************************** INSURANCE ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            गाड़ी का बीमा और व्यवधान रक्षा        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="mensal">
+                    <span>
+                        प्रतिमास                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="trimestral">
+                    <span>
+                        त्रैमासिक                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="semestral">
+                    <span>
+                        छमाही                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="anual">
+                    <span>
+                        सालाना                     </span>
+                </div>
+            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput" name="insuranceValue" size="9"
+                    value="">
+                &#8377;            </td>
+        </tr>
+    </table>
+    <!--************************** CREDIT ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            गाड़ी के लिए क़र्ज़        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                क्या आपने गाड़ी खरीदने के लिए कर्ज़ किया था?            </td>
+            <td>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <span class="set_right_margin">
+                        हाँ                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <span>
+                        नहीँ                    </span>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div id="sim_credDiv">
+        <table>
+            <tr>
+                <td>
+                    वित्त प्रबन्धित रकम:<br><i>आपने कितना कर्ज़ लिया था??</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput" name="borrowedAmount" size="9" value="">
+                    &#8377;                </td>
+            </tr>
+            <tr>
+                <td>
+                    ऋण अवधि / ऋण के किस्तों की संख्या                </td>
+                <td>
+                    <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" size="9" value="">
+                    महीने                </td>
+            </tr>
+            <tr>
+                <td>
+                    औसत राशि प्रति किश्त                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput" name="amountInstallment" size="9" value="">
+                    &#8377;/महीना                </td>
+            </tr>
+            <tr>
+                <td>
+                    अवशेष मूल्य:<br><i>कर्ज़ के अवधि के अंत में, आपको और कितना भुगतान करना होगा या आपने भुगतान किया था?</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput" name="residualValue" size="9" value="">
+                    &#8377;                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** INSPECTION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            गाड़ी का मुआइना (MOT test)        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                आपने अपनी गाड़ी कितने बार मुआइना के लिए भेजी है?            </td>
+            <td>              
+                <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" value="">
+                बार            </td>
+        </tr>
+        <tr id="InspectionCost_tr">
+            <td>
+                हर मुआइना कि औसत खर्च            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput" name="averageInspectionCost" size="6" value="">
+                &#8377;            </td>
+        </tr>
+    </table>
+    <!--************************** ROAD TAX ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            उत्पाद शुल्क/ एक्साइस् ड्यूटी (कार कर)        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                आपकी गाड़ी से जुड़े टैक्स :<br><i>राज्य को किया गया भुगतान.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput" name="roadTaxes" size="6" value="">
+                &#8377;/साल            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <span class="step">1/3</span>
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
+            value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part1-->
+<div class="form_part" id="form_part2">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    चालू लागत                </b>
+            </h2>
+            <h4>
+                ऐसे खर्च, जो गाड़ी के कुल चलाये हुए फ़सलें, पर निर्भर हो            </h4>
+        </header>
+    </div>
+    <!--************************** FUELS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            ईंधन        </span>
+    </h3>
+    <table>
+        <tr>
+            <td rowspan="2">
+                पेट्रोल, डीजल, एलपीजी, बिजली            </td>
+            <td>
+                हिसाब, आपके चुने पर्याय पर आधारित होगा:                 <br>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                    <span class="set_right_margin">
+                        km                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                    <span>
+                        रुपये                    </span>
+                </span>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="currency_div_form2">
+                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput"
+                        value="" name="combustiveis_euro">
+                    <span class="nowrap">
+                        &#8377; प्रति                    </span>
+                    <select id="combustiveis_periodo_euro">
+                        <option value="1">महीना</option>
+                        <option value="2">दो महीने</option>
+                        <option value="3">त्रैमासिक</option>
+                        <option value="4">छमासी</option>
+                        <option value="5">साल</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="distance_div_form2">
+        <table>
+            <tr>
+                <td>
+                    क्या हम मान ले के आप अपनी गाड़ी से कार्यस्थल पर जाते है??                </td>
+                <td>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <span class="set_right_margin">
+                            हाँ                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <span>
+                            नहीँ                        </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div id="div_car_job_yes_form2"> 
+            <table>
+                <tr>
+                    <td>
+                        सप्ताह के कितने दिन आप अपनी गाड़ी से कार्यस्थल पर जाते है?                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" value="">
+                        दिन/सप्ताह                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        घर से कार्यस्थल पर जाते समय आप कितना फ़ासला, अपनी गाड़ी से तय करते है ( एक तरफा)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="">
+                        km                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        जिस दिन आप गाड़ी कार्यस्थल पर नही ले जाते, उस दिन आपकी गाड़ी औसतन कितना दौड़ती है??:<br><i>उदाहरण हर शनिवार या रविवार </i>&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" value="">
+                        km                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="div_car_job_no_form2">
+            <table>
+                <tr>
+                    <td>
+                        आप इतने किलोमीटर चलाते है                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" value="">
+                        km&nbsp;प्रति                        <select id="combustivel_period_km">
+                            <option value="1">महीना</option>
+                            <option value="2">दो महीने</option>
+                            <option value="3">त्रैमासिक</option>
+                            <option value="4">छमासी</option>
+                            <option value="5">साल</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    आपके वाहन की ईंधन कार्यक्षमता                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" value="">
+                    km/l                </td>
+            </tr>
+            <tr>
+                <td>
+                    आप ईंधन के लिए औसतन कितनी किमत देते है                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="">
+                    &#8377;/l                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** MAINTENANCE  ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            देखभाल        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                देखभाल और व्यवधान रक्षा पर होनेवाले औसत खर्च:<br><i>इंजन तेल बदलना, फिल्टर, लाइट्स, टायर, ब्रेक, वातानुकूलन, स्टीयरिंग अलाइनमेंट, इत्यादि.</i>                <br>
+            </td>
+            <td class="va-middle">
+                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput"
+                       value="">
+                &#8377;/साल            </td>
+        </tr>
+    </table>
+    <!--************************** REPAIRS AND IMPROVEMENTS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            मरम्मत और सुधार         </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                मरम्मत और सुधार पर औसतन खर्च:<br><i>कार के पुर्जे, तब्दिलिया, कोई खराबी कि मरम्मत, डेंट्स, दुर्घटना, ट्यूनिंग, इत्यादि</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                       value="">
+                &#8377;/साल            </td>
+        </tr>
+    </table>
+    <!--************************** PARKING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            पार्किंग        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                पार्किंग के साथ औसतन खर्च:<br><i>शहर में पार्किंग का खर्च, पार्किंग कि जगह का किराया, सार्वजनिक इमारतों में भूमिगत या ऊपरी पार्किंग स्थल, शॉपिंग सेंटर, हवाई अड्डे, बस या ट्रेन स्टेशनों या अन्य कोई आधारिक संरचनाए.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput"
+                       value="">
+                &#8377;/महीना            </td>
+        </tr>
+    </table>
+    <!--************************** TOLLS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            टॉल        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                टॉल के साथ औसतन खर्च<br><i>पुल, सुरंगों, मोटरवे और भीड़ प्रभार शहर के केंद्र तक पहुंच प्राप्त करने के लिए</i>            </td>
+            <td>
+                क्या गिनती दिन पर निर्भर है?                <div>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <span class="set_right_margin">
+                            हाँ                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <span>
+                            नहीँ                        </span>
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- Calculating tolls on a no daily basis -->
+    <div id="daily_tolls_false_div">
+        <table>
+            <tr>
+                <td>
+                    <i>
+                        आप अपने शहर के बाहरी इलाकों या ग्रामीण इलाकों में जो दुर्लभ यात्राएं करते हैं, या किसी भी प्रकार के इलेक्ट्रॉनिक टोल भरते हो, तो उसका भी समावेश करें                    </i>
+                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
+                           value="">
+                    &#8377; प्रति                    <select id="tolls_period_select">
+                        <option value="1">महीना</option>
+                        <option value="2">दो महीने</option>
+                        <option value="3">त्रैमासिक</option>
+                        <option value="4">छमासी</option>
+                        <option value="5">साल</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Calculating tolls on a daily basis -->
+    <div id="daily_tolls_true_div">
+        <table>
+            <tr>
+                <td>
+                    टॉल पर रोज़ का खर्च                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
+                           value="">
+                    &#8377; दौरन                    <br>
+                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" 
+                           value="">
+                    दिन प्रति महीना                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** FINES / TICKETS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            ट्रैफिक से संबंधित जुर्माने        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                ट्रैफिक से संबंधित जुर्माने के औसत खर्च:<br><i>याद किजिये पिछले कुछ वर्षों में आप किसी भी प्रकार के ट्रैफिक से संबंधित जुर्माने (अवैध पार्किंग, गति सीमा उल्लंघन, मोबाइल फोन, इत्यादि) पर कितना खर्च कर चुके हैं.)</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
+                       value="">
+                &#8377; प्रति                <select id="tickets_period_select">
+                    <option value="1">महीना</option>
+                    <option value="2">दो महीने</option>
+                    <option value="3">त्रैमासिक</option>
+                    <option value="4">छमासी</option>
+                    <option value="5">साल</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <!--************************** WASHING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            धुलाई और सफाई        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                धुलाई और पार्किंग सेवक पर औसत खर्च:<br><i>सेवा केंद्रों और अन्य जगहों में</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6"
+                       value="">
+                &#8377; प्रति                <select id="washing_period_select">
+                    <option value="1">महीना</option>
+                    <option value="2">दो महीने</option>
+                    <option value="3">त्रैमासिक</option>
+                    <option value="4">छमासी</option>
+                    <option value="5">साल</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
+        <span class="step">2/3</span>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part2-->
+<!--************************** DADOS ADICIONAIS ***************************************************-->
+<div class="form_part" id="form_part3">
+
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                अतिरिक्त डेटा            </h2>
+        </header>
+    </div>
+
+    <!-- PUBLIC TRANSPORTS SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    अगर आपकी अपनी गाड़ी ना होती, तो कोई अन्य समान यातायात के साधन पर होनेवाले खर्च ?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider1" name="slider1" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- FINANCIAL EFFORT SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    वित्तीय प्रयास?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider2" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- PUBLIC TRANSPORTS SECTION -->
+    <div id="public_transp_Div_form3">
+    <span class="form_section_title">
+        सार्वजनिक परिवहन    </span>
+    <table>
+        <tr>
+            <td>
+                आपके परिवार में 4 साल से अधिक आयु वाले कितने लोग हैं (आप सहित)            </td>
+            <td>
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6"
+                       value="">
+                लोग            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                सार्वजनिक परिवहन के मासिक सीजन टिकट का प्रति व्यक्ति औसतन कीमत क्या है, अपने सामान्य दैनिक जीवन के लिए<br><i>अगर सार्वजनिक परिवहन आपके लिए विकल्प नहीं है, तो 0 डालें</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6"
+                       value="">
+                &#8377;            </td>
+        </tr>
+    </table>
+    </div>
+    <!-- EOF PUBLIC TRANSPORTS SECTION -->
+
+
+    <!-- FINANCIAL EFFORT SECTION -->
+    <div id="fin_effort_Div_form3">
+        <span class="form_section_title">
+            आमदनी        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="income_div_form3">
+                        आपकी शुद्ध/ निवल आय क्या है?                        <br/>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
+                            <span>
+                                प्रति साल                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
+                            <span>
+                                प्रति महीना                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
+                            <span>
+                                प्रति हफ़्ता                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
+                            <span>
+                                प्रति घंटा                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="income_per_year_form3" class="div_element">
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6"
+                               value=""/>
+                        &#8377;/साल                    </div>
+                    <div id="income_per_month_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                               value=""/>
+                        &#8377;/महीना बार                        <br>
+                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
+                               value=""/>
+                        महीने/साल                    </div>
+                    <div id="income_per_week_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
+                               value=""/>
+                        &#8377;/हफ़्ता बार                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
+                               value=""/>
+                        हफ्‍़ते/साल                    </div>
+                    <div id="income_per_hour_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                               value=""/>
+                        &#8377;/घंटा बार                        <br>
+                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                               value=""/>
+                        घंटे/हफ़्ता बार                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                               value=""/>
+                        हफ्‍़ते/साल                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--********************************************************************** -->
+        <div id="working_time_form3">
+            <span class="form_section_title">
+                काम का समय            </span>
+            <table>
+                <tr>
+                    <td>
+                        <div id="working_time_part1_form3">
+                            <br>
+                            क्या आपके पास नौकरी या योग्य व्यवसाय है?                            <br>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
+                                <span>
+                                    हाँ                                </span>
+                            </span>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
+                                <span>
+                                    नहीँ                                </span>
+                            </span>
+                        </div>
+                        <div id="working_time_part2_form3">
+                            काम का समय:
+                        </div>
+                    </td>
+                    <td>
+                        <div id="working_time_input_form3" class="div_element">
+                            <input type="number" min="1" max="12" step="1" id="time_month_per_year" name="time_month_per_year" size="6"
+                                value=""/>
+                            महीने/साल                            <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" name="time_hours_per_week" size="6"
+                                value=""/>
+                            घंटे/हफ़्ता                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- EOF FINANCIAL EFFORT SECTION -->
+
+    <!-- DISTANCE ||| TIME SPENT IN DRIVING ||| SECTION -->
+    <div id="distance_time_spent_driving_form3">
+        <div id="distance_form3">
+            <span class="form_section_title">
+                फ़ासला            </span>
+            <table>
+                <tr>
+                    <td>
+                        क्या हम मान ले के आप अपनी गाड़ी से कार्यस्थल पर जाते है??                    </td>
+                    <td>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
+                                   onchange="driveToJob(true);">
+                            <span class="set_right_margin">
+                                हाँ                            </span>
+                        </span>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
+                                   onchange="driveToJob(false);" checked >
+                            <span>
+                                नहीँ                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        सप्ताह के कितने दिन आप अपनी गाड़ी से कार्यस्थल पर जाते है?&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" size="5"
+                               value="">
+                        दिन/सप्ताह                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        घर से कार्यस्थल पर जाते समय आप कितना फ़ासला, अपनी गाड़ी से तय करते है ( एक तरफा)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        जिस दिन आप गाड़ी कार्यस्थल पर नही ले जाते, उस दिन आपकी गाड़ी औसतन कितना दौड़ती है??:<br><i>उदाहरण हर शनिवार या रविवार </i>&nbsp;
+                    </td>
+                    <td class="ta-left">
+                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr id="car_no_job_distance_form3">
+                    <td>
+                        आप इतने किलोमीटर चलाते है                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4"
+                            value="">
+                        km प्रति                        <select id="period_km">
+                            <option value="1">महीना</option>
+                            <option value="2">दो महीने</option>
+                            <option value="3">त्रैमासिक</option>
+                            <option value="4">छमासी</option>
+                            <option value="5">साल</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--********************************************************************** -->
+        <span class="form_section_title">
+            ड्राइविंग में बिताया समय         </span>
+        <table>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    घर से कार्यस्थल तक आप कितने मिनट ड्राइव करते हैं? (एक तरफा)                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job"
+                           value=""/>
+                    मिनट                </td>
+            </tr>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    जब आप कार को कार्यस्थल पर नहीं ले जाते हैं, ऐसे दिनों में आप कितने देर गाड़ी चलाते हैं?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" value=""/>
+                    मिनट                </td>
+            </tr>
+            <tr class="time_spent_part2_form3">
+                <td>
+                    आप कितने मिनट गाड़ी चलाते है ?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                        value=""/>
+                    मिनट/दिन                    <br>
+                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                        value=""/>
+                    दिन/महीना                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="b-bottom">
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>
+        <!--Run button-->
+        <div id="run_button_div">
+            <input id="run_button" class="button" type="submit" onclick="Run1()" value="चलाएँ"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="चलाएँ"/>
+        </div>
+    </div>
+
+    </div>
+<!-- end of form_part3-->
+</body>
+</html>
