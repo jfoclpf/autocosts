@@ -30,6 +30,9 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 
+//personalised requires
+const url = require(__dirname + '/server/url');
+
 const clientDir = 'client/';
 const HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
 const SRC_DIR = HOME_DIR + "src" + "/";
@@ -69,12 +72,12 @@ app.enable('case sensitive routing');
 
 var hbs = exphbs.create({
     defaultLayout: 'main',
-	extname: '.hbs',
-	helpers: {
+    extname: '.hbs',
+    helpers: {
         /*using for selecting value in HTML select boxes*/
-        isSelected: function (value) { 			
-			return CC === value ? 'selected' : ''; 
-		},
+        isSelected: function (value) {
+            return CC === value ? 'selected' : ''; 
+        },
         /*chose the HTML costs table for specific country*/
         costs_table: function (){
             return CC+'costs';
@@ -99,15 +102,45 @@ app.use(compression());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-//Routing for HTML layout and forms
-app.get('/:CC', function (req, res, next) {    
+//Javavascript Globals.js file to the client with variables inserted by the server
+//The order of app.get must be preserved
+app.get('/Globals.js', function(req, res) {       
+    console.log("app.get('/Globals.js')");
     
-    if (req.params.CC === "Globals.js" || req.params.CC === "submitUserInput"){
-        next();
-        return;
-    }
+    app.set('view engine', '.js'); 
+    
+    res.set('Content-Type', 'application/javascript');
+    res.render('Globals.ejs', { 
+        CC : CC,
+        LangCode : LangCode,
+        available_CT : available_CT,
+        domains_CT : domains_CT,
+        clientDir : clientDir,
+        CDN_URL : CDN_URL,
+        HTTP_Protocol : HTTP_Protocol
+    });
+});
 
-    const url = require(__dirname + '/server/url');
+//Javavascript Globals.js file to the client with variables inserted by the server
+//The order of app.get must be preserved
+app.post('/submitUserInput', function(req, res) {       
+    console.log("app.post('/submitUserInput')");
+    
+    //object got from POST
+    var objectToDb = req.body.objectToDb;
+    
+    //include credentials object
+    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+    console.log(DB_INFO);    
+    
+    const submitUserInput = require(__dirname + '/server/submitUserInput');
+    submitUserInput.insertData2DB(objectToDb, DB_INFO, res);
+    
+});
+
+//Routing for HTML layout and forms
+app.get('/:CC', function (req, res, next) {
+    
     //returns true if redirected to another URL, false otherwise        
     if (url.redirectIfNecessary(req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC)){
         return;
@@ -146,41 +179,7 @@ app.get('/:CC', function (req, res, next) {
 
 });
 
-//Javavascript Globals.js file to the client with variables inserted by the server
-//The order of app.get must be preserved
-app.get('/Globals.js', function(req, res) {       
-    console.log("app.get('/Globals.js')");
-    
-    app.set('view engine', '.js'); 
-    
-    res.set('Content-Type', 'application/javascript');
-    res.render('Globals.ejs', { 
-        CC : CC,
-        LangCode : LangCode,
-        available_CT : available_CT,
-        domains_CT : domains_CT,
-        clientDir : clientDir,
-        CDN_URL : CDN_URL,
-        HTTP_Protocol : HTTP_Protocol
-    });
-});
 
-//Javavascript Globals.js file to the client with variables inserted by the server
-//The order of app.get must be preserved
-app.post('/submitUserInput', function(req, res) {       
-    console.log("app.post('/submitUserInput')");
-    
-    //object got from POST
-    var objectToDb = req.body.objectToDb;
-    
-    //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
-    console.log(DB_INFO);    
-    
-    const submitUserInput = require(__dirname + '/server/submitUserInput');
-    submitUserInput.insertData2DB(objectToDb, DB_INFO, res);
-    
-});
 
 //error handler
 app.use(function (err, req, res, next) {

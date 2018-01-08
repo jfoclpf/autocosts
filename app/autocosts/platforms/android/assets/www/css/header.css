@@ -1,0 +1,115 @@
+/*==== HEADER =====*/
+
+#banner_top {
+    background: #ececec;
+    padding: 5px 0;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid;
+    border-bottom-color: #E9E9E9;
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+    display:table;
+    width:100%;
+}
+
+#main_title {
+    margin: 10px 0;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    line-height: 20px;
+    font-size: 28px;
+    text-align: center;
+    color: #606060;
+}
+
+#left_top_div {
+    width: 15%;
+    display:table-cell;
+}
+
+#header_main_title {
+    text-align:center;
+    display:table-cell;
+    width:70%;
+}
+#country_box {
+    width:15%;
+    display:table-cell;
+    vertical-align: middle;
+}
+
+#country_box_inline{
+    display:table;
+    margin: 0 auto;
+    white-space:nowrap;
+}
+
+#banner_flag{
+    display: table-cell;
+}
+#country_select,
+#banner_flag_div,
+#country_select_div {
+    display: table-cell;
+    vertical-align:middle;
+}
+
+#container{
+    width:100%;
+    margin: 0 auto;
+}
+
+#container_table{
+    display:table;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#description {
+    text-align: justify;
+    text-justify: inter-word;
+    padding-bottom: 2%;
+    display:table;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+#description br {
+    display: none;
+}
+
+.flag {
+    background-image: url("images/flags24.png");
+    height: 20px;
+    width: 24px;
+    float: left;
+    margin: 2px 5px;
+}
+.is_logo {
+    padding: 14px 0;
+}
+.roundCorner,
+.roundCorner img {
+    border-radius: 10px;
+}
+.roundCorner {
+    border: 2px solid #b4b4b4;
+}
+form.roundCorner {
+    border: 0;
+}
+.roundCorner img {
+    border: 0;
+    display: block;
+}
+.hidden {
+    display: none;
+}
+.clear{
+    clear: both;
+}
