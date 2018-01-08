@@ -32,9 +32,6 @@ do
             cp -R src/* build/
 			cp src/.htaccess build/
             
-            if [ -d "node_modules/" ]; then
-                cp -R node_modules/ build/
-            fi
             ;;
 
         h)

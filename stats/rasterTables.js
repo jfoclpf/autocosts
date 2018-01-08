@@ -1,3 +1,4 @@
+/*node script which converts table costs HTML files into correspondent table costs jpg images*/
 var fs = require('fs');
 var TABLES_DIR = fs.absolute("../build/tables/");
 console.log("The tables HTML files are in: " + TABLES_DIR);
@@ -45,7 +46,7 @@ var page_css = require('webpage').create();
 var content_css = '<html><head><link rel="stylesheet" href="file://'+ css_file + '" type="text/css" media="screen"></head><body></body></html>';
 page_css.content = content_css;
 page_css.onLoadFinished = function(status) {
-  console.log('CSS status file: ' + status);
-  render_pages();
-  phantom.exit();
+    console.log('CSS status file: ' + status);
+    render_pages();
+    phantom.exit();
 };
