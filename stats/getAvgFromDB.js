@@ -1,5 +1,4 @@
-//Node file which runs server side with a cron function
-//the file populating the average DB table
+/*Node script which populates the average DB tables for each country*/
 
 //includes
 var fs    = require('fs');
@@ -7,12 +6,12 @@ var path  = require("path");
 var async = require('async'); //module to allow to execute the queries in series
 var mysql = require('mysql'); //module to get info from DB
 
-var HOME_DIR = path.resolve(__dirname, '..') + "/";
+var HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
 var SRC_DIR = HOME_DIR + "src" + "/";
 
-eval(fs.readFileSync(SRC_DIR + 'js/conversionFunctions.js')+'');
-eval(fs.readFileSync(SRC_DIR + 'js/core/coreFunctions.js')+'');
-eval(fs.readFileSync(SRC_DIR + 'js/getData.js')+'');
+eval(fs.readFileSync(SRC_DIR + 'client/conversionFunctions.js')+'');
+eval(fs.readFileSync(SRC_DIR + 'client/core/coreFunctions.js')+'');
+eval(fs.readFileSync(SRC_DIR + 'client/getData.js')+'');
 eval(fs.readFileSync('./statsFunctions.js')+'');
 
 var REL; //release shall be 'work' or 'prod', it's 'work' by default
@@ -34,8 +33,8 @@ console.log("chosen '" + REL + "'");
 //process.exit();
 
 //include credentials object
-eval(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.js')+'');
-var login_UserInputDB = get_DBcredentials();
+var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+console.log(DB_INFO);
 
 //database variable
 var db;
@@ -55,22 +54,23 @@ async.series([
 
     //get the set of different countries and set them in array countries[]
     function(callback) {
-        //console.log("DB login data: "); console.log(login_UserInputDB);
+        //console.log("DB login data: "); console.log(DB_INFO);
 
-        console.log("\nGetting the set of different countries from 'country_specs'");
-        db = mysql.createConnection(login_UserInputDB);
-
+        db = mysql.createConnection(DB_INFO);
+        console.log('\nGetting the set of different countries from ' +
+                    'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs);
+        
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
-        db.query('SELECT * FROM country_specs', function(err, results, fields) {
+        db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function(err, results, fields) {
             if (err) {console.log(err); throw err;}
             //Check that a user was found
             for (var i=0; i<results.length; i++){
@@ -86,20 +86,21 @@ async.series([
 
     //Get users unique ID
     function(callback) {
-        console.log("\nGetting users unique IDs from 'users_insertions'");
-        db = mysql.createConnection(login_UserInputDB);
+        console.log('\nGetting users unique IDs from ' +
+                    'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions);
+        db = mysql.createConnection(DB_INFO);
 
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
-        db.query('SELECT DISTINCT uuid_client, country FROM users_insertions', function(err, results, fields) {
+        db.query('SELECT DISTINCT uuid_client, country FROM ' + DB_INFO.db_tables.users_insertions, function(err, results, fields) {
             if (err) return callback(err);
             for (var i=0; i<results.length; i++){
                 unique_users.push(results[i]);
@@ -112,20 +113,21 @@ async.series([
 
     //Get all data from users input DB
     function(callback) {
-        console.log("\nGetting all data from users input DB 'users_insertions'");
-        db = mysql.createConnection(login_UserInputDB);
+        console.log('\nGetting all user insertion data from ' +
+                    'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions);
+        db = mysql.createConnection(DB_INFO);
 
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
-        db.query('SELECT * FROM users_insertions', function(err, results, fields) {
+        db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function(err, results, fields) {
             if (err) return callback(err);
 
             for (var i=0; i<results.length; i++){
@@ -139,12 +141,13 @@ async.series([
 
     //calculate data and builds query
     function(callback) {
-        console.log("\nCalculating data and building DB insertion query");
+        console.log('\nCalculating data and building DB insertion data for ' + 
+                    'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
         var country_users = []; //array with unique users for one specific country
         var country_data  = []; //array where all data for one specific country is inserted
 
         //query header
-        queryInsert += "INSERT INTO monthly_costs_statistics (\
+        queryInsert += "INSERT INTO " + DB_INFO.db_tables.monthly_costs_statistics + " (\
             country,\
             Date_of_calculation,\
             \
@@ -276,23 +279,24 @@ async.series([
 
     //erase content of monthly_costs_statistics table DB
     function(callback) {
-        console.log("\nErasing previous data from DB");
-        db = mysql.createConnection(login_UserInputDB);
+        console.log("\nDeleting previous data from DB");
+        db = mysql.createConnection(DB_INFO);
 
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
-        db.query('DELETE FROM monthly_costs_statistics', function(err, results, fields) {
+        db.query('DELETE FROM ' + DB_INFO.db_tables.monthly_costs_statistics, function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
             db.end();
-            console.error('Previous data erased');
+            console.error('Previous data deleted from ' +
+                          'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
             callback();
         });
     },
@@ -300,21 +304,22 @@ async.series([
     //insert data into DB
     function(callback) {
         console.log("\nInserting new calculated data into DB");
-        db = mysql.createConnection(login_UserInputDB);
+        db = mysql.createConnection(DB_INFO);
 
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
         db.query(queryInsert, function(err, results, fields) {
             if (err){console.log(err); return callback(err);}
-            console.log("All new data successfully added into DB!\n");
+            console.log('All new data successfully added into ' +
+                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics + '\n\n');
             db.end();
             callback();
         });

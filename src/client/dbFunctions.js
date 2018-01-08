@@ -97,7 +97,7 @@ function createObjToDB(){
 function submitDataToDB(objectToDb){
 
     $.ajax({
-        url: 'php/submitUserInput.php',
+        url: 'submitUserInput',
         type: 'POST',
         data: {
             objectToDb: objectToDb

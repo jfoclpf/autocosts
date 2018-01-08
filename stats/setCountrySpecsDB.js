@@ -33,8 +33,8 @@ else{
 console.log("chosen '" + REL + "'");
 
 //include credentials object
-eval(fs.readFileSync(HOME_DIR + 'keys/'+REL+'/db_credentials.js')+'');
-var login_UserInputDB = get_DBcredentials();
+var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+console.log(DB_INFO);
 
 //getting country information from 
 console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
@@ -57,21 +57,22 @@ async.series([
 
     //delete table before populate it
     function(callback) {
-        console.log("Deleting table 'country_specs' before populating it with country specs");
+        console.log("Deleting DB table " + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs +
+                    " " + "before populating it with country specs");
 
-        db = mysql.createConnection(login_UserInputDB);
+        db = mysql.createConnection(DB_INFO);
 
         db.connect(function(err){
             if (err) {
                 console.error('error connecting: ' + err.stack);
                 return;
             }
-            console.log('User ' + login_UserInputDB.user + 
-                        ' connected successfully to DB ' + login_UserInputDB.database + 
-                        ' at ' + login_UserInputDB.host);
+            console.log('User ' + DB_INFO.user + 
+                        ' connected successfully to DB ' + DB_INFO.database + 
+                        ' at ' + DB_INFO.host);
         });
 
-        db.query('DELETE FROM country_specs', function(err, results, fields) {
+        db.query('DELETE FROM ' + DB_INFO.db_tables.country_specs, function(err, results, fields) {
             if (err) {console.log(err); throw err;}
             //console.log(countries);            
             console.log("Previous data deleted from table");
@@ -85,7 +86,7 @@ async.series([
         for (var key in available_CT){                        
                
             WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + key + ".json", 'utf8'));
-            queryInsert = "INSERT INTO country_specs ( \
+            queryInsert = "INSERT INTO " + DB_INFO.db_tables.country_specs + " ( \
                 Country, \
                 currency, \
                 distance_std, \
