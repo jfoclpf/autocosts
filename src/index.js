@@ -16,12 +16,41 @@ const DefaultCC = "UK"; //when no other method finds the country of user, use th
 //###############################################################################
 //###############################################################################
 
+console.log("\n\nServer started");
+
+//check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
+const numCPUs = require('os').cpus().length;
+console.log("numCPUs: " + numCPUs);
+
 const fs = require('fs');
+const path  = require("path");
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
+const compression = require('compression');
+
 const clientDir = 'client/';
+const HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
+const SRC_DIR = HOME_DIR + "src" + "/";
+
+var REL; //release shall be 'work' or 'prod', it's 'work' by default
+if(process.argv.length == 2){    
+    REL = "work";
+}
+else if (process.argv.length > 3){
+    console.log("Just one argument is accepted \n");
+    process.exit();
+}
+else{
+    if (process.argv[2]!="work" && process.argv[2]!="prod"){
+        console.log("work or prod must be chosen \n");
+        process.exit();
+    }
+    REL = process.argv[2];
+}
+console.log("chosen '" + REL + "'");
+//process.exit();
 
 const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));	
 const available_CT = CountriesInfo.available_CT; //available Countries
@@ -59,11 +88,14 @@ var hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.engine('.js', ejs.__express);
 
+//static content
 app.use(express.static(__dirname + '/public'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/client', express.static(__dirname + '/client'));
 app.use('/countries', express.static(__dirname + '/countries'));
+
+app.use(compression());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -137,12 +169,24 @@ app.get('/Globals.js', function(req, res) {
 //The order of app.get must be preserved
 app.post('/submitUserInput', function(req, res) {       
     console.log("app.post('/submitUserInput')");
-    //console.log(req.body);
     
-    const mysql = require('mysql'); //module to get info from DB
+    //object got from POST
+    var objectToDb = req.body.objectToDb;
     
+    //include credentials object
+    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+    console.log(DB_INFO);    
+    
+    const submitUserInput = require(__dirname + '/server/submitUserInput');
+    submitUserInput.insertData2DB(objectToDb, DB_INFO, res);
     
 });
+
+//error handler
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
 
 var HTTPport = 3000; 
 var server = app.listen(HTTPport, function () {
