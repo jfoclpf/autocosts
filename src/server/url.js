@@ -5,6 +5,31 @@ For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector *
 
 module.exports = {
     
+    //when no country code is provided, example autocosts.info/
+    //if the user is in Portugal, redirects to autocustos.info/PT
+    redirect2CC: function (req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC){
+                
+        const protocol = req.protocol; 
+        const host = req.get('host');
+        const originalUrl = req.originalUrl; //  "/PT" for example    
+                
+        //get country by locale or HTTP header from browser
+        let geoCC = getGeoCC(req, host, available_CT, DefaultCC);
+        
+        var url2redirect;
+        if(isThisLocalhost(req) || isWorkDomain(host)){
+            url2redirect = protocol + '://' + host + '/' + geoCC;
+        }
+        //production
+        else{ 
+            url2redirect = getProtocol(host, IS_HTTPS) + '://' + domains_CT[geoCC] + '/' + geoCC;
+        }
+    
+        res.redirect(302, url2redirect);        
+        return url2redirect;
+    },
+    
+
     //when there is redirection return true; false otherwise
     redirectIfNecessary: function (req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC) {                  
         
@@ -20,7 +45,9 @@ module.exports = {
         //get the Country from locale or HTTP Accept-Language Info
         if (!isCCinCountriesList(CC, available_CT) && !isCCXX(CC)){         
             console.log("if (!isCCinCountriesList)", CC);
-            var url2redirect = getProtocol(host, IS_HTTPS) + '://' + domains_CT[CC] + '/' + getGeoCC(req, host, available_CT, DefaultCC);
+            //get country by locale
+            var geoCC = getGeoCC(req, host, available_CT, DefaultCC);
+            var url2redirect = getProtocol(host, IS_HTTPS) + '://' + domains_CT[geoCC] + '/' + geoCC;
             //302 redirects are temporary
             //it's temporary because the redirect might, from a defined starting URL, 
             // redirect to different URLs according to the locale of the user,
@@ -76,9 +103,8 @@ module.exports = {
         return false;
     },
     
-    isWorkDomain : function (req){
-        const host = req.get('host');
-        return isWorkDomain(host);
+    isThisATest : function (req){        
+        return isThisATest(req);
     },
     
     getProtocol : function(req, IS_HTTPS){

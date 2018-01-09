@@ -3,7 +3,7 @@
 module.exports = {
     
     //when there is redirection return true; false otherwise
-    insertData2DB: function (objectToDb, DB_INFO, res){                
+    insertData2DB: function (objectToDb, DB_INFO, res, callback){                
         //console.log(objectToDb);
         
         const mysql = require('mysql'); //module to get info from DB         
@@ -160,16 +160,14 @@ module.exports = {
         });
 
         db.query(queryInsert, function(err, results, fields) {
-            if (err) {
-                console.log(err); 
-                throw err;
-                re false;
+            if (err) {                                
+                callback(err, null);
             }
             else{
                 console.log('User data successfully added into ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions + '\n\n');
+                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions + '\n\n');
                 
-                return results;
+                callback(null, results);
             }                               
         });
         
