@@ -1,9 +1,6 @@
 keys/prod/
-<<<<<<< HEAD
 keys/work/recaptcha_key.json
 keys/work/uber_token.json
-=======
->>>>>>> 869ba6d03753816ce96fe7e753be2b26223396c1
 build/
 node_modules/
 
