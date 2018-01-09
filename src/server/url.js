@@ -3,6 +3,8 @@ The server side code shall thus forward the page if the entry URL is not correct
 according to the domain name vs. country code combinatorial rules.
 For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector */
 
+const GEO_IP = require('geoip-lite');
+
 module.exports = {
     
     //when no country code is provided, example autocosts.info/
@@ -103,14 +105,18 @@ module.exports = {
         return false;
     },
     
-    isThisATest : function (req){        
+    isThisATest: function (req){        
         return isThisATest(req);
     },
     
-    getProtocol : function(req, IS_HTTPS){
+    getProtocol: function(req, IS_HTTPS){
         const host = req.get('host');
         return getProtocol(host, IS_HTTPS);
-    }
+    },
+    
+    isThisLocalhost: function(req){
+        return isThisLocalhost(req);
+    } 
     
 };
 
@@ -137,14 +143,14 @@ var getGeoCC = function(req, host, available_CT, DefaultCC){
     
     //try to get country by IP
     if (!isThisLocalhost(req)){
-           
+        
+        //tries to get IP from user
         var ip = req.headers['x-forwarded-for'].split(',').pop() || 
                  req.connection.remoteAddress || 
                  req.socket.remoteAddress || 
                  req.connection.socket.remoteAddress;
         
-        var geoip = require('geoip-lite');
-        var geo = geoip.lookup(ip);
+        var geo = GEO_IP.lookup(ip);
         var geoCC = geo.country; 
 
         console.log("geoCC: " + geoCC);
@@ -221,8 +227,8 @@ var getProtocol = function (host, IS_HTTPS){
 var isSubdomain = function(host) {
     host_root = host.split(":")[0];    
     host_dim = (host_root.split(".")).length; 
-		if (host_dim > 2){
-    	return true;
+    if (host_dim > 2){
+        return true;
     }
     return false;
 };
