@@ -31,12 +31,14 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 
 //personalised requires
-const url = require(__dirname + '/server/url');
+const url = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
+const submitUserInput = require(__dirname + '/server/submitUserInput');
 
 const clientDir = 'client/';
 const HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
 const SRC_DIR = HOME_DIR + "src" + "/";
 
+//select release
 var REL; //release shall be 'work' or 'prod', it's 'work' by default
 if(process.argv.length == 2){    
     REL = "work";
@@ -54,6 +56,10 @@ else{
 }
 console.log("chosen '" + REL + "'");
 //process.exit();
+
+//include credentials object
+var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+console.log(DB_INFO);
 
 const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));	
 const available_CT = CountriesInfo.available_CT; //available Countries
@@ -102,6 +108,23 @@ app.use(compression());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+//checks CDN
+app.use(function (req, res, next) {
+    if(IS_CDN){
+        if(url.isThisATest(req)){
+            CDN_URL = CDN_URL_WORK;
+        }
+        else{
+            CDN_URL = CDN_URL_PROD;
+        }
+    }
+    else{
+        CDN_URL = "";
+    }
+    console.log("CDN_URL: " + CDN_URL);
+    next();
+});
+
 //Javavascript Globals.js file to the client with variables inserted by the server
 //The order of app.get must be preserved
 app.get('/Globals.js', function(req, res) {       
@@ -127,14 +150,18 @@ app.post('/submitUserInput', function(req, res) {
     console.log("app.post('/submitUserInput')");
     
     //object got from POST
-    var objectToDb = req.body.objectToDb;
-    
-    //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
-    console.log(DB_INFO);    
-    
-    const submitUserInput = require(__dirname + '/server/submitUserInput');
-    submitUserInput.insertData2DB(objectToDb, DB_INFO, res);
+    var objectToDb = req.body.objectToDb;        
+    submitUserInput.insertData2DB(objectToDb, DB_INFO, res, function(err, data){
+        if (err) {
+            // error handling code goes here
+            console.log("Error inserting user data into DB: ", err);
+            res.status(501).send('Error inserting user data into DB');
+        } else {
+            // code to execute on data retrieval
+            console.log("result from db query is : ", data);
+            res.send(data);
+        }     
+    });
     
 });
 
@@ -149,18 +176,6 @@ app.get('/:CC', function (req, res, next) {
     CC = req.params.CC;
     console.log("app.get('/:CC')");
     console.log("Country Code :" + CC);    
-
-    if(IS_CDN){
-        if(url.isWorkDomain(req)){
-            CDN_URL = CDN_URL_WORK;
-        }
-        else{
-            CDN_URL = CDN_URL_PROD;
-        }
-    }
-    else{
-        CDN_URL = "";
-    }
 
     HTTP_Protocol = url.getProtocol(req, IS_HTTPS);
 
@@ -179,7 +194,11 @@ app.get('/:CC', function (req, res, next) {
 
 });
 
-
+app.get('/', function (req, res, next) {
+    console.log("app.get('/') => redirecting...");
+    var url2redirect = url.redirect2CC(req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC);
+    console.log("redirected to " + url2redirect); 
+});
 
 //error handler
 app.use(function (err, req, res, next) {
