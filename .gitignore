@@ -1,6 +1,4 @@
 keys/prod/
-keys/work/recaptcha_key.json
-keys/work/uber_token.json
 build/
 node_modules/
 
