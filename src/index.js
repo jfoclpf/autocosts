@@ -76,6 +76,7 @@ var HTTP_Protocol = "http";
 var app = express();
 app.enable('case sensitive routing');
 
+//rendering engine for dynamically loaded HTML files
 var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
@@ -93,8 +94,9 @@ var hbs = exphbs.create({
         } 
     }
 });
-
 app.engine('.hbs', hbs.engine);
+
+//rendering engine for dynamically loaded JS files
 app.engine('.js', ejs.__express);
 
 //static content
@@ -142,6 +144,48 @@ app.get('/Globals.js', function(req, res) {
         CDN_URL : CDN_URL,
         HTTP_Protocol : HTTP_Protocol
     });
+});
+
+/* This detects the region of the user by his locale and tries to return,
+if applicable, a cost per unit distance of the correspondent 
+UBER service in that region from which the user is accessing the site */
+app.get('/get_uber', function(req, res) {
+    
+    if (!url.isThisLocalhost(req)){
+        //tries to get IP from user
+        var ip = req.headers['x-forwarded-for'].split(',').pop() || 
+                 req.connection.remoteAddress || 
+                 req.socket.remoteAddress || 
+                 req.connection.socket.remoteAddress;
+        
+        const geoIP = require('geoip-lite');
+        var geo = geoIP.lookup(ip);
+        var lat  = geo.range[0];
+        var long = geo.range[1];
+        
+        
+        var debug=0; //put 0 for PROD; 1 for Lisbon, 2 for London
+        if(debug==1){//Lisbon coordinates
+            lat=38.722252;
+            long=-9.139337;
+        }
+        else if(debug==2){ //London
+            lat=51.507351;
+            long=-0.127758;  
+        }
+        console.log("lat: " + lat + "; long: " +long);
+
+        //get uber token
+        //to manage tokens, visit: https://developer.uber.com/dashboard
+        //user:info@autocosts.info | pass: V*************
+        let uber_token = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/uber_token.json'));
+        let uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
+                            lat + "&longitude=" + long + "&server_token=" + uber_token;
+        console.log(uber_API_url);
+    }
+    
+    
+
 });
 
 //Javavascript Globals.js file to the client with variables inserted by the server
