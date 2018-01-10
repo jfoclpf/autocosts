@@ -33,6 +33,7 @@ const compression = require('compression');
 //personalised requires
 const url = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const submitUserInput = require(__dirname + '/server/submitUserInput');
+const Globals = require(__dirname + '/server/Globals');
 
 const clientDir = 'client/';
 const HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
@@ -68,10 +69,15 @@ const domains_CT   = CountriesInfo.domains_CT;   //Domains
 
 /*Global Variables*/
 //merely defaults, they may change later accordingly
-var CC = DefaultCC; //CC stands for 2-letter Country Code
-var LangCode = languages_CT[DefaultCC];
-var CDN_URL = "";
-var HTTP_Protocol = "http"; 
+var GLOB_VAR = {
+    "CC"            : DefaultCC, //CC stands for 2-letter Country Code
+    "available_CT"  : available_CT,
+    "domains_CT"    : domains_CT,
+    "clientDir"     : clientDir,
+    "LangCode"      : languages_CT[DefaultCC],
+    "CDN_URL"       : "",
+    "HTTP_Protocol" : "http"
+};
 
 var app = express();
 app.enable('case sensitive routing');
@@ -83,14 +89,14 @@ var hbs = exphbs.create({
     helpers: {
         /*using for selecting value in HTML select boxes*/
         isSelected: function (value) {
-            return CC === value ? 'selected' : ''; 
+            return GLOB_VAR.CC === value ? 'selected' : ''; 
         },
         /*chose the HTML costs table for specific country*/
         costs_table: function (){
-            return CC+'costs';
+            return GLOB_VAR.CC+'costs';
         },
         banner_flag: function (){
-            return CC.toLowerCase() + ' ' + 'flag';
+            return GLOB_VAR.CC.toLowerCase() + ' ' + 'flag';
         } 
     }
 });
@@ -129,21 +135,9 @@ app.use(function (req, res, next) {
 
 //Javavascript Globals.js file to the client with variables inserted by the server
 //The order of app.get must be preserved
-app.get('/Globals.js', function(req, res) {       
-    console.log("app.get('/Globals.js')");
-    
-    app.set('view engine', '.js'); 
-    
-    res.set('Content-Type', 'application/javascript');
-    res.render('Globals.ejs', { 
-        CC : CC,
-        LangCode : LangCode,
-        available_CT : available_CT,
-        domains_CT : domains_CT,
-        clientDir : clientDir,
-        CDN_URL : CDN_URL,
-        HTTP_Protocol : HTTP_Protocol
-    });
+app.set('view engine', '.js');
+app.get('/Globals.js', function(req, res){    
+    Globals(req, res, GLOB_VAR);
 });
 
 /* This detects the region of the user by his locale and tries to return,
@@ -184,64 +178,44 @@ app.get('/get_uber', function(req, res) {
         console.log(uber_API_url);
     }
     
-    
-
 });
 
 //Javavascript Globals.js file to the client with variables inserted by the server
 //The order of app.get must be preserved
-app.post('/submitUserInput', function(req, res) {       
-    console.log("app.post('/submitUserInput')");
-    
-    //object got from POST
-    var objectToDb = req.body.objectToDb;        
-    submitUserInput.insertData2DB(objectToDb, DB_INFO, res, function(err, data){
-        if (err) {
-            // error handling code goes here
-            console.log("Error inserting user data into DB: ", err);
-            res.status(501).send('Error inserting user data into DB');
-        } else {
-            // code to execute on data retrieval
-            console.log("result from db query is : ", data);
-            res.send(data);
-        }     
-    });
-    
+app.post('/submitUserInput', function(req, res) {              
+    submitUserInput(req, res, DB_INFO);
 });
 
 //Routing for HTML layout and forms
-app.get('/:CC', function (req, res, next) {
+app.set('view engine', '.hbs');
+app.get('/:CC', function (req, res, next) {    
     
-    //returns true if redirected to another URL, false otherwise        
-    if (url.redirectIfNecessary(req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC)){
+    //returns true if it was redirected
+    var url2redirect = url.getCC(req, res, GLOB_VAR);
+    if(url2redirect){
+        console.log("Redirected to: " + url2redirect);
         return;
-    }
+    };
     
-    CC = req.params.CC;
-    console.log("app.get('/:CC')");
-    console.log("Country Code :" + CC);    
+    //Global object set
+    GLOB_VAR.CC = req.params.CC;
+    GLOB_VAR.LangCode = languages_CT[GLOB_VAR.CC]; //language codes
+    GLOB_VAR.HTTP_Protocol = url.getProtocol(req, IS_HTTPS);        
 
-    HTTP_Protocol = url.getProtocol(req, IS_HTTPS);
-
-    app.set('view engine', '.hbs');    
-
-    var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));	
-    words.word_per += "&#32;" //add non-breaking space
-
-    LangCode = languages_CT[CC]; //language codes
-    console.log("Language code: " + LangCode);
+    console.log("Country code: "  + GLOB_VAR.CC);
+    console.log("Language code: " + GLOB_VAR.LangCode);
+    
+    let words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + GLOB_VAR.CC + '.json', 'utf8'));
+    words.word_per += "&#32;" //add non-breaking space    
 
     //add property
     words.country_select = CountriesInfo.available_CT;
 
-    res.render('home', words);
-
+    res.render('home', words); 
 });
 
-app.get('/', function (req, res, next) {
-    console.log("app.get('/') => redirecting...");
-    var url2redirect = url.redirect2CC(req, res, available_CT, languages_CT, domains_CT, IS_HTTPS, DefaultCC);
-    console.log("redirected to " + url2redirect); 
+app.get('/', function (req, res, next) {    
+    url.redirect(req, res, GLOB_VAR);    
 });
 
 //error handler
