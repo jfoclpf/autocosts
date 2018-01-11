@@ -11,9 +11,9 @@ You will need some `apt-get` software for command line image rendering and compr
 `sudo apt-get install imagemagick phantomjs`
 
 You will also may need some `npm` global packages for code compression and syntax verification (done upon build)<br>
-`sudo npm install uglifycss uglify-js html-minifier jshint nodejs -g`
+`sudo npm install uglifycss uglify-js html-minifier jshint -g`
 
-Clone it and install it
+Clone it and install it<br>
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
 `cd autocosts/ && npm install`
 
