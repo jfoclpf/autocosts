@@ -5,8 +5,15 @@ This calculator allows users to find the true cost of owning a car. It will norm
 
 This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
 
-### Clone it and build it
+### How to install
 
+You will need some `apt-get` software for command line image rendering and compression (done upon build)<br>
+`sudo apt-get install imagemagick phantomjs`
+
+You will also may need some `npm` global packages for code compression and syntax verification (done upon build)<br>
+`sudo npm install uglifycss uglify-js html-minifier jshint nodejs -g`
+
+Clone it and install it
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
 `cd autocosts/ && npm install`
 
