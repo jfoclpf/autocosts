@@ -30,7 +30,7 @@ do
             rm -R -f *
             cd ../
             cp -R src/* build/
-			cp src/.htaccess build/
+            cp src/.htaccess build/
             
             ;;
 
@@ -127,7 +127,7 @@ do
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
-            php -f generateTables.php $RELEASE
+            node generateTables.js $RELEASE
 
             printf "\n    Renders html tables into jpge files \n\n"
             phantomjs rasterTables.js
@@ -159,22 +159,22 @@ do
             cd build/
             printf "\n## Minifying files \n"
 
-			printf "\n    Minifying JS files in build/ \n\n"
-			find client/ -type f \
-				-name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
-				-exec echo {} \; \
-				-exec uglifyjs -o {}.min {} \; \
-				-exec rm {} \; \
-				-exec mv {}.min {} \;
+            printf "\n    Minifying JS files in build/ \n\n"
+            find client/ -type f \
+                -name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
+                -exec echo {} \; \
+                -exec uglifyjs -o {}.min {} \; \
+                -exec rm {} \; \
+                -exec mv {}.min {} \;
 
-			#minification of CSS files
-			printf "\n    Minifying and Merging CSS files in build/ \n\n"
-			find css/ -type f \
-				-name *.css ! -name "*.min.*" \
-				-exec echo {} \; \
-				-exec uglifycss --output {}.min {} \; \
-				-exec rm {} \; \
-				-exec mv {}.min {} \;
+            #minification of CSS files
+            printf "\n    Minifying and Merging CSS files in build/ \n\n"
+            find css/ -type f \
+                -name *.css ! -name "*.min.*" \
+                -exec echo {} \; \
+                -exec uglifycss --output {}.min {} \; \
+                -exec rm {} \; \
+                -exec mv {}.min {} \;
             
             cd css/
             cat *.css > merged.merged
