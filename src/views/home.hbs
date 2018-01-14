@@ -18,7 +18,7 @@
                 </div>
                 <div id="country_select_div">
                     <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                        {{#each country_select}}
+                        {{#each countriesDropDownList}}
                         <option value="{{@key}}" {{isSelected @key}}>
                             {{this}}
                         </option>

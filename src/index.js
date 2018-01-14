@@ -205,16 +205,19 @@ app.get('/:CC', function (req, res, next) {
     console.log("Country code: "  + GLOB_VAR.CC);
     console.log("Language code: " + GLOB_VAR.LangCode);
     
-    let words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + GLOB_VAR.CC + '.json', 'utf8'));
+    var words = JSON.parse(fs.readFileSync(__dirname + '/countries/' + GLOB_VAR.CC + '.json', 'utf8'));
     words.word_per += "&#32;" //add non-breaking space    
 
-    //add property
-    words.country_select = CountriesInfo.available_CT;
+    //add country_select (list of countries) to object to be rendered
+    //to render the dropdown countries list box
+    words.countriesDropDownList = CountriesInfo.available_CT;
+    delete words.countriesDropDownList["XX"];
 
-    res.render('home', words); 
+    res.render('home', words);
 });
 
-app.get('/', function (req, res, next) {    
+app.get('/', function (req, res, next) {
+    console.log("\nRoute: app.get('/')");
     url.redirect(req, res, GLOB_VAR);    
 });
 
