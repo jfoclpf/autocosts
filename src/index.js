@@ -172,8 +172,8 @@ app.get('/get_uber', function(req, res) {
         //get uber token
         //to manage tokens, visit: https://developer.uber.com/dashboard
         //user:info@autocosts.info | pass: V*************
-        let uber_token = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/uber_token.json'));
-        let uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
+        var uber_token = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/uber_token.json'));
+        var uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
                             lat + "&longitude=" + long + "&server_token=" + uber_token;
         console.log(uber_API_url);
     }
@@ -188,12 +188,12 @@ app.post('/submitUserInput', function(req, res) {
 
 //Routing for HTML layout and forms
 app.set('view engine', '.hbs');
-app.get('/:CC', function (req, res, next) {    
+app.get('/:CC', function (req, res, next) {
+    console.log("\nRoute: app.get('/CC')");
     
     //returns true if it was redirected
-    var url2redirect = url.getCC(req, res, GLOB_VAR);
-    if(url2redirect){
-        console.log("Redirected to: " + url2redirect);
+    var wasRedirected = url.getCC(req, res, GLOB_VAR);
+    if(wasRedirected){
         return;
     };
     

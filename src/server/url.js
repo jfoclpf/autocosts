@@ -9,25 +9,26 @@ module.exports = {
     
     //when no country code is provided, example autocosts.info/
     //if the user is in Portugal, redirects to autocustos.info/PT
-    redirect: function (req, res, dataObj){        
-        redirect302(req, res, dataObj);
+    redirect: function (req, res, dataObj){               
+        redirect302(req, res, dataObj);        
     },
     
     //to be used from app.get('/:CC')
-    getCC: function (req, res, dataObj) {              
-        console.log("\nRoute: app.get('/:CC')");
+    //returns true if it redirects
+    getCC: function (req, res, dataObj) {                
         
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        console.log("Entry URL: " + fullUrl);
+        console.log("Entry URL: " + fullUrl);       
         
-        let CC = req.params.CC;
+        var CC = req.params.CC;        
         
         //if no country is defined or the country isn't in the list
         //i.e, if the CC characters in domain.info/CC are not recognized
         //get the Country from locale or HTTP Accept-Language Info
         if (!isCCinCountriesList(CC, dataObj.available_CT) && !isCCXX(CC)){         
-            console.log("if (!isCCinCountriesList) ");            
+            console.log("if (!isCCinCountriesList)");            
             redirect302(req, res, dataObj);
+            return true;
         }
         
         //from here the CC, independently of the case (upper or lower) is in the list or is xx or XX 
@@ -37,22 +38,23 @@ module.exports = {
         //But if the two-letter code are NOT all in upper case domain.info/CC 
         if (!isCC2letterUpperCase(CC)){
             console.log("if (!isCC2letterUpperCase)");
-            var url2redirect = getURLfromCC(req, dataObj.domains_CT, dataObj.IS_HTTPS);
-            res.redirect(301, url2redirect);
-            return url2redirect;        
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            redirect301(res, url2redirect);
+            return true;
         }
         
         //from here the CC is reconginzed and it's in uppercase        
         
         //check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
         if(isSubdomain(req)){
-            console.log("if (isSubdomain)");
-            var url2redirect = getURLfromCC(req, dataObj.domains_CT, dataObj.IS_HTTPS);
-            res.redirect(301, url2redirect);
-            return url2redirect;        
+            console.log("if(isSubdomain)");
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            redirect301(res, url2redirect);
+            return true;        
         }
         
         if(isThisATest(req)){
+            console.log("if(isThisATest)");
             return false;
         }
         
@@ -60,17 +62,17 @@ module.exports = {
         //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)        
         if(!isDomainCCcombValid(req, dataObj.available_CT, dataObj.domains_CT)){
             console.log("if (!isDomainCCcombValid)");
-            var url2redirect = getURLfromCC(req, dataObj.domains_CT, dataObj.IS_HTTPS);
-            res.redirect(301, url2redirect);
-            return url2redirect;        
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            redirect301(res, url2redirect);
+            return true;        
         }
         
         //check for https rules and redirect accordingly
-        if (protocol !== getProtocol(req, IS_HTTPS)){
+        if (req.protocol !== getProtocol(req, IS_HTTPS)){
             console.log("if (protocol !== getProtocol)");
-            var url2redirect = getURLfromCC(req, dataObj.domains_CT, dataObj.IS_HTTPS);
-            res.redirect(301, url2redirect);
-            return url2redirect;        
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            redirect301(res, url2redirect);
+            return true;        
         }        
         
         return false;
@@ -97,10 +99,13 @@ module.exports = {
 var redirect302 = function (req, res, dataObj){            
 
     //get country by locale or HTTP header from browser
-    let geoCC = getGeoCC(req, dataObj.available_CT, dataObj.DefaultCC);
+    var geoCC = getGeoCC(req, dataObj.available_CT, dataObj.DefaultCC);
 
-    let url2redirect;
-    if(isThisLocalhost(req) || isWorkDomain(req)){
+    var url2redirect;
+    if (isWorkDomain(req)){
+        url2redirect = req.protocol + '://autocosts.work/' + geoCC;
+    }
+    else if(isThisLocalhost(req)){
         url2redirect = req.protocol + '://' + req.get('host') + '/' + geoCC;
     }
     //production
@@ -109,8 +114,14 @@ var redirect302 = function (req, res, dataObj){
     }
     
     res.redirect(302, url2redirect);
-    console.log("redirecting to " + url2redirect);
+    console.log("redirecting 302 to " + url2redirect);
 };
+
+//301 redirects are permanent
+var redirect301 = function (res, url2redirect){    
+    res.redirect(301, url2redirect);
+    console.log("redirecting 301 to " + url2redirect);
+}
 
 //CC must be in the format PT, XX, UK, i.e. the letters uppercase
 var isCC2letterUpperCase = function(CC){
@@ -123,8 +134,8 @@ var isCCinCountriesList = function(CC, available_CT){
         return false;
     }
     
-    let CCupper = CC.toUpperCase();
-    let CClower = CC.toLowerCase();
+    var CCupper = CC.toUpperCase();
+    var CClower = CC.toLowerCase();
     
     return available_CT.hasOwnProperty(CCupper) || available_CT.hasOwnProperty(CClower);
 };
@@ -132,19 +143,18 @@ var isCCinCountriesList = function(CC, available_CT){
 //get the 2-letter country code of user according to locale or HTTP header
 var getGeoCC = function(req, available_CT, DefaultCC){
     
-    let host = req.get('host');
+    var host = req.get('host');
     
     //try to get country by IP
-    if (!isThisLocalhost(req)){
-        
+    if (!isThisLocalhost(req)){        
         //tries to get IP from user
-        let ip = req.headers['x-forwarded-for'].split(',').pop() || 
+        var ip = req.headers['x-forwarded-for'].split(',').pop() || 
                  req.connection.remoteAddress || 
                  req.socket.remoteAddress || 
                  req.connection.socket.remoteAddress;
         
-        let geo = GEO_IP.lookup(ip);
-        let geoCC = geo.country; 
+        var geo = GEO_IP.lookup(ip);
+        var geoCC = geo.country; 
 
         console.log("geoCC: " + geoCC);
 
@@ -158,8 +168,8 @@ var getGeoCC = function(req, available_CT, DefaultCC){
     
     //try to get country from HTTP accept-language info
     //https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language
-    let accept_language = req.headers["accept-language"];
-    let CC_HTTP = getCountryfromHTTP(accept_language);     
+    var accept_language = req.headers["accept-language"];
+    var CC_HTTP = getCountryfromHTTP(accept_language);     
     if(CC_HTTP){
         console.log("CC_HTTP: " + CC_HTTP);
         if (isCCinCountriesList(CC_HTTP, available_CT)){
@@ -177,8 +187,8 @@ var getGeoCC = function(req, available_CT, DefaultCC){
 //is Domain/CC Combination valid?
 var isDomainCCcombValid = function (req, available_CT, domains_CT){
 
-    let CC = req.params.CC;
-    let host = req.get('host');
+    var CC = req.params.CC;
+    var host = req.get('host');
     
     if (!isCCinCountriesList(CC, available_CT)){
         return false;
@@ -188,13 +198,13 @@ var isDomainCCcombValid = function (req, available_CT, domains_CT){
 };
 
 //full URL https://autocustos.info/PT
-var getURLfromCC = function (req, domains_CT, IS_HTTPS){
+var getValidURL = function (req, domains_CT, IS_HTTPS){
     
-    let CC = req.params.CC;
-    let protocol = req.protocol; 
-    let host = req.get('host');
+    var CC = req.params.CC;
+    var protocol = req.protocol; 
+    var host = req.get('host');
     
-    let upCC = CC.toUpperCase();
+    var upCC = CC.toUpperCase();
     
     var URL;
     if(isThisLocalhost(req) || isCCXX(CC)){
@@ -207,13 +217,14 @@ var getURLfromCC = function (req, domains_CT, IS_HTTPS){
         URL = getProtocol(req, IS_HTTPS) + '://' + domains_CT[upCC] + '/' + upCC;
     }
     
-    console.log(URL);
+    console.log("Prod URL: " + getProtocol(req, IS_HTTPS) + '://' + domains_CT[upCC] + '/' + upCC)
+    console.log("Valid URL: " + URL);
     return URL;
 };
 
 var getProtocol = function (req, IS_HTTPS){
     
-    let host = req.get('host');
+    var host = req.get('host');
     
     if (IS_HTTPS && !isWorkDomain(req)){
         return "https";
@@ -224,10 +235,10 @@ var getProtocol = function (req, IS_HTTPS){
 //www.example.com returns true and example.com returns false
 var isSubdomain = function(req) {
     
-    let host = req.get('host');
+    var host = req.get('host');
         
-    let host_root = host.split(":")[0];    
-    let host_dim = (host_root.split(".")).length; 
+    var host_root = host.split(":")[0];    
+    var host_dim = (host_root.split(".")).length; 
     if (host_dim > 2){
         return true;
     }
@@ -239,17 +250,17 @@ var isSubdomain = function(req) {
 //Functions to check if it is a test 
 var isThisATest = function (req){ 
 
-    let CC = req.params.CC;
-    let host = req.get('host');
+    var CC = req.params.CC;
+    var host = req.get('host');
     
     return isWorkDomain(req) || isThisLocalhost(req) || isCCXX(CC);
 };
 
 var isWorkDomain = function (req){
 
-    let host = req.get('host');
-    let hostSplit = host.split(".");
-    let tld = hostSplit[hostSplit.length-1];
+    var host = req.get('host');
+    var hostSplit = host.split(".");
+    var tld = hostSplit[hostSplit.length-1];
     
     if (tld.toLowerCase() === "work"){
         return true;
@@ -259,8 +270,8 @@ var isWorkDomain = function (req){
 
 var isThisLocalhost = function (req){
     
-    let ip = req.connection.remoteAddress;
-    let host = req.get('host');
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var host = req.get('host');
     
     return ip === "127.0.0.1" || ip === "::ffff:127.0.0.1" || ip === "::1" || host.indexOf("localhost") !== -1;
 };
