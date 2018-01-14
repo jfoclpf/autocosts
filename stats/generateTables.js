@@ -73,7 +73,6 @@ isOnline().then(online => {
 
     //sorts array of countries
     available_CT = sortObj(available_CT);
-    delete available_CT["XX"];
 
     //function for formating numbers which come from DB
     var fixNmbr = function(i,n){
@@ -114,7 +113,7 @@ isOnline().then(online => {
             var fileName = TABLES_DIR + CCfile + "costs.hbs"; //something like .../PTcosts.hbs
 
             db.query("SELECT * FROM " + DB_INFO.db_tables.monthly_costs_statistics + 
-                " WHERE country='" + CCfile + "'", 
+                " WHERE country='" + (CCfile!=="XX"?CCfile:"UK") + "'", 
                 function(err, results, fields) {
                 var res = results[0];
                 
