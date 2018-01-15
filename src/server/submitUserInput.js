@@ -2,7 +2,9 @@
 
 const mysql = require('mysql'); //module to get info from DB
 
-module.exports = function (req, res, DB_INFO){
+module.exports = function (req, res, GlobData){
+    
+    var DBInfo = GlobData.DBInfo;
     
     console.log("\nRoute: app.post('/submitUserInput')");
     
@@ -11,9 +13,9 @@ module.exports = function (req, res, DB_INFO){
               
     //console.log(objectToDb);
     console.log('\nInserting user data into ' +
-                'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions);
+                'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions);
 
-    var queryInsert = "INSERT INTO " + DB_INFO.db_tables.users_insertions + " ( \
+    var queryInsert = "INSERT INTO " + DBInfo.db_tables.users_insertions + " ( \
         time_to_fill_form, \
         uuid_client, \
         country, \
@@ -148,7 +150,7 @@ module.exports = function (req, res, DB_INFO){
         "'" + objectToDb.time_spent_days_drive_per_month + "'" +
     ")";
 
-    var db = mysql.createConnection(DB_INFO);
+    var db = mysql.createConnection(DBInfo);
 
     db.connect(function(err){
         if (err) {
@@ -156,9 +158,9 @@ module.exports = function (req, res, DB_INFO){
             throw err;
             return;
         }
-        console.log('User ' + DB_INFO.user + 
-                    ' connected successfully to DB ' + DB_INFO.database + 
-                    ' at ' + DB_INFO.host);
+        console.log('User ' + DBInfo.user + 
+                    ' connected successfully to DB ' + DBInfo.database + 
+                    ' at ' + DBInfo.host);
     });
 
     db.query(queryInsert, function(err, results, fields) {
@@ -169,7 +171,7 @@ module.exports = function (req, res, DB_INFO){
         }
         else{
             console.log('User data successfully added into ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions + '\n\n');        
+                        'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n');        
             console.log("Result from db query is : ", results);
             res.send(results);
         }                               
