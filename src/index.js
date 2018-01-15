@@ -34,10 +34,11 @@ const request = require('request');
 const url = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const submitUserInput = require(__dirname + '/server/submitUserInput');
 const Globals = require(__dirname + '/server/Globals');
+const getCC = require(__dirname + '/server/getCC');
 
 const clientDir = 'client/'; //directory with respect to root public HTML, where the client JS flies will be stored
-const HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
-const SRC_DIR = HOME_DIR + "src" + "/";
+const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
+const SRC_DIR = ROOT_DIR + "src" + "/"; //parent directory of source code directory
 
 //select release
 var REL; //release shall be 'work' or 'prod', it's 'work' by default
@@ -80,10 +81,12 @@ const GlobData = {
     "languages_CT"  : CountriesInfo.languages_CT, //Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Domains
     "CDN_URL"       : CDN_URL,
-    "DBInfo"        : JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json')), //include credentials object    
+    "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')), //include credentials object    
     "IS_HTTPS"      : IS_HTTPS,  //changed on the top of the code
     "DefaultCC"     : DefaultCC, //changed on the top of the code
-    "clientDir"     : clientDir  //directory with respect to root public HTML, where the client JS flies will be stored
+    "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored
+    "ROOT_DIR"      : ROOT_DIR,  //parent directory of main project directory tree
+    "SRC_DIR"       : SRC_DIR    //parent directory of source code directory (normally "/src")
 };
 //console.log("Global Constant Object", GlobData);
 
@@ -96,7 +99,7 @@ var hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
         /*using for selecting value in HTML select boxes*/
-        isSelected: function (CC, value) {
+        isSelected: function (CC, value) {            
             return CC === value ? 'selected' : ''; 
         },
         /*chose the HTML costs table for specific country*/
@@ -159,7 +162,7 @@ app.get('/getUBER', function(req, res) {
         //get uber token
         //to manage tokens, visit: https://developer.uber.com/dashboard
         //user:info@autocosts.info | pass: V*************
-        var uber_token = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/uber_token.json'));
+        var uber_token = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/uber_token.json'));
         console.log("uber_token", uber_token);
         var uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
                             lat + "&longitude=" + long + "&server_token=" + uber_token;        
@@ -196,31 +199,7 @@ app.get('/Globals.js/:CC', function(req, res){
 
 app.get('/:CC', function (req, res, next) {
     console.log("\nRoute: app.get('/CC')");
-           
-    //returns true if it was redirected
-    var wasRedirected = url.getCC(req, res, GlobData);
-    if(wasRedirected){
-        return;
-    };
-        
-    var CC = req.params.CC;
-    var LangCode = GlobData.languages_CT[CC]; //language codes
-    var HTTP_Protocol = url.getProtocol(req, GlobData.IS_HTTPS);        
-
-    console.log("Country code: "  + CC);
-    console.log("Language code: " + LangCode);
-    
-    //data to be rendered embedded in the HTML file
-    var data = JSON.parse(fs.readFileSync(__dirname + '/countries/' + CC + '.json', 'utf8'));
-    data.CC = CC; //add new property
-    data.word_per += "&#32;" //add non-breaking space 
-
-    //add country_select (list of countries) to object to be rendered
-    //to render the dropdown countries list box
-    data.countriesDropDownList = CountriesInfo.available_CT;
-    delete data.countriesDropDownList["XX"];
-
-    res.render('home', data);
+    getCC(req, res, GlobData, url, fs);
 });
 
 app.get('/', function (req, res, next) {
