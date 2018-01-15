@@ -18,8 +18,7 @@ module.exports = function(req, res, dataObj) {
         "layout": false
     };
     
-    console.log("data to render", data);
-    
+    //console.log("data to render", data);    
     res.render('Globals', data);
 }
 

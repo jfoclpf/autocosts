@@ -14,12 +14,12 @@
         <div id="country_box">
             <div id="country_box_inline">
                 <div id="banner_flag_div">
-                    <div id="banner_flag" class="{{banner_flag}}"></div>
+                    <div id="banner_flag" class="{{banner_flag CC}}"></div>
                 </div>
                 <div id="country_select_div">
                     <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
                         {{#each countriesDropDownList}}
-                        <option value="{{@key}}" {{isSelected @key}}>
+                        <option value="{{@key}}" {{{isSelected ../CC @key}}}>
                             {{this}}
                         </option>
                         {{/each}}
@@ -158,7 +158,7 @@
             <div id="div1_td">
                 <div id="div1" class="roundCornerSlight">
                     <div id="div13">
-                        {{> (costs_table) }}                        
+                        {{> (costs_table CC) }}                        
                     </div>
                     <div id="br3">
                         <br>
