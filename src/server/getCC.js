@@ -1,4 +1,8 @@
-module.exports = function(req, res, GlobData, url, fs) {
+
+const fs = require('fs');
+const url = require(__dirname + '/url');
+
+module.exports = function(req, res, GlobData) {
     
     //returns true if it was redirected
     var wasRedirected = url.getCC(req, res, GlobData);

@@ -4,9 +4,7 @@ const mysql = require('mysql'); //module to get info from DB
 
 module.exports = function (req, res, GlobData){
     
-    var DBInfo = GlobData.DBInfo;
-    
-    console.log("\nRoute: app.post('/submitUserInput')");
+    var DBInfo = GlobData.DBInfo;    
     
     //object got from POST
     var objectToDb = req.body.objectToDb;    
