@@ -1,7 +1,5 @@
 module.exports = function(req, res, dataObj) {
-    
-    console.log("\nRoute: app.get('/Globals.js')");       
-    
+
     res.set('Content-Type', 'application/javascript');
     
     var CC = req.params.CC;
