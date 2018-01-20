@@ -22,19 +22,19 @@ console.log("\n\nServer started");
 const numCPUs = require('os').cpus().length;
 console.log("numCPUs: " + numCPUs);
 
-const fs = require('fs');
-const path  = require("path");
-const express = require('express');
-const exphbs  = require('express-handlebars');
-const bodyParser = require('body-parser');
+const fs          = require('fs');
+const path        = require("path");
+const express     = require('express');
+const exphbs      = require('express-handlebars');
+const bodyParser  = require('body-parser');
 const compression = require('compression');
-const request = require('request');
 
 //personalised requires
-const url = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
+const url             = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const submitUserInput = require(__dirname + '/server/submitUserInput');
-const Globals = require(__dirname + '/server/Globals');
-const getCC = require(__dirname + '/server/getCC');
+const Globals         = require(__dirname + '/server/Globals');
+const getCC           = require(__dirname + '/server/getCC');
+const getUBER         = require(__dirname + '/server/getUBER');
 
 const clientDir = 'client/'; //directory with respect to root public HTML, where the client JS flies will be stored
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
@@ -76,17 +76,18 @@ console.log("CDN_URL: " + CDN_URL);
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
 const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));
-const GlobData = {    
+const GlobData = {
+    "REL"           : REL,       //Release: "work" or "prod"
+    "ROOT_DIR"      : ROOT_DIR,  //parent directory of main project directory tree
+    "SRC_DIR"       : SRC_DIR,   //parent directory of source code directory (normally "/src")    
+    "DefaultCC"     : DefaultCC, //default Country, changed on the top of the code
+    "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored    
     "available_CT"  : CountriesInfo.available_CT, //available Countries
     "languages_CT"  : CountriesInfo.languages_CT, //Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Domains
     "CDN_URL"       : CDN_URL,
     "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')), //include credentials object    
-    "IS_HTTPS"      : IS_HTTPS,  //changed on the top of the code
-    "DefaultCC"     : DefaultCC, //changed on the top of the code
-    "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored
-    "ROOT_DIR"      : ROOT_DIR,  //parent directory of main project directory tree
-    "SRC_DIR"       : SRC_DIR    //parent directory of source code directory (normally "/src")
+    "IS_HTTPS"      : IS_HTTPS  //changed on the top of the code   
 };
 //console.log("Global Constant Object", GlobData);
 
