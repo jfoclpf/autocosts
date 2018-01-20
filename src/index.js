@@ -94,7 +94,7 @@ const GlobData = {
 var app = express();
 app.enable('case sensitive routing');
 
-//rendering engine for dynamically loaded HTML files
+//rendering engine for dynamically loaded HTML/JS files
 var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
@@ -110,6 +110,38 @@ var hbs = exphbs.create({
         banner_flag: function (CC){
             return CC.toLowerCase() + ' ' + 'flag';
         },
+        //get first sentence of string, with HTML tags stripped out
+        meta_description: function(string){            
+            return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');
+        },
+        //function that gets a string of main/key words from title
+        //Ex: "calculadora dos custos do automóvel" returns "calculadora, custos, automóvel"
+        get_keywords: function(title, str1, str2){
+
+            //lower case all strings
+            var title = title.toLowerCase();
+            var str1 = str1.toLowerCase();
+            var str2 = str2.toLowerCase();
+
+            //get an array of words stripped by space
+            var words = title.split(" ");
+
+            //if a word has a size bigger than 3, adds to keywords
+            var keywords = []; var word;
+            for(var i=0; i<words.length; i++){
+                word = words[i];
+                if (word.length >3 ){
+                    keywords.push(word);
+                }
+            }
+
+            keywords.push(str1);
+            keywords.push(str2);
+
+            var keywords_string = keywords.join(',');
+
+            return keywords_string;
+        },      
         json: function(context) {
             return JSON.stringify(context);
         }
