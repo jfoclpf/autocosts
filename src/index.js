@@ -82,9 +82,10 @@ const GlobData = {
     "SRC_DIR"       : SRC_DIR,   //parent directory of source code directory (normally "/src")    
     "DefaultCC"     : DefaultCC, //default Country, changed on the top of the code
     "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored    
-    "available_CT"  : CountriesInfo.available_CT, //available Countries
-    "languages_CT"  : CountriesInfo.languages_CT, //Language Codes
-    "domains_CT"    : CountriesInfo.domains_CT,   //Domains
+    "available_CT"  : CountriesInfo.available_CT, //Array of available Countries
+    "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
+    "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
+    "domains"       : (Object.values(CountriesInfo.domains_CT)).filter((x, i, a) => a.indexOf(x) == i), //Array of Unique Domains
     "CDN_URL"       : CDN_URL,
     "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')), //include credentials object    
     "IS_HTTPS"      : IS_HTTPS  //changed on the top of the code   
