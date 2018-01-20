@@ -102,7 +102,7 @@ var hbs = exphbs.create({
     helpers: {
         /*using for selecting value in HTML select boxes*/
         isSelected: function (CC, value) {            
-            return CC === value ? 'selected' : ''; 
+            return CC === value ? ' ' + 'selected' : ''; 
         },
         /*chose the HTML costs table for specific country*/
         costs_table: function (CC){

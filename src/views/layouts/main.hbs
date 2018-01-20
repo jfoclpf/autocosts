@@ -12,11 +12,10 @@
     <meta name="robots" content="{{#if isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
 
     <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
-        script-src 'self' cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
-        style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
-        img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;
-    ">
+        {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
+        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
+        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        {{~emptyChar}} img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;">
 </head>
 <body>
     {{{body}}}
