@@ -20,8 +20,11 @@ module.exports = function(req, res, GlobData) {
     //data to be rendered embedded in the HTML file
     var data = JSON.parse(fs.readFileSync(GlobData.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
     data.CC = CC; //add new property
-    data.word_per += "&#32;" //add non-breaking space 
-
+    data.word_per += "&#32;" //add non-breaking space
+    
+    //empty var to be used in handlebars for whitespace trimming
+    data.emptyChar = "";
+    
     //add country_select (list of countries) to object to be rendered
     //to render the dropdown countries list box
     data.countriesDropDownList = GlobData.available_CT;
