@@ -184,10 +184,10 @@ do
 
             #minification of html files
             printf "\n    Minifying HTML files in build/ \n\n"
-            find . -path ./node_modules -prune -o -name "*.hbs" \
+            find . -path ./node_modules -prune -o -name "*.hbs" ! -name "Globals.hbs" \
                 -type f \
                 -exec echo {} \;  \
-                -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
+                -exec html-minifier --ignore-custom-fragments "/{{[{]?(.*?)[}]?}}/" --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
 
