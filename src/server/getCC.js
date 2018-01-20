@@ -26,6 +26,9 @@ module.exports = function(req, res, GlobData) {
     //to render the dropdown countries list box
     data.countriesDropDownList = GlobData.available_CT;
     delete data.countriesDropDownList["XX"];
+    
+    //add domains array
+    data.domains = GlobData.domains;
 
     res.render('home', data);
     
