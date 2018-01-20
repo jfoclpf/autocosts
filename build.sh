@@ -161,16 +161,22 @@ do
 
             printf "\n    Minifying JS files in build/ \n\n"
             find client/ -type f \
-                -name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
+                -name "*.js" ! -name "*.min.*" ! -name "vfs_fonts*" \
                 -exec echo {} \; \
                 -exec uglifyjs -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
+            
+            #minify Javascript file Globals.hbs 
+            echo "views/Globals.hbs"
+            cd views/
+            uglifyjs -b quote_style=1 -b beautify=false -o Globals.hbs.min Globals.hbs && rm Globals.hbs && mv Globals.hbs.min Globals.hbs
+            cd ../
 
             #minification of CSS files
             printf "\n    Minifying and Merging CSS files in build/ \n\n"
             find css/ -type f \
-                -name *.css ! -name "*.min.*" \
+                -name "*.css" ! -name "*.min.*" \
                 -exec echo {} \; \
                 -exec uglifycss --output {}.min {} \; \
                 -exec rm {} \; \

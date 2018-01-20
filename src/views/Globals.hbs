@@ -24,17 +24,17 @@ var SWITCHES = {
 };
 
 /*Define GLOBAL Javascript variables*/
-var COUNTRY = "{{{ CC }}}";
+var COUNTRY = '{{{ CC }}}';
 /*Language code according to ISO_639-1 codes*/
-var LANGUAGE = "{{{ LangCode }}}";
+var LANGUAGE = '{{{ LangCode }}}';
 /*List of countries and domains in a Javascript Object*/
-var COUNTRY_LIST = {{{ json available_CT }}};
-var DOMAIN_LIST  = {{{ json domains_CT }}};
+var COUNTRY_LIST = JSON.parse('{{{ json available_CT }}}');
+var DOMAIN_LIST  = JSON.parse('{{{ json domains_CT }}}');
 
-var CDN_URL       = "{{{ CDN_URL }}}"; /*it's defined in the node server side index.js*/
-var HTTP_Protocol = "{{{ HTTP_Protocol }}}"; /*it's defined in node server side index.js*/
+var CDN_URL       = '{{{ CDN_URL }}}'; /*it's defined in the node server side index.js*/
+var HTTP_Protocol = '{{{ HTTP_Protocol }}}'; /*it's defined in node server side index.js*/
 
-var clientDir = "{{{ clientDir }}}";
+var clientDir = '{{{ clientDir }}}';
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
 var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 

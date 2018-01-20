@@ -177,7 +177,7 @@ app.use('/images', express.static(__dirname + '/images'));
 app.use('/client', express.static(__dirname + '/client'));
 app.use('/countries', express.static(__dirname + '/countries'));
 
-app.use(compression());
+app.use(compression({"level":"9"}));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
