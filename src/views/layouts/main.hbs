@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>{{web_page_title}}</title>
-	<link rel="stylesheet" type="text/css" href="css/merged.css">
+    
+    <!--gets the first sentence of variable $INITIAL_TEXT-->
+    <meta name="description" content="{{{ meta_description ./initial_text }}}">
+    <meta name="keywords" content="{{{ get_keywords ./web_page_title ./fixed_costs ./running_costs }}}">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Autocosts Org">
+    <meta name="robots" content="">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com ;
+        script-src 'self' cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
+        style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;
+    ">
 </head>
 <body>
-
     {{{body}}}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="Globals.js/{{{ CC }}}"></script>
 </body>
