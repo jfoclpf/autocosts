@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{web_page_title}}</title>
+    <title>{{{ adapt_title web_page_title}}}</title>
     
     <!--gets the first sentence of variable $INITIAL_TEXT-->
     <meta name="description" content="{{{ meta_description ./initial_text }}}">
     <meta name="keywords" content="{{{ get_keywords ./web_page_title ./fixed_costs ./running_costs }}}">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
-    <meta name="robots" content="">
+    <meta name="robots" content="{{#if isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
 
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
