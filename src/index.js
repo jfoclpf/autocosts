@@ -111,6 +111,24 @@ var hbs = exphbs.create({
         banner_flag: function (CC){
             return CC.toLowerCase() + ' ' + 'flag';
         },
+        //function that adpats the title for lower case 
+        //having only uppercase on the firt letters of the words bigger than 4 characters
+        adapt_title: function(Title){ 
+
+            //lower case all string
+            var title = Title.toLowerCase();
+            //get an array of words stripped by space
+            var words = title.split(" ");
+            //if a word has a size bigger than 4, uppercase first letter            
+            for (var i = 0; i< words.length;  i++){
+                if (words[i].length > 4){
+                    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1); //uppercase of first letter of word
+                }
+            }
+
+            var title = words.join(' ');
+            return title;
+        },        
         //get first sentence of string, with HTML tags stripped out
         meta_description: function(string){            
             return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');

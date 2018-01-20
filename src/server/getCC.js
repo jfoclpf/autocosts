@@ -29,6 +29,9 @@ module.exports = function(req, res, GlobData) {
     
     //add domains array
     data.domains = GlobData.domains;
+    
+    //boolean variable regarding if present rendering is a test
+    data.isThisATest = url.isThisATest(req);
 
     res.render('home', data);
     
