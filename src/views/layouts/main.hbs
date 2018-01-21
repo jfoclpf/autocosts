@@ -13,13 +13,15 @@
 
     <meta http-equiv="Content-Security-Policy" content="
         {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
-        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
+        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
         {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
         {{~emptyChar}} img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;">
+    
+    <style>{{> merged1.css }}</style>
+    
 </head>
 <body>
     {{{body}}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="Globals.js/{{{ CC }}}"></script>
 </body>
 </html>

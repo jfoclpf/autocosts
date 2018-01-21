@@ -99,6 +99,8 @@ app.enable('case sensitive routing');
 var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
+    layoutsDir: __dirname + '/views/layouts/',
+    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/'],    
     helpers: {
         /*using for selecting value in HTML select boxes*/
         isSelected: function (CC, value) {            
@@ -177,7 +179,7 @@ app.use('/images', express.static(__dirname + '/images'));
 app.use('/client', express.static(__dirname + '/client'));
 app.use('/countries', express.static(__dirname + '/countries'));
 
-app.use(compression({"level":"9"}));
+//app.use(compression()); //Apache already compresses
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
