@@ -168,9 +168,9 @@ do
                 -exec mv {}.min {} \;
             
             #minify Javascript file Globals.hbs 
-            echo "views/Globals.hbs"
-            cd views/
-            uglifyjs -b quote_style=1 -b beautify=false -o Globals.hbs.min Globals.hbs && rm Globals.hbs && mv Globals.hbs.min Globals.hbs
+            echo "views/Globals.js.hbs"
+            cd client/
+            uglifyjs -b quote_style=1 -b beautify=false -o temp.min Globals.js.hbs && rm Globals.js.hbs && mv temp.min Globals.js.hbs
             cd ../
 
             #minification of CSS files
@@ -188,6 +188,7 @@ do
                 #Control will enter here if merged-min/ exists.
                 rm -rf merged-min/
             fi
+            echo " merging css files"
             mkdir merged-min/
             cat main.css central.css form.css left.css right.css header.css flags.css mobile.css > merged-min/merged1.css.hbs
             cat jAlert.css results.css > merged-min/merged2.css
@@ -195,8 +196,9 @@ do
             cd ..
 
             #minification of html files
-            printf "\n    Minifying HTML files in build/ \n\n"
-            find . -path ./node_modules -prune -o -name "*.hbs" ! -name "Globals.hbs" \
+            printf "\n    Minifying handlebars HTML template files in build/ \n\n"
+            find views/ \
+                -name "*.hbs" \
                 -type f \
                 -exec echo {} \;  \
                 -exec html-minifier --ignore-custom-fragments "/{{[{]?(.*?)[}]?}}/" --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \

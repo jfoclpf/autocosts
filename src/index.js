@@ -32,7 +32,6 @@ const compression = require('compression');
 //personalised requires
 const url             = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const submitUserInput = require(__dirname + '/server/submitUserInput');
-const Globals         = require(__dirname + '/server/Globals');
 const getCC           = require(__dirname + '/server/getCC');
 const getUBER         = require(__dirname + '/server/getUBER');
 
@@ -100,7 +99,7 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: __dirname + '/views/layouts/',
-    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/'],    
+    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/', __dirname + '/client/'],    
     helpers: {
         /*using for selecting value in HTML select boxes*/
         isSelected: function (CC, value) {            
@@ -189,16 +188,9 @@ app.get('/getUBER/:CC', function(req, res) {
     
 });
 
-//Javavascript Globals.js file to the client with variables inserted by the server
-//The order of app.get must be preserved
 app.post('/submitUserInput', function(req, res) {
     console.log("\nRoute: app.post('/submitUserInput')");
     submitUserInput(req, res, GlobData);
-});
-
-app.get('/Globals.js/:CC', function(req, res){
-    console.log("\nRoute: app.get('/Globals.js')");
-    Globals(req, res, GlobData);
 });
 
 app.get('/:CC', function (req, res, next) {
