@@ -35,8 +35,17 @@ module.exports = function(req, res, GlobData) {
     
     //boolean variable regarding if present rendering is a test
     data.isThisATest = url.isThisATest(req);
+    
+    //other data to be rendered    
+    data.LangCode = LangCode;
+    data.available_CT = GlobData.available_CT;
+    data.domains_CT = GlobData.domains_CT;
+    data.clientDir = GlobData.clientDir;
+    data.CDN_URL = GlobData.CDN_URL;
+    data.HTTP_Protocol = HTTP_Protocol;
+    data.layout = false; 
 
-    res.render('home', data);
+    res.render('main', data);
     
 }
 
