@@ -1,3 +1,36 @@
+/*function that loads the scripts only once */
+/*for understanding this scope, read: ryanmorr.com/understanding-scope-and-context-in-javascript */
+/*this works like a module, like a singleton function */
+var getScriptOnce = (function(url, callback){
+    var ScriptArray = []; /*array of urls*/
+    return function (url, callback) {
+        /*the array doesn't have such url*/
+        if (ScriptArray.indexOf(url) === -1){
+            if (typeof callback === 'function') {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                    callback();
+                });
+            } else {
+                return $.getScript(url, function(){
+                    ScriptArray.push(url);
+                });
+            }
+        }
+        /*the file is already there, it does nothing*/
+        /*to support as of jQuery 1.5 methods .done().fail()*/
+        else{
+            return {
+                done: function () {
+                    return {
+                        fail: function () {}
+                    };
+                }
+            };
+        }
+    };
+}());
+
 
 (function initialize() {
 
@@ -23,7 +56,7 @@
         });
 
         //detects whether Google Analytics has loaded
-        check_ga();
+        check_ga();        
         
     });
     
@@ -31,8 +64,12 @@
         //defaults for the alert box
         $.fn.jAlert.defaults.size = 'sm';
         $.fn.jAlert.defaults.theme = 'default';
-        $.fn.jAlert.defaults.closeOnClick = 'true';        
+        $.fn.jAlert.defaults.closeOnClick = 'true'; 
+        
     });
+    
+    //loads second part of CSS files (not critical thus can be deferred)
+    loadStyleSheets(['css/merged-min/merged2.css']);     
     
     /*Google Analytics*/
     if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() ) {
@@ -50,7 +87,8 @@
 
         ga('create', 'UA-3421546-6', 'auto');
         ga('send', 'pageview');
-    }
+    }   
+    
 })();
 
 //function that sets the JS language variables to the correspondent HTML divs
@@ -290,5 +328,25 @@ function IsThisAtest() {
     }
 
     return false;
+}
+
+/*The function below will create and add to the document all the stylesheets that you wish to load asynchronously. 
+(But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
+function loadStyleSheets(styleSheets) {
+    var head = document.getElementsByTagName('head')[0];
+
+    for (var i = 0; i < styleSheets.length; i++) {
+        var link = document.createElement('link');
+        var rel = document.createAttribute('rel');
+        var href = document.createAttribute('href');
+
+        rel.value = 'stylesheet';
+        href.value = styleSheets[i];
+
+        link.setAttributeNode(rel);
+        link.setAttributeNode(href); 
+
+        head.appendChild(link);
+    }
 }
 

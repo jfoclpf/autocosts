@@ -182,10 +182,16 @@ do
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
             
+            #merge CSS files
             cd css/
-            cat *.css > merged.merged
-            rm *.css
-            mv merged.merged merged.css
+            if [ -d "merged-min/" ]; then
+                #Control will enter here if merged-min/ exists.
+                rm -rf merged-min/
+            fi
+            mkdir merged-min/
+            cat main.css central.css form.css left.css right.css header.css flags.css mobile.css > merged-min/merged1.css.hbs
+            cat jAlert.css results.css > merged-min/merged2.css
+            rm *.css            
             cd ..
 
             #minification of html files
