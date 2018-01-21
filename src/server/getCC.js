@@ -1,5 +1,6 @@
 
 const fs = require('fs');
+const sortObj  = require('sort-object'); //to sort JS objects
 const url = require(__dirname + '/url');
 
 module.exports = function(req, res, GlobData) {
@@ -27,7 +28,7 @@ module.exports = function(req, res, GlobData) {
     
     //add country_select (list of countries) to object to be rendered
     //to render the dropdown countries list box
-    data.countriesDropDownList = GlobData.available_CT;
+    data.countriesDropDownList = sortObj(GlobData.available_CT);
     delete data.countriesDropDownList["XX"];
     
     //add domains array
