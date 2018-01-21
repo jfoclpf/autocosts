@@ -2,13 +2,7 @@
 const fs = require('fs');
 const url = require(__dirname + '/url');
 
-module.exports = function(req, res, GlobData) {
-    
-    //returns true if it was redirected
-    var wasRedirected = url.getCC(req, res, GlobData);
-    if(wasRedirected){        
-        return;
-    };
+module.exports = function(req, res, GlobData, WORDS_CC) {    
         
     var CC = req.params.CC;
     var LangCode = GlobData.languages_CT[CC]; //language codes
@@ -18,7 +12,7 @@ module.exports = function(req, res, GlobData) {
     console.log("Language code: " + LangCode);
     
     //data to be rendered embedded in the HTML file
-    var data = JSON.parse(fs.readFileSync(GlobData.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
+    var data = WORDS_CC;
     data.CC = CC; //add new property
     data.word_per += "&#32;" //add non-breaking space
     
