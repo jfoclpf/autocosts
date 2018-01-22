@@ -36,6 +36,10 @@ var HTTP_Protocol = '{{{ HTTP_Protocol }}}'; /*it's defined in node server side 
 
 var clientDir = '{{{ clientDir }}}';
 
+var WORDS = JSON.parse('{{{ jsonEscap Words }}}');
+
+var INITIAL_TEX = '{{{ initial_text }}}';
+
 /*forms present page full url, example 'http://autocosts.info/UK' */
 var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 
 
@@ -87,9 +91,6 @@ var UBER_FILE = "getUBER/" + COUNTRY;
 
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
-
-var WORDS; /* JS Object with the words for each country */
-var INITIAL_TEX;
 
 /*global function variables for function expressions */
 var Run1, PrintElem, generatePDF, TimeCounter;

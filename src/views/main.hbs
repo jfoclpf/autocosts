@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    {{#with Words}}
     <title>{{{ adapt_title web_page_title}}}</title>
     
     <!--gets the first sentence of variable $INITIAL_TEXT-->
@@ -41,6 +42,7 @@
                         <div id="banner_flag" class="{{banner_flag CC}}"></div>
                     </div>
                     <div id="country_select_div">
+                        {{/with}}
                         <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
                             {{~#each countriesDropDownList~}}
                             <option value="{{@key}}"{{{isSelected ../CC @key}}}>
@@ -48,6 +50,7 @@
                             </option>
                             {{/each}}
                         </select>
+                        {{#with Words}}
                     </div>
                 </div>
             </div>
@@ -193,9 +196,8 @@
         </div>
         <br>
     </div>
-
+    {{/with}}
     <script>{{> Globals.js }}</script>
-
 </body>
 </html>
 
