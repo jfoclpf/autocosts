@@ -33,8 +33,7 @@ var getScriptOnce = (function(url, callback){
 
 
 (function initialize() {
-      
-    //WORDS = json;
+        
     INITIAL_TEX = WORDS.initial_text;
 
     getScriptOnce(JS_FILES.validateForm);
