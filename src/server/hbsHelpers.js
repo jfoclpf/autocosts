@@ -65,8 +65,10 @@ module.exports = {
     },      
     json: function(context) {
         return JSON.stringify(context);
+    },
+    jsonEscap: function(obj){
+        //adds backslash before special characters, i.e. escapes strings
+        return JSON.stringify(obj).replace(/[\/\(\)\']/g, "\\$&");
     }
-
 }
-
 

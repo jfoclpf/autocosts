@@ -12,8 +12,10 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     console.log("Language code: " + LangCode);
     
     //data to be rendered embedded in the HTML file
-    var data = WORDS_CC;
-    data.CC = CC; //add new property
+    var data = {};    
+    
+    data.Words = WORDS_CC;
+    data.CC = data.Words.CC = CC; //add new property
     data.word_per += "&#32;" //add non-breaking space
     
     //empty var to be used in handlebars for whitespace trimming

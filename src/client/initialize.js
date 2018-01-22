@@ -33,32 +33,27 @@ var getScriptOnce = (function(url, callback){
 
 
 (function initialize() {
+      
+    //WORDS = json;
+    INITIAL_TEX = WORDS.initial_text;
 
-    $.getJSON(LANG_JSON_DIR + COUNTRY + ".json", function(json) {
-        //console.log(json); // this will show the info it in firebug console
-        
-        WORDS = json;
-        INITIAL_TEX = WORDS.initial_text;
-        
-        getScriptOnce(JS_FILES.validateForm);
-        
-        //detects old versions of Internet Explorer
-        oldIE();
+    getScriptOnce(JS_FILES.validateForm);
 
-        CurrentFormPart=1;
-        
-        DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
+    //detects old versions of Internet Explorer
+    oldIE();
 
-        DISPLAY.descriptionHTML = $('#description').html();
+    CurrentFormPart=1;
 
-        getScriptOnce(JS_FILES.documentFunctions, function(){ 
-            getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
-        });
+    DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
-        //detects whether Google Analytics has loaded
-        check_ga();        
-        
+    DISPLAY.descriptionHTML = $('#description').html();
+
+    getScriptOnce(JS_FILES.documentFunctions, function(){ 
+        getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
     });
+
+    //detects whether Google Analytics has loaded
+    check_ga();
     
     getScriptOnce(JS_FILES.jAlert, function(){  
         //defaults for the alert box
