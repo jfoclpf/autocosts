@@ -36,7 +36,7 @@ const submitUserInput = require(__dirname + '/server/submitUserInput');
 const getCC           = require(__dirname + '/server/getCC');
 const getUBER         = require(__dirname + '/server/getUBER');
 const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
-//const list            = require(__dirname + '/server/list');
+const list            = require(__dirname + '/server/list');
 
 const clientDir = 'client/'; //directory with respect to root public HTML, where the client JS flies will be stored
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
@@ -93,11 +93,13 @@ const GlobData = {
     "IS_HTTPS"      : IS_HTTPS  //changed on the top of the code
 };
 
-//creates Object of objects with Words for each Country
+//creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in GlobData.available_CT){
     WORDS[CC] = JSON.parse(fs.readFileSync(GlobData.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
+    WORDS[CC].languageCode = GlobData.available_CT[CC];
+    WORDS[CC].domain = GlobData.domains_CT[CC];    
 }
 
 var app = express();
@@ -126,11 +128,11 @@ app.use('/countries', express.static(__dirname + '/countries'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-/*
+/*lists all Countries information*/
 app.get('/list', function(req, res) {
     console.log("\nRoute: app.get('/list')");
-    list(req, res, GlobData);
-});*/
+    list(req, res, GlobData, WORDS);
+});
 
 app.get('/getUBER/:CC', function(req, res) {
     console.log("\nRoute: app.get('/getUBER')");
