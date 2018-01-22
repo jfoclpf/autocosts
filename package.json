@@ -41,6 +41,7 @@
     "mysql": "^2.15.0",
     "path": "^0.12.7",
     "pdfmake": "^0.1.35",
+    "phantomjs-prebuilt": "^2.1.16",
     "request": "^2.83.0",
     "sort-object": "^3.0.2",
     "uuid": "^3.2.1",

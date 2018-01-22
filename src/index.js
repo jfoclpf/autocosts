@@ -110,7 +110,7 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: __dirname + '/views/layouts/',
-    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/', __dirname + '/client/'],
+    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/', __dirname + '/client/', __dirname + '/tables/'],
     helpers: hbsHelpers
 });
 
@@ -119,6 +119,7 @@ app.set('view engine', '.hbs');
 
 //static content
 app.use(express.static(__dirname + '/public')); //root public folder
+app.use('/tables', express.static(__dirname + '/tables'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/client', express.static(__dirname + '/client'));
