@@ -69,6 +69,48 @@ module.exports = {
     jsonEscap: function(obj){
         //adds backslash before special characters, i.e. escapes strings
         return JSON.stringify(obj).replace(/[\/\(\)\']/g, "\\$&");
-    }
+    },
+    getFuelEfficiencyOptStr: function(optN){
+        switch(optN){
+            case 1:
+                return "l/100km";            
+            case 2:
+                return "km/l";            
+            case 3:
+                return "mpg(imp)";
+            case 4:
+                return "mpg(US)";           
+            case 5:
+                return "l/mil";
+            case 6:
+                return "km/gal(US)";
+            default: 
+                return "error";
+        }
+    },
+    getDistanceOptStr: function(optN){
+        switch(optN){
+            case 1:
+                return "kilometres";            
+            case 2:
+                return "miles";            
+            case 3:
+                return "mil";
+            default: 
+                return "error";
+        }
+    },
+    getFuelPriceVolumeOptStr: function(optN){
+        switch(optN){
+            case 1:
+                return "litres";            
+            case 2:
+                return "imperial gallons";            
+            case 3:
+                return "US gallons";
+            default: 
+                return "error";
+        }
+    }   
 }
 
