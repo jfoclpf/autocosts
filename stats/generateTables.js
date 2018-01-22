@@ -1,5 +1,6 @@
 /*File which generates the statistics tables on a HTML file
 that will be shown in the right column of the main page*/
+/*It call also the PhantomJS script that raster these tables into JPEG files*/
 
 //includes
 const fs       = require('fs');
@@ -8,31 +9,38 @@ const async    = require('async'); //module to allow to execute the queries in s
 const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
+const commons  = require('../commons.js');
+const childProcess = require('child_process')
+const phantomjs = require('phantomjs-prebuilt')
+const binPath = phantomjs.path
 
-var HOME_DIR      = path.resolve(__dirname, '..') + "/";
-var SRC_DIR       = HOME_DIR + "src" + "/";
-var COUNTRIES_DIR = SRC_DIR  + "countries" + "/"; 
-var COUNTRY_LIST_FILE = COUNTRIES_DIR + "list.json";
+//Root directory of the main project
+var ROOT_DIR = path.resolve(__dirname, '../')  + "/";
+//Main directories got from commons
+var Dirs = commons.getDirs(ROOT_DIR);
+
+var ROOT_DIR      = Dirs.ROOT_DIR;
+var SRC_DIR       = Dirs.SRC_DIR;
+var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
+var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
+var TABLES_DIR = Dirs.TABLES_DIR;
 
 var REL; //release shall be 'work' or 'prod', it's 'work' by default
-var tableArg; //normally shall be 'src' or 'build'; 
-
 if(process.argv.length == 2){    
     REL = "work";
-    tableArg = "build";
 }
-else if (process.argv.length == 3){
-    REL = process.argv[2];
-    tableArg = "build";        
-}
-else if (process.argv.length == 4){
-    REL = process.argv[2];
-    tableArg = process.argv[3];
-}
-else if (process.argv.length > 4){
-    console.log("Just one or two arguments are accepted \n");
+else if (process.argv.length > 3){
+    console.log("Just one argument is accepted \n");
     process.exit();
 }
+else{
+    if (process.argv[2]!="work" && process.argv[2]!="prod"){
+        console.log("work or prod must be chosen \n");
+        process.exit();
+    }
+    REL = process.argv[2];
+}
+//process.exit();
 
 //check that release was correctly chose
 if (REL!=="work" && REL!=="prod"){
@@ -41,13 +49,11 @@ if (REL!=="work" && REL!=="prod"){
 }        
 console.log("chosen '" + REL + "'");
 
-//check if tables was correctly chose
-var TABLES_DIR = HOME_DIR + tableArg + "/" +"views/partials" + "/";    
-if (!fs.existsSync(TABLES_DIR) || (tableArg!=="src" && tableArg!=="build")){
-    console.log("second argument must be 'src' or 'build'");
+//check if TABLES_DIR directory exists
+if (!fs.existsSync(TABLES_DIR)){
     throw "TABLES_DIR '" + TABLES_DIR + "' doesn't exist";
 }
-console.log("Generating the tables on: " + TABLES_DIR);
+console.log("\nGenerating the tables on: " + TABLES_DIR + "\n");
 //process.exit();
 
 //checks for internet connection
@@ -57,11 +63,9 @@ isOnline().then(online => {
         throw "There is no Internet Connection";
         process.exit();
     }
-
-    console.log("Generating statistics tables");    
     
     //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
     console.log(DB_INFO);
 
     //getting country information from 
@@ -202,7 +206,9 @@ isOnline().then(online => {
                     count++;
                     
                     if(count==nbrOfCountries){
-                        console.log("\nCreated countries statistical tables HTML files!\n");
+                        console.log("\nCreated countries statistical tables HTML files!\n");                        
+                        
+                        rasterTables();
                     }
                 });//fs.writeFile
             
@@ -216,3 +222,18 @@ isOnline().then(online => {
     
 });//isOnline
 
+//Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
+function rasterTables(){
+    
+    console.log("\nRastering tables!\n");
+    
+    var childArgs = [
+      path.join(__dirname, 'rasterTables.js')
+    ];
+
+    console.log(binPath, childArgs[0]);
+    childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+        if (err){throw err;}
+        console.log(stdout);
+    });
+}

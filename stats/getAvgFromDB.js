@@ -6,9 +6,14 @@ const path     = require("path");
 const async    = require('async'); //module to allow to execute the queries in series
 const mysql    = require('mysql'); //module to get info from DB
 const isOnline = require('is-online');
+const commons  = require('../commons.js');
 
-var HOME_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of current file directory
-var SRC_DIR = HOME_DIR + "src" + "/";
+//Root directory of the main project
+var ROOT_DIR = path.resolve(__dirname, '../') + "/";
+//Main directories got from commons
+var Dirs = commons.getDirs(ROOT_DIR);
+
+var SRC_DIR       = Dirs.SRC_DIR;
 
 //checks for internet connection
 isOnline().then(online => {
@@ -42,7 +47,7 @@ isOnline().then(online => {
     //process.exit();
 
     //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
     console.log(DB_INFO);
 
     //database variable

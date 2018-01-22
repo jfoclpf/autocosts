@@ -9,11 +9,16 @@ const async    = require('async'); //module to allow to execute the queries in s
 const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
+const commons  = require('../commons.js');
 
-var HOME_DIR      = path.resolve(__dirname, '..') + "/";
-var SRC_DIR       = HOME_DIR + "src" + "/";
-var COUNTRIES_DIR = SRC_DIR  + "countries" + "/"; 
-var COUNTRY_LIST_FILE = COUNTRIES_DIR + "list.json";
+//Root directory of the main project
+var ROOT_DIR = path.resolve(__dirname, '../') + "/"; 
+//Main directories got from commons
+var Dirs = commons.getDirs(ROOT_DIR);
+
+var SRC_DIR       = Dirs.SRC_DIR;
+var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
+var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
 
 //checks for internet connection
 isOnline().then(online => {
@@ -41,7 +46,7 @@ isOnline().then(online => {
     console.log("chosen '" + REL + "'");
 
     //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(HOME_DIR + 'keys/' + REL + '/db_credentials.json'));
+    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
     console.log(DB_INFO);
 
     //getting country information from 

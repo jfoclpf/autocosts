@@ -129,9 +129,6 @@ do
             printf "\n    Extracts stat info from prod and create html tables \n\n"
             node generateTables.js $RELEASE
 
-            printf "\n    Renders html tables into jpge files \n\n"
-            phantomjs rasterTables.js
-
             cd ../
             ;;                                             
 
