@@ -96,7 +96,7 @@ const GlobData = {
 //creates Object of objects with Words for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
-for (let CC in GlobData.available_CT){
+for (var CC in GlobData.available_CT){
     WORDS[CC] = JSON.parse(fs.readFileSync(GlobData.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
 }
 
@@ -147,7 +147,7 @@ app.post('/submitUserInput', function(req, res) {
 app.get('/:CC', function (req, res, next) {
     console.log("\nRoute: app.get('/CC')");
 
-    //returns true if it was redirected
+    //returns true if it was redirected to another URL
     let wasRedirected = url.getCC(req, res, GlobData);
     if(wasRedirected){
         return;
