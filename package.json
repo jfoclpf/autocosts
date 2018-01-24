@@ -33,6 +33,7 @@
     "fs": "0.0.1-security",
     "geoip-lite": "^1.2.1",
     "handlebars": "^4.0.11",
+    "imagemagick": "^0.1.3",
     "is-online": "^7.0.0",
     "jAlert": "^4.5.0",
     "jquery": "^3.3.1",
