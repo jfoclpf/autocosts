@@ -110,7 +110,10 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: __dirname + '/views/layouts/',
-    partialsDir: [__dirname + '/views/partials/', __dirname + '/css/merged-min/', __dirname + '/client/', __dirname + '/tables/'],
+    partialsDir: [ __dirname + '/views/partials/', 
+                   __dirname + '/css/merged-min/', 
+                   __dirname + '/client/', 
+                   __dirname + '/tables/'],
     helpers: hbsHelpers
 });
 
