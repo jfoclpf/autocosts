@@ -1,6 +1,6 @@
 /*File which generates the statistics tables on a HTML file
 that will be shown in the right column of the main page*/
-/*It call also the PhantomJS script that raster these tables into JPEG files*/
+/*It call also the PhantomJS script 'rasterTables.js' that rasters these tables into JPEG files*/
 
 //includes
 const fs       = require('fs');
@@ -10,16 +10,15 @@ const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
 const commons  = require('../commons.js');
-const childProcess = require('child_process')
-const phantomjs = require('phantomjs-prebuilt')
-const binPath = phantomjs.path
+const childProcess = require('child_process');
+const phantomjs = require('phantomjs-prebuilt'); //to use './rasterTables.js'
+const binPath = phantomjs.path;
 
 //Root directory of the main project
 var ROOT_DIR = path.resolve(__dirname, '../')  + "/";
 //Main directories got from commons
 var Dirs = commons.getDirs(ROOT_DIR);
 
-var ROOT_DIR      = Dirs.ROOT_DIR;
 var SRC_DIR       = Dirs.SRC_DIR;
 var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
 var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
