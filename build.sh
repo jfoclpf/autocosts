@@ -88,7 +88,7 @@ do
     case $OPTION in
 
         s)
-            cd stats/
+            cd scripts/
             printf "\n## Creates DB with countries' specifcations \n"
             node setCountrySpecsDB.js $RELEASE
             cd ../
@@ -106,7 +106,7 @@ do
         
         r)
                 
-            cd stats/
+            cd scripts/
             printf "\n## Refreshes statistical costs DB \n"
             node getAvgFromDB.js $RELEASE
             cd ../
@@ -123,7 +123,7 @@ do
 
         t)
             #generating statistical tables
-            cd stats/
+            cd scripts/
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
@@ -220,26 +220,12 @@ do
 
         i)
             #compress images
-            cd build/images/
+            cd scripts/
             printf "\n## Compress images, jpg and png files \n\n"
+                  
+            node compressImages.js
 
-            for f in $(find . -type f -name '*.jpg')
-            do 
-                printf "Compressing $f \n"
-                convert $f -sampling-factor 4:2:0 -strip -quality 85 -interlace Plane -colorspace RGB $f.min
-                rm $f
-                mv $f.min $f 
-            done
-
-            for f in $(find . -type f -name '*.png')
-            do
-                printf "Compressing $f \n"
-                convert $f -strip $f.min
-                rm $f
-                mv $f.min $f
-            done                        
-
-            cd ../../
+            cd ../
             ;;
     esac
 done
