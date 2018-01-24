@@ -33,6 +33,40 @@ module.exports = {
         };
 
         return Dirs;
-    }
+    },
     
+    find : function(startPath, filter, callback){
+        Find(startPath, filter, callback);
+    }
+ 
+}
+
+
+const path    = require('path'); 
+const fs      = require('fs');
+
+/*to find all files in "startPath" folder and all its sub folders*/
+/*filter may be for example ".html" */
+function Find(startPath, filter, callback){
+
+    //console.log('Starting from dir '+startPath+'/');
+
+    if (!fs.existsSync(startPath)){
+        console.log("no dir ",startPath);
+        return;
+    }
+
+    var files=fs.readdirSync(startPath);
+    for(var i=0;i<files.length;i++){
+        var filename=path.join(startPath,files[i]);
+        var stat = fs.lstatSync(filename);
+        if (stat.isDirectory()){
+            Find(filename,filter,callback); //recurse
+        }
+        else if (filename.indexOf(filter)>=0) {            
+            if (typeof callback === "function"){                
+                callback(filename);
+            }
+        }
+    }
 }
