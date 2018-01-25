@@ -12,8 +12,9 @@ const commons  = require('../commons.js');
 var ROOT_DIR = path.resolve(__dirname, '../') + "/";
 //Main directories got from commons
 var Dirs = commons.getDirs(ROOT_DIR);
-
 var SRC_DIR       = Dirs.SRC_DIR;
+
+var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
 
 //checks for internet connection
 isOnline().then(online => {
@@ -27,24 +28,6 @@ isOnline().then(online => {
     eval(fs.readFileSync(SRC_DIR + 'client/core/coreFunctions.js')+'');
     eval(fs.readFileSync(SRC_DIR + 'client/getData.js')+'');
     eval(fs.readFileSync('./statsFunctions.js')+'');
-
-    var REL; //release shall be 'work' or 'prod', it's 'work' by default
-    if(process.argv.length == 2){    
-        REL = "work";
-    }
-    else if (process.argv.length > 3){
-        console.log("Just one argument is accepted \n");
-        process.exit();
-    }
-    else{
-        if (process.argv[2]!="work" && process.argv[2]!="prod"){
-            console.log("work or prod must be chosen \n");
-            process.exit();
-        }
-        REL = process.argv[2];
-    }
-    console.log("chosen '" + REL + "'");
-    //process.exit();
 
     //include credentials object
     var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));

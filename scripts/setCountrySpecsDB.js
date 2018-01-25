@@ -20,6 +20,8 @@ var SRC_DIR       = Dirs.SRC_DIR;
 var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
 var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
 
+var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
+
 //checks for internet connection
 isOnline().then(online => {
     
@@ -27,23 +29,6 @@ isOnline().then(online => {
         console.log("There is no Internet Connection");
         process.exit();
     }
-
-    var REL; //release shall be 'work' or 'prod', it's 'work' by default
-    if(process.argv.length == 2){    
-        REL = "work";
-    }
-    else if (process.argv.length > 3){
-        console.log("Just one argument is accepted \n");
-        process.exit();
-    }
-    else{
-        if (process.argv[2]!="work" && process.argv[2]!="prod"){
-            console.log("work or prod must be chosen \n");
-            process.exit();
-        }
-        REL = process.argv[2];
-    }
-    console.log("chosen '" + REL + "'");
 
     //include credentials object
     var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
