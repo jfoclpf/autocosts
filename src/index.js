@@ -16,7 +16,7 @@ const DefaultCC = "UK"; //when no other method finds the country of user, use th
 //###############################################################################
 //###############################################################################
 
-console.log("\n\nServer started");
+console.log("\n\nServer started at " + __dirname);
 
 //check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
 const numCPUs = require('os').cpus().length;
@@ -40,6 +40,7 @@ const list            = require(__dirname + '/server/list');
 
 const clientDir = 'client/'; //directory with respect to root public HTML, where the client JS flies will be stored
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
+const INDEX_DIR = __dirname + "/"; //directory where the index.js is located
 const SRC_DIR = ROOT_DIR + "src" + "/"; //parent directory of source code directory
 
 //select release
@@ -81,6 +82,7 @@ const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.js
 const GlobData = {
     "REL"           : REL,       //Release: "work" or "prod"
     "ROOT_DIR"      : ROOT_DIR,  //parent directory of main project directory tree
+    "INDEX_DIR"     : INDEX_DIR, //directory where the index.js fiel is located
     "SRC_DIR"       : SRC_DIR,   //parent directory of source code directory (normally "/src")
     "DefaultCC"     : DefaultCC, //default Country, changed on the top of the code
     "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored

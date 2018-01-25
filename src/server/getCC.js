@@ -40,8 +40,9 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     data.CDN_URL = GlobData.CDN_URL;
     data.HTTP_Protocol = HTTP_Protocol;
     data.layout = false; 
-
-    res.render('main', data);
+    
+    var fileToRender = GlobData.INDEX_DIR + "views/main.hbs";
+    res.render(fileToRender, data);
     
 }
 
