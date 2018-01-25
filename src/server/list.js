@@ -5,7 +5,8 @@ module.exports = function(req, res, GlobData, WORDS) {
     data.WORDS = WORDS;
     data.layout = false;
 
-    res.render('list', data);
+    var fileToRender = GlobData.INDEX_DIR + "views/list.hbs";
+    res.render(fileToRender, data);
     
 }
 
