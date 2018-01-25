@@ -11,7 +11,7 @@ then
 fi
 
 #string with available options
-optstring=':hcesrtim u: l:'
+optstring=':hcesrtim :A u: l:'
 
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
@@ -34,7 +34,7 @@ do
             
             ;;
 
-        h)
+        h)            
             printf "Usage: \n"
             printf "$0 -h \n"
             printf "$0 -etc \n"
@@ -50,6 +50,7 @@ do
             printf "   -t     generate html and jpeg stats [t]ables in build/   based on statistical costs DB \n"
             printf "   -i     compress [i]mages, jpg and png files in build/    with ImageMagick \n"                        
             printf "   -m     [m]inify js, json, css and html files in build/   with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "   -A     runs [a]ll previous options                         \n"
             printf "\n"
             printf "   -u     [u]upload to server                               -u work or -u prod (work by default) \n"
             printf "   -h     help (this output) \n\n"
@@ -79,6 +80,20 @@ done
 
 echo "Chosen release: $RELEASE"
 
+OPTIND=1
+
+while getopts "$optstring" OPTION; 
+do
+    case "$OPTION" in
+
+        A)  
+            #runs all options
+            ./build.sh -cesrtim -l $RELEASE
+            exit
+            ;;
+        
+    esac
+done
 
 OPTIND=1
 
