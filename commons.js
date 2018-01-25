@@ -35,19 +35,26 @@ module.exports = {
         return Dirs;
     },
     
-    find : function(startPath, filter, callback){
-        Find(startPath, filter, callback);
+    find: function(startPath, filter, callback){
+        _find(startPath, filter, callback);
+    },
+    
+    getRelease: function(process){
+        _getRelease(process);
     }
  
 }
 
+/*****************************************************************************/
+/*****************************************************************************/
+/*****************************************************************************/
 
 const path    = require('path'); 
 const fs      = require('fs');
 
 /*to find all files in "startPath" folder and all its sub folders*/
 /*filter may be for example ".html" */
-function Find(startPath, filter, callback){
+function _find(startPath, filter, callback){
 
     //console.log('Starting from dir '+startPath+'/');
 
@@ -61,7 +68,7 @@ function Find(startPath, filter, callback){
         var filename=path.join(startPath,files[i]);
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory()){
-            Find(filename,filter,callback); //recurse
+            _find(filename,filter,callback); //recurse
         }
         else if (filename.indexOf(filter)>=0) {            
             if (typeof callback === "function"){                
@@ -69,4 +76,32 @@ function Find(startPath, filter, callback){
             }
         }
     }
+}
+
+/*function to be used in several scripts to get the release according to the argv of 
+the command line, it shall be either 'work' (test version at autocosts.work) 
+or 'prod', the production version that is filled in by autocosts.info */
+function _getRelease(process){
+
+    if(process.argv.length == 2){    
+        REL = "work";
+    }
+    else if (process.argv.length > 3){
+        console.log("Just one argument is accepted \n");
+        process.exit();
+    }
+    else{
+        if (process.argv[2]!="work" && process.argv[2]!="prod"){
+            console.log("work or prod must be chosen \n");
+            process.exit();
+        }
+        REL = process.argv[2];
+    }
+
+    //check that release was correctly chose
+    if (REL!=="work" && REL!=="prod"){
+        console.log("release 'work' or 'prod' must be chosen \n");
+        process.exit();
+    }        
+    console.log("Release: '" + REL + "'");
 }

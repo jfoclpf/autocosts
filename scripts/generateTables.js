@@ -24,42 +24,13 @@ var COUNTRIES_DIR = Dirs.COUNTRIES_DIR;
 var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
 var TABLES_DIR = Dirs.TABLES_DIR;
 
-var REL; //release shall be 'work' or 'prod', it's 'work' by default
-if(process.argv.length == 2){    
-    REL = "work";
-}
-else if (process.argv.length > 3){
-    console.log("Just one argument is accepted \n");
-    process.exit();
-}
-else{
-    if (process.argv[2]!="work" && process.argv[2]!="prod"){
-        console.log("work or prod must be chosen \n");
-        process.exit();
-    }
-    REL = process.argv[2];
-}
-//process.exit();
-
-//check that release was correctly chose
-if (REL!=="work" && REL!=="prod"){
-    console.log("release 'work' or 'prod' must be chosen \n");
-    process.exit();
-}        
-console.log("chosen '" + REL + "'");
-
-//check if TABLES_DIR directory exists
-if (!fs.existsSync(TABLES_DIR)){
-    throw "TABLES_DIR '" + TABLES_DIR + "' doesn't exist";
-}
-console.log("\nGenerating the tables on: " + TABLES_DIR + "\n");
-//process.exit();
+var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
 
 //checks for internet connection
 isOnline().then(online => {
     
     if(!online){
-        throw "There is no Internet Connection";
+        console.log("Error: no Internet connection");
         process.exit();
     }
     
@@ -207,6 +178,8 @@ isOnline().then(online => {
                     if(count==nbrOfCountries){
                         console.log("\nCreated countries statistical tables HTML files!\n");                        
                         
+                        //Runs PhantomJS script to raster the tables, 
+                        //only after the HTML.hbs generation was completed
                         rasterTables();
                     }
                 });//fs.writeFile
@@ -219,7 +192,7 @@ isOnline().then(online => {
     
     db.end();        
     
-});//isOnline
+});
 
 //Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
 function rasterTables(){
