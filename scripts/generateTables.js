@@ -113,7 +113,7 @@ isOnline().then(online => {
             var stdDist = WORDS['std_dist']; //standard distance 
         
             //the file name to which the HTML table will be saved
-            var fileName = TABLES_DIR + CCfile + "costs.hbs"; //something like .../PTcosts.hbs
+            var fileName = TABLES_DIR + CCfile + ".hbs"; //something like .../PT.hbs
 
             db.query("SELECT * FROM " + DB_INFO.db_tables.monthly_costs_statistics + 
                 " WHERE country='" + (CCfile!=="XX"?CCfile:"UK") + "'", 
