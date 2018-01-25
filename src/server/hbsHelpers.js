@@ -8,7 +8,7 @@ module.exports = {
     },
     /*chose the HTML costs table for specific country*/
     costs_table: function (CC){
-        return CC+'costs';
+        return CC;
     },
     banner_flag: function (CC){
         return CC.toLowerCase() + ' ' + 'flag';

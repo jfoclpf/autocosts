@@ -6,10 +6,11 @@ var commons  = require('../commons.js');
 
 var ROOT_DIR = fs.absolute("../") + "/";
 var Dirs = commons.getDirs(ROOT_DIR);
-var TABLES_DIR      = Dirs.TABLES_DIR;
+var TABLES_DIR  = Dirs.TABLES_DIR;
+var BUILD_DIR   = Dirs.BUILD_DIR;
 
 console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
-var css_file = fs.absolute("../build/css/") + "right.css";
+var css_file = fs.absolute(BUILD_DIR + "css/") + "right.css";
 console.log("The CSS main file is in: " + css_file);
 
 // Get a list all files in directory
