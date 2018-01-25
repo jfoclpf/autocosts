@@ -179,7 +179,7 @@ isOnline().then(online => {
                         console.log("\nCreated countries statistical tables HTML files!\n");                        
                         
                         //Runs PhantomJS script to raster the tables, 
-                        //only after the HTML.hbs generation was completed
+                            //only after the HTML.hbs generation was completed
                         rasterTables();
                     }
                 });//fs.writeFile
@@ -200,7 +200,7 @@ function rasterTables(){
     console.log("\nRastering tables!\n");
     
     var childArgs = [
-      path.join(__dirname, 'rasterTables.js')
+        path.join(__dirname, 'rasterTables.js')
     ];
 
     console.log(binPath, childArgs[0]);
@@ -209,3 +209,4 @@ function rasterTables(){
         console.log(stdout);
     });
 }
+
