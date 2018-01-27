@@ -40,7 +40,7 @@ module.exports = {
     },
     
     getRelease: function(process){
-        _getRelease(process);
+        return _getRelease(process);
     }
  
 }
@@ -82,7 +82,8 @@ function _find(startPath, filter, callback){
 the command line, it shall be either 'work' (test version at autocosts.work) 
 or 'prod', the production version that is filled in by autocosts.info */
 function _getRelease(process){
-
+    
+    var REL;
     if(process.argv.length == 2){    
         REL = "work";
     }
@@ -104,4 +105,6 @@ function _getRelease(process){
         process.exit();
     }        
     console.log("Release: '" + REL + "'");
+    
+    return REL;
 }
