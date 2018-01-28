@@ -9,7 +9,7 @@ module.exports = {
         /*Always leave the traling slash at the end on each directory*/                
 
         //Source directory - the directory where the source code is stored
-        var SRC_DIR       = ROOT_DIR + "src" + "/";
+        var SRC_DIR       = ROOT_DIR + "src" + "/";       
 
         //Build directory - the directory to where the source code is deployed after running the bash script ./build.sh
         var BUILD_DIR       = ROOT_DIR + "build" + "/";
