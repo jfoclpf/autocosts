@@ -5,13 +5,16 @@
             List of Countries for the Automobile Costs Calculator
         </title>
         <style>
+            body {
+                font-family: Arial;
+            }
             table {
                 border-collapse: collapse;
             }
-            table, th, td {
-                border: 1px solid black;
+            th, td {
+                border: 1px solid grey;
                 padding: 4px;
-            }
+            }          
         </style>
     </head>
 <body>
@@ -74,7 +77,7 @@
             <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
             <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
             <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
-            <td style="text-align:center"><a href="">*</a></td>
+            <td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
             </tr>
         {{/each}}
         
