@@ -30,7 +30,6 @@ do
             rm -R -f *
             cd ../
             cp -R src/* build/
-            cp src/.htaccess build/
             
             ;;
 
