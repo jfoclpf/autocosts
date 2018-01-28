@@ -31,6 +31,7 @@ const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
 
 //personalised requires
+const commons         = require('../commons');
 const url             = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const submitUserInput = require(__dirname + '/server/submitUserInput');
 const getCC           = require(__dirname + '/server/getCC');
@@ -38,29 +39,16 @@ const getUBER         = require(__dirname + '/server/getUBER');
 const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
 const list            = require(__dirname + '/server/list');
 
-const clientDir = 'client/'; //directory with respect to root public HTML, where the client JS flies will be stored
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
 const INDEX_DIR = __dirname + "/"; //directory where the index.js is located
-const SRC_DIR = ROOT_DIR + "src" + "/"; //parent directory of source code directory
 
-//select release
-var REL; //release shall be 'work' or 'prod', it's 'work' by default
-if(process.argv.length == 2){
-    REL = "work";
-}
-else if (process.argv.length > 3){
-    console.log("Just one argument is accepted \n");
-    process.exit();
-}
-else{
-    if (process.argv[2]!="work" && process.argv[2]!="prod"){
-        console.log("work or prod must be chosen \n");
-        process.exit();
-    }
-    REL = process.argv[2];
-}
-console.log("chosen '" + REL + "'");
-//process.exit();
+//Main directories got from commons
+var Dirs = commons.getDirs(ROOT_DIR);
+var SRC_DIR       = Dirs.SRC_DIR;
+
+const clientDir = 'client/'; //directory with respect to src/ dir, where the client JS flies will be stored
+
+var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
 
 //selects CDN_URL Global variable, in case the CDN is used
 var CDN_URL;
@@ -85,7 +73,7 @@ const GlobData = {
     "INDEX_DIR"     : INDEX_DIR, //directory where the index.js fiel is located
     "SRC_DIR"       : SRC_DIR,   //parent directory of source code directory (normally "/src")
     "DefaultCC"     : DefaultCC, //default Country, changed on the top of the code
-    "clientDir"     : clientDir, //directory with respect to root public HTML, where the client JS flies will be stored
+    "clientDir"     : clientDir, //directory with respect to src/ dir, where the client JS flies will be stored
     "available_CT"  : sortObj(CountriesInfo.available_CT), //Array of alphabetically sorted available Countries
     "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
