@@ -6,7 +6,6 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
         
     var CC = req.params.CC;
     var LangCode = GlobData.languages_CT[CC]; //language codes
-    var HTTP_Protocol = url.getProtocol(req, GlobData.IS_HTTPS);        
 
     console.log("Country code: "  + CC);
     console.log("Language code: " + LangCode);
@@ -36,12 +35,22 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     data.LangCode = LangCode;
     data.available_CT = GlobData.available_CT;
     data.domains_CT = GlobData.domains_CT;
-    data.clientDir = GlobData.clientDir;
-    data.CDN_URL = GlobData.CDN_URL;
-    data.HTTP_Protocol = HTTP_Protocol;
+    data.clientDir = GlobData.Dirs.clientDir;
+    
+    //selects CDN URL
+    if (GlobData.Settings.CDN.IS_CDN){
+        data.CDN_URL = url.isThisATest(req) ? GlobData.Settings.CDN.URL_WORK : GlobData.Settings.CDN.URL_PROD;
+    }
+    else{
+        data.CDN_URL = "";
+    }
+    console.log("CDN_URL: ", data.CDN_URL);
+    
+    data.HTTP_Protocol = url.getProtocol(req, GlobData.Settings.IS_HTTPS);
+    
     data.layout = false; 
     
-    var fileToRender = GlobData.INDEX_DIR + "views/main.hbs";
+    var fileToRender = GlobData.Dirs.INDEX_DIR + "views/main.hbs";
     res.render(fileToRender, data);
     
 }
