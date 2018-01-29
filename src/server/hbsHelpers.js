@@ -70,6 +70,9 @@ module.exports = {
         //adds backslash before special characters, i.e. escapes strings
         return JSON.stringify(obj).replace(/[\/\(\)\']/g, "\\$&");
     },
+    escapeStr: function(str){
+        return str.replace(/[\/\(\)\']/g, "\\$&");
+    },
     getFuelEfficiencyOptStr: function(optN){
         switch(optN){
             case 1:
