@@ -6,7 +6,7 @@ module.exports = function(req, res, GlobData, WORDS) {
     delete data.WORDS["XX"];
     data.layout = false;
 
-    var fileToRender = GlobData.INDEX_DIR + "views/list.hbs";
+    var fileToRender = GlobData.Dirs.INDEX_DIR + "views/list.hbs";
     res.render(fileToRender, data);
     
 }

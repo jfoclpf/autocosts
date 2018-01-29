@@ -38,7 +38,7 @@ module.exports = {
         //But if the two-letter code are NOT all in upper case domain.info/CC 
         if (!isCC2letterUpperCase(CC)){
             console.log("if (!isCC2letterUpperCase)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;
         }
@@ -48,7 +48,7 @@ module.exports = {
         //check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
         if(isSubdomain(req)){
             console.log("if(isSubdomain)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }
@@ -62,7 +62,7 @@ module.exports = {
         //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)        
         if(!isDomainCCcombValid(req, dataObj.available_CT, dataObj.domains_CT)){
             console.log("if (!isDomainCCcombValid)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }
@@ -70,7 +70,7 @@ module.exports = {
         //check for https rules and redirect accordingly
         if (req.protocol !== getProtocol(req, IS_HTTPS)){
             console.log("if (protocol !== getProtocol)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.IS_HTTPS);
+            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }        
@@ -99,7 +99,7 @@ module.exports = {
 var redirect302 = function (req, res, dataObj){            
 
     //get country by locale or HTTP header from browser
-    var geoCC = getGeoCC(req, dataObj.available_CT, dataObj.DefaultCC);
+    var geoCC = getGeoCC(req, dataObj.available_CT, dataObj.Settings.DefaultCC);
 
     var url2redirect;
     if (isWorkDomain(req)){
@@ -110,7 +110,7 @@ var redirect302 = function (req, res, dataObj){
     }
     //production
     else{ 
-        url2redirect = getProtocol(req, dataObj.IS_HTTPS) + '://' + domains_CT[geoCC] + '/' + geoCC;
+        url2redirect = getProtocol(req, dataObj.Settings.IS_HTTPS) + '://' + domains_CT[geoCC] + '/' + geoCC;
     }
     
     res.redirect(302, url2redirect);
@@ -223,9 +223,7 @@ var getValidURL = function (req, domains_CT, IS_HTTPS){
 };
 
 var getProtocol = function (req, IS_HTTPS){
-    
-    var host = req.get('host');
-    
+        
     if (IS_HTTPS && !isWorkDomain(req)){
         return "https";
     }
@@ -260,7 +258,7 @@ var isWorkDomain = function (req){
 
     var host = req.get('host');
     var hostSplit = host.split(".");
-    var tld = hostSplit[hostSplit.length-1];
+    var tld = hostSplit[hostSplit.length-1]; //top level domain, ex: ".info"
     
     if (tld.toLowerCase() === "work"){
         return true;
