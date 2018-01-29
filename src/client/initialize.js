@@ -33,7 +33,7 @@ var getScriptOnce = (function(url, callback){
 
 
 (function initialize() {
-        
+
     INITIAL_TEX = WORDS.initial_text;
 
     getScriptOnce(JS_FILES.validateForm);
@@ -47,24 +47,24 @@ var getScriptOnce = (function(url, callback){
 
     DISPLAY.descriptionHTML = $('#description').html();
 
-    getScriptOnce(JS_FILES.documentFunctions, function(){ 
+    getScriptOnce(JS_FILES.documentFunctions, function(){
         getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
     });
 
     //detects whether Google Analytics has loaded
     check_ga();
-    
-    getScriptOnce(JS_FILES.jAlert, function(){  
+
+    getScriptOnce(JS_FILES.jAlert, function(){
         //defaults for the alert box
         $.fn.jAlert.defaults.size = 'sm';
         $.fn.jAlert.defaults.theme = 'default';
-        $.fn.jAlert.defaults.closeOnClick = 'true'; 
-        
+        $.fn.jAlert.defaults.closeOnClick = 'true';
+
     });
-    
+
     //loads second part of CSS files (not critical thus can be deferred)
-    loadStyleSheets(['css/merged-min/merged2.css']);     
-    
+    loadStyleSheets(['css/merged-min/merged2.css']);
+
     /*Google Analytics*/
     if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() ) {
         (function(i, s, o, g, r, a, m) {
@@ -81,13 +81,13 @@ var getScriptOnce = (function(url, callback){
 
         ga('create', 'UA-3421546-6', 'auto');
         ga('send', 'pageview');
-    }   
-    
+    }
+
 })();
 
 //function that sets the JS language variables to the correspondent HTML divs
 function setLanguageVars(){
-    
+
     //language HTML select dropdowns
     var SelectList = {
         "1" : WORDS.month,
@@ -95,18 +95,18 @@ function setLanguageVars(){
         "3" : WORDS.trimester,
         "4" : WORDS.semester,
         "5" : WORDS.year
-    };    
+    };
     $('select[class="time_period"]').each(function(){
-        var $dropdown = $(this);    
+        var $dropdown = $(this);
         $.each(SelectList, function(key, value) {
             $dropdown.append($("<option/>").val(key).text(value));
         });
     });
-   
+
     initializeForm();
     loadsDefaultValues();
     loadsButtonsSettings();
-    
+
     scrollPage(resized);
 }
 
@@ -159,14 +159,14 @@ function initializeForm(){
     if(!SWITCHES.pdf){
         $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
     }
-    
+
 }
 
 function loadsDefaultValues(){
 
     //the key the name of the variable in WORDS
     //the value is the name of the id in the form
-    var mappingIDs = {        
+    var mappingIDs = {
         "std_acq_month" : "acquisitionMonth",
         "std_acq_year" : "acquisitionYear",
         "std_price_paid" : "commercialValueAtAcquisition",
@@ -210,25 +210,25 @@ function loadsDefaultValues(){
     };
 
     $.each(mappingIDs, function(key, value){
-        $("#"+value).val(WORDS[key]);      
+        $("#"+value).val(WORDS[key]);
     });
 
 }
 
 function loadsButtonsSettings(){
-    
-    //associate click functions with buttons 
+
+    //associate click functions with buttons
     $("#run_button, #run_button_noCapctha").attr("onclick", "Run1()");
-    //associate click functions with buttons     
+    //associate click functions with buttons
     $("#rerun_button").attr("onclick", "reload()");
     $("#print_button").attr("onclick", "PrintElem()");
-    $("#generate_PDF").attr("onclick", "generatePDF()"); 
+    $("#generate_PDF").attr("onclick", "generatePDF()");
 }
 
 
 //detects whether Google Analytics has loaded
 function check_ga() {
-  
+
     if(IsThisAtest()){
         SERVICE_AVAILABILITY.g_analytics = false;
         return;
@@ -244,7 +244,7 @@ function check_ga() {
 
 /*Timer function*/
 /* jshint ignore:start */
-getScriptOnce(JS_FILES.jTimer, function(){  
+getScriptOnce(JS_FILES.jTimer, function(){
     TimeCounter = new function () {
         var incrementTime = 500;
         var currentTime = 0;
@@ -260,7 +260,7 @@ getScriptOnce(JS_FILES.jTimer, function(){
         this.getCurrentTimeInSeconds = function () {
             return currentTime / 1000;
         };
-    };    
+    };
     TimeCounter.resetStopwatch();
 });
 /* jshint ignore:end */
@@ -276,7 +276,7 @@ uuid = guid();
 
 //gets default protocol defined by Global Variable
 function getProtocol(){
- 
+
     //verifies top level domain
     var hostName = window.location.hostname;
     var hostNameArray = hostName.split(".");
@@ -284,8 +284,8 @@ function getProtocol(){
     var tld = hostNameArray[posOfTld];
     if(tld=="work"){
         return "http://";
-    }    
-    
+    }
+
     if (SWITCHES.https){
         return "https://";
     }
@@ -324,7 +324,7 @@ function IsThisAtest() {
     return false;
 }
 
-/*The function below will create and add to the document all the stylesheets that you wish to load asynchronously. 
+/*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
 (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
 function loadStyleSheets(styleSheets) {
     var head = document.getElementsByTagName('head')[0];
@@ -338,9 +338,10 @@ function loadStyleSheets(styleSheets) {
         href.value = styleSheets[i];
 
         link.setAttributeNode(rel);
-        link.setAttributeNode(href); 
+        link.setAttributeNode(href);
 
         head.appendChild(link);
     }
 }
+
 
