@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     {{#with Words}}
     <title>{{{ adapt_title web_page_title}}}</title>
-    
+
     <!--gets the first sentence of variable $INITIAL_TEXT-->
     <meta name="description" content="{{{ meta_description ./initial_text }}}">
     <meta name="keywords" content="{{{ get_keywords ./web_page_title ./fixed_costs ./running_costs }}}">
@@ -15,16 +15,16 @@
     <meta http-equiv="Content-Security-Policy" content="
         {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
         {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
-        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval'; 
+        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
         {{~emptyChar}} img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;">
-    
+
     <style>{{> merged1.css }}</style>
-    
+
 </head>
 <body>
 
     <div id="main_div">
-        
+
         <div id="banner_top">
             <div id="left_top_div">&nbsp;</div>
             <!--#####################-->
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div id="container">
             <div id="description">
@@ -76,7 +76,7 @@
 
                             <a class="display_block" target="_blank" href="https://play.google.com/store/apps/details?id=info.autocosts">
                                 <div id="div31" class="roundCorner">
-                                    <img alt="Android logo" src="images/android/playstore.svg">                                
+                                    <img alt="Android logo" src="images/android/playstore.svg">
                                 </div>
                             </a>
 
@@ -171,7 +171,7 @@
                                 {{{word_print}}}
                             </button>&nbsp;
                             <button id="generate_PDF" class="button">
-                                {{{word_download_pdf}}}                            
+                                {{{word_download_pdf}}}
                             </button>
                             <div id="shareIcons"></div>
                         </div>
@@ -185,7 +185,7 @@
                 <div id="div1_td">
                     <div id="div1" class="roundCornerSlight">
                         <div id="div13">
-                            {{> (costs_table CC) }}                        
+                            {{> (costs_table CC) }}
                         </div>
                         <div id="br3">
                             <br>
@@ -200,5 +200,4 @@
     <script>{{> Globals.js }}</script>
 </body>
 </html>
-
 
