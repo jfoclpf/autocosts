@@ -3,8 +3,40 @@
 
 module.exports = {
     
-    //Root directory of the main project
-    //command to get ROOT_DIR might vary according to the applica 
+    //change accordingly
+    getSettings: function(){    
+        
+        //SLS HTTPS
+        //false for simple http always, 
+        //true for https when requested, only set to true when SSL is available
+        const IS_HTTPS = true; 
+        
+        //Content delivery network
+        const IS_CDN = false; 
+        //CDN configuration at https://app.keycdn.com/zones
+        //CDN provider: https://app.keycdn.com/zones
+        const CDN_URL_PROD = "https://cdn.autocosts.info"+"/"; //preserve the bar "/" at the end
+        const CDN_URL_WORK = "http://cdn.autocosts.work"+"/";  //preserve the bar "/" at the end
+        
+        //Default Country when any possible method to get country isn't available
+        const DefaultCC = "UK"; //when no other method finds the country of user, use this by default 
+        
+        var Obj = {
+            "IS_HTTPS": IS_HTTPS,
+            "CDN": {
+                "IS_CDN": IS_CDN,
+                "URL_PROD": CDN_URL_PROD,
+                "URL_WORK": CDN_URL_WORK       
+                },
+            "DefaultCC": DefaultCC
+            };        
+        
+        return Obj;
+    },    
+    
+    //Root directory of the main project's root directory
+    //command to get ROOT_DIR might vary according to the application (nodeJS or PhantomJS), therefore parsed here
+    //change vars accordingly
     getDirs : function(ROOT_DIR){
         /*Always leave the traling slash at the end on each directory*/                
 
@@ -41,9 +73,17 @@ module.exports = {
     
     getRelease: function(process){
         return _getRelease(process);
+    },
+    
+    getUniqueArray: function(Arr){
+        return _getUniqueArray(Arr);
+    },
+    
+    getKeyByValue: function(object, value){
+        return _getKeyByValue(object, value);
     }
  
-}
+};
 
 /***************************************************************************************************/
 /***************************************************************************************************/
@@ -108,3 +148,25 @@ function _getRelease(process){
     
     return REL;
 }
+
+//gets Array with unique non-repeated values
+//ex: [2,2,3,4,4] returns [2,3,4]
+function _getUniqueArray(Arr){
+    var newArr = (Object.values(Arr)).
+        filter(function(x, i, a){ 
+            return a.indexOf(x) == i
+        });
+    
+    return newArr;
+}
+
+//get Key by Value, ex: var hash = {foo: 1, bar: 2}; getKeyByValue(hash, 2); => 'bar' 
+function _getKeyByValue(object, value) {
+    var key = Object.keys(object).
+        find(function(key){ 
+            return object[key] === value
+        });
+    
+    return key;
+}
+
