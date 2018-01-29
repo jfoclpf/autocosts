@@ -111,6 +111,9 @@ module.exports = {
             default: 
                 return "error";
         }
-    }   
+    },
+    get2letterLangCode(langCode){
+        return langCode.substr(0, 2);
+    }
 }
 

@@ -101,6 +101,12 @@ app.get('/list', function(req, res) {
     list(req, res, GlobData, WORDS);
 });
 
+/*sitemap.xml for Search Engines optimization*/
+app.get('/sitemap.xml', function(req, res) {
+    console.log("\nRoute: app.get('/sitemap.xml')");
+    sitemap(req, res, GlobData, WORDS);
+});
+
 app.get('/getUBER/:CC', function(req, res) {
     console.log("\nRoute: app.get('/getUBER')");
     getUBER(req, res, GlobData);
