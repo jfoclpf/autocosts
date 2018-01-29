@@ -5,17 +5,6 @@
 **                                             **
 ************************************************/
 
-//change accordingly
-const IS_HTTPS = true; //false for simple http
-const IS_CDN = false; //Content delivery network
-//CDN configuration at https://app.keycdn.com/zones
-//CDN provider: https://app.keycdn.com/zones
-const CDN_URL_PROD = "https://cdn.autocosts.info"+"/"; //preserve the bar "/" at the end
-const CDN_URL_WORK = "http://cdn.autocosts.work"+"/";  //preserve the bar "/" at the end
-const DefaultCC = "UK"; //when no other method finds the country of user, use this by default
-//###############################################################################
-//###############################################################################
-
 console.log("\n\nServer started at " + __dirname);
 
 //check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
@@ -38,57 +27,41 @@ const getCC           = require(__dirname + '/server/getCC');
 const getUBER         = require(__dirname + '/server/getUBER');
 const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
 const list            = require(__dirname + '/server/list');
+const sitemap         = require(__dirname + '/server/sitemap');
 
+//Deals with directories, some dirs are got from commons.js
+//other dirs are got directly here in this script
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
-const INDEX_DIR = __dirname + "/"; //directory where the index.js is located
-
-//Main directories got from commons
+const INDEX_DIR = __dirname + "/"; //directory where this script index.js is located
+const clientDir = 'client/'; //directory with respect to src/ dir, where the client JS browser files will be stored
 var Dirs = commons.getDirs(ROOT_DIR);
-var SRC_DIR       = Dirs.SRC_DIR;
+Dirs.ROOT_DIR = ROOT_DIR;   //parent directory of main project directory tree
+Dirs.INDEX_DIR = INDEX_DIR; //directory where the index.js file is located
+Dirs.clientDir = clientDir; //directory with respect to src/ dir, where the client JS files will be stored
 
-const clientDir = 'client/'; //directory with respect to src/ dir, where the client JS flies will be stored
-
-var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
-
-//selects CDN_URL Global variable, in case the CDN is used
-var CDN_URL;
-if(IS_CDN){
-    if(url.isThisATest(req)){
-        CDN_URL = CDN_URL_WORK;
-    }
-    else{
-        CDN_URL = CDN_URL_PROD;
-    }
-}
-else{
-    CDN_URL = "";
-}
-console.log("CDN_URL: " + CDN_URL);
+const Settings = commons.getSettings();
+const REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
 const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));
 const GlobData = {
     "REL"           : REL,       //Release: "work" or "prod"
-    "ROOT_DIR"      : ROOT_DIR,  //parent directory of main project directory tree
-    "INDEX_DIR"     : INDEX_DIR, //directory where the index.js fiel is located
-    "SRC_DIR"       : SRC_DIR,   //parent directory of source code directory (normally "/src")
-    "DefaultCC"     : DefaultCC, //default Country, changed on the top of the code
-    "clientDir"     : clientDir, //directory with respect to src/ dir, where the client JS flies will be stored
+    "Settings"      : Settings,  //Settings set in commons.js
+    "Dirs"          : Dirs,      //Directories set in commons.js
     "available_CT"  : sortObj(CountriesInfo.available_CT), //Array of alphabetically sorted available Countries
     "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
-    "domains"       : (Object.values(CountriesInfo.domains_CT)).filter((x, i, a) => a.indexOf(x) == i), //Array of Unique Domains
-    "CDN_URL"       : CDN_URL,
-    "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')), //include credentials object
-    "IS_HTTPS"      : IS_HTTPS  //changed on the top of the code
+    "domains"       : commons.getUniqueArray(CountriesInfo.domains_CT), //Array of Unique Domains
+    "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')) //include credentials object
 };
+//console.log(GlobData);
 
 //creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in GlobData.available_CT){
-    WORDS[CC] = JSON.parse(fs.readFileSync(GlobData.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
-    WORDS[CC].languageCode = GlobData.available_CT[CC];
+    WORDS[CC] = JSON.parse(fs.readFileSync(GlobData.Dirs.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
+    WORDS[CC].languageCode = GlobData.languages_CT[CC];
     WORDS[CC].domain = GlobData.domains_CT[CC];    
 }
 
