@@ -38,10 +38,10 @@ var clientDir = '{{{ clientDir }}}';
 
 var WORDS = JSON.parse('{{{ jsonEscap Words }}}');
 
-var INITIAL_TEX = '{{{ initial_text }}}';
+var INITIAL_TEX = '{{{ escapeStr Words.initial_text }}}';
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
-var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY; 
+var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
 
 /*it may be changed accordingly*/
 var LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
@@ -49,7 +49,7 @@ var STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statist
 var STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
 
 /*Location of Javascript Files, it may be changed accordingly*/
-var rootClientURL = CDN_URL + clientDir; 
+var rootClientURL = CDN_URL + clientDir;
 var JS_FILES = {
     Google : {
         rgbcolor : "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js",  /*RGB color parser in JavaScript*/
@@ -57,9 +57,9 @@ var JS_FILES = {
         recaptchaAPI : "https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE,
         chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
-    
+
     initialize :          rootClientURL + "initialize.js",
-    documentFunctions :   rootClientURL + "documentFunctions.js",    
+    documentFunctions :   rootClientURL + "documentFunctions.js",
     formFunctions :       rootClientURL + "formFunctions.js",
     validateForm :        rootClientURL + "validateForm.js",
     charts :              rootClientURL + "charts.js",
@@ -67,15 +67,15 @@ var JS_FILES = {
     conversionFunctions : rootClientURL + "conversionFunctions.js",
     coreFunctions :       rootClientURL + "core/coreFunctions.js",
     getData :             rootClientURL + "getData.js",
-    printResults :        rootClientURL + "printResults.js",    
+    printResults :        rootClientURL + "printResults.js",
     print :               rootClientURL + "print.js",
-    dbFunctions :         rootClientURL + "dbFunctions.js",    
-    
+    dbFunctions :         rootClientURL + "dbFunctions.js",
+
     jQuery : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
     jTimer : rootClientURL + "jquery/js_timer.js",
 
     PDF : {
-        pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",        
+        pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
         generatePDF :     rootClientURL + "pdf/generatePDF.js",
         vfs_fonts :       "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
         vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
@@ -163,11 +163,9 @@ var SERVICE_AVAILABILITY = {
             }
         };
         head.appendChild(script);
-    }    
+    }
     getScript(JS_FILES.jQuery,function(){
         getScript(JS_FILES.initialize, function(){});
     });
 })();
-
-
 
