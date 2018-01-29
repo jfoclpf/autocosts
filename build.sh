@@ -202,14 +202,13 @@ do
             echo " merging css files"
             mkdir merged-min/
             cat main.css central.css form.css left.css right.css header.css flags.css mobile.css > merged-min/merged1.css.hbs
-            cat jAlert.css results.css > merged-min/merged2.css
-            rm *.css            
+            cat jAlert.css results.css > merged-min/merged2.css             
             cd ..
 
             #minification of html files
             printf "\n    Minifying handlebars HTML template files in build/ \n\n"
             find views/ \
-                -name "*.hbs" \
+                -name "*.hbs" ! -name "sitemap.hbs" \
                 -type f \
                 -exec echo {} \;  \
                 -exec html-minifier --ignore-custom-fragments "/{{[{]?(.*?)[}]?}}/" --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
