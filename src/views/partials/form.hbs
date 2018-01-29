@@ -156,7 +156,7 @@
             <td>
                 {{{inspection_nbmr_times}}}
             </td>
-            <td>              
+            <td>
                 <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" />
                 {{{word_times}}}
             </td>
@@ -268,7 +268,7 @@
                 </td>
             </tr>
         </table>
-        <div id="div_car_job_yes_form2"> 
+        <div id="div_car_job_yes_form2">
             <table>
                 <tr>
                     <td>
@@ -461,7 +461,7 @@
                 <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" />
                 {{{curr_symbol}}}
                 {{{word_per}}}
-                
+
                 <select class="time_period" id="tickets_period_select"></select>
             </td>
         </tr>
@@ -479,7 +479,6 @@
                 <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6" />
                 {{{curr_symbol}}}
                 {{{word_per}}}
-                
                 <select class="time_period" id="washing_period_select"></select>
             </td>
         </tr>
@@ -661,14 +660,14 @@
                             {{{extra_data_working_time_question}}}
                             <br>
                             <span class="nowrap">
-                                <input type="radio" name="radio_work_time" 
+                                <input type="radio" name="radio_work_time"
                                        id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
                                 <span>
                                     {{{yes}}}
                                 </span>
                             </span>
                             <span class="nowrap">
-                                <input type="radio" name="radio_work_time" 
+                                <input type="radio" name="radio_work_time"
                                        id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
                                 <span>
                                     {{{no}}}
@@ -676,16 +675,15 @@
                             </span>
                         </div>
                         <div id="working_time_part2_form3">
-                            {{{extra_data_working_time}}}
-:
+                            {{{extra_data_working_time}}}:                                        
                         </div>
                     </td>
                     <td>
                         <div id="working_time_input_form3" class="div_element">
-                            <input type="number" min="1" max="12" step="1" 
+                            <input type="number" min="1" max="12" step="1"
                                    id="time_month_per_year" name="time_month_per_year" size="6" />
                             {{{months}}}/{{{year}}}
-                            <input type="number" min="1" max="168" step="Any" 
+                            <input type="number" min="1" max="168" step="Any"
                                    id="time_hours_per_week" name="time_hours_per_week" size="6" />
                             {{{hours}}}/{{{week}}}
                         </div>
@@ -709,7 +707,7 @@
                     </td>
                     <td>
                         <span class="nowrap">
-                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" 
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3"
                                    value="true" onchange="driveToJob(true);">
                             <span class="set_right_margin">
                                 {{{yes}}}
@@ -730,7 +728,7 @@
                         &nbsp;
                     </td>
                     <td>
-                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" 
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week"
                                name="drive_to_work_days_per_week" size="5" />
                         {{{days_per_week_short}}}
                     </td>
@@ -763,10 +761,10 @@
                     </td>
                     <td>
                         <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4" />
-                        
+
                         {{{std_dist}}}
                         {{{word_per}}}
-                        
+
                         <select class="time_period" id="period_km"></select>
                     </td>
                 </tr>
@@ -814,7 +812,7 @@
     <div class="b-bottom">
         <button id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)">
             &laquo;
-        </button>            
+        </button>
         <!--Run button-->
         <div id="run_button_div">
             <button id="run_button" class="button">
@@ -828,3 +826,4 @@
 
     </div>
 <!-- end of form_part3-->
+
