@@ -1,11 +1,14 @@
-/*PhantomJS script (not node script, but PhantomJS script) 
+/*PhantomJS script (not node script, but PhantomJS script)
 which converts table costs HTML.hbs files into correspondent table costs jpg images*/
 
 var fs = require('fs');
-var commons  = require('../commons.js');
 
-var ROOT_DIR = fs.absolute("../") + "/";
+var commonsJSFile = fs.absolute("../") + "commons.js";
+var commons  = require(commonsJSFile);
+
+var ROOT_DIR = fs.absolute("../");
 var Dirs = commons.getDirs(ROOT_DIR);
+
 var TABLES_DIR  = Dirs.TABLES_DIR;
 var BUILD_DIR   = Dirs.BUILD_DIR;
 
@@ -23,7 +26,7 @@ function render_pages(){
     for(var x = 0, n = 0; x < list.length; x++){
       // Note: If you didn't end path with a slash, you need to do so here.
         var file_name = list[x];
-        var file_path = TABLES_DIR + file_name;        
+        var file_path = TABLES_DIR + file_name;
         //it must be a file with the format of XX.html
         if(fs.isFile(file_path) && (file_name.split("."))[1]=="hbs" ){
             //console.log("Creating page");
