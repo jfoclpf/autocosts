@@ -5,23 +5,9 @@ This calculator allows users to find the true cost of owning a car. It will norm
 
 This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
 
-### How to install
-
-You will need some `apt-get` software for command line image rendering and compression (done upon build)<br>
-`sudo apt-get install imagemagick phantomjs`
-
-You will also may need some `npm` global packages for code compression and syntax verification (done upon build)<br>
-`sudo npm install uglifycss uglify-js html-minifier jshint -g`
-
-Clone it and install it<br>
-`git clone https://github.com/jfoclpf/autocosts.git`<br>
-`cd autocosts/ && npm install`
-
-### Website
+## Website
 https://autocosts.info<br>
 Playground: https://autocosts.info/XX 
-
-The directory that corresponds to the website public HTML is `build/`. This directory is built upon installation. For more information run `./build.sh -h`.
 
 ### The list of available countries
 https://autocustos.info/list
@@ -32,8 +18,23 @@ The list of available countries is from the file `src/countries/list.json`
 ### The registered associated domains
 https://autocosts.info/domains
 
+
+## How to install
+
+You may need some `npm` global packages for code compression and syntax verification (done upon build)<br>
+`sudo npm install uglifycss uglify-js html-minifier jshint -g`
+
+Clone it and install it<br>
+`git clone https://github.com/jfoclpf/autocosts.git`<br>
+`cd autocosts/ && npm install`
+
+
+The directory that corresponds to the website public HTML is `build/`. This directory is built upon installation. For more information run `./build.sh -h`.
+
+
+
 ## Available services
-The available services are defined in the global `SWITCH` JS object in the file `Globals.js`
+The available services are defined in the global `SWITCH` JS object in the file `src/client/Globals.js`
 
 ## Android APP<br>
 
