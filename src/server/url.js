@@ -88,6 +88,10 @@ module.exports = {
     
     isThisLocalhost: function(req){
         return isThisLocalhost(req);
+    },
+    
+    getValidURL: function(req, domains_CT, IS_HTTPS){ //returns full URL
+        return getValidURL(req, domains_CT, IS_HTTPS);
     }
 };
 
