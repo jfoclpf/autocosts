@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>
+            List of Countries for the Automobile Costs Calculator
+        </title>
+        <style>
+            body {
+                font-family: Arial;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid grey;
+                padding: 4px;
+            }          
+        </style>
+    </head>
+<body>
+
+<h1 style="text-align:center">
+    List of Countries for the Automobile Costs Calculator
+</h1>
+
+<div style="width:100%">
+    <table style="margin: 0 auto">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                CC
+            </th>
+            <th>
+                Language
+            </th>        
+            <th>
+                Main domain
+            </th>
+            <th>
+                Curr. code
+            </th>
+            <th>
+                Currency name
+            </th>
+            <th>
+                Curr. symbol
+            </th>
+            <th>
+                Fuel efficiency
+            </th>
+            <th>
+                Standard distance
+            </th>
+            <th>
+                Fuel volume
+            </th>
+            <th>
+                Costs
+            </th>        
+        </tr>
+        
+        {{#each WORDS as |Country CC|}}
+            <tr>
+            <td>{{@index}}</td>
+            <td>{{{Country.country_name}}}</td>
+            <td>{{{CC}}}</td>
+            <td style="text-align:center"> {{{Country.languageCode}}} </td>
+            <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
+            <td style="text-align:center">{{{Country.curr_code}}}</td>
+            <td>{{{Country.curr_name}}}</td>
+            <td style="text-align:center">{{{Country.curr_symbol}}}</td>   
+            <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
+            <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
+            <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
+            <td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
+            </tr>
+        {{/each}}
+        
+    </table>
+</div>
+<br><br>
+</body>
+</html>            

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forms for RO</title>
+</head>
+<body>
+<div class="form_part" id="form_part1">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    COSTURI FIXE                </b>
+            </h2>
+            <h4>
+                Acelea care nu depind de distanţa parcursă, şi pentru care trebuie să plătiţi pentru a avea maşina disponibilă pentru circulaţie.            </h4>
+        </header>
+    </div>
+    <!--************************** DEPRECIATION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Deprecierea vehiculului        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Data de achiziţie a maşinii            </td>
+            <td id="depr_input_td">
+                <input type="number" min="1" max="12" step="1" id="acquisitionMonth" name="acquisitionMonth" size="3" value="01">
+                &#8209;<!--non breakable hyphen-->
+                <input type="number" min="1910" step="1" id="acquisitionYear" name="acquisitionYear" size="6" value="2000">
+            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Valoarea comercială a maşinii la cumpărare<br><i> dacă este nouă, preţul plătit pentru maşină<br> dacă este o maşină second-hand, valoarea comercială a maşinii la momentul achiziţiei</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput" name="commercialValueAtAcquisition" size="10" value="">
+                lei            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Valoarea comercială a maşinii astăzi<br><i> dacă o vindeţi acum, cât de mult aţi obţine pe ea?</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput" name="commercialValueAtNow" size="10" value="">
+                lei            </td>
+        </tr>
+    </table>
+    <!--************************** INSURANCE ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Asigurarea autovehiculului şi asistenţa tehnică        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="mensal">
+                    <span>
+                        lunar                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="trimestral">
+                    <span>
+                        trimestrial                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="semestral">
+                    <span>
+                        semestrial                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="anual">
+                    <span>
+                        anual                    </span>
+                </div>
+            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput" name="insuranceValue" size="9"
+                    value="">
+                lei            </td>
+        </tr>
+    </table>
+    <!--************************** CREDIT ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Finanţare maşină        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Aţi folosit o metodă de finanţare a maşinii pentru achiziţia acesteia?            </td>
+            <td>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <span class="set_right_margin">
+                        da                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <span>
+                        nu                    </span>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div id="sim_credDiv">
+        <table>
+            <tr>
+                <td>
+                    Suma împrumutată:<br><i>Care este valoarea împrumutului efectuat?</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput" name="borrowedAmount" size="9" value="">
+                    lei                </td>
+            </tr>
+            <tr>
+                <td>
+                    Perioada de creditare / numărul de rate plăţi credit                </td>
+                <td>
+                    <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" size="9" value="">
+                    luni                </td>
+            </tr>
+            <tr>
+                <td>
+                    Valoarea medie pentru fiecare rată de achitat                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput" name="amountInstallment" size="9" value="">
+                    lei/lună                </td>
+            </tr>
+            <tr>
+                <td>
+                    Valoarea reziduală:<br><i>La sfărşitul perioadei de credit, cât de mult mai trebuie să plătiţi sau aţi achitat?</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput" name="residualValue" size="9" value="">
+                    lei                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** INSPECTION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Inspecţia tehnică a maşinii (ITP)        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                De câte ori aţi dus maşina la inspecţie?            </td>
+            <td>              
+                <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" value="">
+                ori            </td>
+        </tr>
+        <tr id="InspectionCost_tr">
+            <td>
+                Costul mediu pentru fiecare inspecţie a automobilului            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput" name="averageInspectionCost" size="6" value="">
+                lei            </td>
+        </tr>
+    </table>
+    <!--************************** ROAD TAX ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Taxe şi accize pentru vehicul (Taxe auto)        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Taxe auto pentru vehiculul dumneavoastră:<br><i> plată efectuată către stat</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput" name="roadTaxes" size="6" value="">
+                lei/an            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <span class="step">1/3</span>
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
+            value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part1-->
+<div class="form_part" id="form_part2">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    COSTURI MOBILE                </b>
+            </h2>
+            <h4>
+                Acelea care depind de distanţa parcursă            </h4>
+        </header>
+    </div>
+    <!--************************** FUELS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Combustibil        </span>
+    </h3>
+    <table>
+        <tr>
+            <td rowspan="2">
+                Benzină, motorină, LPG, electricitate            </td>
+            <td>
+                Calculations based on:                 <br>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                    <span class="set_right_margin">
+                        km                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                    <span>
+                        Lei                    </span>
+                </span>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="currency_div_form2">
+                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput"
+                        value="" name="combustiveis_euro">
+                    <span class="nowrap">
+                        lei pe                    </span>
+                    <select id="combustiveis_periodo_euro">
+                        <option value="1">lună</option>
+                        <option value="2">două luni</option>
+                        <option value="3">trimestru</option>
+                        <option value="4">semestru</option>
+                        <option value="5">an</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="distance_div_form2">
+        <table>
+            <tr>
+                <td>
+                    Circulaţi cu maşina la servici?                </td>
+                <td>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <span class="set_right_margin">
+                            da                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <span>
+                            nu                        </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div id="div_car_job_yes_form2"> 
+            <table>
+                <tr>
+                    <td>
+                        Zi(le) pe săptămână  când conduceţi pentru a merge la servici                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" value="">
+                        zile/săptămâni                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Kilometri parcurşi între casă şi locul de muncă (doar dus)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="">
+                        km                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Kilometri parcurşi în medie în zilele în care nu vă duceţi cu maşina la servici:<br><i>de exemplu, în fiecare săptămână</i>&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" value="">
+                        km                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="div_car_job_no_form2">
+            <table>
+                <tr>
+                    <td>
+                        Kilometri parcurşi                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" value="">
+                        km&nbsp;pe                        <select id="combustivel_period_km">
+                            <option value="1">lună</option>
+                            <option value="2">două luni</option>
+                            <option value="3">trimestru</option>
+                            <option value="4">semestru</option>
+                            <option value="5">an</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    Eficienţa consumului de combustibil la autovehiculul dumneavoastră                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" value="">
+                    l/100km                </td>
+            </tr>
+            <tr>
+                <td>
+                    Preţul mediu pe care îl plătiţi pentru combustibil                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="">
+                    lei/ltr                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** MAINTENANCE  ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Întreţinere        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Costul mediu de întreţinere şi asistenţă tehnică:<br><i>înlocuirea uleiului, filtre, lumini, anvelope, frâne, aer condiţionat, controlul direcţiei, etc.</i>                <br>
+            </td>
+            <td class="va-middle">
+                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput"
+                       value="">
+                lei/an            </td>
+        </tr>
+    </table>
+    <!--************************** REPAIRS AND IMPROVEMENTS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Reparaţii şi îmbunătăţiri        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Costul mediu al reparaţiilor şi îmbunătăţirilor:<br><i>piese auto, modificări, reparaţii pentru probleme tehnice, ciocniri, coliziuni, tuning, etc.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                       value="">
+                lei/an            </td>
+        </tr>
+    </table>
+    <!--************************** PARKING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Parcare        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Costul mediu cu parcarea autovehiculului:<br><i> taxatoare de parcare în oraş, închirierea unui spaţiu de parcare, loturi de parcare subterane sau supraterane în clădiri publice, centre de cumpărături, aeroporturi, staţii de autobuz sau tren sau orice alte infrastructuri asemenea.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput"
+                       value="">
+                lei/lună            </td>
+        </tr>
+    </table>
+    <!--************************** TOLLS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Taxe de drum        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Suma medie cheltuită cu taxele de drum <br><i>porturi, tunele, autostrăzi sau taxe de congestie pentru a accesa centrul oraşului</i>            </td>
+            <td>
+                Calculaţi în funcţie de zi?                <div>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <span class="set_right_margin">
+                            da                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <span>
+                            nu                        </span>
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- Calculating tolls on a no daily basis -->
+    <div id="daily_tolls_false_div">
+        <table>
+            <tr>
+                <td>
+                    <i>
+                        Luaţi în considerare chiar şi cele mai rare călătorii efectuate în afara oraşului sau la ţară, sau chitanţele pentru orice fel de metodă de colectare a taxelor de drum                    </i>
+                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
+                           value="">
+                    lei pe                    <select id="tolls_period_select">
+                        <option value="1">lună</option>
+                        <option value="2">două luni</option>
+                        <option value="3">trimestru</option>
+                        <option value="4">semestru</option>
+                        <option value="5">an</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Calculating tolls on a daily basis -->
+    <div id="daily_tolls_true_div">
+        <table>
+            <tr>
+                <td>
+                    Suma zilnică cheltuită cu taxele de drum                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
+                           value="">
+                    lei în timpul                    <br>
+                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" 
+                           value="">
+                    zile pe lună                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** FINES / TICKETS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Amenzi        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Suma medie achitată pe amenzi:<br><i> luaţi în considerare cât de mult aţi plătit în ultimii ani pe orice fel de amenzi în trafic (parcare ilegală, depăşirea nepermisă a vitezei, utilizarea greşită a telefonului mobil în timpul conducerii automobilului, etc.)</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
+                       value="">
+                lei pe                <select id="tickets_period_select">
+                    <option value="1">lună</option>
+                    <option value="2">două luni</option>
+                    <option value="3">trimestru</option>
+                    <option value="4">semestru</option>
+                    <option value="5">an</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <!--************************** WASHING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Spălare şi curăţare        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Suma cheltuită în medie pentru spălarea şi îngrijirea maşinii:<br><i> în service-urile special amenajate sau în alte locuri</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6"
+                       value="">
+                lei pe                <select id="washing_period_select">
+                    <option value="1">lună</option>
+                    <option value="2">două luni</option>
+                    <option value="3">trimestru</option>
+                    <option value="4">semestru</option>
+                    <option value="5">an</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
+        <span class="step">2/3</span>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part2-->
+<!--************************** DADOS ADICIONAIS ***************************************************-->
+<div class="form_part" id="form_part3">
+
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                DATE ADIŢIONALE            </h2>
+        </header>
+    </div>
+
+    <!-- PUBLIC TRANSPORTS SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Costuri echivalente de transport, luând în considerare că nu deţineţi o maşină?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider1" name="slider1" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- FINANCIAL EFFORT SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Efort financiar?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider2" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- PUBLIC TRANSPORTS SECTION -->
+    <div id="public_transp_Div_form3">
+    <span class="form_section_title">
+        Public transports    </span>
+    <table>
+        <tr>
+            <td>
+                Cât de multe persoane peste vârsta de 4 ani se află în familia dumneavoastră (inclusiv dumneavoastră)            </td>
+            <td>
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6"
+                       value="">
+                oameni            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                Care este preţul mediu pe persoană pentru utilizarea transportului public, lunar, în mod obişnuit <br><i>dacă transportul public nu se aplică pentru dumneavoastră, inseraţi 0</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6"
+                       value="">
+                lei            </td>
+        </tr>
+    </table>
+    </div>
+    <!-- EOF PUBLIC TRANSPORTS SECTION -->
+
+
+    <!-- FINANCIAL EFFORT SECTION -->
+    <div id="fin_effort_Div_form3">
+        <span class="form_section_title">
+            Venit        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="income_div_form3">
+                        Care este venitul dvs. net?                        <br/>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
+                            <span>
+                                pe an                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
+                            <span>
+                                pe lună                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
+                            <span>
+                                pe săptămână                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
+                            <span>
+                                pe oră                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="income_per_year_form3" class="div_element">
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6"
+                               value=""/>
+                        lei/an                    </div>
+                    <div id="income_per_month_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                               value=""/>
+                        lei/lună ori                        <br>
+                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
+                               value=""/>
+                        luni/an                    </div>
+                    <div id="income_per_week_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
+                               value=""/>
+                        lei/săptămână ori                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
+                               value=""/>
+                        săptămâni/an                    </div>
+                    <div id="income_per_hour_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                               value=""/>
+                        lei/oră ori                        <br>
+                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                               value=""/>
+                        ore/săptămână ori                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                               value=""/>
+                        săptămâni/an                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--********************************************************************** -->
+        <div id="working_time_form3">
+            <span class="form_section_title">
+                Timp de lucru            </span>
+            <table>
+                <tr>
+                    <td>
+                        <div id="working_time_part1_form3">
+                            <br>
+                            Aveţi un loc de muncă sau o ocupaţie lucrativă?                            <br>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
+                                <span>
+                                    da                                </span>
+                            </span>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
+                                <span>
+                                    nu                                </span>
+                            </span>
+                        </div>
+                        <div id="working_time_part2_form3">
+                            Timp de lucru:
+                        </div>
+                    </td>
+                    <td>
+                        <div id="working_time_input_form3" class="div_element">
+                            <input type="number" min="1" max="12" step="1" id="time_month_per_year" name="time_month_per_year" size="6"
+                                value=""/>
+                            luni/an                            <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" name="time_hours_per_week" size="6"
+                                value=""/>
+                            ore/săptămână                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- EOF FINANCIAL EFFORT SECTION -->
+
+    <!-- DISTANCE ||| TIME SPENT IN DRIVING ||| SECTION -->
+    <div id="distance_time_spent_driving_form3">
+        <div id="distance_form3">
+            <span class="form_section_title">
+                Distance            </span>
+            <table>
+                <tr>
+                    <td>
+                        Circulaţi cu maşina la servici?                    </td>
+                    <td>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
+                                   onchange="driveToJob(true);">
+                            <span class="set_right_margin">
+                                da                            </span>
+                        </span>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
+                                   onchange="driveToJob(false);" checked >
+                            <span>
+                                nu                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Zi(le) pe săptămână  când conduceţi pentru a merge la servici&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" size="5"
+                               value="">
+                        zile/săptămâni                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Kilometri parcurşi între casă şi locul de muncă (doar dus)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Kilometri parcurşi în medie în zilele în care nu vă duceţi cu maşina la servici:<br><i>de exemplu, în fiecare săptămână</i>&nbsp;
+                    </td>
+                    <td class="ta-left">
+                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr id="car_no_job_distance_form3">
+                    <td>
+                        Kilometri parcurşi                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4"
+                            value="">
+                        km pe                        <select id="period_km">
+                            <option value="1">lună</option>
+                            <option value="2">două luni</option>
+                            <option value="3">trimestru</option>
+                            <option value="4">semestru</option>
+                            <option value="5">an</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--********************************************************************** -->
+        <span class="form_section_title">
+            Timp petrecut la volan        </span>
+        <table>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Câte minute călătoriţi cu maşina de acasă la locul de muncă? (doar dus)                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job"
+                           value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Câte minute călătoriţi cu maşina în zilele în care nu mergeţi cu maşina la locul de muncă?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part2_form3">
+                <td>
+                    Câte minute călătoriţi cu maşina?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                        value=""/>
+                    minute/zi                    <br>
+                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                        value=""/>
+                    zile/lună                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="b-bottom">
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>
+        <!--Run button-->
+        <div id="run_button_div">
+            <input id="run_button" class="button" type="submit" onclick="Run1()" value="Rulaţi"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="Rulaţi"/>
+        </div>
+    </div>
+
+    </div>
+<!-- end of form_part3-->
+</body>
+</html>
