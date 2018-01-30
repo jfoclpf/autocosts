@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forms for PL</title>
+</head>
+<body>
+<div class="form_part" id="form_part1">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    KOSZTY STAŁE                </b>
+            </h2>
+            <h4>
+                Koszty niezależne od pokonywanych odległości, które właściciel musi ponieść aby samochód nadawał się do jazdy            </h4>
+        </header>
+    </div>
+    <!--************************** DEPRECIATION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Utrata wartości pojazdu        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Data nabycia pojazdu            </td>
+            <td id="depr_input_td">
+                <input type="number" min="1" max="12" step="1" id="acquisitionMonth" name="acquisitionMonth" size="3" value="01">
+                &#8209;<!--non breakable hyphen-->
+                <input type="number" min="1910" step="1" id="acquisitionYear" name="acquisitionYear" size="6" value="2000">
+            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Wartość handlowa samochodu w momencie jego zakupu<br><i>jeśli nowy, cena jaką zapłaciłeś/aś za samochód<br>jeśli używany, wartość handlowa samochodu w momencie jego nabycia</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput" name="commercialValueAtAcquisition" size="10" value="">
+                zł            </td>
+        </tr>
+        <tr>
+            <td class="p2">
+                Aktualna wartość handlowa samochodu<br><i>jeśli chciałbyś/chciałabyś go teraz sprzedać, ile za niego dostaniesz?</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput" name="commercialValueAtNow" size="10" value="">
+                zł            </td>
+        </tr>
+    </table>
+    <!--************************** INSURANCE ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Ubezpieczenie pojazdu        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="mensal">
+                    <span>
+                        miesięcznie                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="trimestral">
+                    <span>
+                        kwartalnie                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="semestral">
+                    <span>
+                        półrocznie                    </span>
+                </div>
+                <div class="col">
+                    <input type="radio" name="insurancePaymentPeriod" value="anual">
+                    <span>
+                        rocznie                    </span>
+                </div>
+            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput" name="insuranceValue" size="9"
+                    value="">
+                zł            </td>
+        </tr>
+    </table>
+    <!--************************** CREDIT ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Kredyt samochodowy        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Czy korzystałeś/aś z kredytu samochodowego w celu nabycia pojazdu?            </td>
+            <td>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <span class="set_right_margin">
+                        tak                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="no_left_margin" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <span>
+                        nie                    </span>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div id="sim_credDiv">
+        <table>
+            <tr>
+                <td>
+                    Kwota kredytu:<br><i>Ile pożyczyłeś/aś?</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput" name="borrowedAmount" size="9" value="">
+                    zł                </td>
+            </tr>
+            <tr>
+                <td>
+                    Okres kredytu / liczba rat                </td>
+                <td>
+                    <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" size="9" value="">
+                    miesiące(ęcy)                </td>
+            </tr>
+            <tr>
+                <td>
+                    Przeciętna kwota każdej raty                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput" name="amountInstallment" size="9" value="">
+                    zł/miesiąc                </td>
+            </tr>
+            <tr>
+                <td>
+                    Wartość końcowa:<br><i>Na koniec okresu kredytowania, ile musisz jeszcze zapłacić lub zapłaciłeś/aś?</i>                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput" name="residualValue" size="9" value="">
+                    zł                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** INSPECTION ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Badanie techniczne pojazdu        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Ile razy zleciłeś/aś badanie techniczne swojego pojazdu?            </td>
+            <td>              
+                <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" size="6" value="">
+                razy            </td>
+        </tr>
+        <tr id="InspectionCost_tr">
+            <td>
+                Średni koszt każdego z badań technicznych            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput" name="averageInspectionCost" size="6" value="">
+                zł            </td>
+        </tr>
+    </table>
+    <!--************************** ROAD TAX ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Podatek drogowy        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Podatek drogowy od Twojego samochodu:<br><i>płatność na rzecz państwa</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput" name="roadTaxes" size="6" value="">
+                zł/rok            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <span class="step">1/3</span>
+        <input id="form_part1_button_next" class="button" type="button" onclick="openForm_part(1, 2);"
+            value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part1-->
+<div class="form_part" id="form_part2">
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                <b>
+                    KOSZTY BIEŻĄCE                </b>
+            </h2>
+            <h4>
+                Koszty zależne od pokonywanych odległości            </h4>
+        </header>
+    </div>
+    <!--************************** FUELS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Paliwo        </span>
+    </h3>
+    <table>
+        <tr>
+            <td rowspan="2">
+                Benzyna, olej napędowy, gaz LPG, prąd            </td>
+            <td>
+                Wyliczenia w oparciu o:                 <br>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                    <span class="set_right_margin">
+                        km                    </span>
+                </span>
+                <span class="nowrap">
+                    <input type="radio" name="calc_combustiveis" class="no_left_margin" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                    <span>
+                        złotych                    </span>
+                </span>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="currency_div_form2">
+                    <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput"
+                        value="" name="combustiveis_euro">
+                    <span class="nowrap">
+                        zł na                    </span>
+                    <select id="combustiveis_periodo_euro">
+                        <option value="1">miesiąc</option>
+                        <option value="2">dwa miesiące</option>
+                        <option value="3">kwartał</option>
+                        <option value="4">półrocze</option>
+                        <option value="5">rok</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="distance_div_form2">
+        <table>
+            <tr>
+                <td>
+                    Zakładając, że dojeżdżasz do pracy?                </td>
+                <td>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <span class="set_right_margin">
+                            tak                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <span>
+                            nie                        </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div id="div_car_job_yes_form2"> 
+            <table>
+                <tr>
+                    <td>
+                        Liczba dni w tygodniu, gdy dojeżdżasz do pracy                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="car_to_work_number_days_week" name="dias_por_semana" size="5" value="">
+                         dni / tydzień                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        Odległość między domem a miejscem pracy, jaką pokonujesz (w jedną stronę)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" name="km_entre_casa_trabalho" size="5" value="">
+                        km                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Dystans, jaki przeciętnie pokonujesz w dni, kiedy nie zabierasz samochodu do pracy:<br><i>na przykład w każdy weekend</i>&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" size="5" value="">
+                        km                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="div_car_job_no_form2">
+            <table>
+                <tr>
+                    <td>
+                        Dystans, jaki pokonujesz                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" name="km_por_mes" size="4" id="no_car_to_work_distance" value="">
+                        km&nbsp;na                        <select id="combustivel_period_km">
+                            <option value="1">miesiąc</option>
+                            <option value="2">dwa miesiące</option>
+                            <option value="3">kwartał</option>
+                            <option value="4">półrocze</option>
+                            <option value="5">rok</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    Zużycie paliwa w Twoim samochodzie                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_efficiency" name="consumo_auto" size="5" value="">
+                    l/100km                </td>
+            </tr>
+            <tr>
+                <td>
+                    Średnia cena, jaką płacisz za paliwo                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput" name="fuel_price" size="5" value="">
+                    zł/l                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** MAINTENANCE  ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Przeglądy okresowe        </span>
+    </h3>
+    <table>
+        <tr>
+            <td class="p2">
+                Przeciętny koszt przeglądów i ubezpieczenia na wypadek awarii:<br><i>wymiana oleju silnikowego, filtrów, świateł, opon, hamulców, serwis klimatyzacji, regulacja układu kierowniczego, itd.</i>                <br>
+            </td>
+            <td class="va-middle">
+                <input type="number" min="0" step="Any" name="revisoes" size="6" id="maintenance" class="currencyInput"
+                       value="">
+                zł/rok            </td>
+        </tr>
+    </table>
+    <!--************************** REPAIRS AND IMPROVEMENTS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Naprawy i udoskonalenia        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Średni koszt napraw i udoskonaleń:<br><i>części samochodowe, modyfikacje, usunięcie nieprawidłowości, wgniecenia, kolizje, tuning, itp.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="reparacoes" size="6" id="repairs" class="currencyInput"
+                       value="">
+                zł/rok            </td>
+        </tr>
+    </table>
+    <!--************************** PARKING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Parkowanie        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Średni koszt parkowania samochodu:<br><i>miejskie parkometry, wynajęcie miejsca postojowego, podziemne lub naziemne parkingi w budynkach użyteczności publicznej, centrach handlowych, na lotniskach, dworcach autobusowych lub kolejowych oraz wszelkich innych tego typu miejscach.</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" name="parqueamento" size="6" id="parking" class="currencyInput"
+                       value="">
+                zł/miesiąc            </td>
+        </tr>
+    </table>
+    <!--************************** TOLLS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Opłaty drogowe        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Średnia kwota wydana na opłaty drogowe<br><i>mosty, tunele, autostrady oraz opłaty za wjazd do centrum miasta</i>            </td>
+            <td>
+                Kalkulacje dzienne?                <div>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true" onclick="tolls_daily(true);" />
+                        <span class="set_right_margin">
+                            tak                        </span>
+                    </span>
+                    <span class="nowrap">
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <span>
+                            nie                        </span>
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- Calculating tolls on a no daily basis -->
+    <div id="daily_tolls_false_div">
+        <table>
+            <tr>
+                <td>
+                    <i>
+                        Pomyśl nawet o sporadycznych wycieczkach na obrzeża miasta albo na wieś, a także o wszelkiego rodzaju miejscach elektronicznego poboru opłat, z których korzystałeś/aś                    </i>
+                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput" name="no_daily_tolls_value" size="6" 
+                           value="">
+                    zł na                    <select id="tolls_period_select">
+                        <option value="1">miesiąc</option>
+                        <option value="2">dwa miesiące</option>
+                        <option value="3">kwartał</option>
+                        <option value="4">półrocze</option>
+                        <option value="5">rok</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Calculating tolls on a daily basis -->
+    <div id="daily_tolls_true_div">
+        <table>
+            <tr>
+                <td>
+                    Dzienna kwota jaką wydajesz na opłaty drogowe                </td>
+                <td>
+                    <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput" name="daily_expense_tolls" size="6" 
+                           value="">
+                    zł w ciągu                    <br>
+                    <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" size="3" 
+                           value="">
+                    dni na miesiąc                </td>
+            </tr>
+        </table>
+    </div>
+    <!--************************** FINES / TICKETS ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Mandaty karne        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Średnia kwota wydana na mandaty karne:<br><i>pomyśl ile w ostatnich latach wydałeś/aś na jakiekolwiek mandaty (nieprawidłowe parkowanie, przekroczenie dozwolonej prędkości, korzystanie z telefonu komórkowego w czasie jazdy, itp.)</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput" name="tickets_value" size="6" 
+                       value="">
+                zł na                <select id="tickets_period_select">
+                    <option value="1">miesiąc</option>
+                    <option value="2">dwa miesiące</option>
+                    <option value="3">kwartał</option>
+                    <option value="4">półrocze</option>
+                    <option value="5">rok</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <!--************************** WASHING ***************************************************-->
+    <h3>
+        <span class="form_section_title">
+            Mycie i czyszczenie        </span>
+    </h3>
+    <table>
+        <tr>
+            <td>
+                Przeciętny rachunek za mycie i czyszczenie wnętrza:<br><i>na stacjach usługowych oraz w innych miejscach</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput" name="washing_value" size="6"
+                       value="">
+                zł na                <select id="washing_period_select">
+                    <option value="1">miesiąc</option>
+                    <option value="2">dwa miesiące</option>
+                    <option value="3">kwartał</option>
+                    <option value="4">półrocze</option>
+                    <option value="5">rok</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="b-bottom">
+        <input id="form_part2_button_back" class="button" type="button" onclick="openForm_part(2, 1)" value="&laquo;"/>
+        <span class="step">2/3</span>
+        <input id="form_part2_button_next" class="button" type="button" onclick="openForm_part(2, 3);" value="&raquo;"/>
+    </div>
+</div>
+<!-- end of form_part2-->
+<!--************************** DADOS ADICIONAIS ***************************************************-->
+<div class="form_part" id="form_part3">
+
+    <div class="form_part_head_title">
+        <header>
+            <h2>
+                DODATKOWE DANE            </h2>
+        </header>
+    </div>
+
+    <!-- PUBLIC TRANSPORTS SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Równoważne koszty transportu, zakładając, że nie posiadasz samochodu?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider1" name="slider1" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- FINANCIAL EFFORT SLIDER -->
+    <table class="form_section_question">
+        <tr>
+            <td>
+                <span class="form_section_title2">
+                    Zasoby finansowe?                </span>
+            </td>
+            <td class="switch_td">
+                <label class="switch">
+                    <input id="slider2" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+
+    <!-- PUBLIC TRANSPORTS SECTION -->
+    <div id="public_transp_Div_form3">
+    <span class="form_section_title">
+        Transport publiczny Public transports    </span>
+    <table>
+        <tr>
+            <td>
+                Ile osób w wieku powyżej 4 roku życia liczy Twoja rodzina (wliczając Ciebie)            </td>
+            <td>
+                <input type="number" min="0" step="1" id="household_number_people" name="pessoas_agregado" size="6"
+                       value="">
+                osoby            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                Jaka jest średnia, dostosowana do potrzeb życia codziennego, cena miesięcznego biletu okresowego dla jednej osoby, <br><i>jeśli opcja transportu publicznego Cię nie dotyczy, wpisz 0</i>            </td>
+            <td>
+                <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput" name="preco_passe" size="6"
+                       value="">
+                zł            </td>
+        </tr>
+    </table>
+    </div>
+    <!-- EOF PUBLIC TRANSPORTS SECTION -->
+
+
+    <!-- FINANCIAL EFFORT SECTION -->
+    <div id="fin_effort_Div_form3">
+        <span class="form_section_title">
+            Dochód        </span>
+        <table>
+            <tr>
+                <td>
+                    <div id="income_div_form3">
+                        Jaki jest Twój dochód netto?                        <br/>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
+                            <span>
+                                na rok                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)"/>
+                            <span>
+                                na miesiąc                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)"/>
+                            <span>
+                                na tydzień                            </span>
+                        </div>
+                        <div class="col">
+                            <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)"/>
+                            <span>
+                                na godzina                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="income_per_year_form3" class="div_element">
+                        <input type="number" min="0" step="Any" id="income_per_year" class="currencyInput" name="income_per_year" size="6"
+                               value=""/>
+                        zł/rok                    </div>
+                    <div id="income_per_month_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_month" class="currencyInput" name="income_per_month" size="6"
+                               value=""/>
+                        zł/miesiąc razy                        <br>
+                        <input type="number" min="1" max="12" step="1" id="income_months_per_year" name="income_months_per_year" size="6"
+                               value=""/>
+                        miesiące(ęcy)/rok                    </div>
+                    <div id="income_per_week_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_week" class="currencyInput" name="income_per_week" size="6"
+                               value=""/>
+                        zł/tydzień razy                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_weeks_per_year" name="income_weeks_per_year" size="6"
+                               value=""/>
+                        tygodnie/rok                    </div>
+                    <div id="income_per_hour_form3" class="div_element hidden">
+                        <input type="number" min="0" step="Any" id="income_per_hour" class="currencyInput" name="income_per_hour" size="6"
+                               value=""/>
+                        zł/godzina razy                        <br>
+                        <input type="number" min="0" max="168" step="Any" id="income_hours_per_week" name="income_hours_per_week" size="6"
+                               value=""/>
+                        godziny/tydzień razy                        <br>
+                        <input type="number" min="0" max="53" step="Any" id="income_hour_weeks_per_year" name="income_hour_weeks_per_year" size="6"
+                               value=""/>
+                        tygodnie/rok                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--********************************************************************** -->
+        <div id="working_time_form3">
+            <span class="form_section_title">
+                Czas pracy            </span>
+            <table>
+                <tr>
+                    <td>
+                        <div id="working_time_part1_form3">
+                            <br>
+                            Pracujesz lub posiadasz jakieś godne zajęcie?                            <br>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" onchange="working_time_toggle(true)" checked />
+                                <span>
+                                    tak                                </span>
+                            </span>
+                            <span class="nowrap">
+                                <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" onchange="working_time_toggle(false)"/>
+                                <span>
+                                    nie                                </span>
+                            </span>
+                        </div>
+                        <div id="working_time_part2_form3">
+                            Czas pracy:
+                        </div>
+                    </td>
+                    <td>
+                        <div id="working_time_input_form3" class="div_element">
+                            <input type="number" min="1" max="12" step="1" id="time_month_per_year" name="time_month_per_year" size="6"
+                                value=""/>
+                            miesiące(ęcy)/rok                            <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" name="time_hours_per_week" size="6"
+                                value=""/>
+                            godziny/tydzień                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- EOF FINANCIAL EFFORT SECTION -->
+
+    <!-- DISTANCE ||| TIME SPENT IN DRIVING ||| SECTION -->
+    <div id="distance_time_spent_driving_form3">
+        <div id="distance_form3">
+            <span class="form_section_title">
+                Dystans            </span>
+            <table>
+                <tr>
+                    <td>
+                        Zakładając, że dojeżdżasz do pracy?                    </td>
+                    <td>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3" value="true"
+                                   onchange="driveToJob(true);">
+                            <span class="set_right_margin">
+                                tak                            </span>
+                        </span>
+                        <span class="nowrap">
+                            <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" value="false"
+                                   onchange="driveToJob(false);" checked >
+                            <span>
+                                nie                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Liczba dni w tygodniu, gdy dojeżdżasz do pracy&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="1" max="7" step="1" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" size="5"
+                               value="">
+                         dni / tydzień                     </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Odległość między domem a miejscem pracy, jaką pokonujesz (w jedną stronę)&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_home_job" name="dist_home_job" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+                <tr class="car_to_job_distance_form3">
+                    <td>
+                        Dystans, jaki przeciętnie pokonujesz w dni, kiedy nie zabierasz samochodu do pracy:<br><i>na przykład w każdy weekend</i>&nbsp;
+                    </td>
+                    <td class="ta-left">
+                        <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" size="5"
+                            value="">
+                        km                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr id="car_no_job_distance_form3">
+                    <td>
+                        Dystans, jaki pokonujesz                    </td>
+                    <td>
+                        <input type="number" min="0" step="Any" id="dist_per_month" name="km_per_month" size="4"
+                            value="">
+                        km na                        <select id="period_km">
+                            <option value="1">miesiąc</option>
+                            <option value="2">dwa miesiące</option>
+                            <option value="3">kwartał</option>
+                            <option value="4">półrocze</option>
+                            <option value="5">rok</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--********************************************************************** -->
+        <span class="form_section_title">
+            Czas spędzony na jeździe        </span>
+        <table>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Ile minut zajmuje Ci dojaz z domu do miejsca pracy (w jedną stronę)? (just one way)                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_home_job" name="time_home_job"
+                           value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part1_form3">
+                <td>
+                    Ile czasu spędzasz za kierownicą, gdy nie jedziesz do pracy samochodem?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="time_weekend" name="time_weekend" value=""/>
+                    min                </td>
+            </tr>
+            <tr class="time_spent_part2_form3">
+                <td>
+                    Ile minut jedziesz samochodem?                </td>
+                <td>
+                    <input type="number" min="0" step="Any" size="6" id="min_drive_per_day" name="min_drive_per_day"
+                        value=""/>
+                    minut/dzień                    <br>
+                    <input type="number" min="0" max="31" step="1" size="6" id="days_drive_per_month" name="days_drive_per_month"
+                        value=""/>
+                    dni/miesiąc                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="b-bottom">
+        <input id="form_part3_button_back" class="button" type="button" onclick="openForm_part(3, 2)" value="&laquo;"/>
+        <!--Run button-->
+        <div id="run_button_div">
+            <input id="run_button" class="button" type="submit" onclick="Run1()" value="Wykonaj"/>
+            <input id="run_button_noCapctha" class="button" type="submit" onclick="Run1()" value="Wykonaj"/>
+        </div>
+    </div>
+
+    </div>
+<!-- end of form_part3-->
+</body>
+</html>

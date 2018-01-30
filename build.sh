@@ -11,7 +11,7 @@ then
 fi
 
 #string with available options
-optstring=':hcesrtim u: l:'
+optstring=':hcesrtim :A u: l:'
 
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
@@ -31,12 +31,9 @@ do
             cd ../
             cp -R src/* build/
             
-            if [ -d "node_modules/" ]; then
-                cp -R node_modules/ build/
-            fi
             ;;
 
-        h)
+        h)            
             printf "Usage: \n"
             printf "$0 -h \n"
             printf "$0 -etc \n"
@@ -52,6 +49,7 @@ do
             printf "   -t     generate html and jpeg stats [t]ables in build/   based on statistical costs DB \n"
             printf "   -i     compress [i]mages, jpg and png files in build/    with ImageMagick \n"                        
             printf "   -m     [m]inify js, json, css and html files in build/   with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "   -A     runs [a]ll previous options                         \n"
             printf "\n"
             printf "   -u     [u]upload to server                               -u work or -u prod (work by default) \n"
             printf "   -h     help (this output) \n\n"
@@ -81,6 +79,20 @@ done
 
 echo "Chosen release: $RELEASE"
 
+OPTIND=1
+
+while getopts "$optstring" OPTION; 
+do
+    case "$OPTION" in
+
+        A)  
+            #runs all options
+            ./build.sh -cesrtim -l $RELEASE
+            exit
+            ;;
+        
+    esac
+done
 
 OPTIND=1
 
@@ -90,7 +102,7 @@ do
     case $OPTION in
 
         s)
-            cd stats/
+            cd scripts/
             printf "\n## Creates DB with countries' specifcations \n"
             node setCountrySpecsDB.js $RELEASE
             cd ../
@@ -108,7 +120,7 @@ do
         
         r)
                 
-            cd stats/
+            cd scripts/
             printf "\n## Refreshes statistical costs DB \n"
             node getAvgFromDB.js $RELEASE
             cd ../
@@ -125,14 +137,11 @@ do
 
         t)
             #generating statistical tables
-            cd stats/
+            cd scripts/
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
-            php -f generateTables.php $RELEASE
-
-            printf "\n    Renders html tables into jpge files \n\n"
-            phantomjs rasterTables.js
+            node generateTables.js $RELEASE
 
             cd ../
             ;;                                             
@@ -162,28 +171,47 @@ do
             printf "\n## Minifying files \n"
 
             printf "\n    Minifying JS files in build/ \n\n"
-            find js/ -type f \
-                -name *.js ! -name "*.min.*" ! -name "vfs_fonts*" \
+            find client/ -type f \
+                -name "*.js" ! -name "*.min.*" ! -name "vfs_fonts*" \
                 -exec echo {} \; \
                 -exec uglifyjs -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
+            
+            #minify Javascript file Globals.hbs 
+            echo "views/Globals.js.hbs"
+            cd client/
+            uglifyjs -b quote_style=1 -b beautify=false -o temp.min Globals.js.hbs && rm Globals.js.hbs && mv temp.min Globals.js.hbs
+            cd ../
 
             #minification of CSS files
-            printf "\n    Minifying CSS files in build/ \n\n"
+            printf "\n    Minifying and Merging CSS files in build/ \n\n"
             find css/ -type f \
-                -name *.css ! -name "*.min.*" \
+                -name "*.css" ! -name "*.min.*" \
                 -exec echo {} \; \
                 -exec uglifycss --output {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
+            
+            #merge CSS files
+            cd css/
+            if [ -d "merged-min/" ]; then
+                #Control will enter here if merged-min/ exists.
+                rm -rf merged-min/
+            fi
+            echo " merging css files"
+            mkdir merged-min/
+            cat main.css central.css form.css left.css right.css header.css flags.css mobile.css > merged-min/merged1.css.hbs
+            cat jAlert.css results.css > merged-min/merged2.css             
+            cd ..
 
             #minification of html files
-            printf "\n    Minifying HTML files in build/ \n\n"
-            find . -path ./node_modules -prune -o -name "*.html" \
+            printf "\n    Minifying handlebars HTML template files in build/ \n\n"
+            find views/ \
+                -name "*.hbs" ! -name "sitemap.hbs" \
                 -type f \
                 -exec echo {} \;  \
-                -exec html-minifier --collapse-whitespace --remove-comments --remove-optional-tags -o {}.min {} \; \
+                -exec html-minifier --ignore-custom-fragments "/{{[{]?(.*?)[}]?}}/" --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
                 -exec rm {} \; \
                 -exec mv {}.min {} \;
 
@@ -205,26 +233,12 @@ do
 
         i)
             #compress images
-            cd build/images/
+            cd scripts/
             printf "\n## Compress images, jpg and png files \n\n"
+                  
+            node compressImages.js
 
-            for f in $(find . -type f -name '*.jpg')
-            do 
-                printf "Compressing $f \n"
-                convert $f -sampling-factor 4:2:0 -strip -quality 85 -interlace Plane -colorspace RGB $f.min
-                rm $f
-                mv $f.min $f 
-            done
-
-            for f in $(find . -type f -name '*.png')
-            do
-                printf "Compressing $f \n"
-                convert $f -strip $f.min
-                rm $f
-                mv $f.min $f
-            done                        
-
-            cd ../../
+            cd ../
             ;;
     esac
 done
@@ -255,5 +269,5 @@ do
     esac
 done
 
-printf "\nProcessed without errors \n\n"
+printf "\nProcessed \n\n"
 

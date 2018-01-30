@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>
+            List of Domains for the Automobile Costs Calculator
+        </title>
+        <style>
+            body {
+                font-family: Arial;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid grey;
+                padding: 4px;
+            }          
+        </style>
+    </head>
+<body>
+
+<h1 style="text-align:center">
+    List of Domains for the Automobile Costs Calculator
+</h1>
+
+<div style="width:100%">
+    <table style="margin: 0 auto">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Domain
+            </th>
+            <th>
+                Countries
+            </th>
+            <th>
+                CC
+            </th>
+        </tr>        
+    {{#each domains as |entry domain|}}
+        {{#if singular}}
+        <tr>
+            <td>1</td>            
+            <td>{{domain}}</td>
+            {{#each countries as |value CC|}}
+            <td><a href="{{value.fullURL}}">{{value.country}}</a></td>
+            <td>{{CC}}</td>
+            {{/each}}
+        </tr> 
+        {{else}}
+        {{#each countries as |value CC|}}
+        <tr>
+            {{#if value.first}}
+            <td rowspan="{{../nbrItems}}">{{../nbrItems}}</td>
+            <td rowspan="{{../nbrItems}}">{{domain}}</td>            
+            {{/if}}
+            <td><a href="{{value.fullURL}}">{{value.country}}</a></td>
+            <td>{{CC}}</td>            
+        </tr>
+        {{/each}}
+        {{/if}}
+    {{/each}}
+                            
+    </table>
+</div>
+<br><br>
+</body>
+</html>
