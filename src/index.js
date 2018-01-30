@@ -27,6 +27,7 @@ const getCC           = require(__dirname + '/server/getCC');
 const getUBER         = require(__dirname + '/server/getUBER');
 const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
 const list            = require(__dirname + '/server/list');
+const domains         = require(__dirname + '/server/domains');
 const sitemap         = require(__dirname + '/server/sitemap');
 
 //Deals with directories, some dirs are got from commons.js
@@ -99,6 +100,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.get('/list', function(req, res) {
     console.log("\nRoute: app.get('/list')");
     list(req, res, GlobData, WORDS);
+});
+
+/*lists all available domains*/
+app.get('/domains', function(req, res) {
+    console.log("\nRoute: app.get('/domains')");
+    domains(req, res, GlobData, WORDS);
 });
 
 /*sitemap.xml for Search Engines optimization*/
