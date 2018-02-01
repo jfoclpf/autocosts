@@ -1,5 +1,5 @@
 app/
-keys/prod/
+keys/
 build/
 node_modules/
 
