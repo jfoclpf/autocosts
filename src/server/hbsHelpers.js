@@ -73,6 +73,9 @@ module.exports = {
     escapeStr: function(str){
         return str.replace(/[\/\(\)\']/g, "\\$&");
     },
+    striOutHTML: function(str){
+        return str.replace(/<(?:.|\n)*?>/gm, '');
+    },
     getFuelEfficiencyOptStr: function(optN){
         switch(optN){
             case 1:
