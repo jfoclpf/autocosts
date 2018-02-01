@@ -115,7 +115,7 @@ module.exports = {
                 return "error";
         }
     },
-    get2letterLangCode(langCode){
+    get2letterLangCode: function(langCode){
         return langCode.substr(0, 2);
     }
 }
