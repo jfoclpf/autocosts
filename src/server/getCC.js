@@ -1,6 +1,7 @@
 
-const fs = require('fs');
-const url = require(__dirname + '/url');
+const fs      = require('fs');
+const url     = require('./url');
+const commons = require('../../commons');
 
 module.exports = function(req, res, GlobData, WORDS_CC) {    
         
@@ -16,14 +17,14 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     data.Words = WORDS_CC;
     data.CC = data.Words.CC = CC; //add new property
     data.word_per += "&#32;" //add non-breaking space
-    
+
     //empty var to be used in handlebars for whitespace trimming
     data.emptyChar = "";
     
     //add country_select (list of countries) to object to be rendered
     //to render the dropdown countries list box
-    data.countriesDropDownList = GlobData.available_CT;
-    delete data.countriesDropDownList["XX"];
+    data.countriesList = GlobData.available_CT;
+    delete data.countriesList["XX"];
     
     //add domains array
     data.domains = GlobData.domains;
@@ -33,7 +34,8 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     
     //other data to be rendered    
     data.LangCode = LangCode;
-    data.available_CT = GlobData.available_CT;
+    data.available_CT = GlobData.available_CT;    
+    data.countriesListOnString = commons.getCCListOnStr(GlobData.available_CT); //a string with all the CC
     data.domains_CT = GlobData.domains_CT;
     data.clientDir = GlobData.Dirs.clientDir;
     
@@ -54,5 +56,4 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     res.render(fileToRender, data);
     
 }
-
 

@@ -81,8 +81,12 @@ module.exports = {
     
     getKeyByValue: function(object, value){
         return _getKeyByValue(object, value);
+    },
+    
+    getCCListOnStr: function(available_CT){
+        return getCCListOnStr(available_CT);
     }
- 
+
 };
 
 /***************************************************************************************************/
@@ -170,3 +174,14 @@ function _getKeyByValue(object, value) {
     return key;
 }
 
+//from the countries Object "available_CT" get a string of CC separated by commas
+//for example: "PT, BR, US, UK, etc."
+function getCCListOnStr(available_CT){
+    var str = "";
+    for (var CC in available_CT){
+        str += CC + ", ";
+    }
+    //strip the last two character of the string, the last ", "
+    str = str.slice(0, -2);
+    return str;
+}

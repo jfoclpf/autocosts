@@ -18,8 +18,11 @@
         {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
         {{~emptyChar}} img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;">
 
+    {{/with}}
+    <script type="application/ld+json">{{> structuredData }}</script>
     <style>{{> merged1.css }}</style>
-
+    {{#with Words}}
+    
 </head>
 <body>
 
@@ -42,15 +45,13 @@
                         <div id="banner_flag" class="{{banner_flag CC}}"></div>
                     </div>
                     <div id="country_select_div">
-                        {{/with}}
                         <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                            {{~#each countriesDropDownList~}}
+                            {{~#each ../countriesList~}}
                             <option value="{{@key}}"{{{isSelected ../CC @key}}}>
                                 {{~this~}}
                             </option>
                             {{/each}}
                         </select>
-                        {{#with Words}}
                     </div>
                 </div>
             </div>
