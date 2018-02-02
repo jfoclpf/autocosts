@@ -29,6 +29,7 @@ const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
 const list            = require(__dirname + '/server/list');
 const domains         = require(__dirname + '/server/domains');
 const sitemap         = require(__dirname + '/server/sitemap');
+const captchaValidate = require(__dirname + '/server/captchaValidate');
 
 //Deals with directories, some dirs are got from commons.js
 //other dirs are got directly here in this script
@@ -48,7 +49,7 @@ const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.js
 const GlobData = {
     "REL"           : REL,       //Release: "work" or "prod"
     "Settings"      : Settings,  //Settings set in commons.js
-    "Dirs"          : Dirs,      //Directories set in commons.js
+    "Dirs"          : Dirs, //{ROOT_DIR, SRC_DIR, BUILD_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
     "available_CT"  : sortObj(CountriesInfo.available_CT), //Array of alphabetically sorted available Countries
     "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
@@ -117,6 +118,11 @@ app.get('/sitemap.xml', function(req, res) {
 app.get('/getUBER/:CC', function(req, res) {
     console.log("\nRoute: app.get('/getUBER')");
     getUBER(req, res, GlobData);
+});
+
+app.post('/captchaValidate', function(req, res) {
+    console.log("\nRoute: app.post('/captchaValidate')");
+    captchaValidate(req, res, GlobData);
 });
 
 app.post('/submitUserInput', function(req, res) {

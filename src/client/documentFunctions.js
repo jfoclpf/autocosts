@@ -514,12 +514,12 @@ $('#tbl_statistics').click(function(){
 
 //Loader after the run button is clicked
 function runButtonLoader() {
-    $('.lang-button_run').html('');
+    $('#run_button, #run_button_noCapctha').html('');
     $('#run_button, #run_button_noCapctha').addClass('button_loader');
 }
 //reset the run buttons, i.e., removes the loader of the button
 function resetRunButtons() {
-    $('.lang-button_run').html(WORDS.button_run);
+    $('#run_button, #run_button_noCapctha').html(WORDS.button_run);
     $('#run_button, #run_button_noCapctha').removeClass('button_loader');
 }
 
