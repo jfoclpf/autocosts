@@ -25,10 +25,10 @@ Run1 = function Run1(){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
-            url: "google/captcha_validate.php",
+            url: "captchaValidate",
             data: "&g-recaptcha-response=" + grecaptcha.getResponse()
         }).done(function(result){
-            //alert(result);
+            console.log("recaptcha-result: ", result);
             if(result=="ok"){
                 if(Run2() && COUNTRY != "XX"){
                     //if not a test triggers event for Google Analytics
