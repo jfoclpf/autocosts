@@ -52,7 +52,8 @@ module.exports = {
         //The JSON file where the meta-information about the countries is stored
         var COUNTRY_LIST_FILE = COUNTRIES_DIR + "list.json";
 
-        //The directory where the tables HTML.hbs and JPEG files are stored 
+        //The directory where the tables HTML.hbs and JPEG files 
+        //are to be stored right after being generated
         var TABLES_DIR = BUILD_DIR + "tables" + "/";
 
         var Dirs = {
@@ -67,8 +68,8 @@ module.exports = {
         return Dirs;
     },
     
-    find: function(startPath, filter, callback){
-        _find(startPath, filter, callback);
+    find: function(startPath, filter, param1, param2){
+        _find(startPath, filter, param1, param2);
     },
     
     getRelease: function(process){
@@ -96,11 +97,25 @@ module.exports = {
 const path    = require('path'); 
 const fs      = require('fs');
 
-/*to find all files in "startPath" folder and all its sub folders*/
-/*filter may be for example ".html" */
-function _find(startPath, filter, callback){
+/*to find all files in "startPath" folder and all its sub folders
+The filter argument may be for example ".html". 
+There are two possible arguments situations: 
+param1 to be a callback and param2 unexistant/undefined or
+param1 to be an array of exeptions and param2 the callback
+Example: _find("/path/to/directory", ".jpg", ['file1.jpg', 'file2.jpg'], callback)
+Example: _find("/path/to/directory", ".jpg", callback)*/
+function _find(startPath, filter, param1, param2){    
 
-    //console.log('Starting from dir '+startPath+'/');
+    //console.log('on: ' + startPath + '/');
+    
+    var callback, exceptionsArr;
+    if (param2 === undefined){
+        callback = param1;        
+    }
+    else{
+        exceptionsArr = param1;
+        callback = param2;
+    }    
 
     if (!fs.existsSync(startPath)){
         console.log("no dir ",startPath);
@@ -108,17 +123,23 @@ function _find(startPath, filter, callback){
     }
 
     var files=fs.readdirSync(startPath);
+    
     for(var i=0;i<files.length;i++){
+        
         var filename=path.join(startPath,files[i]);
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory()){
-            _find(filename,filter,callback); //recurse
+            _find(filename, filter, param1, param2); //recurse
         }
-        else if (filename.indexOf(filter)>=0) {            
-            if (typeof callback === "function"){                
+        //check if the filter applies and callback is a function
+        else if (filename.indexOf(filter)>=0 && typeof callback === "function") {            
+            //if the array of exceptions was not defined, run the callback
+            //if it was defined, said array must not include the file
+            if (exceptionsArr === undefined || !exceptionsArr.includes(files[i])){
                 callback(filename);
             }
         }
+        
     }
 }
 
