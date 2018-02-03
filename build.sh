@@ -3,6 +3,10 @@ set -e
 
 PATH=$(npm bin):$PATH
 
+#goes to the directory where this script is located
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
+
 if [ $# -eq 0 ]
 then
     printf "Missing options!\n"
