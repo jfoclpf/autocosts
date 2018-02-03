@@ -1,5 +1,5 @@
-/*Script to compress and optimize for the web page,
-all the images, namely JPG and PNG images */
+/*node script to compress and optimize all the images, namely JPG and PNG images, for the web page.
+Optimal compression settings were defined by Google from the Page Speed Insights documentation */
 
 const im      = require('imagemagick');
 const path    = require('path'); 
