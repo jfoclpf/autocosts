@@ -217,5 +217,7 @@ do
     esac
 done
 
-printf "\nProcessed \n\n"
+printf "\nProcessed \n"
+printf "\nRun\nnode $DIR/build/index.js\nto start application\n\n"
+
 
