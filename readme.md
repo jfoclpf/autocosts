@@ -21,10 +21,7 @@ https://autocosts.info/domains
 
 ## How to install
 
-You may need some `npm` global packages for code compression and syntax verification (done upon build)<br>
-`sudo npm install uglifycss uglify-js html-minifier jshint -g`
-
-Clone it and install it<br>
+Clone it, install it and build it<br>
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
 `cd autocosts/ && npm install`
 

@@ -170,67 +170,11 @@ do
             ;;
 
         m)
-            #minification of js files
-            cd build/
-            printf "\n## Minifying files \n"
+            #minification and concatenation of files
+            cd scripts/
+            printf "\n## Minify and concatenate, js, html/hbs, css and json files \n\n"
 
-            printf "\n    Minifying JS files in build/ \n\n"
-            find client/ -type f \
-                -name "*.js" ! -name "*.min.*" ! -name "vfs_fonts*" \
-                -exec echo {} \; \
-                -exec uglifyjs -o {}.min {} \; \
-                -exec rm {} \; \
-                -exec mv {}.min {} \;
-            
-            #minify Javascript file Globals.hbs 
-            echo "views/Globals.js.hbs"
-            cd client/
-            uglifyjs -b quote_style=1 -b beautify=false -o temp.min Globals.js.hbs && rm Globals.js.hbs && mv temp.min Globals.js.hbs
-            cd ../
-
-            #minification of CSS files
-            printf "\n    Minifying and Merging CSS files in build/ \n\n"
-            find css/ -type f \
-                -name "*.css" ! -name "*.min.*" \
-                -exec echo {} \; \
-                -exec uglifycss --output {}.min {} \; \
-                -exec rm {} \; \
-                -exec mv {}.min {} \;
-            
-            #merge CSS files
-            cd css/
-            if [ -d "merged-min/" ]; then
-                #Control will enter here if merged-min/ exists.
-                rm -rf merged-min/
-            fi
-            echo " merging css files"
-            mkdir merged-min/
-            cat main.css central.css form.css left.css right.css header.css flags.css mobile.css > merged-min/merged1.css.hbs
-            cat jAlert.css results.css > merged-min/merged2.css             
-            cd ..
-
-            #minification of html files
-            printf "\n    Minifying handlebars HTML template files in build/ \n\n"
-            find views/ \
-                -name "*.hbs" ! -name "sitemap.hbs" \
-                -type f \
-                -exec echo {} \;  \
-                -exec html-minifier --ignore-custom-fragments "/{{[{]?(.*?)[}]?}}/" --collapse-whitespace --remove-comments --remove-optional-tags --case-sensitive -o {}.min {} \; \
-                -exec rm {} \; \
-                -exec mv {}.min {} \;
-
-            #minification of json files
-            printf "\n    Minifying JSON files in build/ \n\n"
-            cd countries/
-            for i in *.json; do
-                [ -f "$i" ] || break
-                printf $i" ";
-                json-minify $i > $i.min;
-                rm $i;
-                mv $i.min $i;
-            done
-            cd ../
-            printf "\n"
+            node minifyFiles.js
 
             cd ../
             ;;
