@@ -51,6 +51,7 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     }
     console.log("CDN_URL: ", data.CDN_URL);
     
+    data.IS_HTTPS = GlobData.Settings.IS_HTTPS;
     data.HTTP_Protocol = url.getProtocol(req, GlobData.Settings.IS_HTTPS);
     
     data.layout = false; 
