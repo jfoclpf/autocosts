@@ -4,10 +4,10 @@ module.exports = function(req, res, GlobData, WORDS) {
 
     var data = {};
     data.WORDS = JSON.parse(JSON.stringify(WORDS)); //clone object
-    delete data.WORDS["XX"];
+    delete data.WORDS.XX;
     
     var domains_CT = JSON.parse(JSON.stringify(GlobData.domains_CT)); //clone object
-    delete domains_CT["XX"];
+    delete domains_CT.XX;
     
     var domains = {};
     //array GlobData.domains has unique elements, i.e. an array without repeated elements

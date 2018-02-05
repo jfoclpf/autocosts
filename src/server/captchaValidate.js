@@ -38,7 +38,7 @@ module.exports = function(req, res, GlobData) {
     request(options, function(error, response, body){
         if (!error && response.statusCode == 200) {
             var responseKeys = JSON.parse(body);
-            if (Number(responseKeys["success"]) !== 1){
+            if (Number(responseKeys.success) !== 1){
                 res.send("not-ok-2");
                 return;            
             }

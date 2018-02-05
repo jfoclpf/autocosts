@@ -154,7 +154,6 @@ module.exports = function (req, res, GlobData){
         if (err) {
             console.error('error connecting: ' + err.stack);
             throw err;
-            return;
         }
         console.log('User ' + DBInfo.user + 
                     ' connected successfully to DB ' + DBInfo.database + 

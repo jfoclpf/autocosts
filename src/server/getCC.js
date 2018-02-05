@@ -24,7 +24,7 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     //add country_select (list of countries) to object to be rendered
     //to render the dropdown countries list box
     data.countriesList = GlobData.available_CT;
-    delete data.countriesList["XX"];
+    delete data.countriesList.XX;
     
     //add domains array
     data.domains = GlobData.domains;
@@ -32,12 +32,15 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     //boolean variable regarding if present rendering is a test
     data.isThisATest = url.isThisATest(req);
     
+    //settings taken from the server code, to be passed into the client code    
+    data.SWITCHES = GlobData.Settings.SWITCHES; 
+    
     //other data to be rendered    
     data.LangCode = LangCode;
     data.available_CT = GlobData.available_CT;    
     data.countriesListOnString = commons.getCCListOnStr(GlobData.available_CT); //a string with all the CC
     data.domains_CT = GlobData.domains_CT;
-    data.clientDir = GlobData.Dirs.clientDir;
+    data.clientDir = GlobData.Dirs.clientDir;        
     
     //selects CDN URL
     if (GlobData.Settings.CDN.IS_CDN){

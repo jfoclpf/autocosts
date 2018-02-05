@@ -6,11 +6,11 @@ module.exports = function(req, res, GlobData, WORDS) {
     var data = {};
         
     data.WORDS = JSON.parse(JSON.stringify(WORDS)); //clone object
-    delete data.WORDS["XX"];
+    delete data.WORDS.XX;
   
     //create another object for double looping inside handlebars template
     data.WORDS2 = JSON.parse(JSON.stringify(WORDS)); //clone object
-    delete data.WORDS2["XX"];  
+    delete data.WORDS2.XX;  
 
     //function that gets an Object associating a language with a country/domain
     var twoLetterLang = getUniqueLangObj(GlobData);    
@@ -32,7 +32,7 @@ module.exports = function(req, res, GlobData, WORDS) {
 function getUniqueLangObj(GlobData){
 
     var languages_CT = JSON.parse(JSON.stringify(GlobData.languages_CT)); //clone object
-    delete languages_CT["XX"];
+    delete languages_CT.XX;
     
     //gets an array of unique, Languages => [en, en-ES, es, pt-BR, pt-PT, it, etc.]
     var uniqueLangsTemp = commons.getUniqueArray(languages_CT); //get unique Array from Object
@@ -55,9 +55,9 @@ function getUniqueLangObj(GlobData){
         //because there are many countries whose language is English
         //it choses UK as default country for English
         if (langCode=="en"){
-            twoLetterLang["UK"] = {};
-            twoLetterLang["UK"].langCode = langCode;
-            twoLetterLang["UK"].domain = GlobData.domains_CT["UK"];
+            twoLetterLang.UK = {};
+            twoLetterLang.UK.langCode = langCode;
+            twoLetterLang.UK.domain = GlobData.domains_CT.UK;
         }
         else{
             var CC = commons.getKeyByValue(languages_CT, langCode);

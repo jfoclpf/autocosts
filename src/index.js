@@ -139,7 +139,7 @@ app.get('/:CC', function (req, res, next) {
     let wasRedirected = url.getCC(req, res, GlobData);
     if(wasRedirected){
         return;
-    };
+    }
     //from here CC is acceptable and the page will be rendered
 
     //get words for chosen CC

@@ -20,7 +20,8 @@ module.exports = {
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("Entry URL: " + fullUrl);       
         
-        var CC = req.params.CC;        
+        var CC = req.params.CC;
+        var url2redirect;
         
         //if no country is defined or the country isn't in the list
         //i.e, if the CC characters in domain.info/CC are not recognized
@@ -38,7 +39,7 @@ module.exports = {
         //But if the two-letter code are NOT all in upper case domain.info/CC 
         if (!isCC2letterUpperCase(CC)){
             console.log("if (!isCC2letterUpperCase)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
+            url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;
         }
@@ -48,7 +49,7 @@ module.exports = {
         //check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
         if(isSubdomain(req)){
             console.log("if(isSubdomain)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
+            url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }
@@ -62,7 +63,7 @@ module.exports = {
         //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)        
         if(!isDomainCCcombValid(req, dataObj.available_CT, dataObj.domains_CT)){
             console.log("if (!isDomainCCcombValid)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
+            url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }
@@ -70,7 +71,7 @@ module.exports = {
         //check for https rules and redirect accordingly
         if (req.protocol !== getProtocol(req, IS_HTTPS)){
             console.log("if (protocol !== getProtocol)");
-            var url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
+            url2redirect = getValidURL(req, dataObj.domains_CT, dataObj.Settings.IS_HTTPS);
             redirect301(res, url2redirect);
             return true;        
         }        
