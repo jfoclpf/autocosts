@@ -64,7 +64,9 @@ module.exports = function(req, res, GlobData) {
     });
 }
 
-var readCCFileAsync = async function (path){    
+/* JShint still doesn't fully support ES7 async await */
+/* jshint ignore:start */
+var readCCFileAsync = async function (path){
     
     var resPromise = function(){
         return new Promise(function(resolve, reject){    
@@ -98,14 +100,17 @@ var makeUberRequest = async function (req, GlobData){
     }
     console.log("debug: ", debug);
     
+    //geo coordinates
+    var lat, long;
+    
     //debug=1;
     if(debug==1){//Lisbon coordinates
-        lat=38.722252;
-        long=-9.139337;
+        lat  = 38.722252;
+        long = -9.139337;
     }
     else if(debug==2){ //London coordinates
-        lat=51.507351;
-        long=-0.127758;  
+        lat  = 51.507351;
+        long = -0.127758;  
     }
     else{//PROD or .work
         //tries to get IP from user
@@ -115,8 +120,8 @@ var makeUberRequest = async function (req, GlobData){
                  req.connection.socket.remoteAddress;
 
         var geo = geoIP.lookup(ip);
-        var lat  = geo.ll[0];
-        var long = geo.ll[1];
+        lat  = geo.ll[0];
+        long = geo.ll[1];
     }
     console.log("lat: " + lat + "; long: " +long);
 
@@ -154,6 +159,7 @@ var makeUberRequest = async function (req, GlobData){
     var result = await resPromise();    
     return result;
 };
+/* jshint ignore:end */
 
 
 

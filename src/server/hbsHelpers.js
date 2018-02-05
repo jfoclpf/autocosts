@@ -28,7 +28,7 @@ module.exports = {
             }
         }
 
-        var title = words.join(' ');
+        title = words.join(' ');
         return title;
     },        
     //get first sentence of string, with HTML tags stripped out
@@ -40,12 +40,12 @@ module.exports = {
     get_keywords: function(title, str1, str2){
 
         //lower case all strings
-        var title = title.toLowerCase();
-        var str1 = str1.toLowerCase();
-        var str2 = str2.toLowerCase();
+        var Title = title.toLowerCase();
+        var Str1 = str1.toLowerCase();
+        var Str2 = str2.toLowerCase();
 
         //get an array of words stripped by space
-        var words = title.split(" ");
+        var words = Title.split(" ");
 
         //if a word has a size bigger than 3, adds to keywords
         var keywords = []; var word;
@@ -56,8 +56,8 @@ module.exports = {
             }
         }
 
-        keywords.push(str1);
-        keywords.push(str2);
+        keywords.push(Str1);
+        keywords.push(Str2);
 
         var keywords_string = keywords.join(',');
 
