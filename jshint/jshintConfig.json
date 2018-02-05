@@ -4,6 +4,7 @@
   "asi": true,
   "expr": true,
   "evil": true,
-  "funcscope": false
+  "funcscope": false,
+  "esversion": 6
 }
 

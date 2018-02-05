@@ -17,6 +17,8 @@ fi
 #string with available options
 optstring=':hcesrtim :A u: l:'
 
+COPIED="0"
+
 #if the -copy option is available execute it first
 while getopts "$optstring" OPTION; 
 do
@@ -35,27 +37,29 @@ do
             cd ../
             cp -R src/* build/
             
+            COPIED="1"
+            
             ;;
 
         h)            
-            printf "Usage: \n"
-            printf "$0 -h \n"
-            printf "$0 -etc \n"
-            printf "$0 -c -m \n"
-            printf "$0 -l prod -cesrtimu \n"
+            printf "Exemple: \n"
+            printf "$0 -ceim \n"
+            printf "$0 -A \n"
             printf "\n"
-            printf "   -l     selects DB re[l]ease                              -l work or -l prod (work by default) \n"
+            printf "   #With these options it may run just locally\n"
+            printf "   -c     makes [c]lean copy from src/ to build/              need to be done on the 1st time \n"
+            printf "   -e     check for JS syntax [e]rrors in src/                with npm jshint \n"
+            printf "   -i     compress [i]mages, jpg and png files in build/      with ImageMagick \n"                        
+            printf "   -m     [m]inify js, json, css and html files in build/     with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "\n\n"
+            printf "   #With these options it needs internet connection to a server's Database\n"            
+            printf "   -l     selects Database re[l]ease (-l work or -l prod)     Database credentials in directory keys/work/ or keys/prod/\n"
+            printf "   -s     creates a Database with countries' [s]pecifcations  connection to a Database\n"
+            printf "   -r     [r]efreshes the statistical costs Database          connection to the countries' specifcations Database \n"
+            printf "   -t     generate html and jpeg stats [t]ables in build/     based on the statistical costs Database \n"
             printf "\n"
-            printf "   -c     makes [c]lean copy from src/ to build/            need to be done on the 1st time \n"
-            printf "   -e     check for JS syntax [e]rrors in src/              with npm jshint \n"
-            printf "   -s     creates DB with countries' [s]pecifcations        connection to DB \n"
-            printf "   -r     [r]efreshes statistical costs DB                  connection to specifcations DB \n"
-            printf "   -t     generate html and jpeg stats [t]ables in build/   based on statistical costs DB \n"
-            printf "   -i     compress [i]mages, jpg and png files in build/    with ImageMagick \n"                        
-            printf "   -m     [m]inify js, json, css and html files in build/   with npm: minifier, html-minifier, uglifycss and json-minify \n"
-            printf "   -A     runs [a]ll previous options                         \n"
+            printf "   -A     runs [a]ll previous options\n"
             printf "\n"
-            printf "   -u     [u]upload to server                               -u work or -u prod (work by default) \n"
             printf "   -h     help (this output) \n\n"
             exit 0
             ;;                          
@@ -160,19 +164,19 @@ do
     case $OPTION in
 
         e)                
-            #checks for JS errors
-            cd jshint/
+            #checks for JS errors            
 
-            printf "\n## Checking for JS errors in src/ \n\n"                        
-            ./jshint.sh
-
-            cd ../
+            printf "\n## Checking for JS syntax errors in src/ \n\n"                        
+            find src \
+                -name "*.js" ! -name "vfs_fonts*" ! -name "js_timer.js" ! -name "jAlert.js" \
+                -exec echo {} \; \
+                -exec ./node_modules/jshint/bin/jshint {} --config jshint/jshintConfig.json \;            
             ;;
 
         m)
             #minification and concatenation of files
             cd scripts/
-            printf "\n## Minify and concatenate, js, html/hbs, css and json files \n\n"
+            printf "\n## Minify and concatenate js, html/hbs, css and json files \n\n"
 
             node minifyFiles.js
 
@@ -191,33 +195,9 @@ do
     esac
 done
 
-OPTIND=1
-
-UPLOAD_DIR="work" 
-#get release
-while getopts "$optstring" OPTION; 
-do
-    case "$OPTION" in
-
-        u)
-            u=${OPTARG}
-            if [ "$u" == "prod" ]
-            then
-                UPLOAD_DIR="public_html"
-            fi
-            
-            cd build/
-            printf "\n## Upload to server on $UPLOAD_DIR/ directory \n\n"
-            
-            scp -P 2222 -r * jfolpf@autocosts.info:/home4/jfolpf/$UPLOAD_DIR
-            
-            cd ../          
-            ;;
-        
-    esac
-done
-
 printf "\nProcessed \n"
-printf "\nRun\nnode $DIR/build/index.js\nto start application\n\n"
-
+if [ "$COPIED" == "1" ]
+    then
+    printf "\nRun\nnode $DIR/build/index.js\nto start application\n\n"
+fi
 
