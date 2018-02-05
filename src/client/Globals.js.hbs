@@ -12,15 +12,15 @@
 
 /*GLOBAL switches, change accordingly*/
 var SWITCHES = {
-    "uber": true,        /*Uber*/
-    "social": true,      /*Social media pulgins*/
-    "g_charts": true,    /*Google Charts*/
-    "g_captcha": true,   /*Google Captcha*/
-    "g_analytics": true, /*Google Analytics*/
-    "data_base": true,   /*Inserts user input data into DataBase*/
-    "print": true,       /*Print option*/
-    "pdf": true,         /*Download PDF report option*/
-    "https": true        /*true for https, false for http*/
+    "uber": JSON.parse('{{{ SWITCHES.uber }}}'),               /*Uber*/
+    "social": JSON.parse('{{{ SWITCHES.social }}}'),           /*Social media pulgins*/
+    "g_charts": JSON.parse('{{{ SWITCHES.g_charts }}}'),       /*Google Charts*/
+    "g_captcha": JSON.parse('{{{ SWITCHES.g_captcha }}}'),     /*Google Captcha*/
+    "g_analytics": JSON.parse('{{{ SWITCHES.g_analytics }}}'), /*Google Analytics*/
+    "data_base": JSON.parse('{{{ SWITCHES.data_base }}}'),     /*Inserts user input data into DataBase*/
+    "print": JSON.parse('{{{ SWITCHES.print }}}'),             /*Print option*/
+    "pdf": JSON.parse('{{{ SWITCHES.pdf }}}'),                 /*Download PDF report option*/
+    "https": JSON.parse('{{{ IS_HTTPS }}}')                    /*true for https, false for http*/
 };
 
 /*Define GLOBAL Javascript variables*/

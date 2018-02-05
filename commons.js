@@ -16,11 +16,24 @@ module.exports = {
         //CDN configuration at https://app.keycdn.com/zones
         //CDN provider: https://app.keycdn.com/zones
         const CDN_URL_PROD = "https://cdn.autocosts.info"+"/"; //preserve the bar "/" at the end
-        const CDN_URL_WORK = "http://cdn.autocosts.work"+"/";  //preserve the bar "/" at the end
+        const CDN_URL_WORK = "http://cdn.autocosts.work"+"/";  //preserve the bar "/" at the end        
+        
+        /*GLOBAL switches, change accordingly*/
+        const SWITCHES = {
+            "uber": true,        /*uses UBER API to give car user comparisions with UBER costs*/
+            "social": true,      /*Social media pulgins*/
+            "g_charts": true,    /*Google Charts*/
+            "g_captcha": true,   /*Google Captcha to avoid spam-bots*/
+            "g_analytics": true, /*Google Analytics*/
+            "data_base": true,   /*Inserts user input data into a DataBase*/
+            "print": true,       /*Print result option, at the end*/
+            "pdf": true          /*Download PDF report option*/
+        };        
         
         //Default Country when any possible method to get country isn't available
         const DefaultCC = "UK"; //when no other method finds the country of user, use this by default 
-        
+                
+        //don't change here
         var Obj = {
             "IS_HTTPS": IS_HTTPS,
             "CDN": {
@@ -28,8 +41,9 @@ module.exports = {
                 "URL_PROD": CDN_URL_PROD,
                 "URL_WORK": CDN_URL_WORK       
                 },
-            "DefaultCC": DefaultCC
-            };        
+            "DefaultCC": DefaultCC,
+            "SWITCHES": SWITCHES
+            };
         
         return Obj;
     },    

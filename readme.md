@@ -31,7 +31,7 @@ The directory that corresponds to the website public HTML is `build/`. This dire
 
 
 ## Available services
-The available services are defined in the global `SWITCH` JS object in the file `src/client/Globals.js`
+The available services are defined in the global `SWITCH` JS object in the file `commons.js`
 
 ## Android APP<br>
 
