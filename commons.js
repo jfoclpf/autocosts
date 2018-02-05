@@ -68,10 +68,6 @@ module.exports = {
         return Dirs;
     },
     
-    find: function(startPath, filter, param1, param2){
-        _find(startPath, filter, param1, param2);
-    },
-    
     getRelease: function(process){
         return _getRelease(process);
     },
@@ -96,52 +92,6 @@ module.exports = {
 
 const path    = require('path'); 
 const fs      = require('fs');
-
-/*to find all files in "startPath" folder and all its sub folders
-The filter argument may be for example ".html". 
-There are two possible arguments situations: 
-param1 to be a callback and param2 unexistant/undefined or
-param1 to be an array of exeptions and param2 the callback
-Example: _find("/path/to/directory", ".jpg", ['file1.jpg', 'file2.jpg'], callback)
-Example: _find("/path/to/directory", ".jpg", callback)*/
-function _find(startPath, filter, param1, param2){    
-
-    //console.log('on: ' + startPath + '/');
-    
-    var callback, exceptionsArr;
-    if (param2 === undefined){
-        callback = param1;        
-    }
-    else{
-        exceptionsArr = param1;
-        callback = param2;
-    }    
-
-    if (!fs.existsSync(startPath)){
-        console.log("no dir ",startPath);
-        return;
-    }
-
-    var files=fs.readdirSync(startPath);
-    
-    for(var i=0;i<files.length;i++){
-        
-        var filename=path.join(startPath,files[i]);
-        var stat = fs.lstatSync(filename);
-        if (stat.isDirectory()){
-            _find(filename, filter, param1, param2); //recurse
-        }
-        //check if the filter applies and callback is a function
-        else if (filename.indexOf(filter)>=0 && typeof callback === "function") {            
-            //if the array of exceptions was not defined, run the callback
-            //if it was defined, said array must not include the file
-            if (exceptionsArr === undefined || !exceptionsArr.includes(files[i])){
-                callback(filename);
-            }
-        }
-        
-    }
-}
 
 /*function to be used in several scripts to get the release according to the argv of 
 the command line, it shall be either 'work' (test version at autocosts.work) 
