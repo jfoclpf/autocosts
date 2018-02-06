@@ -36,13 +36,15 @@ const captchaValidate = require(__dirname + '/server/captchaValidate');
 const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
 const INDEX_DIR = __dirname + "/"; //directory where this script index.js is located
 const clientDir = 'client/'; //directory with respect to src/ dir, where the client JS browser files will be stored
+
 var Dirs = commons.getDirs(ROOT_DIR);
-Dirs.ROOT_DIR = ROOT_DIR;   //parent directory of main project directory tree
+//add further relevant directories to the Dirs object
+Dirs.ROOT_DIR  = ROOT_DIR;   //parent directory of main project directory tree
 Dirs.INDEX_DIR = INDEX_DIR; //directory where the index.js file is located
 Dirs.clientDir = clientDir; //directory with respect to src/ dir, where the client JS files will be stored
 
-const Settings = commons.getSettings();
 const REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
+const Settings = commons.getSettings();
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
 const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));

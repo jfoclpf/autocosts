@@ -4,6 +4,8 @@
 module.exports = {
     
     //change accordingly
+    //before calling this function, you must call both
+    //commons.getRelease(process) and commons.getDirs(ROOT_DIR)
     getSettings: function(){    
         
         //SLS HTTPS
@@ -34,7 +36,7 @@ module.exports = {
         const DefaultCC = "UK"; //when no other method finds the country of user, use this by default 
                 
         //don't change here
-        var Obj = {
+        var settings = {
             "IS_HTTPS": IS_HTTPS,
             "CDN": {
                 "IS_CDN": IS_CDN,
@@ -42,16 +44,19 @@ module.exports = {
                 "URL_WORK": CDN_URL_WORK       
                 },
             "DefaultCC": DefaultCC,
-            "SWITCHES": SWITCHES
+            "SWITCHES": SWITCHES,
+            "gaTrackingId": SWITCHES.g_analytics ? getGAnalyticsTrackigID() : ""
             };
         
-        return Obj;
+        return settings;
     },    
     
     //Root directory of the main project's root directory
     //command to get ROOT_DIR might vary according to the application (nodeJS or PhantomJS), therefore parsed here
     //change vars accordingly
     getDirs : function(ROOT_DIR){
+        _ROOT_DIR = ROOT_DIR; //sets the global variable
+        
         /*Always leave the traling slash at the end on each directory*/
         /*this directory structure was based on Node/JS most common practises,
         namely see: docs/nodeJS-directory-structure.md */
@@ -109,14 +114,18 @@ module.exports = {
 const path    = require('path'); 
 const fs      = require('fs');
 
+//Global variables*/
+var _REL; //release, "work" or "prod"
+var _ROOT_DIR; //root directory of the project
+
 /*function to be used in several scripts to get the release according to the argv of 
 the command line, it shall be either 'work' (test version at autocosts.work) 
 or 'prod', the production version that is filled in by autocosts.info */
 function _getRelease(process){
     
-    var REL;
+    var rel;
     if(process.argv.length == 2){    
-        REL = "work";
+        rel = "work";
     }
     else if (process.argv.length > 3){
         console.log("Just one argument is accepted \n");
@@ -127,17 +136,18 @@ function _getRelease(process){
             console.log("work or prod must be chosen \n");
             process.exit();
         }
-        REL = process.argv[2];
+        rel = process.argv[2];
     }
 
     //check that release was correctly chose
-    if (REL!=="work" && REL!=="prod"){
+    if (rel!=="work" && rel!=="prod"){
         console.log("release 'work' or 'prod' must be chosen \n");
         process.exit();
     }        
-    console.log("Release: '" + REL + "'");
+    console.log("Release: '" + rel + "'");
     
-    return REL;
+    _REL = rel;
+    return rel;
 }
 
 //gets Array with unique non-repeated values
@@ -171,4 +181,16 @@ function getCCListOnStr(available_CT){
     //strip the last two character of the string, the last ", "
     str = str.slice(0, -2);
     return str;
+}
+
+//Get Google Analytics Tracking ID
+function getGAnalyticsTrackigID(){
+    if (typeof _ROOT_DIR !== 'undefined' && typeof _REL !== 'undefined'){ 
+        var filename = _ROOT_DIR + 'keys/' + _REL + '/google_analytics.json';
+        var data = JSON.parse(fs.readFileSync(filename));        
+        return data["tracking-id"];
+    }
+    else{
+        throw "commons.getRelease(process) and commons.getDirs(ROOT_DIR) must be called before commons.getSettings()";
+    }
 }

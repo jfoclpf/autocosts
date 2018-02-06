@@ -40,7 +40,8 @@ module.exports = function(req, res, GlobData, WORDS_CC) {
     data.available_CT = GlobData.available_CT;    
     data.countriesListOnString = commons.getCCListOnStr(GlobData.available_CT); //a string with all the CC
     data.domains_CT = GlobData.domains_CT;
-    data.clientDir = GlobData.Dirs.clientDir;        
+    data.clientDir = GlobData.Dirs.clientDir;
+    data.gaTrackingId = GlobData.Settings.gaTrackingId;
     
     //selects CDN URL
     if (GlobData.Settings.CDN.IS_CDN){
