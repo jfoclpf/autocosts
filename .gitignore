@@ -1,4 +1,5 @@
 app/
 keys/
+bin/*
 node_modules/
 
