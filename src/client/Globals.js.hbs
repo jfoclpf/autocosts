@@ -41,7 +41,7 @@ var WORDS = JSON.parse('{{{ jsonEscap Words }}}');
 var INITIAL_TEX = '{{{ escapeStr Words.initial_text }}}';
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
-var PAGE_URL = HTTP_Protocol + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
+var PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
 
 /*it may be changed accordingly*/
 var LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
