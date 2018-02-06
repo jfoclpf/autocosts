@@ -26,7 +26,7 @@ Clone it, install it and build it<br>
 `cd autocosts/ && npm install`
 
 
-The directory that corresponds to the website public HTML is `bin/`. This directory is built upon installation. For more information run `./build.sh -h`.
+The directory that corresponds to the website public HTML is `bin/`. This directory is built upon installation. For more information run `./build.sh -h`. Our directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
 
 ## How does it work?
 
