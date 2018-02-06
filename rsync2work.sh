@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
-rsync -avz --delete --exclude '.git*' --exclude 'rsync2work.sh' --exclude 'app/' --exclude 'build/' . jfolpf@autocosts.work:/var/www/autocosts.work/
+rsync -avz --delete --exclude '.git*' --exclude 'rsync2work.sh' --exclude 'app/' --exclude 'bin/' . jfolpf@autocosts.work:/var/www/autocosts.work/
 
 ssh jfolpf@autocosts.work 'pkill -f /usr/local/bin/node'
 
@@ -15,7 +15,7 @@ fi
 if [ $1 = "build" ] 
 then
     ssh jfolpf@autocosts.work 'cd /var/www/autocosts.work && ./build.sh -cesrtim'
-    ssh jfolpf@autocosts.work 'cd /var/www/autocosts.work/build && /usr/local/bin/node index.js'
+    ssh jfolpf@autocosts.work 'cd /var/www/autocosts.work/bin && /usr/local/bin/node index.js'
 fi
 
 

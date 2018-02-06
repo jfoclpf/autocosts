@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN"><title>List of Countries for the Automobile Costs Calculator</title><style>body {
+                font-family: Arial;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid grey;
+                padding: 4px;
+            }</style><h1 style="text-align:center">List of Countries for the Automobile Costs Calculator</h1><div style="width:100%"><table style="margin: 0 auto"><tr><th>#<th>Country<th>CC<th>Language<th>Main domain<th>Curr. code<th>Currency name<th>Curr. symbol<th>Fuel efficiency<th>Standard distance<th>Fuel volume<th>Costs</tr> {{#each WORDS as |Country CC|}} <tr><td>{{@index}}<td>{{{Country.country_name}}}<td>{{{CC}}}<td style="text-align:center"> {{{Country.languageCode}}} <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a><td style="text-align:center">{{{Country.curr_code}}}<td>{{{Country.curr_name}}}<td style="text-align:center">{{{Country.curr_symbol}}}<td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}<td>{{{ getDistanceOptStr Country.distance_std_option}}}<td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}<td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></tr> {{/each}} </table></div><br><br>
