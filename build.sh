@@ -26,16 +26,16 @@ do
 
         c)                
             #make clean copy from src/ to build/ 
-            if [ ! -d "build/" ]; then
+            if [ ! -d "bin/" ]; then
                 #if directory doesn't exist
-                mkdir build/
+                mkdir bin/
             fi
             
-            cd build/
-            printf "\n## Making a clean copy from src/ to build/ \n\n"
+            cd bin/
+            printf "\n## Making a clean copy from src/ to bin/ \n\n"
             rm -R -f *
             cd ../
-            cp -R src/* build/
+            cp -R src/* bin/
             
             COPIED="1"
             
@@ -47,16 +47,16 @@ do
             printf "$0 -A \n"
             printf "\n"
             printf "   #With these options it may run just locally\n"
-            printf "   -c     makes [c]lean copy from src/ to build/              need to be done on the 1st time \n"
+            printf "   -c     makes a [c]lean copy from src/ to bin/              need to be done on the 1st time \n"
             printf "   -e     check for JS syntax [e]rrors in src/                with npm jshint \n"
-            printf "   -i     compress [i]mages, jpg and png files in build/      with ImageMagick \n"                        
-            printf "   -m     [m]inify js, json, css and html files in build/     with npm: minifier, html-minifier, uglifycss and json-minify \n"
+            printf "   -i     compress [i]mages, jpg and png files in bin/        with ImageMagick \n"                        
+            printf "   -m     [m]inify js, json, css and html files in bin/       with npm: minifier, html-minifier, uglifycss and json-minify \n"
             printf "\n\n"
             printf "   #With these options it needs internet connection to a server's Database\n"            
             printf "   -l     selects Database re[l]ease (-l work or -l prod)     Database credentials in directory keys/work/ or keys/prod/\n"
             printf "   -s     creates a Database with countries' [s]pecifcations  connection to a Database\n"
             printf "   -r     [r]efreshes the statistical costs Database          connection to the countries' specifcations Database \n"
-            printf "   -t     generate html and jpeg stats [t]ables in build/     based on the statistical costs Database \n"
+            printf "   -t     generate html and jpeg stats [t]ables in bin/       based on the statistical costs Database \n"
             printf "\n"
             printf "   -A     runs [a]ll previous options\n"
             printf "\n"
@@ -110,7 +110,7 @@ do
     case $OPTION in
 
         s)
-            cd scripts/
+            cd build/
             printf "\n## Creates DB with countries' specifcations \n"
             node setCountrySpecsDB.js $RELEASE
             cd ../
@@ -128,7 +128,7 @@ do
         
         r)
                 
-            cd scripts/
+            cd build/
             printf "\n## Refreshes statistical costs DB \n"
             node getAvgFromDB.js $RELEASE
             cd ../
@@ -145,7 +145,7 @@ do
 
         t)
             #generating statistical tables
-            cd scripts/
+            cd build/
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
@@ -175,7 +175,7 @@ do
 
         m)
             #minification and concatenation of files
-            cd scripts/
+            cd build/
             printf "\n## Minify and concatenate js, html/hbs, css and json files \n\n"
 
             node minifyFiles.js
@@ -185,7 +185,7 @@ do
 
         i)
             #compress images
-            cd scripts/
+            cd build/
             printf "\n## Compress images, jpg and png files \n\n"
                   
             node compressImages.js
@@ -198,6 +198,6 @@ done
 printf "\nProcessed \n"
 if [ "$COPIED" == "1" ]
     then
-    printf "\nRun\nnode $DIR/build/index.js\nto start application\n\n"
+    printf "\nRun\nnode $DIR/bin/index.js\nto start application\n\n"
 fi
 

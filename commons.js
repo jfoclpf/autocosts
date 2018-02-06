@@ -52,13 +52,15 @@ module.exports = {
     //command to get ROOT_DIR might vary according to the application (nodeJS or PhantomJS), therefore parsed here
     //change vars accordingly
     getDirs : function(ROOT_DIR){
-        /*Always leave the traling slash at the end on each directory*/                
+        /*Always leave the traling slash at the end on each directory*/
+        /*this directory structure was based on Node/JS most common practises,
+        namely see: docs/nodeJS-directory-structure.md */
 
         //Source directory - the directory where the source code is stored
         var SRC_DIR       = ROOT_DIR + "src" + "/";       
 
         //Build directory - the directory to where the source code is deployed after running the bash script ./build.sh
-        var BUILD_DIR       = ROOT_DIR + "build" + "/";
+        var BIN_DIR       = ROOT_DIR + "bin" + "/";
 
         //The directory where the countries information is originally stored
         var COUNTRIES_DIR = SRC_DIR  + "countries" + "/"; 
@@ -68,12 +70,12 @@ module.exports = {
 
         //The directory where the tables HTML.hbs and JPEG files 
         //are to be stored right after being generated
-        var TABLES_DIR = BUILD_DIR + "tables" + "/";
+        var TABLES_DIR = BIN_DIR + "tables" + "/";
 
         var Dirs = {
             "ROOT_DIR": ROOT_DIR,
             "SRC_DIR": SRC_DIR,
-            "BUILD_DIR": BUILD_DIR,
+            "BIN_DIR": BIN_DIR,
             "COUNTRIES_DIR": COUNTRIES_DIR,
             "COUNTRY_LIST_FILE": COUNTRY_LIST_FILE,
             "TABLES_DIR": TABLES_DIR
