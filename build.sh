@@ -35,7 +35,7 @@ do
             printf "\n## Making a clean copy from src/ to bin/ \n\n"
             rm -R -f *
             cd ../
-            cp -R src/* bin/
+            cp -R src/* src/.gitkeep bin/
             
             COPIED="1"
             
