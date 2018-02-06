@@ -110,7 +110,13 @@ Autocosts uses Google Charts to render the final charts, with several analysys. 
 
 ### Google Analytics
 
-You can add your Google Analytics credentials.
+You can add your Google Analytics credentials. The file `google_analytics.json` should be stored in `keys/prods/` or `keys/work/`, the latter being the test version. This file `google_analytics.json` should be like:
+
+```
+{
+    "tracking-id": "UA-*******-*"
+}
+```
 
 ### Google Captcha v2
 

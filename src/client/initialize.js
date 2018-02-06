@@ -51,9 +51,6 @@ var getScriptOnce = (function(url, callback){
         getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
     });
 
-    //detects whether Google Analytics has loaded
-    check_ga();
-
     getScriptOnce(JS_FILES.jAlert, function(){
         //defaults for the alert box
         $.fn.jAlert.defaults.size = 'sm';
@@ -66,7 +63,7 @@ var getScriptOnce = (function(url, callback){
     loadStyleSheets(['css/merged-min/merged2.css']);
 
     /*Google Analytics*/
-    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() ) {
+    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
         (function(i, s, o, g, r, a, m) {
             i.GoogleAnalyticsObject = r;
             i[r] = i[r] || function() {
@@ -79,10 +76,15 @@ var getScriptOnce = (function(url, callback){
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-3421546-6', 'auto');
+        //change according to your site
+        ga('create', GA_TRACKING_ID, 'auto');
         ga('send', 'pageview');
+        
+        //detects whether Google Analytics has loaded
+        //tries every second
+        check_ga(1000);
     }
-
+    
 })();
 
 //function that sets the JS language variables to the correspondent HTML divs
@@ -227,7 +229,7 @@ function loadsButtonsSettings(){
 
 
 //detects whether Google Analytics has loaded
-function check_ga() {
+function check_ga(t) {
 
     if(IsThisAtest()){
         SERVICE_AVAILABILITY.g_analytics = false;
@@ -238,7 +240,7 @@ function check_ga() {
         SERVICE_AVAILABILITY.g_analytics = true;
     } else {
         SERVICE_AVAILABILITY.g_analytics = false;
-        setTimeout(check_ga, 1000);
+        setTimeout(check_ga, t);
     }
 }
 
