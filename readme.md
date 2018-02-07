@@ -124,7 +124,7 @@ Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the
 
 ```
 {  
-    "secretKey" : "6LeWQBsUAAAAAH3bLdxs781UaD71Mu4hMv92qFMA"
+    "secretKey" : "*************************************"
 }
 ```
 
