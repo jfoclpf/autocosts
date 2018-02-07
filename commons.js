@@ -43,13 +43,16 @@ module.exports = {
                 "URL_PROD": CDN_URL_PROD,
                 "URL_WORK": CDN_URL_WORK       
                 },
-            "DefaultCC": DefaultCC,
-            "SWITCHES": SWITCHES,
-            "gaTrackingId": SWITCHES.g_analytics ? getGAnalyticsTrackigID() : ""
+            "DefaultCC"         : DefaultCC,
+            "SWITCHES"          : SWITCHES,                            
+            "gCaptchaSecretKey" : SWITCHES.g_captcha   ? getServInfoFromFile("Google Captcha V2", "recaptcha_key.json", "secretKey") : "",
+            "gaTrackingId"      : SWITCHES.g_analytics ? getServInfoFromFile("Google Analytics", "google_analytics.json", "tracking-id") : "",
+            "DBInfo"            : SWITCHES.data_base   ? getServInfoFromFile("Database", "db_credentials.json") : null,
+            "UBERtoken"         : SWITCHES.uber        ? getServInfoFromFile("UBER API", "uber_token.json", "token") : ""
             };
         
         return settings;
-    },    
+    },        
     
     //Root directory of the main project's root directory
     //command to get ROOT_DIR might vary according to the application (nodeJS or PhantomJS), therefore parsed here
@@ -183,14 +186,36 @@ function getCCListOnStr(available_CT){
     return str;
 }
 
-//Get Google Analytics Tracking ID
-function getGAnalyticsTrackigID(){
-    if (typeof _ROOT_DIR !== 'undefined' && typeof _REL !== 'undefined'){ 
-        var filename = _ROOT_DIR + 'keys/' + _REL + '/google_analytics.json';
-        var data = JSON.parse(fs.readFileSync(filename));        
-        return data["tracking-id"];
+//gets the correspondent service credentials are stored in directories
+// keys/prod or keys/work, the latter being the release test version
+function getServInfoFromFile(service, serviceFile, prop){
+    
+    if (typeof service !== 'string' || typeof serviceFile !== 'string'){
+        throw "Error calling function getService(service, serviceFile, prop)";   
+    }
+    
+    if (typeof _ROOT_DIR !== 'undefined' && typeof _REL !== 'undefined'){
+        
+        var fileName = _ROOT_DIR + 'keys/' + _REL + '/' + serviceFile;
+        if (!fs.existsSync(fileName)){
+            throw "Considering you enabled the " + service +
+                  " services, you have the create the " + serviceFile +
+                  " file in either keys/prod/ or keys/work directories, the latter being the release of the test version." +
+                  " To avoid this error, either create that file or disable the " + service + " service.\n";             
+        }
+        var dataObj = JSON.parse(fs.readFileSync(fileName));
+        
+        if (typeof prop !== 'undefined'){
+            return dataObj[prop];
+        }
+        else{
+            return dataObj;
+        }        
     }
     else{
-        throw "commons.getRelease(process) and commons.getDirs(ROOT_DIR) must be called before commons.getSettings()";
+        var thisScriptFileName = path.basename(__filename);
+        throw "functions getRelease(process) and getDirs(ROOT_DIR) called externally to module " + thisScriptFileName +
+              " must both be called before the function getSettings()\n";
     }
 }
+
