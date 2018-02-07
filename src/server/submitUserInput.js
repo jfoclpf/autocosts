@@ -4,7 +4,7 @@ const mysql = require('mysql'); //module to get info from DB
 
 module.exports = function (req, res, GlobData){
     
-    var DBInfo = GlobData.DBInfo;    
+    var DBInfo = GlobData.Settings.DBInfo;    
     
     //object got from POST
     var objectToDb = req.body.objectToDb;    

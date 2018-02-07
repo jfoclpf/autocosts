@@ -126,10 +126,10 @@ var makeUberRequest = async function (req, GlobData){
     console.log("lat: " + lat + "; long: " +long);
 
     //get uber token  
-    var uber_token = JSON.parse(fs.readFileSync(GlobData.Dirs.ROOT_DIR + 'keys/' + GlobData.REL + '/uber_token.json'));
+    var uber_token = GlobData.Settings.UBERtoken;
     console.log("uber_token", uber_token);
     var uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
-                        lat + "&longitude=" + long + "&server_token=" + uber_token.token;        
+                        lat + "&longitude=" + long + "&server_token=" + uber_token;        
     console.log("uber_API_url", uber_API_url);
 
     //HTTP Header request

@@ -22,14 +22,11 @@ const sortObj     = require('sort-object'); //to sort JS objects
 //personalised requires
 const commons         = require('../commons');
 const url             = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
-const submitUserInput = require(__dirname + '/server/submitUserInput');
 const getCC           = require(__dirname + '/server/getCC');
-const getUBER         = require(__dirname + '/server/getUBER');
 const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
 const list            = require(__dirname + '/server/list');
 const domains         = require(__dirname + '/server/domains');
 const sitemap         = require(__dirname + '/server/sitemap');
-const captchaValidate = require(__dirname + '/server/captchaValidate');
 
 //Deals with directories, some dirs are got from commons.js
 //other dirs are got directly here in this script
@@ -55,10 +52,13 @@ const GlobData = {
     "available_CT"  : sortObj(CountriesInfo.available_CT), //Array of alphabetically sorted available Countries
     "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
     "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
-    "domains"       : commons.getUniqueArray(CountriesInfo.domains_CT), //Array of Unique Domains
-    "DBInfo"        : JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json')) //include credentials object
+    "domains"       : commons.getUniqueArray(CountriesInfo.domains_CT) //Array of Unique Domains
 };
-//console.log(GlobData);
+console.log(GlobData);
+
+//Global switches with the available services
+//for more information see commons.js
+const SWITCHES = Settings.SWITCHES;
 
 //creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
@@ -117,20 +117,29 @@ app.get('/sitemap.xml', function(req, res) {
     sitemap(req, res, GlobData, WORDS);
 });
 
-app.get('/getUBER/:CC', function(req, res) {
-    console.log("\nRoute: app.get('/getUBER')");
-    getUBER(req, res, GlobData);
-});
+if (SWITCHES.uber){
+    const getUBER = require(__dirname + '/server/getUBER');    
+    app.get('/getUBER/:CC', function(req, res) {
+        console.log("\nRoute: app.get('/getUBER')");
+        getUBER(req, res, GlobData);
+    });
+}
 
-app.post('/captchaValidate', function(req, res) {
-    console.log("\nRoute: app.post('/captchaValidate')");
-    captchaValidate(req, res, GlobData);
-});
+if (SWITCHES.g_captcha){
+    const captchaValidate = require(__dirname + '/server/captchaValidate');    
+    app.post('/captchaValidate', function(req, res) {
+        console.log("\nRoute: app.post('/captchaValidate')");
+        captchaValidate(req, res, GlobData);
+    });
+}
 
-app.post('/submitUserInput', function(req, res) {
-    console.log("\nRoute: app.post('/submitUserInput')");
-    submitUserInput(req, res, GlobData);
-});
+if (SWITCHES.data_base){
+    const submitUserInput = require(__dirname + '/server/submitUserInput');    
+    app.post('/submitUserInput', function(req, res) {
+        console.log("\nRoute: app.post('/submitUserInput')");
+        submitUserInput(req, res, GlobData);
+    });
+}
 
 /*this middleware shall be the last before error*/
 /*this is the entry Main Page*/
