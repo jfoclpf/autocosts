@@ -3,4 +3,6 @@ keys/work/*
 keys/prod/*
 bin/*
 node_modules/
+rsync2work.sh
+
 
