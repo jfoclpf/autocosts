@@ -133,7 +133,7 @@ the latter being the test version. This file `googleAnalytics.json` should be li
 
 ```
 {
-    "tracking-id": "UA-*******-*"
+    "trackingId": "UA-*******-*"
 }
 ```
 
