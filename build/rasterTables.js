@@ -4,13 +4,11 @@ which converts table costs HTML.hbs files into correspondent table costs jpg ima
 var fs = require('fs');
 
 var commonsJSFile = fs.absolute("../") + "commons.js";
-var commons  = require(commonsJSFile);
+var commons       = require(commonsJSFile);
 
-var ROOT_DIR = fs.absolute("../");
-var Dirs = commons.getDirs(ROOT_DIR);
-
-var TABLES_DIR  = Dirs.TABLES_DIR;
-var BIN_DIR   = Dirs.BIN_DIR;
+var directories = commons.getDirectories();
+var TABLES_DIR  = directories.server.tables;
+var BIN_DIR     = directories.server.bin;
 
 console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
 var css_file = fs.absolute(BIN_DIR + "css/") + "right.css";
@@ -64,3 +62,4 @@ page_css.onLoadFinished = function(status) {
     render_pages();
     phantom.exit();
 };
+

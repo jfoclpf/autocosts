@@ -1,7 +1,7 @@
 const url      = require(__dirname + '/url');
 const commons  = require('../../commons');
 
-module.exports = function(req, res, GlobData, WORDS) {
+module.exports = function(req, res, serverData, WORDS) {
 
     var data = {};
         
@@ -13,29 +13,29 @@ module.exports = function(req, res, GlobData, WORDS) {
     delete data.WORDS2.XX;  
 
     //function that gets an Object associating a language with a country/domain
-    var twoLetterLang = getUniqueLangObj(GlobData);    
+    var twoLetterLang = getUniqueLangObj(serverData);    
     data.twoLetterLang = twoLetterLang;
     
-    data.HTTP_Protocol = url.getProtocol(req, GlobData.Settings.IS_HTTPS);
+    data.HTTP_Protocol = url.getProtocol(req, serverData.settings.switches.https);
     
     data.layout = false;
     
     res.header('Content-Type', 'application/xml; charset=utf-8');
   
-    var fileToRender = GlobData.Dirs.INDEX_DIR + "views/sitemap.hbs";
+    var fileToRender = serverData.directories.index + "views/sitemap.hbs";
     res.render(fileToRender, data);
     
 }
 
 
 //function that gets an Object associating a language with a country/domain
-function getUniqueLangObj(GlobData){
+function getUniqueLangObj(serverData){
 
-    var languages_CT = JSON.parse(JSON.stringify(GlobData.languages_CT)); //clone object
-    delete languages_CT.XX;
+    var languagesCountries = JSON.parse(JSON.stringify(serverData.languagesCountries)); //clone object
+    delete languagesCountries.XX;
     
     //gets an array of unique, Languages => [en, en-ES, es, pt-BR, pt-PT, it, etc.]
-    var uniqueLangsTemp = commons.getUniqueArray(languages_CT); //get unique Array from Object
+    var uniqueLangsTemp = commons.getUniqueArray(languagesCountries); //get unique Array from Object
     
     //gets just the 2 letters of language code, i.e. the 2 first letters
     //therefore gest a unique array, of non-specific-country, Languages 
@@ -57,14 +57,14 @@ function getUniqueLangObj(GlobData){
         if (langCode=="en"){
             twoLetterLang.UK = {};
             twoLetterLang.UK.langCode = langCode;
-            twoLetterLang.UK.domain = GlobData.domains_CT.UK;
+            twoLetterLang.UK.domain = serverData.domainsCountries.UK;
         }
         else{
-            var CC = commons.getKeyByValue(languages_CT, langCode);
+            var CC = commons.getKeyByValue(languagesCountries, langCode);
             if (CC){
                 twoLetterLang[CC] = {};
                 twoLetterLang[CC].langCode = langCode;
-                twoLetterLang[CC].domain = GlobData.domains_CT[CC];     
+                twoLetterLang[CC].domain = serverData.domainsCountries[CC];     
             }
         }
     }

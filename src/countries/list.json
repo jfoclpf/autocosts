@@ -1,5 +1,5 @@
 { 
-    "available_CT" : {
+    "availableCountries" : {
         "XX" : "test",
         "PT" : "Portugal",
         "BR" : "Brasil",
@@ -47,7 +47,7 @@
         "JP" : "日本",
         "CN" : "中国"
     },    
-    "languages_CT" : {
+    "languagesCountries" : {
         "XX" : "en",
         "PT" : "pt",
         "BR" : "pt-BR",
@@ -95,7 +95,7 @@
         "JP" : "ja",
         "CN" : "zh"
     },
-    "domains_CT" : {
+    "domainsCountries" : {
         "XX" : "autocosts.info",
         "PT" : "autocustos.info",
         "BR" : "autocustos.info",

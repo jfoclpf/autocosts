@@ -9,12 +9,12 @@ const geoIP    = require('geoip-lite');
 const request  = require('request');
 const url      = require(__dirname + '/url');
 
-module.exports = function(req, res, GlobData) {
+module.exports = function(req, res, serverData) {
     
     var CC = req.params.CC;
     
-    var p1 = readCCFileAsync(GlobData.Dirs.SRC_DIR + 'countries/' + CC + '.json');
-    var p2 = makeUberRequest(req, GlobData);
+    var p1 = readCCFileAsync(serverData.directories.server.countries + CC + '.json');
+    var p2 = makeUberRequest(req, serverData);
 
     res.set('Content-Type', 'application/json');    
     
@@ -89,7 +89,7 @@ var readCCFileAsync = async function (path){
     return result;
 };
 
-var makeUberRequest = async function (req, GlobData){
+var makeUberRequest = async function (req, serverData){
 
     var debug; //put 0 for PROD; 1 for Lisbon, 2 for London
     if (url.isThisLocalhost(req)){
@@ -126,7 +126,7 @@ var makeUberRequest = async function (req, GlobData){
     console.log("lat: " + lat + "; long: " +long);
 
     //get uber token  
-    var uber_token = GlobData.Settings.UBERtoken;
+    var uber_token = serverData.settings.uber.token;
     console.log("uber_token", uber_token);
     var uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
                         lat + "&longitude=" + long + "&server_token=" + uber_token;        

@@ -7,15 +7,15 @@ module.exports = {
         return CC === value ? ' ' + 'selected' : ''; 
     },
     /*chose the HTML costs table for specific country*/
-    costs_table: function (CC){
+    costsTable: function (CC){
         return CC;
     },
-    banner_flag: function (CC){
+    bannerFlag: function (CC){
         return CC.toLowerCase() + ' ' + 'flag';
     },
     //function that adpats the title for lower case 
     //having only uppercase on the firt letters of the words bigger than 4 characters
-    adapt_title: function(Title){ 
+    adaptTitle: function(Title){ 
 
         //lower case all string
         var title = Title.toLowerCase();
@@ -32,20 +32,20 @@ module.exports = {
         return title;
     },        
     //get first sentence of string, with HTML tags stripped out
-    meta_description: function(string){            
+    metaDescription: function(string){            
         return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');
     },
     //function that gets a string of main/key words from title
     //Ex: "calculadora dos custos do automóvel" returns "calculadora, custos, automóvel"
-    get_keywords: function(title, str1, str2){
+    getKeywords: function(title, str1, str2){
 
         //lower case all strings
-        var Title = title.toLowerCase();
-        var Str1 = str1.toLowerCase();
-        var Str2 = str2.toLowerCase();
+        var localTitle = title.toLowerCase();
+        var localStr1 = str1.toLowerCase();
+        var localStr2 = str2.toLowerCase();
 
         //get an array of words stripped by space
-        var words = Title.split(" ");
+        var words = localTitle.split(" ");
 
         //if a word has a size bigger than 3, adds to keywords
         var keywords = []; var word;
@@ -56,8 +56,8 @@ module.exports = {
             }
         }
 
-        keywords.push(Str1);
-        keywords.push(Str2);
+        keywords.push(localStr1);
+        keywords.push(localStr2);
 
         var keywords_string = keywords.join(',');
 

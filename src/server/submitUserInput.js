@@ -2,9 +2,9 @@
 
 const mysql = require('mysql'); //module to get info from DB
 
-module.exports = function (req, res, GlobData){
+module.exports = function (req, res, serverData){
     
-    var DBInfo = GlobData.Settings.DBInfo;    
+    var DBInfo = serverData.settings.dataBase.credentials;    
     
     //object got from POST
     var objectToDb = req.body.objectToDb;    

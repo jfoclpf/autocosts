@@ -4,12 +4,12 @@
     "applicationCategory": "Calculator",
     "applicationSubCategory": "Automobile costs calculator",
     "operatingSystem": "Windows, Linux, OSX, Android",
-    "countriesSupported": "{{{ countriesListOnString }}}",
+    "countriesSupported": "{{{ serverData.CClistOnString }}}",
     "about" : {
         "@type": "Thing",
-        "description": "{{{ meta_description Words.initial_text }}}",
+        "description": "{{{ metaDescription words.initial_text }}}",
         "image": "http://autocosts.info/images/logos/autocosts_dollar.png",
-        "name": "{{{ adapt_title Words.web_page_title}}}",
+        "name": "{{{ adaptTitle words.web_page_title}}}",
         "url": "autocosts.info/{{{CC}}}"
     },
     "audience": {
@@ -20,7 +20,7 @@
     "inLanguage": "{{{LangCode}}}",
     "isAccessibleForFree": "True",
     "isFamilyFriendly": "True",
-    "keywords": "{{{ get_keywords Words.web_page_title Words.fixed_costs Words.running_costs }}}",
-    "text": "{{{ striOutHTML Words.initial_text}}}"  
+    "keywords": "{{{ getKeywords words.web_page_title words.fixed_costs words.running_costs }}}",
+    "text": "{{{ striOutHTML words.initial_text}}}"  
 }
 

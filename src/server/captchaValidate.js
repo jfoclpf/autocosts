@@ -4,7 +4,7 @@ regarding the Google reCapactha v2 https://developers.google.com/recaptcha/docs/
 const request  = require('request');
 const fs       = require('fs');
 
-module.exports = function(req, res, GlobData) {
+module.exports = function(req, res, serverData) {
         
     var captchaResponse = req.body['g-recaptcha-response'];
     if(!captchaResponse){
@@ -18,9 +18,7 @@ module.exports = function(req, res, GlobData) {
              req.socket.remoteAddress || 
              req.connection.socket.remoteAddress;
     
-    var keyFile = GlobData.Dirs.ROOT_DIR + 'keys/' + GlobData.REL + '/recaptcha_key.json';        
-    var data = JSON.parse(fs.readFileSync(keyFile));
-    var secretKey = data.secretKey;
+    var secretKey = serverData.settings.googleCaptcha.secretKey;
     
     //loads the Google info with corresponding response
     //@ forces the ignoring of warnings in case the info is not loaded    
