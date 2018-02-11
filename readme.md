@@ -23,12 +23,10 @@ https://autocosts.info/domains
 
 Clone it, install it, build it and run it<br>
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
-`cd autocosts/ && npm install`
+`cd autocosts/ && npm install`<br>
 `node bin/index.js`
 
-This will run a `node` server application with the calculator.
-For more information run `./build.sh -h`. 
-The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
+This will run a `node` server application with the calculator. For more information on builidng run `./build.sh -h`. For more information on the application run `node bin/index.js -h`.
 
 ## How does it work?
 
@@ -61,23 +59,26 @@ using the `node bin/index.js` command line options:
 
 ```
 Usage: node index.js [options]
-Ex:    node index.js -r prod --uber --data_base
+Ex:    node index.js -r prod --uber --dataBase
 
 Options: 
 -r, --release              'work' for tests or 'prod' for production
-                           API credentials being in keys/work/ or keys/prod/ 
+-p, --port                 HTTP port on which the application is listening (default:3000)
+
+    External API services, disabled by default
+    API credentials must be in either credentials/work/ or credentials/prod/ according to release
     --https                Enables protocol https when available
-    --CDN                  Enables Content Delivery Network
+    --cdn                  Enables Content Delivery Network
     --uber                 Enables UBER API
     --social               Enables social media plugin
-    --g_charts             Enables Google Charts for report
-    --g_captcha            Enables Google Captcha V2 anti-bot for calculation button
-    --g_analytics          Enables Google Analytics
-    --data_base            Enables a mysql Database
+    --googleCharts         Enables Google Charts for report
+    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
+    --googleAnalytics      Enables Google Analytics
+    --dataBase             Enables a mysql Database
     --print                Enables option to print, on the final report
     --pdf                  Enables option to download pdf repor on final report
 
--A  --all                  Enables all the previous options
+-A  --all                  Enables all the previous services
 ```
 
 ### Database
@@ -133,7 +134,7 @@ the latter being the test version. This file `googleAnalytics.json` should be li
 
 ```
 {
-    "tracking-id": "UA-*******-*"
+    "trackingId": "UA-*******-*"
 }
 ```
 
@@ -162,6 +163,7 @@ The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Andro
 * Use four spaces for indentations
 * Comment the code in English
 * The local variables names, object properties, functions names and directories names shall obey CamelCase
+* The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
 
 ## License<br>
 GNU GPLv3<br>
