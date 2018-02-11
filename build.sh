@@ -198,6 +198,7 @@ done
 printf "\nProcessed \n"
 if [ "$COPIED" == "1" ]
     then
-    printf "\nRun\nnode $DIR/bin/index.js\nto start application\n\n"
+    printf "\nRun\nnode $DIR/bin/index.js\nto start application\nor"
+    printf "\nnode $DIR/bin/index.js -h \nfor more information\n\n"
 fi
 

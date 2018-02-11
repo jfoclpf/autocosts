@@ -5,12 +5,8 @@
 **                                             **
 ************************************************/
 
-console.log("\n\nServer started at " + __dirname);
-
 //check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
-const numCPUs = require('os').cpus().length;
-console.log("numCPUs: " + numCPUs);
-
+const numCPUs     = require('os').cpus().length;
 const fs          = require('fs');
 const path        = require("path");
 const express     = require('express');
@@ -49,7 +45,7 @@ const serverData = {
     "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-//console.log(serverData);
+console.log(serverData);
 
 //Global switches with the available services
 //for more information see commons.js
@@ -63,6 +59,9 @@ for (var CC in serverData.availableCountries){
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
     WORDS[CC].domain = serverData.domainsCountries[CC];    
 }
+
+console.log("\n\nServer started at " + __dirname);
+console.log("numCPUs: " + numCPUs);
 
 var app = express();
 app.enable('case sensitive routing');
@@ -166,9 +165,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 })
 
-var HTTPport = 3000;
-var server = app.listen(HTTPport, function () {
-    console.log('Listening on port ' + HTTPport);
+var server = app.listen(settings.HTTPport, function () {
+    console.log('Listening on port ' + settings.HTTPport);
     //server.close();
 });
 
