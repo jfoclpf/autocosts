@@ -5,6 +5,9 @@
 **                                             **
 ************************************************/
 
+/*#############################################################################*/
+/*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
+
 /*File with Javascript Global variables rendered by handlebars to be inserted inline*/
 
 /*In this file for comments ALWAYS use bar-star star-bar / * comments * / */
@@ -12,36 +15,38 @@
 
 /*GLOBAL switches, change accordingly*/
 var SWITCHES = {
-    "uber": JSON.parse('{{{ SWITCHES.uber }}}'),               /*Uber*/
-    "social": JSON.parse('{{{ SWITCHES.social }}}'),           /*Social media pulgins*/
-    "g_charts": JSON.parse('{{{ SWITCHES.g_charts }}}'),       /*Google Charts*/
-    "g_captcha": JSON.parse('{{{ SWITCHES.g_captcha }}}'),     /*Google Captcha*/
-    "g_analytics": JSON.parse('{{{ SWITCHES.g_analytics }}}'), /*Google Analytics*/
-    "data_base": JSON.parse('{{{ SWITCHES.data_base }}}'),     /*Inserts user input data into DataBase*/
-    "print": JSON.parse('{{{ SWITCHES.print }}}'),             /*Print option*/
-    "pdf": JSON.parse('{{{ SWITCHES.pdf }}}'),                 /*Download PDF report option*/
-    "https": JSON.parse('{{{ IS_HTTPS }}}')                    /*true for https, false for http*/
+    "https": JSON.parse('{{{ serverData.settings.switches.https }}}'),                 /*true for https, false for http*/    
+    "uber": JSON.parse('{{{ serverData.settings.switches.uber }}}'),                   /*Uber*/
+    "social": JSON.parse('{{{ serverData.settings.switches.social }}}'),               /*Social media pulgins*/
+    "g_charts": JSON.parse('{{{ serverData.settings.switches.googleCharts }}}'),       /*Google Charts*/
+    "g_captcha": JSON.parse('{{{ serverData.settings.switches.googleCaptcha }}}'),     /*Google Captcha*/
+    "g_analytics": JSON.parse('{{{ serverData.settings.switches.googleAnalytics }}}'), /*Google Analytics*/
+    "data_base": JSON.parse('{{{ serverData.settings.switches.dataBase }}}'),          /*Inserts user input data into DataBase*/
+    "print": JSON.parse('{{{ serverData.settings.switches.print }}}'),                 /*Print option*/
+    "pdf": JSON.parse('{{{ serverData.settings.switches.pdf }}}')                      /*Download PDF report option*/
 };
 
 /*Define GLOBAL Javascript variables*/
 var COUNTRY = '{{{ CC }}}';
 /*Language code according to ISO_639-1 codes*/
-var LANGUAGE = '{{{ LangCode }}}';
+var LANGUAGE = '{{{ clientData.languageCode }}}';
 /*List of countries and domains in a Javascript Object*/
-var COUNTRY_LIST = JSON.parse('{{{ json available_CT }}}');
-var DOMAIN_LIST  = JSON.parse('{{{ json domains_CT }}}');
+var COUNTRY_LIST = JSON.parse('{{{ json serverData.availableCountries }}}');
+var DOMAIN_LIST  = JSON.parse('{{{ json serverData.domainsCountries }}}');
 
-var CDN_URL       = '{{{ CDN_URL }}}'; /*it's defined in the node server side index.js*/
-var HTTP_Protocol = '{{{ HTTP_Protocol }}}'; /*it's defined in node server side index.js*/
+var CDN_URL       = '{{{ serverData.settings.cdn.url }}}'; /*it's defined in the node server side index.js*/
+var HTTP_Protocol = '{{{ clientData.httpProtocol }}}'; /*it's defined in node server side index.js*/
 
-var clientDir = '{{{ clientDir }}}';
+var clientDir = '{{{ serverData.directories.client.client }}}';
 
-var WORDS = JSON.parse('{{{ jsonEscap Words }}}');
-
-var INITIAL_TEX = '{{{ escapeStr Words.initial_text }}}';
+var WORDS = JSON.parse('{{{ jsonEscap words }}}');
+var INITIAL_TEX = '{{{ escapeStr words.initial_text }}}';
 
 /*Google analytics Tracking ID*/
-var GA_TRACKING_ID = '{{{ gaTrackingId }}}';
+var GA_TRACKING_ID = '{{{ serverData.settings.googleAnalytics.trackingId }}}';
+
+/*true when this session does not come from localhost*/
+var NOT_LOCALHOST = JSON.parse('{{{ clientData.notLocalhost }}}');
 
 /*forms present page full url, example 'http://autocosts.info/UK' */
 var PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
@@ -92,9 +97,6 @@ var JS_FILES = {
 
 var UBER_FILE = "getUBER/" + COUNTRY;
 
-/*#############################################################################*/
-/*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
-
 /*global function variables for function expressions */
 var Run1, PrintElem, generatePDF, TimeCounter;
 Run1 = PrintElem = generatePDF = TimeCounter = function(){console.error("Function called and not yet loaded");};
@@ -127,9 +129,9 @@ var DISPLAY = {
         MIN_RATIO:       0.7, /*minimum ratio width of charts as frame_witdh becomes too wide*/
         MIN_RATIO_WIDTH: 750, /*width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO*/
         MIN_LEGEND:      425, /*window width value under which the legends of the charts are hidden*/
-        isMonthlyCostsPieChart: false, /*prints chart bool variable*/
-        isMonthlyCostsBarChart: false, /*prints chart bool variable*/
-        isFinEffortChart:       false, /*prints chart bool variable*/
+        isMonthlyCostsPieChart: false,  /*prints chart bool variable*/
+        isMonthlyCostsBarChart: false,  /*prints chart bool variable*/
+        isFinEffortChart:       false,  /*prints chart bool variable*/
         isAlterToCarChart:      false,  /*prints chart bool variable*/
         /*the charts images data URI*/
         URIs: {

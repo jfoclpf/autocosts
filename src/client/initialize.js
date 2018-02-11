@@ -157,9 +157,15 @@ function initializeForm(){
     if(!SWITCHES.print){
         $("#print_button").hide();
     }
-    //deactivates pdf download button, to be activated only after pdf files are available
+    else{
+        $("#print_button").show();    
+    }
+    
     if(!SWITCHES.pdf){
-        $("#generate_PDF").prop("disabled",true).addClass("buttton_disabled");
+        $("#generate_PDF").hide();
+    }
+    else{
+        $("#generate_PDF").show();
     }
 
 }

@@ -1,24 +1,24 @@
 const url = require(__dirname + '/url');
 
-module.exports = function(req, res, GlobData, WORDS) {
+module.exports = function(req, res, serverData, WORDS) {
 
     var data = {};
     data.WORDS = JSON.parse(JSON.stringify(WORDS)); //clone object
     delete data.WORDS.XX;
     
-    var domains_CT = JSON.parse(JSON.stringify(GlobData.domains_CT)); //clone object
-    delete domains_CT.XX;
+    var domainsCountries = JSON.parse(JSON.stringify(serverData.domainsCountries)); //clone object
+    delete domainsCountries.XX;
     
     var domains = {};
-    //array GlobData.domains has unique elements, i.e. an array without repeated elements
-    for (var i=0; i<GlobData.domains.length; i++){
+    //array serverData.domains has unique elements, i.e. an array without repeated elements
+    for (var i=0; i<serverData.domains.length; i++){
         
-        var domain = GlobData.domains[i];
+        var domain = serverData.domains[i];
         domains[domain] = {}; //creates an empty entry
         
         //get the domains that exist for a particular domain
         //i.e. which countries have, for example the "autocosts.info" as associated domain
-        var domainsCC = getCCforDomain(domains_CT, domain);        
+        var domainsCC = getCCforDomain(domainsCountries, domain);        
         
         domains[domain].nbrItems = domainsCC.length;
         
@@ -33,14 +33,14 @@ module.exports = function(req, res, GlobData, WORDS) {
         for (var j=0; j<domainsCC.length; j++){
                         
             var CC = domainsCC[j];            
-            var country = GlobData.available_CT[CC]                        
+            var country = serverData.availableCountries[CC]                        
             
             //the "first" detects the first element to render correctly the table in handlebars
             //regarding the first line <td rowspan="x">
             var first = (j==0)? true : false;
             
             req.params.CC = CC;
-            var fullURL = url.getValidURL(req, domains_CT, GlobData.Settings.IS_HTTPS);
+            var fullURL = url.getValidURL(req, domainsCountries, serverData.settings.switches.https);
             
             var Obj = {
                 "country": country,
@@ -56,17 +56,17 @@ module.exports = function(req, res, GlobData, WORDS) {
     
     data.layout = false;
 
-    var fileToRender = GlobData.Dirs.INDEX_DIR + "views/domains.hbs";
+    var fileToRender = serverData.directories.index + "views/domains.hbs";
     res.render(fileToRender, data);
     
 }
 
 //get array of countries codes (CC) having a specific domain
-function getCCforDomain(domains_CT, domain){
+function getCCforDomain(domainsCountries, domain){
 
     var domainsCC = [];
-    for (var CC in domains_CT){
-        if(domains_CT[CC] == domain){
+    for (var CC in domainsCountries){
+        if(domainsCountries[CC] == domain){
             domainsCC.push(CC);
         }
     }    

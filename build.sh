@@ -112,7 +112,7 @@ do
         s)
             cd build/
             printf "\n## Creates DB with countries' specifcations \n"
-            node setCountrySpecsDB.js $RELEASE
+            node setCountrySpecsDB.js -r $RELEASE --dataBase
             cd ../
             ;;
         
@@ -130,7 +130,7 @@ do
                 
             cd build/
             printf "\n## Refreshes statistical costs DB \n"
-            node getAvgFromDB.js $RELEASE
+            node getAvgFromDB.js -r $RELEASE --dataBase
             cd ../
             ;;
     esac
@@ -149,7 +149,7 @@ do
             printf "\n## Generating statistical tables \n"
 
             printf "\n    Extracts stat info from prod and create html tables \n\n"
-            node generateTables.js $RELEASE
+            node generateTables.js -r $RELEASE --dataBase
 
             cd ../
             ;;                                             

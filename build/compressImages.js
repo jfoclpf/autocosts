@@ -1,18 +1,19 @@
 /*node script to compress and optimize all the images, namely JPG and PNG images, for the web page.
 Optimal compression settings were defined by Google from the Page Speed Insights documentation */
 
+console.log("\nRunning script " + __filename + "\n");
+
 const im      = require('imagemagick');
 const path    = require('path'); 
 const fs      = require('fs');
 const commons = require('../commons.js');
 const walk    = require('walk');
 
-//Root directory of the main project
-var ROOT_DIR = path.resolve(__dirname, '../')  + "/";
 //Main directories got from commons
-var Dirs = commons.getDirs(ROOT_DIR);
+var directories = commons.getDirectories();
 
-var BIN_DIR = Dirs.BIN_DIR;
+var ROOT_DIR = directories.server.root;
+var BIN_DIR  = directories.server.bin;
 console.log("BIN_DIR: ", BIN_DIR);
 
 compressImages();

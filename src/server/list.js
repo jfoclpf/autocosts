@@ -1,12 +1,12 @@
 
-module.exports = function(req, res, GlobData, WORDS) {
+module.exports = function(req, res, serverData, words) {
 
     var data = {};
-    data.WORDS = JSON.parse(JSON.stringify(WORDS)); //clone object
-    delete data.WORDS.XX;
+    data.words = JSON.parse(JSON.stringify(words)); //clone object
+    delete data.words.XX;
     data.layout = false;
 
-    var fileToRender = GlobData.Dirs.INDEX_DIR + "views/list.hbs";
+    var fileToRender = serverData.directories.index + "views/list.hbs";
     res.render(fileToRender, data);
     
 }

@@ -2,6 +2,8 @@
 that will be shown in the right column of the main page*/
 /*It call also the PhantomJS script 'rasterTables.js' that rasters these tables into JPEG files*/
 
+console.log("\nRunning script " + __filename + "\n");
+
 //includes
 const fs       = require('fs');
 const path     = require("path");
@@ -14,39 +16,43 @@ const childProcess = require('child_process');
 const phantomjs = require('phantomjs-prebuilt'); //to use './rasterTables.js'
 const binPath = phantomjs.path;
 
-//Root directory of the main project
-var ROOT_DIR = path.resolve(__dirname, '../')  + "/";
+commons.init();
 //Main directories got from commons
-var Dirs = commons.getDirs(ROOT_DIR);
+var directories       = commons.getDirectories();
+var ROOT_DIR          = directories.server.root;
+var SRC_DIR           = directories.server.src;
+var COUNTRIES_DIR     = directories.server.countries; 
+var TABLES_DIR        = directories.server.tables;
 
-var SRC_DIR       = Dirs.SRC_DIR;
-var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
-var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
-var TABLES_DIR = Dirs.TABLES_DIR;
+var fileNames         = commons.getFileNames();
+var COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
 
-var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
+var settings = commons.getSettings();
 
 //checks for internet connection
-isOnline().then(online => {
+isOnline().then(function(online) {
     
     if(!online){
         console.log("Error: no Internet connection");
         process.exit();
     }
     
-    //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
-    console.log(DB_INFO);
+    var DB_INFO = settings.dataBase.credentials;
+    //detect for null or empty object
+    if(!DB_INFO || Object.keys(DB_INFO).length === 0){
+        throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
+    }    
+    //console.log(DB_INFO);
 
     //getting country information from 
     console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
     var country_list = JSON.parse(fs.readFileSync(COUNTRY_LIST_FILE, 'utf8'));
-    var available_CT = country_list.available_CT;
-    var languages_CT = country_list.languages_CT;
+    var availableCountries = country_list.availableCountries;
+    var languagesCountries = country_list.languagesCountries;
     var domains_CT = country_list.domains_CT;
 
     //sorts array of countries
-    available_CT = sortObj(available_CT);
+    availableCountries = sortObj(availableCountries);
 
     //function for formating numbers which come from DB
     var fixNmbr = function(i,n){
@@ -70,15 +76,15 @@ isOnline().then(online => {
     console.log("Creating tables");
     
     //get number of countries
-    var nbrOfCountries = Object.keys(available_CT).length, 
+    var nbrOfCountries = Object.keys(availableCountries).length, 
         count=0;
     
     //for each country creates a corresponding file
-    for (var CC in available_CT) {                
+    for (var CC in availableCountries) {                
         
         (function (CCfile){                        
          
-            var country_name = available_CT[CCfile];
+            var country_name = availableCountries[CCfile];
             var WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + CCfile + ".json", 'utf8'));
             var currSymb = WORDS['curr_symbol']; //currency symbol
             var stdDist = WORDS['std_dist']; //standard distance 
@@ -188,10 +194,13 @@ isOnline().then(online => {
             
         })(CC);//anonymous function    
         
-    }//for (var CC in available_CT)
+    }//for (var CC in availableCountries)
     
     db.end();        
     
+}).catch(function(err){
+    console.log(err);
+    process.exit();
 });
 
 //Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed

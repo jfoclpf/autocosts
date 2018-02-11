@@ -21,12 +21,14 @@ https://autocosts.info/domains
 
 ## How to install
 
-Clone it, install it and build it<br>
+Clone it, install it, build it and run it<br>
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
 `cd autocosts/ && npm install`
+`node bin/index.js`
 
-
-The directory that corresponds to the website public HTML is `bin/`. This directory is built upon installation. For more information run `./build.sh -h`. The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
+This will run a `node` server application with the calculator.
+For more information run `./build.sh -h`. 
+The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
 
 ## How does it work?
 
@@ -54,27 +56,37 @@ For more information regarding how the costs are calculated, you can check the `
   * Car washes
 
 ### Aditional services
-Autocosts supports the following additional services, which can be turned off or on, in the file `commons.js`
+Autocosts supports the following additional services, which can be enabled or disabled, 
+using the `node bin/index.js` command line options:
 
 ```
-/*GLOBAL switches, change accordingly*/
-const SWITCHES = {
-    "uber": true,        /*uses UBER API to give car user comparisions with UBER costs*/
-    "social": true,      /*Social media pulgins*/
-    "g_charts": true,    /*Google Charts*/
-    "g_captcha": true,   /*Google Captcha to avoid spam-bots*/
-    "g_analytics": true, /*Google Analytics*/
-    "data_base": true,   /*Inserts user input data into a DataBase*/
-    "print": true,       /*Print result option, at the end*/
-    "pdf": true          /*Download PDF report option*/
-};    
+Usage: node index.js [options]
+Ex:    node index.js -r prod --uber --data_base
+
+Options: 
+-r, --release              'work' for tests or 'prod' for production
+                           API credentials being in keys/work/ or keys/prod/ 
+    --https                Enables protocol https when available
+    --CDN                  Enables Content Delivery Network
+    --uber                 Enables UBER API
+    --social               Enables social media plugin
+    --g_charts             Enables Google Charts for report
+    --g_captcha            Enables Google Captcha V2 anti-bot for calculation button
+    --g_analytics          Enables Google Analytics
+    --data_base            Enables a mysql Database
+    --print                Enables option to print, on the final report
+    --pdf                  Enables option to download pdf repor on final report
+
+-A  --all                  Enables all the previous options
 ```
 
 ### Database
 
-Autocosts also supports code such that the user inputs might be stored into a `mysql` database. The credentials for said databse should be stored in `keys/prod/db_credentials.json` or `keys/work/db_credentials.json`, the latter being the test version.
+Autocosts also supports code such that the user inputs might be stored into a `mysql` database. 
+The credentials file for said databse should be stored in directory `credentials/prod/` or `credentials/work/`, 
+the latter being the test version.
 
-This file `db_credentials.json` should look like:
+This file `dataBase.json` should look like:
 
 ```
 {
@@ -90,13 +102,17 @@ This file `db_credentials.json` should look like:
 }
 ```
 
-With the data from said database, it is also possible to make several statisitcal analysis, namely the average costs for each country, said statistical analysis having outlier removal techniques, such that such outliers do not distort the average.
+With the data from said database, it is also possible to make several statisitcal analysis, 
+namely the average costs for each country, said statistical analysis having outlier removal techniques, 
+such that such outliers do not distort the average.
 
 ### Uber
 
-Autocosts uses the UBER API, such that at the final repport, the user calculations can be compared with the equivalents costs if the user would use just UBER.
+Autocosts uses the UBER API, such that at the final repport, 
+the user calculations can be compared with the equivalents costs if the user would use just UBER.
 
-The uber secret token file `uber_token.json` should be stored in `keys/prods/` or `keys/work/`, the latter being the test version. This file `uber_token.json` should be like:
+The uber secret token file `uber.json` should be stored in `credentials/prods/` or `credentials/work/`, 
+the latter being the test version. This file `uber.json` should be like:
 
 ```
 {
@@ -106,11 +122,14 @@ The uber secret token file `uber_token.json` should be stored in `keys/prods/` o
 
 ### Google Charts
 
-Autocosts uses Google Charts to render the final charts, with several analysys. We plan to move to <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
+Autocosts uses Google Charts to render the final charts, with several analysys. 
+We plan to move to <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
 
 ### Google Analytics
 
-You can add your Google Analytics credentials. The file `google_analytics.json` should be stored in `keys/prods/` or `keys/work/`, the latter being the test version. This file `google_analytics.json` should be like:
+You can add your Google Analytics credentials. 
+The file `googleAnalytics.json` should be stored in `credentials/prods/` or `credentials/work/`, 
+the latter being the test version. This file `googleAnalytics.json` should be like:
 
 ```
 {
@@ -120,7 +139,10 @@ You can add your Google Analytics credentials. The file `google_analytics.json` 
 
 ### Google Captcha v2
 
-Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the database. The captcha secret key file `recaptcha_key.json` should be stored in `keys/prods/` or `keys/work/`, the latter being the test version. This file `recaptcha_key.json` should be like:
+Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the database. 
+The captcha secret key file `googleCaptcha.json` should be stored in `credentials/prods/` or `credentials/work/`, 
+the latter being the test version. 
+This file `googleCaptcha.json` should be like:
 
 ```
 {  
@@ -138,8 +160,8 @@ The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Andro
 
 ## Contributions
 * Use four spaces for indentations
-* Always comment the code in English
-* Respect the folders structure
+* Comment the code in English
+* The local variables names, object properties, functions names and directories names shall obey CamelCase
 
 ## License<br>
 GNU GPLv3<br>

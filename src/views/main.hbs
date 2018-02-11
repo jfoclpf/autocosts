@@ -2,26 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    {{#with Words}}
-    <title>{{{ adapt_title web_page_title}}}</title>
+    {{#with words}}
+    <title>{{{ adaptTitle web_page_title}}}</title>
 
     <!--gets the first sentence of variable $INITIAL_TEXT-->
-    <meta name="description" content="{{{ meta_description ./initial_text }}}">
-    <meta name="keywords" content="{{{ get_keywords ./web_page_title ./fixed_costs ./running_costs }}}">
+    <meta name="description" content="{{{ metaDescription ./initial_text }}}">
+    <meta name="keywords" content="{{{ getKeywords ./web_page_title ./fixed_costs ./running_costs }}}">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
-    <meta name="robots" content="{{#if isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
-
-    <meta http-equiv="Content-Security-Policy" content="
-        {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com {{#each domains}}*.{{this}} {{/each}};
-        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
-        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.info 'unsafe-inline' 'unsafe-eval';
-        {{~emptyChar}} img-src 'self' *.autocosts.info *.google-analytics.com *.g.doubleclick.net;">
-
+    <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
     {{/with}}
+    
+    {{#with clientData.notLocalhost}}
+    <meta http-equiv="Content-Security-Policy" content="
+        {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}};
+        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-inline' 'unsafe-eval';
+        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-inline' 'unsafe-eval';
+        {{~emptyChar}} img-src 'self' *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} *.google-analytics.com *.g.doubleclick.net;">
+    {{/with}}
+    
     <script type="application/ld+json">{{> structuredData }}</script>
     <style>{{> merged1.css }}</style>
-    {{#with Words}}
+    {{#with words}}
     
 </head>
 <body>
@@ -34,7 +36,7 @@
             <div id="header_main_title">
                 <div id="main_title">
                     <header>
-                        {{{adapt_title main_title}}}
+                        {{{adaptTitle main_title}}}
                     </header>
                 </div>
             </div>
@@ -42,11 +44,11 @@
             <div id="country_box">
                 <div id="country_box_inline">
                     <div id="banner_flag_div">
-                        <div id="banner_flag" class="{{banner_flag CC}}"></div>
+                        <div id="banner_flag" class="{{bannerFlag CC}}"></div>
                     </div>
                     <div id="country_select_div">
                         <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                            {{~#each ../countriesList~}}
+                            {{~#each ../serverData.availableCountries~}}
                             <option value="{{@key}}"{{{isSelected ../CC @key}}}>
                                 {{~this~}}
                             </option>
@@ -186,7 +188,7 @@
                 <div id="div1_td">
                     <div id="div1" class="roundCornerSlight">
                         <div id="div13">
-                            {{> (costs_table CC) }}
+                            {{> (costsTable CC) }}
                         </div>
                         <div id="br3">
                             <br>

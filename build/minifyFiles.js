@@ -3,6 +3,8 @@ replacing their content with the minfied version
 
 It also concatenates somes files, for better bandwith performance*/
 
+console.log("\nRunning script " + __filename + "\n");
+
 //node/npm includes
 const fs       = require('fs');
 const path     = require("path");
@@ -19,11 +21,10 @@ const jsonminify = require("jsonminify");
 //concatenation file tool
 const concat = require('concat-files');
 
-//Root directory of the main project
-var ROOT_DIR = path.resolve(__dirname, '../')  + "/";
 //Main directories got from commons
-var Dirs = commons.getDirs(ROOT_DIR);
-var BIN_DIR = Dirs.BIN_DIR;
+var directories = commons.getDirectories();
+var ROOT_DIR = directories.server.root;
+var BIN_DIR  = directories.server.bin;
 
 console.log('\n## Minifying and concatenating files'); 
 

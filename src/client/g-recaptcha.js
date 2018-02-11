@@ -18,10 +18,10 @@ function grecaptcha_callback() {
 Run1 = function Run1(){
     //Loader after the run button is clicked    
     runButtonLoader();
-
-    //In test version doesn't run Captcha
-    //Only when Google Captcha files are available
-    if(!IS_HUMAN_CONFIRMED && COUNTRY!='XX' && SERVICE_AVAILABILITY.g_captcha && SWITCHES.g_captcha){
+        
+    //if human is already confirmed by previous Google Captcha, doesn't request Google Captcha API again
+    //In XX version or localhost doesn't use google captcha    
+    if(!IS_HUMAN_CONFIRMED && COUNTRY!='XX' && SERVICE_AVAILABILITY.g_captcha && SWITCHES.g_captcha && NOT_LOCALHOST){
         //make a POST command to server to check if the user is human
         $.ajax({
             type: "POST",
@@ -63,8 +63,9 @@ Run1 = function Run1(){
         });
     }
     else{
-        if(Run2() && COUNTRY != "XX" && SWITCHES.data_base){
-            submit_data(); //submits data to database if no test version
+        //here normally human is already confirmed, for example when the same user runs the calculator twice
+        if(Run2() && COUNTRY != "XX" && SWITCHES.data_base && NOT_LOCALHOST){
+            submit_data(); //submits data to database if no test version nor localhost
         }
         resetRunButtons(); //reset the run buttons
         scrollPage();

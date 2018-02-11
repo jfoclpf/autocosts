@@ -162,8 +162,8 @@ function loadExtraFiles() {
         getScriptOnce(JS_FILES.print);
     }
 
-    if (SWITCHES.g_charts){
-        getScriptOnce(JS_FILES.charts, function() {
+    if (SWITCHES.g_charts){        
+        getScriptOnce(JS_FILES.charts, function() {           
             getScriptOnce(JS_FILES.printResults);
         });
     }
@@ -175,20 +175,23 @@ function loadExtraFiles() {
         getScriptOnce(JS_FILES.dbFunctions);
     }
 
-    getScriptOnce(JS_FILES.g_recaptcha, function() {
-        if (SWITCHES.g_captcha){
+    //file JS_FILES.g_recaptcha is from this project and must always be loaded
+    getScriptOnce(JS_FILES.g_recaptcha, function(){
+        //Google Captcha API doesn't work nor applies on localhost
+        if (SWITCHES.g_captcha && NOT_LOCALHOST){
             getScriptOnce(JS_FILES.Google.recaptchaAPI)
                 .done(function(){
                     SERVICE_AVAILABILITY.g_captcha = true;
                 })
                 .fail(function(){
                     SERVICE_AVAILABILITY.g_captcha = false;
-            });
+                });  
         }
         else{
             SERVICE_AVAILABILITY.g_captcha = false;
-        }
-    });
+        }                 
+     });
+   
 
     if (SWITCHES.social){
         //Jquery social media share plugins
@@ -231,6 +234,7 @@ function loadExtraFiles() {
                 //alert(JSON.stringify(data, null, 4));
                 if(data && !$.isEmptyObject(data)){
                     UBER_API =  data; //UBER_API is a global variable
+                    console.log("uber data got from uber API: ", UBER_API);
                 }
                 else{
                     console.error("Error getting uber info");

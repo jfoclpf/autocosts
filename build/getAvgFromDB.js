@@ -1,5 +1,7 @@
 /*Node script which populates the average DB tables for each country*/
 
+console.log("\nRunning script " + __filename + "\n");
+
 //includes
 const fs       = require('fs');
 const path     = require("path");
@@ -8,30 +10,34 @@ const mysql    = require('mysql'); //module to get info from DB
 const isOnline = require('is-online');
 const commons  = require('../commons.js');
 
-//Root directory of the main project
-var ROOT_DIR = path.resolve(__dirname, '../') + "/";
+commons.init();
 //Main directories got from commons
-var Dirs = commons.getDirs(ROOT_DIR);
-var SRC_DIR       = Dirs.SRC_DIR;
+var directories = commons.getDirectories();
+var ROOT_DIR = directories.server.root;
+var SRC_DIR  = directories.server.src;
 
-var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
+var settings  = commons.getSettings();
+var fileNames = commons.getFileNames();
 
 //checks for internet connection
-isOnline().then(online => {
+isOnline().then(function(online) {
     
     if(!online){
         console.log("There is no Internet Connection");
         process.exit();
     }
     
-    eval(fs.readFileSync(SRC_DIR + 'client/conversionFunctions.js')+'');
-    eval(fs.readFileSync(SRC_DIR + 'client/core/coreFunctions.js')+'');
-    eval(fs.readFileSync(SRC_DIR + 'client/getData.js')+'');
-    eval(fs.readFileSync('./statsFunctions.js')+'');
+    eval(fs.readFileSync(fileNames.client["conversionFunctions.js"])+'');
+    eval(fs.readFileSync(fileNames.client["coreFunctions.js"])+'');
+    eval(fs.readFileSync(fileNames.client["getData.js"])+'');
+    eval(fs.readFileSync(fileNames.server["statsFunctions.js"])+'');
 
-    //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
-    console.log(DB_INFO);
+    var DB_INFO = settings.dataBase.credentials;
+    //detect for null or empty object
+    if(!DB_INFO || Object.keys(DB_INFO).length === 0){
+        throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
+    }
+    //console.log(DB_INFO);
 
     //database variable
     var db;
@@ -322,4 +328,8 @@ isOnline().then(online => {
             });
         }
     ]);
+}).catch(function(err){
+    console.log(err);
+    process.exit();
 });
+    

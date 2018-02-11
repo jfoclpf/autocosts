@@ -1,6 +1,7 @@
 /*script that populates a country DB with specs for each country*/
 
 console.log("Populating the 'countries specs DB' with information from the countries files");
+console.log("\nRunning script " + __filename + "\n");
 
 //includes
 const fs       = require('fs');
@@ -11,16 +12,17 @@ const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
 const commons  = require('../commons.js');
 
-//Root directory of the main project
-var ROOT_DIR = path.resolve(__dirname, '../') + "/"; 
+commons.init();
 //Main directories got from commons
-var Dirs = commons.getDirs(ROOT_DIR);
+var directories       = commons.getDirectories();
+var ROOT_DIR          = directories.server.root;
+var SRC_DIR           = directories.server.src;
+var COUNTRIES_DIR     = directories.server.countries; 
 
-var SRC_DIR       = Dirs.SRC_DIR;
-var COUNTRIES_DIR = Dirs.COUNTRIES_DIR; 
-var COUNTRY_LIST_FILE = Dirs.COUNTRY_LIST_FILE;
+var fileNames         = commons.getFileNames();
+var COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
 
-var REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
+var settings = commons.getSettings();
 
 //checks for internet connection
 isOnline().then(online => {
@@ -29,22 +31,25 @@ isOnline().then(online => {
         console.log("There is no Internet Connection");
         process.exit();
     }
-
-    //include credentials object
-    var DB_INFO = JSON.parse(fs.readFileSync(ROOT_DIR + 'keys/' + REL + '/db_credentials.json'));
-    console.log(DB_INFO);
+    
+    var DB_INFO = settings.dataBase.credentials;
+    //detect for null or empty object
+    if(!DB_INFO || Object.keys(DB_INFO).length === 0){
+        throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
+    }
+    //console.log(DB_INFO);
 
     //getting country information from 
     console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
     var country_list = JSON.parse(fs.readFileSync(COUNTRY_LIST_FILE, 'utf8'));
-    var available_CT = country_list.available_CT;
-    var languages_CT = country_list.languages_CT;
+    var availableCountries = country_list.availableCountries;
+    var languagesCountries = country_list.languagesCountries;
     var domains_CT = country_list.domains_CT;
     var WORDS;
 
     //sorts array of countries
-    available_CT = sortObj(available_CT);
-    delete available_CT["XX"];
+    availableCountries = sortObj(availableCountries);
+    delete availableCountries["XX"];
 
     //process.exit();
 
@@ -81,7 +86,7 @@ isOnline().then(online => {
         function(callback) {
 
             var queryInsert;
-            for (var key in available_CT){                        
+            for (var key in availableCountries){                        
 
                 WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + key + ".json", 'utf8'));
                 queryInsert = "INSERT INTO " + DB_INFO.db_tables.country_specs + " ( \
@@ -101,7 +106,7 @@ isOnline().then(online => {
                     )";
 
 
-                var size = Object.keys(available_CT).length;
+                var size = Object.keys(availableCountries).length;
                 var i=0;
                 db.query(queryInsert ,
                     (function(key2){
@@ -121,5 +126,7 @@ isOnline().then(online => {
 
         }
     ]);
+}).catch(function(err){
+    console.log(err);
+    process.exit();
 });
-

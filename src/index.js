@@ -20,53 +20,48 @@ const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
 
 //personalised requires
-const commons         = require('../commons');
-const url             = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
-const getCC           = require(__dirname + '/server/getCC');
-const hbsHelpers      = require(__dirname + '/server/hbsHelpers');
-const list            = require(__dirname + '/server/list');
-const domains         = require(__dirname + '/server/domains');
-const sitemap         = require(__dirname + '/server/sitemap');
+const commons     = require('../commons');
+const url         = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
+const getCC       = require(__dirname + '/server/getCC');
+const hbsHelpers  = require(__dirname + '/server/hbsHelpers');
+const list        = require(__dirname + '/server/list');
+const domains     = require(__dirname + '/server/domains');
+const sitemap     = require(__dirname + '/server/sitemap');
 
-//Deals with directories, some dirs are got from commons.js
-//other dirs are got directly here in this script
-const ROOT_DIR = path.resolve(__dirname, '..') + "/"; //parent directory of project directory tree
-const INDEX_DIR = __dirname + "/"; //directory where this script index.js is located
-const clientDir = 'client/'; //directory with respect to src/ dir, where the client JS browser files will be stored
+commons.init();
+var directories = commons.getDirectories();
+directories.index = __dirname + "/"; //directory where this script index.js is located
 
-var Dirs = commons.getDirs(ROOT_DIR);
-//add further relevant directories to the Dirs object
-Dirs.ROOT_DIR  = ROOT_DIR;   //parent directory of main project directory tree
-Dirs.INDEX_DIR = INDEX_DIR; //directory where the index.js file is located
-Dirs.clientDir = clientDir; //directory with respect to src/ dir, where the client JS files will be stored
-
-const REL = commons.getRelease(process); //release shall be 'work' or 'prod', it's 'work' by default
-const Settings = commons.getSettings();
+const release   = commons.getRelease(); //release shall be 'work' or 'prod', it's 'work' by default
+const settings  = commons.getSettings();
+const fileNames = commons.getFileNames();
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
-const CountriesInfo = JSON.parse(fs.readFileSync(__dirname + '/countries/list.json', 'utf8'));
-const GlobData = {
-    "REL"           : REL,       //Release: "work" or "prod"
-    "Settings"      : Settings,  //Settings set in commons.js
-    "Dirs"          : Dirs, //{ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
-    "available_CT"  : sortObj(CountriesInfo.available_CT), //Array of alphabetically sorted available Countries
-    "languages_CT"  : CountriesInfo.languages_CT, //Array of Language Codes
-    "domains_CT"    : CountriesInfo.domains_CT,   //Array of Domains for each Country
-    "domains"       : commons.getUniqueArray(CountriesInfo.domains_CT) //Array of Unique Domains
+const countriesInfo = JSON.parse(fs.readFileSync(fileNames.server.countriesListFile, 'utf8'));
+const serverData = {
+    "release"            : release,   //Release: "work" or "prod"
+    "settings"           : settings,  //Settings set in commons.js
+    "directories"        : directories, //{ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
+    "fileNames"          : fileNames,   //Object with the fileNames, on the server and client
+    "availableCountries" : sortObj(countriesInfo.availableCountries), //Array of alphabetically sorted available Countries
+    "languagesCountries" : countriesInfo.languagesCountries, //Array of Language Codes
+    "domainsCountries"   : countriesInfo.domainsCountries,   //Array of Domains for each Country
+    "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-console.log(GlobData);
+//console.log(serverData);
 
 //Global switches with the available services
 //for more information see commons.js
-const SWITCHES = Settings.SWITCHES;
+const SWITCHES = settings.switches;
 
 //creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
-for (var CC in GlobData.available_CT){
-    WORDS[CC] = JSON.parse(fs.readFileSync(GlobData.Dirs.SRC_DIR + 'countries/' + CC + '.json', 'utf8'));
-    WORDS[CC].languageCode = GlobData.languages_CT[CC];
-    WORDS[CC].domain = GlobData.domains_CT[CC];    
+for (var CC in serverData.availableCountries){
+    WORDS[CC] = JSON.parse(fs.readFileSync(serverData.directories.server.countries + CC + '.json', 'utf8'));
+    WORDS[CC].languageCode = serverData.languagesCountries[CC];
+    WORDS[CC].domain = serverData.domainsCountries[CC];    
 }
 
 var app = express();
@@ -89,65 +84,67 @@ app.set('view engine', '.hbs');
 
 //static content
 app.use(express.static(__dirname + '/public')); //root public folder
-app.use('/tables', express.static(__dirname + '/tables'));
-app.use('/css', express.static(__dirname + '/css'));
-app.use('/images', express.static(__dirname + '/images'));
-app.use('/client', express.static(__dirname + '/client'));
-app.use('/countries', express.static(__dirname + '/countries'));
+app.use('/tables'    , express.static( __dirname + '/tables'   ));
+app.use('/css'       , express.static( __dirname + '/css'      ));
+app.use('/images'    , express.static( __dirname + '/images'   ));
+app.use('/client'    , express.static( __dirname + '/client'   ));
+app.use('/countries' , express.static( __dirname + '/countries'));
 
 //app.use(compression()); //Apache already compresses
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-/*lists all Countries information*/
+//lists all Countries information
 app.get('/list', function(req, res) {
     console.log("\nRoute: app.get('/list')");
-    list(req, res, GlobData, WORDS);
+    list(req, res, serverData, WORDS);
 });
 
-/*lists all available domains*/
+//lists all available domains
 app.get('/domains', function(req, res) {
     console.log("\nRoute: app.get('/domains')");
-    domains(req, res, GlobData, WORDS);
+    domains(req, res, serverData, WORDS);
 });
 
-/*sitemap.xml for Search Engines optimization*/
+//sitemap.xml for Search Engines optimization
 app.get('/sitemap.xml', function(req, res) {
     console.log("\nRoute: app.get('/sitemap.xml')");
-    sitemap(req, res, GlobData, WORDS);
+    sitemap(req, res, serverData, WORDS);
 });
 
 if (SWITCHES.uber){
     const getUBER = require(__dirname + '/server/getUBER');    
     app.get('/getUBER/:CC', function(req, res) {
         console.log("\nRoute: app.get('/getUBER')");
-        getUBER(req, res, GlobData);
+        getUBER(req, res, serverData);
     });
 }
 
-if (SWITCHES.g_captcha){
+if (SWITCHES.googleCaptcha){
     const captchaValidate = require(__dirname + '/server/captchaValidate');    
     app.post('/captchaValidate', function(req, res) {
-        console.log("\nRoute: app.post('/captchaValidate')");
-        captchaValidate(req, res, GlobData);
+        if (!url.isThisLocalhost(req)){
+            console.log("\nRoute: app.post('/captchaValidate')");
+            captchaValidate(req, res, serverData);
+        }
     });
 }
 
-if (SWITCHES.data_base){
+if (SWITCHES.dataBase){
     const submitUserInput = require(__dirname + '/server/submitUserInput');    
     app.post('/submitUserInput', function(req, res) {
         console.log("\nRoute: app.post('/submitUserInput')");
-        submitUserInput(req, res, GlobData);
+        submitUserInput(req, res, serverData);
     });
 }
 
-/*this middleware shall be the last before error*/
-/*this is the entry Main Page*/
+//this middleware shall be the last before error
+//this is the entry Main Page
 app.get('/:CC', function (req, res, next) {
     console.log("\nRoute: app.get('/CC')");
 
     //returns true if it was redirected to another URL
-    let wasRedirected = url.getCC(req, res, GlobData);
+    let wasRedirected = url.getCC(req, res, serverData);
     if(wasRedirected){
         return;
     }
@@ -155,12 +152,12 @@ app.get('/:CC', function (req, res, next) {
 
     //get words for chosen CC
     let WORDS_CC = WORDS[req.params.CC];
-    getCC(req, res, GlobData, WORDS_CC);
+    getCC(req, res, serverData, WORDS_CC);
 });
 
 app.get('/', function (req, res, next) {
     console.log("\nRoute: app.get('/')");
-    url.redirect(req, res, GlobData);
+    url.redirect(req, res, serverData);
 });
 
 //error handler
@@ -174,3 +171,5 @@ var server = app.listen(HTTPport, function () {
     console.log('Listening on port ' + HTTPport);
     //server.close();
 });
+
+
