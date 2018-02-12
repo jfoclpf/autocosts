@@ -58,24 +58,24 @@ Autocosts supports the following additional services, which can be enabled or di
 using the `node bin/index.js` command line options:
 
 ```
-Usage: node index.js [options]
-Ex:    node index.js -r prod --uber --data_base
-
 Options: 
 -r, --release              'work' for tests or 'prod' for production
-                           API credentials being in keys/work/ or keys/prod/ 
+-p, --port                 HTTP port on which the application is listening (default:3000)
+
+    External API services, disabled by default
+    API credentials being in undefined/work/ or undefined/prod/ 
     --https                Enables protocol https when available
-    --CDN                  Enables Content Delivery Network
+    --cdn                  Enables Content Delivery Network
     --uber                 Enables UBER API
     --social               Enables social media plugin
-    --g_charts             Enables Google Charts for report
-    --g_captcha            Enables Google Captcha V2 anti-bot for calculation button
-    --g_analytics          Enables Google Analytics
-    --data_base            Enables a mysql Database
+    --googleCharts         Enables Google Charts for report
+    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
+    --googleAnalytics      Enables Google Analytics
+    --dataBase             Enables a mysql Database
     --print                Enables option to print, on the final report
     --pdf                  Enables option to download pdf repor on final report
 
--A  --all                  Enables all the previous options
+-A  --all                  Enables all the previous services
 ```
 
 ### Database
