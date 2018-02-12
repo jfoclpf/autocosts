@@ -23,12 +23,10 @@ https://autocosts.info/domains
 
 Clone it, install it, build it and run it<br>
 `git clone https://github.com/jfoclpf/autocosts.git`<br>
-`cd autocosts/ && npm install`
+`cd autocosts/ && npm install`<br>
 `node bin/index.js`
 
-This will run a `node` server application with the calculator.
-For more information run `./build.sh -h`. 
-The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
+This will run a `node` server application with the calculator. For more information on builidng run `./build.sh -h`. For more information on the application run `node bin/index.js -h`.
 
 ## How does it work?
 
@@ -162,6 +160,7 @@ The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Andro
 * Use four spaces for indentations
 * Comment the code in English
 * The local variables names, object properties, functions names and directories names shall obey CamelCase
+* The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
 
 ## License<br>
 GNU GPLv3<br>

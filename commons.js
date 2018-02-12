@@ -2,6 +2,7 @@
 
 //Default Country when any possible method to get country isn't available
 const defaultCountry = "UK"; //when no other method finds the country of user, use this by default
+const defaultPort = 3000;    //default HTTP Port where the app listens
 
 module.exports = {
 
@@ -92,6 +93,7 @@ function _init(){
     optionDefinitions = [
         { name: 'help', alias: 'h', type: Boolean },
         { name: 'release', alias: 'r', type: String },
+        { name: 'port', alias: 'p', type: Number },
         { name: 'All', alias: 'A', type: Boolean }
     ];
 
@@ -103,14 +105,8 @@ function _init(){
     //get set options from command line arguments
     const options = commandLineArgs(optionDefinitions);
     //this "option" object is just filled with the options that were inserted in the command line
-
-    //check if --help was selected
-    if(options.help){
-        console.log(getArgvHelpMsg());
-        process.exit();
-    }
     //console.log(options);
-
+    
     var release = options.release;
     //check that release was correctly chosen
     if (release !== "work" && release !== "prod"){
@@ -119,6 +115,19 @@ function _init(){
     console.log("Release: '" + release + "'");
     RELEASE = release; //set Global variable
 
+    //after the RELEASE is known, the directories and files can be obtained and set
+    setDIRECTORIES();
+    setFILENAMES();    
+    
+    //check if --help was selected
+    if(options.help){
+        console.log(getArgvHelpMsg());
+        process.exit();
+    }        
+    
+    //get HTTP port
+    const HTTPport = options.port ? options.port : defaultPort;
+    
     //set SWITCHES according to commandLineArgs input options
     if (options.All){
         for (var opt in SWITCHES){
@@ -133,12 +142,11 @@ function _init(){
         }
     }
 
-    setDIRECTORIES();
-    setFILENAMES();
 
     SETTINGS = {
         "release"  : RELEASE,
         "switches" : SWITCHES,
+        "HTTPport" : HTTPport,
         "cdn": { //a CDN provider might be: https://app.keycdn.com/zones
             "enabled"  : SWITCHES.cdn,
             "name"     : "Content Delivery Network",
@@ -448,7 +456,10 @@ function getArgvHelpMsg(){
         "\n" +
         "Options: \n" +
         "-r, --release              'work' for tests or 'prod' for production\n" +
-        "                           API credentials being in keys/work/ or keys/prod/ \n" +
+        "-p, --port                 HTTP port on which the application is listening (default:" + defaultPort + ")\n" +
+        "\n" +
+        "    External API services, disabled by default\n" +
+        "    API credentials being in " + DIRECTORIES.credentials + "/work/ or " + DIRECTORIES.credentials + "/prod/ \n" +        
         "    --https                Enables protocol https when available\n" +
         "    --cdn                  Enables Content Delivery Network\n" +
         "    --uber                 Enables UBER API\n" +
@@ -460,7 +471,7 @@ function getArgvHelpMsg(){
         "    --print                Enables option to print, on the final report\n" +
         "    --pdf                  Enables option to download pdf repor on final report\n" +
         "\n" +
-        "-A  --all                  Enables all the previous options\n";
+        "-A  --all                  Enables all the previous services\n";
 
     return messg;
 }
