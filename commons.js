@@ -62,6 +62,10 @@ module.exports = {
 /***************************************************************************************************/
 
 //Global variables*/
+const commandLineArgs = require('command-line-args');
+const path    = require('path');
+const fs      = require('fs');
+
 var RELEASE; //release, "work" or "prod"
 var ROOT_DIR; //root directory of the project
 var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES;
@@ -69,10 +73,6 @@ var optionDefinitions; //for the commandLineArgs
 
 //initialization
 function _init(){
-
-    const commandLineArgs = require('command-line-args');
-    const path    = require('path');
-    const fs      = require('fs');
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -118,7 +118,7 @@ function _init(){
     //after the RELEASE is known, the directories and files can be obtained and set
     setDIRECTORIES();
     setFILENAMES();    
-    
+        
     //check if --help was selected
     if(options.help){
         console.log(getArgvHelpMsg());
@@ -388,9 +388,6 @@ function getServiceCredentialsFromFile(serviceName){
 
     //from here the switch is enabled
 
-    const path = require('path');
-    const fs   = require('fs');
-
     if (typeof serviceObj.name !== 'string' || typeof serviceObj.file !== 'string'){
         throw "Error calling function getServiceCredentialsFromFile(serviceName)";
     }
@@ -449,17 +446,20 @@ function getArgvHelpMsg(){
 
     var fnArr = (process.mainModule.filename).split('/');
     var filename = fnArr[fnArr.length -1];
+    
+    //credentials Directory seen from Root directory
+    var credDirRelativePath = path.relative(DIRECTORIES.server.root, DIRECTORIES.server.credentials);
 
     var messg = "\n\n" +
         "Usage: node " + filename + " [options]\n" +
-        "Ex:    node " + filename + " -r prod --uber --data_base\n" +
+        "Ex:    node " + filename + " -r prod --uber --dataBase\n" +
         "\n" +
         "Options: \n" +
         "-r, --release              'work' for tests or 'prod' for production\n" +
         "-p, --port                 HTTP port on which the application is listening (default:" + defaultPort + ")\n" +
         "\n" +
         "    External API services, disabled by default\n" +
-        "    API credentials being in " + DIRECTORIES.credentials + "/work/ or " + DIRECTORIES.credentials + "/prod/ \n" +        
+        "    API credentials must be in either " + credDirRelativePath + "/work/ or " + credDirRelativePath + "/prod/ according to release\n" +        
         "    --https                Enables protocol https when available\n" +
         "    --cdn                  Enables Content Delivery Network\n" +
         "    --uber                 Enables UBER API\n" +
