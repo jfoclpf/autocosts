@@ -45,7 +45,7 @@ const serverData = {
     "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-console.log(serverData);
+//console.log(serverData);
 
 //Global switches with the available services
 //for more information see commons.js
