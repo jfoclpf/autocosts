@@ -1,4 +1,5 @@
-const url = require(__dirname + '/url');
+const url   = require(__dirname + '/url');
+const debug = require('debug')('app:domains');
 
 module.exports = function(req, res, serverData, WORDS) {
 
@@ -51,7 +52,7 @@ module.exports = function(req, res, serverData, WORDS) {
         }
         
     }    
-    //console.log(domains);            
+    debug(domains);            
     data.domains = domains;
     
     data.layout = false;

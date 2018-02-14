@@ -1,6 +1,7 @@
 /*functions which deal with the user POST submission*/
 
 const mysql = require('mysql'); //module to get info from DB
+const debug = require('debug')('app:submitUserInput');
 
 module.exports = function (req, res, serverData){
     
@@ -9,8 +10,8 @@ module.exports = function (req, res, serverData){
     //object got from POST
     var objectToDb = req.body.objectToDb;    
               
-    //console.log(objectToDb);
-    console.log('\nInserting user data into ' +
+    debug(objectToDb);
+    debug('\nInserting user data into ' +
                 'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions);
 
     var queryInsert = "INSERT INTO " + DBInfo.db_tables.users_insertions + " ( \
@@ -155,7 +156,7 @@ module.exports = function (req, res, serverData){
             console.error('error connecting: ' + err.stack);
             throw err;
         }
-        console.log('User ' + DBInfo.user + 
+        debug('User ' + DBInfo.user + 
                     ' connected successfully to DB ' + DBInfo.database + 
                     ' at ' + DBInfo.host);
     });
@@ -163,13 +164,13 @@ module.exports = function (req, res, serverData){
     db.query(queryInsert, function(err, results, fields) {
         if (err) {                                
             // error handling code goes here
-            console.log("Error inserting user data into DB: ", err);
+            debug("Error inserting user data into DB: ", err);
             res.status(501).send('Error inserting user data into DB');
         }
         else{
-            console.log('User data successfully added into ' +
+            debug('User data successfully added into ' +
                         'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n');        
-            console.log("Result from db query is : ", results);
+            debug("Result from db query is : ", results);
             res.send(results);
         }                               
     });

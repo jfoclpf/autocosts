@@ -3,6 +3,7 @@ regarding the Google reCapactha v2 https://developers.google.com/recaptcha/docs/
 
 const request  = require('request');
 const fs       = require('fs');
+const debug    = require('debug')('app:captchaValidate');
 
 module.exports = function(req, res, serverData) {
         
@@ -41,14 +42,14 @@ module.exports = function(req, res, serverData) {
                 return;            
             }
             else{
-                console.log("Google captcha response ok");
+                debug("Google captcha response ok");
                 res.send("ok");
                 return;            
             }
         }
         
         else{
-            console.log("error making the Recaptach request to Google: ", error);
+            debug("error making the Recaptach request to Google: ", error);
             res.send("not-ok-3");
             return;
         }
