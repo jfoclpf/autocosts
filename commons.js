@@ -2,7 +2,7 @@
 
 //Default Country when any possible method to get country isn't available
 const defaultCountry = "UK"; //when no other method finds the country of user, use this by default
-const defaultPort = 3000;    //default HTTP Port where the app listens
+const defaultPort = 3027;    //default HTTP Port where the app listens
 
 module.exports = {
 
@@ -248,6 +248,9 @@ function setDIRECTORIES(){
 
     //directory with respect to src/ dir, where the client JS browser files will be stored
     var clientDir = 'client/';
+    
+    //directory with respect to src/ dir, where the CSS  files will be stored
+    var cssDir = 'css/';    
 
     DIRECTORIES = {
         "server" : {
@@ -260,7 +263,8 @@ function setDIRECTORIES(){
             "credentials"       : credentialsDir,
         },
         "client" : {
-            "client"            : clientDir
+            "client"            : clientDir,
+            "css"               : cssDir
         }
     };
 
