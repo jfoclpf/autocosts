@@ -14,6 +14,8 @@ const exphbs      = require('express-handlebars');
 const bodyParser  = require('body-parser');
 const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
+const debug       = require('debug')('app:main');
+
 
 //personalised requires
 const commons     = require('../commons');
@@ -95,26 +97,26 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //lists all Countries information
 app.get('/list', function(req, res) {
-    console.log("\nRoute: app.get('/list')");
+    debug("\nRoute: app.get('/list')");
     list(req, res, serverData, WORDS);
 });
 
 //lists all available domains
 app.get('/domains', function(req, res) {
-    console.log("\nRoute: app.get('/domains')");
+    debug("\nRoute: app.get('/domains')");
     domains(req, res, serverData, WORDS);
 });
 
 //sitemap.xml for Search Engines optimization
 app.get('/sitemap.xml', function(req, res) {
-    console.log("\nRoute: app.get('/sitemap.xml')");
+    debug("\nRoute: app.get('/sitemap.xml')");
     sitemap(req, res, serverData, WORDS);
 });
 
 if (SWITCHES.uber){
     const getUBER = require(__dirname + '/server/getUBER');    
     app.get('/getUBER/:CC', function(req, res) {
-        console.log("\nRoute: app.get('/getUBER')");
+        debug("\nRoute: app.get('/getUBER')");
         getUBER(req, res, serverData);
     });
 }
@@ -123,7 +125,7 @@ if (SWITCHES.googleCaptcha){
     const captchaValidate = require(__dirname + '/server/captchaValidate');    
     app.post('/captchaValidate', function(req, res) {
         if (!url.isThisLocalhost(req)){
-            console.log("\nRoute: app.post('/captchaValidate')");
+            debug("\nRoute: app.post('/captchaValidate')");
             captchaValidate(req, res, serverData);
         }
     });
@@ -132,7 +134,7 @@ if (SWITCHES.googleCaptcha){
 if (SWITCHES.dataBase){
     const submitUserInput = require(__dirname + '/server/submitUserInput');    
     app.post('/submitUserInput', function(req, res) {
-        console.log("\nRoute: app.post('/submitUserInput')");
+        debug("\nRoute: app.post('/submitUserInput')");
         submitUserInput(req, res, serverData);
     });
 }
@@ -140,7 +142,7 @@ if (SWITCHES.dataBase){
 //this middleware shall be the last before error
 //this is the entry Main Page
 app.get('/:CC', function (req, res, next) {
-    console.log("\nRoute: app.get('/CC')");
+    debug("\nRoute: app.get('/CC')");
 
     //returns true if it was redirected to another URL
     let wasRedirected = url.getCC(req, res, serverData);
@@ -155,7 +157,7 @@ app.get('/:CC', function (req, res, next) {
 });
 
 app.get('/', function (req, res, next) {
-    console.log("\nRoute: app.get('/')");
+    debug("\nRoute: app.get('/')");
     url.redirect(req, res, serverData);
 });
 
@@ -167,7 +169,7 @@ app.use(function (err, req, res, next) {
 
 var server = app.listen(settings.HTTPport, function () {
     console.log('Listening on port ' + settings.HTTPport);
-    //server.close();
+    console.log('check http://localhost:' + settings.HTTPport + "\n");
 });
 
 

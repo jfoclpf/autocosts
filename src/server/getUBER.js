@@ -8,6 +8,7 @@ const fs       = require('fs');
 const geoIP    = require('geoip-lite');
 const request  = require('request');
 const url      = require(__dirname + '/url');
+const debug    = require('debug')('app:uber');
 
 module.exports = function(req, res, serverData) {
     
@@ -19,7 +20,7 @@ module.exports = function(req, res, serverData) {
     res.set('Content-Type', 'application/json');    
     
     Promise.all([p1, p2]).then(function(values){
-        //console.log("Uber response: ", values);                                
+        debug("Uber response: ", values);                                
         if(!values[0] || !values[1]){            
             res.send(null);
             return;
@@ -73,7 +74,7 @@ var readCCFileAsync = async function (path){
             fs.readFile(path, 'utf8', //async read file
                 function(err, data){
                     if(err){
-                        console.log("Error loading the file: ", err);
+                        debug("Error loading the file: ", err);
                         resolve(null);
                     }
                     else{
@@ -91,24 +92,24 @@ var readCCFileAsync = async function (path){
 
 var makeUberRequest = async function (req, serverData){
 
-    var debug; //put 0 for PROD; 1 for Lisbon, 2 for London
+    var debugOption; //put 0 for PROD; 1 for Lisbon, 2 for London
     if (url.isThisLocalhost(req)){
-        debug = 1 + (Math.random() >= 0.5); //random, it gives either 1 or 2        
+        debugOption = 1 + (Math.random() >= 0.5); //random, it gives either 1 or 2        
     }
     else{
-        debug = 0;
+        debugOption = 0;
     }
-    console.log("debug: ", debug);
+    debug("debugOption: ", debugOption);
     
     //geo coordinates
     var lat, long;
     
-    //debug=1;
-    if(debug==1){//Lisbon coordinates
+    //debugOption=1;
+    if(debugOption==1){//Lisbon coordinates
         lat  = 38.722252;
         long = -9.139337;
     }
-    else if(debug==2){ //London coordinates
+    else if(debugOption==2){ //London coordinates
         lat  = 51.507351;
         long = -0.127758;  
     }
@@ -123,14 +124,14 @@ var makeUberRequest = async function (req, serverData){
         lat  = geo.ll[0];
         long = geo.ll[1];
     }
-    console.log("lat: " + lat + "; long: " +long);
+    debug("lat: " + lat + "; long: " +long);
 
     //get uber token  
     var uber_token = serverData.settings.uber.token;
-    console.log("uber_token", uber_token);
+    debug("uber_token", uber_token);
     var uber_API_url = "https://api.uber.com/v1.2/products?latitude=" + 
                         lat + "&longitude=" + long + "&server_token=" + uber_token;        
-    console.log("uber_API_url", uber_API_url);
+    debug("uber_API_url", uber_API_url);
 
     //HTTP Header request
     var options = {
@@ -149,7 +150,7 @@ var makeUberRequest = async function (req, serverData){
                     resolve(JSON.parse(body));           
                 }
                 else{
-                    console.log("error making the HTTP request to UBER API: ", error);
+                    debug("error making the HTTP request to UBER API: ", error);
                     resolve(null);
                 }
             });

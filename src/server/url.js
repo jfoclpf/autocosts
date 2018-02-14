@@ -4,6 +4,7 @@ according to the domain name vs. country code combinatorial rules.
 For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector */
 
 const GEO_IP = require('geoip-lite');
+const debug  = require('debug')('app:url');
 
 module.exports = {
     
@@ -18,7 +19,7 @@ module.exports = {
     getCC: function (req, res, serverData) {                
         
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        console.log("Entry URL: " + fullUrl);       
+        debug("Entry URL: " + fullUrl);       
         
         var CC = req.params.CC;
         var url2redirect;
@@ -27,7 +28,7 @@ module.exports = {
         //i.e, if the CC characters in domain.info/CC are not recognized
         //get the Country from locale or HTTP Accept-Language Info
         if (!isCCinCountriesList(CC, serverData.availableCountries) && !isCCXX(CC)){         
-            console.log("if (!isCCinCountriesList)");            
+            debug("if (!isCCinCountriesList)");            
             redirect302(req, res, serverData);
             return true;
         }
@@ -38,7 +39,7 @@ module.exports = {
         //if the CC characters after domain.info/cc ARE recognized as being in the list 
         //But if the two-letter code are NOT all in upper case domain.info/CC 
         if (!isCC2letterUpperCase(CC)){
-            console.log("if (!isCC2letterUpperCase)");
+            debug("if (!isCC2letterUpperCase)");
             url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;
@@ -48,21 +49,21 @@ module.exports = {
         
         //check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
         if(isSubdomain(req)){
-            console.log("if(isSubdomain)");
+            debug("if(isSubdomain)");
             url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
         }
         
         if(isThisATest(req)){
-            console.log("if(isThisATest)");
+            debug("if(isThisATest)");
             return false;
         }
         
         //if the URL is not the valid URL, i.e. the combination domain/CC is not valid
         //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)        
         if(!isDomainCCcombValid(req, serverData.availableCountries, serverData.domainsCountries)){
-            console.log("if (!isDomainCCcombValid)");
+            debug("if (!isDomainCCcombValid)");
             url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
@@ -70,7 +71,7 @@ module.exports = {
         
         //check for https rules and redirect accordingly
         if (req.protocol !== getProtocol(req, IS_HTTPS)){
-            console.log("if (protocol !== getProtocol)");
+            debug("if (protocol !== getProtocol)");
             url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
@@ -119,13 +120,13 @@ var redirect302 = function (req, res, serverData){
     }
     
     res.redirect(302, url2redirect);
-    console.log("redirecting 302 to " + url2redirect);
+    debug("redirecting 302 to " + url2redirect);
 };
 
 //301 redirects are permanent
 var redirect301 = function (res, url2redirect){    
     res.redirect(301, url2redirect);
-    console.log("redirecting 301 to " + url2redirect);
+    debug("redirecting 301 to " + url2redirect);
 }
 
 //CC must be in the format PT, XX, UK, i.e. the letters uppercase
@@ -161,7 +162,7 @@ var getGeoCC = function(req, availableCountries, defaultCountry){
         var geo = GEO_IP.lookup(ip);
         var geoCC = geo.country; 
 
-        console.log("geoCC: " + geoCC);
+        debug("geoCC: " + geoCC);
 
         if (isCCinCountriesList(geoCC, availableCountries)){
             if (geoCC == "GB"){
@@ -176,7 +177,7 @@ var getGeoCC = function(req, availableCountries, defaultCountry){
     var accept_language = req.headers["accept-language"];
     var CC_HTTP = getCountryfromHTTP(accept_language);     
     if(CC_HTTP){
-        console.log("CC_HTTP: " + CC_HTTP);
+        debug("CC_HTTP: " + CC_HTTP);
         if (isCCinCountriesList(CC_HTTP, availableCountries)){
             if (CC_HTTP == "GB"){
                 CC_HTTP = "UK";
@@ -222,8 +223,8 @@ var getValidURL = function (req, domainsCountries, IS_HTTPS){
         URL = getProtocol(req, IS_HTTPS) + '://' + domainsCountries[upCC] + '/' + upCC;
     }
     
-    console.log("Prod URL: " + getProtocol(req, IS_HTTPS) + '://' + domainsCountries[upCC] + '/' + upCC)
-    console.log("Valid URL: " + URL);
+    debug("Prod URL: " + getProtocol(req, IS_HTTPS) + '://' + domainsCountries[upCC] + '/' + upCC)
+    debug("Valid URL: " + URL);
     return URL;
 };
 

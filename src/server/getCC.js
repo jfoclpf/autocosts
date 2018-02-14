@@ -1,5 +1,6 @@
 
 const url     = require('./url');
+const debug  = require('debug')('app:getCC');
 
 module.exports = function(req, res, serverData, wordsOfCountry) {    
         
@@ -9,8 +10,8 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     var isThisATest     = url.isThisATest(req); //returns bool
     var httpProtocol    = url.getProtocol(req, serverData.settings.switches.https);
     
-    console.log("Country code: "  + CC);
-    console.log("Language code: " + languageCode);
+    debug("Country code: "  + CC);
+    debug("Language code: " + languageCode);
     
     //data to be rendered embedded in the HTML file
     var data = {};    
