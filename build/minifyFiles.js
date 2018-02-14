@@ -48,21 +48,25 @@ function processJSfiles(){
 
     console.log('\n   Minifying JS files in build/client/');
 
-    var walker = walk.walk(BIN_DIR + 'client');    
+    var clientJSfilesDir = remTrailingSlash(BIN_DIR + directories.client.client);
+    var walker = walk.walk(clientJSfilesDir);
+    
     walker.on("file", function (root, fileStats, next) {
                         
         var filename = root + "/" + fileStats.name;        
         
-        if(filename.includes(".js") && !filename.includes("vfs_fonts.js")){
+        //gets file extension
+        if(getFileExtension(filename) == 'js' && !filename.includes("vfs_fonts.js")){
             
-            console.log(filename.replace(ROOT_DIR, ''));
+            console.log(filename.replace(ROOT_DIR, '')); //removes base directory from file name
             var code = fs.readFileSync(filename, 'utf-8');            
             
             //file 'Globals.js.hbs' because is a JS file rendered by handlebars
             //needs a special treatment upon minification
             var result;
             if (!filename.includes('Globals.js.hbs')){
-                result = UglifyJS.minify(code);
+                var options = { compress: { drop_console: true }};
+                result = UglifyJS.minify(code, options);
             }
             else{        
                 var options = { output: {  beautify: false, quote_style: 1}};        
@@ -103,8 +107,9 @@ function processCSSfiles(){
 function minifyCSSFiles(){
 
     console.log('\n   Minifying CSS files in build/css/\n');
-        
-    var walker = walk.walk(BIN_DIR + 'css');//dir to walk into    
+    
+    var clientCSSfilesDir = remTrailingSlash(BIN_DIR + directories.client.css);    
+    var walker = walk.walk(clientCSSfilesDir);//dir to walk into    
    
     walker.on("file", function (root, fileStats, next) {
                         
@@ -144,40 +149,42 @@ function minifyCSSFiles(){
 //concatenate some CSS files
 function concatCSSFiles(){    
      
+    var CSS_DIR = BIN_DIR + directories.client.css;
+    
     //creates directory if it doesn't exist
-    if (!fs.existsSync(BIN_DIR + 'css/merged-min/')){
-        fs.mkdirSync(BIN_DIR + 'css/merged-min/');
+    if (!fs.existsSync(CSS_DIR + 'merged-min/')){
+        fs.mkdirSync(CSS_DIR + 'merged-min/');
     }    
     
     //CSS files to be concatenated, 
     //the ones which are needed for initial main page loading
     var files1Arr = [
-        BIN_DIR + 'css/main.css',
-        BIN_DIR + 'css/central.css',
-        BIN_DIR + 'css/form.css',
-        BIN_DIR + 'css/left.css',
-        BIN_DIR + 'css/right.css',
-        BIN_DIR + 'css/header.css',
-        BIN_DIR + 'css/flags.css',
-        BIN_DIR + 'css/mobile.css'
+        CSS_DIR + 'main.css',
+        CSS_DIR + 'central.css',
+        CSS_DIR + 'form.css',
+        CSS_DIR + 'left.css',
+        CSS_DIR + 'right.css',
+        CSS_DIR + 'header.css',
+        CSS_DIR + 'flags.css',
+        CSS_DIR + 'mobile.css'
     ];
 
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
     var files2Arr = [
-        BIN_DIR + 'css/jAlert.css',
-        BIN_DIR + 'css/results.css'
+        CSS_DIR + 'jAlert.css',
+        CSS_DIR + 'results.css'
 
     ];
 
     //concatenating files
-    concat(files1Arr, BIN_DIR + 'css/merged-min/merged1.css.hbs',
+    concat(files1Arr, CSS_DIR + 'merged-min/merged1.css.hbs',
         function(err) {
             if (err) throw err
             console.log('merged1.css.hbs concatenation done\n');
         }
     );
-    concat(files2Arr, BIN_DIR + 'css/merged-min/merged2.css',
+    concat(files2Arr, CSS_DIR + 'merged-min/merged2.css',
         function(err) {
             if (err) throw err
             console.log('merged2.css concatenation done\n');
@@ -243,8 +250,10 @@ function processHTMLfiles(){
 function processJSONfiles(){
     
     console.log('\n   Minifying JSON files in build/countries/\n');
-
-    var walker = walk.walk(BIN_DIR + 'countries');//dir to walk into
+    
+    var countriesFilesDir = remTrailingSlash(BIN_DIR + 'countries');    
+    var walker = walk.walk(countriesFilesDir);//dir to walk into
+    
     walker.on("file", function (root, fileStats, next) {
                         
         var filename = root + "/" + fileStats.name;  
@@ -278,5 +287,11 @@ function processJSONfiles(){
     });     
 }
 
+function getFileExtension(fileName){
+    return fileName.split('.').pop();
+}
 
-
+//both /path/to/foo and /path/to/foo/ return /path/to/foo
+function remTrailingSlash(dirName){
+    return dirName.replace(/\/+$/, "");
+}
