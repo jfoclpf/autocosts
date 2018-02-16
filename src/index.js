@@ -47,7 +47,7 @@ const serverData = {
     "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-//console.log(serverData);
+debug(serverData);
 
 //Global switches with the available services
 //for more information see commons.js
@@ -57,7 +57,7 @@ const SWITCHES = settings.switches;
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in serverData.availableCountries){
-    WORDS[CC] = JSON.parse(fs.readFileSync(serverData.directories.server.countries + CC + '.json', 'utf8'));
+    WORDS[CC] = JSON.parse(fs.readFileSync(directories.index + directories.project.countries + CC + '.json', 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
     WORDS[CC].domain = serverData.domainsCountries[CC];    
 }

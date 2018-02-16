@@ -34,8 +34,15 @@ do
             cd bin/
             printf "\n## Making a clean copy from src/ to bin/ \n\n"
             rm -R -f *
+            
             cd ../
             cp -R src/* src/.gitkeep bin/
+            
+            #copy node modules to bin/            
+            cp node_modules/jquery/dist/jquery.min.js        bin/client/jquery/
+            cp node_modules/pdfmake/build/pdfmake.min.js     bin/client/pdf/
+            cp node_modules/pdfmake/build/pdfmake.min.js.map bin/public/
+            cp node_modules/pdfmake/build/vfs_fonts.js       bin/client/pdf/
             
             COPIED="1"
             

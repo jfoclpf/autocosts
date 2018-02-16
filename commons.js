@@ -65,6 +65,8 @@ module.exports = {
 const commandLineArgs = require('command-line-args');
 const path    = require('path');
 const fs      = require('fs');
+const debug   = require('debug')('app:commons');
+
 
 var RELEASE; //release, "work" or "prod"
 var ROOT_DIR; //root directory of the project
@@ -236,38 +238,58 @@ function setDIRECTORIES(){
     //Build directory - the directory to where the building scripts are stored
     var buildDir     = ROOT_DIR + "build" + "/";    
     
-    //The directory where the countries information is originally stored
-    var countriesDir = srcDir  + "countries" + "/";
-
-    //The directory where the tables HTML.hbs and JPEG files
-    //are to be stored right after being generated
-    var tablesDir = binDir + "tables" + "/";
-
     //credentials directory where json credential files are stored for each service
     var credentialsDir = ROOT_DIR + "credentials/"
 
-    //directory with respect to src/ dir, where the client JS browser files will be stored
-    var clientDir = 'client/';
-    
-    //directory with respect to src/ dir, where the CSS  files will be stored
-    var cssDir = 'css/';    
+    var serverDirs = {
+        "root"              : ROOT_DIR,
+        "src"               : srcDir,
+        "bin"               : binDir,
+        "build"             : buildDir,
+        "credentials"       : credentialsDir
+    };    
 
-    DIRECTORIES = {
-        "server" : {
-            "root"              : ROOT_DIR,
-            "src"               : srcDir,
-            "bin"               : binDir,
-            "build"             : buildDir,
-            "countries"         : countriesDir,
-            "tables"            : tablesDir,
-            "credentials"       : credentialsDir,
-        },
-        "client" : {
-            "client"            : clientDir,
-            "css"               : cssDir
-        }
+    /*#################################*/
+    
+    //these paths are relative, and they refer to the paths which are seen by the browser        
+    var clientDirs = {
+        "client"   : "client" + "/", //directory with respect to src/ dir, where the client JS browser files will be stored
+        "css"      : "css"    + "/" //directory with respect to src/ dir, where the CSS  files will be stored
+    };
+    
+    /*#################################*/
+    
+    //these paths are relative and refer to the project's code parent folder, 
+    //i.e., the parent directory of these paths is either src/ or bin/  
+    var projectDirs = {
+        "countries" : "countries" + "/",  
+        "css"       : "css"       + "/",
+        "tables"    : "css"       + "/",
+        "images"    : "images"    + "/",
+        "public"    : "public"    + "/",
+        "views"     : "views"     + "/",
+        "client"    : "client"    + "/",
+        "server"    : "server"    + "/"
     };
 
+    var srcProjectDirs = {};
+    var binProjectDirs = {};
+    
+    for (var prop in projectDirs){
+        srcProjectDirs[prop] = srcDir + projectDirs[prop];
+        binProjectDirs[prop] = binDir + projectDirs[prop];
+    }
+    
+    DIRECTORIES = {
+        //these paths are absolute
+        "server"  : serverDirs,     //these paths are absolute
+        "src"     : srcProjectDirs, //these paths are absolute
+        "bin"     : binProjectDirs, //these paths are absolute
+        "client"  : clientDirs,     //these paths are relative (as seen by the browser)       
+        "project" : projectDirs     //these paths are relative (as seen by either src/ or bin/)
+    };
+    
+    debug(DIRECTORIES);    
 }
 
 
@@ -284,6 +306,7 @@ function setFILENAMES(){
 
     //Default file names for JSON files with credentials for each external service
     FILENAMES = {
+        //these paths are ABSOLUTE
         "server" : {
             "credentials" : {
                 "cdn"             : "cdn.json",
@@ -299,13 +322,31 @@ function setFILENAMES(){
                 "googleAnalytics" : "",
                 "dataBase"        : ""
             },        
-            "countriesListFile" : DIRECTORIES.server.countries + "list.json",
-            "statsFunctions.js" : DIRECTORIES.server.build + "statsFunctions.js"
+            "countriesListFile" : DIRECTORIES.src.countries + "list.json",
+            "statsFunctions.js" : DIRECTORIES.server.build  + "statsFunctions.js"
         },
-        "client": {
-            "conversionFunctions.js" : DIRECTORIES.server.src + 'client/conversionFunctions.js',
-            "coreFunctions.js"       : DIRECTORIES.server.src + 'client/core/coreFunctions.js',
-            "getData.js"             : DIRECTORIES.server.src + 'client/getData.js'
+        "src": {
+            "conversionFunctions.js" : DIRECTORIES.src.client + 'conversionFunctions.js',
+            "coreFunctions.js"       : DIRECTORIES.src.client + 'core/coreFunctions.js',
+            "getData.js"             : DIRECTORIES.src.client + 'getData.js'
+        },
+        //the LOCAL paths are RELATIVE to the main host as seen by the browser
+        "client" : {
+            "jquery" : {
+                "local" : DIRECTORIES.client.client + "jquery/jquery.min.js",
+                "cdn"   : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+                "uri"   : "" //it will be one of the above
+            },
+            "pdfmake" : {
+                "local" : DIRECTORIES.client.client + "pdf/pdfmake.min.js",
+                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
+                "uri"   : "" //it will be one of the above
+            },
+            "vfs_fonts" : {
+                "local" : DIRECTORIES.client.client + "pdf/vfs_fonts.js",
+                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
+                "uri"   : "" //it will be one of the above
+            }             
         }
     };  
     
@@ -315,7 +356,7 @@ function setFILENAMES(){
         FILENAMES.server.credentialsFullPath[file] = credentialsDir + FILENAMES.server.credentials[file];    
     }
     
-    //console.log(FILENAMES);    
+    debug(FILENAMES);    
 }
 
 //get parent directory of project directory tree
