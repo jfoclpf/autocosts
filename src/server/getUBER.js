@@ -14,7 +14,7 @@ module.exports = function(req, res, serverData) {
     
     var CC = req.params.CC;
     
-    var p1 = readCCFileAsync(serverData.directories.server.countries + CC + '.json');
+    var p1 = readCCFileAsync(serverData.directories.index + serverData.directories.project.countries + CC + '.json');
     var p2 = makeUberRequest(req, serverData);
 
     res.set('Content-Type', 'application/json');    

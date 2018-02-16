@@ -56,7 +56,9 @@ function processJSfiles(){
         var filename = root + "/" + fileStats.name;        
         
         //gets file extension
-        if(getFileExtension(filename) == 'js' && !filename.includes("vfs_fonts.js")){
+        if(getFileExtension(filename) == 'js' && 
+           !filename.includes("vfs_fonts.js") && 
+           !filename.includes(".min.js")){
             
             console.log(filename.replace(ROOT_DIR, '')); //removes base directory from file name
             var code = fs.readFileSync(filename, 'utf-8');            
@@ -108,7 +110,7 @@ function minifyCSSFiles(){
 
     console.log('\n   Minifying CSS files in build/css/\n');
     
-    var clientCSSfilesDir = remTrailingSlash(BIN_DIR + directories.client.css);    
+    var clientCSSfilesDir = remTrailingSlash(directories.bin.css);    
     var walker = walk.walk(clientCSSfilesDir);//dir to walk into    
    
     walker.on("file", function (root, fileStats, next) {
@@ -149,7 +151,7 @@ function minifyCSSFiles(){
 //concatenate some CSS files
 function concatCSSFiles(){    
      
-    var CSS_DIR = BIN_DIR + directories.client.css;
+    var CSS_DIR = directories.bin.css;
     
     //creates directory if it doesn't exist
     if (!fs.existsSync(CSS_DIR + 'merged-min/')){
@@ -201,7 +203,7 @@ function processHTMLfiles(){
     
     console.log('\n   Minifying HTML .hbs files in build/views/\n');
     
-    var walker = walk.walk(BIN_DIR + 'views');//dir to walk into
+    var walker = walk.walk(directories.bin.views);//dir to walk into
     walker.on("file", function (root, fileStats, next) {
                         
         var filename = root + "/" + fileStats.name;  
@@ -251,7 +253,7 @@ function processJSONfiles(){
     
     console.log('\n   Minifying JSON files in build/countries/\n');
     
-    var countriesFilesDir = remTrailingSlash(BIN_DIR + 'countries');    
+    var countriesFilesDir = remTrailingSlash(directories.bin.countries);    
     var walker = walk.walk(countriesFilesDir);//dir to walk into
     
     walker.on("file", function (root, fileStats, next) {

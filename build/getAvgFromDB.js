@@ -27,9 +27,9 @@ isOnline().then(function(online) {
         process.exit();
     }
     
-    eval(fs.readFileSync(fileNames.client["conversionFunctions.js"])+'');
-    eval(fs.readFileSync(fileNames.client["coreFunctions.js"])+'');
-    eval(fs.readFileSync(fileNames.client["getData.js"])+'');
+    eval(fs.readFileSync(fileNames.src["conversionFunctions.js"])+'');
+    eval(fs.readFileSync(fileNames.src["coreFunctions.js"])+'');
+    eval(fs.readFileSync(fileNames.src["getData.js"])+'');
     eval(fs.readFileSync(fileNames.server["statsFunctions.js"])+'');
 
     var DB_INFO = settings.dataBase.credentials;

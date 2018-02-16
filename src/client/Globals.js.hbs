@@ -79,13 +79,13 @@ var JS_FILES = {
     print :               rootClientURL + "print.js",
     dbFunctions :         rootClientURL + "dbFunctions.js",
 
-    jQuery : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+    jQuery : '{{{ serverData.fileNames.client.jquery.uri }}}',
     jTimer : rootClientURL + "jquery/js_timer.js",
 
     PDF : {
-        pdfmake :        "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
+        pdfmake :         '{{{ serverData.fileNames.client.pdfmake.uri }}}',
         generatePDF :     rootClientURL + "pdf/generatePDF.js",
-        vfs_fonts :       "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
+        vfs_fonts :       '{{{ serverData.fileNames.client.vfs_fonts.uri }}}',
         vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
         vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
         vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
