@@ -1,8 +1,8 @@
 /*Common information that will be used by other scripts and code*/
 
 //Default Country when any possible method to get country isn't available
-const defaultCountry = "UK"; //when no other method finds the country of user, use this by default
-const defaultPort = 3027;    //default HTTP Port where the app listens
+var defaultCountry = "UK"; //when no other method finds the country of user, use this by default
+var defaultPort = 3027;    //default HTTP Port where the app listens
 
 module.exports = {
 
@@ -61,12 +61,6 @@ module.exports = {
 /***************************************************************************************************/
 /***************************************************************************************************/
 
-//Global variables*/
-const commandLineArgs = require('command-line-args');
-const path    = require('path');
-const fs      = require('fs');
-const debug   = require('debug')('app:commons');
-
 
 var RELEASE; //release, "work" or "prod"
 var ROOT_DIR; //root directory of the project
@@ -75,6 +69,12 @@ var optionDefinitions; //for the commandLineArgs
 
 //initialization
 function _init(){
+    
+    //these const are here and not global to avoid errors with PhantomJS, since both NodeJS and PhantomJS load this commons.js module
+    const commandLineArgs = require('command-line-args');
+    const path            = require('path');
+    const fs              = require('fs');
+    const debug           = require('debug')('app:commons');    
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -105,7 +105,7 @@ function _init(){
     }
 
     //get set options from command line arguments
-    const options = commandLineArgs(optionDefinitions);
+    var options = commandLineArgs(optionDefinitions);
     //this "option" object is just filled with the options that were inserted in the command line
     //console.log(options);
     
@@ -128,7 +128,7 @@ function _init(){
     }        
     
     //get HTTP port
-    const HTTPport = options.port ? options.port : defaultPort;
+    var HTTPport = options.port ? options.port : defaultPort;
     
     //set SWITCHES according to commandLineArgs input options
     if (options.All){
@@ -215,12 +215,14 @@ function _init(){
         }
     }
 
-    //console.log(SETTINGS);
+    debug(SETTINGS);
 }
 
 
 function setDIRECTORIES(){
 
+    const debug = require('debug')('app:commons');    
+    
     if(typeof ROOT_DIR === 'undefined'){
         setROOT_DIR();
     }
@@ -264,7 +266,7 @@ function setDIRECTORIES(){
     var projectDirs = {
         "countries" : "countries" + "/",  
         "css"       : "css"       + "/",
-        "tables"    : "css"       + "/",
+        "tables"    : "tables"    + "/",
         "images"    : "images"    + "/",
         "public"    : "public"    + "/",
         "views"     : "views"     + "/",
@@ -295,6 +297,8 @@ function setDIRECTORIES(){
 
 function setFILENAMES(){
 
+    const debug = require('debug')('app:commons');    
+    
     if(!RELEASE){
         _init();
     }
@@ -395,6 +399,9 @@ function setROOT_DIR(){
 // keys/prod or keys/work, the latter being the release test version
 function getServiceCredentialsFromFile(serviceName){
 
+    const path = require('path');
+    const fs   = require('fs');
+
     if(!RELEASE || isEmptyOrInvalidObj(SETTINGS)){
         _init();
     }
@@ -489,6 +496,8 @@ function getCClistOnStr(available_CT){
 
 function getArgvHelpMsg(){
 
+    const path = require('path');
+    
     var fnArr = (process.mainModule.filename).split('/');
     var filename = fnArr[fnArr.length -1];
     
