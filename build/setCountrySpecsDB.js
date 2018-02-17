@@ -17,7 +17,7 @@ commons.init();
 var directories       = commons.getDirectories();
 var ROOT_DIR          = directories.server.root;
 var SRC_DIR           = directories.server.src;
-var COUNTRIES_DIR     = directories.server.countries; 
+var COUNTRIES_DIR     = directories.src.countries; 
 
 var fileNames         = commons.getFileNames();
 var COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
