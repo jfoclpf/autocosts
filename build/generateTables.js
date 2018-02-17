@@ -21,8 +21,8 @@ commons.init();
 var directories       = commons.getDirectories();
 var ROOT_DIR          = directories.server.root;
 var SRC_DIR           = directories.server.src;
-var COUNTRIES_DIR     = directories.server.countries; 
-var TABLES_DIR        = directories.server.tables;
+var COUNTRIES_DIR     = directories.src.countries; //directory, from where the countries information will be obtained
+var TABLES_DIR        = directories.bin.tables;    //directory in which the HTML tables will be generated
 
 var fileNames         = commons.getFileNames();
 var COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
@@ -73,7 +73,7 @@ isOnline().then(function(online) {
                     ' at ' + DB_INFO.host);
     });
 
-    console.log("Creating tables");
+    console.log("Creating tables on ", TABLES_DIR);
     
     //get number of countries
     var nbrOfCountries = Object.keys(availableCountries).length, 
@@ -107,71 +107,78 @@ isOnline().then(function(online) {
                 }
                                 
                 //the content of the file
-                var content = '<table id="tbl_statistics">' +
-                    '<tr class="tr-title">' +
-                    '<td id="td-top-title" colspan="2" class="center td-title">';
+                var content = '<table id="tbl_statistics">\n' +
+                    '\t<tr class="tr-title">\n' +
+                    '\t\t<td id="td-top-title" colspan="2" class="center td-title">\n';
 
                 if (CCfile == "TR") {
-                     content +='<b><span>' + WORDS['country_name'] + '</span><span class="stat_title"> ' + WORDS['statistic_title'] + '</span></b>';
+                     content +='\t\t\t<b><span>' + WORDS['country_name'] + '</span><span class="stat_title"> ' + WORDS['statistic_title'] + '</span></b>';
                 }
                 else{
-                     content +='<b><span>' + WORDS['statistic_title'] + '</span><span class="stat_title"> ' + WORDS['country_name'] + '</span></b>';
+                     content +='\t\t\t<b><span>' + WORDS['statistic_title'] + '</span><span class="stat_title"> ' + WORDS['country_name'] + '</span></b>';
                 }
                 
-                content +='<br><span>' + WORDS['average_costs_per_type'] + '</span>' +
-                        + '</td>' +
-                        + '</tr>';
+                content +='<br>\n' + 
+                        '\t\t\t<span>' + WORDS['average_costs_per_type'] + '</span>\n' +
+                        '\t\t</td>\n' +
+                        '\t</tr>\n';
 
-                content += '<tr class="tr-sub-title"><td colspan="2" class="center"><span>' + WORDS['fixed_costs'] + '</span></td></tr>' +                                            
-                    '<tr><td style="width:50%"><span>' + WORDS['depreciation_st'] + '</span></td> <td style="width:25%"><span> ' + currSymb + ' </span><span id="txt_depr" class="value-field">' + fixNmbr(res["Depreciation"],1) + '</span></td></tr>' +               
-                    '<tr><td><span>' + WORDS['insurance_st']     + '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_ins" class="value-field">'    + fixNmbr(res["Insurance"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['credit_interests'] + '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_cred" class="value-field">'   + fixNmbr(res["Loan_interests"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['inspection_short'] + '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_insp" class="value-field">'   + fixNmbr(res["Inspection"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['road_taxes_short'] + '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_tax" class="value-field">'    + fixNmbr(res["Car_tax"],1) + '</span></td></tr>' +
-                    '<tr><td><span>50% ' + WORDS['maintenance'] +  '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_maint1" class="value-field">' + fixNmbr(res["Maintenance"],1) + '</span></td></tr>' +
-                    '<tr class="tr-result">' +
-                       '<td><span>' + WORDS['word_total_cap'] + '<br>' + WORDS['fixed_costs'] + '</span></td>' +
-                       '<td><span> ' + currSymb + ' </span><span id="txt_standing_costs" class="value-field">' + fixNmbr(res["standing_costs"],0) + '</span></td>' +
-                    '</tr>' +
-                    '<tr class="tr-sub-title"><td colspan="2" class="center"><span>' + WORDS['running_costs'] + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['fuel'] +             '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_fuel" class="value-field">'   + fixNmbr(res["Fuel"],1) + '</span></td></tr>' +
-                    '<tr><td><span>50% ' + WORDS['maintenance'] +  '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_maint2" class="value-field">' + fixNmbr(res["Maintenance"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['rep_st'] +           '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_rep" class="value-field">'    + fixNmbr(res["Repairs"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['parking'] +          '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_park" class="value-field">'   + fixNmbr(res["Parking"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['tolls'] +            '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_tolls" class="value-field">'  + fixNmbr(res["Tolls"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['fines'] +            '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_fines" class="value-field">'  + fixNmbr(res["Fines"],1) + '</span></td></tr>' +
-                    '<tr><td><span>' + WORDS['washing_st'] +       '</span></td> <td><span> ' + currSymb + ' </span><span id="txt_wash" class="value-field">'   + fixNmbr(res["Washing"],1) + '</span></td></tr>' +
-                    '<tr class="tr-result">' +
-                       '<td><span>' + WORDS['word_total_cap'] + '<br>' + WORDS['running_costs'] + '</span></td>' +
-                       '<td><span> ' + currSymb + ' </span><span id="txt_running_costs" class="value-field">' + fixNmbr(res["running_costs"],0) + '</span></td>' +
-                    '</tr>' +
-                    '<tr><td colspan="2"></td></tr>' +
-                    '<tr class="main_total">' +
-                       '<td><span>' + WORDS['word_total_cap'] + '</span></td>' +
-                       '<td><span> ' + currSymb + ' </span><span id="txt_total_overal" class="value-field">' + fixNmbr(res["total_costs"],0) + '</span></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                       '<td><span>' + WORDS['run_cp_dist'] + '</span></td>' +
-                       '<td><span> ' + currSymb + '</span><span id="txt_running_costs_dist" class="value-field">' + fixNmbr(res["running_costs_dist"],2) + '</span><span>/' + stdDist + '</span></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                       '<td><span>' + WORDS['total_cp_dist'] + '</span></td>' +
-                       '<td><span> ' + currSymb + '</span><span id="txt_total_costs_p_unit" class="value-field">' + fixNmbr(res["total_costs_dist"],2) + '</span><span>/' + stdDist + '</span></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                       '<td><span>' + WORDS['kinetic_speed_title'] + '</span></td>' +
-                       '<td><span id="txt_kinetic_speed" class="value-field"></span>' + fixNmbr(res["kinetic_speed"],0) + '<span> ' + stdDist + '/h</span></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                       '<td><span><a target="_blank" href="' + consumer_speed_url + '">' + WORDS['virtual_speed_title'] + '</a></span></td>' +
-                        '<td><span id="txt_virtual_speed" class="value-field">' + fixNmbr(res["virtual_speed"],0) + '</span><span> ' + stdDist + '/h</span></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                        '<td id="table-td-bottom-left"><span>' + WORDS['total_costs_per_year'] + '</span></td>' +
-                        '<td id="table-td-bottom-right">' + currSymb + ' <span id="txt_total_costs_year" class="value-field">' + fixNmbr(res["total_costs_year"],0) + '</span></td>' +
-                    '</tr>' +
-                    '</table>' +
-                    '<div id="tbl_statistics_footer"></div>';                
+                content += '\t\t<tr class="tr-sub-title">\n' + 
+                        '\t\t<td colspan="2" class="center"><span>' + WORDS['fixed_costs'] + '</span></td>\n' + 
+                    '\t</tr>\n' +                                            
+                    '\t<tr>\n\t\t<td style="width:50%"><span>' + WORDS['depreciation_st'] + '</span></td>\n\t\t<td style="width:25%"><span> ' + currSymb + ' </span><span id="txt_depr" class="value-field">' + fixNmbr(res["Depreciation"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['insurance_st']     + '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_ins" class="value-field">'    + fixNmbr(res["Insurance"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['credit_interests'] + '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_cred" class="value-field">'   + fixNmbr(res["Loan_interests"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['inspection_short'] + '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_insp" class="value-field">'   + fixNmbr(res["Inspection"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['road_taxes_short'] + '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_tax" class="value-field">'    + fixNmbr(res["Car_tax"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>50% ' + WORDS['maintenance'] +  '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_maint1" class="value-field">' + fixNmbr(res["Maintenance"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr class="tr-result">\n' +
+                       '\t\t<td><span>' + WORDS['word_total_cap'] + '<br>' + WORDS['fixed_costs'] + '</span></td>\n' +
+                       '\t\t<td><span> ' + currSymb + ' </span><span id="txt_standing_costs" class="value-field">' + fixNmbr(res["standing_costs"],0) + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr class="tr-sub-title">\n' + 
+                        '\t\t<td colspan="2" class="center"><span>' + WORDS['running_costs'] + '</span></td>\n' + 
+                    '\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['fuel'] +             '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_fuel" class="value-field">'   + fixNmbr(res["Fuel"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>50% ' + WORDS['maintenance'] +  '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_maint2" class="value-field">' + fixNmbr(res["Maintenance"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['rep_st'] +           '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_rep" class="value-field">'    + fixNmbr(res["Repairs"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['parking'] +          '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_park" class="value-field">'   + fixNmbr(res["Parking"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['tolls'] +            '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_tolls" class="value-field">'  + fixNmbr(res["Tolls"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['fines'] +            '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_fines" class="value-field">'  + fixNmbr(res["Fines"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr>\n\t\t<td><span>' + WORDS['washing_st'] +       '</span></td>\n\t\t<td><span> ' + currSymb + ' </span><span id="txt_wash" class="value-field">'   + fixNmbr(res["Washing"],1) + '</span></td>\n\t</tr>\n' +
+                    '\t<tr class="tr-result">\n' +
+                       '\t\t<td><span>' + WORDS['word_total_cap'] + '<br>' + WORDS['running_costs'] + '</span></td>\n' +
+                       '\t\t<td><span> ' + currSymb + ' </span><span id="txt_running_costs" class="value-field">' + fixNmbr(res["running_costs"],0) + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' + 
+                        '\t\t<td colspan="2"></td>\n' + 
+                    '\t</tr>\n' +
+                    '\t<tr class="main_total">\n' +
+                       '\t\t<td><span>' + WORDS['word_total_cap'] + '</span></td>\n' +
+                       '\t\t<td><span> ' + currSymb + ' </span><span id="txt_total_overal" class="value-field">' + fixNmbr(res["total_costs"],0) + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' +
+                       '\t\t<td><span>' + WORDS['run_cp_dist'] + '</span></td>\n' +
+                       '\t\t<td><span> ' + currSymb + '</span><span id="txt_running_costs_dist" class="value-field">' + fixNmbr(res["running_costs_dist"],2) + '</span><span>/' + stdDist + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' +
+                       '\t\t<td><span>' + WORDS['total_cp_dist'] + '</span></td>\n' +
+                       '\t\t<td><span> ' + currSymb + '</span><span id="txt_total_costs_p_unit" class="value-field">' + fixNmbr(res["total_costs_dist"],2) + '</span><span>/' + stdDist + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' +
+                       '\t\t<td><span>' + WORDS['kinetic_speed_title'] + '</span></td>\n' +
+                       '\t\t<td><span id="txt_kinetic_speed" class="value-field"></span>' + fixNmbr(res["kinetic_speed"],0) + '<span> ' + stdDist + '/h</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' +
+                       '\t\t<td><span>\n\t\t\t<a target="_blank" href="' + consumer_speed_url + '">\n\t\t\t\t' + WORDS['virtual_speed_title'] + '\n\t\t\t</a></span></td>\n' +
+                        '\t\t<td><span id="txt_virtual_speed" class="value-field">' + fixNmbr(res["virtual_speed"],0) + '</span><span> ' + stdDist + '/h</span></td>\n' +
+                    '\t</tr>\n' +
+                    '\t<tr>\n' +
+                        '\t\t<td id="table-td-bottom-left"><span>' + WORDS['total_costs_per_year'] + '</span></td>\n' +
+                        '\t\t<td id="table-td-bottom-right">' + currSymb + ' <span id="txt_total_costs_year" class="value-field">' + fixNmbr(res["total_costs_year"],0) + '</span></td>\n' +
+                    '\t</tr>\n' +
+                    '</table>\n' +
+                    '<div id="tbl_statistics_footer">\n</div>\n';
                 
                 fs.writeFile(fileName, content, 'utf8', function (err) {
                     if (err) {
