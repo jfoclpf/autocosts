@@ -48,8 +48,7 @@ function processJSfiles(){
 
     console.log('\n   Minifying JS files in build/client/');
 
-    var clientJSfilesDir = remTrailingSlash(BIN_DIR + directories.client.client);
-    var walker = walk.walk(clientJSfilesDir);
+    var walker = walk.walk(remTrailingSlash(BIN_DIR + directories.client.client));
     
     walker.on("file", function (root, fileStats, next) {
                         
@@ -109,9 +108,8 @@ function processCSSfiles(){
 function minifyCSSFiles(){
 
     console.log('\n   Minifying CSS files in build/css/\n');
-    
-    var clientCSSfilesDir = remTrailingSlash(directories.bin.css);    
-    var walker = walk.walk(clientCSSfilesDir);//dir to walk into    
+        
+    var walker = walk.walk(remTrailingSlash(directories.bin.css));//dir to walk into    
    
     walker.on("file", function (root, fileStats, next) {
                         
@@ -203,12 +201,15 @@ function processHTMLfiles(){
     
     console.log('\n   Minifying HTML .hbs files in build/views/\n');
     
-    var walker = walk.walk(directories.bin.views);//dir to walk into
+    var walker = walk.walk(remTrailingSlash(directories.server.bin));//dir to walk into
     walker.on("file", function (root, fileStats, next) {
                         
         var filename = root + "/" + fileStats.name;  
         
-        if(filename.includes(".hbs") && !filename.includes("sitemap.hbs")){  
+        if(getFileExtension(filename) === "hbs" && 
+              !filename.includes("sitemap.hbs") && 
+              !filename.includes(".js.hbs") &&  //excludes js files generated bu handlebars
+              !filename.includes(".css.hbs")){  //excludes css files generated bu handlebars
 
             console.log(filename.replace(ROOT_DIR, ''));
 
@@ -253,8 +254,7 @@ function processJSONfiles(){
     
     console.log('\n   Minifying JSON files in build/countries/\n');
     
-    var countriesFilesDir = remTrailingSlash(directories.bin.countries);    
-    var walker = walk.walk(countriesFilesDir);//dir to walk into
+    var walker = walk.walk(remTrailingSlash(directories.bin.countries));//dir to walk into
     
     walker.on("file", function (root, fileStats, next) {
                         
