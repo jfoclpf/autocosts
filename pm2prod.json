@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name"        : "autocosts work",
+    "script"      : "bin/index.js",
+    "args"        : "-r prod -A",
+    "instances"   : "max",
+    "exec_mode"   : "cluster",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }]
+}
+

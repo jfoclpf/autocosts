@@ -1,0 +1,14 @@
+{
+  "apps" : [{
+    "name"        : "autocosts work",
+    "script"      : "bin/index.js",
+    "args"        : "--https --print --pdf --social --googleCharts --uber --googleCaptcha --googleAnalytics --dataBase",
+    "watch"       : true,
+    "instances"   : "max",
+    "exec_mode"   : "cluster",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }]
+}
+
