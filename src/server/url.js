@@ -116,7 +116,7 @@ var redirect302 = function (req, res, serverData){
     }
     //production
     else{ 
-        url2redirect = getProtocol(req, serverData.settings.switches.https) + '://' + domainsCountries[geoCC] + '/' + geoCC;
+        url2redirect = getProtocol(req, serverData.settings.switches.https) + '://' + serverData.domainsCountries[geoCC] + '/' + geoCC;
     }
     
     res.redirect(302, url2redirect);
@@ -230,7 +230,7 @@ var getValidURL = function (req, domainsCountries, IS_HTTPS){
 
 var getProtocol = function (req, IS_HTTPS){
         
-    if (IS_HTTPS && !isWorkDomain(req)){
+    if (!isThisLocalhost(req) && IS_HTTPS){
         return "https";
     }
     return "http";
@@ -274,10 +274,11 @@ var isWorkDomain = function (req){
 
 var isThisLocalhost = function (req){
     
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var ip=req.ip;    
     var host = req.get('host');
+    debug("ip", ip, "\nhost", host);
     
-    return ip === "127.0.0.1" || ip === "::ffff:127.0.0.1" || ip === "::1" || host.indexOf("localhost") !== -1;
+    return ip === "127.0.0.1" || ip === "::ffff:127.0.0.1" || ip === "::1";
 };
 
 var isCCXX = function (CC) {    
