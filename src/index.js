@@ -67,6 +67,7 @@ console.log("numCPUs: " + numCPUs);
 
 var app = express();
 app.enable('case sensitive routing');
+app.enable('trust proxy');
 
 //rendering engine for dynamically loaded HTML/JS files
 var hbs = exphbs.create({

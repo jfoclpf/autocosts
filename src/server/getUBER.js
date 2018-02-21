@@ -20,7 +20,7 @@ module.exports = function(req, res, serverData) {
     res.set('Content-Type', 'application/json');    
     
     Promise.all([p1, p2]).then(function(values){
-        debug("Uber response: ", values);                                
+        //debug("Uber response: ", values);                                
         if(!values[0] || !values[1]){            
             res.send(null);
             return;
@@ -105,22 +105,19 @@ var makeUberRequest = async function (req, serverData){
     var lat, long;
     
     //debugOption=1;
-    if(debugOption==1){//Lisbon coordinates
+    if(debugOption == 1){//Lisbon coordinates
+        debug("Lisbon");
         lat  = 38.722252;
         long = -9.139337;
     }
-    else if(debugOption==2){ //London coordinates
+    else if(debugOption == 2){ //London coordinates
+        debug("London");
         lat  = 51.507351;
         long = -0.127758;  
     }
     else{//PROD or .work
-        //tries to get IP from user
-        var ip = req.headers['x-forwarded-for'].split(',').pop() || 
-                 req.connection.remoteAddress || 
-                 req.socket.remoteAddress || 
-                 req.connection.socket.remoteAddress;
-
-        var geo = geoIP.lookup(ip);
+        //tries to get IP from user        
+        var geo = geoIP.lookup(req.ip);
         lat  = geo.ll[0];
         long = geo.ll[1];
     }
