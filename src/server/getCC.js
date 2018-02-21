@@ -19,8 +19,9 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     //Object with all the expressions for each country
     data.words = wordsOfCountry;
     data.words.word_per += "&#32;" //add non-breaking space    
-    
+        
     //use Local files or CDN?
+    debug("isThisLocalhost ", isThisLocalhost);
     if(isThisLocalhost){
         serverData.fileNames.client.jquery.uri    = serverData.fileNames.client.jquery.local;
         serverData.fileNames.client.pdfmake.uri   = serverData.fileNames.client.pdfmake.local;
