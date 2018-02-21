@@ -2,7 +2,8 @@
 
 //Default Country when any possible method to get country isn't available
 var defaultCountry = "UK"; //when no other method finds the country of user, use this by default
-var defaultPort = 3027;    //default HTTP Port where the app listens
+var defaultPortWork = 3027;  //default HTTP Port where the app listens - test version
+var defaultPortProd = 3028;  //default HTTP Port where the app listens - prod version
 
 module.exports = {
 
@@ -11,6 +12,9 @@ module.exports = {
     },
 
     getSettings: function(){
+        if(isEmptyOrInvalidObj(SETTINGS)){
+            _init();
+        }        
         return SETTINGS;
     },
 
@@ -71,10 +75,7 @@ var optionDefinitions; //for the commandLineArgs
 function _init(){
     
     //these const are here and not global to avoid errors with PhantomJS, since both NodeJS and PhantomJS load this commons.js module
-    const commandLineArgs = require('command-line-args');
-    const path            = require('path');
-    const fs              = require('fs');
-    const debug           = require('debug')('app:commons');    
+    const commandLineArgs = require('command-line-args');         
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -116,7 +117,10 @@ function _init(){
     }
     console.log("Release: '" + release + "'");
     RELEASE = release; //set Global variable
-
+    
+    //shows NODE_ENV
+    console.log("NODE_ENV: ", process.env.NODE_ENV);
+        
     //after the RELEASE is known, the directories and files can be obtained and set
     setDIRECTORIES();
     setFILENAMES();    
@@ -127,8 +131,22 @@ function _init(){
         process.exit();
     }        
     
-    //get HTTP port
-    var HTTPport = options.port ? options.port : defaultPort;
+    //set HTTP port
+    var HTTPport;
+    if(options.port){
+        HTTPport = options.port;
+    }
+    else{
+        if (release === "prod"){
+            HTTPport = defaultPortProd;
+        }
+        else if (release === "work"){
+            HTTPport = defaultPortWork;
+        }
+        else{
+            throw "Error setting port";
+        }
+    }
     
     //set SWITCHES according to commandLineArgs input options
     if (options.All){
@@ -215,7 +233,8 @@ function _init(){
         }
     }
 
-    debug(SETTINGS);
+    const debug = require('debug')('app:commons');
+    debug("SETTINGS", SETTINGS);
 }
 
 
@@ -291,7 +310,7 @@ function setDIRECTORIES(){
         "project" : projectDirs     //these paths are relative (as seen by either src/ or bin/)
     };
     
-    debug(DIRECTORIES);    
+    debug("DIRECTORIES", DIRECTORIES);    
 }
 
 
@@ -360,7 +379,7 @@ function setFILENAMES(){
         FILENAMES.server.credentialsFullPath[file] = credentialsDir + FILENAMES.server.credentials[file];    
     }
     
-    debug(FILENAMES);    
+    debug("FILENAMES", FILENAMES);    
 }
 
 //get parent directory of project directory tree
@@ -510,20 +529,21 @@ function getArgvHelpMsg(){
         "\n" +
         "Options: \n" +
         "-r, --release              'work' for tests or 'prod' for production\n" +
-        "-p, --port                 HTTP port on which the application is listening (default:" + defaultPort + ")\n" +
+        "-p, --port                 HTTP port on which the application is listening " + 
+                                    "(default:" + defaultPortWork + " for tests, and " + defaultPortProd + " for production)\n" +
+        "    --https                Enables protocol https when available\n" +
+        "    --print                Enables the standard printing of final report\n" +
+        "    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n" +
+        "    --social               Enables social media plugin (js-socials)\n" +
+        "    --googleCharts         Enables Google Charts on report\n" +        
         "\n" +
         "    External API services, disabled by default\n" +
         "    API credentials must be in either " + credDirRelativePath + "/work/ or " + credDirRelativePath + "/prod/ according to release\n" +        
-        "    --https                Enables protocol https when available\n" +
         "    --cdn                  Enables Content Delivery Network\n" +
         "    --uber                 Enables UBER API\n" +
-        "    --social               Enables social media plugin\n" +
-        "    --googleCharts         Enables Google Charts for report\n" +
         "    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n" +
         "    --googleAnalytics      Enables Google Analytics\n" +
         "    --dataBase             Enables a mysql Database\n" +
-        "    --print                Enables option to print, on the final report\n" +
-        "    --pdf                  Enables option to download pdf repor on final report\n" +
         "\n" +
         "-A  --all                  Enables all the previous services\n";
 
