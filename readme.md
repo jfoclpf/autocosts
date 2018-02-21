@@ -63,20 +63,20 @@ Ex:    node index.js -r prod --uber --dataBase
 
 Options: 
 -r, --release              'work' for tests or 'prod' for production
--p, --port                 HTTP port on which the application is listening (default:3000)
+-p, --port                 HTTP port on which the application is listening (default:3027 for tests, and 3028 for production) 
+    --https                Enables protocol https when available
+    --print                Enables the standard printing of final report
+    --pdf                  Enables the downloading of a pdf final report (using pdfmake)
+    --social               Enables social media plugin (js-socials)
+    --googleCharts         Enables Google Charts on report
 
     External API services, disabled by default
     API credentials must be in either credentials/work/ or credentials/prod/ according to release
-    --https                Enables protocol https when available
     --cdn                  Enables Content Delivery Network
     --uber                 Enables UBER API
-    --social               Enables social media plugin
-    --googleCharts         Enables Google Charts for report
     --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
     --googleAnalytics      Enables Google Analytics
     --dataBase             Enables a mysql Database
-    --print                Enables option to print, on the final report
-    --pdf                  Enables option to download pdf repor on final report
 
 -A  --all                  Enables all the previous services
 ```
