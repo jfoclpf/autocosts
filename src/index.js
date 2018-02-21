@@ -5,6 +5,10 @@
 **                                             **
 ************************************************/
 
+//this should be here on the beginning to set global environments
+const commons     = require('../commons');
+commons.init();
+
 //check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
 const numCPUs     = require('os').cpus().length;
 const fs          = require('fs');
@@ -18,7 +22,6 @@ const debug       = require('debug')('app:main');
 
 
 //personalised requires
-const commons     = require('../commons');
 const url         = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
 const getCC       = require(__dirname + '/server/getCC');
 const hbsHelpers  = require(__dirname + '/server/hbsHelpers');
@@ -26,7 +29,7 @@ const list        = require(__dirname + '/server/list');
 const domains     = require(__dirname + '/server/domains');
 const sitemap     = require(__dirname + '/server/sitemap');
 
-commons.init();
+
 var directories = commons.getDirectories();
 directories.index = __dirname + "/"; //directory where this script index.js is located
 
@@ -47,7 +50,7 @@ const serverData = {
     "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-debug(serverData);
+debug("serverData", serverData);
 
 //Global switches with the available services
 //for more information see commons.js
