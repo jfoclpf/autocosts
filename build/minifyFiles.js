@@ -26,6 +26,8 @@ var directories = commons.getDirectories();
 var ROOT_DIR = directories.server.root;
 var BIN_DIR  = directories.server.bin;
 
+var settings = commons.getSettings();
+
 console.log('\n## Minifying and concatenating files'); 
 
 processFiles();
@@ -66,7 +68,7 @@ function processJSfiles(){
             //needs a special treatment upon minification
             var result;
             if (!filename.includes('Globals.js.hbs')){
-                var options = { compress: { drop_console: true }};
+                var options = { compress: { drop_console: (settings.release === "prod") ? true : false }};
                 result = UglifyJS.minify(code, options);
             }
             else{        
