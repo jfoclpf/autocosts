@@ -20,7 +20,7 @@ module.exports = function(req, res, serverData, WORDS) {
     
     data.layout = false;
     
-    res.header('Content-Type', 'application/xml; charset=utf-8');
+    res.header('Content-Type', 'application/xml');
   
     var fileToRender = serverData.directories.index + "views/sitemap.hbs";
     res.render(fileToRender, data);
