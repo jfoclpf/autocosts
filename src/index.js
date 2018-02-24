@@ -9,8 +9,6 @@
 const commons     = require('../commons');
 commons.init();
 
-//check https://nodejs.org/dist/latest-v4.x/docs/api/cluster.html#cluster_how_it_works
-const numCPUs     = require('os').cpus().length;
 const fs          = require('fs');
 const path        = require("path");
 const express     = require('express');
@@ -66,7 +64,6 @@ for (var CC in serverData.availableCountries){
 }
 
 console.log("\n\nServer started at " + __dirname);
-console.log("numCPUs: " + numCPUs);
 
 var app = express();
 app.enable('case sensitive routing');
