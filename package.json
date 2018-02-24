@@ -29,7 +29,6 @@
     "command-line-args": "^5.0.2",
     "compression": "^1.7.2",
     "concat-files": "^0.1.1",
-    "curl": "^0.1.4",
     "debug": "^3.1.0",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
@@ -53,7 +52,6 @@
     "sort-object": "^3.0.2",
     "uglify-js": "^3.3.11",
     "uglifycss": "0.0.27",
-    "uuid": "^3.2.1",
     "walk": "^2.3.9",
     "webpage": "^0.3.0"
   }
