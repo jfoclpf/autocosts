@@ -118,8 +118,18 @@ function Run2(callback){
     //gets result frame width to draw charts within it
     DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;
 
-    drawChartResult();
-    
+    //When Google Charts are available
+    if(SWITCHES.g_charts && SERVICE_AVAILABILITY.g_charts){        
+        drawChartResult();
+    }
+    //when no charts are available
+    else{        
+        var blankImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=";
+        for (var uri in DISPLAY.charts.URIs){
+            DISPLAY.charts.URIs[uri] = blankImg;
+        }
+    }
+        
     $("*").promise().done(function(){    
         
         //global variable indicating the results are being shown
@@ -860,92 +870,6 @@ function print_extern_table(f1, f2, f3, data){
     return varResult;
 }
 
-//******************************************************************************************************************************************************
-//******************************************************************************************************************************************************
-
-
-function drawChartResult(){
-
-    //When Google Charts are not available
-    if(!SERVICE_AVAILABILITY.g_charts || !SWITCHES.g_charts){
-        return;
-    }
-
-    var frameWidth = DISPLAY.centralFrameWidth;
-
-    var width_off = DISPLAY.charts.WIDTH_PX_OFF;        //frame width in px under which the charts are not shown
-    var minRatio = DISPLAY.charts.MIN_RATIO;            //minimum ratio width of charts as frameWitdh becomes too wide
-    var minRatioWidth = DISPLAY.charts.MIN_RATIO_WIDTH; //width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO
-
-    //it doesn't print the charts in very small screen width
-    if (frameWidth < width_off) {
-        $("#pie_chart_div").css('display', 'none');
-        $("#bar_chart_div").css('display', 'none');
-        return;
-    }
-
-    //make charts width adjustments according to the div_width (uses linear expression y=mx+b)
-    var ratio;
-    if (frameWidth > minRatioWidth) {
-        ratio = minRatio;
-    }
-    else if(frameWidth > width_off) {
-        var m = (minRatio - 1) / (minRatioWidth - width_off);
-        var b = 1 - m * width_off;
-        ratio = m * frameWidth + b;
-    }
-    frameWidth = ratio * frameWidth;
-
-    //prepares the the correspondent divs
-    $("#pie_chart_div").css('display', 'inline-block');
-    $("#pie_chart_div").css('width', '95%');
-    $("#bar_chart_div").css('display', 'inline-block');
-    $("#bar_chart_div").css('width', '95%');
-
-    //draw Pie Chart
-    var pie_chart_width=parseInt(frameWidth * 1);
-    var pie_chart_height=parseInt(pie_chart_width*4/6);
-
-    drawMonthlyCostsPieChart(pie_chart_width,  pie_chart_height);
-
-    //draw Bar Chart
-    var bar_chart_width = parseInt(frameWidth * 0.8);
-    var bar_chart_height = parseInt(bar_chart_width*45/50);
-
-    drawMonthlyCostsBarChart(bar_chart_width, bar_chart_height);
-
-    //adjust the charst divs
-    $("#pie_chart_div").css('display', 'inline-block');
-    $("#pie_chart_div").css('width', 'auto');
-    $("#bar_chart_div").css('display', 'inline-block');
-    $("#bar_chart_div").css('width', 'auto');
-
-    //draw Financial Effort Chart
-    if(CALCULATED.data.fin_effort_calculated){//if the financial effort was calculated
-        var fe_chart_width=parseInt(frameWidth *0.9);
-        var fe_chart_height=parseInt(fe_chart_width*1/2);
-
-        drawFinEffortChart(parseFloat(CALCULATED.data.fin_effort.total_costs_year.toFixed(0)),
-                           parseFloat(CALCULATED.data.fin_effort.income_per_year.toFixed(0)),
-                           fe_chart_width,
-                           fe_chart_height
-                    );
-
-        $("#fin_effort_chart_div").css('display', 'inline-block');
-        $("#fin_effort_chart_div").css('width', 'auto');
-    }
-
-    //draw Alternative to Car Costs Chart
-    if(CALCULATED.data.alternative_to_car_costs_calculated){//if the alternative to car transports were calculated
-        var alter_to_car_chart_width=parseInt(frameWidth * 0.8);
-        var alter_to_car_chart_height=parseInt(alter_to_car_chart_width*55/50);
-
-        drawAlterToCarChart(alter_to_car_chart_width, alter_to_car_chart_height);
-
-        $("#alternative_carcosts_chart_div").css('display', 'inline-block');
-        $("#alternative_carcosts_chart_div").css('width', 'auto');
-    }
-}
 
 //puts the currency symbol after the money value, for certain countries
 function currencyShow(value){

@@ -10,6 +10,9 @@ generatePDF = function generatePDF(){
     var title1, title2, title3, title4;
     var chartData1, chartData2, chartData3, chartData4;  //chart images
 
+    //are there charts available to be rendered to pdf?
+    var isCharts = SWITCHES.g_charts && SERVICE_AVAILABILITY.g_charts;
+    
     //main top table with total costs
     body0 = get_main_table("#result_table0");
 
@@ -24,7 +27,7 @@ generatePDF = function generatePDF(){
 
     chartData1 = DISPLAY.charts.URIs.pieChart;
     chartData2 = DISPLAY.charts.URIs.barChart;
-
+      
     var docDefinition = {
         header: {
             text: main_title,
@@ -47,19 +50,21 @@ generatePDF = function generatePDF(){
                     body: body11
                 }
             },
-            {
-                image: chartData1,
-                width: 400,
-                height: 267,
-                style: 'img_style'
-            },
-            {
-                image: chartData2,
-                width: 400,
-                height: 300,
-                style: 'img_style',
-                pageBreak: 'after'
-            },
+            isCharts ? 
+                {
+                    image: chartData1,
+                    width: 400,
+                    height: 267,
+                    style: 'img_style'
+                } : {},
+            isCharts ?                
+                {
+                    image: chartData2,
+                    width: 400,
+                    height: 300,
+                    style: 'img_style',
+                    pageBreak: 'after'
+                } : {},
             {
                 style: 'tableMarging',
                 table:{
@@ -157,12 +162,12 @@ generatePDF = function generatePDF(){
         //chart
         if(DISPLAY.charts.isFinEffortChart){
             chartData3 = DISPLAY.charts.URIs.finEffort;
-            body23 = {
+            body23 = isCharts ? {
                         image: chartData3,
                         width: 400,
                         height: 220,
                         style: 'img_style'
-                    };
+                    } : {} ;
             docDefinition.content.push(body23);
         }
 
@@ -199,12 +204,12 @@ generatePDF = function generatePDF(){
         //chart
         if(DISPLAY.charts.isAlterToCarChart){
             chartData4 = DISPLAY.charts.URIs.alterToCar;
-            body33 = {
+            body33 = isCharts ? {
                         image: chartData4,
                         width: 400,
                         height: 350,
                         style: 'img_style'
-                    };
+                    } : {} ;
             docDefinition.content.push(body33);
         }
 

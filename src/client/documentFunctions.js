@@ -181,7 +181,7 @@ function loadExtraFiles() {
         if (SWITCHES.g_captcha && NOT_LOCALHOST){
             getScriptOnce(JS_FILES.Google.recaptchaAPI)
                 .done(function(){
-                    SERVICE_AVAILABILITY.g_captcha = true;
+                    SERVICE_AVAILABILITY.g_captcha = true;                    
                 })
                 .fail(function(){
                     SERVICE_AVAILABILITY.g_captcha = false;
@@ -389,8 +389,12 @@ function resized(callback){
 
     //if the result are showing resizes the charts
     if(DISPLAY.result.isShowing){
-        DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;
-        drawChartResult();
+        DISPLAY.centralFrameWidth = document.getElementById("div2").offsetWidth;        
+        
+        //When Google Charts are available
+        if(SWITCHES.g_charts && SERVICE_AVAILABILITY.g_charts){        
+            drawChartResult();
+        }
     }
 
     if (typeof callback === 'function'){
