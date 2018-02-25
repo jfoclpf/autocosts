@@ -185,7 +185,7 @@ do
             cd build/
             printf "\n## Minify and concatenate js, html/hbs, css and json files \n\n"
 
-            node minifyFiles.js
+            node minifyFiles.js -r $RELEASE
 
             cd ../
             ;;
@@ -195,7 +195,7 @@ do
             cd build/
             printf "\n## Compress images, jpg and png files \n\n"
                   
-            node compressImages.js
+            node compressImages.js -r $RELEASE
 
             cd ../
             ;;
