@@ -67,15 +67,7 @@ module.exports = {
             url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
-        }
-        
-        //check for https rules and redirect accordingly
-        if (req.protocol !== getProtocol(req, IS_HTTPS)){
-            debug("if (protocol !== getProtocol)");
-            url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
-            redirect301(res, url2redirect);
-            return true;        
-        }        
+        }     
         
         return false;
     },
