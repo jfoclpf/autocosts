@@ -350,11 +350,20 @@ function onCountrySelect(country) {
     var domain = window.location.hostname;
 
     var url2go;
-    if(domain.split(".")[1]=="work"){
-        url2go = "http://autocosts.work/" + country.toUpperCase();
+    
+    if(NOT_LOCALHOST){
+        if(domain.split(".")[1]=="work"){
+            url2go = "http://autocosts.work/" + country.toUpperCase();
+        }
+        else{
+            url2go = getProtocol() + DOMAIN_LIST[country] + "/" + country.toUpperCase();
+        }
     }
+    //is run from localhost, for example http://localhost:3027/PT
     else{
-        url2go = getProtocol() + DOMAIN_LIST[country] + "/" + country.toUpperCase();
+        url2go = getProtocol() + window.location.hostname + 
+                (location.port ? ':'+location.port : '') + 
+                "/" + country.toUpperCase();
     }
     window.location.href = url2go;
 }

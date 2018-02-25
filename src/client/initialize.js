@@ -283,19 +283,11 @@ function guid() {
 uuid = guid();
 
 //gets default protocol defined by Global Variable
+//it returns either "http://" or "https://", i.e., it returns including the "://"
 function getProtocol(){
 
-    //verifies top level domain
-    var hostName = window.location.hostname;
-    var hostNameArray = hostName.split(".");
-    var posOfTld = hostNameArray.length - 1;
-    var tld = hostNameArray[posOfTld];
-    if(tld=="work"){
-        return "http://";
-    }
-
     if (SWITCHES.https){
-        return "https://";
+        return location.protocol + "//";
     }
     else{
         return "http://";
