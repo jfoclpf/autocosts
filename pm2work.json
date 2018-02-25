@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name"        : "autocosts work",
+    "name"        : "autocosts.work",
     "script"      : "bin/index.js",
     "args"        : "--https --print --pdf --social --googleCharts --uber --googleCaptcha --googleAnalytics --dataBase",
     "watch"       : true,
