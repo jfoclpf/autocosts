@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name"        : "autocosts work",
+    "name"        : "autocosts prod",
     "script"      : "bin/index.js",
     "args"        : "-r prod -A",
     "instances"   : "max",
