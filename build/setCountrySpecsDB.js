@@ -37,7 +37,7 @@ isOnline().then(online => {
     if(!DB_INFO || Object.keys(DB_INFO).length === 0){
         throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
     }
-    //console.log(DB_INFO);
+    console.log(DB_INFO);
 
     //getting country information from 
     console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
