@@ -59,9 +59,6 @@ var getScriptOnce = (function(url, callback){
 
     });
 
-    //loads second part of CSS files (not critical thus can be deferred)
-    loadStyleSheets(['css/merged-min/merged2.css']);
-
     /*Google Analytics*/
     if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
         (function(i, s, o, g, r, a, m) {

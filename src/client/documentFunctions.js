@@ -155,6 +155,9 @@ function shows_part(part_number_origin, part_number_destiny){
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
 function loadExtraFiles() {
     
+    //loads second part of CSS files (not critical thus can be deferred)
+    loadStyleSheets(['css/merged-min/merged2.css']);
+    
     getScriptOnce(JS_FILES.conversionFunctions);    
     getScriptOnce(JS_FILES.getData);
 
