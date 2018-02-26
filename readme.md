@@ -95,6 +95,7 @@ This file `dataBase.json` should look like:
     "user"      : "*****",
     "password"  : "*****",
     "database"  : "*****",
+    "port"      : "***** (optional)",
     "db_tables" : {
         "country_specs"    : "country_specs" ,
         "users_insertions" : "users_insertions",
