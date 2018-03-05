@@ -27,7 +27,20 @@ span.codedirection{
 #contact_div{
     padding:4px 0 8px 0;
     width:100%;
-    font-size:95%;
+    font-size:130%;
+    line-height: 180%;
+    font-weight: bold;
+}
+
+.npm_link{
+    color: #cb3837 !important;
+
+  
+}
+
+.github_link{
+    color: #0366d6 !important;
+ 
 }
 
 .display_block {
