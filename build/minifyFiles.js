@@ -8,7 +8,7 @@ console.log("\nRunning script " + __filename + "\n");
 //node/npm includes
 const fs       = require('fs');
 const path     = require("path");
-const commons  = require('../commons.js');
+const commons  = require(path.join(__dirname, '..', 'commons'));
 const childProcess = require('child_process');
 const walk     = require('walk');        
 
@@ -48,13 +48,13 @@ function processFiles(){
 
 function processJSfiles(){
 
-    console.log('\n   Minifying JS files in build/client/');
+    console.log('\n   Minifying JS files in ' + path.join('build', 'client'));
 
-    var walker = walk.walk(remTrailingSlash(BIN_DIR + directories.client.client));
+    var walker = walk.walk(path.join(BIN_DIR, directories.client.client));
     
     walker.on("file", function (root, fileStats, next) {
                         
-        var filename = root + "/" + fileStats.name;        
+        var filename = path.join(root, fileStats.name);        
         
         //gets file extension
         if(getFileExtension(filename) == 'js' && 
@@ -111,11 +111,11 @@ function minifyCSSFiles(){
 
     console.log('\n   Minifying CSS files in build/css/\n');
         
-    var walker = walk.walk(remTrailingSlash(directories.bin.css));//dir to walk into    
+    var walker = walk.walk(directories.bin.css);//dir to walk into    
    
     walker.on("file", function (root, fileStats, next) {
                         
-        var filename = root + "/" + fileStats.name;  
+        var filename = path.join(root, fileStats.name);  
         
         if(filename.includes(".css")){        
 
@@ -154,39 +154,39 @@ function concatCSSFiles(){
     var CSS_DIR = directories.bin.css;
     
     //creates directory if it doesn't exist
-    if (!fs.existsSync(CSS_DIR + 'merged-min/')){
-        fs.mkdirSync(CSS_DIR + 'merged-min/');
+    if (!fs.existsSync(path.join(CSS_DIR, 'merged-min'))){
+        fs.mkdirSync(path.join(CSS_DIR, 'merged-min'));
     }    
     
     //CSS files to be concatenated, 
     //the ones which are needed for initial main page loading
     var files1Arr = [
-        CSS_DIR + 'main.css',
-        CSS_DIR + 'central.css',
-        CSS_DIR + 'form.css',
-        CSS_DIR + 'left.css',
-        CSS_DIR + 'right.css',
-        CSS_DIR + 'header.css',
-        CSS_DIR + 'flags.css',
-        CSS_DIR + 'mobile.css'
+        path.join(CSS_DIR, 'main.css'),
+        path.join(CSS_DIR, 'central.css'),
+        path.join(CSS_DIR, 'form.css'),
+        path.join(CSS_DIR, 'left.css'),
+        path.join(CSS_DIR, 'right.css'),
+        path.join(CSS_DIR, 'header.css'),
+        path.join(CSS_DIR, 'flags.css'),
+        path.join(CSS_DIR, 'mobile.css')
     ];
 
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
     var files2Arr = [
-        CSS_DIR + 'jAlert.css',
-        CSS_DIR + 'results.css'
+        path.join(CSS_DIR, 'jAlert.css'),
+        path.join(CSS_DIR, 'results.css')
 
     ];
 
     //concatenating files
-    concat(files1Arr, CSS_DIR + 'merged-min/merged1.css.hbs',
+    concat(files1Arr, path.join(CSS_DIR, 'merged-min', 'merged1.css.hbs'),
         function(err) {
             if (err) throw err
             console.log('merged1.css.hbs concatenation done\n');
         }
     );
-    concat(files2Arr, CSS_DIR + 'merged-min/merged2.css',
+    concat(files2Arr, path.join(CSS_DIR, 'merged-min', 'merged2.css'),
         function(err) {
             if (err) throw err
             console.log('merged2.css concatenation done\n');
@@ -203,10 +203,10 @@ function processHTMLfiles(){
     
     console.log('\n   Minifying HTML .hbs files in build/views/\n');
     
-    var walker = walk.walk(remTrailingSlash(directories.server.bin));//dir to walk into
+    var walker = walk.walk(directories.server.bin);//dir to walk into
     walker.on("file", function (root, fileStats, next) {
                         
-        var filename = root + "/" + fileStats.name;  
+        var filename = path.join(root, fileStats.name);  
         
         if(getFileExtension(filename) === "hbs" && 
               !filename.includes("sitemap.hbs") && 
@@ -256,11 +256,11 @@ function processJSONfiles(){
     
     console.log('\n   Minifying JSON files in build/countries/\n');
     
-    var walker = walk.walk(remTrailingSlash(directories.bin.countries));//dir to walk into
+    var walker = walk.walk(directories.bin.countries);//dir to walk into
     
     walker.on("file", function (root, fileStats, next) {
                         
-        var filename = root + "/" + fileStats.name;  
+        var filename = path.join(root, fileStats.name);  
         
         if(filename.includes(".json")){  
 
@@ -293,9 +293,4 @@ function processJSONfiles(){
 
 function getFileExtension(fileName){
     return fileName.split('.').pop();
-}
-
-//both /path/to/foo and /path/to/foo/ return /path/to/foo
-function remTrailingSlash(dirName){
-    return dirName.replace(/\/+$/, "");
 }

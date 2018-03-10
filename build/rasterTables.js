@@ -3,13 +3,9 @@ which converts table costs HTML.hbs files into correspondent table costs jpg ima
 
 var fs = require('fs');
 
-var commonsJSFile = fs.absolute("../") + "commons.js";
-var commons       = require(commonsJSFile);
-
-var directories = commons.getDirectories();
-var BIN_DIR     = directories.server.bin;
-//directory where the jpg images will be rendered
-var TABLES_DIR  = directories.bin.tables;
+var BIN_DIR     = fs.absolute("../bin/");
+console.log("BIN_DIR " + BIN_DIR);
+var TABLES_DIR  = fs.absolute("../bin/tables/");
 
 console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
 var css_file = fs.absolute(BIN_DIR + "css/") + "right.css";

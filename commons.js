@@ -10,6 +10,13 @@ module.exports = {
     init: function(){
         _init();
     },
+    
+    getROOT_DIR: function(){
+        if(!ROOT_DIR || typeof ROOT_DIR === 'undefined'){
+            setROOT_DIR();
+        }
+        return ROOT_DIR;
+    },
 
     getSettings: function(){
         if(isEmptyOrInvalidObj(SETTINGS)){
@@ -23,6 +30,14 @@ module.exports = {
             _init();
         }
         return RELEASE;
+    },
+    
+    setRelease: function(release){
+        //check that release was correctly chosen
+        if (release !== "work" && release !== "prod"){
+            throw "Error on function setRelease(release) in commons.js; 'work' or 'prod' must be selected";
+        }
+        RELEASE = release;
     },
 
     getDirectories : function(){
@@ -119,7 +134,9 @@ function _init(){
     RELEASE = release; //set Global variable
     
     //shows NODE_ENV
-    console.log("NODE_ENV: ", process.env.NODE_ENV);
+    if(process.env.NODE_ENV){
+        console.log("NODE_ENV: ", process.env.NODE_ENV);
+    }        
         
     //after the RELEASE is known, the directories and files can be obtained and set
     setDIRECTORIES();
@@ -240,7 +257,8 @@ function _init(){
 
 function setDIRECTORIES(){
 
-    const debug = require('debug')('app:commons');    
+    const debug = require('debug')('app:commons');
+    const path = require('path');
     
     if(typeof ROOT_DIR === 'undefined'){
         setROOT_DIR();
@@ -251,16 +269,16 @@ function setDIRECTORIES(){
     namely see: docs/nodeJS-directory-structure.md */
 
     //Source directory - the directory where the source code is stored
-    var srcDir       = ROOT_DIR + "src" + "/";
+    var srcDir       = path.join(ROOT_DIR, "src");
 
     //Bin directory - the directory to where the source code is deployed after running the bash script ./build.sh
-    var binDir       = ROOT_DIR + "bin" + "/";
+    var binDir       = path.join(ROOT_DIR, "bin");
 
     //Build directory - the directory to where the building scripts are stored
-    var buildDir     = ROOT_DIR + "build" + "/";    
+    var buildDir     = path.join(ROOT_DIR, "build");    
     
     //credentials directory where json credential files are stored for each service
-    var credentialsDir = ROOT_DIR + "credentials/"
+    var credentialsDir = path.join(ROOT_DIR, "credentials");
 
     var serverDirs = {
         "root"              : ROOT_DIR,
@@ -274,8 +292,8 @@ function setDIRECTORIES(){
     
     //these paths are relative, and they refer to the paths which are seen by the browser        
     var clientDirs = {
-        "client"   : "client" + "/", //directory with respect to src/ dir, where the client JS browser files will be stored
-        "css"      : "css"    + "/" //directory with respect to src/ dir, where the CSS  files will be stored
+        "client"   : "client", //directory with respect to src/ dir, where the client JS browser files will be stored
+        "css"      : "css"     //directory with respect to src/ dir, where the CSS  files will be stored
     };
     
     /*#################################*/
@@ -283,22 +301,22 @@ function setDIRECTORIES(){
     //these paths are relative and refer to the project's code parent folder, 
     //i.e., the parent directory of these paths is either src/ or bin/  
     var projectDirs = {
-        "countries" : "countries" + "/",  
-        "css"       : "css"       + "/",
-        "tables"    : "tables"    + "/",
-        "images"    : "images"    + "/",
-        "public"    : "public"    + "/",
-        "views"     : "views"     + "/",
-        "client"    : "client"    + "/",
-        "server"    : "server"    + "/"
+        "countries" : "countries",
+        "css"       : "css",      
+        "tables"    : "tables",
+        "images"    : "images",
+        "public"    : "public",
+        "views"     : "views",
+        "client"    : "client",
+        "server"    : "server"
     };
 
     var srcProjectDirs = {};
     var binProjectDirs = {};
     
     for (var prop in projectDirs){
-        srcProjectDirs[prop] = srcDir + projectDirs[prop];
-        binProjectDirs[prop] = binDir + projectDirs[prop];
+        srcProjectDirs[prop] = path.join(srcDir, projectDirs[prop]);
+        binProjectDirs[prop] = path.join(binDir, projectDirs[prop]);
     }
     
     DIRECTORIES = {
@@ -316,7 +334,8 @@ function setDIRECTORIES(){
 
 function setFILENAMES(){
 
-    const debug = require('debug')('app:commons');    
+    const debug = require('debug')('app:commons');  
+    const path = require('path');
     
     if(!RELEASE){
         _init();
@@ -330,6 +349,15 @@ function setFILENAMES(){
     //Default file names for JSON files with credentials for each external service
     FILENAMES = {
         //these paths are ABSOLUTE
+        "build" : {
+            "compressImages"    : path.join(DIRECTORIES.server.build, "compressImages.js"),   
+            "generateTables"    : path.join(DIRECTORIES.server.build, "generateTables.js"),
+            "getAvgFromDB"      : path.join(DIRECTORIES.server.build, "getAvgFromDB.js"),
+            "minifyFiles"       : path.join(DIRECTORIES.server.build, "minifyFiles.js"),
+            "rasterTables"      : path.join(DIRECTORIES.server.build, "rasterTables.js"),
+            "setCountrySpecsDB" : path.join(DIRECTORIES.server.build, "setCountrySpecsDB.js"),
+            "statsFunctions"    : path.join(DIRECTORIES.server.build, "statsFunctions.js")
+        },
         "server" : {
             "credentials" : {
                 "cdn"             : "cdn.json",
@@ -345,28 +373,28 @@ function setFILENAMES(){
                 "googleAnalytics" : "",
                 "dataBase"        : ""
             },        
-            "countriesListFile" : DIRECTORIES.src.countries + "list.json",
-            "statsFunctions.js" : DIRECTORIES.server.build  + "statsFunctions.js"
+            "countriesListFile" : path.join(DIRECTORIES.src.countries, "list.json"),
+            "statsFunctions.js" : path.join(DIRECTORIES.server.build, "statsFunctions.js")
         },
         "src": {
-            "conversionFunctions.js" : DIRECTORIES.src.client + 'conversionFunctions.js',
-            "coreFunctions.js"       : DIRECTORIES.src.client + 'core/coreFunctions.js',
-            "getData.js"             : DIRECTORIES.src.client + 'getData.js'
+            "conversionFunctions.js" : path.join(DIRECTORIES.src.client, "conversionFunctions.js"),
+            "coreFunctions.js"       : path.join(DIRECTORIES.src.client, "core", "coreFunctions.js"),
+            "getData.js"             : path.join(DIRECTORIES.src.client, "getData.js")
         },
         //the LOCAL paths are RELATIVE to the main host as seen by the browser
         "client" : {
             "jquery" : {
-                "local" : DIRECTORIES.client.client + "jquery/jquery.min.js",
+                "local" : path.join(DIRECTORIES.client.client, "jquery", "jquery.min.js"),
                 "cdn"   : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "pdfmake" : {
-                "local" : DIRECTORIES.client.client + "pdf/pdfmake.min.js",
+                "local" : path.join(DIRECTORIES.client.client, "pdf", "pdfmake.min.js"),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "vfs_fonts" : {
-                "local" : DIRECTORIES.client.client + "pdf/vfs_fonts.js",
+                "local" : path.join(DIRECTORIES.client.client, "pdf", "vfs_fonts.js"),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
                 "uri"   : "" //it will be one of the above
             }             
@@ -374,9 +402,9 @@ function setFILENAMES(){
     };  
     
     //fills credentialsFullPath subObject
-    var credentialsDir = DIRECTORIES.server.credentials + RELEASE + "/";
+    var credentialsDir = path.join(DIRECTORIES.server.credentials, RELEASE);
     for (file in FILENAMES.server.credentials){
-        FILENAMES.server.credentialsFullPath[file] = credentialsDir + FILENAMES.server.credentials[file];    
+        FILENAMES.server.credentialsFullPath[file] = path.join(credentialsDir, FILENAMES.server.credentials[file]);
     }
     
     debug("FILENAMES", FILENAMES);    
@@ -393,7 +421,7 @@ function setROOT_DIR(){
 
         var path = require('path');
         //the root directory of the project is where this file is stored
-        root_dir = path.resolve(__dirname, '.') + "/";
+        root_dir = path.resolve(__dirname, '.');
         console.log("Node is running. ROOT_DIR: " + root_dir);
     }
     else {//PhantomJS?
@@ -465,7 +493,7 @@ function getServiceCredentialsFromFile(serviceName){
 
     if (typeof RELEASE !== 'undefined'){
 
-        var fileName = credentialsDir + RELEASE + '/' + serviceObj.file;
+        var fileName = path.join(credentialsDir, RELEASE, serviceObj.file);
         if (!fs.existsSync(fileName)){
             throw _getNoServErrMsg(serviceObj);
         }
@@ -517,8 +545,7 @@ function getArgvHelpMsg(){
 
     const path = require('path');
     
-    var fnArr = (process.mainModule.filename).split('/');
-    var filename = fnArr[fnArr.length -1];
+    var filename = path.basename(process.mainModule.filename);
     
     //credentials Directory seen from Root directory
     var credDirRelativePath = path.relative(DIRECTORIES.server.root, DIRECTORIES.server.credentials);

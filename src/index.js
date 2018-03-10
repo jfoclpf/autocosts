@@ -20,12 +20,12 @@ const debug       = require('debug')('app:main');
 
 
 //personalised requires
-const url         = require(__dirname + '/server/url'); //to deal with the full URL rules and redirect accordingly
-const getCC       = require(__dirname + '/server/getCC');
-const hbsHelpers  = require(__dirname + '/server/hbsHelpers');
-const list        = require(__dirname + '/server/list');
-const domains     = require(__dirname + '/server/domains');
-const sitemap     = require(__dirname + '/server/sitemap');
+const url         = require(path.join(__dirname, 'server', 'url')); //to deal with the full URL rules and redirect accordingly
+const getCC       = require(path.join(__dirname, 'server', 'getCC'));
+const hbsHelpers  = require(path.join(__dirname, 'server', 'hbsHelpers'));
+const list        = require(path.join(__dirname, 'server', 'list'));
+const domains     = require(path.join(__dirname, 'server', 'domains'));
+const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
 
 
 var directories = commons.getDirectories();
@@ -58,7 +58,7 @@ const SWITCHES = settings.switches;
 //such that it can be loaded faster as it is already in memory when the server starts
 var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in serverData.availableCountries){
-    WORDS[CC] = JSON.parse(fs.readFileSync(directories.index + directories.project.countries + CC + '.json', 'utf8'));
+    WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
     WORDS[CC].domain = serverData.domainsCountries[CC];    
 }
@@ -73,11 +73,11 @@ app.enable('trust proxy');
 var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
-    layoutsDir: __dirname + '/views/layouts/',
-    partialsDir: [ __dirname + '/views/partials/', 
-                   __dirname + '/css/merged-min/', 
-                   __dirname + '/client/', 
-                   __dirname + '/tables/'],
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    partialsDir: [ path.join(__dirname, 'views', 'partials'), 
+                   path.join(__dirname, 'css', 'merged-min'), 
+                   path.join(__dirname, 'client'), 
+                   path.join(__dirname, 'tables')],
     helpers: hbsHelpers
 });
 
@@ -85,12 +85,12 @@ app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
 //static content
-app.use(express.static(__dirname + '/public')); //root public folder
-app.use('/tables'    , express.static( __dirname + '/tables'   ));
-app.use('/css'       , express.static( __dirname + '/css'      ));
-app.use('/images'    , express.static( __dirname + '/images'   ));
-app.use('/client'    , express.static( __dirname + '/client'   ));
-app.use('/countries' , express.static( __dirname + '/countries'));
+app.use(express.static(path.join(__dirname, 'public'))); //root public folder
+app.use('/tables'    , express.static( path.join(__dirname, 'tables'   )));
+app.use('/css'       , express.static( path.join(__dirname, 'css'      )));
+app.use('/images'    , express.static( path.join(__dirname, 'images'   )));
+app.use('/client'    , express.static( path.join(__dirname, 'client'   )));
+app.use('/countries' , express.static( path.join(__dirname, 'countries')));
 
 //app.use(compression()); //Apache already compresses
 app.use(bodyParser.json()); // support json encoded bodies

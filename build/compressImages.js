@@ -6,7 +6,7 @@ console.log("\nRunning script " + __filename + "\n");
 const im      = require('imagemagick');
 const path    = require('path'); 
 const fs      = require('fs');
-const commons = require('../commons.js');
+const commons = require(path.join(__dirname, '..', 'commons'));
 const walk    = require('walk');
 
 //Main directories got from commons
@@ -34,11 +34,11 @@ function compressJPG(){
         //gets all jpg files in builddir
 
         //BIN_DIR has a trailing slash, removes it for the walker function    
-        var walker = walk.walk(path.dirname(BIN_DIR+"."));    
+        var walker = walk.walk(BIN_DIR);    
 
         walker.on("file", function (root, fileStats, next) {
 
-            var filename = root + "/" + fileStats.name;        
+            var filename = path.join(root, fileStats.name);        
 
             if(filename.includes(".jpg")){
 
@@ -80,12 +80,12 @@ function compressPNG(){
 
     //gets all png files in builddir 
     
-    //BIN_DIR has a trailing slash, removes it for the walker function    
-    var walker = walk.walk(path.dirname(BIN_DIR+"."));    
+    //BIN_DIR has a trailing slash, removes it for the walker function
+    var walker = walk.walk(BIN_DIR);    
     
     walker.on("file", function (root, fileStats, next) {
                         
-        var filename = root + "/" + fileStats.name;        
+        var filename = path.join(root, fileStats.name);        
         
         if(filename.includes(".png")){
 

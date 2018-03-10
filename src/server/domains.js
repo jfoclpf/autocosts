@@ -1,4 +1,5 @@
-const url   = require(__dirname + '/url');
+const path  = require('path');
+const url   = require(path.join(__dirname, 'url'));
 const debug = require('debug')('app:domains');
 
 module.exports = function(req, res, serverData, WORDS) {
@@ -57,7 +58,7 @@ module.exports = function(req, res, serverData, WORDS) {
     
     data.layout = false;
 
-    var fileToRender = serverData.directories.index + "views/domains.hbs";
+    var fileToRender = path.join(serverData.directories.index, "views", "domains.hbs");
     res.render(fileToRender, data);
     
 }
