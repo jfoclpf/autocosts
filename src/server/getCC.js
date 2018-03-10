@@ -1,6 +1,7 @@
 
-const url     = require('./url');
-const debug  = require('debug')('app:getCC');
+const path  = require('path');
+const url   = require(path.join(__dirname, 'url'));
+const debug = require('debug')('app:getCC');
 
 module.exports = function(req, res, serverData, wordsOfCountry) {    
         
@@ -52,7 +53,7 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     data.emptyChar = ""; //empty character to be used in handlebars for whitespace trimming
     data.layout = false; //doesn't use handlebars default template
     
-    var fileToRender = serverData.directories.index + "views/main.hbs";
+    var fileToRender = path.join(serverData.directories.index, "views", "main.hbs");
     res.render(fileToRender, data);
     
 }

@@ -1,3 +1,4 @@
+const path  = require('path');
 
 module.exports = function(req, res, serverData, words) {
 
@@ -6,7 +7,7 @@ module.exports = function(req, res, serverData, words) {
     delete data.words.XX;
     data.layout = false;
 
-    var fileToRender = serverData.directories.index + "views/list.hbs";
+    var fileToRender = path.join(serverData.directories.index, "views", "list.hbs");
     res.render(fileToRender, data);
     
 }

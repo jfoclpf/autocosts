@@ -11,7 +11,7 @@ const async    = require('async'); //module to allow to execute the queries in s
 const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
-const commons  = require('../commons.js');
+const commons  = require(path.join(__dirname, '..', 'commons'));
 const childProcess = require('child_process');
 const phantomjs = require('phantomjs-prebuilt'); //to use './rasterTables.js'
 const binPath = phantomjs.path;
@@ -85,12 +85,12 @@ isOnline().then(function(online) {
         (function (CCfile){                        
          
             var country_name = availableCountries[CCfile];
-            var WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + CCfile + ".json", 'utf8'));
+            var WORDS = JSON.parse(fs.readFileSync(path.join(COUNTRIES_DIR, CCfile + ".json"), 'utf8'));
             var currSymb = WORDS['curr_symbol']; //currency symbol
             var stdDist = WORDS['std_dist']; //standard distance 
         
             //the file name to which the HTML table will be saved
-            var fileName = TABLES_DIR + CCfile + ".hbs"; //something like .../PT.hbs
+            var fileName = path.join(TABLES_DIR, CCfile + ".hbs"); //something like .../PT.hbs
 
             db.query("SELECT * FROM " + DB_INFO.db_tables.monthly_costs_statistics + 
                 " WHERE country='" + (CCfile!=="XX"?CCfile:"UK") + "'", 

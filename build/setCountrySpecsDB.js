@@ -10,7 +10,7 @@ const async    = require('async'); //module to allow to execute the queries in s
 const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
-const commons  = require('../commons.js');
+const commons  = require(path.join(__dirname, '..', 'commons'));
 
 commons.init();
 //Main directories got from commons
@@ -88,7 +88,7 @@ isOnline().then(online => {
             var queryInsert;
             for (var key in availableCountries){                        
 
-                WORDS = JSON.parse(fs.readFileSync(COUNTRIES_DIR + key + ".json", 'utf8'));
+                WORDS = JSON.parse(fs.readFileSync(path.join(COUNTRIES_DIR, key + ".json"), 'utf8'));
                 queryInsert = "INSERT INTO " + DB_INFO.db_tables.country_specs + " ( \
                     Country, \
                     currency, \

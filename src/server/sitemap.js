@@ -1,5 +1,6 @@
-const url      = require(__dirname + '/url');
-const commons  = require('../../commons');
+const path     = require('path');
+const url      = require(path.join(__dirname, 'url'));
+const commons  = require(path.join(__dirname, '..', '..', 'commons'));
 
 module.exports = function(req, res, serverData, WORDS) {
 
@@ -22,7 +23,7 @@ module.exports = function(req, res, serverData, WORDS) {
     
     res.header('Content-Type', 'application/xml');
   
-    var fileToRender = serverData.directories.index + "views/sitemap.hbs";
+    var fileToRender = path.join(serverData.directories.index, "views", "sitemap.hbs");
     res.render(fileToRender, data);
     
 }

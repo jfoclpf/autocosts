@@ -5,16 +5,17 @@ To manage tokens, visit: https://developer.uber.com/dashboard
 user:info@autocosts.info | pass: V************* */
 
 const fs       = require('fs');
+const path     = require('path');
 const geoIP    = require('geoip-lite');
 const request  = require('request');
-const url      = require(__dirname + '/url');
+const url      = require(path.join(__dirname, 'url'));
 const debug    = require('debug')('app:uber');
 
 module.exports = function(req, res, serverData) {
     
     var CC = req.params.CC;
     
-    var p1 = readCCFileAsync(serverData.directories.index + serverData.directories.project.countries + CC + '.json');
+    var p1 = readCCFileAsync(path.join(serverData.directories.index, serverData.directories.project.countries, CC + '.json'));
     var p2 = makeUberRequest(req, serverData);
 
     res.set('Content-Type', 'application/json');    

@@ -8,7 +8,7 @@ const path     = require("path");
 const async    = require('async'); //module to allow to execute the queries in series
 const mysql    = require('mysql'); //module to get info from DB
 const isOnline = require('is-online');
-const commons  = require('../commons.js');
+const commons  = require(path.join(__dirname, '..', 'commons'));
 
 commons.init();
 //Main directories got from commons
