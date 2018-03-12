@@ -11,7 +11,7 @@ module.exports = {
     //when no country code is provided, example autocosts.info/
     //if the user is in Portugal, redirects to autocustos.info/PT
     redirect: function (req, res, serverData){               
-        redirect302(req, res, serverData);        
+        redirect302(req, res, serverData);
     },
     
     //to be used from app.get('/:CC')

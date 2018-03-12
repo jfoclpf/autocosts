@@ -3,11 +3,17 @@ which converts table costs HTML.hbs files into correspondent table costs jpg ima
 
 var fs = require('fs');
 
-var BIN_DIR     = fs.absolute("../bin/");
-console.log("BIN_DIR " + BIN_DIR);
-var TABLES_DIR  = fs.absolute("../bin/tables/");
+//PhantomJS can't know exactly the directory of this file, 
+//since the directories are always relative to directory where it is called
+//console.log(fs.workingDirectory);
+//console.log(fs.absolute("."));
+//phantom.exit(0);
 
+var BIN_DIR     = fs.absolute("bin/");
+console.log("BIN_DIR: " + BIN_DIR);
+var TABLES_DIR  = fs.absolute("bin/tables/");
 console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
+
 var css_file = fs.absolute(BIN_DIR + "css/") + "right.css";
 console.log("The CSS main file is in: " + css_file);
 
