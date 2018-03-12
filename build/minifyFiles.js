@@ -9,7 +9,6 @@ console.log("\nRunning script " + __filename + "\n");
 const fs       = require('fs');
 const path     = require("path");
 const commons  = require(path.join(__dirname, '..', 'commons'));
-const childProcess = require('child_process');
 const walk     = require('walk');        
 
 //minification tools

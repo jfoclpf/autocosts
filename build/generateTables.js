@@ -219,7 +219,8 @@ function rasterTables(){
         path.join(__dirname, 'rasterTables.js')
     ];
 
-    console.log(binPath, childArgs[0]);
+    console.log(binPath, childArgs[0]);       
+    
     childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
         if (err){throw err;}
         console.log(stdout);

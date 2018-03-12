@@ -27,7 +27,6 @@ const list        = require(path.join(__dirname, 'server', 'list'));
 const domains     = require(path.join(__dirname, 'server', 'domains'));
 const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
 
-
 var directories = commons.getDirectories();
 directories.index = __dirname + "/"; //directory where this script index.js is located
 
