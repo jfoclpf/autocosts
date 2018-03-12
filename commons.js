@@ -381,20 +381,21 @@ function setFILENAMES(){
             "coreFunctions.js"       : path.join(DIRECTORIES.src.client, "core", "coreFunctions.js"),
             "getData.js"             : path.join(DIRECTORIES.src.client, "getData.js")
         },
-        //the LOCAL paths are RELATIVE to the main host as seen by the browser
+        //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER, 
+        //thus don't use node 'fs' or 'path' functions, i.e., these are URI or part of URI
         "client" : {
             "jquery" : {
-                "local" : path.join(DIRECTORIES.client.client, "jquery", "jquery.min.js"),
+                "local" : DIRECTORIES.client.client + "/jquery/jquery.min.js",
                 "cdn"   : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "pdfmake" : {
-                "local" : path.join(DIRECTORIES.client.client, "pdf", "pdfmake.min.js"),
+                "local" : DIRECTORIES.client.client + "/pdf/pdfmake.min.js",
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "vfs_fonts" : {
-                "local" : path.join(DIRECTORIES.client.client, "pdf", "vfs_fonts.js"),
+                "local" : DIRECTORIES.client.client + "/pdf/vfs_fonts.js",
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
                 "uri"   : "" //it will be one of the above
             }             
