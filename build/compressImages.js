@@ -54,7 +54,7 @@ function compressJPG(){
                 im.convert(params, function(err, stdout){
                         if (err) throw err;
                         fs.unlinkSync(filename);
-                        fs.renameSync(filename + '.min', filename);4
+                        fs.renameSync(filename + '.min', filename);
                         next();
                     });
             }
