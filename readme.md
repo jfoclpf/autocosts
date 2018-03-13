@@ -3,7 +3,7 @@ Automobile costs calculator
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. By default, these values are calculated on a monthly basis. 
 
-This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
+This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information. Since it uses NodeJS and NPM it works and it is tested for either Ubuntu related OS or Windows related OS.
 
 ## Website
 https://autocosts.info<br>
@@ -26,13 +26,13 @@ Clone it, install it, build it and run it<br>
 `cd autocosts/ && npm install`<br>
 `node bin/index.js`
 
-This will run a `node` server application with the calculator. For more information on builidng run `./build.sh -h`. For more information on the application run `node bin/index.js -h`.
+This will run a `node` server local application with the calculator. For more information on builidng run `node build.js -h`. For more information on the application run `node bin/index.js -h`.
 
 ## How does it work?
 
 Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser. 
 
-The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The `XX` stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country. Additional countries are very welcomed.
+The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The 2 last letters on the URI stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country.
 
 The project already considers all the units and fuel efficiency cases, different in many countries. The variations for fuel efficiency are `l/100km`, `km/l`, `mpg(US)`, `mpg(imp)` and for distance are `km`, `miles` and `mil` (Nordic mile=10km). More information can be found in the directory `src/countries/`.
 
@@ -40,21 +40,21 @@ For more information regarding how the costs are calculated, you can check the `
 
 * Standing costs
   * Depreciation
-  *	Car taxes
-  *	Insurance
-  *	Inspection
-  *	Car finance
+  * Car taxes
+  * Insurance
+  * Inspection
+  * Car finance
 * Running costs
-  *	Fuel
-  *	Maintenance
-  *	Repairs and Improvements
-  *	Parking
-  *	Tolls
-  *	Fines
+  * Fuel
+  * Maintenance
+  * Repairs and Improvements
+  * Parking
+  * Tolls
+  * Fines
   * Car washes
 
 ### Aditional services
-Autocosts supports the following additional services, which can be enabled or disabled, 
+Autocosts supports the following additional services, which can be enabled or disabled (default), 
 using the `node bin/index.js` command line options:
 
 ```
@@ -154,7 +154,7 @@ This file `googleCaptcha.json` should be like:
 
 ### PDF
 
-Autocosts also allow the final report to be printed into a PDF report. It makes use of `pdfmake` npm package.
+Autocosts also allows the final report to be printed into a PDF report. It makes use of `pdfmake` npm package.
 
 ## Android APP<br>
 
