@@ -16,6 +16,7 @@ const exphbs      = require('express-handlebars');
 const bodyParser  = require('body-parser');
 const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
+const colors      = require('colors/safe'); //does not alter string prototype
 const debug       = require('debug')('app:main');
 
 
@@ -169,7 +170,7 @@ app.use(function (err, req, res, next) {
 
 var server = app.listen(settings.HTTPport, function () {
     console.log('Listening on port ' + settings.HTTPport);
-    console.log('check http://localhost:' + settings.HTTPport + "\n");
+    console.log('check ' + colors.green.bold('http://localhost:' + settings.HTTPport) + "\n");
 });
 
 
