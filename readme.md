@@ -21,10 +21,9 @@ https://autocosts.info/domains
 
 ## How to install
 
-Clone it, install it, build it and run it<br>
-`git clone https://github.com/jfoclpf/autocosts.git`<br>
-`cd autocosts/ && npm install`<br>
-`node bin/index.js`
+Install it and run it<br>
+`npm i autocosts`<br>
+Follow then the instructions to run the HTTP server.
 
 This will run a `node` server local application with the calculator. For more information on builidng run `node build.js -h`. For more information on the application run `node bin/index.js -h`.
 

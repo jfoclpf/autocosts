@@ -170,6 +170,7 @@ app.use(function (err, req, res, next) {
 
 var server = app.listen(settings.HTTPport, function () {
     console.log('Listening on port ' + settings.HTTPport);
+    console.log('To stop server press ' + colors.red.bold('CTRL+C') + "\n");
     console.log('check ' + colors.green.bold('http://localhost:' + settings.HTTPport) + "\n");
 });
 
