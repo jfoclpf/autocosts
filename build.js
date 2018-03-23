@@ -296,11 +296,10 @@ function getArgvHelpMsg(){
 
 function getFinalRunMsg(){
 
-    var relativePath = path.relative(process.cwd(), BIN_DIR);
-    var filename = path.join(relativePath, "index.js");
+    var filename = path.join(process.cwd(), 'bin', "index.js");
     
-    var messg = "\nRun " + colors.blue("node " + filename) + " to start application\n" + 
-                "or " + colors.blue ("node " + filename + " -h") + " for more information\n\n";          
+    var messg = "\nRun " + colors.green.bold("node " + filename) + " to start application\n" + 
+                "or " + colors.green.bold("node " + filename + " -h") + " for more information\n\n";          
 
     return messg;
 }
