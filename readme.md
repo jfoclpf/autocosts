@@ -25,8 +25,6 @@ Install it and run it<br>
 `npm i autocosts`<br>
 Follow then the instructions to run the HTTP server.
 
-This will run a `node` server local application with the calculator. For more information on builidng run `node build.js -h`. For more information on the application run `node bin/index.js -h`.
-
 ## How does it work?
 
 Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser. 
