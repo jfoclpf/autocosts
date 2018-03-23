@@ -162,18 +162,24 @@ function copy(){
     
     fse.copySync(SRC_DIR, BIN_DIR);
     
-    console.log("Copy node modules to bin/");    
+    console.log("Copy node modules to bin/");            
     
-    fse.copySync(path.join(ROOT_DIR, 'node_modules', 'jquery', 'dist', 'jquery.min.js'), 
+    //copy jquery file
+    var jqueryDir = path.dirname(require.resolve('jquery'));
+    fse.copySync(path.join(jqueryDir, 'jquery.min.js'), 
                  path.join(BIN_DIR, 'client', 'jquery', 'jquery.min.js'));
-    fse.copySync(path.join(ROOT_DIR, 'node_modules', 'pdfmake', 'build', 'pdfmake.min.js'),
+    
+    //copy pdfmake files
+    var pdfmakeSrcDir = path.resolve(path.dirname(require.resolve('pdfmake')),'../build');    
+    
+    fse.copySync(path.join(pdfmakeSrcDir, 'pdfmake.min.js'),
                  path.join(BIN_DIR, 'client', 'pdf', 'pdfmake.min.js'));
-    fse.copySync(path.join(ROOT_DIR, 'node_modules', 'pdfmake', 'build', 'pdfmake.min.js.map'), 
+    fse.copySync(path.join(pdfmakeSrcDir, 'vfs_fonts.js'),
+                 path.join(BIN_DIR, 'client', 'pdf', 'vfs_fonts.js'));    
+    fse.copySync(path.join(pdfmakeSrcDir, 'pdfmake.min.js.map'), 
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
-    fse.copySync(path.join(ROOT_DIR, 'node_modules', 'pdfmake', 'build', 'vfs_fonts.js'),
-                 path.join(BIN_DIR, 'client', 'pdf', 'vfs_fonts.js'));
-}
 
+}
 
 function checkJS(callback){
     console.log("\n" + colors.blue.bold("## Checking for JS syntax errors in src/") + " \n");    
