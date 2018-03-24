@@ -170,13 +170,13 @@ function copy(){
                  path.join(BIN_DIR, 'client', 'jquery', 'jquery.min.js'));
     
     //copy pdfmake files
-    var pdfmakeSrcDir = path.resolve(path.dirname(require.resolve('pdfmake')),'../build');    
+    var pdfmakeBuildDir = path.resolve(path.dirname(require.resolve('pdfmake')),'../build');    
     
-    fse.copySync(path.join(pdfmakeSrcDir, 'pdfmake.min.js'),
+    fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js'),
                  path.join(BIN_DIR, 'client', 'pdf', 'pdfmake.min.js'));
-    fse.copySync(path.join(pdfmakeSrcDir, 'vfs_fonts.js'),
+    fse.copySync(path.join(pdfmakeBuildDir, 'vfs_fonts.js'),
                  path.join(BIN_DIR, 'client', 'pdf', 'vfs_fonts.js'));    
-    fse.copySync(path.join(pdfmakeSrcDir, 'pdfmake.min.js.map'), 
+    fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js.map'), 
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
 
 }
