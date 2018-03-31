@@ -11,7 +11,7 @@ generatePDF = function generatePDF(){
     var chartData1, chartData2, chartData3, chartData4;  //chart images
 
     //are there charts available to be rendered to pdf?
-    var isCharts = SWITCHES.g_charts && SERVICE_AVAILABILITY.g_charts;
+    var isCharts = SWITCHES.charts;
     
     //main top table with total costs
     body0 = get_main_table("#result_table0");

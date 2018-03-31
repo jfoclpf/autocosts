@@ -9,7 +9,8 @@ const path            = require('path');
 const walk            = require('walk');
 const jshint          = require('jshint').JSHINT;
 const prettyjson      = require('prettyjson');
-const async           = require('async'); //module to allow to execute the queries in series
+const async           = require('async');          //module to allow to execute the queries in series
+const concat          = require('concat-files');   //concatenation file tool
 
 const commons   = require(path.join(__dirname, 'commons'));
 
@@ -92,8 +93,11 @@ async.series([
     function(callback){
         if(options.copy){
             copy();
+            concatCSSFiles(callback);
         }
-        callback();
+        else{
+            callback();
+        }
     },
 
     //Creates DB with countries' specifcations
@@ -152,7 +156,7 @@ async.series([
     
 ]);//async.series
     
-
+//copy files from src/ to bin/
 function copy(){
     console.log("\n" + colors.blue.bold("## Making a clean copy from src/ to bin/") + " \n");
     
@@ -178,7 +182,71 @@ function copy(){
                  path.join(BIN_DIR, 'client', 'pdf', 'vfs_fonts.js'));    
     fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js.map'), 
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
+    
+    //copy chartjs file
+    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')),'../dist');
+        
+    fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
+                 path.join(BIN_DIR, 'client', 'chartjs', 'Chart.min.js'));        
 
+}
+
+
+//concatenate some CSS files
+function concatCSSFiles(mainCallback){    
+     
+    var CSS_DIR = directories.bin.css;
+    
+    //creates directory if it doesn't exist
+    if (!fs.existsSync(path.join(CSS_DIR, 'merged-min'))){
+        fs.mkdirSync(path.join(CSS_DIR, 'merged-min'));
+    }    
+    
+    //CSS files to be concatenated, 
+    //the ones which are needed for initial main page loading
+    var files1Arr = [
+        path.join(CSS_DIR, 'main.css'),
+        path.join(CSS_DIR, 'central.css'),
+        path.join(CSS_DIR, 'form.css'),
+        path.join(CSS_DIR, 'left.css'),
+        path.join(CSS_DIR, 'right.css'),
+        path.join(CSS_DIR, 'header.css'),
+        path.join(CSS_DIR, 'flags.css'),
+        path.join(CSS_DIR, 'mobile.css')
+    ];
+
+    //CSS files to be concatenated, 
+    //the ones which are deferred from initial loading
+    var files2Arr = [
+        path.join(CSS_DIR, 'jAlert.css'),
+        path.join(CSS_DIR, 'results.css')
+
+    ];
+
+    //concatenating files
+    async.series([        
+        function(callback){
+            concat(files1Arr, path.join(CSS_DIR, 'merged-min', 'merged1.css.hbs'),
+                function(err) {
+                    if (err) throw err
+                    console.log('merged1.css.hbs concatenation done');
+                    callback();
+                }
+            );
+        },    
+        function(callback){
+            concat(files2Arr, path.join(CSS_DIR, 'merged-min', 'merged2.css'),
+                function(err) {
+                    if (err) throw err
+                    console.log('merged2.css concatenation done');
+                    callback();
+                }
+            );
+        },
+        function(){
+            mainCallback();
+        }
+    ]);//async.series
 }
 
 function checkJS(callback){

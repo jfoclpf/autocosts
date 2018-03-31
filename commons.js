@@ -99,7 +99,7 @@ function _init(){
         "cdn": false,             /*Content Delivery Network*/
         "uber": false,            /*uses UBER API to give car user comparisions with UBER costs*/
         "social": false,          /*Social media pulgins*/
-        "googleCharts": false,    /*Google Charts*/
+        "disableCharts": false,   /*Disable Charts on result*/
         "googleCaptcha": false,   /*Google Captcha to avoid spam-bots*/
         "googleAnalytics": false, /*Google Analytics*/
         "dataBase": false,        /*Inserts user input data into a DataBase*/
@@ -111,8 +111,7 @@ function _init(){
     optionDefinitions = [
         { name: 'help', alias: 'h', type: Boolean },
         { name: 'release', alias: 'r', type: String },
-        { name: 'port', alias: 'p', type: Number },
-        { name: 'All', alias: 'A', type: Boolean }
+        { name: 'port', alias: 'p', type: Number }
     ];
 
     //populates optionDefinitions of commandLineArgs according to SWITCHES
@@ -398,7 +397,12 @@ function setFILENAMES(){
                 "local" : DIRECTORIES.client.client + "/pdf/vfs_fonts.js",
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
                 "uri"   : "" //it will be one of the above
-            }             
+            },
+            "chartjs" : {
+                "local" : DIRECTORIES.client.client + "/chart/Chart.min.js",
+                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
+                "uri"   : "" //it will be one of the above
+            }           
         }
     };  
     
@@ -563,7 +567,7 @@ function getArgvHelpMsg(){
         "    --print                Enables the standard printing of final report\n" +
         "    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n" +
         "    --social               Enables social media plugin (js-socials)\n" +
-        "    --googleCharts         Enables Google Charts on report\n" +        
+        "    --disableCharts        Disables Charts on final report\n" +        
         "\n" +
         "    External API services, disabled by default\n" +
         "    API credentials must be in either " + credDirRelativePath + "/work/ or " + credDirRelativePath + "/prod/ according to release\n" +        
@@ -572,9 +576,8 @@ function getArgvHelpMsg(){
         "    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n" +
         "    --googleAnalytics      Enables Google Analytics\n" +
         "    --dataBase             Enables a mysql Database\n" +
-        "\n" +
-        "-A  --all                  Enables all the previous services\n";
-
+        "\n";
+    
     return messg;
 }
 

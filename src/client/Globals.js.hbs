@@ -18,7 +18,7 @@ var SWITCHES = {
     "https": JSON.parse('{{{ serverData.settings.switches.https }}}'),                 /*true for https, false for http*/    
     "uber": JSON.parse('{{{ serverData.settings.switches.uber }}}'),                   /*Uber*/
     "social": JSON.parse('{{{ serverData.settings.switches.social }}}'),               /*Social media pulgins*/
-    "g_charts": JSON.parse('{{{ serverData.settings.switches.googleCharts }}}'),       /*Google Charts*/
+    "charts": JSON.parse('{{{ negate serverData.settings.switches.disableCharts }}}'), /*Charts*/
     "g_captcha": JSON.parse('{{{ serverData.settings.switches.googleCaptcha }}}'),     /*Google Captcha*/
     "g_analytics": JSON.parse('{{{ serverData.settings.switches.googleAnalytics }}}'), /*Google Analytics*/
     "data_base": JSON.parse('{{{ serverData.settings.switches.dataBase }}}'),          /*Inserts user input data into DataBase*/
@@ -60,17 +60,13 @@ var STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statist
 var rootClientURL = CDN_URL + clientDir + "/";
 var JS_FILES = {
     Google : {
-        rgbcolor : "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js",  /*RGB color parser in JavaScript*/
-        canvg: "https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/canvg.min.js",
         recaptchaAPI : "https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE,
-        chartsAPI :    "https://www.gstatic.com/charts/loader.js"
     },
 
     initialize :          rootClientURL + "initialize.js",
     documentFunctions :   rootClientURL + "documentFunctions.js",
     formFunctions :       rootClientURL + "formFunctions.js",
-    validateForm :        rootClientURL + "validateForm.js",
-    charts :              rootClientURL + "charts.js",
+    validateForm :        rootClientURL + "validateForm.js",    
     g_recaptcha :         rootClientURL + "g-recaptcha.js",
     conversionFunctions : rootClientURL + "conversionFunctions.js",
     coreFunctions :       rootClientURL + "core/coreFunctions.js",
@@ -91,6 +87,8 @@ var JS_FILES = {
         vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
     },
 
+    drawCostsCharts :     rootClientURL + "chartjs/drawCostsCharts.js",
+    chartjs :             rootClientURL + "chartjs/Chart.min.js",
     jAlert :              rootClientURL + "jAlert/jAlert.js",
     jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
 };
@@ -125,28 +123,20 @@ var DISPLAY = {
         ext_costs          : false
     },
     charts: {
-        WIDTH_PX_OFF:    280, /*client width in px under which the charts are not shown*/
-        MIN_RATIO:       0.7, /*minimum ratio width of charts as frame_witdh becomes too wide*/
-        MIN_RATIO_WIDTH: 750, /*width on which the ratio is MIN_RATIO and above which the ration is fixed on MIN_RATIO*/
-        MIN_LEGEND:      425, /*window width value under which the legends of the charts are hidden*/
         isMonthlyCostsPieChart: false,  /*prints chart bool variable*/
         isMonthlyCostsBarChart: false,  /*prints chart bool variable*/
         isFinEffortChart:       false,  /*prints chart bool variable*/
         isAlterToCarChart:      false,  /*prints chart bool variable*/
-        /*the charts images data URI*/
-        URIs: {
-            pieChart: 0,
-            barChart: 0,
-            finEffort: 0,
-            alterToCar: 0
-        }
+        pieChart: 0,
+        barChart: 0,
+        finEffort: 0,
+        alterToCar: 0
     }
 };
 
 /*Service availability. Later on in the code, the variables might be set to TRUE*/
 /*if the services are available. Therefore do not change these values here*/
 var SERVICE_AVAILABILITY = {
-    g_charts      : false,   /*variable that says whether Google Charts JS files are available*/
     g_captcha     : false,   /*variable that says whether Google Captcha JS files are available*/
     g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
 };

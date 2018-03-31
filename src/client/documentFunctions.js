@@ -165,8 +165,11 @@ function loadExtraFiles() {
         getScriptOnce(JS_FILES.print);
     }
 
-    if (SWITCHES.g_charts){        
-        getScriptOnce(JS_FILES.charts, function() {           
+    if (SWITCHES.charts){
+        
+        getScriptOnce(JS_FILES.chartjs);
+        
+        getScriptOnce(JS_FILES.drawCostsCharts, function() {           
             getScriptOnce(JS_FILES.printResults);
         });
     }
@@ -209,25 +212,6 @@ function loadExtraFiles() {
             }).appendTo('head');
         });
     }
-
-
-    if (SWITCHES.g_charts){
-        //Tries to load Google chart JS files
-        getScriptOnce(JS_FILES.Google.chartsAPI)
-            .done(function(){
-                SERVICE_AVAILABILITY.g_charts = true;
-                google.charts.load( 'current', {"packages": ["corechart"], "language": LANGUAGE });
-            })
-            .fail(function(){
-                SERVICE_AVAILABILITY.g_charts = false; //can't load google charts
-        });
-    }
-    else {
-        SERVICE_AVAILABILITY.g_charts = false;
-    }
-
-    getScriptOnce(JS_FILES.Google.rgbcolor);
-    getScriptOnce(JS_FILES.Google.canvg);
 
     //uber
     if (SWITCHES.uber){
@@ -279,7 +263,6 @@ function loadExtraFiles() {
         });
     }
 }
-
 
 
 /*function that is run when the button Reload/Rerun is clicked*/

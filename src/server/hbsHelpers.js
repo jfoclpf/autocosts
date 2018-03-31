@@ -6,6 +6,10 @@ module.exports = {
     isSelected: function (CC, value) {            
         return CC === value ? ' ' + 'selected' : ''; 
     },
+    /*negation*/
+    negate: function(boolVar) {
+        return !boolVar;
+    },
     /*chose the HTML costs table for specific country*/
     costsTable: function (CC){
         return CC;

@@ -17,9 +17,6 @@ const uglifycss  = require('uglifycss');
 const minifyHTML = require('html-minifier').minify;
 const jsonminify = require("jsonminify");
 
-//concatenation file tool
-const concat = require('concat-files');
-
 //Main directories got from commons
 var directories = commons.getDirectories();
 var ROOT_DIR = directories.server.root;
@@ -142,56 +139,9 @@ function minifyCSSFiles(){
 
     walker.on("end", function () {
         console.log("\nAll CSS files compressed\n");
-        concatCSSFiles();        
+        processHTMLfiles();  
     });     
 
-}
-
-//concatenate some CSS files
-function concatCSSFiles(){    
-     
-    var CSS_DIR = directories.bin.css;
-    
-    //creates directory if it doesn't exist
-    if (!fs.existsSync(path.join(CSS_DIR, 'merged-min'))){
-        fs.mkdirSync(path.join(CSS_DIR, 'merged-min'));
-    }    
-    
-    //CSS files to be concatenated, 
-    //the ones which are needed for initial main page loading
-    var files1Arr = [
-        path.join(CSS_DIR, 'main.css'),
-        path.join(CSS_DIR, 'central.css'),
-        path.join(CSS_DIR, 'form.css'),
-        path.join(CSS_DIR, 'left.css'),
-        path.join(CSS_DIR, 'right.css'),
-        path.join(CSS_DIR, 'header.css'),
-        path.join(CSS_DIR, 'flags.css'),
-        path.join(CSS_DIR, 'mobile.css')
-    ];
-
-    //CSS files to be concatenated, 
-    //the ones which are deferred from initial loading
-    var files2Arr = [
-        path.join(CSS_DIR, 'jAlert.css'),
-        path.join(CSS_DIR, 'results.css')
-
-    ];
-
-    //concatenating files
-    concat(files1Arr, path.join(CSS_DIR, 'merged-min', 'merged1.css.hbs'),
-        function(err) {
-            if (err) throw err
-            console.log('merged1.css.hbs concatenation done\n');
-        }
-    );
-    concat(files2Arr, path.join(CSS_DIR, 'merged-min', 'merged2.css'),
-        function(err) {
-            if (err) throw err
-            console.log('merged2.css concatenation done\n');
-            processHTMLfiles();
-        }
-    );
 }
 
 //minifies all html handlebars templates .hbs files on the client side, 
