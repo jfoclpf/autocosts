@@ -130,7 +130,15 @@ var DISPLAY = {
         pieChart: 0,
         barChart: 0,
         finEffort: 0,
-        alterToCar: 0
+        alterToCar: 0,
+        /*the charts images data URI*/
+        //https://en.wikipedia.org/wiki/Data_URI_scheme#SVG
+        URIs: {
+            pieChart: 0,
+            barChart: 0,
+            finEffort: 0,
+            alterToCar: 0
+        }
     }
 };
 
@@ -140,7 +148,6 @@ var SERVICE_AVAILABILITY = {
     g_captcha     : false,   /*variable that says whether Google Captcha JS files are available*/
     g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
 };
-
 
 /*defer loading of jQuery*/
 (function() {
