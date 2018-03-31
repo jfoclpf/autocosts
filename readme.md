@@ -1,9 +1,9 @@
 Automobile costs calculator
 =========
 
-This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. By default, these values are calculated on a monthly basis. 
+This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
-This calculator is and shall be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information. Since it uses NodeJS and NPM it works and it is tested for either Ubuntu related OS or Windows related OS.
+This calculator is and shall always be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information. Since it uses NodeJS and NPM it works and it is tested for either Ubuntu related OS or Windows related OS.
 
 ## Website
 https://autocosts.info<br>
@@ -17,7 +17,6 @@ The list of available countries is from the file `src/countries/list.json`
 
 ### The registered associated domains
 https://autocosts.info/domains
-
 
 ## How to install
 
@@ -60,12 +59,12 @@ Ex:    node index.js -r prod --uber --dataBase
 
 Options: 
 -r, --release              'work' for tests or 'prod' for production
--p, --port                 HTTP port on which the application is listening (default:3027 for tests, and 3028 for production) 
+-p, --port                 HTTP port on which the application is listening (default:3027 for tests, and 3028 for production)
     --https                Enables protocol https when available
     --print                Enables the standard printing of final report
     --pdf                  Enables the downloading of a pdf final report (using pdfmake)
     --social               Enables social media plugin (js-socials)
-    --googleCharts         Enables Google Charts on report
+    --disableCharts        Disables Charts on final report
 
     External API services, disabled by default
     API credentials must be in either credentials/work/ or credentials/prod/ according to release
@@ -74,8 +73,6 @@ Options:
     --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
     --googleAnalytics      Enables Google Analytics
     --dataBase             Enables a mysql Database
-
--A  --all                  Enables all the previous services
 ```
 
 ### Database
@@ -119,10 +116,9 @@ the latter being the test version. This file `uber.json` should be like:
 }
 ```
 
-### Google Charts
+### Charts
 
-Autocosts uses Google Charts to render the final charts, with several analysys. 
-We plan to move to <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
+Autocosts uses <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
 
 ### Google Analytics
 
