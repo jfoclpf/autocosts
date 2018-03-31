@@ -282,8 +282,7 @@ function drawAlterToCarChart() {
     var labels = [formatLabel(WORDS.your_car_costs_you + " " + 
                               WORDS.word_per.replace(/&#32;/g,"") + " " + 
                               WORDS.month, 25)];
-    
-    
+        
     var dataset = [                      
                       //Monthly Costs
                       //1st column
@@ -444,9 +443,11 @@ function drawAlterToCarChart() {
         
         //adds zero on the beginning of 'data'
         //i.e. from [0, u.delta] to [0, 0, u.delta] since UBER is on the 3rd column
-        for(let i=0; i<u_dataset.length; i++){
-            u_dataset[i].data.splice(0,0,0);
-        }          
+        if(p_bool){
+            for(let i=0; i<u_dataset.length; i++){
+                u_dataset[i].data.splice(0,0,0);
+            }          
+        }
               
         dataset = dataset.concat(u_dataset);
         labels.push("UBER");

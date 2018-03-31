@@ -19,7 +19,8 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     
     //Object with all the expressions for each country
     data.words = wordsOfCountry;
-    data.words.word_per += "&#32;" //add non-breaking space    
+    data.words.word_per += "&#32;" //add non-breaking space  
+    data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, `$1`); //removes excess of "&#32;"
         
     //use Local files or CDN?
     debug("isThisLocalhost ", isThisLocalhost);
