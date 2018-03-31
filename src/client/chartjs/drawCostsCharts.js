@@ -278,7 +278,6 @@ function drawAlterToCarChart() {
     //boolean variables
     var p_bool = isObjDef(p) && p.display_pt() && DISPLAY.result.public_transports; //public transports    
     var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
-    console.log(p_bool, u_bool);
     
     var labels = [formatLabel(WORDS.your_car_costs_you + " " + 
                               WORDS.word_per.replace(/&#32;/g,"") + " " + 
@@ -406,7 +405,7 @@ function drawAlterToCarChart() {
         //UBER
         //2nd or 3d column        
         var u_dataset;
-        console.log(u.result_type);
+
         if(u.result_type == 1){
             
             u_dataset = [
