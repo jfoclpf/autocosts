@@ -128,10 +128,19 @@
                             <b>{{{average_costs_per_type}}}</b>
                         </div>
                         <br>
-                        <!-- first top (pie) chart -->
-                        <div id="pie_chart_div" class="chart_div"></div><br>
-                        <!-- second (bars) chart -->
-                        <div id="bar_chart_div" class="chart_div"></div>
+                        
+                        <div class="charts_container">
+                            <!-- first top (pie) chart -->
+                            <div class="chart">
+                                <canvas id="pieChart" height="400"></canvas>
+                            </div>
+                            <br>
+                            <!-- second (bars) chart -->
+                            <div class="chart">                        
+                                <canvas id="barChart" height="300"></canvas>
+                            </div>
+                        </div>
+                            
                         <!-- results tables -->
                         <div class="result_div" id="monthly_costs"></div>
                     </div>
@@ -144,7 +153,11 @@
                             <b>{{{financial_effort}}}</b>
                         </div>
                         <!-- third chart -->
-                        <div id="fin_effort_chart_div" class="chart_div"></div>
+                        <div class="charts_container">
+                            <div class="chart">
+                                <canvas id="FinEffChart" height="150"></canvas>
+                            </div>
+                        </div>                        
                         <!-- results table -->
                         <div class="result_div" id="fin_effort"></div>
                     </div>
@@ -157,7 +170,11 @@
                             <b>{{{publ_tra_equiv}}}</b>
                         </div>
                         <!-- fourth chart -->
-                        <div id="alternative_carcosts_chart_div" class="chart_div"></div>
+                        <div class="charts_container">
+                            <div class="chart">
+                                <canvas id="AlterToCarCostsChart" height="550"></canvas>
+                            </div>
+                        </div>
                         <!-- results table -->
                         <div class="result_div" id="alternative_to_carcosts"></div>
                     </div>

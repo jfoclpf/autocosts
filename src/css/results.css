@@ -6,6 +6,12 @@
 .result_div {
     margin: 15px;
 }
+
+.charts_container {
+  width: 50%; 
+  margin: 5px auto;
+}
+
 .result_div td {
     padding: 8px 3%;
     border-top: 1px solid #a5a5a5;

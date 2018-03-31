@@ -2,7 +2,7 @@
   "apps" : [{
     "name"        : "autocosts.work",
     "script"      : "bin/index.js",
-    "args"        : "--https --print --pdf --social --googleCharts --uber --googleCaptcha --googleAnalytics --dataBase",
+    "args"        : "--https --print --pdf --social --uber --googleCaptcha --googleAnalytics --dataBase",
     "watch"       : true,
     "instances"   : "max",
     "exec_mode"   : "cluster",

@@ -99,6 +99,9 @@
         font-size: 15px;
         line-height: 22px;
     }
+    .charts_container {
+      width: 60% !important; 
+    }
     #description {
         margin-top: 70px;
     }
@@ -162,6 +165,9 @@
         background: none;
         border: none;
     }
+    .charts_container {
+      width: 90% !important; 
+    }    
     #result_table0 td {
         padding: 4px;
     }
@@ -224,6 +230,10 @@
         font-size: 105%;
     }
 
+    .charts_container {
+      width: 98% !important; 
+    }  
+    
     .result_table {
         margin: 6px auto;
     }
