@@ -35,67 +35,75 @@ function drawMonthlyCostsPieChart() {
     }  
     
     var labels = [
-                    WORDS.depreciation_st,
-                    WORDS.insurance_short,
-                    WORDS.credit,
-                    WORDS.inspection_short,
-                    WORDS.road_taxes_short,
-                    WORDS.maintenance,
-                    WORDS.fuel,
-                    WORDS.rep_improv,
-                    WORDS.parking,
-                    WORDS.tolls,
-                    WORDS.fines,
-                    WORDS.washing
-                 ];    
+        WORDS.depreciation_st,
+        WORDS.insurance_short,
+        WORDS.credit,
+        WORDS.inspection_short,
+        WORDS.road_taxes_short,
+        WORDS.maintenance,
+        WORDS.fuel,
+        WORDS.rep_improv,
+        WORDS.parking,
+        WORDS.tolls,
+        WORDS.fines,
+        WORDS.washing
+    ];    
     
     //always creates a new chart
     if (DISPLAY.charts.pieChart){
         DISPLAY.charts.pieChart.destroy();
     }
 
-
     var dataset = [{
-                    label: WORDS.costs,
-                    data: [
-                            c.depreciation,
-                            c.insurance,
-                            c.credit,
-                            c.inspection,
-                            c.car_tax,
-                            c.maintenance,
-                            c.fuel,
-                            c.repairs_improv,
-                            c.parking,
-                            c.tolls,
-                            c.fines,
-                            c.washing
-                          ],
-                    backgroundColor: [
-                                        'navy',
-                                        'blue',
-                                        'aqua',
-                                        'teal',
-                                        'olive',
-                                        'green',
-                                        'maroon',
-                                        'lime',
-                                        'yellow',
-                                        'orange',
-                                        'red',
-                                        'purple'
-                                      ]
-                    }];
+        label: WORDS.costs,
+        data: [
+            c.depreciation,
+            c.insurance,
+            c.credit,
+            c.inspection,
+            c.car_tax,
+            c.maintenance,
+            c.fuel,
+            c.repairs_improv,
+            c.parking,
+            c.tolls,
+            c.fines,
+            c.washing
+        ],
+        backgroundColor: [
+            'navy',
+            'blue',
+            'aqua',
+            'teal',
+            'olive',
+            'green',
+            'maroon',
+            'lime',
+            'yellow',
+            'orange',
+            'red',
+            'purple'
+        ]
+    }];
 
+    var options = {
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.URIs.pieChart = DISPLAY.charts.pieChart.toBase64Image();
+            }
+        }
+    };
+    
     var content = {
         type: 'pie',
         data: {
             labels: labels,
             datasets: dataset
-        }
+        },
+        options: options        
     };    
     
-    DISPLAY.charts.pieChart = new Chart(pieChart, content);    
+    DISPLAY.charts.pieChart = new Chart(pieChart, content);
     DISPLAY.charts.isMonthlyCostsPieChart = true;
 }
 
@@ -112,95 +120,100 @@ function drawMonthlyCostsBarChart() {
     var labels = [WORDS.fixed_costs, WORDS.running_costs];
 
     var dataset = [
-                      //standing costs
-                      {
-                         label: WORDS.depreciation_st,
-                         data: [c.depreciation, 0],
-                         backgroundColor: 'navy'
-                      }, {
-                         label: WORDS.insurance_short,
-                         data: [c.insurance, 0],
-                         backgroundColor: 'blue'
-                      }, {
-                         label: WORDS.credit,
-                         data: [c.credit, 0],
-                         backgroundColor: 'aqua'
-                      }, {
-                         label: WORDS.inspection_short,
-                         data: [c.inspection, 0],
-                         backgroundColor: 'teal'
-                      }, {
-                         label: WORDS.road_taxes_short,
-                         data: [c.car_tax, 0],
-                         backgroundColor: 'olive'
-                      }, {
-                         label: WORDS.maintenance,
-                         data: [(1/2*c.maintenance), 0],
-                         backgroundColor: 'green'
-                      },
-                      //running costs
-                      {
-                         label: WORDS.rep_improv,
-                         data: [0, c.repairs_improv],
-                         backgroundColor: 'lime'
-                      }, {
-                         label: WORDS.fuel,
-                         data: [0, c.fuel],
-                         backgroundColor: 'maroon'
-                      }, {
-                         label: WORDS.parking,
-                         data: [0, c.parking],
-                         backgroundColor: 'yellow'
-                      }, {
-                         label: WORDS.tolls,
-                         data: [0, c.tolls],
-                         backgroundColor: 'orange'
-                      }, {
-                         label: WORDS.fines,
-                         data: [0, c.fines],
-                         backgroundColor: 'red'
-                      }, {
-                         label: WORDS.washing,
-                         data: [0, c.washing],
-                         backgroundColor: 'purple'
-                      }, {
-                         label: WORDS.maintenance,
-                         data: [0, (1/2*c.maintenance)],
-                         backgroundColor: 'green'
-                      }
-                    ];
+        //standing costs
+        {
+            label: WORDS.depreciation_st,
+            data: [c.depreciation, 0],
+            backgroundColor: 'navy'
+        }, {
+            label: WORDS.insurance_short,
+            data: [c.insurance, 0],
+            backgroundColor: 'blue'
+        }, {
+            label: WORDS.credit,
+            data: [c.credit, 0],
+            backgroundColor: 'aqua'
+        }, {
+            label: WORDS.inspection_short,
+            data: [c.inspection, 0],
+            backgroundColor: 'teal'
+        }, {
+            label: WORDS.road_taxes_short,
+            data: [c.car_tax, 0],
+            backgroundColor: 'olive'
+        }, {
+            label: WORDS.maintenance,
+            data: [(1/2*c.maintenance), 0],
+            backgroundColor: 'green'
+        },
+        //running costs
+        {
+            label: WORDS.rep_improv,
+            data: [0, c.repairs_improv],
+            backgroundColor: 'lime'
+        }, {
+            label: WORDS.fuel,
+            data: [0, c.fuel],
+            backgroundColor: 'maroon'
+        }, {
+            label: WORDS.parking,
+            data: [0, c.parking],
+            backgroundColor: 'yellow'
+        }, {
+            label: WORDS.tolls,
+            data: [0, c.tolls],
+            backgroundColor: 'orange'
+        }, {
+            label: WORDS.fines,
+            data: [0, c.fines],
+            backgroundColor: 'red'
+        }, {
+            label: WORDS.washing,
+            data: [0, c.washing],
+            backgroundColor: 'purple'
+        }, {
+            label: WORDS.maintenance,
+            data: [0, (1/2*c.maintenance)],
+            backgroundColor: 'green'
+        }
+    ];
 
     var options = {
-                      legend: {
-                         position: 'right', // place legend on the right side of chart
-                         display: false, //do not display
-                         labels : {
-                             fontSize: 9,
-                             fontColor: 'black'
-                         }
-                      },
-                      scales: {
-                         xAxes: [{
-                            stacked: true, // this should be set to make the bars stacked
-                            beginAtZero: true
-                         }],
-                         yAxes: [{
-                            stacked: true, // this also..
-                            beginAtZero: true
-                         }]
-                      }
-                   };
+        legend: {
+            position: 'right', // place legend on the right side of chart
+            display: false, //do not display
+            labels : {
+                fontSize: 9,
+                fontColor: 'black'
+            }
+        },
+            scales: {
+                xAxes: [{
+                    stacked: true, // this should be set to make the bars stacked
+                    beginAtZero: true
+                }],
+                yAxes: [{
+                    stacked: true, // this also..
+                    beginAtZero: true
+                }]
+            },
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.URIs.barChart = DISPLAY.charts.barChart.toBase64Image();
+            }
+        }
+    };
 
     var content = {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: dataset
-                    },
-                    options: options
-                  };
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: dataset
+        },
+        options: options
+    };
 
-    DISPLAY.charts.barChart = new Chart(barChart, content);   
+    DISPLAY.charts.barChart = new Chart(barChart, content);
     DISPLAY.charts.isMonthlyCostsBarChart = true;
 }
 
@@ -219,36 +232,41 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
                   formatLabel(WORDS.total_costs_per_year, 20) ];
     
     var dataset = [
-                      {
-                         label: WORDS.costs,
-                         data: [
-                                c.income_per_year,
-                                c.total_costs_year
-                         ],
-                         backgroundColor:[
-                                           'blue',
-                                           'red'
-                                         ]
-                       }
-                  ];
+        {
+            label: WORDS.costs,
+            data: [
+                c.income_per_year,
+                c.total_costs_year
+            ],
+            backgroundColor:[
+                'blue',
+                'red'
+            ]
+        }
+    ];
 
     var options =  {
-                       legend: {
-                                display: false
-                               },
-                       scales: {
-                                xAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        fontSize: 9
-                                    }
-                                }]
-                               }
-                   };
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    fontSize: 9
+                }
+            }]
+        },
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.URIs.finEffort = DISPLAY.charts.finEffort.toBase64Image();
+            }
+        }
+    };
 
     var content = {
         type: 'horizontalBar',
@@ -259,7 +277,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
         options: options
     };
 
-    DISPLAY.charts.finEffort = new Chart(FinEffChart, content);    
+    DISPLAY.charts.finEffort = new Chart(finEffChart, content);   
     DISPLAY.charts.isFinEffortChart = true;
 }
 
@@ -279,66 +297,67 @@ function drawAlterToCarChart() {
     var p_bool = isObjDef(p) && p.display_pt() && DISPLAY.result.public_transports; //public transports    
     var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
     
-    var labels = [formatLabel(WORDS.your_car_costs_you + " " + 
-                              WORDS.word_per.replace(/&#32;/g,"") + " " + 
-                              WORDS.month, 25)];
+    var labels = [
+        formatLabel( WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + 
+                     " " + WORDS.month, 25)
+    ];
         
     var dataset = [                      
-                      //Monthly Costs
-                      //1st column
-                      //standing costs
-                      {
-                         label: WORDS.depreciation_st,
-                         data: [c.depreciation],
-                         backgroundColor: 'navy'
-                      }, {
-                         label: WORDS.insurance_short,
-                         data: [c.insurance],
-                         backgroundColor: 'blue'
-                      }, {
-                         label: WORDS.credit,
-                         data: [c.credit],
-                         backgroundColor: 'aqua'
-                      }, {
-                         label: WORDS.inspection_short,
-                         data: [c.inspection],
-                         backgroundColor: 'teal'
-                      }, {
-                         label: WORDS.road_taxes_short,
-                         data: [c.car_tax],
-                         backgroundColor: 'olive'
-                      }, {
-                         label: WORDS.maintenance,
-                         data: [c.maintenance],
-                         backgroundColor: 'green'
-                      },
-                      //running costs
-                      {
-                         label: WORDS.rep_improv,
-                         data: [c.repairs_improv],
-                         backgroundColor: 'lime'
-                      }, {
-                         label: WORDS.fuel,
-                         data: [c.fuel],
-                         backgroundColor: 'maroon'
-                      }, {
-                         label: WORDS.parking,
-                         data: [c.parking],
-                         backgroundColor: 'yellow'
-                      }, {
-                         label: WORDS.tolls,
-                         data: [c.tolls],
-                         backgroundColor: 'orange'
-                      }, {
-                         label: WORDS.fines,
-                         data: [c.fines],
-                         backgroundColor: 'red'
-                      }, {
-                         label: WORDS.washing,
-                         data: [c.washing],
-                         backgroundColor: 'purple'
-                      }      
-                    ];
+        //Monthly Costs
+        //1st column
+        //standing costs
+        {
+            label: WORDS.depreciation_st,
+            data: [c.depreciation],
+            backgroundColor: 'navy'
+        }, {
+            label: WORDS.insurance_short,
+            data: [c.insurance],
+            backgroundColor: 'blue'
+        }, {
+            label: WORDS.credit,
+            data: [c.credit],
+            backgroundColor: 'aqua'
+        }, {
+            label: WORDS.inspection_short,
+            data: [c.inspection],
+            backgroundColor: 'teal'
+        }, {
+            label: WORDS.road_taxes_short,
+            data: [c.car_tax],
+            backgroundColor: 'olive'
+        }, {
+            label: WORDS.maintenance,
+            data: [c.maintenance],
+            backgroundColor: 'green'
+        },
+        //running costs
+        {
+            label: WORDS.rep_improv,
+            data: [c.repairs_improv],
+            backgroundColor: 'lime'
+        }, {
+            label: WORDS.fuel,
+            data: [c.fuel],
+            backgroundColor: 'maroon'
+        }, {
+            label: WORDS.parking,
+            data: [c.parking],
+            backgroundColor: 'yellow'
+        }, {
+            label: WORDS.tolls,
+            data: [c.tolls],
+            backgroundColor: 'orange'
+        }, {
+            label: WORDS.fines,
+            data: [c.fines],
+            backgroundColor: 'red'
+        }, {
+            label: WORDS.washing,
+            data: [c.washing],
+            backgroundColor: 'purple'
+        }      
+    ];
     
     //adds zeros to "data" properties on the previous dataset, since the previous monthly costs values
     //just apply to the first column of chart, thus the remainer columns should be set to zero, i.e.
@@ -456,33 +475,38 @@ function drawAlterToCarChart() {
 
 
     var options = {
-                      scales: {
-                         xAxes: [{
-                            stacked: true, // this should be set to make the bars stacked
-                            ticks: {
-                                beginAtZero: true,
-                                fontSize: 9
-                            }
-                         }],
-                         yAxes: [{
-                            stacked: true, // this also..
-                            ticks: {
-                                beginAtZero: true
-                            }
-                         }]
-                      }
-                   };
+        scales: {
+            xAxes: [{
+                stacked: true, // this should be set to make the bars stacked
+                ticks: {
+                    beginAtZero: true,
+                    fontSize: 9
+                }
+            }],
+            yAxes: [{
+                stacked: true, // this also..
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },        
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.URIs.alterToCar = DISPLAY.charts.alterToCar.toBase64Image();
+            }
+        }
+    };
 
     var content = {
-                      type: 'bar',
-                      data: {
-                          labels: labels,
-                          datasets: dataset
-                      },
-                      options: options
-                  };
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: dataset
+        },
+        options: options
+    };
 
-    DISPLAY.charts.alterToCar = new Chart(AlterToCarCostsChart, content);
+    DISPLAY.charts.alterToCar = new Chart(alterToCarCostsChart, content);
     DISPLAY.charts.isAlterToCarChart = true;
 }
 
@@ -495,9 +519,9 @@ function pft(num){
 function pfto(obj){
     //rounds every element in object
     for (var key in obj) {
-      if (obj.hasOwnProperty(key) && typeof obj[key] === 'number') {
-        obj[key] = parseFloat(obj[key].toFixed(1));
-      }
+        if (obj.hasOwnProperty(key) && typeof obj[key] === 'number') {
+            obj[key] = parseFloat(obj[key].toFixed(1));
+        }
     }
     return obj;
 }

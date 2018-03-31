@@ -53,14 +53,14 @@ generatePDF = function generatePDF(){
             isCharts ? 
                 {
                     image: chartData1,
-                    width: 400,
+                    width: 267,
                     height: 267,
                     style: 'img_style'
                 } : {},
             isCharts ?                
                 {
                     image: chartData2,
-                    width: 400,
+                    width: 300,
                     height: 300,
                     style: 'img_style',
                     pageBreak: 'after'
@@ -206,7 +206,7 @@ generatePDF = function generatePDF(){
             chartData4 = DISPLAY.charts.URIs.alterToCar;
             body33 = isCharts ? {
                         image: chartData4,
-                        width: 400,
+                        width: 300,
                         height: 350,
                         style: 'img_style'
                     } : {} ;

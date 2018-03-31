@@ -125,7 +125,11 @@ function Run2(callback){
     }
     //when no charts are available
     else{        
-        $(".charts_container").hide();    
+        $(".charts_container").hide();        
+        var blankImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=";
+        for (var uri in DISPLAY.charts.URIs){
+            DISPLAY.charts.URIs[uri] = blankImg;
+        } 
     }
         
     $("*").promise().done(function(){    
