@@ -49,7 +49,6 @@
     "mysql": "^2.15.0",
     "path": "^0.12.7",
     "pdfmake": "^0.1.36",
-    "phantomjs": "^2.1.7",
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
     "request": "^2.85.0",
