@@ -53,7 +53,7 @@ generatePDF = function generatePDF(){
             isCharts ? 
                 {
                     image: chartData1,
-                    width: 267,
+                    width: 230,
                     height: 267,
                     style: 'img_style'
                 } : {},
@@ -164,7 +164,7 @@ generatePDF = function generatePDF(){
             chartData3 = DISPLAY.charts.URIs.finEffort;
             body23 = isCharts ? {
                         image: chartData3,
-                        width: 400,
+                        width: 450,
                         height: 220,
                         style: 'img_style'
                     } : {} ;
@@ -207,7 +207,7 @@ generatePDF = function generatePDF(){
             body33 = isCharts ? {
                         image: chartData4,
                         width: 300,
-                        height: 350,
+                        height: 400,
                         style: 'img_style'
                     } : {} ;
             docDefinition.content.push(body33);
@@ -294,7 +294,7 @@ generatePDF = function generatePDF(){
     }
 
     //creates PDF file
-    console.log(docDefinition);
+    console.log("docDefinition to be PDFed", docDefinition);
     pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
 
 }
