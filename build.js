@@ -31,7 +31,8 @@ optionDefinitions = [
     
     /*###*/
     { name: 'help',         alias: 'h', type: Boolean },
-    { name: 'All',          alias: 'A', type: Boolean }
+    { name: 'All',          alias: 'A', type: Boolean },
+    { name: 'run',                      type: Boolean }
     
 ];
 
@@ -151,7 +152,22 @@ async.series([
     }, 
     
     function(callback){
-        console.log(getFinalRunMsg());
+        //only shows this final message if the bin/index.js is not run
+        if(!options.run){
+            console.log(getFinalRunMsg());
+        }
+        callback();
+    },
+    
+    function(callback){
+        if(options.run){
+            //when option run is selected, at least makes a new copy from src/ to bin/ if not enabled
+            if(!options.copy){
+                copy();
+                concatCSSFiles(callback);
+            }                        
+            runApp();
+        }        
     }
     
 ]);//async.series
@@ -355,7 +371,7 @@ function getArgvHelpMsg(){
                 "-t  --genTables     generate html and jpeg stats [t]ables in bin/        based on the statistical costs Database \n" +
                 "\n" +
                 "-A  --All           enables [a]ll previous options\n" +
-                "\n" +
+                "    --run           runs built with default options, after building is complete\n" +
                 "-h  --help          (this output) \n\n"; 
 
     return messg;
@@ -363,13 +379,27 @@ function getArgvHelpMsg(){
 
 
 function getFinalRunMsg(){
-
+    //built filename
     var filename = path.join(process.cwd(), 'bin', "index.js");
     
-    var messg = "\nRun " + colors.green.bold("node " + filename) + " to start application\n" + 
-                "or " + colors.green.bold("node " + filename + " -h") + " for more information\n\n";          
+    var messg = "\nRun " + colors.green.bold("node " + filename) + " to start application with default options\n" + 
+                "or " + colors.green.bold("node " + filename + " -h") + " for more information\n";          
 
     return messg;
+}
+
+function runApp(){
+
+    //built filename
+    var filename = path.join(process.cwd(), 'bin', "index.js");
+    
+    console.log("Building complete with " + colors.bold("--run") + " option enabled, therefore");
+    console.log("starting application with default options using command: "); 
+    console.log(colors.green.bold("node " + filename) + "\n");
+    console.log("For other options stop server and run:");
+    console.log(colors.green.bold("node " + filename + " -h\n"));
+    
+    execSync("node " + filename + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 function getFileExtension(fileName){
