@@ -126,6 +126,7 @@ function Run2(callback){
     //when no charts are available
     else{        
         $(".charts_container").hide();        
+        //blank image to be rendered as URI image/png;base64 to be rendered as PDF when Charts are switched off
         var blankImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=";
         for (var uri in DISPLAY.charts.URIs){
             DISPLAY.charts.URIs[uri] = blankImg;

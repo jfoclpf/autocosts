@@ -8,8 +8,26 @@
 }
 
 .charts_container {
-  width: 50%; 
-  margin: 5px auto;
+    width: 50%; 
+    margin: 5px auto;
+}
+
+.chart {
+    position: relative;
+    margin: auto;
+}
+
+#pieChartDiv{
+    min-height: 400px;
+}
+#barChartDiv{
+    min-height: 350px;
+}
+#finEffChartDiv{
+    min-height: 150px;
+}
+#alterToCarCostsChartDiv{
+    min-height: 500px;
 }
 
 .result_div td {
