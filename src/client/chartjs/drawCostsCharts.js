@@ -87,6 +87,7 @@ function drawMonthlyCostsPieChart() {
     }];
 
     var options = {
+        maintainAspectRatio: false,
         animation : {
             onComplete : function(){    
                 DISPLAY.charts.URIs.pieChart = DISPLAY.charts.pieChart.toBase64Image();
@@ -105,6 +106,7 @@ function drawMonthlyCostsPieChart() {
     
     DISPLAY.charts.pieChart = new Chart(pieChart, content);
     DISPLAY.charts.isMonthlyCostsPieChart = true;
+
 }
 
 //draw bar chart
@@ -179,6 +181,7 @@ function drawMonthlyCostsBarChart() {
     ];
 
     var options = {
+        maintainAspectRatio: false,
         legend: {
             position: 'right', // place legend on the right side of chart
             display: false, //do not display
@@ -246,6 +249,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     ];
 
     var options =  {
+        maintainAspectRatio: false,
         legend: {
             display: false
         },
@@ -475,6 +479,7 @@ function drawAlterToCarChart() {
 
 
     var options = {
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 stacked: true, // this should be set to make the bars stacked
@@ -489,10 +494,13 @@ function drawAlterToCarChart() {
                     beginAtZero: true
                 }
             }]
+        },
+        legend: {
+            display: false
         },        
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.alterToCar = DISPLAY.charts.alterToCar.toBase64Image();
+                DISPLAY.charts.URIs.alterToCar = DISPLAY.charts.alterToCar.toBase64Image();                
             }
         }
     };
