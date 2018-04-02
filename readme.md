@@ -19,13 +19,10 @@ The list of available countries is from the file `src/countries/list.json`
 https://autocosts.info/domains
 
 ## How to install
-
-Install it and run it<br>
-`npm i autocosts`<br>
-Follow then the instructions to run the HTTP server.
+Install it, build it and run it with the single command<br>
+`npm i autocosts`
 
 ## How does it work?
-
 Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser. 
 
 The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The 2 last letters on the URI stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country.
