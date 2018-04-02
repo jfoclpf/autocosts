@@ -1,0 +1,39 @@
+<!-- Data to be transferred from server to client, through data Attributes
+The data transfer should not be made writing directly on JS dynamic files, to avoid code injection, thus this is safer
+see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes -->
+
+<data
+    id =                "global_switches" 
+    data-https =        "{{{ serverData.settings.switches.https }}}"
+    data-uber =         "{{{ serverData.settings.switches.uber }}}"
+    data-social =       "{{{ serverData.settings.switches.social }}}"
+    data-charts =       "{{{ negate serverData.settings.switches.disableCharts }}}"
+    data-g_captcha =    "{{{ serverData.settings.switches.googleCaptcha }}}"
+    data-g_analytics =  "{{{ serverData.settings.switches.googleAnalytics }}}"
+    data-data_base =    "{{{ serverData.settings.switches.dataBase }}}"
+    data-print =        "{{{ serverData.settings.switches.print }}}"
+    data-pdf =          "{{{ serverData.settings.switches.pdf }}}">
+</data>
+
+<data
+    id =                    "global_variables" 
+    data-country =          "{{{ CC }}}"       
+    data-language =         "{{{ clientData.languageCode }}}"
+    data-country_list =     "{{{ jsonObj serverData.availableCountries }}}"
+    data-domain_list =      "{{{ jsonObj serverData.domainsCountries }}}"
+    data-cdn_url =          "{{{ serverData.settings.cdn.url }}}"
+    data-http_protocol =    "{{{ clientData.httpProtocol }}}"
+    data-client_dir =       "{{{ serverData.directories.client.client }}}"
+    data-words =            "{{{ jsonObj words }}}"
+    data-ga_tracking_id =   "{{{ serverData.settings.googleAnalytics.trackingId }}}"
+    data-not_localhost =    "{{{ clientData.notLocalhost }}}">
+</data>
+
+<data
+    id =                    "js_files" 
+    data-jquery =           '{{{ serverData.fileNames.client.jquery.uri }}}'
+    data-pdfmake =          '{{{ serverData.fileNames.client.pdfmake.uri }}}'  
+    data-vfs_fonts =        '{{{ serverData.fileNames.client.vfs_fonts.uri }}}'>
+</data>
+      
+      

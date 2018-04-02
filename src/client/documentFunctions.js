@@ -217,7 +217,7 @@ function loadExtraFiles() {
     if (SWITCHES.uber){
         if(COUNTRY!="XX"){//if not test version
             //gets asynchronously UBER information
-            $.get(UBER_FILE, function(data) {
+            $.get(UBER_API_LOCAL_URL, function(data) {
                 //alert(JSON.stringify(data, null, 4));
                 if(data && !$.isEmptyObject(data)){
                     UBER_API =  data; //UBER_API is a global variable

@@ -34,8 +34,6 @@ var getScriptOnce = (function(url, callback){
 
 (function initialize() {
 
-    INITIAL_TEX = WORDS.initial_text;
-
     getScriptOnce(JS_FILES.validateForm);
 
     //detects old versions of Internet Explorer
