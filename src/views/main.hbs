@@ -16,7 +16,7 @@
     {{#with clientData.notLocalhost}}
     <meta http-equiv="Content-Security-Policy" content="
         {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}};
-        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-inline' 'unsafe-eval';
+        {{~emptyChar}} script-src 'self' cdnjs.cloudflare.com *.googleapis.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-eval';
         {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-inline' 'unsafe-eval';
         {{~emptyChar}} img-src 'self' *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} *.google-analytics.com *.g.doubleclick.net;">
     {{/with}}
@@ -26,6 +26,7 @@
     {{#with words}}
     
 </head>
+    
 <body>
 
     <div id="main_div">
@@ -77,7 +78,8 @@
 
                             <br>
 
-                            <a class="display_block" target="_blank" href="https://play.google.com/store/apps/details?id=info.autocosts">
+                            <a class="display_block" target="_blank" 
+                                href="https://play.google.com/store/apps/details?id=info.autocosts">
                                 <div id="div31" class="roundCorner">
                                     <img alt="Android logo" src="images/android/playstore.svg">
                                 </div>
@@ -220,8 +222,12 @@
         </div>
         <br>
     </div>
-    {{/with}}
-    <script>{{> Globals.js }}</script>
+    {{/with}}    
+    <div>
+        <!-- Data that is being sent -->
+        {{> globalData }}
+    </div>
+    <script src="client/Globals.js"></script>    
 </body>
 </html>
 
