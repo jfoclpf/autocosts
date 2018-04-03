@@ -8,19 +8,19 @@
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
 
-/*File with Javascript Global variables rendered by server side (handlebars) inserted in HTML data attributes. 
-See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes */
+/*File with Javascript Global variables rendered by server side (handlebars) inserted in HTML data attributes 
+and collected here. See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes */
 
 //Global Variables
 var SWITCHES,           //GLOBAL switches Object
-    COUNTRY,            //Define GLOBAL Javascript variables
+    COUNTRY,            //Current country
     LANGUAGE,           //Language code according to ISO_639-1 codes
     COUNTRY_LIST,       //List of countries in a Javascript Object
     DOMAIN_LIST,        //List of domains in a Javascript Object
     CDN_URL,            //it's defined in the node server side index.js
     HTTP_Protocol,      //it's defined in node server side index.js*/
     clientDir,          //client directory seen by the browser
-    WORDS,              //text strings with language
+    WORDS,              //Object with country's language text strings
     INITIAL_TEX, 
     GA_TRACKING_ID,     //Google analytics Tracking ID
     NOT_LOCALHOST,      //true when this session does not come from localhost
