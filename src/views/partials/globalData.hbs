@@ -4,6 +4,7 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
 
 <data
     id =                "global_switches" 
+    value =             "global_switches"
     data-https =        "{{{ serverData.settings.switches.https }}}"
     data-uber =         "{{{ serverData.settings.switches.uber }}}"
     data-social =       "{{{ serverData.settings.switches.social }}}"
@@ -17,6 +18,7 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
 
 <data
     id =                    "global_variables" 
+    value =                 "global_variables" 
     data-country =          "{{{ CC }}}"       
     data-language =         "{{{ clientData.languageCode }}}"
     data-country_list =     "{{{ jsonObj serverData.availableCountries }}}"
@@ -31,7 +33,9 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
 
 <data
     id =                    "js_files" 
+    value =                 "js_files"
     data-jquery =           '{{{ serverData.fileNames.client.jquery.uri }}}'
+    data-jquery_local =     '{{{ serverData.fileNames.client.jquery.local }}}'
     data-pdfmake =          '{{{ serverData.fileNames.client.pdfmake.uri }}}'  
     data-vfs_fonts =        '{{{ serverData.fileNames.client.vfs_fonts.uri }}}'>
 </data>
