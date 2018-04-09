@@ -19,12 +19,14 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     
     //Object with all the expressions for each country
     data.words = wordsOfCountry;
-    data.words.word_per += "&#32;" //add non-breaking space  
+    data.words.word_per += "&#32;" //add non-breaking space
     data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, `$1`); //removes excess of "&#32;"
         
     //use Local files or CDN?
-    debug("isThisLocalhost ", isThisLocalhost);
-    if(isThisLocalhost){
+    var usesLocalFiles = isThisLocalhost || !serverData.settings.switches.cdn;
+    debug("usesLocalFiles", usesLocalFiles);
+     
+    if(usesLocalFiles){
         serverData.fileNames.client.jquery.uri    = serverData.fileNames.client.jquery.local;
         serverData.fileNames.client.pdfmake.uri   = serverData.fileNames.client.pdfmake.local;
         serverData.fileNames.client.vfs_fonts.uri = serverData.fileNames.client.vfs_fonts.local;

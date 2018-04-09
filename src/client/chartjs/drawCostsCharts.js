@@ -288,6 +288,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
 //draw bar chart
 function drawAlterToCarChart() {
 
+    var i;
     var c = pfto(CALCULATED.data.monthly_costs);     //Monthly costs object of calculated data, parsed to fixed(1)
     var p = pfto(CALCULATED.data.public_transports);
     var u = pfto(CALCULATED.uber);
@@ -366,18 +367,17 @@ function drawAlterToCarChart() {
     //adds zeros to "data" properties on the previous dataset, since the previous monthly costs values
     //just apply to the first column of chart, thus the remainer columns should be set to zero, i.e.
     //according to chartsJS the "data" for each object should be for example "data: [c.fines, 0]" if it has 2 columns
-    //see for more information: https://stackoverflow.com/a/45123023/1243247     
+    //see for more information: https://stackoverflow.com/a/45123023/1243247         
     if(p_bool){
-        for(let i=0; i<dataset.length; i++){
+        for(i=0; i<dataset.length; i++){
             dataset[i].data.push(0);
         }        
     }
     if(u_bool){
-        for(let i=0; i<dataset.length; i++){
+        for(i=0; i<dataset.length; i++){
             dataset[i].data.push(0);
         }        
-    }
-    
+    }    
     
     /*****************************************/
     //if public transports bar is to be shown
@@ -410,7 +410,7 @@ function drawAlterToCarChart() {
         //adds one zero at the end of each 'data' property for the 3rd column (uber)
         //see for more information: https://stackoverflow.com/a/45123023/1243247  
         if(u_bool){        
-            for(let i=0; i<p_dataset.length; i++){
+            for(i=0; i<p_dataset.length; i++){
                 p_dataset[i].data.push(0);
             }             
         }
@@ -467,7 +467,7 @@ function drawAlterToCarChart() {
         //adds zero on the beginning of 'data'
         //i.e. from [0, u.delta] to [0, 0, u.delta] since UBER is on the 3rd column
         if(p_bool){
-            for(let i=0; i<u_dataset.length; i++){
+            for(i=0; i<u_dataset.length; i++){
                 u_dataset[i].data.splice(0,0,0);
             }          
         }

@@ -385,7 +385,7 @@ function setFILENAMES(){
         "client" : {
             "jquery" : {
                 "local" : DIRECTORIES.client.client + "/jquery/jquery.min.js",
-                "cdn"   : "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+                "cdn"   : "https://code.jquery.com/jquery-latest.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "pdfmake" : {
