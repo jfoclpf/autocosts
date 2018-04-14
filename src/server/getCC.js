@@ -7,6 +7,7 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
         
     var CC = req.params.CC; //ISO 2 letter Country Code
     var languageCode    = serverData.languagesCountries[CC]; //ISO language code (ex: pt-PT)
+    
     var isThisLocalhost = url.isThisLocalhost(req); //returns bool
     var isThisATest     = url.isThisATest(req); //returns bool
     var httpProtocol    = url.getProtocol(req, serverData.settings.switches.https);
@@ -20,22 +21,7 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     //Object with all the expressions for each country
     data.words = wordsOfCountry;
     data.words.word_per += "&#32;" //add non-breaking space
-    data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, `$1`); //removes excess of "&#32;"
-        
-    //use Local files or CDN?
-    var usesLocalFiles = isThisLocalhost || !serverData.settings.switches.cdn;
-    debug("usesLocalFiles", usesLocalFiles);
-     
-    if(usesLocalFiles){
-        serverData.fileNames.client.jquery.uri    = serverData.fileNames.client.jquery.local;
-        serverData.fileNames.client.pdfmake.uri   = serverData.fileNames.client.pdfmake.local;
-        serverData.fileNames.client.vfs_fonts.uri = serverData.fileNames.client.vfs_fonts.local;
-    }
-    else{
-        serverData.fileNames.client.jquery.uri    = serverData.fileNames.client.jquery.cdn;
-        serverData.fileNames.client.pdfmake.uri   = serverData.fileNames.client.pdfmake.cdn;
-        serverData.fileNames.client.vfs_fonts.uri = serverData.fileNames.client.vfs_fonts.cdn;    
-    }
+    data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, `$1`); //removes excess of "&#32;"        
     
     //global constant data for every request, and that was already loaded when the server app was initialized
     data.serverData = serverData;
