@@ -4,7 +4,7 @@ which converts table costs HTML.hbs files into correspondent table costs jpg ima
 var fs = require('fs');
 
 //PhantomJS can't know exactly the directory of this file, 
-//since the directories are always relative to directory where it is called
+//since the directories are always relative to directory where it is called (root directory)
 //console.log(fs.workingDirectory);
 //console.log(fs.absolute("."));
 //phantom.exit(0);
