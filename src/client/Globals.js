@@ -101,7 +101,7 @@ var Run1, PrintElem, generatePDF, TimeCounter;
         },
 
         drawCostsCharts :     rootClientURL + "chartjs/drawCostsCharts.js",
-        chartjs :             rootClientURL + "chartjs/Chart.min.js",
+        chartjs :             JSfiles.dataset.chartjs,
         jAlert :              rootClientURL + "jAlert/jAlert.js",
         jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
     };

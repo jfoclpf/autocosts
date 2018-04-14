@@ -7,7 +7,9 @@
 
 //this should be here on the beginning to set global environments
 const commons     = require('../commons');
-commons.init();
+const events      = require('events');
+var eventEmitter  = new events.EventEmitter();
+commons.init(eventEmitter);
 
 const fs          = require('fs');
 const path        = require("path");
@@ -17,27 +19,28 @@ const bodyParser  = require('body-parser');
 const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
 const colors      = require('colors/safe'); //does not alter string prototype
-const debug       = require('debug')('app:main');
-
+const util        = require('util');
+const debug       = require('debug')('app:index');
 
 //personalised requires
 const url         = require(path.join(__dirname, 'server', 'url')); //to deal with the full URL rules and redirect accordingly
 const getCC       = require(path.join(__dirname, 'server', 'getCC'));
 const hbsHelpers  = require(path.join(__dirname, 'server', 'hbsHelpers'));
 const list        = require(path.join(__dirname, 'server', 'list'));
+const stats       = require(path.join(__dirname, 'server', 'stats'));
 const domains     = require(path.join(__dirname, 'server', 'domains'));
 const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
 
+const release   = commons.getRelease(); //release shall be 'work' or 'prod', it's 'work' by default
+
 var directories = commons.getDirectories();
 directories.index = __dirname + "/"; //directory where this script index.js is located
-
-const release   = commons.getRelease(); //release shall be 'work' or 'prod', it's 'work' by default
-const settings  = commons.getSettings();
-const fileNames = commons.getFileNames();
+var   fileNames = commons.getFileNames();
+var   settings  = commons.getSettings();
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
-const countriesInfo = JSON.parse(fs.readFileSync(fileNames.server.countriesListFile, 'utf8'));
-const serverData = {
+var countriesInfo = JSON.parse(fs.readFileSync(fileNames.server.countriesListFile, 'utf8'));
+var serverData = {
     "release"            : release,   //Release: "work" or "prod"
     "settings"           : settings,  //Settings set in commons.js
     "directories"        : directories, //{ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
@@ -48,11 +51,11 @@ const serverData = {
     "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
-debug("serverData", serverData);
+debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
 //Global switches with the available services
 //for more information see commons.js
-const SWITCHES = settings.switches;
+var SWITCHES = settings.switches;
 
 //creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
@@ -62,6 +65,20 @@ for (var CC in serverData.availableCountries){
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
     WORDS[CC].domain = serverData.domainsCountries[CC];    
 }
+
+//event handler to deal when the settings are changed
+eventEmitter.on('settingsChanged', function(){
+    serverData.settings  = settings  = commons.getSettings();
+    SWITCHES = settings.switches;
+    
+    //updates filnames and directory objects
+    serverData.fileNames = fileNames = commons.getFileNames();
+    serverData.directories = directories = commons.getDirectories();
+    serverData.directories.index = directories.index = __dirname + "/";    
+    
+    console.log("Settings updated.");
+    debug(util.inspect(serverData, {showHidden: false, depth: null}));
+});
 
 console.log("\n\nServer started at " + __dirname);
 
@@ -105,6 +122,12 @@ app.get('/list', function(req, res) {
 app.get('/domains', function(req, res) {
     debug("\nRoute: app.get('/domains')");
     domains(req, res, serverData, WORDS);
+});
+
+//statistics page
+app.get('/stats', function(req, res) {
+    debug("\nRoute: app.get('/stats')");
+    stats(req, res, serverData, WORDS);
 });
 
 //sitemap.xml for Search Engines optimization

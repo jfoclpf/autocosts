@@ -7,7 +7,8 @@ var defaultPortProd = 3028;  //default HTTP Port where the app listens - prod ve
 
 module.exports = {
 
-    init: function(){
+    init: function(eventEmitter){
+        EVENTEMITTER = eventEmitter;
         _init();
     },
     
@@ -79,7 +80,7 @@ module.exports = {
 
 var RELEASE; //release, "work" or "prod"
 var ROOT_DIR; //root directory of the project
-var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES;
+var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER;
 var optionDefinitions; //for the commandLineArgs
 
 //initialization
@@ -88,8 +89,9 @@ function _init(){
     //these const npm modules are local and not global to avoid errors with PhantomJS, 
     //since both NodeJS and PhantomJS load this commons.js module
     const commandLineArgs = require('command-line-args');
-    const path = require('path');
-    const fs   = require('fs');
+    const isOnline = require('is-online');
+    const path     = require('path');
+    const fs       = require('fs');
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -176,7 +178,37 @@ function _init(){
             }
         }
     }
-
+    
+    //checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics" 
+    //options are selected. These options require Internet and thus disables them
+    var demandingInternet = ["uber", "cdn", "social", "googleCaptcha", "googleAnalytics"];
+    var isAny = false;
+    for (var i=0; i<demandingInternet.length; i++){
+        isAny = isAny || SWITCHES[demandingInternet[i]]
+    }
+    if(isAny){
+        //check for Internet connection
+        isOnline().then(function(online) {
+            if(!online){
+                if(SWITCHES.cdn){
+                    setCdnOrLocalFiles(false); //set Local files with "false"
+                }
+                
+                process.stdout.write("There is no Internet connection. Services disabled:");
+                for (var i=0; i<demandingInternet.length; i++){
+                    if(SWITCHES[demandingInternet[i]]){
+                        SWITCHES[demandingInternet[i]] = false;
+                        process.stdout.write(" " + demandingInternet[i]);
+                    }
+                }
+                process.stdout.write(".\n");
+                
+                EVENTEMITTER.emit('settingsChanged');
+            }
+        });
+    }
+    
+    
     SETTINGS = {
         "release"  : RELEASE,
         "switches" : SWITCHES,
@@ -268,8 +300,14 @@ function _init(){
         }
     }
     
-    const debug = require('debug')('app:commons');
-    debug("SETTINGS", SETTINGS);       
+    //set FILENAMES URIs for JS known files according to Local files or CDN
+    //if cdn option is enabled, select CDN version, otherwise Local files
+    setCdnOrLocalFiles(SWITCHES.cdn);
+    
+    const debug = require('debug')('app:commons');    
+    debug("SETTINGS", SETTINGS);
+    debug("DIRECTORIES", DIRECTORIES);    
+    debug("FILENAMES", FILENAMES);
 }
 
 
@@ -344,11 +382,8 @@ function setDIRECTORIES(){
         "bin"     : binProjectDirs, //these paths are absolute
         "client"  : clientDirs,     //these paths are relative (as seen by the browser)       
         "project" : projectDirs     //these paths are relative (as seen by either src/ or bin/)
-    };
-    
-    debug("DIRECTORIES", DIRECTORIES);    
+    };    
 }
-
 
 function setFILENAMES(){
 
@@ -393,7 +428,7 @@ function setFILENAMES(){
             "getData.js"             : path.join(DIRECTORIES.src.client, "getData.js")
         },
         //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER, 
-        //thus don't use node 'fs' or 'path' functions, i.e., these are URI or part of URI
+        //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
         "client" : {
             "jquery" : {
                 "local" : DIRECTORIES.client.client + "/jquery/jquery.min.js",
@@ -422,9 +457,7 @@ function setFILENAMES(){
     for (file in FILENAMES.server.credentials){
         FILENAMES.server.credentialsFullPath[file] = 
             path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file]);
-    }
-    
-    debug("FILENAMES", FILENAMES);    
+    }     
 }
 
 //get parent directory of project directory tree
@@ -457,6 +490,26 @@ function setROOT_DIR(){
     }
 
     ROOT_DIR = root_dir;
+}
+
+
+//set FILENAMES URI for JS known files according to Local files or CDN
+//if cdn option is enabled, select CDN version, otherwise local files
+//true for CDN; false for Local files
+function setCdnOrLocalFiles(isCDN){
+    for (key in FILENAMES.client){
+        var obj = FILENAMES.client[key];
+        if (obj.local && obj.cdn){
+            obj.uri = isCDN ? obj.cdn : obj.local;
+        }
+        else{
+            throw obj;
+        }
+    }
+    //ensures that CDN URL to be passed to client is blank in case cdn option is not enabled
+    if (!isCDN){
+        SETTINGS.cdn.url = "";
+    }
 }
 
 //gets Array with unique non-repeated values
