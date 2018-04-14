@@ -1,6 +1,5 @@
 app/
-credentials/work/*
-credentials/prod/*
+credentials/*
 bin/*
 node_modules/
 rsync2work.sh

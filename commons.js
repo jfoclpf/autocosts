@@ -65,10 +65,6 @@ module.exports = {
     getCClistOnStr: function(available_CT){
         return getCClistOnStr(available_CT);
     },
-
-    getNoServErrMsg: function(serviceObj){
-        return _getNoServErrMsg(serviceObj);
-    },
     
     getDataBaseErrMsg: function(scriptName, serviceObj){
         return _getDataBaseErrMsg(scriptName, serviceObj);
@@ -89,8 +85,11 @@ var optionDefinitions; //for the commandLineArgs
 //initialization
 function _init(){
     
-    //these const are here and not global to avoid errors with PhantomJS, since both NodeJS and PhantomJS load this commons.js module
-    const commandLineArgs = require('command-line-args');         
+    //these const npm modules are local and not global to avoid errors with PhantomJS, 
+    //since both NodeJS and PhantomJS load this commons.js module
+    const commandLineArgs = require('command-line-args');
+    const path = require('path');
+    const fs   = require('fs');
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -178,79 +177,99 @@ function _init(){
         }
     }
 
-
     SETTINGS = {
         "release"  : RELEASE,
         "switches" : SWITCHES,
         "HTTPport" : HTTPport,
         "cdn": { //a CDN provider might be: https://app.keycdn.com/zones
             "enabled"  : SWITCHES.cdn,
-            "name"     : "Content Delivery Network",
-            "file"     : FILENAMES.server.credentials.cdn,
-            "filePath" : FILENAMES.server.credentialsFullPath.cdn,
+            "name"     : "cdn",
             "propName" : "url",
             "propType" : "string",
             "url"      : ""
         },
         "uber": {
             "enabled"  : SWITCHES.uber,
-            "name"     : "UBER",
-            "file"     : FILENAMES.server.credentials.uber,
-            "filePath" : FILENAMES.server.credentialsFullPath.uber,            
+            "name"     : "uber",            
             "propName" : "token",
             "propType" : "string",
             "token"    : ""
         },
         "googleCaptcha" : {
             "enabled"   : SWITCHES.googleCaptcha,
-            "name"      : "Google Captcha V2",
-            "file"      : FILENAMES.server.credentials.googleCaptcha,
-            "filePath"  : FILENAMES.server.credentialsFullPath.googleCaptcha,            
+            "name"      : "googleCaptcha",            
             "propName"  : "secretKey",
             "propType"  : "string",
             "secretKey" : ""
         },
         "googleAnalytics": {
             "enabled"    : SWITCHES.googleAnalytics,
-            "name"       : "Google Analytics",
-            "file"       : FILENAMES.server.credentials.googleAnalytics,
-            "filePath"   : FILENAMES.server.credentialsFullPath.googleAnalytics,            
+            "name"       : "googleAnalytics",           
             "propName"   : "trackingId",
             "propType"   : "string",
             "trackingId" : ""
         },
         "dataBase" : {
             "enabled"     : SWITCHES.dataBase,
-            "name"        : "Database",
-            "file"        : FILENAMES.server.credentials.dataBase,
-            "filePath"    : FILENAMES.server.credentialsFullPath.dataBase,            
+            "name"        : "dataBase",            
             "propName"    : "credentials",
             "propType"    : "object",
             "credentials" : {}
         },
+        "money" : {
+            "enabled"     : SWITCHES.dataBase, //this switch is linked with switch of dataBase
+            "name"        : "money",            
+            "propName"    : "ApiId",
+            "propType"    : "string",
+            "ApiId"       : ""
+        },        
         "defaultCountry" : defaultCountry
     };
 
+    //reads data from JSON file with credentials for each service (in directory credentials/)
+    var credentialsFileName;
+    if (RELEASE === 'prod'){
+        credentialsFileName = FILENAMES.server.credentialsFullPath.prod; 
+    }
+    else{
+        credentialsFileName = FILENAMES.server.credentialsFullPath.work;
+    }
+    console.log(credentialsFileName);
+    
     //fills missing information, for each service corresponding property: "url", "token", "secretKey", etc.
-    //gets the information from corresponding file
+    //gets the information from the credentials JSON file    
     for (service in SETTINGS){
         var serviceObj = SETTINGS[service];
-        if(typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled){
-            var dataObj = getServiceCredentialsFromFile(serviceObj.name);
-            if (serviceObj.propType === 'string'){
-                serviceObj[serviceObj.propName] = dataObj[serviceObj.propName];
+        if(typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled){                                           
+            
+            if (!fs.existsSync(credentialsFileName)){
+                throw _getNoServiceErrMsg(serviceObj, credentialsFileName);  
             }
-            else if(serviceObj.propType === 'object'){
-                 serviceObj[serviceObj.propName] = Object.assign({}, dataObj); //clone object
+            var credentialsData = JSON.parse(fs.readFileSync(credentialsFileName));
+            
+            if (serviceObj.propType === 'string'){                
+                var dataStr = credentialsData[serviceObj.name][serviceObj.propName];
+                //check if string is valid (no just whitespaces or asterisks)
+                if(!isValidCredentialString(dataStr)){
+                    throw _getNoServiceErrMsg(serviceObj, credentialsFileName);
+                }
+                serviceObj[serviceObj.propName] = dataStr;
+            }
+            else if(serviceObj.propType === 'object'){//if service data is an object (normally applies to dataBase)
+                var dataObj = credentialsData[serviceObj.name];
+                if(!isValidCredentialString(dataObj)){
+                    throw _getNoServiceErrMsg(serviceObj, credentialsFileName);
+                }                
+                serviceObj[serviceObj.propName] = Object.assign({}, dataObj); //clone object
             }
             else{
                 throw "Error getting service information from " + serviceObj.name;
             }
         }
     }
-
+    
     const debug = require('debug')('app:commons');
-    debug("SETTINGS", SETTINGS);
+    debug("SETTINGS", SETTINGS);       
 }
 
 
@@ -340,8 +359,7 @@ function setFILENAMES(){
         _init();
     }
     
-    if(isEmptyOrInvalidObj(DIRECTORIES)){
-        
+    if(isEmptyOrInvalidObj(DIRECTORIES)){        
         setDIRECTORIES();
     }
 
@@ -359,18 +377,12 @@ function setFILENAMES(){
         },
         "server" : {
             "credentials" : {
-                "cdn"             : "cdn.json",
-                "uber"            : "uber.json",
-                "googleCaptcha"   : "googleCaptcha.json",
-                "googleAnalytics" : "googleAnalytics.json",
-                "dataBase"        : "dataBase.json"
+                "prod"          : "prodCredentials.json",
+                "work"          : "workCredentials.json"
             },
             "credentialsFullPath" : {
-                "cdn"             : "",
-                "uber"            : "",
-                "googleCaptcha"   : "",
-                "googleAnalytics" : "",
-                "dataBase"        : ""
+                "prod"          : "",
+                "work"          : ""
             },        
             "countriesListFile" : path.join(DIRECTORIES.src.countries, "list.json"),
             "statsFunctions.js" : path.join(DIRECTORIES.server.build, "statsFunctions.js")
@@ -407,9 +419,9 @@ function setFILENAMES(){
     };  
     
     //fills credentialsFullPath subObject
-    var credentialsDir = path.join(DIRECTORIES.server.credentials, RELEASE);
     for (file in FILENAMES.server.credentials){
-        FILENAMES.server.credentialsFullPath[file] = path.join(credentialsDir, FILENAMES.server.credentials[file]);
+        FILENAMES.server.credentialsFullPath[file] = 
+            path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file]);
     }
     
     debug("FILENAMES", FILENAMES);    
@@ -445,72 +457,6 @@ function setROOT_DIR(){
     }
 
     ROOT_DIR = root_dir;
-}
-
-//gets the correspondent service credentials are stored in directories
-// keys/prod or keys/work, the latter being the release test version
-function getServiceCredentialsFromFile(serviceName){
-
-    const path = require('path');
-    const fs   = require('fs');
-
-    if(!RELEASE || isEmptyOrInvalidObj(SETTINGS)){
-        _init();
-    }
-
-    if(isEmptyOrInvalidObj(DIRECTORIES)){
-        setDIRECTORIES();
-    }
-
-    //get the service Object
-    var serviceObj, serviceObjI;
-    for (serviceI in SETTINGS){
-        serviceObjI = SETTINGS[serviceI];
-        if(typeof serviceObjI.enabled !== 'undefined' && typeof serviceObjI.name !== 'undefined'){
-            if(serviceObjI.name == serviceName){
-                serviceObj =  Object.assign({}, serviceObjI); //clones object
-            }
-        }
-    }
-
-    if (isEmptyOrInvalidObj(serviceObj)){
-        throw "Service object in settings object is empty when trying to get credentials from file on service " + serviceName;
-    }
-
-    //credentials directory where json credential files are stored
-    var credentialsDir = DIRECTORIES.server.credentials;
-
-    //check if the switch for this service is enabled
-    if(!serviceObj.enabled){
-        if (serviceObj.prop){//when property of object is requested, but switch is disabled
-            return "";
-        }
-        else{//empty object
-            return {};
-        }
-    }
-
-    //from here the switch is enabled
-
-    if (typeof serviceObj.name !== 'string' || typeof serviceObj.file !== 'string'){
-        throw "Error calling function getServiceCredentialsFromFile(serviceName)";
-    }
-
-    if (typeof RELEASE !== 'undefined'){
-
-        var fileName = path.join(credentialsDir, RELEASE, serviceObj.file);
-        if (!fs.existsSync(fileName)){
-            throw _getNoServErrMsg(serviceObj);
-        }
-
-        return JSON.parse(fs.readFileSync(fileName));
-
-    }
-    else{
-        var thisScriptFileName = path.basename(__filename);
-        throw "'RELEASE', the internal variable of module " + thisScriptFileName + " " +
-              "are not yet defined\n";
-    }
 }
 
 //gets Array with unique non-repeated values
@@ -581,12 +527,14 @@ function getArgvHelpMsg(){
     return messg;
 }
 
-function _getNoServErrMsg(serviceObj){
+function _getNoServiceErrMsg(serviceObj, fileName){
 
-    var messg = "\nConsidering you enabled the " + serviceObj.name + " services and you're using the release '" + RELEASE + "', " +
+    const colors = require('colors/safe'); //does not alter string prototype
+    var messg = "\nConsidering you enabled the " + serviceObj.name + 
+                " services and you're using the release '" + RELEASE + "', " +
                 "you have to either:\n" +
-                "  - create the file " + serviceObj.filePath + " with the " +
-                serviceObj.name + " credentials, or\n" +
+                "  - insert within the file " + colors.green.bold(fileName) + " a valid " +
+                colors.green.bold(serviceObj.name + " " + serviceObj.propName) + " (see readme.md), or\n" +
                 "  - disable the " + serviceObj.name + " service.\n";
 
     return messg;
@@ -594,7 +542,8 @@ function _getNoServErrMsg(serviceObj){
 
 function _getDataBaseErrMsg(scriptName, serviceObj){
     var messg = "\nThis building script " + scriptName + " needs the Database credentials to run, therefore:\n" + 
-                "- enable the Database option (--dataBase) and provide also its credentials on " + serviceObj.filePath + ", or\n" +
+                "- enable the Database option (--dataBase) and provide also its credentials on " + 
+                serviceObj.filePath + ", or\n" +
                 "- do not run this particular building script file while building.\n";
     
     return messg;
@@ -614,3 +563,31 @@ function isEmpty(obj) {
 
     return JSON.stringify(obj) === JSON.stringify({});
 }
+
+//checks if a credential is valid
+function isValidCredentialString(data){
+
+    if (typeof data === 'string'){
+        //check if string is valid (no just whitespaces or asterisks)
+        return data && data.replace(/(\s|\*)/g, '').length;
+    }    
+    
+    else if (typeof data === 'object'){                
+        var flattenedObj = require('flat').flatten(data);
+        for (var key in flattenedObj){
+            var str = flattenedObj[key];
+            //first character. When property of obj starts with '_' it's comment, thus ignore            
+            if (key.charAt(0) !== "_"){ 
+                if (!str || !str.replace(/(\s|\*)/g, '').length){
+                    return false;
+                }
+            }
+        }        
+        return true;
+    }
+    
+    else{
+        return false;
+    }
+}
+
