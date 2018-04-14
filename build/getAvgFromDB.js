@@ -34,12 +34,13 @@ isOnline().then(function(online) {
     eval(fs.readFileSync(fileNames.src["getData.js"])+'');
     eval(fs.readFileSync(fileNames.server["statsFunctions.js"])+'');
 
-    var DB_INFO = settings.dataBase.credentials;
+    var DB_INFO    = settings.dataBase.credentials;
+    var MoneyApiId = settings.money.ApiId;
     //detect for null or empty object
     if(!DB_INFO || Object.keys(DB_INFO).length === 0){
         throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
     }
-    //console.log(DB_INFO);
+    console.log(DB_INFO);
 
     //database variable
     var db;
@@ -63,7 +64,7 @@ isOnline().then(function(online) {
         //and: https://openexchangerates.org/account/app-ids
         function(callback) {
             console.log("Load exchange rates via API on openexchangerates.org");
-            var API_url = 'https://openexchangerates.org/api/latest.json?app_id='+API_ID;
+            var API_url = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId;
             //HTTP Header request
             var options = {
                 url: API_url,
@@ -338,7 +339,8 @@ isOnline().then(function(online) {
                     " | " + ("        " + countries[i].total_costs).slice(-7) + " " + countries[i].currency +
                     " | " + ("            " + countries[i].valid_users).slice(-11) +
                     " | " + ("            " + countries[i].total_users).slice(-11) +
-                    " | " + ("            " + (countries[i].valid_users/countries[i].total_users*100).toFixed(1) + "%").slice(-11) +
+                    " | " + ("            " + 
+                             (countries[i].valid_users/countries[i].total_users*100).toFixed(1) + "%").slice(-11) +
                     " | " + ("               " + (countries[i].valid_users/total_valid_users*100).toFixed(1) + "%").slice(-14));
             }
             console.log("\nData calculated and DB query built");

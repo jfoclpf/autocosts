@@ -74,44 +74,11 @@ Options:
 
 ### Database
 
-Autocosts also supports code such that the user inputs might be stored into a `mysql` database. 
-The credentials file for said databse should be stored in directory `credentials/prod/` or `credentials/work/`, 
-the latter being the test version.
-
-This file `dataBase.json` should look like:
-
-```
-{
-    "host"      : "*****",
-    "user"      : "*****",
-    "password"  : "*****",
-    "database"  : "*****",
-    "port"      : "***** (optional)",
-    "db_tables" : {
-        "country_specs"    : "country_specs" ,
-        "users_insertions" : "users_insertions",
-        "monthly_costs_statistics" : "monthly_costs_statistics"
-  }
-}
-```
-
-With the data from said database, it is also possible to make several statisitcal analysis, 
-namely the average costs for each country, said statistical analysis having outlier removal techniques, 
-such that such outliers do not distort the average.
+Autocosts also supports code such that the user inputs might be stored into a `mysql` database. With the data from said database, it is also possible to make several statisitcal analysis, namely the average costs for each country, said statistical analysis having outlier removal techniques, such that such outliers do not distort the average.
 
 ### Uber
 
-Autocosts uses the UBER API, such that at the final repport, 
-the user calculations can be compared with the equivalents costs if the user would use just UBER.
-
-The uber secret token file `uber.json` should be stored in `credentials/prods/` or `credentials/work/`, 
-the latter being the test version. This file `uber.json` should be like:
-
-```
-{
-    "token": "********************************************"
-}
-```
+Autocosts may use the UBER API, such that at the final repport, the user calculations can be compared with the equivalents costs if the user would use just UBER or combined with public transports.
 
 ### Charts
 
@@ -119,32 +86,61 @@ Autocosts uses <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, op
 
 ### Google Analytics
 
-You can add your Google Analytics credentials. 
-The file `googleAnalytics.json` should be stored in `credentials/prods/` or `credentials/work/`, 
-the latter being the test version. This file `googleAnalytics.json` should be like:
-
-```
-{
-    "trackingId": "UA-*******-*"
-}
-```
+You may also add your Google Analytics credentials.
 
 ### Google Captcha v2
 
-Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the database. 
-The captcha secret key file `googleCaptcha.json` should be stored in `credentials/prods/` or `credentials/work/`, 
-the latter being the test version. 
-This file `googleCaptcha.json` should be like:
-
-```
-{  
-    "secretKey" : "*************************************"
-}
-```
+Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the database.
 
 ### PDF
 
 Autocosts also allows the final report to be printed into a PDF report. It makes use of `pdfmake` npm package.
+
+### Credentials file
+
+The credentials for the above services are in the JSON file `workCredentials.json` or `prodCredentials.json` stored in the directory `credentials/`. If you enable a service while running `node bin/index.js` the corresponding credential must be present in that JSON file. If you don't use the service the corresponding information in the JSON file will be ignored. This JSON file must obey the following structure:
+
+```
+{
+    "dataBase" : {
+        "_comment"  : "SQL Database where to store all the Countries' specifications and users average costs",
+        "host"      : "***********",
+        "user"      : "***********",
+        "password"  : "***********",
+        "database"  : "***********",
+        "port"      : "3306",
+        "db_tables" : {
+            "country_specs"    : "country_specs" ,
+            "users_insertions" : "users_insertions",
+            "monthly_costs_statistics" : "monthly_costs_statistics",
+            "monthly_costs_normalized" : "monthly_costs_normalized"
+      }
+    },
+    "money" : {
+        "_comment"      : "Load money API for the currency conversion information (mandatory if dataBase is enabled)",
+        "_getYourApiOn" : "https://openexchangerates.org/account/app-ids",
+        "ApiId"         : "************************************"
+    }, 
+    "uber" : {
+        "_comment"      : "UBER API to get uber prices for each region, as an alternative to car",
+        "_getYourApiOn" : "https://auth.uber.com/login",
+        "token"         : "*************************************"
+    },
+    "googleCaptcha" : {
+        "_comment"           : "Google reCaptacha to avoid spam bots from polluting the database",
+        "_getYourGCaptchaOn" : "https://www.google.com/recaptcha",
+        "secretKey"          : "*******************************************"
+    },
+    "googleAnalytics" : {
+        "_comment"   : "Google Analytics Tracking ID",
+        "trackingId" : "UA-*********"
+    },
+    "cdn" : {
+        "_comment" : "Content Delivery Network base URL in case such service is enabled",
+        "url"      : "https://yourCDNdomain.com/"
+    }       
+}
+```
 
 ## Android APP<br>
 
