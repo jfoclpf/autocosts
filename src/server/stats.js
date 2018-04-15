@@ -49,10 +49,7 @@ module.exports = {
                     if (err) {
                         console.error('error connecting: ' + err.stack);
                         return;
-                    }
-                    console.log('User ' + dbInfo.user + 
-                                ' connected successfully to DB ' + dbInfo.database + 
-                                ' at ' + dbInfo.host);                    
+                    }                   
                     callback();
                 });            
             },
