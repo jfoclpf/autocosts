@@ -446,7 +446,7 @@ function setFILENAMES(){
                 "uri"   : "" //it will be one of the above
             },
             "chartjs" : {
-                "local" : DIRECTORIES.client.client + "/chart/Chart.min.js",
+                "local" : DIRECTORIES.client.client + "/chart/chartjs.min.js",
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
                 "uri"   : "" //it will be one of the above
             }           

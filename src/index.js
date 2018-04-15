@@ -27,7 +27,6 @@ const url         = require(path.join(__dirname, 'server', 'url')); //to deal wi
 const getCC       = require(path.join(__dirname, 'server', 'getCC'));
 const hbsHelpers  = require(path.join(__dirname, 'server', 'hbsHelpers'));
 const list        = require(path.join(__dirname, 'server', 'list'));
-const stats       = require(path.join(__dirname, 'server', 'stats'));
 const domains     = require(path.join(__dirname, 'server', 'domains'));
 const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
 
@@ -124,12 +123,6 @@ app.get('/domains', function(req, res) {
     domains(req, res, serverData, WORDS);
 });
 
-//statistics page
-app.get('/stats', function(req, res) {
-    debug("\nRoute: app.get('/stats')");
-    stats(req, res, serverData, WORDS);
-});
-
 //sitemap.xml for Search Engines optimization
 app.get('/sitemap.xml', function(req, res) {
     debug("\nRoute: app.get('/sitemap.xml')");
@@ -137,7 +130,7 @@ app.get('/sitemap.xml', function(req, res) {
 });
 
 if (SWITCHES.uber){
-    const getUBER = require(__dirname + '/server/getUBER');    
+    const getUBER = require(path.join(__dirname, 'server', 'getUBER'));
     app.get('/getUBER/:CC', function(req, res) {
         debug("\nRoute: app.get('/getUBER')");
         getUBER(req, res, serverData);
@@ -145,7 +138,7 @@ if (SWITCHES.uber){
 }
 
 if (SWITCHES.googleCaptcha){
-    const captchaValidate = require(__dirname + '/server/captchaValidate');    
+    const captchaValidate = require(path.join(__dirname, 'server', 'captchaValidate'));
     app.post('/captchaValidate', function(req, res) {
         if (!url.isThisLocalhost(req)){
             debug("\nRoute: app.post('/captchaValidate')");
@@ -155,7 +148,26 @@ if (SWITCHES.googleCaptcha){
 }
 
 if (SWITCHES.dataBase){
-    const submitUserInput = require(__dirname + '/server/submitUserInput');    
+    
+    //statistics page
+    const stats = require(path.join(__dirname, 'server', 'stats'));
+    stats.prepareChart(serverData, WORDS.UK, eventEmitter);
+    
+    var chartContent;
+    //event handler to deal when the chartContent is calculated
+    eventEmitter.on('chartContentCalculated', function(data){
+        debug("event 'chartContentCalculated' emmited");
+        chartContent = data;
+    });
+    
+    app.get('/stats', function(req, res) {
+        debug("\nRoute: app.get('/stats')");
+        stats.req(req, res, serverData, WORDS.UK, chartContent);
+    });
+
+    
+    //process the users input to be sent to database
+    const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'));
     app.post('/submitUserInput', function(req, res) {
         debug("\nRoute: app.post('/submitUserInput')");
         submitUserInput(req, res, serverData);

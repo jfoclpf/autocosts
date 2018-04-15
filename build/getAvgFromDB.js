@@ -63,7 +63,7 @@ isOnline().then(function(online) {
         //see: http://openexchangerates.github.io/money.js/
         //and: https://openexchangerates.org/account/app-ids
         function(callback) {
-            console.log("Load exchange rates via API on openexchangerates.org");
+            console.log("\nLoad exchange rates via API on openexchangerates.org");
             var API_url = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId;
             //HTTP Header request
             var options = {

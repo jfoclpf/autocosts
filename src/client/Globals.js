@@ -100,7 +100,7 @@ var Run1, PrintElem, generatePDF, TimeCounter;
             vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
         },
 
-        drawCostsCharts :     rootClientURL + "chartjs/drawCostsCharts.js",
+        drawCostsCharts :     rootClientURL + "chart/drawCostsCharts.js",
         chartjs :             JSfiles.dataset.chartjs,
         jAlert :              rootClientURL + "jAlert/jAlert.js",
         jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
@@ -169,8 +169,7 @@ var Run1, PrintElem, generatePDF, TimeCounter;
 })();
 
 
-(function() {
-    
+(function() {    
     //function to defer loading of script
     function getScript(url,success){
         var script=document.createElement('script');

@@ -200,13 +200,10 @@ function copy(){
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
     
     //copy chartjs file
-    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')),'../dist');
-        
+    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')),'../dist');        
     fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
-                 path.join(BIN_DIR, 'client', 'chartjs', 'Chart.min.js'));        
-
+                 path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));
 }
-
 
 //concatenate some CSS files
 function concatCSSFiles(mainCallback){    

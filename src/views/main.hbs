@@ -14,11 +14,7 @@
     {{/with}}
     
     {{#with clientData.notLocalhost}}
-    <meta http-equiv="Content-Security-Policy" content="
-        {{~emptyChar}} default-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}};
-        {{~emptyChar}} script-src 'self' 'unsafe-inline' *.jquery.com *.googleapis.com cdnjs.cloudflare.com *.google.com *.google-analytics.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-eval';
-        {{~emptyChar}} style-src 'self' cdnjs.cloudflare.com *.google.com *.gstatic.com *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} 'unsafe-inline' 'unsafe-eval';
-        {{~emptyChar}} img-src 'self' *.autocosts.work {{#each ../serverData.domains}}*.{{this}} {{/each}} *.google-analytics.com *.g.doubleclick.net;">
+        <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains}}">
     {{/with}}
     
     <script type="application/ld+json">{{> structuredData }}</script>

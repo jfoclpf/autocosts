@@ -1,4 +1,5 @@
 /*Handlebars Helper Functions*/
+const debug = require('debug')('app:helpers');
 
 module.exports = {
 
@@ -120,6 +121,37 @@ module.exports = {
     },
     get2letterLangCode: function(langCode){
         return langCode.substr(0, 2);
+    },
+    //Content Security Policy; domainsArr has the domains of this calculator: autocosts.info, autocustos.info, etc.
+    getCSPstring(domainsArr){
+        
+        //creates string with calculator domains
+        var domainsStr = "", i;
+        for (i=0; i<domainsArr.length; i++){
+            domainsStr += "*." + domainsArr[i] + " " + domainsArr[i] + " ";
+        }
+        
+        var reliableDomains = [ "cdnjs.cloudflare.com",
+                                "code.jquery.com",
+                                "googleapis.com",
+                                "google.com",
+                                "gstatic.com",
+                                "google-analytics.com",
+                                "g.doubleclick.net", //used from Google Analytics
+                                "autocosts.work"];
+        
+         //adds string with reliable domains
+        for (i=0; i<reliableDomains.length; i++){
+            domainsStr += "*." + reliableDomains[i] + " " + reliableDomains[i] + " ";
+        }
+        
+        var CSPstr = "default-src 'self'" + " " + domainsStr + "; ";
+        CSPstr += "script-src 'self' 'unsafe-eval' 'unsafe-inline'" + " " + domainsStr + "; ";        
+        CSPstr += "style-src 'self' 'unsafe-inline' 'unsafe-eval'" + " " + domainsStr + "; ";
+        CSPstr += "img-src 'self'" + " " + domainsStr + ";";
+        
+        debug(CSPstr);
+        return CSPstr;    
     }
 }
 

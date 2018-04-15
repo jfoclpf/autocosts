@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>
+            World statistics of the Automobile Costs
+        </title>
+        
+        {{#with clientData.notLocalhost}}
+            <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains}}">
+        {{/with}}
+        
+        <style>
+            body {
+                font-family: Arial;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid grey;
+                padding: 4px;
+            }
+            h1 { font-size: 2em; 
+                 text-align:center;
+                 margin:0;
+            }
+            h3 { font-size: 1.17em; 
+                 text-align:center; 
+                 margin:0;
+            }
+            .chart {
+                position: relative;
+                margin: auto;
+            }
+            #overallStatsChartDiv{
+                min-height: 500px;
+            }            
+        </style>
+        <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
+    </head>
+<body>
+
+    <h1 style="text-align:center">
+        World statistics of Automobile Costs
+    </h1>
+    <h3>
+        Yearly costs per country (in Euros)    
+    </h3>
+
+    <div class="chart" id="overallStatsChartDiv">
+        <canvas id="overallStatsChart"></canvas>
+    </div>
+
+    <div>
+        <!-- Data that is being sent -->
+        {{> globalData }}
+    </div> 
+    
+    <data
+        id =    "chart" 
+        value = "chart" 
+        data-chart_content = "{{{ jsonObj chartContent }}}">
+    </data>    
+    
+    <script>
+        console.log("1");
+        var chartData = document.getElementById('chart');
+        var chartContent   = JSON.parse(decodeURI(chartData.dataset.chart_content));
+        console.log("2");
+        
+        new Chart(overallStatsChart, chartContent);
+        console.log("3");
+    </script>
+
+
+</body>
+</html>            
