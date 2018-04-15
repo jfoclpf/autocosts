@@ -5,15 +5,8 @@ const debug = require('debug')('app:getCC');
 
 module.exports = function(req, res, serverData, wordsOfCountry) {    
         
-    var CC = req.params.CC; //ISO 2 letter Country Code
-    var languageCode    = serverData.languagesCountries[CC]; //ISO language code (ex: pt-PT)
-    
-    var isThisLocalhost = url.isThisLocalhost(req); //returns bool
-    var isThisATest     = url.isThisATest(req); //returns bool
-    var httpProtocol    = url.getProtocol(req, serverData.settings.switches.https);
-    
+    var CC = req.params.CC; //ISO 2 letter Country Code        
     debug("Country code: "  + CC);
-    debug("Language code: " + languageCode);
     
     //data to be rendered embedded in the HTML file
     var data = {};    
@@ -29,10 +22,10 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     
     //information depending on this request from the client    
     var clientData = {
-        "languageCode" : languageCode,     //ISO 2 letter Language Code  
-        "isThisATest"  : isThisATest,      //boolean variable regarding if present request is a test
-        "notLocalhost" : !isThisLocalhost, //boolean variable regarding if present request is from localhost
-        "httpProtocol" : httpProtocol
+        "languageCode" : serverData.languagesCountries[CC], //ISO language code (ex: pt-PT)
+        "isThisATest"  : url.isThisATest(req),              //boolean variable regarding if present request is a test
+        "notLocalhost" : !url.isThisLocalhost(req),         //boolean variable regarding if present request is from localhost
+        "httpProtocol" : url.getProtocol(req, serverData.settings.switches.https)
     }    
     data.clientData = clientData;
     

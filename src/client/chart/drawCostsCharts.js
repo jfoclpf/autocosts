@@ -190,16 +190,16 @@ function drawMonthlyCostsBarChart() {
                 fontColor: 'black'
             }
         },
-            scales: {
-                xAxes: [{
-                    stacked: true, // this should be set to make the bars stacked
-                    beginAtZero: true
-                }],
-                yAxes: [{
-                    stacked: true, // this also..
-                    beginAtZero: true
-                }]
-            },
+        scales: {
+            xAxes: [{
+                stacked: true, // this should be set to make the bars stacked
+                beginAtZero: true
+            }],
+            yAxes: [{
+                stacked: true, // this also..
+                beginAtZero: true
+            }]
+        },
         animation : {
             onComplete : function(){    
                 DISPLAY.charts.URIs.barChart = DISPLAY.charts.barChart.toBase64Image();
