@@ -156,7 +156,7 @@ if (SWITCHES.dataBase){
     var chartContent;
     //event handler to deal when the chartContent is calculated
     eventEmitter.on('chartContentCalculated', function(data){
-        debug("event 'chartContentCalculated' emmited");
+        console.log("Chart of world statistics calculated");
         chartContent = data;
     });
     
