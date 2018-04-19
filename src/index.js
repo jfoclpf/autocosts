@@ -153,16 +153,14 @@ if (SWITCHES.dataBase){
     const stats = require(path.join(__dirname, 'server', 'stats'));
     stats.prepareChart(serverData, WORDS.UK, eventEmitter);
     
-    var chartContent;
     //event handler to deal when the chartContent is calculated
-    eventEmitter.on('chartContentCalculated', function(data){
+    eventEmitter.on('chartContentCalculated', function(){
         console.log("Chart of world statistics calculated");
-        chartContent = data;
     });
     
     app.get('/stats', function(req, res) {
         debug("\nRoute: app.get('/stats')");
-        stats.req(req, res, serverData, WORDS.UK, chartContent);
+        stats.req(req, res, serverData, WORDS.UK);
     });
 
     
