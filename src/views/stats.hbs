@@ -34,9 +34,17 @@
             }
             #overallStatsChartDiv{
                 min-height: 500px;
-            }            
-        </style>
-        <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
+            }
+            table {
+                margin: 0 auto;
+            }
+            .center{
+                text-align:center;
+            }
+            .justify{
+                text-align: justify;
+            }
+        </style>        
     </head>
 <body>
 
@@ -44,34 +52,64 @@
         World statistics of Automobile Costs
     </h1>
     <h3>
-        Yearly costs per country (in Euros)    
+        Yearly average costs per country (in Euros)    
     </h3>
 
     <div class="chart" id="overallStatsChartDiv">
         <canvas id="overallStatsChart"></canvas>
+    </div>    
+    <br>
+    
+    <hr>
+    
+    <br>
+    <div>
+    <b>Note on these averages:</b> 
+        
+        <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both <i>a priori</i> and <i>a posteiori</i> analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive.</li>
+        <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the datbase from where these values are obtained and calculated.</li>
+        <li> Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org.
+        </li>
+    </div>    
+    <br>
+    
+    <hr>
+    
+    <h3>
+        Users insertion statistical information
+    </h3>
+    <br>    
+    <div class="center">
+        <table>
+            <tr>
+                <th>Country Code</th>
+                <th>Country Name</th>
+                <th>Surveyed users</th>
+                <th>Valid users</th>
+            </tr>
+            {{#each chartTable as |value key|}}
+                <tr>
+                    <td class="center">{{key}}</td>
+                    <td>{{value.country_name}}</td>
+                    <td>{{value.total_users}}</td>
+                    <td>{{value.valid_users}}</td>                
+                </tr>
+            {{/each}}
+        </table>
     </div>
 
     <div>
         <!-- Data that is being sent -->
-        {{> globalData }}
+        {{> globalData }}        
+        <data
+            id =    "chart" 
+            value = "chart" 
+            data-chart_content = "{{{ jsonObj chartContent }}}">
+        </data>
     </div> 
-    
-    <data
-        id =    "chart" 
-        value = "chart" 
-        data-chart_content = "{{{ jsonObj chartContent }}}">
-    </data>    
-    
-    <script>
-        console.log("1");
-        var chartData = document.getElementById('chart');
-        var chartContent   = JSON.parse(decodeURI(chartData.dataset.chart_content));
-        console.log("2");
-        
-        new Chart(overallStatsChart, chartContent);
-        console.log("3");
-    </script>
 
+    <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
+    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/chart/worldStatsChart.js"></script>
 
 </body>
 </html>            

@@ -4,9 +4,12 @@ const mysql = require('mysql'); //module to get info from DB
 const async = require('async'); //module to allow to execute the queries in series
 const debug = require('debug')('app:stats');
 
+var chartContent; //chartjs content of World statistics
+var chartTable;   //HTML table data relating to the chart
+
 module.exports = {
     
-    req: function(req, res, serverData, wordsOfUK, chartContent) {
+    req: function(req, res, serverData, wordsOfUK/*, chartContent*/) {
 
         var data = {};
         data.words = wordsOfUK;
@@ -14,6 +17,7 @@ module.exports = {
         delete data.serverData.availableCountries.XX;   
         
         data.chartContent = chartContent;
+        data.chartTable   = chartTable;
 
         //information depending on this request from the client    
         var clientData = {
@@ -34,8 +38,9 @@ module.exports = {
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(dbInfo);
 
-        var costs = {};
+        var costs = {}; //object of arrays, each property is a cost item array
         var labels = [];
+        var table = {}; //table with useful information for each country stats (total users, valid users, etc.)
         
         async.series([
         //creates DB connection and connects
@@ -57,6 +62,7 @@ module.exports = {
             //Get the normalised costs
             function(callback) {                
                 
+                var i, n;
                 db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized, 
                     function(err, results, fields) {
                         if (err) {console.log(err); throw err;}
@@ -80,9 +86,9 @@ module.exports = {
                         });
                     
                         //on every cost item, builds an array of values for said cost item
-                        for (var n=0; n<costsStrs.length; n++){
+                        for (n=0; n<costsStrs.length; n++){
                             costs[costsStrs[n]]=[];//cost item array                         
-                            for (var i=0; i<results.length; i++){
+                            for (i=0; i<results.length; i++){
                                 if (results[i].country !== "XX"){                       
                                     //copies value from db (monthly) to object (yearly)
                                     costs[costsStrs[n]].push(results[i][costsStrs[n]]*12);
@@ -92,9 +98,21 @@ module.exports = {
                                     }
                                 }
                             }
-                        }                        
+                        }                                                
+                        debug(costs);  
+                    
+                        //calculate values for the table
+                        for (i=0; i<results.length; i++){                        
+                            var cc = results[i].country; //country code string
+                            table[cc] = {}; //creates object for the country
+                            table[cc].country_name = serverData.availableCountries[cc];
+                            table[cc].valid_users = results[i].valid_users;
+                            table[cc].total_users = results[i].total_users;
+                            table[cc].global_total_users = results[i].global_total_users; //total users from all countries
+                        }
+                        chartTable = table;
+                        debug(table);
                         
-                        debug(costs);                        
                         callback();
                     }
                 );
@@ -183,7 +201,7 @@ module.exports = {
                     }
                 };
 
-                var content = {
+                chartContent = {
                     type: 'bar',
                     data: {
                         labels: labels,
@@ -192,7 +210,7 @@ module.exports = {
                     options: options
                 };        
 
-                eventEmitter.emit('chartContentCalculated', content);                       
+                eventEmitter.emit('chartContentCalculated');                       
             }
         ]);//async.series        
     }//prepareChart
