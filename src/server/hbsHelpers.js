@@ -122,6 +122,10 @@ module.exports = {
     get2letterLangCode: function(langCode){
         return langCode.substr(0, 2);
     },
+    //convert number to string with n decimal values
+    toFixed: function(num, n){
+        return num.toFixed(n);
+    },
     //Content Security Policy; domainsArr has the domains of this calculator: autocosts.info, autocustos.info, etc.
     getCSPstring(domainsArr){
         

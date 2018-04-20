@@ -4,20 +4,24 @@ const mysql = require('mysql'); //module to get info from DB
 const async = require('async'); //module to allow to execute the queries in series
 const debug = require('debug')('app:stats');
 
+var averageNormalizedCosts;
 var chartContent; //chartjs content of World statistics
 var chartTable;   //HTML table data relating to the chart
+var dateOfCalculation; //date when the chart data was calculated
 
 module.exports = {
     
-    req: function(req, res, serverData, wordsOfUK/*, chartContent*/) {
+    req: function(req, res, serverData, wordsOfUK) {
 
         var data = {};
-        data.words = wordsOfUK;
+        data.wordsOfUK = wordsOfUK;
         data.serverData = serverData;        
         delete data.serverData.availableCountries.XX;   
         
         data.chartContent = chartContent;
         data.chartTable   = chartTable;
+        data.dateOfCalculation = dateOfCalculation;
+        data.averageNormalizedCosts = averageNormalizedCosts;
 
         //information depending on this request from the client    
         var clientData = {
@@ -33,10 +37,14 @@ module.exports = {
         
     },
     
-    prepareChart : function(serverData, wordsOfUK, eventEmitter){
+    prepareChart : function(serverData, WORDS, eventEmitter){
         
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(dbInfo);
+        
+        //get current date in a formated string
+        var d = new Date();
+        dateOfCalculation = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
 
         var costs = {}; //object of arrays, each property is a cost item array
         var labels = [];
@@ -65,7 +73,12 @@ module.exports = {
                 var i, n;
                 db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized, 
                     function(err, results, fields) {
-                        if (err) {console.log(err); throw err;}
+                        
+                        if (err) {
+                            console.log("Cannot connect to Database");
+                            throw err;
+                        }
+                        
                         debug(results);
                     
                         var costsStrs = ["Depreciation", 
@@ -89,9 +102,11 @@ module.exports = {
                         for (n=0; n<costsStrs.length; n++){
                             costs[costsStrs[n]]=[];//cost item array                         
                             for (i=0; i<results.length; i++){
-                                if (results[i].country !== "XX"){                       
+                                var cc = results[i].country;
+                                if (cc !== "XX"){
+                                    var yearlyCost = results[i][costsStrs[n]]*12;
                                     //copies value from db (monthly) to object (yearly)
-                                    costs[costsStrs[n]].push(results[i][costsStrs[n]]*12);
+                                    costs[costsStrs[n]].push(yearlyCost);
                                     //fills labels, but just needs once
                                     if(n==0){
                                         labels.push(results[i].country);
@@ -99,20 +114,39 @@ module.exports = {
                                 }
                             }
                         }                                                
-                        debug(costs);  
+                        //debug(costs);
                     
-                        //calculate values for the table
+                        //convert values from monthly to yearly on every cost item
+                        for (n=0; n<costsStrs.length; n++){
+                            var costItem = costsStrs[n];
+                            for (var cc in results){
+                                results[cc][costItem] = results[cc][costItem]*12;
+                            }
+                        }
+                    
+                        //calculate values for the last table on web page
+                        var v, t;
                         for (i=0; i<results.length; i++){                        
                             var cc = results[i].country; //country code string
+                            
+                            results[i].countryName = serverData.availableCountries[cc];
+                            
                             table[cc] = {}; //creates object for the country
                             table[cc].country_name = serverData.availableCountries[cc];
-                            table[cc].valid_users = results[i].valid_users;
-                            table[cc].total_users = results[i].total_users;
+                            table[cc].valid_users = v = results[i].valid_users;
+                            table[cc].total_users = t = results[i].total_users;
                             table[cc].global_total_users = results[i].global_total_users; //total users from all countries
+                            table[cc].percentage_valid = v/t*100; //% of valid users                            
+                            //currency
+                            table[cc].CurrToEUR = results[i].CurrToEUR
+                            table[cc].Currency  = WORDS[cc].curr_code;
                         }
                         chartTable = table;
-                        debug(table);
-                        
+                        //debug(table);
+                    
+                        averageNormalizedCosts = results;
+                        debug(averageNormalizedCosts);
+                    
                         callback();
                     }
                 );
@@ -121,55 +155,55 @@ module.exports = {
             function(callback){
                 
                 var countryList = serverData.availableCountries;
-                var WORDS = wordsOfUK;
+                var wordsOfUK = WORDS.UK;
 
                 var dataset = [
                     {
-                        label: WORDS.depreciation_st,
+                        label: wordsOfUK.depreciation_st,
                         data: costs.Depreciation,
                         backgroundColor: 'navy'
                     }, {
-                        label: WORDS.insurance_short,
+                        label: wordsOfUK.insurance_short,
                         data: costs.Insurance,
                         backgroundColor: 'blue'
                     }, {
-                        label: WORDS.credit,
+                        label: wordsOfUK.credit,
                         data: costs.Loan_interests,
                         backgroundColor: 'aqua'
                     }, {
-                        label: WORDS.inspection_short,
+                        label: wordsOfUK.inspection_short,
                         data: costs.Inspection,
                         backgroundColor: 'teal'
                     }, {
-                        label: WORDS.road_taxes_short,
+                        label: wordsOfUK.road_taxes_short,
                         data: costs.Car_tax,
                         backgroundColor: 'olive'
                     }, {
-                        label: WORDS.maintenance,
+                        label: wordsOfUK.maintenance,
                         data: costs.Maintenance,
                         backgroundColor: 'green'
                     }, {
-                        label: WORDS.rep_improv,
+                        label: wordsOfUK.rep_improv,
                         data: costs.Repairs,
                         backgroundColor: 'lime'
                     }, {
-                        label: WORDS.fuel,
+                        label: wordsOfUK.fuel,
                         data: costs.Fuel,
                         backgroundColor: 'maroon'
                     }, {
-                        label: WORDS.parking,
+                        label: wordsOfUK.parking,
                         data: costs.Parking,
                         backgroundColor: 'yellow'
                     }, {
-                        label: WORDS.tolls,
+                        label: wordsOfUK.tolls,
                         data: costs.Tolls,
                         backgroundColor: 'orange'
                     }, {
-                        label: WORDS.fines,
+                        label: wordsOfUK.fines,
                         data: costs.Fines,
                         backgroundColor: 'red'
                     }, {
-                        label: WORDS.washing,
+                        label: wordsOfUK.washing,
                         data: costs.Washing,
                         backgroundColor: 'purple'
                     }
@@ -210,7 +244,7 @@ module.exports = {
                     options: options
                 };        
 
-                eventEmitter.emit('chartContentCalculated');                       
+                console.log("Chart of world statistics calculated");
             }
         ]);//async.series        
     }//prepareChart
