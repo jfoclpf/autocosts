@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            World statistics of the Automobile Costs
+            World statistics of the Car Costs
         </title>
         
         {{#with clientData.notLocalhost}}
@@ -38,61 +38,165 @@
             table {
                 margin: 0 auto;
             }
+            th, 
+            .country {
+                font-size:80%;
+            }
+            th {
+                border-bottom: solid 2px;
+            }
             .center{
-                text-align:center;
+                text-align:center;                
+            }
+            .tdRight{
+                text-align:right;
+                padding-right: 10px;
             }
             .justify{
                 text-align: justify;
+            }
+            .navy{
+                background-color:navy;
+            }
+            .blue{
+                background-color:blue;
+            }            
+            .aqua{
+                background-color:aqua;
+            }
+            .teal{
+                background-color:teal;
+            }            
+            .olive{
+                background-color:olive;
+            }
+            .green{
+                background-color:green;
+            }            
+            .lime{
+                background-color:lime;
+            }
+            .maroon{
+                background-color:maroon;
+            } 
+            .yellow{
+                background-color:yellow;
+            } 
+            .orange{
+                background-color:orange;
+            } 
+            .red{
+                background-color:red;
+            }
+            .purple{
+                background-color:purple;
+            }      
+            .right2px {
+                border-right: solid 2px;
             }
         </style>        
     </head>
 <body>
 
     <h1 style="text-align:center">
-        World statistics of Automobile Costs
+        World statistics of Car Costs
     </h1>
     <h3>
-        Yearly average costs per country (in Euros)    
+        Yearly average costs per country (all values in Euros)    
     </h3>
 
     <div class="chart" id="overallStatsChartDiv">
         <canvas id="overallStatsChart"></canvas>
     </div>    
     <br>
+        
+    <div class="center">
+        <table>
+            <tr>                
+                <th class="right2px">Country</th>
+                <th class="navy">{{{wordsOfUK.depreciation_st}}}</th>
+                <th class="blue">{{{wordsOfUK.insurance_short}}}</th>
+                <th class="aqua">{{{wordsOfUK.credit}}}</th>
+                <th class="teal">{{{wordsOfUK.inspection_short}}}</th>
+                <th class="olive">{{{wordsOfUK.road_taxes_short}}}</th>
+                <th class="green">{{{wordsOfUK.maintenance}}}</th>
+                <th class="lime">{{{wordsOfUK.rep_improv}}}</th>
+                <th class="maroon">{{{wordsOfUK.fuel}}}</th>
+                <th class="yellow">{{{wordsOfUK.parking}}}</th>
+                <th class="orange">{{{wordsOfUK.tolls}}}</th>
+                <th class="red">{{{wordsOfUK.fines}}}</th>
+                <th class="purple right2px">{{{wordsOfUK.washing}}}</th>
+                <th>Running costs per distance</th>
+                <th class="right2px">Total costs per distance</th>
+                <th>{{{wordsOfUK.kinetic_speed}}}</th>
+                <th class="right2px">{{{wordsOfUK.virtual_speed}}}</th>
+                <th>Total costs per year</th>
+            </tr>
+            {{#each averageNormalizedCosts as |value key|}}
+                <tr>
+                    <td class="center country right2px">{{value.countryName}} ({{value.country}})</td>
+                    <td class="tdRight">{{toFixed value.Depreciation 0}}</td>
+                    <td class="tdRight">{{toFixed value.Insurance 0}}</td>
+                    <td class="tdRight">{{toFixed value.Loan_interests 0}}</td>
+                    <td class="tdRight">{{toFixed value.Inspection 0}}</td>
+                    <td class="tdRight">{{toFixed value.Car_tax 0}}</td>
+                    <td class="tdRight">{{toFixed value.Maintenance 0}}</td>
+                    <td class="tdRight">{{toFixed value.Repairs 0}}</td>
+                    <td class="tdRight">{{toFixed value.Fuel 0}}</td>
+                    <td class="tdRight">{{toFixed value.Parking 0}}</td>
+                    <td class="tdRight">{{toFixed value.Tolls 0}}</td>
+                    <td class="tdRight">{{toFixed value.Fines 0}}</td>
+                    <td class="tdRight right2px">{{toFixed value.Washing 0}}</td>
+                    <td class="tdRight">{{toFixed value.running_costs_dist 2}}</td>
+                    <td class="tdRight right2px">{{toFixed value.total_costs_dist 2}}</td>
+                    <td class="tdRight">{{toFixed value.kinetic_speed 0}}</td>
+                    <td class="tdRight right2px">{{toFixed value.virtual_speed 0}}</td>
+                    <td class="tdRight">{{value.total_costs_year}}</td>
+                </tr>
+            {{/each}}
+        </table>
+    </div>    
+        
+    <br>
+    <br>
     
     <hr>
     
     <br>
     <div>
-    <b>Note on these averages:</b> 
-        
-        <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both <i>a priori</i> and <i>a posteiori</i> analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive.</li>
-        <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the datbase from where these values are obtained and calculated.</li>
-        <li> Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org.
+    <b>Notes and sources of these averages:</b> 
+        <li>
+        These averages are based on a statistical roboust and restrictive analysis on the inputs from the users who run the automobile costs calculator at autocosts.info;
         </li>
-    </div>    
-    <br>
-    
-    <hr>
-    
-    <h3>
-        Users insertion statistical information
-    </h3>
+        <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both <i>a priori</i> and <i>a posteiori</i> analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive;</li>
+        <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the database from where these values are obtained and calculated;</li>
+        <li> Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org;
+        </li>
+        <li>
+            The dates of the users insertions vary from 22-02-2014 till {{{dateOfCalculation}}}. These averages were calculated on {{{dateOfCalculation}}};
+        </li>
+        <li> The user insertion statistical information is based therefore on the following user survey data:
+        </li>
+    </div>
     <br>    
     <div class="center">
         <table>
             <tr>
                 <th>Country Code</th>
                 <th>Country Name</th>
+                <th>Currency Rate<br>(1 EUR)</th>
                 <th>Surveyed users</th>
                 <th>Valid users</th>
+                <th>% of valid users</th>
             </tr>
             {{#each chartTable as |value key|}}
                 <tr>
                     <td class="center">{{key}}</td>
-                    <td>{{value.country_name}}</td>
-                    <td>{{value.total_users}}</td>
-                    <td>{{value.valid_users}}</td>                
+                    <td class="tdRight">{{value.country_name}}</td>
+                    <td class="tdRight">{{toFixed value.CurrToEUR 2}} {{value.Currency}}</td>                      
+                    <td class="tdRight">{{value.total_users}}</td>
+                    <td class="tdRight">{{value.valid_users}}</td>
+                    <td class="tdRight">{{toFixed value.percentage_valid 1}}</td>                    
                 </tr>
             {{/each}}
         </table>
@@ -106,7 +210,9 @@
             value = "chart" 
             data-chart_content = "{{{ jsonObj chartContent }}}">
         </data>
-    </div> 
+    </div>
+    <br>
+    <br>
 
     <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
     <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/chart/worldStatsChart.js"></script>

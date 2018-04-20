@@ -303,8 +303,8 @@ isOnline().then(function(online) {
                     fx(stats_results.totCos).from(curr).to('EUR')          + "', '" +
                     fx(stats_results.runCostsProDist).from(curr).to('EUR') + "', '" +
                     fx(stats_results.totCostsProDist).from(curr).to('EUR') + "', '" +
-                    fx(stats_results.kinetic_speed).from(curr).to('EUR')   + "', '" +
-                    fx(stats_results.virtual_speed).from(curr).to('EUR')   + "', '" +
+                    stats_results.kinetic_speed                            + "', '" +
+                    stats_results.virtual_speed                            + "', '" +
                     fx(stats_results.totCostsPerYear).from(curr).to('EUR') + "', '" +
                     countries[i].valid_users                               + "', '" +
                     countries[i].total_users                               + "', '" +
