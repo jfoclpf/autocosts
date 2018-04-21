@@ -70,7 +70,7 @@ module.exports = {
             //Get the normalised costs
             function(callback) {                
                 
-                var i, n;
+                var i, n, cc;
                 db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized, 
                     function(err, results, fields) {
                         
@@ -110,7 +110,7 @@ module.exports = {
                         for (n=0; n<costsStrs.length; n++){
                             costs[costsStrs[n]]=[];//cost item array                         
                             for (i=0; i<results.length; i++){
-                                var cc = results[i].country;
+                                cc = results[i].country;
                                 if (cc !== "XX"){
                                     var yearlyCost = results[i][costsStrs[n]]*12;
                                     //copies value from db (monthly) to object (yearly)
@@ -127,7 +127,7 @@ module.exports = {
                         //convert values from monthly to yearly on every cost item
                         for (n=0; n<costsStrs.length; n++){
                             var costItem = costsStrs[n];
-                            for (var cc in results){
+                            for (cc in results){
                                 results[cc][costItem] = results[cc][costItem]*12;
                             }
                         }
@@ -135,7 +135,7 @@ module.exports = {
                         //calculate values for the last table on web page
                         var v, t;
                         for (i=0; i<results.length; i++){                        
-                            var cc = results[i].country; //country code string
+                            cc = results[i].country; //country code string
                             
                             //add some extra info the the object results to be parsed into the web page
                             results[i].countryName = serverData.availableCountries[cc];
