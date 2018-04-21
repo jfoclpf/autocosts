@@ -153,7 +153,6 @@ module.exports = {
                                 "google.com",
                                 "gstatic.com",
                                 "google-analytics.com",
-                                "g.doubleclick.net", //used from Google Analytics
                                 "autocosts.work"];
         
          //adds string with reliable domains

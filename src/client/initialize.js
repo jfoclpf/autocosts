@@ -73,6 +73,7 @@ var getScriptOnce = (function(url, callback){
 
         //change according to your site
         ga('create', GA_TRACKING_ID, 'auto');
+        ga('set', 'displayFeaturesTask', null);
         ga('send', 'pageview');
         
         //detects whether Google Analytics has loaded
