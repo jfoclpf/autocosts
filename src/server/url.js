@@ -245,11 +245,14 @@ var isSubdomain = function(req) {
 /*******************************************************************************/
 //Functions to check if it is a test 
 var isThisATest = function (req){ 
-
-    var CC = req.params.CC;
-    var host = req.get('host');
     
-    return isWorkDomain(req) || isThisLocalhost(req) || isCCXX(CC);
+    var CC = req.params.CC;
+    if(CC){        
+        return isWorkDomain(req) || isThisLocalhost(req) || isCCXX(CC);
+    }
+    else{
+        return isWorkDomain(req) || isThisLocalhost(req);
+    }
 };
 
 var isWorkDomain = function (req){
