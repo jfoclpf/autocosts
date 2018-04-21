@@ -29,7 +29,7 @@ module.exports = {
             "notLocalhost" : !url.isThisLocalhost(req), //boolean variable regarding if present request is from localhost
             "httpProtocol" : url.getProtocol(req, serverData.settings.switches.https)
         }    
-        data.clientData = clientData;        
+        data.clientData = clientData;    
         
         data.layout = false;    
         var fileToRender = path.join(serverData.directories.index, "views", "stats.hbs");
