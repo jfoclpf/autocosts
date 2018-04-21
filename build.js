@@ -190,7 +190,7 @@ function copy(){
                  path.join(BIN_DIR, 'client', 'jquery', 'jquery.min.js'));
     
     //copy pdfmake files
-    var pdfmakeBuildDir = path.resolve(path.dirname(require.resolve('pdfmake')),'../build');    
+    var pdfmakeBuildDir = path.resolve(path.dirname(require.resolve('pdfmake')), '..', 'build');    
     
     fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js'),
                  path.join(BIN_DIR, 'client', 'pdf', 'pdfmake.min.js'));
@@ -200,7 +200,7 @@ function copy(){
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
     
     //copy chartjs file
-    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')),'../dist');        
+    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')), '..', 'dist');        
     fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
                  path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));
 }

@@ -9,92 +9,7 @@
             <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains}}">
         {{/with}}
         
-        <style>
-            body {
-                font-family: Arial;
-            }
-            table {
-                border-collapse: collapse;
-            }
-            th, td {
-                border: 1px solid grey;
-                padding: 4px;
-            }
-            h1 { font-size: 2em; 
-                 text-align:center;
-                 margin:0;
-            }
-            h3 { font-size: 1.17em; 
-                 text-align:center; 
-                 margin:0;
-            }
-            .chart {
-                position: relative;
-                margin: auto;
-            }
-            #overallStatsChartDiv{
-                min-height: 500px;
-            }
-            table {
-                margin: 0 auto;
-            }
-            th, 
-            .country {
-                font-size:80%;
-            }
-            th {
-                border-bottom: solid 2px;
-            }
-            .center{
-                text-align:center;                
-            }
-            .tdRight{
-                text-align:right;
-                padding-right: 10px;
-            }
-            .justify{
-                text-align: justify;
-            }
-            .navy{
-                background-color:navy;
-            }
-            .blue{
-                background-color:blue;
-            }            
-            .aqua{
-                background-color:aqua;
-            }
-            .teal{
-                background-color:teal;
-            }            
-            .olive{
-                background-color:olive;
-            }
-            .green{
-                background-color:green;
-            }            
-            .lime{
-                background-color:lime;
-            }
-            .maroon{
-                background-color:maroon;
-            } 
-            .yellow{
-                background-color:yellow;
-            } 
-            .orange{
-                background-color:orange;
-            } 
-            .red{
-                background-color:red;
-            }
-            .purple{
-                background-color:purple;
-            }      
-            .right2px {
-                border-right: solid 2px;
-            }
-        </style>        
+        <link rel="stylesheet" type="text/css" href="{{{serverData.directories.client.css}}}/worldStats/main.css">
     </head>
 <body>
 
@@ -109,9 +24,13 @@
         <canvas id="overallStatsChart"></canvas>
     </div>    
     <br>
-        
+    
+    <h3>
+        Yearly average costs per country (all values in Euros)    
+    </h3>   
+    <br>
     <div class="center">
-        <table>
+        <table class="hoverTable">
             <tr>                
                 <th class="right2px">Country</th>
                 <th class="navy">{{{wordsOfUK.depreciation_st}}}</th>
@@ -134,7 +53,11 @@
             </tr>
             {{#each averageNormalizedCosts as |value key|}}
                 <tr>
-                    <td class="center country right2px">{{value.countryName}} ({{value.country}})</td>
+                    <td class="center country right2px">
+                        <a href="/{{value.country}}" target="_blank">
+                            {{value.countryName}} ({{value.country}})
+                        </a>
+                    </td>
                     <td class="tdRight">{{toFixed value.Depreciation 0}}</td>
                     <td class="tdRight">{{toFixed value.Insurance 0}}</td>
                     <td class="tdRight">{{toFixed value.Loan_interests 0}}</td>
@@ -147,11 +70,23 @@
                     <td class="tdRight">{{toFixed value.Tolls 0}}</td>
                     <td class="tdRight">{{toFixed value.Fines 0}}</td>
                     <td class="tdRight right2px">{{toFixed value.Washing 0}}</td>
-                    <td class="tdRight">{{toFixed value.running_costs_dist 2}}</td>
-                    <td class="tdRight right2px">{{toFixed value.total_costs_dist 2}}</td>
-                    <td class="tdRight">{{toFixed value.kinetic_speed 0}}</td>
-                    <td class="tdRight right2px">{{toFixed value.virtual_speed 0}}</td>
-                    <td class="tdRight">{{value.total_costs_year}}</td>
+                    <td class="tdRight">
+                        {{toFixed value.running_costs_dist 2}}/{{{getDistanceOptStrShort value.distance_std_option}}}
+                    </td>
+                    <td class="tdRight right2px">
+                        {{toFixed value.total_costs_dist 2}}/{{{getDistanceOptStrShort value.distance_std_option}}}
+                    </td>
+                    <td class="tdRight">
+                        {{toFixed value.kinetic_speed 0}}{{{getDistanceOptStrShort value.distance_std_option}}}/h
+                    </td>
+                    <td class="tdRight right2px">
+                        {{toFixed value.virtual_speed 0}}{{{getDistanceOptStrShort value.distance_std_option}}}/h
+                    </td>
+                    <td class="tdRight">
+                        <a href="{{{../serverData.directories.client.tables}}}/{{value.country}}.jpg" target="_blank">
+                            {{toFixed value.total_costs_year 0}}
+                        </a>
+                    </td>
                 </tr>
             {{/each}}
         </table>
@@ -174,6 +109,9 @@
         </li>
         <li>
             The dates of the users insertions vary from 22-02-2014 till {{{dateOfCalculation}}}. These averages were calculated on {{{dateOfCalculation}}};
+        </li>
+        <li>
+            The calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information, since the outlier removal technique uses already mathematical statistical filters and <i>a priori</i> filtering considerations;
         </li>
         <li> The user insertion statistical information is based therefore on the following user survey data:
         </li>

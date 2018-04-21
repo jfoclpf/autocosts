@@ -107,6 +107,18 @@ module.exports = {
                 return "error";
         }
     },
+    getDistanceOptStrShort: function(optN){
+        switch(optN){
+            case 1:
+                return "km";            
+            case 2:
+                return "mi";            
+            case 3:
+                return "Mil";
+            default: 
+                return "error";
+        }
+    },    
     getFuelPriceVolumeOptStr: function(optN){
         switch(optN){
             case 1:
