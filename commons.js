@@ -349,7 +349,8 @@ function setDIRECTORIES(){
     //these paths are relative, and they refer to the paths which are seen by the browser        
     var clientDirs = {
         "client"   : "client", //directory with respect to src/ dir, where the client JS browser files will be stored
-        "css"      : "css"     //directory with respect to src/ dir, where the CSS  files will be stored
+        "css"      : "css",    //directory with respect to src/ dir, where the CSS  files will be stored
+        "tables"   : "tables"  //where the JPG tables with car costs for each country
     };
     
     /*#################################*/
@@ -431,25 +432,25 @@ function setFILENAMES(){
         //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
         "client" : {
             "jquery" : {
-                "local" : DIRECTORIES.client.client + "/jquery/jquery.min.js",
+                "local" : path.join(DIRECTORIES.client.client, 'jquery', 'jquery.min.js'),
                 "cdn"   : "https://code.jquery.com/jquery-latest.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "pdfmake" : {
-                "local" : DIRECTORIES.client.client + "/pdf/pdfmake.min.js",
+                "local" : path.join(DIRECTORIES.client.client, 'pdf', 'pdfmake.min.js'),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
                 "uri"   : "" //it will be one of the above
             },
             "vfs_fonts" : {
-                "local" : DIRECTORIES.client.client + "/pdf/vfs_fonts.js",
+                "local" : path.join(DIRECTORIES.client.client, 'pdf', 'vfs_fonts.js'),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
                 "uri"   : "" //it will be one of the above
             },
             "chartjs" : {
-                "local" : DIRECTORIES.client.client + "/chart/chartjs.min.js",
+                "local" :  path.join(DIRECTORIES.client.client, 'chart', 'chartjs.min.js'),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
                 "uri"   : "" //it will be one of the above
-            }           
+            }            
         }
     };  
     
@@ -499,11 +500,9 @@ function setROOT_DIR(){
 function setCdnOrLocalFiles(isCDN){
     for (key in FILENAMES.client){
         var obj = FILENAMES.client[key];
+        //it is a client filename with different values for cdn and local
         if (obj.local && obj.cdn){
             obj.uri = isCDN ? obj.cdn : obj.local;
-        }
-        else{
-            throw obj;
         }
     }
     //ensures that CDN URL to be passed to client is blank in case cdn option is not enabled

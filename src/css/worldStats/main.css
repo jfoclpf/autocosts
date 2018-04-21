@@ -1,0 +1,110 @@
+body {
+    font-family: Arial;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid grey;
+    padding: 4px;
+}
+h1 { font-size: 2em; 
+     text-align:center;
+     margin:0;
+}
+h3 { font-size: 1.17em; 
+     text-align:center; 
+     margin:0;
+}
+.chart {
+    position: relative;
+    margin: auto;
+}
+#overallStatsChartDiv{
+    min-height: 500px;
+}
+table {
+    margin: 0 auto;
+}
+th, 
+.country {
+    font-size:80%;
+}
+th {
+    border-bottom: solid 2px;
+}
+.center{
+    text-align:center;                
+}
+.tdRight{
+    text-align:right;
+    padding-right: 10px;
+}
+.justify{
+    text-align: justify;
+}    
+.right2px {
+    border-right: solid 2px;
+}
+
+table {
+  overflow: hidden;
+}
+
+tr:hover {
+  background-color: #ffa;
+}
+
+td, th {
+  position: relative;
+}
+td:hover::after,
+th:hover::after {
+  content: "";
+  position: absolute;
+  background-color: #ffa;
+  left: 0;
+  top: -5000px;
+  height: 10000px;
+  width: 100%;
+  z-index: -1;
+}
+
+
+/*colours*/
+.navy{
+    background-color:navy;
+}
+.blue{
+    background-color:blue;
+}            
+.aqua{
+    background-color:aqua;
+}
+.teal{
+    background-color:teal;
+}            
+.olive{
+    background-color:olive;
+}
+.green{
+    background-color:green;
+}            
+.lime{
+    background-color:lime;
+}
+.maroon{
+    background-color:maroon;
+} 
+.yellow{
+    background-color:yellow;
+} 
+.orange{
+    background-color:orange;
+} 
+.red{
+    background-color:red;
+}
+.purple{
+    background-color:purple;
+}  

@@ -77,8 +77,15 @@ module.exports = {
                         if (err) {
                             console.log("Cannot connect to Database");
                             throw err;
-                        }
+                        }                        
                         
+                        //removes entries with no valid users
+                        for (i=0; i<results.length; i++){  
+                            if(!results[i].valid_users){
+                                results.splice(i, 1); //removes element i
+                                i--;
+                            }
+                        }
                         debug(results);
                     
                         var costsStrs = ["Depreciation", 
@@ -99,6 +106,7 @@ module.exports = {
                         });
                     
                         //on every cost item, builds an array of values for said cost item
+                        //to be used by the chartjs chart
                         for (n=0; n<costsStrs.length; n++){
                             costs[costsStrs[n]]=[];//cost item array                         
                             for (i=0; i<results.length; i++){
@@ -129,7 +137,9 @@ module.exports = {
                         for (i=0; i<results.length; i++){                        
                             var cc = results[i].country; //country code string
                             
+                            //add some extra info the the object results to be parsed into the web page
                             results[i].countryName = serverData.availableCountries[cc];
+                            results[i].distance_std_option = WORDS[cc].distance_std_option;
                             
                             table[cc] = {}; //creates object for the country
                             table[cc].country_name = serverData.availableCountries[cc];
