@@ -18,6 +18,9 @@ The list of available countries is from the file `src/countries/list.json`
 ### The registered associated domains
 https://autocosts.info/domains
 
+### World statistics of Car Costs
+https://autocosts.info/stats
+
 ## How to install
 Install it, build it and run it with the single command<br>
 `npm i autocosts`
