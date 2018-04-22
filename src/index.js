@@ -69,7 +69,7 @@ eventEmitter.on('settingsChanged', function(){
     serverData.settings  = settings  = commons.getSettings();
     SWITCHES = settings.switches;
     
-    //updates filnames and directory objects
+    //updates filenames and directory objects
     serverData.fileNames = fileNames = commons.getFileNames();
     serverData.directories = directories = commons.getDirectories();
     serverData.directories.index = directories.index = __dirname + "/";    
