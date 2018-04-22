@@ -4,6 +4,8 @@ const mysql = require('mysql'); //module to get info from DB
 const async = require('async'); //module to allow to execute the queries in series
 const debug = require('debug')('app:stats');
 
+const MIN_VALID_USERS = 20; //minimum number of valid users to show the country on world chart
+
 var averageNormalizedCosts;
 var chartContent; //chartjs content of World statistics
 var chartTable;   //HTML table data relating to the chart
@@ -79,9 +81,9 @@ module.exports = {
                             throw err;
                         }                        
                         
-                        //removes entries with no valid users
+                        //removes entries with not enough valid users
                         for (i=0; i<results.length; i++){  
-                            if(!results[i].valid_users){
+                            if(results[i].valid_users < MIN_VALID_USERS){
                                 results.splice(i, 1); //removes element i
                                 i--;
                             }
