@@ -8,10 +8,28 @@ const debug  = require('debug')('app:url');
 
 module.exports = {
     
+    //to be used from app.get('/')
     //when no country code is provided, example autocosts.info/
-    //if the user is in Portugal, redirects to autocustos.info/PT
+    //IF, for example, the user types autocosti.info redirects to autocosti.info/IT 
+    //because autocosti.info is associated only with Italy
+    //ELSE, uses the locale and HTTP info to redirect 
+    //for example, if the user is in Portugal, redirects to autocustos.info/PT
+    //because autocustos.info is associated with both PT and BR
     redirect: function (req, res, serverData){               
-        redirect302(req, res, serverData);
+
+        //does this domain/host is associated with only one country?
+        //if yes, set such country to CC
+        var CC = isSingleDomain(req.get('host'), serverData.domains);
+        if(CC && isCCinCountriesList(CC, serverData.availableCountries)){
+            debug("isSingleDomain", CC);
+            req.params.CC = CC.toUpperCase();
+            url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
+            redirect301(res, url2redirect);                
+        }
+        else{        
+            //redirects according to locale and/or browser settings
+            redirect302(req, res, serverData);
+        }
     },
     
     //to be used from app.get('/:CC')
@@ -33,12 +51,14 @@ module.exports = {
             //does this domain/host is associated with only one country?
             //if yes, set such country to CC
             CC = isSingleDomain(req.get('host'), serverData.domains);
-            if(CC){
+            if(CC && isCCinCountriesList(CC, serverData.availableCountries)){
+                debug("isSingleDomain", CC);
                 req.params.CC = CC.toUpperCase();
                 url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
                 redirect301(res, url2redirect);                
             }
             else{
+                debug("isSingleDomain == false", CC);
                 //redirects according to locale and/or browser settings
                 redirect302(req, res, serverData);
             }                        
@@ -142,6 +162,7 @@ var isCC2letterUpperCase = function(CC){
 
 var isCCinCountriesList = function(CC, availableCountries){        
     
+    //2-letter ISO Country Code (CC)
     if(!CC || CC.length !== 2){
         return false;
     }
@@ -211,6 +232,7 @@ var isDomainCCcombValid = function (req, availableCountries, domainsCountries){
 
 //full URL https://autocustos.info/PT
 var getValidURL = function (req, domainsCountries, IS_HTTPS){
+    debug("getValidURL");
     
     var CC = req.params.CC;
     var protocol = req.protocol; 
@@ -273,7 +295,8 @@ var isSingleDomain = function(host, domains){
 
 /*******************************************************************************/
 //Functions to check if it is a test 
-var isThisATest = function (req){ 
+var isThisATest = function (req){     
+    debug("isThisATest");
     
     var CC = req.params.CC;
     if(CC){        
@@ -296,11 +319,12 @@ var isWorkDomain = function (req){
     return false;
 };
 
-var isThisLocalhost = function (req){
+var isThisLocalhost = function (req){    
+    debug("isThisLocalhost");
     
     var ip=req.ip;    
     var host = req.get('host');
-    debug("ip", ip, "\nhost", host);
+    debug("ip:", ip, "; host:", host);
     
     return ip === "127.0.0.1" || ip === "::ffff:127.0.0.1" || ip === "::1";
 };

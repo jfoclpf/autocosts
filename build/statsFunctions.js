@@ -1,7 +1,7 @@
 //********************
 //statistics outlier removal constants
 var statsConstants = {
-    MIN_TIME_TO_FILL_FORM: 90, //minimum time to fill form shall be 90 seconds, after which is considered spam-bot
+    MIN_TIME_TO_FILL_FORM: 90, //minimum time to fill form shall be 90 seconds, before which is considered spam-bot
 
     //speed
     MAX_AVERAGE_SPEED:  120, //applies both for mph and km/h
