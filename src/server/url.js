@@ -28,8 +28,20 @@ module.exports = {
         //i.e, if the CC characters in domain.info/CC are not recognized
         //get the Country from locale or HTTP Accept-Language Info
         if (!isCCinCountriesList(CC, serverData.availableCountries) && !isCCXX(CC)){         
-            debug("if (!isCCinCountriesList)");            
-            redirect302(req, res, serverData);
+            debug("if (!isCCinCountriesList)");
+            
+            //does this domain/host is associated with only one country?
+            //if yes, set such country to CC
+            CC = isSingleDomain(req.get('host'), serverData.domains);
+            if(CC){
+                req.params.CC = CC.toUpperCase();
+                url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
+                redirect301(res, url2redirect);                
+            }
+            else{
+                //redirects according to locale and/or browser settings
+                redirect302(req, res, serverData);
+            }                        
             return true;
         }
         
@@ -40,7 +52,7 @@ module.exports = {
         //But if the two-letter code are NOT all in upper case domain.info/CC 
         if (!isCC2letterUpperCase(CC)){
             debug("if (!isCC2letterUpperCase)");
-            url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
+            url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;
         }
@@ -50,7 +62,7 @@ module.exports = {
         //check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
         if(isSubdomain(req)){
             debug("if(isSubdomain)");
-            url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
+            url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
         }
@@ -62,9 +74,9 @@ module.exports = {
         
         //if the URL is not the valid URL, i.e. the combination domain/CC is not valid
         //example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)        
-        if(!isDomainCCcombValid(req, serverData.availableCountries, serverData.domainsCountries)){
+        if(!isDomainCCcombValid(req, serverData.availableCountries, serverData.domains.countries)){
             debug("if (!isDomainCCcombValid)");
-            url2redirect = getValidURL(req, serverData.domainsCountries, serverData.settings.switches.https);
+            url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https);
             redirect301(res, url2redirect);
             return true;        
         }     
@@ -108,7 +120,9 @@ var redirect302 = function (req, res, serverData){
     }
     //production
     else{ 
-        url2redirect = getProtocol(req, serverData.settings.switches.https) + '://' + serverData.domainsCountries[geoCC] + '/' + geoCC;
+        url2redirect = getProtocol(req, serverData.settings.switches.https) + 
+                       '://' + serverData.domains.countries[geoCC] + 
+                       '/' + geoCC;
     }
     
     res.redirect(302, url2redirect);
@@ -128,7 +142,7 @@ var isCC2letterUpperCase = function(CC){
 
 var isCCinCountriesList = function(CC, availableCountries){        
     
-    if(CC.length !== 2){
+    if(!CC || CC.length !== 2){
         return false;
     }
     
@@ -242,6 +256,21 @@ var isSubdomain = function(req) {
     return false;
 };
 
+//function that says whether a domain is associated with only One country
+//for example autokoszty.info is associated only with PL, 
+//whilst autocosts.info has several CCs associated
+//returns the associated Country Code (CC) or false
+var isSingleDomain = function(host, domains){    
+    if (host){
+        for (var domain in domains.counts){
+            if (host.indexOf(domain) > -1 && domains.counts[domain] == 1){
+                return getKeyByValue(domains.countries, domain);
+            }
+        }
+    }
+    return false;
+};
+
 /*******************************************************************************/
 //Functions to check if it is a test 
 var isThisATest = function (req){ 
@@ -276,8 +305,13 @@ var isThisLocalhost = function (req){
     return ip === "127.0.0.1" || ip === "::ffff:127.0.0.1" || ip === "::1";
 };
 
-var isCCXX = function (CC) {    
-    return CC.toUpperCase() === "XX";
+var isCCXX = function (CC) {
+    if (CC){
+        return CC.toUpperCase() === "XX";
+    }
+    else{
+        return false;
+    }
 };
 
 
@@ -315,6 +349,11 @@ var getCountryfromHTTP = function (accept_language){
     
     return false;
 };
+
+//on a certain Object, gets the key, given the value
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
 
 //2-letter ISO Country Codes
 var isoCountries = {

@@ -58,14 +58,14 @@ function getUniqueLangObj(serverData){
         if (langCode=="en"){
             twoLetterLang.UK = {};
             twoLetterLang.UK.langCode = langCode;
-            twoLetterLang.UK.domain = serverData.domainsCountries.UK;
+            twoLetterLang.UK.domain = serverData.domains.countries.UK;
         }
         else{
             var CC = commons.getKeyByValue(languagesCountries, langCode);
             if (CC){
                 twoLetterLang[CC] = {};
                 twoLetterLang[CC].langCode = langCode;
-                twoLetterLang[CC].domain = serverData.domainsCountries[CC];     
+                twoLetterLang[CC].domain = serverData.domains.countries[CC];     
             }
         }
     }

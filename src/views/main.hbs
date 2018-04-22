@@ -14,7 +14,7 @@
     {{/with}}
     
     {{#with clientData.notLocalhost}}
-        <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains}}">
+        <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains.uniqueArr}}">
     {{/with}}
     
     <script type="application/ld+json">{{> structuredData }}</script>

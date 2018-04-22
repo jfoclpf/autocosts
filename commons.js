@@ -55,6 +55,10 @@ module.exports = {
         return FILENAMES;
     },
 
+    getDomainsObject: function(domainsCountries){
+        return _getDomainsObject(domainsCountries);
+    },
+    
     getUniqueArray: function(Arr){
         return _getUniqueArray(Arr);
     },
@@ -511,6 +515,23 @@ function setCdnOrLocalFiles(isCDN){
     }
 }
 
+//returns an object with several different information about the domains
+function _getDomainsObject(domainsCountries){
+
+    var domainsObj = {};
+    domainsObj.countries = domainsCountries; //Object that associates a Country Code (CC) with a domain
+    domainsObj.uniqueArr = _getUniqueArray(domainsCountries); //Array with unique domain names
+        
+    var counts = {};
+    var arr = Object.values(domainsCountries);
+    for (var i = 0; i < arr.length; i++) {
+        counts[arr[i]] = 1 + (counts[arr[i]] || 0);
+    }        
+    domainsObj.counts = counts;  //for every domain, count how many domain names
+    
+    return domainsObj;
+}
+
 //gets Array with unique non-repeated values
 //ex: [2,2,3,4,4] returns [2,3,4]
 function _getUniqueArray(Arr){
@@ -642,4 +663,3 @@ function isValidCredentialString(data){
         return false;
     }
 }
-
