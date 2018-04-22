@@ -46,9 +46,8 @@ var serverData = {
     "fileNames"          : fileNames,   //Object with the fileNames, on the server and client
     "availableCountries" : sortObj(countriesInfo.availableCountries), //Array of alphabetically sorted available Countries
     "languagesCountries" : countriesInfo.languagesCountries, //Array of Language Codes
-    "domainsCountries"   : countriesInfo.domainsCountries,   //Array of Domains for each Country
-    "domains"            : commons.getUniqueArray(countriesInfo.domainsCountries), //Array of Unique Domains
-    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
+    "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries)  //a string with all the CC
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
@@ -62,7 +61,7 @@ var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in serverData.availableCountries){
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
-    WORDS[CC].domain = serverData.domainsCountries[CC];    
+    WORDS[CC].domain = serverData.domains.countries[CC];    
 }
 
 //event handler to deal when the settings are changed
@@ -179,7 +178,7 @@ app.get('/:CC', function (req, res, next) {
     }
     //from here CC is acceptable and the page will be rendered
 
-    //get words for chosen CC
+    //get words for chosen CC - Country Code
     let WORDS_CC = WORDS[req.params.CC];
     getCC(req, res, serverData, WORDS_CC);
 });

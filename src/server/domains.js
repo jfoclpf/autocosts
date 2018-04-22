@@ -8,14 +8,15 @@ module.exports = function(req, res, serverData, WORDS) {
     data.WORDS = JSON.parse(JSON.stringify(WORDS)); //clone object
     delete data.WORDS.XX;
     
-    var domainsCountries = JSON.parse(JSON.stringify(serverData.domainsCountries)); //clone object
+    var domainsCountries = JSON.parse(JSON.stringify(serverData.domains.countries)); //clone object
     delete domainsCountries.XX;
+    debug(domainsCountries);
     
     var domains = {};
-    //array serverData.domains has unique elements, i.e. an array without repeated elements
-    for (var i=0; i<serverData.domains.length; i++){
+    //array serverData.domains.uniqueArr has unique elements, i.e. an array without repeated elements
+    for (var i=0; i<serverData.domains.uniqueArr.length; i++){
         
-        var domain = serverData.domains[i];
+        var domain = serverData.domains.uniqueArr[i];
         domains[domain] = {}; //creates an empty entry
         
         //get the domains that exist for a particular domain
@@ -59,8 +60,7 @@ module.exports = function(req, res, serverData, WORDS) {
     data.layout = false;
 
     var fileToRender = path.join(serverData.directories.index, "views", "domains.hbs");
-    res.render(fileToRender, data);
-    
+    res.render(fileToRender, data);  
 }
 
 //get array of countries codes (CC) having a specific domain
@@ -74,6 +74,4 @@ function getCCforDomain(domainsCountries, domain){
     }    
     return domainsCC;
 }
-
-
 
