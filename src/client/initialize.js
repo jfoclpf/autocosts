@@ -69,7 +69,7 @@ var getScriptOnce = (function(url, callback){
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        })(window, document, 'script', JS_FILES.Google.analytics, 'ga');
 
         //change according to your site
         ga('create', GA_TRACKING_ID, 'auto');

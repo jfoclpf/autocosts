@@ -21,6 +21,7 @@ const sortObj     = require('sort-object'); //to sort JS objects
 const colors      = require('colors/safe'); //does not alter string prototype
 const util        = require('util');
 const debug       = require('debug')('app:index');
+const crypto      = require('crypto');
 
 //personalised requires
 const url         = require(path.join(__dirname, 'server', 'url')); //to deal with the full URL rules and redirect accordingly
@@ -47,7 +48,8 @@ var serverData = {
     "availableCountries" : sortObj(countriesInfo.availableCountries), //Array of alphabetically sorted available Countries
     "languagesCountries" : countriesInfo.languagesCountries, //Array of Language Codes
     "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
-    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries)  //a string with all the CC
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries), //a string with all the CC
+    "CSPstrig"           : commons.getCSPstring(countriesInfo.domainsCountries)    //CSP string for webpages on Internet
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
@@ -72,13 +74,19 @@ eventEmitter.on('settingsChanged', function(){
     //updates filenames and directory objects
     serverData.fileNames = fileNames = commons.getFileNames();
     serverData.directories = directories = commons.getDirectories();
-    serverData.directories.index = directories.index = __dirname + "/";    
+    serverData.directories.index = directories.index = __dirname + "/";
+    serverData.CSPstrig = commons.getCSPstring(countriesInfo.domainsCountries);
     
     console.log("Settings updated.");
     debug(util.inspect(serverData, {showHidden: false, depth: null}));
 });
 
 console.log("\n\nServer started at " + __dirname);
+
+console.log(crypto.randomBytes(16).toString('base64'));
+console.log(crypto.randomBytes(16).toString('base64'));
+console.log(crypto.randomBytes(16).toString('base64'));
+console.log(crypto.randomBytes(16).toString('base64'));
 
 var app = express();
 app.enable('case sensitive routing');

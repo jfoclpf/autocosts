@@ -67,12 +67,14 @@ var Run1, PrintElem, generatePDF, TimeCounter;
     GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
     NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);    
     
-    //Location of Javascript Files, it may be changed accordingly
-    var JSfiles = document.getElementById('js_files');
+    //Location of Javascript Files (define in /commons.js)
+    var JSfiles = JSON.parse(decodeURI(globalVariables.dataset.js_files));
+    
     var rootClientURL = CDN_URL + clientDir + "/";
     JS_FILES = {
         Google : {
-            recaptchaAPI : "https://www.google.com/recaptcha/api.js?onload=grecaptcha_callback&render=explicit&hl="+LANGUAGE,
+            recaptchaAPI : JSfiles.GrecaptchaAPI + "?onload=grecaptcha_callback&render=explicit&hl=" + LANGUAGE,
+            analytics    : JSfiles.Ganalytics
         },
 
         initialize :          rootClientURL + "initialize.js",
@@ -87,23 +89,23 @@ var Run1, PrintElem, generatePDF, TimeCounter;
         print :               rootClientURL + "print.js",
         dbFunctions :         rootClientURL + "dbFunctions.js",
 
-        jQuery :              JSfiles.dataset.jquery,
-        jQueryLocal :         JSfiles.dataset.jquery_local,
+        jQuery :              JSfiles.jquery.uri,
+        jQueryLocal :         JSfiles.jquery.local,
         jTimer :              rootClientURL + "jquery/js_timer.js",
 
         PDF : {
-            pdfmake :         JSfiles.dataset.pdfmake,
+            pdfmake :         JSfiles.pdfmake.uri,
             generatePDF :     rootClientURL + "pdf/generatePDF.js",
-            vfs_fonts :       JSfiles.dataset.vfs_fonts,
+            vfs_fonts :       JSfiles.vfs_fonts.uri,
             vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
             vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
             vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
         },
 
         drawCostsCharts :     rootClientURL + "chart/drawCostsCharts.js",
-        chartjs :             JSfiles.dataset.chartjs,
+        chartjs :             JSfiles.chartjs.uri,
         jAlert :              rootClientURL + "jAlert/jAlert.js",
-        jssocials :           "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js"
+        jssocials :           JSfiles.jssocials
     };
 
     UBER_API = {};
