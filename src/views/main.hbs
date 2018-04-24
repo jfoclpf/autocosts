@@ -13,18 +13,16 @@
     <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
     {{/with}}
     
-    {{#with clientData.notLocalhost}}
-        <meta http-equiv="Content-Security-Policy" content="{{ getCSPstring ../serverData.domains.uniqueArr}}">
-    {{/with}}
+       
     
     <script type="application/ld+json">{{> structuredData }}</script>
-    <style>{{> merged1.css }}</style>
-    {{#with words}}
+    <style>{{> merged1.css }}</style>    
     
 </head>
     
 <body>
 
+    {{#with words}}
     <div id="main_div">
 
         <div id="banner_top">

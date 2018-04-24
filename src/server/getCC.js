@@ -36,6 +36,11 @@ module.exports = function(req, res, serverData, wordsOfCountry) {
     data.layout = false; //doesn't use handlebars default template
     
     var fileToRender = path.join(serverData.directories.index, "views", "main.hbs");
+    
+    if(clientData.notLocalhost){
+        res.set('Content-Security-Policy', serverData.CSPstrig);   
+    }
+    
     res.render(fileToRender, data);
     
 }

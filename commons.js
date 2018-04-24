@@ -59,6 +59,10 @@ module.exports = {
         return _getDomainsObject(domainsCountries);
     },
     
+    getCSPstring: function(domainsCountries){
+        return _getCSPstring(domainsCountries);
+    },
+    
     getUniqueArray: function(Arr){
         return _getUniqueArray(Arr);
     },
@@ -74,7 +78,6 @@ module.exports = {
     getDataBaseErrMsg: function(scriptName, serviceObj){
         return _getDataBaseErrMsg(scriptName, serviceObj);
     }
-
 };
 
 /***************************************************************************************************/
@@ -308,7 +311,7 @@ function _init(){
     //if cdn option is enabled, select CDN version, otherwise Local files
     setCdnOrLocalFiles(SWITCHES.cdn);
     
-    const debug = require('debug')('app:commons');    
+    const debug = require('debug')('app:commons');
     debug("SETTINGS", SETTINGS);
     debug("DIRECTORIES", DIRECTORIES);    
     debug("FILENAMES", FILENAMES);
@@ -454,7 +457,10 @@ function setFILENAMES(){
                 "local" :  path.join(DIRECTORIES.client.client, 'chart', 'chartjs.min.js'),
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
                 "uri"   : "" //it will be one of the above
-            }            
+            },
+            "jssocials"     : "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js",
+            "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
+            "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
         }
     };  
     
@@ -480,7 +486,6 @@ function setROOT_DIR(){
         console.log("Node is running. ROOT_DIR: " + root_dir);
     }
     else {//PhantomJS?
-
         try{
             var fs = require('fs');
             //considering the phantom is called from build/
@@ -491,7 +496,6 @@ function setROOT_DIR(){
         catch(err){
             throw "Engine not recognized, nor NodeJS nor PhantomJS";
         }
-
     }
 
     ROOT_DIR = root_dir;
@@ -530,6 +534,67 @@ function _getDomainsObject(domainsCountries){
     domainsObj.counts = counts;  //for every domain, count how many domain names
     
     return domainsObj;
+}
+
+//Content Security Policy for webpages in Internet
+function _getCSPstring(domainsCountries){
+    const debug = require('debug')('app:CSP');
+    debug(SETTINGS);
+    debug(FILENAMES);    
+
+    var reliableDomains = [];
+    
+    if(SETTINGS.cdn.enabled){
+        reliableDomains.push(extractHostname(SETTINGS.cdn.url));
+        for(var key in FILENAMES.client){
+            var file = FILENAMES.client[key];
+            if(file.cdn){
+                reliableDomains.push(extractHostname(file.cdn));
+            }
+        }
+    }
+    
+    if(SETTINGS.switches.googleCaptcha){
+        reliableDomains.push(extractHostname(FILENAMES.client.GrecaptchaAPI));
+        reliableDomains.push("www.gstatic.com");
+    }
+    
+    if(SETTINGS.switches.googleAnalytics){
+        reliableDomains.push(extractHostname(FILENAMES.client.Ganalytics));
+    }
+
+    if(SETTINGS.switches.uber){
+        reliableDomains.push(extractHostname("https://api.uber.com"));
+    }    
+    
+    if(SETTINGS.switches.social){
+        reliableDomains.push(extractHostname(FILENAMES.client.jssocials));
+    }
+    
+    //filters repeated values
+    var uniqueReliableDomains = reliableDomains.filter(function(item, pos) {
+        return reliableDomains.indexOf(item) == pos;
+    })    
+    debug(uniqueReliableDomains);
+    
+    //adds string with reliable domains/urls
+    var domainsStr = "";
+    for (var i=0; i<uniqueReliableDomains.length; i++){
+        domainsStr += uniqueReliableDomains[i] + " ";
+    }
+
+    //for 'strict-dynamic' read
+    //https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
+    
+    var CSPstr = "default-src 'self'" + " " + domainsStr + "; ";
+    CSPstr += "script-src 'self' 'unsafe-eval' 'unsafe-inline'" + " " + domainsStr + "; ";        
+    CSPstr += "style-src 'self' 'unsafe-inline'; ";
+    CSPstr += "img-src 'self'; ";
+    CSPstr += "object-src 'none';";
+    CSPstr += "base-uri 'self';";
+    
+    debug(CSPstr.replace(/;/g,`;\n`));
+    return CSPstr; 
 }
 
 //gets Array with unique non-repeated values
@@ -662,4 +727,24 @@ function isValidCredentialString(data){
     else{
         return false;
     }
+}
+
+//extract hostname/domain from url
+function extractHostname(url) {
+    var hostname;
+    //find & remove protocol (http, ftp, etc.) and get hostname
+
+    if (url.indexOf("://") > -1) {
+        hostname = url.split('/')[2];
+    }
+    else {
+        hostname = url.split('/')[0];
+    }
+
+    //find & remove port number
+    hostname = hostname.split(':')[0];
+    //find & remove "?"
+    hostname = hostname.split('?')[0];
+
+    return hostname;
 }

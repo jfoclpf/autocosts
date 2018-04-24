@@ -35,8 +35,12 @@ module.exports = {
         
         data.layout = false;    
         var fileToRender = path.join(serverData.directories.index, "views", "stats.hbs");
-        res.render(fileToRender, data);
         
+        if(clientData.notLocalhost){
+            res.set('Content-Security-Policy', serverData.CSPstrig);   
+        }
+        
+        res.render(fileToRender, data);
     },
     
     prepareChart : function(serverData, WORDS, eventEmitter){

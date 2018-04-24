@@ -21,6 +21,7 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
     value =                 "global_variables" 
     data-country =          "{{{ CC }}}"       
     data-language =         "{{{ clientData.languageCode }}}"
+    data-js_files =         "{{{ jsonObj serverData.fileNames.client }}}"
     data-country_list =     "{{{ jsonObj serverData.availableCountries }}}"
     data-domain_list =      "{{{ jsonObj serverData.domains.countries }}}"
     data-cdn_url =          "{{{ serverData.settings.cdn.url }}}"
@@ -29,16 +30,6 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
     data-words =            "{{{ jsonObj words }}}"
     data-ga_tracking_id =   "{{{ serverData.settings.googleAnalytics.trackingId }}}"
     data-not_localhost =    "{{{ clientData.notLocalhost }}}">
-</data>
-
-<data
-    id =                    "js_files" 
-    value =                 "js_files"
-    data-jquery =           '{{{ serverData.fileNames.client.jquery.uri }}}'
-    data-jquery_local =     '{{{ serverData.fileNames.client.jquery.local }}}'
-    data-pdfmake =          '{{{ serverData.fileNames.client.pdfmake.uri }}}'  
-    data-vfs_fonts =        '{{{ serverData.fileNames.client.vfs_fonts.uri }}}'
-    data-chartjs =          '{{{ serverData.fileNames.client.chartjs.uri }}}'>
 </data>
       
       
