@@ -34,7 +34,7 @@ const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
 const release   = commons.getRelease(); //release shall be 'work' or 'prod', it's 'work' by default
 
 var directories = commons.getDirectories();
-directories.index = __dirname + "/"; //directory where this script index.js is located
+directories.index = __dirname; //directory where this script index.js is located
 var   fileNames = commons.getFileNames();
 var   settings  = commons.getSettings();
 
@@ -82,11 +82,6 @@ eventEmitter.on('settingsChanged', function(){
 });
 
 console.log("\n\nServer started at " + __dirname);
-
-console.log(crypto.randomBytes(16).toString('base64'));
-console.log(crypto.randomBytes(16).toString('base64'));
-console.log(crypto.randomBytes(16).toString('base64'));
-console.log(crypto.randomBytes(16).toString('base64'));
 
 var app = express();
 app.enable('case sensitive routing');

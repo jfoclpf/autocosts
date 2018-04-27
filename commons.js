@@ -549,26 +549,27 @@ function _getCSPstring(domainsCountries){
         for(var key in FILENAMES.client){
             var file = FILENAMES.client[key];
             if(file.cdn){
-                reliableDomains.push(extractHostname(file.cdn));
+                reliableDomains.push(file.cdn);
             }
         }
     }
     
+    //https://developers.google.com/recaptcha/docs/faq#im-using-content-security-policy-csp-on-my-website-how-can-i-configure-it-to-work-with-recaptcha
     if(SETTINGS.switches.googleCaptcha){
-        reliableDomains.push(extractHostname(FILENAMES.client.GrecaptchaAPI));
-        reliableDomains.push("www.gstatic.com");
+        reliableDomains.push("https://www.google.com/recaptcha/");
+        reliableDomains.push("https://www.gstatic.com/recaptcha/");
     }
     
     if(SETTINGS.switches.googleAnalytics){
-        reliableDomains.push(extractHostname(FILENAMES.client.Ganalytics));
+        reliableDomains.push(FILENAMES.client.Ganalytics);
     }
 
     if(SETTINGS.switches.uber){
-        reliableDomains.push(extractHostname("https://api.uber.com"));
+        reliableDomains.push("https://api.uber.com");
     }    
     
     if(SETTINGS.switches.social){
-        reliableDomains.push(extractHostname(FILENAMES.client.jssocials));
+        reliableDomains.push(FILENAMES.client.jssocials);
     }
     
     //filters repeated values
@@ -585,9 +586,18 @@ function _getCSPstring(domainsCountries){
 
     //for 'strict-dynamic' read
     //https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
+    //to generate nonces use crypto.randomBytes(128).toString('base64')
+    
+    var nonceStr, usesNonce = true;
+    if(usesNonce){
+        nonceStr = "'nonce-EDNnf03nceIOfn39fn3e9h3sdfa' 'strict-dynamic'";
+    }
+    else{
+        nonceStr = "";
+    }
     
     var CSPstr = "default-src 'self'" + " " + domainsStr + "; ";
-    CSPstr += "script-src 'self' 'unsafe-eval' 'unsafe-inline'" + " " + domainsStr + "; ";        
+    CSPstr += "script-src 'self' 'unsafe-eval' 'unsafe-inline' " + nonceStr + " " + domainsStr + "; ";
     CSPstr += "style-src 'self' 'unsafe-inline'; ";
     CSPstr += "img-src 'self'; ";
     CSPstr += "object-src 'none';";

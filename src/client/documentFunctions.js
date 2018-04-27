@@ -3,7 +3,7 @@
 /*         Functions which work on the page           */
 
 /*functions which is used to change the form parts*/
-var openForm_part = (function(part_number_origin, part_number_destiny) {
+var openForm_part = (function() {
 
     var hasLoadedCoreFunctions = false; //local variable
 
@@ -185,13 +185,9 @@ function loadExtraFiles() {
     getScriptOnce(JS_FILES.g_recaptcha, function(){
         //Google Captcha API doesn't work nor applies on localhost
         if (SWITCHES.g_captcha && NOT_LOCALHOST){
-            getScriptOnce(JS_FILES.Google.recaptchaAPI)
-                .done(function(){
+            getScriptOnce(JS_FILES.Google.recaptchaAPI, function(){
                     SERVICE_AVAILABILITY.g_captcha = true;                    
-                })
-                .fail(function(){
-                    SERVICE_AVAILABILITY.g_captcha = false;
-                });  
+                });
         }
         else{
             SERVICE_AVAILABILITY.g_captcha = false;

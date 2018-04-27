@@ -11,9 +11,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="Autocosts Org">
     <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}">
-    {{/with}}
-    
-       
+    {{/with}}           
     
     <script type="application/ld+json">{{> structuredData }}</script>
     <style>{{> merged1.css }}</style>    
@@ -42,7 +40,7 @@
                         <div id="banner_flag" class="{{bannerFlag CC}}"></div>
                     </div>
                     <div id="country_select_div">
-                        <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
+                        <select name="country_select" id="country_select">
                             {{~#each ../serverData.availableCountries~}}
                             <option value="{{@key}}"{{{isSelected ../CC @key}}}>
                                 {{~this~}}
@@ -221,7 +219,7 @@
         <!-- Data that is being sent -->
         {{> globalData }}
     </div>    
-    <script src="client/Globals.js"></script> 
+    <script nonce="EDNnf03nceIOfn39fn3e9h3sdfa" src="client/Globals.js"></script> 
 </body>
 </html>
 
