@@ -219,7 +219,7 @@
         <!-- Data that is being sent -->
         {{> globalData }}
     </div>    
-    <script nonce="EDNnf03nceIOfn39fn3e9h3sdfa" src="client/Globals.js"></script> 
+    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="client/Globals.js"></script> 
 </body>
 </html>
 

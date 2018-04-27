@@ -393,13 +393,15 @@
                 {{{tolls_day_calc}}}
                 <div>
                     <span class="nowrap">
-                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" class="no_left_margin" value="true"/>
+                        <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" 
+                               class="no_left_margin" value="true"/>
                         <span class="set_right_margin">
                             {{{yes}}}
                         </span>
                     </span>
                     <span class="nowrap">
-                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" class="no_left_margin" value="false" checked="checked"/>
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" 
+                               class="no_left_margin" value="false"/>
                         <span>
                             {{{no}}}
                         </span>
@@ -813,8 +815,7 @@
 
     <!-- BUTTONS -->
     <div class="b-bottom">
-        <input type="button" id="form_part3_button_back" class="button" type="button">
-            &laquo;        
+        <input type="button" id="form_part3_button_back" value="&laquo;" class="button" type="button">            
         <!--Run button-->
         <div id="run_button_div">
             <input type="button" id="run_button" value="{{{button_run}}}" class="button">                

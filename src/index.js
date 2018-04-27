@@ -21,7 +21,6 @@ const sortObj     = require('sort-object'); //to sort JS objects
 const colors      = require('colors/safe'); //does not alter string prototype
 const util        = require('util');
 const debug       = require('debug')('app:index');
-const crypto      = require('crypto');
 
 //personalised requires
 const url         = require(path.join(__dirname, 'server', 'url')); //to deal with the full URL rules and redirect accordingly
@@ -48,8 +47,7 @@ var serverData = {
     "availableCountries" : sortObj(countriesInfo.availableCountries), //Array of alphabetically sorted available Countries
     "languagesCountries" : countriesInfo.languagesCountries, //Array of Language Codes
     "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
-    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries), //a string with all the CC
-    "CSPstrig"           : commons.getCSPstring(countriesInfo.domainsCountries)    //CSP string for webpages on Internet
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
@@ -67,6 +65,8 @@ for (var CC in serverData.availableCountries){
 }
 
 //event handler to deal when the settings are changed
+//particularly the event is triggered when 
+//it is detected that there is no Internet connection and settings are thus changed
 eventEmitter.on('settingsChanged', function(){
     serverData.settings  = settings  = commons.getSettings();
     SWITCHES = settings.switches;
@@ -169,6 +169,11 @@ if (SWITCHES.dataBase){
     });
 }
 
+
+//before processing the request generate a pre CSP string
+//for fast web delivery
+getCC.preGenerateCSPstring(serverData);
+
 //this middleware shall be the last before error
 //this is the entry Main Page
 app.get('/:CC', function (req, res, next) {
@@ -178,12 +183,12 @@ app.get('/:CC', function (req, res, next) {
     let wasRedirected = url.getCC(req, res, serverData);
     if(wasRedirected){
         return;
-    }
-    //from here CC is acceptable and the page will be rendered
-
+    }    
+    //from here CC is acceptable and the page will be rendered        
+    
     //get words for chosen CC - Country Code
     let WORDS_CC = WORDS[req.params.CC];
-    getCC(req, res, serverData, WORDS_CC);
+    getCC.render(req, res, serverData, WORDS_CC);
 });
 
 app.get('/', function (req, res, next) {

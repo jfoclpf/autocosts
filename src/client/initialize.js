@@ -76,8 +76,7 @@ function setLanguageVars(){
 }
 
 function initializeForm(){
-
-    setRadioButton("insurancePaymentPeriod", "semestral");
+    
     $("#main_form select").val('1'); //set all the selects to "month"
     $("#tickets_period_select").val('5'); //set fines period to year
     $("#washing_period_select").val('3'); //set washing period to trimester
@@ -88,10 +87,8 @@ function initializeForm(){
 
     tolls_daily(false);
 
-    document.getElementById("radio_fuel_euros").checked = true;
     $('#currency_div_form2').show();
     $('#distance_div_form2').hide();
-    document.getElementById("cred_auto_false").checked = true;
     $('#sim_credDiv').hide();
 
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
@@ -101,11 +98,8 @@ function initializeForm(){
     carToJob(false);
 
     //set public transporsts and fin. effort main DIVs to no
-    $('#slider1').checked = false;
-    $('#public_transp_Div_form3').hide();
-    $('#slider1').checked = false;
-    $('#fin_effort_Div_form3').hide();
-    $("#distance_time_spent_driving_form3").hide();
+    $("#slider1, #slider2").checked = false;    
+    $("#public_transp_Div_form3, #fin_effort_Div_form3, #distance_time_spent_driving_form3").hide();
 
     //align radio button text
     $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
@@ -194,7 +188,7 @@ function loadsButtonsSettings(){
     //actively selects in the dropdown menu, the Country
     $("#country_select").val(COUNTRY);
     
-    //associate click functions with buttons
+    //associate click functions with buttons (handlers)
     $("#rerun_button").on( "click", function(){reload();} );
     $("#print_button").on( "click", function(){PrintElem();} );
     $("#generate_PDF").on( "click", function(){generatePDF();} );     
@@ -221,7 +215,17 @@ function loadsButtonsSettings(){
     $("#radio_income_year").on( "change", function(){income_toggle("year")});
     $("#radio_income_month").on( "change", function(){income_toggle("month")});
     $("#radio_income_week").on( "change", function(){income_toggle("week")});
-    $("#radio_income_hour").on( "change", function(){income_toggle("hour")});    
+    $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
+    
+    //set radio button checked
+    setRadioButton("insurancePaymentPeriod", "semestral"); //insruance radio button set to half-yearly
+    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"
+    
+    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"    
+    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no)    
+    $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
+    
+    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
 }
 
 
