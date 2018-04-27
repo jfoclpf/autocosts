@@ -118,7 +118,9 @@ var Run1, PrintElem, generatePDF, TimeCounter;
     STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
     STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
 
-    Run1 = PrintElem = generatePDF = TimeCounter = function(){console.error("Function called and not yet loaded");};
+    Run1 = PrintElem = generatePDF = TimeCounter = function(){
+        console.error("Function " + arguments.callee.name + " called and not yet loaded");
+    };
 
     /*global variable for Google reCaptcha*/
     IS_HUMAN_CONFIRMED = false;        
@@ -170,37 +172,52 @@ var Run1, PrintElem, generatePDF, TimeCounter;
    
 })();
 
+/*function that loads the scripts async only once */
+/*for understanding this scope, read: ryanmorr.com/understanding-scope-and-context-in-javascript */
+/*this works like a module, like a singleton function */
+var getScriptOnce = function() {
 
-(function() {    
+    var scriptArray = []; //array of urls (enclosure)
+
     //function to defer loading of script
-    function getScript(url,success){
-        var script=document.createElement('script');
-        script.src=url;
-        var head=document.getElementsByTagName('head')[0],
-            done=false;
-        script.onload=script.onreadystatechange = function(){
-            if ( !done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') ) {
-                done=true;
-                success();
-                script.onload = script.onreadystatechange = null;
-                head.removeChild(script);
-            }
-        };
-        head.appendChild(script);
-    }
-    
-    //defer loading of jQuery
-    getScript(JS_FILES.jQuery, function(){
-        if(window.jQuery){
-            getScript(JS_FILES.initialize, function(){});
+    return function (url, callback){
+        
+        //the array doesn't have such url
+        if (scriptArray.indexOf(url) === -1){            
+            var script=document.createElement('script');
+            script.src=url;
+            script.setAttribute('nonce', 'EDNnf03nceIOfn39fn3e9h3sdfa');
+            var head=document.getElementsByTagName('head')[0],
+                done=false;
+
+            script.onload=script.onreadystatechange = function(){
+                if ( !done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') ) {
+                    done=true;
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                    script.onload = script.onreadystatechange = null;
+                    //head.removeChild(script);
+
+                    scriptArray.push(url);
+                }
+            };
+
+            head.appendChild(script);
         }
-        //if default jQuery location not available, loads jquery local file
-        else{
-            getScript(JS_FILES.jQueryLocal, function(){
-                getScript(JS_FILES.initialize, function(){});
-            });        
-        }                
-    });
-    
-})();
+    };
+}(); //here it executes the function immediately to get the returned function
+
+//defer loading of jQuery
+getScriptOnce(JS_FILES.jQuery, function(){
+    if(window.jQuery){
+        getScriptOnce(JS_FILES.initialize, function(){});
+    }
+    //if default jQuery location not available, loads jquery local file
+    else{
+        getScriptOnce(JS_FILES.jQueryLocal, function(){
+            getScriptOnce(JS_FILES.initialize, function(){});
+        });        
+    }                
+});
 

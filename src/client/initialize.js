@@ -1,36 +1,3 @@
-/*function that loads the scripts only once */
-/*for understanding this scope, read: ryanmorr.com/understanding-scope-and-context-in-javascript */
-/*this works like a module, like a singleton function */
-var getScriptOnce = (function(url, callback){
-    var ScriptArray = []; /*array of urls*/
-    return function (url, callback) {
-        /*the array doesn't have such url*/
-        if (ScriptArray.indexOf(url) === -1){
-            if (typeof callback === 'function') {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                    callback();
-                });
-            } else {
-                return $.getScript(url, function(){
-                    ScriptArray.push(url);
-                });
-            }
-        }
-        /*the file is already there, it does nothing*/
-        /*to support as of jQuery 1.5 methods .done().fail()*/
-        else{
-            return {
-                done: function () {
-                    return {
-                        fail: function () {}
-                    };
-                }
-            };
-        }
-    };
-}());
-
 
 (function initialize() {
 
@@ -163,7 +130,7 @@ function initializeForm(){
     else{
         $("#generate_PDF").show();
     }
-
+    
 }
 
 function loadsDefaultValues(){
@@ -216,17 +183,45 @@ function loadsDefaultValues(){
     $.each(mappingIDs, function(key, value){
         $("#"+value).val(WORDS[key]);
     });
-
 }
 
 function loadsButtonsSettings(){
+    
+    //associate click functions with buttons
+    $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
+    
+    $("#country_select").on( "change", function(){onCountrySelect(this.value)});
+    //actively selects in the dropdown menu, the Country
+    $("#country_select").val(COUNTRY);
+    
+    //associate click functions with buttons
+    $("#rerun_button").on( "click", function(){reload();} );
+    $("#print_button").on( "click", function(){PrintElem();} );
+    $("#generate_PDF").on( "click", function(){generatePDF();} );     
 
-    //associate click functions with buttons
-    $("#run_button, #run_button_noCapctha").attr("onclick", "Run1()");
-    //associate click functions with buttons
-    $("#rerun_button").attr("onclick", "reload()");
-    $("#print_button").attr("onclick", "PrintElem()");
-    $("#generate_PDF").attr("onclick", "generatePDF()");
+    $("#form_part1_button_next").on( "click", function(){openForm_part(1, 2)});
+    $("#form_part2_button_back").on( "click", function(){openForm_part(2, 1)});
+    $("#form_part2_button_next").on( "click", function(){openForm_part(2, 3)});
+    $("#form_part3_button_back").on( "click", function(){openForm_part(3, 2)});
+
+    $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
+    $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
+    $("#radio_fuel_km").on( "click", function(){fuelCalculationMethodChange('distance')});
+    $("#radio_fuel_euros").on( "click", function(){fuelCalculationMethodChange('currency')});
+    $("#car_job_form2_yes").on( "click", function(){carToJob(true)});
+    $("#car_job_form2_no").on( "click", function(){carToJob(false)});
+    $("#tolls_daily_true").on( "click", function(){tolls_daily(true)});
+    $("#tolls_daily_false").on( "click", function(){tolls_daily(false)});
+
+    $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
+    $("#drive_to_work_no_form3").on( "change", function(){driveToJob(false)});
+    $("#working_time_yes_form3").on( "change", function(){working_time_toggle(true)});
+    $("#working_time_no_form3").on( "change", function(){working_time_toggle(false)});
+
+    $("#radio_income_year").on( "change", function(){income_toggle("year")});
+    $("#radio_income_month").on( "change", function(){income_toggle("month")});
+    $("#radio_income_week").on( "change", function(){income_toggle("week")});
+    $("#radio_income_hour").on( "change", function(){income_toggle("hour")});    
 }
 
 
@@ -265,7 +260,7 @@ getScriptOnce(JS_FILES.jTimer, function(){
             return currentTime / 1000;
         };
     };
-    TimeCounter.resetStopwatch();
+    TimeCounter.resetStopwatch();    
 });
 /* jshint ignore:end */
 
