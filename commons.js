@@ -59,10 +59,6 @@ module.exports = {
         return _getDomainsObject(domainsCountries);
     },
     
-    getCSPstring: function(domainsCountries){
-        return _getCSPstring(domainsCountries);
-    },
-    
     getUniqueArray: function(Arr){
         return _getUniqueArray(Arr);
     },
@@ -519,94 +515,6 @@ function setCdnOrLocalFiles(isCDN){
     }
 }
 
-//returns an object with several different information about the domains
-function _getDomainsObject(domainsCountries){
-
-    var domainsObj = {};
-    domainsObj.countries = domainsCountries; //Object that associates a Country Code (CC) with a domain
-    domainsObj.uniqueArr = _getUniqueArray(domainsCountries); //Array with unique domain names
-        
-    var counts = {};
-    var arr = Object.values(domainsCountries);
-    for (var i = 0; i < arr.length; i++) {
-        counts[arr[i]] = 1 + (counts[arr[i]] || 0);
-    }        
-    domainsObj.counts = counts;  //for every domain, count how many domain names
-    
-    return domainsObj;
-}
-
-//Content Security Policy for webpages in Internet
-function _getCSPstring(domainsCountries){
-    const debug = require('debug')('app:CSP');
-    debug(SETTINGS);
-    debug(FILENAMES);    
-
-    var reliableDomains = [];
-    
-    if(SETTINGS.cdn.enabled){
-        reliableDomains.push(extractHostname(SETTINGS.cdn.url));
-        for(var key in FILENAMES.client){
-            var file = FILENAMES.client[key];
-            if(file.cdn){
-                reliableDomains.push(file.cdn);
-            }
-        }
-    }
-    
-    //https://developers.google.com/recaptcha/docs/faq#im-using-content-security-policy-csp-on-my-website-how-can-i-configure-it-to-work-with-recaptcha
-    if(SETTINGS.switches.googleCaptcha){
-        reliableDomains.push("https://www.google.com/recaptcha/");
-        reliableDomains.push("https://www.gstatic.com/recaptcha/");
-    }
-    
-    if(SETTINGS.switches.googleAnalytics){
-        reliableDomains.push(FILENAMES.client.Ganalytics);
-    }
-
-    if(SETTINGS.switches.uber){
-        reliableDomains.push("https://api.uber.com");
-    }    
-    
-    if(SETTINGS.switches.social){
-        reliableDomains.push(FILENAMES.client.jssocials);
-    }
-    
-    //filters repeated values
-    var uniqueReliableDomains = reliableDomains.filter(function(item, pos) {
-        return reliableDomains.indexOf(item) == pos;
-    })    
-    debug(uniqueReliableDomains);
-    
-    //adds string with reliable domains/urls
-    var domainsStr = "";
-    for (var i=0; i<uniqueReliableDomains.length; i++){
-        domainsStr += uniqueReliableDomains[i] + " ";
-    }
-
-    //for 'strict-dynamic' read
-    //https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
-    //to generate nonces use crypto.randomBytes(128).toString('base64')
-    
-    var nonceStr, usesNonce = true;
-    if(usesNonce){
-        nonceStr = "'nonce-EDNnf03nceIOfn39fn3e9h3sdfa' 'strict-dynamic'";
-    }
-    else{
-        nonceStr = "";
-    }
-    
-    var CSPstr = "default-src 'self'" + " " + domainsStr + "; ";
-    CSPstr += "script-src 'self' 'unsafe-eval' 'unsafe-inline' " + nonceStr + " " + domainsStr + "; ";
-    CSPstr += "style-src 'self' 'unsafe-inline'; ";
-    CSPstr += "img-src 'self'; ";
-    CSPstr += "object-src 'none';";
-    CSPstr += "base-uri 'self';";
-    
-    debug(CSPstr.replace(/;/g,`;\n`));
-    return CSPstr; 
-}
-
 //gets Array with unique non-repeated values
 //ex: [2,2,3,4,4] returns [2,3,4]
 function _getUniqueArray(Arr){
@@ -695,6 +603,23 @@ function _getDataBaseErrMsg(scriptName, serviceObj){
                 "- do not run this particular building script file while building.\n";
     
     return messg;
+}
+
+//returns an object with several different information about the domains
+function _getDomainsObject(domainsCountries){
+
+    var domainsObj = {};
+    domainsObj.countries = domainsCountries; //Object that associates a Country Code (CC) with a domain
+    domainsObj.uniqueArr = _getUniqueArray(domainsCountries); //Array with unique domain names
+        
+    var counts = {};
+    var arr = Object.values(domainsCountries);
+    for (var i = 0; i < arr.length; i++) {
+        counts[arr[i]] = 1 + (counts[arr[i]] || 0);
+    }        
+    domainsObj.counts = counts;  //for every domain, count how many domain names
+    
+    return domainsObj;
 }
 
 //returns true when an object is empty = {} or invalid

@@ -34,8 +34,9 @@ var SWITCHES,               //GLOBAL switches Object
     UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX 
     CALCULATED,             //calculated meta-data after user clicks "Run"
     DISPLAY,                //Object regarding the display of information               
-    SERVICE_AVAILABILITY;   //To be used by the code to check whether services are available
-     
+    SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available
+    NONCE;                  //Number used only once for CSP rules in scrips
+
 //Global Function variables for function expressions
 var Run1, PrintElem, generatePDF, TimeCounter;
 
@@ -65,7 +66,8 @@ var Run1, PrintElem, generatePDF, TimeCounter;
     WORDS           = JSON.parse(decodeURI(globalVariables.dataset.words));
     INITIAL_TEX     = WORDS.initial_text;
     GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
-    NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);    
+    NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);
+    NONCE           = globalVariables.dataset.nonce;
     
     //Location of Javascript Files (define in /commons.js)
     var JSfiles = JSON.parse(decodeURI(globalVariables.dataset.js_files));
@@ -113,7 +115,7 @@ var Run1, PrintElem, generatePDF, TimeCounter;
     
     /*forms present page full url, example 'http://autocosts.info/UK' */
     PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
-    /*it may be changed accordingly*/
+    
     LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
     STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
     STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
@@ -186,11 +188,15 @@ var getScriptOnce = function() {
         if (scriptArray.indexOf(url) === -1){            
             var script=document.createElement('script');
             script.src=url;
-            script.setAttribute('nonce', 'EDNnf03nceIOfn39fn3e9h3sdfa');
+            
+            if(NONCE){
+                script.setAttribute('nonce', NONCE);
+            }
+            
             var head=document.getElementsByTagName('head')[0],
                 done=false;
 
-            script.onload=script.onreadystatechange = function(){
+            script.onload = script.onreadystatechange = function(){
                 if ( !done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') ) {
                     done=true;
                     if (typeof callback === 'function') {
