@@ -38,7 +38,7 @@ var SWITCHES,               //GLOBAL switches Object
     NONCE;                  //Number used only once for CSP rules in scrips
 
 //Global Function variables for function expressions
-var Run1, PrintElem, generatePDF, TimeCounter;
+var Run1, Print, generatePDF, TimeCounter;
 
 (function(){
 
@@ -120,7 +120,7 @@ var Run1, PrintElem, generatePDF, TimeCounter;
     STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
     STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
 
-    Run1 = PrintElem = generatePDF = TimeCounter = function(){
+    Run1 = Print = generatePDF = TimeCounter = function(){
         console.error("Function " + arguments.callee.name + " called and not yet loaded");
     };
 
