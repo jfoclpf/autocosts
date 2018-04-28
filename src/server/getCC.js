@@ -115,7 +115,7 @@ module.exports = {
 
         //this is a global variable
         CSPstr1 = "style-src 'self' 'unsafe-inline'; ";
-        CSPstr1 += "img-src 'self'; ";
+        CSPstr1 += "img-src 'self' data:; ";
         CSPstr1 += "object-src 'none';";
         CSPstr1 += "base-uri 'self';";
         CSPstr1 += frameStr;
@@ -136,7 +136,9 @@ function getCSPstr(nonce){
     }    
 
     return CSPstr0 + nonceStr + CSPstr1;
-}; 
+}
+
+
 
 
 
