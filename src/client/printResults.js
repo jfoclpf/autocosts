@@ -111,7 +111,7 @@ function Run2(callback){
             text: INITIAL_TEX,
             showLabel: false,
             showCount: false,
-            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+            shares: ["whatsapp", "facebook", "twitter", "googleplus"]
         });
     }
 
