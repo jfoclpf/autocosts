@@ -43,8 +43,8 @@ Print = function PrintElem(title) {
 
     if(DISPLAY.result.ext_costs){        
         mywindow.document.write('<p style="page-break-before: always;"></p>');
-        mywindow.document.write($('#exten_costs').html());
-        mywindow.document.write('<br><br>');
+        mywindow.document.write($('#extern_costs').html());
+        mywindow.document.write('<br>');
     }
 
     mywindow.document.write('</div>');
