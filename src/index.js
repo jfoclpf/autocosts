@@ -74,10 +74,9 @@ eventEmitter.on('settingsChanged', function(){
     //updates filenames and directory objects
     serverData.fileNames = fileNames = commons.getFileNames();
     serverData.directories = directories = commons.getDirectories();
-    serverData.directories.index = directories.index = __dirname + "/";
-    serverData.CSPstrig = commons.getCSPstring(countriesInfo.domainsCountries);
+    serverData.directories.index = directories.index = __dirname;    
     
-    console.log("Settings updated.");
+    console.log("Settings updated.");    
     debug(util.inspect(serverData, {showHidden: false, depth: null}));
 });
 

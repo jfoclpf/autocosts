@@ -197,7 +197,7 @@ function _init(){
                     setCdnOrLocalFiles(false); //set Local files with "false"
                 }
                 
-                process.stdout.write("There is no Internet connection. Services disabled:");
+                process.stdout.write("\nThere is no Internet connection. Services disabled:");
                 for (var i=0; i<demandingInternet.length; i++){
                     if(SWITCHES[demandingInternet[i]]){
                         SWITCHES[demandingInternet[i]] = false;
