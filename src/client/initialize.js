@@ -189,9 +189,9 @@ function loadsButtonsSettings(){
     $("#country_select").val(COUNTRY);
     
     //associate click functions with buttons (handlers)
-    $("#rerun_button").on( "click", function(){reload();} );
-    $("#print_button").on( "click", function(){PrintElem();} );
-    $("#generate_PDF").on( "click", function(){generatePDF();} );     
+    $("#rerun_button").on( "click", function(){reload()});
+    $("#print_button").on( "click", function(){Print(WORDS.main_title)});
+    $("#generate_PDF").on( "click", function(){generatePDF()});
 
     $("#form_part1_button_next").on( "click", function(){openForm_part(1, 2)});
     $("#form_part2_button_back").on( "click", function(){openForm_part(2, 1)});
