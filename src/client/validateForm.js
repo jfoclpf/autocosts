@@ -58,7 +58,7 @@ function is_userdata_formpart1_ok(){
     if(!carNumberOfMonths){
         $.jAlert({
             'title': WORDS.depreciation,
-            'content': WORDS.depreciation_date + "!"
+            'content': WORDS.error_depreciation_date + "!"
         });
         return false;
     }
