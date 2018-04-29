@@ -214,16 +214,4 @@ var getScriptOnce = function() {
     };
 }(); //here it executes the function immediately to get the returned function
 
-//defer loading of jQuery
-getScriptOnce(JS_FILES.jQuery, function(){
-    if(window.jQuery){
-        getScriptOnce(JS_FILES.initialize, function(){});
-    }
-    //if default jQuery location not available, loads jquery local file
-    else{
-        getScriptOnce(JS_FILES.jQueryLocal, function(){
-            getScriptOnce(JS_FILES.initialize, function(){});
-        });        
-    }                
-});
-
+getScriptOnce(JS_FILES.initialize, function(){});

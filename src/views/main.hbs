@@ -24,11 +24,15 @@
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
 
     <link rel="stylesheet" media="screen" href="css/style.css" />     
-        
+    
     <script src="client/jquery/jquery.min.js"></script>
     <script src="client/jquery/jquery.sidebar.js"></script>
-    <script src="client/handlers.js"></script>
+    <script src="client/handlers.js"></script>    
     
+    <!-- Data that is being sent -->
+    {{> globalData }}    
+    <script src="client/Globals.js"></script>
+             
 </head>
 <body class="home">
 
@@ -281,25 +285,16 @@
         </div>    
     </section>
     
+    {{#with words}}
     <section id="form">
         {{> form }}
     </section>
-
+    {{/with}}
+    
     <footer>
         <div class="animation"></div>
     </footer>
 </main>
-    
-<script>
-    $(document).ready(function(){
-        $("#form").hide();
-    });
-    
-    $("#calculateButton").on("click", function(){
-        $("#hero, footer").hide();
-        $("#form").show();
-    });    
-</script>
         
 </body>
 </html>
