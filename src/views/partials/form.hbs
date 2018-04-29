@@ -1,456 +1,222 @@
-<!DOCTYPE html>
-<html>
+<div class="container">
+    <div class="steps">
+        <ul>
+          <li class="list active number one"> <span>Standing costs</span> 
+              <ul>
+                  <li class="active done"><span>Depreciation of the vehicle</span></li>
+                  <li class="active"><span>Vehicle insurance and breakdown coverage</span></li>
+                  <li><span>Car finance</span></li>
+                  <li><span>Vehicle inspection</span></li>
+                  <li><span>Vehicle excise tax</span></li>
+              </ul>
+          </li>
+          <li class="list number two"><span>Running costs</span>
+              <ul>
+                  <li><span>Fuel</span></li>
+                  <li><span>Maintenance</span></li>
+                  <li><span>Repair and improvements</span></li>
+                  <li><span>Parking</span></li>
+                  <li><span>Tolls</span></li>
+                  <li><span>Traffic fines</span></li>
+                  <li><span>Washing and cleaning</span></li>
+              </ul>
+          </li>
+          <li class="list number three"><span> Additional data <span class="optional">Optional</span></span>
+              <ul>
+                  <li><span>Public transports</span></li>
+                  <li><span>Income</span></li>
+                  <li><span>Working time</span></li>
+                  <li><span>Distance</span></li>
+                  <li><span>Time spent in driving</span></li>
+              </ul>
+          </li>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width">
-    
-    <!-- <link rel="icon" type="image/png" href="/favicon.ico" /> -->
-    
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Auto Costs" />
-    <meta property="og:description" content="" />
-    <meta property="og:url" content="http://" />
-    <meta property="og:site_name" content="Auto Costs" />
-    <meta property="og:image" content="" />
-    <meta property="og:image:secure_url" content="" />
-    <meta property="og:locale" content="en_US" />
-    
-    <title>Auto Costs</title>    
-    
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
-    
-    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
-
-    <link rel="stylesheet" media="screen" href="css/style.css" />     
-    
-    
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="client/jquery/jquery.sidebar.js"></script>
-    <script src="http://jillix.github.io/jQuery-sidebar/js/handlers.js"></script>
-
-</head>
-<body class="form">
-
-<main class="container">
-
-    <div class="sidebars">
-        <div class="sidebar left">
-            <div class="sidebar-left-container">
-                <a href="#" class="btn btn-danger close" data-action="close" data-side="left"><span></span></a>
-                <h3>Info</h3>
-                <p>This calculator will allow you to find <b>the true cost</b> of owning a car in <b>Canada</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car.</p>
-
-                <p>Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.</p>
-
-                <p>This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.</p>
-
-                <div class="sidebar-contact">
-                    <h3>Contact us</h3>
-                    <a href="mailto:info@autocosts.info">info@autocosts.info</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar right">
-            <div class="sidebar-right-container">
-                <a href="#" class="btn btn-danger close" data-action="close" data-side="right"><span></span></a>
-                <h3>Costs for <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                                <option value="AR">Argentina</option> 
-                                <option value="AU">Australia</option> 
-                                <option value="BO">Bolivia</option> 
-                                <option value="BR">Brasil</option> 
-                                <option value="CA" selected="">Canada</option> 
-                                <option value="CL">Chile</option> 
-                                <option value="CN">中国</option> 
-                                <option value="CO">Colombia</option> 
-                                <option value="CR">Costa Rica</option> 
-                                <option value="CU">Cuba</option> 
-                                <option value="CZ">Česká</option> 
-                                <option value="DE">Deutschland</option> 
-                                <option value="DK">Danmark</option> 
-                                <option value="DO">Rep. Dominicana</option> 
-                                <option value="EC">Ecuador</option> 
-                                <option value="ES">España</option> 
-                                <option value="FI">Suomessa</option> 
-                                <option value="FR">France</option> 
-                                <option value="GR">Ελλάδα</option> 
-                                <option value="GT">Guatemala</option> 
-                                <option value="HU">Magyarország</option> 
-                                <option value="IE">Ireland</option> 
-                                <option value="IN">India</option> 
-                                <option value="IT">Italia</option> 
-                                <option value="JP">日本</option> 
-                                <option value="MX">México</option> 
-                                <option value="NI">Nicaragua</option> 
-                                <option value="NL">Nederland</option> 
-                                <option value="NO">Norge</option> 
-                                <option value="PA">Panamá</option> 
-                                <option value="PE">Perú</option> 
-                                <option value="PL">Polska</option> 
-                                <option value="PR">Puerto Rico</option> 
-                                <option value="PT">Portugal</option> 
-                                <option value="PY">Paraguay</option> 
-                                <option value="RO">România</option> 
-                                <option value="RU">Россия</option> 
-                                <option value="SE">Sverige</option> 
-                                <option value="SV">El Salvador</option> 
-                                <option value="TR">Türkiye</option> 
-                                <option value="UA">Україна</option> 
-                                <option value="UK">United Kingdom</option> 
-                                <option value="US">USA</option> 
-                                <option value="UY" >Uruguay</option> 
-                                <option value="VE">Venezuela</option>  
-                            </select>
-                </h3>
-                <h4>Monthly cost (average)</h4>
-                <table>
-                    <tr>
-                        <th>Standing costs</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>Depreciation</td>
-                        <td>C$ 90.5</td>
-                    </tr>
-                    <tr>
-                        <td>Insurance</td>
-                        <td>C$ 54.2</td>
-                    </tr>
-                    <tr>
-                        <td>Loan interest</td>
-                        <td>C$ 0.0</td>
-                    </tr>
-                    <tr>
-                        <td>Inspection</td>
-                        <td>C$ 8.5</td>
-                    </tr>
-                    <tr>
-                        <td>Car tax</td>
-                        <td>C$ 46.5</td>
-                    </tr>
-                    <tr>
-                        <td>50% maintenance</td>
-                        <td>C$ 23.2</td>
-                    </tr>    
-                    <tr class="subtotal">
-                        <td>Total standing costs</td>
-                        <td>C$ 200</td>
-                    </tr>     
-                </table>
-                <table>
-                    <tr>
-                        <th>Running costs</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>Fuel</td>
-                        <td>C$ 65.3</td>
-                    </tr>
-                    <tr>
-                        <td>50% maintenance</td>
-                        <td>C$ 46.5</td>
-                    </tr>
-                    <tr>
-                        <td>Repair</td>
-                        <td>C$ 13.2</td>
-                    </tr>
-                    <tr>
-                        <td>Parking</td>
-                        <td>C$ 28.7</td>
-                    </tr>
-                    <tr>
-                        <td>Tolls</td>
-                        <td>C$ 0.1</td>
-                    </tr>
-                    <tr>
-                        <td>Traffic fines</td>
-                        <td>C$ 0.7</td>
-                    </tr>
-                    <tr>
-                        <td>Washing</td>
-                        <td>C$ 2.6</td>
-                    </tr>    
-                    <tr class="subtotal">
-                        <td>Total running costs</td>
-                        <td>C$ 134</td>
-                    </tr>     
-                </table>
-                <table class="total blue-bg">
-                    <tr>
-                        <th>Total monthly costs</th>
-                        <th>C$ 334</th>
-                    </tr>
-                </table>
-
-
-                <h4 class="yellow-bar">Year cost (average)</h4>
-                <table>
-                    <tr>
-                        <td>Running cost per km</td>
-                        <td>C$ 0.19</td>
-                    </tr>
-                    <tr>
-                        <td>Total cost per km</td>
-                        <td>C$ 0.48</td>
-                    </tr>
-                    <tr>
-                        <td>Kinetic speed</td>
-                        <td>42 km/h</td>
-                    </tr>
-                    <tr>
-                        <td>Consumer speed</td>
-                        <td>22 km/h</td>
-                    </tr>
-                </table>
-                <table class="total yellow-bg">
-                    <tr>
-                        <th>Total year costs</th>
-                        <th>C$ 4000</th>
-                    </tr>
-                </table>
-
-            </div>
-        </div>
+        </ul>
     </div>
 
-    <header>
-        <a href="#" class="btn btn-left-sidebar" data-action="toggle" data-side="left"></a>
 
-        <a href="#" class="btn btn-right-sidebar" data-action="toggle" data-side="right"></a>
+    <!--  Here start the long form with al the steps  -->
+    <div class="form_part" id="form_part1">
+        <div class="form_part_head_title">
+            <h2 class="lang-fixed_costs_header_1"> 
+               {{{fixed_costs_header_1}}}
+            </h2>
+            <p class="lang-fixed_costs_header_2">
+                {{{fixed_costs_header_2}}}
+             </p>
+        </div>
 
-        <h1 class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></h1>
-    </header>
-    
-    
-    <section id="form">
-        <div class="container">
-            <div class="steps">
-                <ul>
-                  <li class="list active number one"> <span>Standing costs</span> 
-                      <ul>
-                          <li class="active done"><span>Depreciation of the vehicle</span></li>
-                          <li class="active"><span>Vehicle insurance and breakdown coverage</span></li>
-                          <li><span>Car finance</span></li>
-                          <li><span>Vehicle inspection</span></li>
-                          <li><span>Vehicle excise tax</span></li>
-                      </ul>
-                  </li>
-                  <li class="list number two"><span>Running costs</span>
-                      <ul>
-                          <li><span>Fuel</span></li>
-                          <li><span>Maintenance</span></li>
-                          <li><span>Repair and improvements</span></li>
-                          <li><span>Parking</span></li>
-                          <li><span>Tolls</span></li>
-                          <li><span>Traffic fines</span></li>
-                          <li><span>Washing and cleaning</span></li>
-                      </ul>
-                  </li>
-                  <li class="list number three"><span> Additional data <span class="optional">Optional</span></span>
-                      <ul>
-                          <li><span>Public transports</span></li>
-                          <li><span>Income</span></li>
-                          <li><span>Working time</span></li>
-                          <li><span>Distance</span></li>
-                          <li><span>Time spent in driving</span></li>
-                      </ul>
-                  </li>
-                  
-                </ul>
+        <div class="field_container" id="depr_input_td">
+            <label>
+                {{{aq_date}}}
+            </label>
+            <input type="date" step="1" id="acquisitionDate" name="acquisitionDate" >
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+        <div class="field_container" id="p2">
+            <label>
+                {{{com_value}}}
+                <span>
+                    If new, the price you paid for the car. <br />
+                    If used, the commercial value the car had when you acquired it.
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
             </div>
 
-            
-            <!--  Here start the long form with al the steps  -->
-            <div class="form_part" id="form_part1">
-                <div class="form_part_head_title">
-                    <h2 class="lang-fixed_costs_header_1"> 
-                       {{{fixed_costs_header_1}}}
-                    </h2>
-                    <p class="lang-fixed_costs_header_2">
-                        {{{fixed_costs_header_2}}}
-                     </p>
-                </div>
-                
-                <div class="field_container" id="depr_input_td">
-                    <label>
-                        {{{aq_date}}}
-                    </label>
-                    <input type="date" step="1" id="acquisitionDate" name="acquisitionDate" >
 
-                    <div class="next">
-                        <a href="#" class="button btn-orange">Next &#10230;</a>
-                        <span>press <b>Enter</b> or <b>Tab</b> </span>
-                    </div>
-                </div>
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
 
-                <div class="field_container" id="p2">
-                    <label>
-                        {{{com_value}}}
-                        <span>
-                            If new, the price you paid for the car. <br />
-                            If used, the commercial value the car had when you acquired it.
-                        </span>
-                    </label>
-                    <div class="input_value">
-                        <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
-                        <span class="unit">
-                            {{{curr_symbol}}}
-                        </span>
-                    </div>
-
-
-                    <div class="next">
-                        <a href="#" class="button btn-orange">Next &#10230;</a>
-                        <span>press <b>Enter</b> or <b>Tab</b> </span>
-                    </div>
-                </div>
-
-                <div class="field_container" id="p2">
-                    <label>
-                        <!--{{{com_value_today}}}-->
-                        Commercial value of the car today
-                        <span>
-                            If you sell it now, how much would you get?
-                        </span>
-                    </label>
-                    <div class="input_value">
-                        <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
-                        <span class="unit">
-                            {{{curr_symbol}}}
-                        </span>
-                    </div>
-
-
-                    <div class="next">
-                        <a href="#" class="button btn-orange">Next &#10230;</a>
-                        <span>press <b>Enter</b> or <b>Tab</b> </span>
-                    </div>
-                </div>
-
-
-                <!--************************** INSURANCE **************************-->
-
-                <div class="field_container" id="">
-                    <label>
-                        {{{insurance}}}
-                    </label>
-                    <div class="radio_tabs">
-                        <div class="radio_tab_container">
-                            <input type="radio" name="insurancePaymentPeriod" value="mensal">
-                            <label>
-                                {{{monthly}}}
-                            </label>
-                         </div>
-
-                        <div class="radio_tab_container">
-                            <input type="radio" name="insurancePaymentPeriod" value="trimestral">
-                            <label>
-                                {{{trimesterly}}}
-                            </label>
-                        </div>
-                        <div class="radio_tab_container">
-                            <input type="radio" name="insurancePaymentPeriod" value="semestral">
-                            <label>
-                                {{{semesterly}}}
-                            </label>
-                        </div>
-
-                        <div class="radio_tab_container">
-                            <input type="radio" name="insurancePaymentPeriod" value="anual">
-                            <label>
-                                {{{yearly}}}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="input_value">
-                        <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput unit_left" name="insuranceValue" />
-                        <span class="unit">
-                            {{{curr_symbol}}}
-                        </span>
-                    </div>
-
-                    <div class="next">
-                        <a href="#" class="button btn-orange">Next &#10230;</a>
-                        <span>press <b>Enter</b> or <b>Tab</b> </span>
-                    </div>
-                </div>
-
-                <!--************************** CREDIT **************************-->
-
-                <div class="field_container" id="">
-                    <label class="float_left">
-                        {{{insurance}}}
-                    </label>
-                    <div class="radio_tabs small_tabs">
-                        <div class="radio_tab_container">
-                            <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="" onclick="onclick_div_show('#sim_credDiv',true);">
-                            <label>
-                                {{{yes}}}
-                            </label>
-                         </div>
-
-                        <div class="radio_tab_container">
-                            <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="" onclick="onclick_div_show('#sim_credDiv',false);" checked>
-                            <label>
-                                {{{no}}}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div id="sim_credDiv">
-                        <div class="input_value small_input">
-                            <label>
-                                {{{credit_loan}}}
-                            </label>
-                             <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput unit_left" name="borrowedAmount"/>
-                            <span class="unit">
-                                {{{curr_symbol}}}
-                            </span>
-                        </div>
-                        <div class="input_value small_input">
-                            <label>
-                                {{{credit_period}}}
-                            </label>
-                             <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" class="no_padding_left" />
-                        </div>
-                        <div class="input_value small_input">
-                            <label>
-                                {{{credit_average_value}}}
-                            </label>
-                             <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput unit_left" name="amountInstallment" />
-                            <span class="unit">
-                                {{{curr_symbol}}}
-                            </span>
-                        </div>
-                        <div class="input_value small_input">
-                            <label>
-                                {{{credit_residual_value}}}
-                            </label>
-                            <input type="number" min="0" step="Any" id="residualValue" class="currencyInput unit_left" name="residualValue" />
-                            <span class="unit" style="top: 49px">
-                                {{{curr_symbol}}}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="next">
-                        <a href="#" class="button btn-orange">Next &#10230;</a>
-                        <span>press <b>Enter</b> or <b>Tab</b> </span>
-                    </div>
-                </div>
-
+        <div class="field_container" id="p2">
+            <label>
+                <!--{{{com_value_today}}}-->
+                Commercial value of the car today
+                <span>
+                    If you sell it now, how much would you get?
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
             </div>
 
-            
-        </div>    
-        
-    </section>
 
-</main>
-        
-</body>
-</html>
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** INSURANCE **************************-->
+
+        <div class="field_container" id="">
+            <label>
+                {{{insurance}}}
+            </label>
+            <div class="radio_tabs">
+                <div class="radio_tab_container">
+                    <input type="radio" name="insurancePaymentPeriod" value="mensal">
+                    <label>
+                        {{{monthly}}}
+                    </label>
+                 </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" name="insurancePaymentPeriod" value="trimestral">
+                    <label>
+                        {{{trimesterly}}}
+                    </label>
+                </div>
+                <div class="radio_tab_container">
+                    <input type="radio" name="insurancePaymentPeriod" value="semestral">
+                    <label>
+                        {{{semesterly}}}
+                    </label>
+                </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" name="insurancePaymentPeriod" value="anual">
+                    <label>
+                        {{{yearly}}}
+                    </label>
+                </div>
+            </div>
+
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="insuranceValue" class="currencyInput unit_left" name="insuranceValue" />
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+        <!--************************** CREDIT **************************-->
+
+        <div class="field_container" id="">
+            <label class="float_left">
+                {{{insurance}}}
+            </label>
+            <div class="radio_tabs small_tabs">
+                <div class="radio_tab_container">
+                    <input type="radio" id="cred_auto_true" name="AutoCreditRadioBtn" value="true" class="" onclick="onclick_div_show('#sim_credDiv',true);">
+                    <label>
+                        {{{yes}}}
+                    </label>
+                 </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" id="cred_auto_false" name="AutoCreditRadioBtn" value="false" class="" onclick="onclick_div_show('#sim_credDiv',false);" checked>
+                    <label>
+                        {{{no}}}
+                    </label>
+                </div>
+            </div>
+
+            <div id="sim_credDiv">
+                <div class="input_value small_input">
+                    <label>
+                        {{{credit_loan}}}
+                    </label>
+                     <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput unit_left" name="borrowedAmount"/>
+                    <span class="unit">
+                        {{{curr_symbol}}}
+                    </span>
+                </div>
+                <div class="input_value small_input">
+                    <label>
+                        {{{credit_period}}}
+                    </label>
+                     <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" class="no_padding_left" />
+                </div>
+                <div class="input_value small_input">
+                    <label>
+                        {{{credit_average_value}}}
+                    </label>
+                     <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput unit_left" name="amountInstallment" />
+                    <span class="unit">
+                        {{{curr_symbol}}}
+                    </span>
+                </div>
+                <div class="input_value small_input">
+                    <label>
+                        {{{credit_residual_value}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput unit_left" name="residualValue" />
+                    <span class="unit" style="top: 49px">
+                        {{{curr_symbol}}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>           
 
