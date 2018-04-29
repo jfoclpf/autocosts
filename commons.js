@@ -572,7 +572,7 @@ function getArgvHelpMsg(){
         "    --disableCharts        Disables Charts on final report\n" +        
         "\n" +
         "    External API services, disabled by default\n" +
-        "    API credentials must be in either " + credDirRelativePath + "/work/ or " + credDirRelativePath + "/prod/ according to release\n" +        
+        "    API credentials must be in either " + credDirRelativePath + "/workCredentials.json or " + credDirRelativePath + "/prodCredentials.json according to release\n" +        
         "    --cdn                  Enables Content Delivery Network\n" +
         "    --uber                 Enables UBER API\n" +
         "    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n" +
