@@ -94,7 +94,8 @@ async.series([
     function(callback){
         if(options.copy){
             copy();
-            concatCSSFiles(callback);
+            //concatCSSFiles(callback);
+            callback();
         }
         else{
             callback();
@@ -164,7 +165,7 @@ async.series([
             //when option run is selected, at least makes a new copy from src/ to bin/ if not enabled
             if(!options.copy){
                 copy();
-                concatCSSFiles(callback);
+                //concatCSSFiles(callback);
             }                        
             runApp();
         }        

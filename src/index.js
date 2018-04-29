@@ -104,7 +104,7 @@ app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public'))); //root public folder
 app.use('/tables'    , express.static( path.join(__dirname, 'tables'   )));
 app.use('/css'       , express.static( path.join(__dirname, 'css'      )));
-app.use('/images'    , express.static( path.join(__dirname, 'images'   )));
+app.use('/img'       , express.static( path.join(__dirname, 'img'      )));
 app.use('/client'    , express.static( path.join(__dirname, 'client'   )));
 app.use('/countries' , express.static( path.join(__dirname, 'countries')));
 
