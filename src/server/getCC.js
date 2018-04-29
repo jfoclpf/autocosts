@@ -86,7 +86,7 @@ module.exports = {
         }
 
         if(switches.googleAnalytics){
-            reliableDomains.push(fileNames.client.Ganalytics);
+            reliableDomains.push("https://www.google-analytics.com");
         }
 
         if(switches.uber){
