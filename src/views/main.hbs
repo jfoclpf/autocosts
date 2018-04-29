@@ -24,12 +24,11 @@
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
 
     <link rel="stylesheet" media="screen" href="css/style.css" />     
-    
-    
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        
+    <script src="client/jquery/jquery.min.js"></script>
     <script src="client/jquery/jquery.sidebar.js"></script>
-    <script src="http://jillix.github.io/jQuery-sidebar/js/handlers.js"></script>
-
+    <script src="client/handlers.js"></script>
+    
 </head>
 <body class="home">
 
@@ -222,8 +221,7 @@
 
         <h1 class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></h1>
     </header>
-    
-    
+        
     <section id="hero">
         <div class="container">
             <h1>Automobile Cost Calculator</h1>
@@ -279,15 +277,29 @@
              is <b>$5640</b> per year.<br />
             Find the true cost of owning a car in your country.</h2>
 
-            <a href="#" class="button big btn-blue">Calculate car cost</a>
+            <a id="calculateButton" href="#" class="button big btn-blue">Calculate car cost</a>
         </div>    
+    </section>
+    
+    <section id="form">
+        {{> form }}
     </section>
 
     <footer>
         <div class="animation"></div>
     </footer>
-
 </main>
+    
+<script>
+    $(document).ready(function(){
+        $("#form").hide();
+    });
+    
+    $("#calculateButton").on("click", function(){
+        $("#hero, footer").hide();
+        $("#form").show();
+    });    
+</script>
         
 </body>
 </html>

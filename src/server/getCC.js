@@ -44,7 +44,7 @@ module.exports = {
 
         var fileToRender = path.join(serverData.directories.index, "views", "main.hbs");
 
-        if(clientData.notLocalhost){
+        if(false/*clientData.notLocalhost*/){
             var nonce = crypto.randomBytes(16).toString('base64');
             data.nonce = nonce;
             var CSPstr = getCSPstr(nonce);
