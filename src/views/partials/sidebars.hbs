@@ -16,7 +16,7 @@
 <div class="sidebar right">
     <div class="sidebar-right-container">
         <a href="#" class="btn btn-danger close" data-action="close" data-side="right"><span></span></a>
-        <h3>Costs for <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
+        <h3>Costs for <select name="country_select_stats" id="country_select_stats" onchange="onCountrySelect(this.value);">
                         {{~#each serverData.availableCountries~}}
                         <option value="{{@key}}"{{{isSelected ../CC @key}}}>
                             {{~this~}}

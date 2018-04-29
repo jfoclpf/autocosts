@@ -1,13 +1,3 @@
-    $(document).ready(function(){
-        $("#form").hide();
-    });
-
-    $("#calculateButton").on("click", function(){
-        $("#hero, footer").hide();
-        $("#form").show();
-    });  
-
-
 (function initialize() {
     
     getScriptOnce(JS_FILES.validateForm);
@@ -15,11 +5,7 @@
     //detects old versions of Internet Explorer
     oldIE();
 
-    CurrentFormPart=1;
-
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
-
-    DISPLAY.descriptionHTML = $('#description').html();
 
     getScriptOnce(JS_FILES.documentFunctions, function(){
         getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
@@ -182,6 +168,25 @@ function loadsDefaultValues(){
 
 function loadsButtonsSettings(){
     
+    //NEW UI/UX
+    $(document).ready(function(){
+        $("#form").hide();
+    });
+
+    $("#calculateButton").on("click", function(){
+        $("#hero, footer").hide();
+        $("#form").show();
+    });    
+    
+    $("#country_select").on('change', function() {
+      window.location.href = this.value;
+    });
+    
+    
+    
+    /***********************************************************/
+    /***********************************************************/
+    
     //associate click functions with buttons
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
     
@@ -193,11 +198,6 @@ function loadsButtonsSettings(){
     $("#rerun_button").on( "click", function(){reload()});
     $("#print_button").on( "click", function(){Print()});
     $("#generate_PDF").on( "click", function(){generatePDF()});
-
-    $("#form_part1_button_next").on( "click", function(){openForm_part(1, 2)});
-    $("#form_part2_button_back").on( "click", function(){openForm_part(2, 1)});
-    $("#form_part2_button_next").on( "click", function(){openForm_part(2, 3)});
-    $("#form_part3_button_back").on( "click", function(){openForm_part(3, 2)});
 
     $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
     $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
@@ -320,24 +320,5 @@ function IsThisAtest() {
     return false;
 }
 
-/*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
-(But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
-function loadStyleSheets(styleSheets) {
-    var head = document.getElementsByTagName('head')[0];
-
-    for (var i = 0; i < styleSheets.length; i++) {
-        var link = document.createElement('link');
-        var rel = document.createAttribute('rel');
-        var href = document.createAttribute('href');
-
-        rel.value = 'stylesheet';
-        href.value = styleSheets[i];
-
-        link.setAttributeNode(rel);
-        link.setAttributeNode(href);
-
-        head.appendChild(link);
-    }
-}
 
 
