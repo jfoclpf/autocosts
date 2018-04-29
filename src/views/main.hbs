@@ -43,11 +43,8 @@
             <div class="sidebar-left-container">
                 <a href="#" class="btn btn-danger close" data-action="close" data-side="left"><span></span></a>
                 <h3>Info</h3>
-                <p>This calculator will allow you to find <b>the true cost</b> of owning a car in <b>Canada</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car.</p>
-
-                <p>Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.</p>
-
-                <p>This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.</p>
+                
+                {{{words.initial_text}}}
 
                 <div class="sidebar-contact">
                     <h3>Contact us</h3>
@@ -60,51 +57,11 @@
             <div class="sidebar-right-container">
                 <a href="#" class="btn btn-danger close" data-action="close" data-side="right"><span></span></a>
                 <h3>Costs for <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                                <option value="AR">Argentina</option> 
-                                <option value="AU">Australia</option> 
-                                <option value="BO">Bolivia</option> 
-                                <option value="BR">Brasil</option> 
-                                <option value="CA" selected="">Canada</option> 
-                                <option value="CL">Chile</option> 
-                                <option value="CN">中国</option> 
-                                <option value="CO">Colombia</option> 
-                                <option value="CR">Costa Rica</option> 
-                                <option value="CU">Cuba</option> 
-                                <option value="CZ">Česká</option> 
-                                <option value="DE">Deutschland</option> 
-                                <option value="DK">Danmark</option> 
-                                <option value="DO">Rep. Dominicana</option> 
-                                <option value="EC">Ecuador</option> 
-                                <option value="ES">España</option> 
-                                <option value="FI">Suomessa</option> 
-                                <option value="FR">France</option> 
-                                <option value="GR">Ελλάδα</option> 
-                                <option value="GT">Guatemala</option> 
-                                <option value="HU">Magyarország</option> 
-                                <option value="IE">Ireland</option> 
-                                <option value="IN">India</option> 
-                                <option value="IT">Italia</option> 
-                                <option value="JP">日本</option> 
-                                <option value="MX">México</option> 
-                                <option value="NI">Nicaragua</option> 
-                                <option value="NL">Nederland</option> 
-                                <option value="NO">Norge</option> 
-                                <option value="PA">Panamá</option> 
-                                <option value="PE">Perú</option> 
-                                <option value="PL">Polska</option> 
-                                <option value="PR">Puerto Rico</option> 
-                                <option value="PT">Portugal</option> 
-                                <option value="PY">Paraguay</option> 
-                                <option value="RO">România</option> 
-                                <option value="RU">Россия</option> 
-                                <option value="SE">Sverige</option> 
-                                <option value="SV">El Salvador</option> 
-                                <option value="TR">Türkiye</option> 
-                                <option value="UA">Україна</option> 
-                                <option value="UK">United Kingdom</option> 
-                                <option value="US">USA</option> 
-                                <option value="UY" >Uruguay</option> 
-                                <option value="VE">Venezuela</option>  
+                                {{~#each serverData.availableCountries~}}
+                                <option value="{{@key}}"{{{isSelected ../CC @key}}}>
+                                    {{~this~}}
+                                </option>
+                                {{/each}}
                             </select>
                 </h3>
                 <h4>Monthly cost (average)</h4>
@@ -232,56 +189,16 @@
             
             <h2>The average total cost in 
             <select name="country_select" id="country_select" onchange="onCountrySelect(this.value);">
-                <option value="AR">Argentina</option> 
-                <option value="AU">Australia</option> 
-                <option value="BO">Bolivia</option> 
-                <option value="BR">Brasil</option> 
-                <option value="CA" selected="">Canada</option> 
-                <option value="CL">Chile</option> 
-                <option value="CN">中国</option> 
-                <option value="CO">Colombia</option> 
-                <option value="CR">Costa Rica</option> 
-                <option value="CU">Cuba</option> 
-                <option value="CZ">Česká</option> 
-                <option value="DE">Deutschland</option> 
-                <option value="DK">Danmark</option> 
-                <option value="DO">Rep. Dominicana</option> 
-                <option value="EC">Ecuador</option> 
-                <option value="ES">España</option> 
-                <option value="FI">Suomessa</option> 
-                <option value="FR">France</option> 
-                <option value="GR">Ελλάδα</option> 
-                <option value="GT">Guatemala</option> 
-                <option value="HU">Magyarország</option> 
-                <option value="IE">Ireland</option> 
-                <option value="IN">India</option> 
-                <option value="IT">Italia</option> 
-                <option value="JP">日本</option> 
-                <option value="MX">México</option> 
-                <option value="NI">Nicaragua</option> 
-                <option value="NL">Nederland</option> 
-                <option value="NO">Norge</option> 
-                <option value="PA">Panamá</option> 
-                <option value="PE">Perú</option> 
-                <option value="PL">Polska</option> 
-                <option value="PR">Puerto Rico</option> 
-                <option value="PT">Portugal</option> 
-                <option value="PY">Paraguay</option> 
-                <option value="RO">România</option> 
-                <option value="RU">Россия</option> 
-                <option value="SE">Sverige</option> 
-                <option value="SV">El Salvador</option> 
-                <option value="TR">Türkiye</option> 
-                <option value="UA">Україна</option> 
-                <option value="UK">United Kingdom</option> 
-                <option value="US">USA</option> 
-                <option value="UY" >Uruguay</option> 
-                <option value="VE">Venezuela</option>  
+                {{~#each serverData.availableCountries~}}
+                <option value="{{@key}}"{{{isSelected ../CC @key}}}>
+                    {{~this~}}
+                </option>
+                {{/each}}
             </select>
              is <b>$5640</b> per year.<br />
             Find the true cost of owning a car in your country.</h2>
 
-            <a id="calculateButton" href="#" class="button big btn-blue">Calculate car cost</a>
+            <input type="button" id="calculateButton" style="cursor: pointer;" class="button big btn-blue" value="Calculate car cost" />
         </div>    
     </section>
     
