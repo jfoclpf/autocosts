@@ -14,7 +14,7 @@ module.exports = {
         
         var CC = req.params.CC; //ISO 2 letter Country Code        
         debug("Country code: "  + CC);
-
+        
         //data to be rendered embedded in the HTML file
         var data = {};    
 

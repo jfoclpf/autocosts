@@ -186,7 +186,7 @@ app.get('/:CC', function (req, res, next) {
     //from here CC is acceptable and the page will be rendered        
     
     //get words for chosen CC - Country Code
-    let WORDS_CC = WORDS[req.params.CC];
+    let WORDS_CC = WORDS[req.params.CC];    
     getCC.render(req, res, serverData, WORDS_CC);
 });
 

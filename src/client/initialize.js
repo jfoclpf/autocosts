@@ -1,6 +1,15 @@
+    $(document).ready(function(){
+        $("#form").hide();
+    });
+
+    $("#calculateButton").on("click", function(){
+        $("#hero, footer").hide();
+        $("#form").show();
+    });  
+
 
 (function initialize() {
-
+    
     getScriptOnce(JS_FILES.validateForm);
 
     //detects old versions of Internet Explorer
