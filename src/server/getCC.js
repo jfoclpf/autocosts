@@ -115,7 +115,7 @@ module.exports = {
 
         //this is a global variable
         CSPstr1 = "style-src 'self' 'unsafe-inline'; ";
-        CSPstr1 += "img-src 'self' data:; ";
+        CSPstr1 += "img-src 'self' https://www.google-analytics.com data:; ";
         CSPstr1 += "object-src 'none';";
         CSPstr1 += "base-uri 'self';";
         CSPstr1 += frameStr;
