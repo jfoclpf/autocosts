@@ -67,7 +67,7 @@ Options:
     --disableCharts        Disables Charts on final report
 
     External API services, disabled by default
-    API credentials must be in either credentials/work/ or credentials/prod/ according to release
+    API credentials must be in either credentials/workCredentials.json or credentials/prodCredentials.json according to release
     --cdn                  Enables Content Delivery Network
     --uber                 Enables UBER API
     --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
