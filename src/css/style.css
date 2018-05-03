@@ -17,13 +17,11 @@ header h1.logo a img {display:block;}
 container {display:block;}
 wrapper {display:block; position:relative; overflow:hidden; width:100%; max-width:1110px; margin:0 auto; padding:0 30px;}
 
-main.home, main.form {position: relative; width: 1170px; margin: 70px auto 0; text-align: center;}
-main.form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
-main.home {overflow: hidden; width: 100%}
+main {display:block; position: relative; margin: 130px auto 0; text-align: center; min-height:400px;}
+main section {display:block; position:relative; }
+main #form {width: 1170px; margin: 0 auto;}
+main #form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
 
-
-main {display:block; position:relative; min-height:400px; margin-top:131px;}
-main section {display:block; position:relative; clear:left;}
 
 /* ---------- Fonts ---------- */
 h1,h2,h3,h4,h5,h5 {font-weight: 700; font-family: 'Nunito',Arial,sans-serif;}
@@ -349,4 +347,3 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	
 }
-
