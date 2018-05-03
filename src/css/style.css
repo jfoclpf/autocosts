@@ -1,7 +1,7 @@
 @charset "utf-8";
 * {margin:0; padding:0;}
 
-body {background:#f4f6fe; color:#000; font-family: 'Nunito',Arial,sans-serif;}
+body {width: 100%; background:#f4f6fe; color:#000; font-family: 'Nunito',Arial,sans-serif;}
 
 body a {display:block; font-size: 16px; font-weight: 700; color:#2c49b9; text-decoration:none;}
 body a:hover {color:#385be1}
@@ -17,10 +17,9 @@ header h1.logo a img {display:block;}
 container {display:block;}
 wrapper {display:block; position:relative; overflow:hidden; width:100%; max-width:1110px; margin:0 auto; padding:0 30px;}
 
-.container {position: relative; width: 1170px; margin: 70px auto 0; text-align: center; height: 100vh; }
-
-.home, .home main {overflow: hidden; width:100%;}
-.home main {display: -webkit-box; display: -ms-flexbox; display: flex;}
+main.home, main.form {position: relative; width: 1170px; margin: 70px auto 0; text-align: center;}
+main.form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
+main.home {overflow: hidden; width: 100%}
 
 
 main {display:block; position:relative; min-height:400px; margin-top:131px;}
@@ -58,11 +57,10 @@ p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 /* ------------------------------********* FORM ELEMENTS *********------------------------------ */
 
 label {font-size: 18px; color: black; display: block; clear: both; margin-bottom: 15px}
-label > span {font-size: 14px; color: #42444a; display: block; clear: both; }
+label > span, label > i  {font-size: 14px; color: #42444a; display: block; clear: both; }
 label.float_left {float: left; margin: 3px 20px 0 0;}
 
 .input_value { position: relative; }
-.unit { position: absolute; font-size: 30px; color: black; display: block; top: 1px; z-index: 9; }
 
 /* ---------- Inputs ---------- */
 input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 18px }
@@ -70,13 +68,36 @@ input:focus {border-bottom: 1px solid black; outline: none;}
 
 input[type='date'], input[type='number'] {font-size: 30px; text-transform: uppercase; }
 input[type=date]:invalid::-webkit-datetime-edit {color: #b0b2be;}
-input.unit_left {padding-left: 48px}
+
 
 input[type='date']-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::-moz-placeholder {color: #b0b2be;}
 input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
+
+/* Units on inputs */
+.unit { position: absolute; font-size: 30px; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
+.unit_left {padding-left: 48px}
+
+.small_input_days-per-week {padding-right: 113px; width: 87px!important;}
+.unit_days-per-week {margin-left: 91px}
+
+.small_input_kms {padding-right: 50px; width: 150px!important;}
+.unit_kms {margin-left: 157px}
+
+.unit_n_year_left {padding-left: 115px}
+.unit_n_month_left {padding-left: 140px}
+
+.small_input_unit_per_litre {padding-left: 78px!important}
+
+.small_input_litre_100kms {padding-right: 134px; width: 70px!important;}
+.unit_litre_100kms {margin-left: 76px}
+
+.per, .during, .months_year, .minutes_day {padding: 0 10px; font-size: 30px}
+.days_per_month, .hours_week, .min {padding: 0 0 0 10px; font-size: 30px}
+
+
 
 /* Small input */
 .small_input {margin:0 25px 25px 0; display: inline-block; }
@@ -85,16 +106,29 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .small_input label {font-size: 14px; margin-bottom: 10px}
 .small_input label > span {color: #42444a}
 .small_input input[type='number'] {width: 152px; font-size: 22px; padding-left: 34px}
-.small_input input, .small_input input.no_padding_left {width: 200px}
 .small_input .unit {font-size: 22px; top: 29px}
 
+.small_input select, .small_input .per {font-size: 22px}
+
+/*---  Input help classes ---*/
+.no_padding_left {padding-left: 0!important}
+.input_300 {width: 300px!important;}
+.input_200 {width: 200px!important;}
+.input_90 {width: 90px!important}
+.input_70 {width: 70px!important}
+.no_margin_bottom {margin-bottom: 0!important}
+input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
+
+#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 158px}
+.fuel_efficiency {margin-top: 26px}
+
 /* ---------- Radio tabs  ---------- */
-.radio_tabs {display: flex;flex-wrap: wrap; margin: 23px 0 20px;}
+.radio_tabs {display: flex;flex-wrap: wrap; margin: 0px 0 20px;}
 .radio_tab_container {position: relative; height:  41px; width:  122px; margin: 0;}
 
 .radio_tab_container input[type='radio'] {opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; margin: 0; cursor: pointer; border: 1px solid black;}
 
-.radio_tab_container label {text-align: center; font-size: 16px; font-weight: 400; color: black; padding: 8px 0; margin: 0; border: 1px solid #b0b2be;  border-right: none;}
+.radio_tab_container label {text-align: center; text-transform: capitalize; font-size: 16px; font-weight: 400; color: black; padding: 8px 0; margin: 0; border: 1px solid #b0b2be;  border-right: none;}
 .radio_tab_container:first-child label {border-radius: 5px 0 0 5px}
 .radio_tab_container:last-child label {border-right: 1px solid #b0b2be;  border-radius: 0 5px 5px 0}
 
@@ -108,7 +142,7 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 
 /* ---------- Dropdown ---------- */
-select {margin: 0; background: transparent; width: 150px; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 2px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
+select {margin: 0; background: transparent; width: 150px; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
 
 /* CAUTION: IE hackery ahead */
 select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
@@ -145,13 +179,30 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li > ul > li.done:before {content: "\2713"; line-height: 16px; font-size: 11px; padding-left: 3px; width: 11px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1);}
 
 
+/* ---------- Bottom bar ---------- */
+.cta_bottom_bar {
+	-webkit-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
+	-moz-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
+	box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
+	background: white;
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    left: 0;
+    z-index: 999;
+}
+.cta_bottom_bar a {display: inline-block; margin-top: 10px}
+
+
+
 /* ------------------------------********* FORM CONTENT *********------------------------------ */
-.container .form_part {width: 65%; margin: 5% 0 0 5%; display: block; text-align: left;}
+.container .form_part {width: 65%; margin: 0 0 0 5%; display: block; text-align: left;}
 
 .container .form_part h2.lang-fixed_costs_header_1 {font-size: 30px; line-height: 30px; margin: 0 }
 .container .form_part p.lang-fixed_costs_header_2 {color: #868790; margin: 0 }
 
-.container .form_part .form_part_head_title {margin: 0 0 30px }
+.container .form_part .form_part_head_title {margin: 8% 0 30px }
 
 .container .form_part .field_container {display: block; margin-top: 60px;}
 
@@ -298,10 +349,4 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	
 }
-
-
-
-
-
-
 
