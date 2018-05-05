@@ -1,4 +1,14 @@
-(function initialize() {
+$(document).ready(function () {
+    
+    // All sides
+    var sides = ["left", "top", "right", "bottom"];
+    $("h1 span.version").text($.fn.sidebar.version);
+
+    // Initialize sidebars
+    for (var i = 0; i < sides.length; ++i) {
+        var cSide = sides[i];
+        $(".sidebar." + cSide).sidebar({side: cSide});
+    }
     
     getScriptOnce(JS_FILES.validateForm);
 
@@ -35,11 +45,11 @@
         });                
     }
     
-})();
+});
 
 //function that sets the JS language variables to the correspondent HTML divs
 function setLanguageVars(){
-
+    
     //language HTML select dropdowns
     var SelectList = {
         "1" : WORDS.month,
@@ -57,9 +67,7 @@ function setLanguageVars(){
 
     initializeForm();
     loadsDefaultValues();
-    loadsButtonsSettings();
-
-    scrollPage(resized);
+    loadsButtonsSettings();   
 }
 
 function initializeForm(){
@@ -180,18 +188,25 @@ function loadsButtonsSettings(){
     
     $("#country_select").on('change', function() {
         window.location.href = this.value;
-    });        
+    });
+    
+    // Click handlers
+    $(".btn[data-action]").on("click", function () {
+        var $this = $(this);
+        var action = $this.attr("data-action");
+        var side = $this.attr("data-side");
+        $(".sidebar." + side).trigger("sidebar:" + action);
+        return false;
+    });    
+    
+    resizeSelectToContent("#country_select");    
     
     /***********************************************************/
     /***********************************************************/
     
     //associate click functions with buttons
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
-    
-    $("#country_select").on( "change", function(){onCountrySelect(this.value)});
-    //actively selects in the dropdown menu, the Country
-    $("#country_select").val(COUNTRY);
-    
+        
     //associate click functions with buttons (handlers)
     $("#rerun_button").on( "click", function(){reload()});
     $("#print_button").on( "click", function(){Print()});
@@ -317,6 +332,4 @@ function IsThisAtest() {
 
     return false;
 }
-
-
 
