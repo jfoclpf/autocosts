@@ -121,3 +121,21 @@ function numberWithSpaces(x) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "&#160;");
     return parts.join(".");
 }
+
+//adjusts the size of select according to content
+function resizeSelectToContent(jqueryId){
+    var $this = $(jqueryId);
+    var arrowWidth = 10;
+    // create test element
+    var text = $this.find("option:selected").text();
+    var $test = $("<span>").html(text).css({
+        "font-size": $this.css("font-size"), // ensures same size text
+        "visibility": "hidden"               // prevents FOUC
+    });
+    // add to parent, get width, and get out
+    $test.appendTo($this.parent());
+    var width = $test.width();
+    $test.remove();
+    // set select width
+    $this.width(width + arrowWidth);    
+}
