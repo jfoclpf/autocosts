@@ -58,21 +58,22 @@ label {font-size: 18px; color: black; display: block; clear: both; margin-bottom
 label > span, label > i  {font-size: 14px; font-style: normal; color: #42444a; display: block; clear: both; }
 label.float_left {float: left; margin: 3px 20px 0 0;}
 
-.input_value { position: relative; }
 
 /* ---------- Inputs ---------- */
+.input_value { position: relative; }
+
 input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 18px }
 input:focus {border-bottom: 1px solid black; outline: none;}
 
 input[type='date'], input[type='number'] {font-size: 30px; text-transform: uppercase; }
 input[type=date]:invalid::-webkit-datetime-edit {color: #b0b2be;}
 
-
 input[type='date']-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::-moz-placeholder {color: #b0b2be;}
 input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
+
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
@@ -96,7 +97,6 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .days_per_month, .hours_week, .min {padding: 0 0 0 10px; font-size: 30px}
 
 
-
 /* Small input */
 .small_input {margin:0 25px 25px 0; display: inline-block; }
 .small_input:last-child {margin-bottom: 0}
@@ -107,6 +107,7 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .small_input .unit {font-size: 22px; top: 29px}
 
 .small_input select, .small_input .per {font-size: 22px}
+
 
 /*---  Input help classes ---*/
 .no_padding_left {padding-left: 0!important}
@@ -119,6 +120,7 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
 #div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 158px}
 .fuel_efficiency {margin-top: 26px}
+
 
 /* ---------- Radio tabs  ---------- */
 .radio_tabs {display: flex;flex-wrap: wrap; margin: 0px 0 20px;}
@@ -138,7 +140,6 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
  .small_tabs .radio_tab_container label {font-size: 14px; padding: 4px 10px}
 
 
-
 /* ---------- Dropdown ---------- */
 select {font-family: 'Nunito',Arial,sans-serif; text-transform: capitalize; margin: 0; background: transparent; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
 select.big-dropdown {font-size: 30px; padding: 0px 30px 0 0;}
@@ -150,6 +151,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 @media screen and (min-width:0\0) {
     select {background:none\9; padding: 5px\9;} 
 }
+
 
 /* ---------- Steps ---------- */
 .container .steps {display: inline-block; width: 23%; margin: 0 0 0 7%; display: block; }
@@ -163,7 +165,6 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li:after {position: absolute; content: ''; background-color: #d7dbee; width: 2px; height: 25px; top: -10px; left: 17px; z-index: -11;}
 .container .steps ul li > ul > li:before {width: 10px; height: 10px;margin: 10px 0 0 13px;}
 .container .steps ul li > ul > li > span {font-size: 12px; font-weight: 400; margin-left: 35px; line-height: 30px;}
-
 
 .container .steps ul .number:before {color: white; padding: 7px 0 0 12px; width: 23px; height: 28px;}
 .container .steps ul .one:before {content: "1"}
@@ -211,7 +212,6 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
-
 .btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }
 .btn-left-sidebar:hover, .btn-right-sidebar:hover {border-color: #385be1}
 .btn-left-sidebar {position: absolute; left: 27px; top: 27px}
@@ -263,10 +263,8 @@ table.total tr th:first-child + th {text-align: right}
 
 
 /* ---------- Home Footer Animation ---------- */
-
 footer {display:block; background: transparent url('../img/animation-bg.jpg') repeat-x left bottom; height: 280px}
 footer .animation {display:block; background: transparent url('../img/animation.gif') no-repeat center top; width: 1400px; height: 313px}
-
 
 
 
@@ -348,3 +346,4 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	
 }
+
