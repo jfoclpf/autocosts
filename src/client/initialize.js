@@ -23,7 +23,7 @@
     if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
         
         getScriptOnce(JS_FILES.Google.analytics, function(){
-            window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;                                
+            window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();                                
             //change according to your site
             ga('create', GA_TRACKING_ID, 'auto');
             ga('set', 'displayFeaturesTask', null);
