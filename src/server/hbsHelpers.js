@@ -1,4 +1,5 @@
 /*Handlebars Helper Functions*/
+const paragraphBuilder = require("paragraph-builder");
 const debug = require('debug')('app:helpers');
 
 module.exports = {
