@@ -1,6 +1,6 @@
 {
   "name": "autocosts",
-  "version": "5.4.7",
+  "version": "5.4.9",
   "description": "Automobile Costs Calculator",
   "main": "bin/index.js",
   "scripts": {
@@ -26,7 +26,11 @@
     "body-parser": "^1.18.2",
     "canvg-fixed": "^1.0.0",
     "chart.js": "^2.7.2",
+<<<<<<< HEAD
     "colors": "^1.2.4",
+=======
+    "colors": "^1.2.2",
+>>>>>>> eed7184455b2aff0bd73486d10170199683c9035
     "command-line-args": "^5.0.2",
     "compression": "^1.7.2",
     "concat-files": "^0.1.1",
