@@ -112,8 +112,6 @@ function loadExtraFiles() {
 }
 
 
-
-
 function isInteger(n) {
     return (parseFloat(n) == parseInt(n, 10));
 }

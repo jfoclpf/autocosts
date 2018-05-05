@@ -138,6 +138,14 @@ module.exports = {
     //convert number to string with n decimal values
     toFixed: function(num, n){
         return num.toFixed(n);
+    },
+    createParagraphs: function(text){
+        var parArr = paragraphBuilder.toArray(text, 180);
+        var output = "";
+        for (var i=0; i<parArr.length; i++){
+            output += "<p>"+parArr[i]+"</p>";
+        }
+        return output;
     }
 }
 

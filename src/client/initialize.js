@@ -179,10 +179,8 @@ function loadsButtonsSettings(){
     });    
     
     $("#country_select").on('change', function() {
-      window.location.href = this.value;
-    });
-    
-    
+        window.location.href = this.value;
+    });        
     
     /***********************************************************/
     /***********************************************************/
