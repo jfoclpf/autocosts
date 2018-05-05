@@ -55,7 +55,7 @@ p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 /* ------------------------------********* FORM ELEMENTS *********------------------------------ */
 
 label {font-size: 18px; color: black; display: block; clear: both; margin-bottom: 15px}
-label > span, label > i  {font-size: 14px; color: #42444a; display: block; clear: both; }
+label > span, label > i  {font-size: 14px; font-style: normal; color: #42444a; display: block; clear: both; }
 label.float_left {float: left; margin: 3px 20px 0 0;}
 
 .input_value { position: relative; }
@@ -75,7 +75,7 @@ input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 /* Units on inputs */
-.unit { position: absolute; font-size: 30px; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
+.unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
 .unit_left {padding-left: 48px}
 
 .small_input_days-per-week {padding-right: 113px; width: 87px!important;}
@@ -134,13 +134,14 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
     .radio_tab_container label {color: white; background-color: black;}
  }
  /* Small tabs */
- .small_tabs .radio_tab_container  {height:  29px; width: 60px;}
- .small_tabs .radio_tab_container label {font-size: 14px; padding: 4px 0}
+ .small_tabs .radio_tab_container  {height:  29px; width: auto;}
+ .small_tabs .radio_tab_container label {font-size: 14px; padding: 4px 10px}
 
 
 
 /* ---------- Dropdown ---------- */
-select {margin: 0; background: transparent; width: 150px; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
+select {font-family: 'Nunito',Arial,sans-serif; text-transform: capitalize; margin: 0; background: transparent; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
+select.big-dropdown {font-size: 30px; padding: 0px 30px 0 0;}
 
 /* CAUTION: IE hackery ahead */
 select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
