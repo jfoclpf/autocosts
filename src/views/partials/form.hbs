@@ -2,50 +2,50 @@
     <div class="steps">
         <ul>
           <li class="list active number one"> <span>Standing costs</span> 
-              <ul>
-                  <li class="active done"><span>Depreciation of the vehicle</span></li>
-                  <li class="active"><span>Vehicle insurance and breakdown coverage</span></li>
-                  <li><span>Car finance</span></li>
-                  <li><span>Vehicle inspection</span></li>
-                  <li><span>Vehicle excise tax</span></li>
-              </ul>
+            <ul>
+                <li class="active done"><span>Depreciation of the vehicle</span></li>
+                <li class="active"><span>Vehicle insurance and breakdown coverage</span></li>
+                <li><span>Car finance</span></li>
+                <li><span>Vehicle inspection</span></li>
+                <li><span>Vehicle excise tax</span></li>
+            </ul>
           </li>
           <li class="list number two"><span>Running costs</span>
-              <ul>
-                  <li><span>Fuel</span></li>
-                  <li><span>Maintenance</span></li>
-                  <li><span>Repair and improvements</span></li>
-                  <li><span>Parking</span></li>
-                  <li><span>Tolls</span></li>
-                  <li><span>Traffic fines</span></li>
-                  <li><span>Washing and cleaning</span></li>
-              </ul>
+            <ul>
+                <li><span>Fuel</span></li>
+                <li><span>Maintenance</span></li>
+                <li><span>Repair and improvements</span></li>
+                <li><span>Parking</span></li>
+                <li><span>Tolls</span></li>
+                <li><span>Traffic fines</span></li>
+                <li><span>Washing and cleaning</span></li>
+            </ul>
           </li>
           <li class="list number three"><span> Additional data <span class="optional">Optional</span></span>
-              <ul>
-                  <li><span>Public transports</span></li>
-                  <li><span>Income</span></li>
-                  <li><span>Working time</span></li>
-                  <li><span>Distance</span></li>
-                  <li><span>Time spent in driving</span></li>
-              </ul>
+            <ul>
+                <li><span>Public transports</span></li>
+                <li><span>Income</span></li>
+                <li><span>Working time</span></li>
+                <li><span>Distance</span></li>
+                <li><span>Time spent in driving</span></li>
+            </ul>
           </li>
-
+          
         </ul>
     </div>
 
-
-    <!--  Here start the long form with al the steps  -->
-    <div class="form_part" id="form_part1">
+            
+    <!--  Start form -->
+    <div class="form_part">
         <div class="form_part_head_title">
             <h2 class="lang-fixed_costs_header_1"> 
-               {{{fixed_costs_header_1}}}
+               1. {{{fixed_costs}}}
             </h2>
             <p class="lang-fixed_costs_header_2">
                 {{{fixed_costs_header_2}}}
              </p>
         </div>
-
+        
         <div class="field_container" id="depr_input_td">
             <label>
                 {{{aq_date}}}
@@ -61,10 +61,6 @@
         <div class="field_container" id="p2">
             <label>
                 {{{com_value}}}
-                <span>
-                    If new, the price you paid for the car. <br />
-                    If used, the commercial value the car had when you acquired it.
-                </span>
             </label>
             <div class="input_value">
                 <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
@@ -82,11 +78,7 @@
 
         <div class="field_container" id="p2">
             <label>
-                <!--{{{com_value_today}}}-->
-                Commercial value of the car today
-                <span>
-                    If you sell it now, how much would you get?
-                </span>
+                {{{com_value_today}}}
             </label>
             <div class="input_value">
                 <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
@@ -104,7 +96,6 @@
 
 
         <!--************************** INSURANCE **************************-->
-
         <div class="field_container" id="">
             <label>
                 {{{insurance}}}
@@ -152,7 +143,6 @@
         </div>
 
         <!--************************** CREDIT **************************-->
-
         <div class="field_container" id="">
             <label class="float_left">
                 {{{insurance}}}
@@ -178,8 +168,8 @@
                     <label>
                         {{{credit_loan}}}
                     </label>
-                     <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput unit_left" name="borrowedAmount"/>
-                    <span class="unit">
+                     <input type="number" min="0" step="Any" id="borrowedAmount" class="currencyInput small_unit_left" name="borrowedAmount"/>
+                    <span class="unit" style="top: 49px">
                         {{{curr_symbol}}}
                     </span>
                 </div>
@@ -187,22 +177,22 @@
                     <label>
                         {{{credit_period}}}
                     </label>
-                     <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" class="no_padding_left" />
+                     <input type="number" min="1" step="1" id="numberInstallments" name="numberInstallments" class="no_padding_left input_200" />
                 </div>
                 <div class="input_value small_input">
                     <label>
                         {{{credit_average_value}}}
                     </label>
-                     <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput unit_left" name="amountInstallment" />
+                     <input type="number" min="0" step="Any" id="amountInstallment" class="currencyInput small_unit_left" name="amountInstallment" />
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
                 </div>
-                <div class="input_value small_input">
+                <div class="input_value small_input ">
                     <label>
                         {{{credit_residual_value}}}
                     </label>
-                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput unit_left" name="residualValue" />
+                    <input type="number" min="0" step="Any" id="residualValue" class="currencyInput small_unit_left" name="residualValue" />
                     <span class="unit" style="top: 49px">
                         {{{curr_symbol}}}
                     </span>
@@ -215,8 +205,688 @@
             </div>
         </div>
 
+
+        <!--************************** INSPECTION **************************-->
+        <div class="field_container" id="">
+            <label>
+                {{{inspection}}}
+            </label>
+
+            <div id="sim_credDiv">
+                <div class="input_value small_input">
+                    <label>
+                        {{{inspection_nbmr_times}}}
+                    </label>
+                     <input type="number" min="0" step="1" id="numberInspections" name="numberInspections" class="no_padding_left input_70" />
+                </div>
+                <div class="input_value small_input">
+                    <label class="disabled">
+                        {{{inspection_price}}}
+                    </label>
+                     <input type="number" min="0" step="Any" id="averageInspectionCost" class="currencyInput small_unit_left" name="averageInspectionCost" disabled />
+                     <span class="unit">
+                        {{{curr_symbol}}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** ROAD TAX **************************-->
+        <div class="field_container" id="p2">
+            <label>
+                {{{road_taxes}}}
+                <span>
+                    {{{road_taxes_value}}}
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput unit_n_year_left input_300" name="roadTaxes"/>
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{year}}}
+                </span>
+            </div>
+
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+        <!--  end form Step 1  -->
+
+
+        <!--  Start form Step 2  -->
+        <div class="form_part_head_title">
+            <h2 class="lang-fixed_costs_header_1"> 
+                2. {{{running_costs}}}
+            </h2>
+            <p class="lang-fixed_costs_header_2">
+                {{{running_costs_header_2}}}
+             </p>
+        </div>
+
+        <!--************************** FUELS **************************-->
+        <div class="field_container" id="depr_input_td">
+            <label>
+                {{{fuel_desc}}}
+            </label>
+            <div class="input_value small_input no_margin_bottom">
+                <label>
+                    {{{fuel_calc}}}
+                </label>
+                <div class="radio_tabs small_tabs">
+                    <div class="radio_tab_container">
+                        <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                        <label>
+                            {{{curr_name_plural}}}
+                        </label>
+                     </div>
+
+                    <div class="radio_tab_container">
+                        <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                        <label>
+                            {{{std_dist}}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /////// Option selected = Kms /////// 
+            Here start >>> CONSIDERING YOU DRIVE TO WORK? YES/NO-->
+            <div id="distance_div_form2" class="input_value small_input no_margin_bottom">
+                <label>
+                    {{{fuel_job_calc}}}
+                </label>
+                <div class="radio_tabs small_tabs">
+                    <div class="radio_tab_container">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                        <label>
+                            {{{yes}}}
+                        </label>
+                     </div>
+
+                    <div class="radio_tab_container">
+                        <input type="radio" name="car_job_form2" class="no_left_margin" id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                        <label>
+                            {{{no}}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- YES & NO options -->
+
+            <!-- /////// Option selected = YES /////// -->
+            <div class="" id="div_car_job_yes_form2" style="display: none;">
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_days}}}
+                    </label>
+                    <input type="number" min="1" max="7" step="1" class="no_padding_left" id="car_to_work_number_days_week" name="dias_por_semana"  />
+                     <span class="unit_days-per-week">
+                        {{{days_per_week_short}}}
+                    </span>
+                    <span class="per">
+                        {{{word_per}}}
+                    </span>
+                    <select class="time_period" id="combustiveis_periodo_euro"></select>
+                </div>
+
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_dist_home_job}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="car_to_work_distance_home_work" class="no_padding_left" name="km_entre_casa_trabalho" />
+                    <span class="unit_kms">
+                        {{{std_dist}}}
+                    </span>
+                </div>
+
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_dist_no_job}}}
+                    </label>
+                    <input type="number" min="0" step="Any" name="km_fds" id="car_to_work_distance_weekend" class="no_padding_left" />
+                    <span class="unit_kms" style="margin-top: 17px">
+                        {{{std_dist}}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- /////// Option selected = NO /////// -->
+            <div class="" id="div_car_job_no_form2">
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_dist}}}
+                    </label>
+                    <input type="number" min="0" step="Any" name="km_por_mes" id="no_car_to_work_distance" class="no_padding_left" />
+                     <span class="unit_kms">
+                        {{{std_dist}}}
+                    </span>
+                    <span class="per">
+                        {{{word_per}}}
+                    </span>
+                    <select class="time_period" id="combustivel_period_km"></select>
+                </div>
+            </div>
+
+            <div class="fuel_efficiency">
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_car_eff}}}
+                    </label>
+                    <input type="number" min="0" step="Any" class="no_padding_left" id="fuel_efficiency" name="consumo_auto" />
+                    <span class="unit_litre_100kms">
+                        {{{std_fuel_calc}}}
+                    </span>
+                </div>
+
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_price}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="fuel_price" class="currencyInput small_input_unit_per_litre" name="fuel_price" />
+                    <span class="unit">
+                        {{{curr_symbol}}}/{{{std_volume_short}}}
+                    </span>
+                </div>
+            </div>
+
+
+            <!-- /////// Option selected = C$ /////// -->
+            <div id="currency_div_form2" class="input_value">
+                <input type="number" min="0" step="Any" size="5" id="fuel_currency_value" class="currencyInput input_200 unit_left" name="combustiveis_euro" />
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
+                <span class="per">
+                    {{{word_per}}}
+                </span>
+                <select class="time_period" id="combustiveis_periodo_euro"></select>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** MAINTENANCE **************************-->
+        <div class="field_container">
+            <label>
+                {{{maintenance}}}
+                <span>
+                    {{{maintenance_desc}}}
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" name="revisoes" id="maintenance" class="currencyInput unit_n_year_left input_300">
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{year}}}
+                </span>
+            </div>
+
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** REPAIRS AND IMPROVEMENTS **************************-->
+        <div class="field_container">
+            <label>
+                {{{rep_improv}}}
+                <span>
+                    {{{rep_improv_desc}}}
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" name="reparacoes" id="repairs" class="currencyInput unit_n_year_left input_300">
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{year}}}
+                </span>
+            </div>
+
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** PARKING **************************-->
+        <div class="field_container">
+            <label>
+                {{{parking}}}
+                <span>
+                    {{{parking_desc}}}
+                </span>
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" name="parqueamento" id="parking" class="currencyInput unit_n_month_left">
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{month}}}
+                </span>
+            </div>
+
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** TOLLS **************************-->
+        <div class="field_container">
+            <label>
+                {{{tolls}}}
+                <span>
+                    {{{tolls_desc}}}
+                </span>
+            </label>
+
+            <div class="input_value small_input no_margin_bottom">
+                <label>
+                    {{{tolls_day_calc}}}
+                </label>
+                <div class="radio_tabs small_tabs">
+                    <div class="radio_tab_container">
+                         <input type="radio" id="tolls_daily_true" name="tolls_daily_radioBtn" value="true" onclick="tolls_daily(true);" />
+                        <label>
+                            {{{yes}}}
+                        </label>
+                     </div>
+
+                    <div class="radio_tab_container">
+                        <input type="radio" id="tolls_daily_false" name="tolls_daily_radioBtn" value="false" onclick="tolls_daily(false);" checked="checked" />
+                        <label>
+                            {{{no}}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /////// Option selected = No /////// -->
+            <div id="daily_tolls_false_div" class="input_value" style="display: none">
+                <label>
+                    <span>
+                        {{{tolls_day_calc_desc}}}
+                    </span>
+                </label>
+                <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput input_200 unit_left" name="no_daily_tolls_value" />
+                <span class="unit" style="top:35px">
+                    {{{curr_symbol}}}
+                </span>
+                <span class="per">
+                    {{{word_per}}}
+                </span>
+                 <select class="time_period" id="tolls_period_select"></select>
+
+            </div>
+
+
+            <!-- /////// Option selected = YES /////// -->
+            <div id="daily_tolls_true_div" class="input_value">
+                <input type="number" min="0" step="Any" id="daily_expense_tolls" class="currencyInput input_200 unit_left" name="daily_expense_tolls"/>
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
+                <span class="during">
+                    {{{during}}}
+                </span>
+                <input type="number" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls"/>
+                <span class="days_per_month">
+                    {{{days}}}
+                    {{{word_per}}}
+                    {{{month}}}
+                </span>
+
+            </div>
+
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** FINES / TICKETS **************************-->
+        <div class="field_container">
+            <label>
+                {{{fines}}}
+                <span>
+                    {{{fines_desc}}}
+                </span>
+            </label>
+
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="tickets_value" class="currencyInput input_200 unit_left" name="tickets_value" />
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
+                <span class="per">
+                    {{{word_per}}}
+                </span>
+                <select class="time_period" id="tickets_period_select"></select>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** WASHING **************************-->
+        <div class="field_container">
+            <label>
+                {{{washing}}}
+                <span>
+                    {{{washing_desc}}}
+                </span>
+            </label>
+
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="washing_value" class="currencyInput input_200 unit_left" name="washing_value" />
+                <span class="unit">
+                    {{{curr_symbol}}}
+                </span>
+                <span class="per">
+                    {{{word_per}}}
+                </span>
+                <select class="time_period big-dropdown" id="washing_period_select"></select>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+        <!--  end form Step 2  -->
+
+
+        <!--  Start form Step 3 - Additional Data  -->
+        <div class="form_part_head_title">
+            <h2 class="lang-fixed_costs_header_1"> 
+                3. {{{extra_data1}}}
+            </h2>
+        </div>
+
+
+        <!--************************** PUBLIC TRANSPORTS **************************-->
+        <div class="field_container" id="">
+            <label>
+                {{{extra_data_public_transp}}}
+            </label>
+
+            <div id="sim_credDiv">
+                <div class="input_value small_input">
+                    <label>
+                        {{{extra_data_family_nbr}}}
+                    </label>
+                    <input type="number" min="0" step="1" id="household_number_people" class="no_padding_left input_70" name="pessoas_agregado">
+                </div>
+                <div class="input_value small_input">
+                    <label>
+                        {{{extra_data_price_pass}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="public_transportation_month_expense" class="currencyInput small_unit_left" name="preco_passe" />
+                     <span class="unit" style="top:49px">
+                        {{{curr_symbol}}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** INCOME **************************-->
+        <div class="field_container" id="fin_effort_Div_form3">
+            <label>
+                {{{extra_data_income_question}}}
+            </label>
+            <div class="radio_tabs" id="income_div_form3">
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_income" value="year" id="radio_income_year"/>
+                    <label>
+                        {{{year}}}
+                    </label>
+                 </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_income" value="month" id="radio_income_month">
+                    <label>
+                        {{{month}}}
+                    </label>
+                </div>
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_income" value="week" id="radio_income_week" />
+                    <label>
+                        {{{week}}}
+                    </label>
+                </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_income" value="hour" id="radio_income_hour" />
+                    <label>
+                        {{{hour}}}
+                    </label>
+                </div>
+            </div>
+
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput input_300" name="roadTaxes"/>
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{year}}}
+                </span>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** WORKING TIME **************************-->
+        <div class="field_container" id="">
+            <label class="float_left">
+                {{{extra_data_working_time_question}}}
+            </label>
+            <div class="radio_tabs small_tabs">
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_work_time" id="working_time_yes_form3" value="true" />
+                    <label>
+                        {{{yes}}}
+                    </label>
+                 </div>
+
+                <div class="radio_tab_container">
+                    <input type="radio" name="radio_work_time" id="working_time_no_form3" value="false" />
+                    <label>
+                        {{{no}}}
+                    </label>
+                </div>
+            </div>
+
+            <!-- /////// Option selected = YES /////// -->
+            <div id="working_time_input_form3" class="input_value">
+                <input type="number" min="1" max="12" step="1" id="time_month_per_year" class="input_70" name="time_month_per_year" />
+                <span class="months_year">
+                    {{{months}}}/{{{year}}}
+                </span>
+                <input type="number" min="1" max="168" step="Any" id="time_hours_per_week" class="input_70" name="time_hours_per_week" />
+                <span class="hours_week">
+                    {{{hours}}}/{{{week}}}
+                </span>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** DISTANCE **************************-->
+        <div class="field_container" id="depr_input_td">
+            <label>
+                {{{distance}}}
+            </label>
+
+            <!-- Here start >>> CONSIDERING YOU DRIVE TO WORK? YES/NO -->
+            <div id="distance_div_form2" class="input_value small_input no_margin_bottom">
+                <label>
+                    {{{fuel_job_calc}}}
+                </label>
+                <div class="radio_tabs small_tabs">
+                    <div class="radio_tab_container">
+                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3"
+                           value="true" />
+                        <label>
+                            {{{yes}}}
+                        </label>
+                     </div>
+
+                    <div class="radio_tab_container">
+                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" 
+                           value="false" />
+                        <label>
+                            {{{no}}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- YES & NO options -->
+
+            <!-- /////// Option selected = YES /////// -->
+            <div class="car_to_job_distance_form3">
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_days}}}
+                    </label>
+                    <input type="number" min="1" max="7" step="1" class="no_padding_left small_input_days-per-week" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                     <span class="unit unit_days-per-week">
+                        {{{days_per_week_short}}}
+                    </span>
+                </div>
+
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_dist_home_job}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
+                    <span class="unit  unit_kms">
+                        {{{std_dist}}}
+                    </span>
+                </div>
+
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_dist_no_job}}}
+                    </label>
+                    <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" class="no_padding_left small_input_kms"  />
+                    <span class="unit unit_kms" style="margin-top: 17px">
+                        {{{std_dist}}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+        <!--************************** TIME SPENT IN DRIVING **************************-->
+        <div class="field_container time_spent_part2_form3" id="">
+            <label>
+                {{{time_spent_part1_form3}}}
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
+                <span class="min">
+                    {{{days}}}/{{{month}}}
+                </span>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+        <div class="field_container time_spent_part1_form3" id="">
+            <label>
+                {{{extra_data_time_question2}}}
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" class="input_90" id="time_weekend" name="time_weekend" />
+                <span class="min">
+                    {{{days}}}/{{{month}}}
+                </span>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+        <div class="field_container time_spent_part2_form3">
+            <label>
+                {{{extra_data_time_question3}}}
+            </label>
+            <div class="input_value">
+                <input type="number" min="0" step="Any" id="min_drive_per_day" class="input_90" name="min_drive_per_day" />
+                <span class="minutes_day">
+                    {{{minutes}}}/{{{day}}}
+                </span>
+                <input type="number" min="0" max="31" step="1" id="days_drive_per_month" class="input_70" name="days_drive_per_month" />
+                <span class="days_per_month">
+                    {{{days}}}/{{{month}}}
+                </span>
+
+            </div>
+
+            <div class="next">
+                <a href="#" class="button btn-orange">Next &#10230;</a>
+                <span>press <b>Enter</b> or <b>Tab</b> </span>
+            </div>
+        </div>
+
+
+    </div><!--  end all forms  -->
+
+    <div class="cta_bottom_bar" style="display:none">
+        <a href="#" class="button btn-blue big">Calculate car cost</a>
     </div>
 
-
-</div>           
-
+</div><!--  end Container  -->
