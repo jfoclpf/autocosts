@@ -51,13 +51,11 @@ var serverData = {
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
-//Global switches with the available services
-//for more information see commons.js
-var SWITCHES = settings.switches;
+var SWITCHES = settings.switches; //Global switches with the available services; for more information see commons.js
+var WORDS = {};                   //Object of Objects with all the words for each country
 
 //creates Object of objects with Words and Standards for each Country
 //such that it can be loaded faster as it is already in memory when the server starts
-var WORDS = {}; //Object of Objects with all the words for each country
 for (var CC in serverData.availableCountries){
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
@@ -150,10 +148,15 @@ if (SWITCHES.googleCaptcha){
 
 if (SWITCHES.dataBase){
     
+    eventEmitter.on('statsColected', function(statsData){
+        serverData.statsData = statsData;
+        console.log("Statistical Data colected");           
+    });
+    
     //statistics page
     const stats = require(path.join(__dirname, 'server', 'stats'));
-    stats.prepareChart(serverData, WORDS, eventEmitter);
-    
+    stats.prepareStats(serverData, WORDS, eventEmitter);
+        
     app.get('/stats', function(req, res) {
         debug("\nRoute: app.get('/stats')");
         stats.req(req, res, serverData, WORDS.UK);

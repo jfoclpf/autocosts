@@ -21,6 +21,7 @@ var SWITCHES,               //GLOBAL switches Object
     HTTP_Protocol,          //it's defined in node server side index.js*/
     clientDir,              //client directory seen by the browser
     WORDS,                  //Object with country's language text strings
+    STATS,                  //Object with countrys' users costs statistics
     INITIAL_TEX,            //Informative text about the calculator
     GA_TRACKING_ID,         //Google analytics Tracking ID
     NOT_LOCALHOST,          //true when this session does not come from localhost
@@ -64,6 +65,7 @@ var Run1, Print, generatePDF, TimeCounter;
     HTTP_Protocol   = globalVariables.dataset.http_protocol; 
     clientDir       = globalVariables.dataset.client_dir;
     WORDS           = JSON.parse(decodeURI(globalVariables.dataset.words));
+    STATS           = JSON.parse(decodeURI(globalVariables.dataset.stats));
     INITIAL_TEX     = WORDS.initial_text;
     GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
     NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);

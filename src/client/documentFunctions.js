@@ -112,6 +112,64 @@ function loadExtraFiles() {
 }
 
 
+function getFuelEfficiencyOptStr(){
+    switch(WORDS.fuel_efficiency_std_option){
+        case 1:
+            return "l/100km";            
+        case 2:
+            return "km/l";            
+        case 3:
+            return "mpg(imp)";
+        case 4:
+            return "mpg(US)";           
+        case 5:
+            return "l/mil";
+        case 6:
+            return "km/gal(US)";
+        default: 
+            return "error";
+    }
+}
+
+function getDistanceOptStr(){
+    switch(WORDS.distance_std_option){
+        case 1:
+            return "kilometres";            
+        case 2:
+            return "miles";            
+        case 3:
+            return "mil";
+        default: 
+            return "error";
+    }
+}
+
+function getDistanceOptStrShort(){
+    switch(WORDS.distance_std_option){
+        case 1:
+            return "km";            
+        case 2:
+            return "mi";            
+        case 3:
+            return "Mil";
+        default: 
+            return "error";
+    }
+}
+
+function getFuelPriceVolumeOptStr(){
+    switch(WORDS.fuel_price_volume_std){
+        case 1:
+            return "litres";            
+        case 2:
+            return "imperial gallons";            
+        case 3:
+            return "US gallons";
+        default: 
+            return "error";
+    }
+}
+
 function isInteger(n) {
     return (parseFloat(n) == parseInt(n, 10));
 }
@@ -138,4 +196,12 @@ function resizeSelectToContent(jqueryId){
     $test.remove();
     // set select width
     $this.width(width + arrowWidth);    
+}
+
+function round(number, precision) {
+  var shift = function (number, precision) {
+    var numArray = ("" + number).split("e");
+    return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+  };
+  return shift(Math.round(shift(number, +precision)), -precision);
 }

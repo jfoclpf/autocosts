@@ -43,11 +43,11 @@ module.exports = {
         res.render(fileToRender, data);
     },
     
-    prepareChart : function(serverData, WORDS, eventEmitter){
+    prepareStats : function(serverData, WORDS, eventEmitter){
         
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(dbInfo);
-        
+                
         //get current date in a formated string
         var d = new Date();
         dateOfCalculation = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
@@ -55,7 +55,7 @@ module.exports = {
         var costs = {}; //object of arrays, each property is a cost item array
         var labels = [];
         var table = {}; //table with useful information for each country stats (total users, valid users, etc.)
-        
+                
         async.series([
         //creates DB connection and connects
             function(callback) {
@@ -79,7 +79,16 @@ module.exports = {
                 var i, n, cc;
                 db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized, 
                     function(err, results, fields) {
-                        
+                                            
+                        //got statistical results; convert array to object and send to index.js
+                        var resultsToSend = {};
+                        for (i=0; i<results.length; i++){  
+                            cc = results[i].country;
+                            resultsToSend[cc] = JSON.parse(JSON.stringify(results[i])); //cone object
+                            resultsToSend[cc].curr_symbol = WORDS[cc].curr_symbol;
+                        }
+                        eventEmitter.emit("statsColected", resultsToSend);
+                    
                         if (err) {
                             console.log("Cannot connect to Database");
                             throw err;
@@ -260,10 +269,11 @@ module.exports = {
                     options: options
                 };        
 
-                console.log("Chart of world statistics calculated");
+                console.log("Chart of world statistics calculated");                                
             }
         ]);//async.series        
-    }//prepareChart
+        
+    }//prepareStats
 }
 
 

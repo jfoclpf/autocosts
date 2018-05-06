@@ -13,10 +13,10 @@
     </div>
 </div>
 
-<div class="sidebar right">
+<div class="sidebar right">    
     <div class="sidebar-right-container">
         <a href="#" class="btn btn-danger close" data-action="close" data-side="right"><span></span></a>
-        <h3>Costs for <select name="country_select_stats" id="country_select_stats" onchange="onCountrySelect(this.value);">
+        <h3>Costs for <select name="country_select_stats" id="country_select_stats">
                         {{~#each serverData.availableCountries~}}
                         <option value="{{@key}}"{{{isSelected ../CC @key}}}>
                             {{~this~}}
@@ -24,112 +24,114 @@
                         {{/each}}
                     </select>
         </h3>
-        <h4>Monthly cost (average)</h4>
+        
+        {{#with words}}
+        <h4>{{{average_costs_per_type}}}</h4>
         <table>
             <tr>
-                <th>Standing costs</th>
+                <th>{{{fixed_costs}}}</th>
                 <th></th>
             </tr>
             <tr>
-                <td>Depreciation</td>
-                <td>C$ 90.5</td>
+                <td>{{{depreciation}}}</td>
+                <td><span id="stats_table-Depreciation"></span></td>
             </tr>
             <tr>
-                <td>Insurance</td>
-                <td>C$ 54.2</td>
+                <td>{{{insurance}}}</td>
+                <td><span id="stats_table-Insurance"></span></td>
             </tr>
             <tr>
-                <td>Loan interest</td>
-                <td>C$ 0.0</td>
+                <td>{{{credit}}}</td>
+                <td><span id="stats_table-Loan_interests"></span></td>
             </tr>
             <tr>
-                <td>Inspection</td>
-                <td>C$ 8.5</td>
+                <td>{{{inspection}}}</td>
+                <td><span id="stats_table-Inspection"></span></td>
             </tr>
             <tr>
-                <td>Car tax</td>
-                <td>C$ 46.5</td>
+                <td>{{{road_taxes}}}</td>
+                <td><span id="stats_table-Car_tax"></span></td>
             </tr>
             <tr>
-                <td>50% maintenance</td>
-                <td>C$ 23.2</td>
+                <td>50% {{{maintenance}}}</td>
+                <td><span id="stats_table-Maintenance"></span></td>
             </tr>    
             <tr class="subtotal">
-                <td>Total standing costs</td>
-                <td>C$ 200</td>
+                <td>{{{total_fixed}}}</td>
+                <td><span id="stats_table-standing_costs"></span></td>
             </tr>     
         </table>
         <table>
             <tr>
-                <th>Running costs</th>
+                <th>{{{running_costs}}}</th>
                 <th></th>
             </tr>
             <tr>
-                <td>Fuel</td>
-                <td>C$ 65.3</td>
+                <td>{{{fuel}}}</td>
+                <td><span id="stats_table-Fuel"></span></td>
             </tr>
             <tr>
-                <td>50% maintenance</td>
-                <td>C$ 46.5</td>
+                <td>50% {{{maintenance}}}</td>
+                <td><span id="stats_table-Maintenance"></span></td>
             </tr>
             <tr>
-                <td>Repair</td>
-                <td>C$ 13.2</td>
+                <td>{{{rep_st}}}</td>
+                <td><span id="stats_table-Repairs"></span></td>
             </tr>
             <tr>
-                <td>Parking</td>
-                <td>C$ 28.7</td>
+                <td>{{{parking}}}</td>
+                <td><span id="stats_table-Parking"></span></td>
             </tr>
             <tr>
-                <td>Tolls</td>
-                <td>C$ 0.1</td>
+                <td>{{{tolls}}}</td>
+                <td><span id="stats_table-Tolls"></span></td>
             </tr>
             <tr>
-                <td>Traffic fines</td>
-                <td>C$ 0.7</td>
+                <td>{{{fines}}}</td>
+                <td><span id="stats_table-Fines"></span></td>
             </tr>
             <tr>
-                <td>Washing</td>
-                <td>C$ 2.6</td>
+                <td>{{{washing}}}</td>
+                <td><span id="stats_table-Washing"></span></td>
             </tr>    
             <tr class="subtotal">
-                <td>Total running costs</td>
-                <td>C$ 134</td>
+                <td>{{{total_variable}}}</td>
+                <td><span id="stats_table-running_costs"></span></td>
             </tr>     
         </table>
         <table class="total blue-bg">
             <tr>
-                <th>Total monthly costs</th>
-                <th>C$ 334</th>
+                <th>{{{monthly_amount}}}</th>
+                <th><span id="stats_table-total_costs"></span></th>
             </tr>
         </table>
 
 
-        <h4 class="yellow-bar">Year cost (average)</h4>
+        <h4 class="yellow-bar">{{{word_total_cap}}} ({{{yearly}}})</h4>
         <table>
             <tr>
-                <td>Running cost per km</td>
-                <td>C$ 0.19</td>
+                <td>{{{run_cp_dist}}}</td>
+                <td><span id="stats_table-running_costs_dist"></span></td>
             </tr>
             <tr>
-                <td>Total cost per km</td>
-                <td>C$ 0.48</td>
+                <td>{{{total_cp_dist}}}</td>
+                <td><span id="stats_table-total_costs_dist"></span></td>
             </tr>
             <tr>
-                <td>Kinetic speed</td>
-                <td>42 km/h</td>
+                <td>{{{kinetic_speed}}}</td>
+                <td><span id="stats_table-kinetic_speed"></span></td>
             </tr>
             <tr>
-                <td>Consumer speed</td>
-                <td>22 km/h</td>
+                <td>{{{virtual_speed}}}</td>
+                <td><span id="stats_table-virtual_speed"></span></td>
             </tr>
         </table>
         <table class="total yellow-bg">
             <tr>
-                <th>Total year costs</th>
-                <th>C$ 4000</th>
+                <th>{{{total_costs_per_year}}}</th>
+                <th><span id="stats_table-total_costs_year"></span></th>
             </tr>
         </table>
-
-    </div>
+        {{/with}}
+    </div>    
 </div>

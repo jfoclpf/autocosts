@@ -30,8 +30,7 @@ $(document).ready(function () {
     });
 
     /*Google Analytics*/
-    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
-        
+    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {        
         getScriptOnce(JS_FILES.Google.analytics, function(){
             window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();                                
             //change according to your site
@@ -177,9 +176,7 @@ function loadsDefaultValues(){
 function loadsButtonsSettings(){
     
     //NEW UI/UX
-    $(document).ready(function(){
-        $("#form").hide();
-    });
+    $("#form").hide();
 
     $("#calculateButton").on("click", function(){
         $("#hero, footer").hide();
@@ -199,7 +196,34 @@ function loadsButtonsSettings(){
         return false;
     });    
     
-    resizeSelectToContent("#country_select");    
+    resizeSelectToContent("#country_select");   
+    
+    //Statistics table on sidebars.hbs
+    var updateStatsTable = function (cc){                
+        for (var key in STATS[cc]){
+            var elementId = "stats_table-"+key; //see sidebars.hbs
+            if(document.getElementById(elementId)){//element exists
+                var $el = $("#"+elementId); 
+                var value = STATS[cc][key];
+                var currSymb = STATS[cc].curr_symbol; 
+                if(key == "running_costs_dist" || key == "total_costs_dist"){
+                    $el.text(currSymb + round(value, 2) + "/" + getDistanceOptStrShort());
+                }
+                else if (key == "kinetic_speed" || key == "virtual_speed"){
+                    $el.text(round(value, 0) + getDistanceOptStrShort() + "/h");
+                }
+                else{
+                    $el.text(currSymb + " " + round(value, 0));
+                }
+            }   
+        }    
+    };
+    
+    updateStatsTable(COUNTRY);
+    
+    $("#country_select_stats").on('change', function() {
+        updateStatsTable(this.value);
+    });
     
     /***********************************************************/
     /***********************************************************/

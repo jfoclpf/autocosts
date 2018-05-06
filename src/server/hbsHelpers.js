@@ -146,6 +146,9 @@ module.exports = {
             output += "<p>"+parArr[i]+"</p>";
         }
         return output;
+    },
+    getStatsItem(serverData, CC, item){
+        return serverData.statsData[CC][item];
     }
 }
 
