@@ -1,7 +1,7 @@
 <div class="container">
     <div class="steps">
         <ul>
-          <li class="list active number one"> <span>{{{fixed_costs}}}Standing costs</span> 
+          <li class="list active number one"> <span>{{{fixed_costs}}}</span> 
             <ul>
                 <li class="active done"><span>{{{depreciation}}}</span></li>
                 <li class="active"><span>{{{insurance}}}</span></li>
@@ -81,7 +81,7 @@
                 {{{com_value_today}}}
             </label>
             <div class="input_value">
-                <input type="number" min="0" step="Any" id="commercialValueAtAcquisition" class="currencyInput unit_left" name="commercialValueAtAcquisition">
+                <input type="number" min="0" step="Any" id="commercialValueAtNow" class="currencyInput unit_left" name="commercialValueAtNow">
                 <span class="unit">
                     {{{curr_symbol}}}
                 </span>
@@ -523,12 +523,12 @@
             <!-- /////// Option selected = No /////// -->
             <div id="daily_tolls_false_div" class="input_value" style="display: none">
                 <label>
-                    <span>
+                    <span style="width: 450px">
                         {{{tolls_day_calc_desc}}}
                     </span>
                 </label>
                 <input type="number" min="0" step="Any" id="no_daily_tolls_value" class="currencyInput input_200 unit_left" name="no_daily_tolls_value" />
-                <span class="unit" style="top:35px">
+                <span class="unit" style="top: 54px">
                     {{{curr_symbol}}}
                 </span>
                 <span class="per">
@@ -696,9 +696,9 @@
             </div>
 
             <div class="input_value">
-                <input type="number" min="0" step="Any" id="roadTaxes" class="currencyInput input_300" name="roadTaxes"/>
+                <input type="number" min="0" step="Any" id="income" class="currencyInput input_300" name="income"/>
                 <span class="unit">
-                    {{{curr_symbol}}}/{{{year}}}
+                    {{{curr_symbol}}}
                 </span>
             </div>
 
@@ -800,7 +800,7 @@
                         {{{fuel_dist_home_job}}}
                     </label>
                     <input type="number" min="0" step="Any" id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
-                    <span class="unit  unit_kms">
+                    <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
                 </div>
@@ -810,9 +810,26 @@
                         {{{fuel_dist_no_job}}}
                     </label>
                     <input type="number" min="0" step="Any" name="journey_weekend" id="journey_weekend" class="no_padding_left small_input_kms"  />
-                    <span class="unit unit_kms" style="margin-top: 17px">
+                    <span class="unit_kms" style="margin-top: 17px">
                         {{{std_dist}}}
                     </span>
+                </div>
+            </div>
+
+            <!-- /////// Option selected = NO /////// -->
+            <div class="car_no_job_distance_form3">
+                <div class="input_value small_input">
+                    <label>
+                        {{{fuel_days}}}
+                    </label>
+                    <input type="number" min="0" step="Any" id="dist_per_month" class="no_padding_left" name="km_per_month"/>
+                     <span class="unit_kms">
+                        {{{std_dist}}}
+                    </span>
+                    <span class="per">
+                        {{{word_per}}}
+                    </span>
+                    <select class="time_period" id="period_km"></select>
                 </div>
             </div>
 
@@ -824,32 +841,25 @@
 
 
         <!--************************** TIME SPENT IN DRIVING **************************-->
-        <div class="field_container time_spent_part2_form3" id="">
+        <div class="field_container time_spent_part1_form3" id="">
             <label>
-                {{{time_spent_part1_form3}}}
+                {{{extra_data_time_question1}}}
             </label>
             <div class="input_value">
                 <input type="number" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
                 <span class="min">
-                    {{{days}}}/{{{month}}}
+                    {{{min}}}
                 </span>
 
             </div>
 
-            <div class="next">
-                <a href="#" class="button btn-orange">Next &#10230;</a>
-                <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>
-        </div>
-
-        <div class="field_container time_spent_part1_form3" id="">
             <label>
                 {{{extra_data_time_question2}}}
             </label>
             <div class="input_value">
                 <input type="number" min="0" step="Any" class="input_90" id="time_weekend" name="time_weekend" />
                 <span class="min">
-                    {{{days}}}/{{{month}}}
+                    {{{min}}}
                 </span>
 
             </div>
