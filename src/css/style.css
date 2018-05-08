@@ -77,23 +77,15 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
+.unit_kms, .unit_days-per-week, .unit_litre_100kms {font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; padding: 0 0 0 10px}
+
 .unit_left {padding-left: 48px}
-
-.small_input_days-per-week {padding-right: 113px; width: 87px!important;}
-.unit_days-per-week {margin-left: 91px}
-
-.small_input_kms {padding-right: 50px; width: 150px!important;}
-.unit_kms {margin-left: 157px}
 
 .unit_n_year_left {padding-left: 115px}
 .unit_n_month_left {padding-left: 140px}
 
-.small_input_unit_per_litre {padding-left: 78px!important}
 
-.small_input_litre_100kms {padding-right: 134px; width: 70px!important;}
-.unit_litre_100kms {margin-left: 76px}
-
-.per, .during, .months_year, .minutes_day {padding: 0 10px; font-size: 30px}
+.per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
 .days_per_month, .hours_week, .min {padding: 0 0 0 10px; font-size: 30px}
 
 
@@ -106,7 +98,11 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .small_input input[type='number'] {width: 152px; font-size: 22px; padding-left: 34px}
 .small_input .unit {font-size: 22px; top: 29px}
 
-.small_input select, .small_input .per {font-size: 22px}
+.small_input select, 
+.small_input .per,
+.small_input .unit_kms,
+.small_input .unit_days-per-week,
+.small_input .unit_litre_100kms {font-size: 22px}
 
 
 /*---  Input help classes ---*/
@@ -245,10 +241,10 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ---------- Tables ---------- */
-table {width: 80%; font-size: 16px; color: #797b82; margin: 3px 0 0 20px}
+table {width: 80%; font-size: 16px; line-height: 16px; color: #797b82; margin: 3px 0 0 20px}
 table tr td {margin-left: 20px}
 table tr td:first-child {display: block}
-table tr td:first-child + td {text-align: right;}
+table tr td + td {text-align: right; width: 30%}
 
 table tr.subtotal td, table.total tr th {color: black; font-weight: 700}
 
@@ -258,8 +254,8 @@ table.total::before {content:""; width:100%; position:absolute; height:35px; lef
 table.blue-bg::before {background-color:#e9ecf8;}
 table.yellow-bg::before {background-color:#fdf5e6;}
 
-table.total tr th {font-size: 18px; z-index:2;position: relative;padding-top: 3px}
-table.total tr th:first-child + th {text-align: right}
+table.total tr th {font-size: 18px; line-height: 18px; z-index:2;position: relative;padding-top: 3px}
+table.total tr th + th {text-align: right; width: 30%}
 
 
 /* ---------- Home Footer Animation ---------- */
