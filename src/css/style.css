@@ -34,17 +34,6 @@ h4 {font-size: 18px}
 p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 
 
-/* ---------- Buttons ---------- */
-.button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700}
-
-.big {width: 370px; font-size: 18px; padding: 18px 30px;}
-
-.btn-blue {background-color: #2c49b9} 
-.btn-blue:hover {color: white; background-color: #385be1}
-
-.btn-orange {background-color: #efa00b; padding: 8px 20px;} 
-.btn-orange:hover {color: white; background-color: #ffae16}
-
 /* ---------- Hero ---------- */
 #hero {display: block; padding: 60px 0;}
 #hero .container {max-width: 90%; margin: 0 auto; text-align: center; }
@@ -61,6 +50,14 @@ label.float_left {float: left; margin: 3px 20px 0 0;}
 
 /* ---------- Inputs ---------- */
 .input_value { position: relative; }
+
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"]{
+-webkit-appearance: none;
+border-radius: 0;
+}
 
 input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 18px }
 input:focus {border-bottom: 1px solid black; outline: none;}
@@ -147,6 +144,18 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 @media screen and (min-width:0\0) {
     select {background:none\9; padding: 5px\9;} 
 }
+
+
+/* ---------- Buttons ---------- */
+.button, input[type="button"].button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700}
+
+.big {width: 370px; font-size: 18px; padding: 18px 30px;}
+
+.btn-blue {background-color: #2c49b9} 
+.btn-blue:hover {color: white; background-color: #385be1}
+
+.btn-orange {background-color: #efa00b; padding: 8px 20px;} 
+.btn-orange:hover {color: white; background-color: #ffae16}
 
 
 /* ---------- Steps ---------- */
@@ -242,6 +251,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* ---------- Tables ---------- */
 table {width: 80%; font-size: 16px; line-height: 16px; color: #797b82; margin: 3px 0 0 20px}
+table tr {margin-bottom: 5px}
 table tr td {margin-left: 20px}
 table tr td:first-child {display: block}
 table tr td + td {text-align: right; width: 30%}
@@ -303,7 +313,6 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	h4 {font-size: 18px}
 
 	/* ------ Header ------*/
-	
 	.btn-left-sidebar, .btn-right-sidebar {background-size: 560%; width: 30px; height: 30px; border-width: 2px;}
 	.btn-left-sidebar {left: 10px; top: 10px;}
 	.btn-right-sidebar {right: 10px; top: 10px; background-position: -61px 0;}
@@ -311,34 +320,78 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.btn-left-sidebar:hover {background-position: -30px 0}
 	.btn-right-sidebar:hover {background-position: -91px 0}
 
-
 	header h1.logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
 
 
 	/* ------ Hero ------*/
-	
-	#hero {padding: 0px 0 30px;}
+		#hero {padding: 0px 0 30px;}
 	#hero .container h2 {margin: 7px 0 20px; }
 	#hero .container .big {max-width: 80%}
 
-
 	/* ------ Sidebars ------*/
-
 	.sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
 	.sidebars > .right > .sidebar-right-container {width: 100%;}
+	.sidebars > .right > .sidebar-right-container select {width: 150px;}
 
 	.sidebars > .left > .sidebar-left-container > .close {margin: -13px 0 0 80%;}
 	.sidebars > .right > .sidebar-right-container > .close {margin: 10px 0 0 86%;}
-
 
 	.close {border: 2px solid #2c49b9; width: 30px; height: 30px}
 	.close span {width: 20px; height: 20px; margin: 8px 0 0 5px;}
 	.close span::before, .close span::after {background: #2c49b9; height: 3px;}
 
+
+	/* ------------------ FORM ELEMENTS ------------------*/
+	.container .steps {display: none;}
+
+	main {margin-top: 90px}
+	main #form {width: 100%;}
+	main #form .container {margin-top: 0px}
+
+	.container .form_part {width: 90%; margin: 0 5%;}
+	
+	.container .form_part .form_part_head_title {margin: 3% 0 25px;}
+	.container .form_part h2.lang-fixed_costs_header_1 {font-size: 22px}
+
+	.container .form_part .field_container {margin: 0 0 50px;}
+
+	label {font-size: 16px; line-height: 18px}
+	input[type='date'], input[type='number'] {font-size: 22px; max-width: 165px;}
+	.input_300 {width: auto!important}
+	input.unit_n_month_left {width: auto!important; padding-left: 85px}
+
+	.radio_tab_container {width: 70px}
+	.radio_tab_container label {font-size: 12px; padding: 4px 0}
+	.small_tabs .radio_tab_container label {font-size: 12px}
+
+	label.float_left {float: inherit; margin-bottom: 10px}
+
+	.unit, .per, .during, .months_year, .minutes_day, 
+	.unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
+	.small_input .unit {top: 1px!important}
+	.fuel_efficiency .small_input .unit {top: 29px!important}
+
+	#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
+
+	#currency_div_form2 input[type='number'] {width: 130px}
+
+	.time_spent_part1_form3 input, .time_spent_part2_form3 input,
+	.fuel_efficiency {margin-bottom: 30px}
+
+	#working_time_input_form3 input, #daily_tolls_true_div input {margin-bottom: 10px}
+
+	#div_car_job_yes_form2 input[type='number'] {width: 80px}
+
+	#daily_tolls_false_div label span {max-width: 100%}
+
+
+
+
 	
 	/* ------ Footer Animation ------*/
 
 	footer .animation {width: 100%; background-size: 160%;}
+	footer, footer .animation {height: 250px}
 
 	
 }
