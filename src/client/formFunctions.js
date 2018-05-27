@@ -15,6 +15,7 @@ function isVisible(html_ref) {
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(nbrInspectOnChanged);
+$("#numberInspections").bind('keyup mouseup', nbrInspectOnChanged);
 function nbrInspectOnChanged(){
 
     if($("#numberInspections").val() == 0){
