@@ -18,10 +18,12 @@ $("#numberInspections").focusout(nbrInspectOnChanged);
 function nbrInspectOnChanged(){
 
     if($("#numberInspections").val() == 0){
-        $("#InspectionCost_tr").hide("slow");
+        $("#averageInspectionCost").prop('disabled', true);
+        $("#averageInspectionCost").prev().addClass('disabled');
     }
     else{
-        $("#InspectionCost_tr").show("slow");
+        $("#averageInspectionCost").prop('disabled', false);
+        $("#averageInspectionCost").prev().removeClass('disabled');
     }
 }
 
