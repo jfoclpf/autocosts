@@ -59,7 +59,7 @@ input[type="submit"]{
 border-radius: 0;
 }
 
-input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 18px }
+input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 30px }
 input:focus {border-bottom: 1px solid black; outline: none;}
 
 input[type='date'], input[type='number'] {font-size: 30px; text-transform: uppercase; }
@@ -93,9 +93,11 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .small_input label {font-size: 14px; margin-bottom: 10px}
 .small_input label > span {color: #42444a}
 .small_input input[type='number'] {width: 152px; font-size: 22px; padding-left: 34px}
-.small_input .unit {font-size: 22px; top: 29px}
+.small_input .unit {top: 29px}
 
+.small_input input,
 .small_input select, 
+.small_input .unit,
 .small_input .per,
 .small_input .unit_kms,
 .small_input .unit_days-per-week,
@@ -113,6 +115,9 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
 #div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 158px}
 .fuel_efficiency {margin-top: 26px}
+
+.time_spent_part1_form3 input, .time_spent_part2_form3 input,
+.fuel_efficiency {margin-bottom: 30px}
 
 
 /* ---------- Radio tabs  ---------- */
@@ -149,7 +154,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 /* ---------- Buttons ---------- */
 .button, input[type="button"].button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700}
 
-.big {width: 370px; font-size: 18px; padding: 18px 30px;}
+.big {width: 370px; font-size: 18px!important; padding: 18px 30px!important;}
 
 .btn-blue {background-color: #2c49b9} 
 .btn-blue:hover {color: white; background-color: #385be1}
@@ -269,7 +274,7 @@ table.total tr th + th {text-align: right; width: 30%}
 
 
 /* ---------- Home Footer Animation ---------- */
-footer {display:block; background: transparent url('../img/animation-bg.jpg') repeat-x left bottom; height: 280px}
+footer {display:block; background: transparent url('../img/animation-bg.jpg') repeat-x left 134px; height: 280px}
 footer .animation {display:block; background: transparent url('../img/animation.gif') no-repeat center top; width: 1400px; height: 313px}
 
 
@@ -355,10 +360,21 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	.container .form_part .field_container {margin: 0 0 50px;}
 
+	.small_input {margin-right: 0}
+
 	label {font-size: 16px; line-height: 18px}
-	input[type='date'], input[type='number'] {font-size: 22px; max-width: 165px;}
-	.input_300 {width: auto!important}
-	input.unit_n_month_left {width: auto!important; padding-left: 85px}
+	input {font-size: 22px; width: 84%; border-radius: 0; -webkit-appearance: none}
+	input[type='date'] {width: 100%; min-height: 2.5rem;}
+	input[type="date"]::before { content: attr(data-placeholder); width: 100%;}
+	input[type="date"]:focus::before,
+	input[type="date"]:valid::before { display: none }
+
+	.input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
+	.input_200 {width: 65%!important}
+	.input_70, select {width: 100%!important}
+	#hero select {width: 118px!important}
+	input.unit_n_month_left {padding-left: 85px}
+	input.no_padding_left {width: 66%}
 
 	.radio_tab_container {width: 70px}
 	.radio_tab_container label {font-size: 12px; padding: 4px 0}
@@ -368,21 +384,21 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	.unit, .per, .during, .months_year, .minutes_day, 
 	.unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
-	.small_input .unit {top: 1px!important}
+	.small_input .unit {top: 0px!important}
 	.fuel_efficiency .small_input .unit {top: 29px!important}
 
 	#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
 
 	#currency_div_form2 input[type='number'] {width: 130px}
 
-	.time_spent_part1_form3 input, .time_spent_part2_form3 input,
-	.fuel_efficiency {margin-bottom: 30px}
-
 	#working_time_input_form3 input, #daily_tolls_true_div input {margin-bottom: 10px}
 
 	#div_car_job_yes_form2 input[type='number'] {width: 80px}
 
 	#daily_tolls_false_div label span {max-width: 100%}
+	#daily_tolls_false_div input {width: 50%!important }
+
+	#working_time_input_form3 input.input_70 {width: 40%!important }
 
 
 
