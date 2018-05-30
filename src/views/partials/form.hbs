@@ -50,7 +50,11 @@
             <label>
                 {{{aq_date}}}
             </label>
-            <input type="date" data-placeholder="DD/MM/AAAA" required aria-required="true" step="1" id="acquisitionDate" name="acquisitionDate" >
+            <input type="tel" data-placeholder="MM" required aria-required="true" step="1" id="acquisitionMonth" name="acquisitionMonth" class="input_40 input_month">
+            <!--non breakable hyphen-->
+            <input type="tel" data-placeholder="AAAA" required aria-required="true" step="1" id="acquisitionYear" name="acquisitionYear" class="input_80 input_year" >
+
+            <!--<input type="date" data-placeholder="DD/MM/AAAA" required aria-required="true" step="1" id="acquisitionDate" name="acquisitionDate" >-->
 
             <div class="next">
                 <a href="#" class="button btn-orange">Next &#10230;</a>
@@ -169,7 +173,7 @@
                 </label>
                 <div class="input_value small_input">
                      <input type="tel" min="0" step="Any" id="borrowedAmount" class="currencyInput unit_left" name="borrowedAmount"/>
-                    <span class="unit" style="top: 49px">
+                    <span class="unit">
                         {{{curr_symbol}}}
                     </span>
                 </div>
@@ -196,7 +200,7 @@
                 </label>
                 <div class="input_value small_input ">
                     <input type="tel" min="0" step="Any" id="residualValue" class="currencyInput unit_left" name="residualValue" />
-                    <span class="unit" style="top: 49px">
+                    <span class="unit">
                         {{{curr_symbol}}}
                     </span>
                 </div>
@@ -395,11 +399,10 @@
                         {{{std_fuel_calc}}}
                     </span>
                 </div>
-
+                <label>
+                    {{{fuel_price}}}
+                </label>
                 <div class="input_value small_input">
-                    <label>
-                        {{{fuel_price}}}
-                    </label>
                     <input type="tel" min="0" step="Any" id="fuel_price" class="currencyInput small_input_unit_per_litre unit_left" name="fuel_price" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{std_volume_short}}}
@@ -798,8 +801,8 @@
                     <label>
                         {{{fuel_days}}}
                     </label>
-                    <input type="tel" min="1" max="7" step="1" class="no_padding_left small_input_days-per-week" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
-                     <span class="unit unit_days-per-week">
+                    <input type="tel" min="1" max="7" step="1" class="no_padding_left" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                     <span class="unit_days-per-week">
                         {{{days_per_week_short}}}
                     </span>
                 </div>
@@ -819,7 +822,7 @@
                         {{{fuel_dist_no_job}}}
                     </label>
                     <input type="tel" min="0" step="Any" name="journey_weekend" id="journey_weekend" class="no_padding_left small_input_kms"  />
-                    <span class="unit_kms" style="margin-top: 17px">
+                    <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
                 </div>
@@ -829,7 +832,7 @@
             <div class="car_no_job_distance_form3">
                 <div class="input_value small_input">
                     <label>
-                        {{{fuel_days}}}
+                        {{{fuel_dist}}}
                     </label>
                     <input type="tel" min="0" step="Any" id="dist_per_month" class="no_padding_left" name="km_per_month"/>
                      <span class="unit_kms">
@@ -884,11 +887,11 @@
                 {{{extra_data_time_question3}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" id="min_drive_per_day" class="input_90" name="min_drive_per_day" />
+                <input type="tel" min="0" step="Any" id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
                 <span class="minutes_day">
                     {{{minutes}}}/{{{day}}}
                 </span>
-                <input type="tel" min="0" max="31" step="1" id="days_drive_per_month" class="input_90" name="days_drive_per_month" />
+                <input type="tel" min="0" max="31" step="1" id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
                 <span class="days_per_month">
                     {{{days}}}/{{{month}}}
                 </span>
