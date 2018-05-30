@@ -17,11 +17,11 @@ function nbrInspectOnChanged(){
 
     if($("#numberInspections").val() == 0){
         $("#averageInspectionCost").prop('disabled', true);
-        $("#averageInspectionCost").prev().addClass('disabled');
+        $("#averageInspectionCost").parent().prev().addClass('disabled');
     }
     else{
         $("#averageInspectionCost").prop('disabled', false);
-        $("#averageInspectionCost").prev().removeClass('disabled');
+        $("#averageInspectionCost").parent().prev().removeClass('disabled');
     }
 }
 
