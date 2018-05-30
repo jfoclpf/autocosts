@@ -87,13 +87,11 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 
 /* Small input */
-.small_input {margin:0 25px 25px 0; display: inline-block; }
-.small_input:last-child {margin-bottom: 0}
+.small_input {margin:0 25px 25px 0; }
 
 .small_input label {font-size: 14px; margin-bottom: 10px}
 .small_input label > span {color: #42444a}
 .small_input input[type='number'] {width: 152px; font-size: 22px; padding-left: 34px}
-.small_input .unit {top: 29px}
 
 .small_input input,
 .small_input select, 
@@ -109,7 +107,9 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 .input_300 {width: 300px!important;}
 .input_200 {width: 200px!important;}
 .input_90 {width: 90px!important}
+.input_80 {width: 90px!important}
 .input_70 {width: 70px!important}
+.input_40 {width: 40px!important}
 .no_margin_bottom {margin-bottom: 0!important}
 input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
@@ -365,9 +365,9 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	label {font-size: 16px; line-height: 18px}
 	input {font-size: 22px; width: 84%; border-radius: 0; -webkit-appearance: none}
 	input[type='date'] {width: 100%; min-height: 2.5rem;}
-	input[type="date"]::before { content: attr(data-placeholder); width: 100%;}
-	input[type="date"]:focus::before,
-	input[type="date"]:valid::before { display: none }
+	input[type="tel"].input_month::before, input[type="tel"].input_year::before { content: attr(data-placeholder); width: 100%;}
+	input[type="tel"].input_month:focus::before, input[type="tel"].input_year:focus::before,
+	input[type="tel"].input_month:valid::before, input[type="tel"].input_year:valid::before { display: none }
 
 	.input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
 	.input_200 {width: 65%!important}
@@ -385,7 +385,6 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.unit, .per, .during, .months_year, .minutes_day, 
 	.unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
 	.small_input .unit {top: 0px!important}
-	.fuel_efficiency .small_input .unit {top: 29px!important}
 
 	#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
 
@@ -399,6 +398,8 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	#daily_tolls_false_div input {width: 50%!important }
 
 	#working_time_input_form3 input.input_70 {width: 40%!important }
+	
+	.time_spent_part2_form3 .input_70 {width: 40px!important }
 
 
 
