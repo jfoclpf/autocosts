@@ -87,9 +87,9 @@ function initializeForm(){
 
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
     driveToJob(false);
+    
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
-    fuelCalculationMethodChange('currency');
-    carToJob(false);
+    fuelCalculationMethodChange('currency');    
 
     //set public transporsts and fin. effort main DIVs to no
     $("#slider1, #slider2").checked = false;    
