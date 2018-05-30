@@ -2,9 +2,6 @@
 /*====================================================*/
 /*Functions which work only on the form*/
 
-var income = "year";
-var isDistanceSet = false;
-
 /*function that checks if a certain HTML id or class is visible*/
 function isVisible(html_ref) {
     if($(html_ref).css("display")!="none")
@@ -34,29 +31,31 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
     if (fuelCalculationMethod === "currency") {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_euros").prop("checked", true);
-
-        isDistanceSet = false;
+                
+        $("#currency_div_form2").slideDown("slow");  //show
+        $("#distance_div_form2, .fuel_efficiency, #div_car_job_no_form2, #div_car_job_yes_form2").slideUp("slow"); //hide
+        
+        //form part 3
         $("#distance_form3").each(function(){ $(this).show(); });
-        $("#currency_div_form2").slideDown("slow");
-        $("#distance_div_form2").slideUp("slow");
         $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
         $(".time_spent_part2_form3").show();
         $("#drive_to_work_no_form3").prop("checked", true);
-
-        carToJob(false);
+        
     } else if (fuelCalculationMethod === "distance") {
         //selects actively radio button to which this function is associated
-        $("#radio_fuel_km").prop("checked", true);
-
-        isDistanceSet = true;
-        $("#distance_form3").each(function(){ $(this).hide(); });
-        $("#currency_div_form2").slideUp("slow");
-        $("#distance_div_form2").slideDown("slow");
+        $("#radio_fuel_km").prop("checked", true);        
+        
+        $("#currency_div_form2").slideUp("slow");  //hide
+        $("#distance_div_form2, .fuel_efficiency").slideDown("slow"); //show
 
         carToJob(false);
+        
+        //form part 3
+        $("#distance_form3").each(function(){ $(this).hide(); });
         driveToJob(false);
+        
     } else {
-        console.log("Either is distance or currency... make up your mind developer");
+        console.error("Either is distance or currency... make up your mind developer");
     }
 }
 
