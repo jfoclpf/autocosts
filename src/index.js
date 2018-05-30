@@ -59,7 +59,15 @@ var WORDS = {};                   //Object of Objects with all the words for eac
 for (var CC in serverData.availableCountries){
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
-    WORDS[CC].domain = serverData.domains.countries[CC];    
+    WORDS[CC].domain = serverData.domains.countries[CC]; 
+    //process the sentences, uppercasing the first letters of the words right after "<br>"
+    //Ex: "This is text 1<br>this is text 2" ==> "This is text 1<br>This is text 2"
+    for (var word in WORDS[CC]){
+        if(typeof WORDS[CC][word] == 'string'){
+            WORDS[CC][word] = WORDS[CC][word].replace(/(<br><i>|<br>)(\w)/g, 
+                function(match, p1, p2){ return p1 + p2.toUpperCase();});          
+        }
+    }
 }
 
 //event handler to deal when the settings are changed
