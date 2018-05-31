@@ -207,22 +207,18 @@ function income_toggle(value){
         case "year":
             $("#income_per_year_form3, #working_time_form3").show("slow");
             $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").hide("slow");
-            income="year";
             break;
         case "month":
             $("#income_per_month_form3, #working_time_form3").show("slow");
             $("#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3").hide("slow");
-            income="month";
             break;
         case "week":
             $("#income_per_week_form3, #working_time_form3").show("slow");
             $("#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3").hide("slow");
-            income="week";
             break;
         case "hour":
             $("#income_per_hour_form3").show("slow");
             $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").hide("slow");
-            income="hour";
             break;
     }
 }

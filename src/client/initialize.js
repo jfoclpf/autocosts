@@ -57,7 +57,7 @@ function setLanguageVars(){
         "4" : WORDS.semester,
         "5" : WORDS.year
     };
-    $('select[class="time_period"]').each(function(){
+    $("select.time_period").each(function(){
         var $dropdown = $(this);
         $.each(SelectList, function(key, value) {
             $dropdown.append($("<option/>").val(key).text(value));
