@@ -761,7 +761,7 @@
 
 
         <!--************************** DISTANCE **************************-->
-        <div class="field_container" id="depr_input_td">
+        <div class="field_container" id="distance_form3">
             <label>
                 {{{distance}}}
             </label>
@@ -773,16 +773,16 @@
                 </label>
                 <div class="radio_tabs small_tabs">
                     <div class="radio_tab_container">
-                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3"
-                           value="true" />
+                        <input type="radio" name="drive_to_work" class="no_left_margin" 
+                               id="drive_to_work_yes_form3" value="true" />
                         <label>
                             {{{yes}}}
                         </label>
                      </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" 
-                           value="false" />
+                        <input type="radio" name="drive_to_work" class="no_left_margin" 
+                               id="drive_to_work_no_form3" value="false" />
                         <label>
                             {{{no}}}
                         </label>
@@ -799,7 +799,8 @@
                     <label>
                         {{{fuel_days}}}
                     </label>
-                    <input type="tel" min="1" max="7" step="1" class="no_padding_left" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                    <input type="tel" min="1" max="7" step="1" class="no_padding_left" 
+                           id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
                      <span class="unit_days-per-week">
                         {{{days_per_week_short}}}
                     </span>
@@ -809,7 +810,8 @@
                     <label>
                         {{{fuel_dist_home_job}}}
                     </label>
-                    <input type="tel" min="0" step="Any" id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
+                    <input type="tel" min="0" step="Any" 
+                           id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
                     <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -819,7 +821,8 @@
                     <label>
                         {{{fuel_dist_no_job}}}
                     </label>
-                    <input type="tel" min="0" step="Any" name="journey_weekend" id="journey_weekend" class="no_padding_left small_input_kms"  />
+                    <input type="tel" min="0" step="Any" name="journey_weekend" 
+                           id="journey_weekend" class="no_padding_left small_input_kms"  />
                     <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -832,7 +835,8 @@
                     <label>
                         {{{fuel_dist}}}
                     </label>
-                    <input type="tel" min="0" step="Any" id="dist_per_month" class="no_padding_left" name="km_per_month"/>
+                    <input type="tel" min="0" step="Any" 
+                           id="dist_per_month" class="no_padding_left" name="km_per_month"/>
                      <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -856,7 +860,8 @@
                 {{{extra_data_time_question1}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
+                <input type="tel" min="0" step="Any" class="input_90" 
+                       id="time_home_job" name="time_home_job" />
                 <span class="min">
                     {{{min}}}
                 </span>
@@ -867,7 +872,8 @@
                 {{{extra_data_time_question2}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" class="input_90" id="time_weekend" name="time_weekend" />
+                <input type="tel" min="0" step="Any" class="input_90" 
+                       id="time_weekend" name="time_weekend" />
                 <span class="min">
                     {{{min}}}
                 </span>
@@ -885,11 +891,13 @@
                 {{{extra_data_time_question3}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
+                <input type="tel" min="0" step="Any" 
+                       id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
                 <span class="minutes_day">
                     {{{minutes}}}/{{{day}}}
                 </span>
-                <input type="tel" min="0" max="31" step="1" id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
+                <input type="tel" min="0" max="31" step="1" 
+                       id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
                 <span class="days_per_month">
                     {{{days}}}/{{{month}}}
                 </span>
