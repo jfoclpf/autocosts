@@ -80,6 +80,7 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 .unit_n_year_left {padding-left: 115px}
 .unit_n_month_left {padding-left: 140px}
+.unit_n_hour_left {padding-left: 110px}
 
 
 .per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
@@ -404,8 +405,12 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.input_200 {width: 65%!important}
 	.input_70, select {width: 100%!important}
 	#hero select {width: 118px!important}
-	input.unit_n_month_left {padding-left: 85px}
+	input.unit_n_month_left {padding-left: 90px}
+	input.unit_n_hour_left {padding-left: 80px}
 	input.no_padding_left {width: 66%}
+
+	select.big-dropdown {font-size: 22px; }
+	.input_value select {margin-top: 10px}
 
 	.radio_tab_container {width: 70px}
 	.radio_tab_container label {font-size: 12px; padding: 4px 0}
