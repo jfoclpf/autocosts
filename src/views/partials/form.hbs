@@ -54,6 +54,8 @@
             <!--non breakable hyphen-->
             <input type="tel" data-placeholder="AAAA" required aria-required="true" step="1" id="acquisitionYear" name="acquisitionYear" class="input_80 input_year" >
 
+            <!--<input type="date" data-placeholder="DD/MM/AAAA" required aria-required="true" step="1" id="acquisitionDate" name="acquisitionDate" >-->
+
             <div class="next">
                 <a href="#" class="button btn-orange">Next &#10230;</a>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
@@ -281,10 +283,7 @@
         <!--************************** FUELS **************************-->
         <div class="field_container" id="depr_input_td">
             <label>
-                {{{fuel}}}
-                <span>
-                    {{{fuel_desc}}}
-                </span>
+                {{{fuel_desc}}}
             </label>
             <div class="input_value small_input no_margin_bottom">
                 <label>
@@ -543,7 +542,7 @@
                     <span class="per">
                         {{{word_per}}}
                     </span>
-                     <select class="time_period" id="tolls_period_select"></select>
+                    <select class="time_period big-dropdown" id="tolls_period_select"></select>
                 </div>
             </div>
 
@@ -591,7 +590,7 @@
                 <span class="per">
                     {{{word_per}}}
                 </span>
-                <select class="time_period" id="tickets_period_select"></select>
+                <select class="time_period big-dropdown" id="tickets_period_select"></select>
 
             </div>
 
@@ -619,7 +618,7 @@
                 <span class="per">
                     {{{word_per}}}
                 </span>
-                <select class="time_period" id="washing_period_select"></select>
+                <select class="time_period big-dropdown" id="washing_period_select"></select>
 
             </div>
 
@@ -678,37 +677,82 @@
             </label>
             <div class="radio_tabs" id="income_div_form3">
                 <div class="radio_tab_container">
-                    <input type="radio" name="radio_income" value="year" id="radio_income_year"/>
+                    <input type="radio" name="radio_income" value="year" id="radio_income_year" onchange="income_toggle(value)" checked />
                     <label>
                         {{{year}}}
                     </label>
                  </div>
 
                 <div class="radio_tab_container">
-                    <input type="radio" name="radio_income" value="month" id="radio_income_month">
+                    <input type="radio" name="radio_income" value="month" id="radio_income_month" onchange="income_toggle(value)" />
                     <label>
                         {{{month}}}
                     </label>
                 </div>
                 <div class="radio_tab_container">
-                    <input type="radio" name="radio_income" value="week" id="radio_income_week" />
+                    <input type="radio" name="radio_income" value="week" id="radio_income_week" onchange="income_toggle(value)" />
                     <label>
                         {{{week}}}
                     </label>
                 </div>
 
                 <div class="radio_tab_container">
-                    <input type="radio" name="radio_income" value="hour" id="radio_income_hour" />
+                    <input type="radio" name="radio_income" value="hour" id="radio_income_hour" onchange="income_toggle(value)" />
                     <label>
                         {{{hour}}}
                     </label>
                 </div>
             </div>
 
-            <div class="input_value">
-                <input type="tel" min="0" step="Any" id="income" class="currencyInput input_300" name="income"/>
+            <!-- Year -->
+            <div id="income_per_year_form3" class="div_element input_value">
+                <input type="tel" min="0" step="Any" id="income_per_year" class="currencyInput unit_n_year_left input_300" name="income_per_year" />
                 <span class="unit">
-                    {{{curr_symbol}}}
+                    {{{curr_symbol}}}/{{{year}}}
+                </span>
+            </div>
+
+            <!-- Month -->
+            <div id="income_per_month_form3" class="input_value div_element hidden">
+                <input type="tel" min="0" step="Any" id="income_per_month" class="currencyInput unit_n_month_left input_300" name="income_per_month"/>
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{month}}}
+                </span>
+                <br><br>
+                <input type="tel" min="1" max="12" step="1" id="income_months_per_year" class="input_40" name="income_months_per_year"/>
+                <span class="months_year">
+                    {{{months}}}/{{{year}}}
+                </span>
+            </div>
+
+            <!-- Week -->
+            <div id="income_per_week_form3" class="input_value div_element hidden">
+                <input type="tel" min="0" step="Any" id="income_per_week" class="currencyInput unit_n_month_left input_300" name="income_per_week" />
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{week}}}
+                </span>
+                <br><br>
+                <input type="tel" min="0" max="53" step="Any" id="income_weeks_per_year" class="input_40" name="income_weeks_per_year" />
+                <span class="months_year">
+                    {{{weeks}}}/{{{year}}}
+                </span>
+            </div>
+
+            <!-- Hour -->
+            <div id="income_per_hour_form3" class="input_value div_element hidden">
+                <input type="tel" min="0" step="Any" id="income_per_hour" class="currencyInput unit_n_hour_left input_90" name="income_per_hour" />
+                <span class="unit">
+                    {{{curr_symbol}}}/{{{hour}}}
+                </span>
+                <br><br>
+                <input type="tel" min="0" max="168" step="Any" id="income_hours_per_week" class="input_80" name="income_hours_per_week"/>
+                <span class="hours_week">
+                    {{{hours}}}/{{{week}}}
+                </span>
+                <br><br>
+                <input type="tel" min="0" max="53" step="Any" id="income_hour_weeks_per_year" class="input_80" name="income_hour_weeks_per_year" />
+                <span class="hours_week">
+                    {{{weeks}}}/{{{year}}}
                 </span>
             </div>
 
@@ -761,7 +805,7 @@
 
 
         <!--************************** DISTANCE **************************-->
-        <div class="field_container" id="distance_form3">
+        <div class="field_container" id="depr_input_td">
             <label>
                 {{{distance}}}
             </label>
@@ -773,16 +817,16 @@
                 </label>
                 <div class="radio_tabs small_tabs">
                     <div class="radio_tab_container">
-                        <input type="radio" name="drive_to_work" class="no_left_margin" 
-                               id="drive_to_work_yes_form3" value="true" />
+                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_yes_form3"
+                           value="true" />
                         <label>
                             {{{yes}}}
                         </label>
                      </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="drive_to_work" class="no_left_margin" 
-                               id="drive_to_work_no_form3" value="false" />
+                        <input type="radio" name="drive_to_work" class="no_left_margin" id="drive_to_work_no_form3" 
+                           value="false" />
                         <label>
                             {{{no}}}
                         </label>
@@ -799,8 +843,7 @@
                     <label>
                         {{{fuel_days}}}
                     </label>
-                    <input type="tel" min="1" max="7" step="1" class="no_padding_left" 
-                           id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                    <input type="tel" min="1" max="7" step="1" class="no_padding_left" id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
                      <span class="unit_days-per-week">
                         {{{days_per_week_short}}}
                     </span>
@@ -810,8 +853,7 @@
                     <label>
                         {{{fuel_dist_home_job}}}
                     </label>
-                    <input type="tel" min="0" step="Any" 
-                           id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
+                    <input type="tel" min="0" step="Any" id="dist_home_job" class="no_padding_left small_input_kms" name="dist_home_job" />
                     <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -821,8 +863,7 @@
                     <label>
                         {{{fuel_dist_no_job}}}
                     </label>
-                    <input type="tel" min="0" step="Any" name="journey_weekend" 
-                           id="journey_weekend" class="no_padding_left small_input_kms"  />
+                    <input type="tel" min="0" step="Any" name="journey_weekend" id="journey_weekend" class="no_padding_left small_input_kms"  />
                     <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -835,8 +876,7 @@
                     <label>
                         {{{fuel_dist}}}
                     </label>
-                    <input type="tel" min="0" step="Any" 
-                           id="dist_per_month" class="no_padding_left" name="km_per_month"/>
+                    <input type="tel" min="0" step="Any" id="dist_per_month" class="no_padding_left" name="km_per_month"/>
                      <span class="unit_kms">
                         {{{std_dist}}}
                     </span>
@@ -860,8 +900,7 @@
                 {{{extra_data_time_question1}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" class="input_90" 
-                       id="time_home_job" name="time_home_job" />
+                <input type="tel" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
                 <span class="min">
                     {{{min}}}
                 </span>
@@ -872,8 +911,7 @@
                 {{{extra_data_time_question2}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" class="input_90" 
-                       id="time_weekend" name="time_weekend" />
+                <input type="tel" min="0" step="Any" class="input_90" id="time_weekend" name="time_weekend" />
                 <span class="min">
                     {{{min}}}
                 </span>
@@ -891,13 +929,11 @@
                 {{{extra_data_time_question3}}}
             </label>
             <div class="input_value">
-                <input type="tel" min="0" step="Any" 
-                       id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
+                <input type="tel" min="0" step="Any" id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
                 <span class="minutes_day">
                     {{{minutes}}}/{{{day}}}
                 </span>
-                <input type="tel" min="0" max="31" step="1" 
-                       id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
+                <input type="tel" min="0" max="31" step="1" id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
                 <span class="days_per_month">
                     {{{days}}}/{{{month}}}
                 </span>
