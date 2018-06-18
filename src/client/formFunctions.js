@@ -25,64 +25,74 @@ function nbrInspectOnChanged(){
     }
 }
 
-//function for the radio button with the question
-//'Calculations based on:' in the Fuel section of Form part 2
+//FUEL - Form Part 2
+//'Calculations based on:' currency or distance
 function fuelCalculationMethodChange(fuelCalculationMethod) {
-    if (fuelCalculationMethod === "currency") {
+    
+    if (fuelCalculationMethod === "distance") {
+        //selects actively radio button to which this function is associated
+        $("#radio_fuel_km").prop("checked", true);        
+
+        $("#currency_div_form2").slideUp("slow");  //hide
+        $("#distance_div_form2, .fuel_efficiency").slideDown("slow"); //show
+
+        carToJob(false);
+
+        //DISTANCE - Form Part 3
+        //If user sets distance here, the calculator does not needs to further question about the distance        
+        $("#distance_form3").hide();
+        driveToJob(false);
+    }
+    
+    else if (fuelCalculationMethod === "currency") {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_euros").prop("checked", true);
                 
         $("#currency_div_form2").slideDown("slow");  //show
         $("#distance_div_form2, .fuel_efficiency, #div_car_job_no_form2, #div_car_job_yes_form2").slideUp("slow"); //hide
         
-        //form part 3
-        $("#distance_form3").each(function(){ $(this).show(); });
-        $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
-        $(".time_spent_part2_form3").show();
-        $("#drive_to_work_no_form3").prop("checked", true);
+        //DISTANCE - Form Part 3
+        //If user sets currency here, the calculator needs anyway to know what the distance traveled, 
+        //and thus it will ask the distance travelled by the user on Form Part 3
+        $("#distance_form3").show();
         
-    } else if (fuelCalculationMethod === "distance") {
-        //selects actively radio button to which this function is associated
-        $("#radio_fuel_km").prop("checked", true);        
-        
-        $("#currency_div_form2").slideUp("slow");  //hide
-        $("#distance_div_form2, .fuel_efficiency").slideDown("slow"); //show
-
-        carToJob(false);
-        
-        //form part 3
-        $("#distance_form3").each(function(){ $(this).hide(); });
-        driveToJob(false);
-        
-    } else {
-        console.error("Either is distance or currency... make up your mind developer");
+        $("#time_spent_part1_form3").hide();
+        $("#time_spent_part2_form3").show();
+        $("#drive_to_work_no_form3").prop("checked", true);        
+    } 
+    else {
+        console.error("Either is distance or currency");
     }
 }
 
-//function for the radio button with the question
-//'Considering you drive to work?' in the Fuel section of Form part 2
+//FUEL - Form Part 2
+//"Considering you drive to work?" yes or no
 function carToJob(carToJobFlag) {
+    //"Considering you drive to work?" YES
     if (carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_yes").prop("checked", true);
 
         $("#div_car_job_yes_form2").slideDown("slow");
         $("#div_car_job_no_form2").slideUp("slow");
-        $(".time_spent_part1_form3").each(function(){ $(this).show(); });
-        $(".time_spent_part2_form3").hide();
+        $("#time_spent_part1_form3").show();
+        $("#time_spent_part2_form3").hide();
 
         //working time section in form part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").hide();
-        $("#working_time_part2_form3").show();
-    } else {
+        $("#working_time_part2_form3").show();        
+    } 
+    
+    //"Considering you drive to work?" NO
+    else {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true);
 
         $("#div_car_job_yes_form2").slideUp("slow");
         $("#div_car_job_no_form2").slideDown("slow");
-        $(".time_spent_part1_form3").each(function(){ $(this).hide(); });
-        $(".time_spent_part2_form3").show();
+        $("#time_spent_part1_form3").hide();
+        $("#time_spent_part2_form3").show();
 
         //set to "no" the question "Do you have a job or a worthy occupation?"
         //in Working Time section of Form Part 3
@@ -93,8 +103,8 @@ function carToJob(carToJobFlag) {
     }
 }
 
+//DISTANCE - Form Part 3
 //Drive to Job yes/no radio button
-//in section Distance in form part 3
 function driveToJob(flag){
     if(flag){
         //selects actively radio button to which this function is associated
@@ -102,9 +112,7 @@ function driveToJob(flag){
 
         //distance section
         $("#car_no_job_distance_form3").fadeOut(function(){
-            $(".car_to_job_distance_form3").each(function(i, elm){
-                $(elm).fadeIn("slow");
-            });
+            $("#car_to_job_distance_form3").fadeIn("slow");
         });
 
         //set to "no" the question "Do you have a job or a worthy occupation?"
@@ -114,10 +122,8 @@ function driveToJob(flag){
         $("#working_time_part2_form3").show("slow");
 
         //time spent in driving section
-        $(".time_spent_part2_form3").fadeOut("slow", function(){
-            $(".time_spent_part1_form3").each(function(i, elm){
-                $(elm).fadeIn("slow");
-            });
+        $("#time_spent_part2_form3").fadeOut("slow", function(){
+            $("#time_spent_part1_form3").fadeIn("slow");
         });
 
     }
@@ -125,9 +131,7 @@ function driveToJob(flag){
         //selects actively radio button to which this function is associated
         $("#drive_to_work_no_form3").prop("checked", true);
 
-        $(".car_to_job_distance_form3").each(function(i, elm){
-            $(elm).fadeOut("slow")
-         }).promise().done( function(){
+        $("#car_to_job_distance_form3").fadeOut("slow", function(){
             $("#car_no_job_distance_form3").fadeIn("slow");
         });
 
@@ -137,10 +141,8 @@ function driveToJob(flag){
         $("#working_time_part2_form3").hide("slow");
 
         //time spent in driving section
-        $(".time_spent_part1_form3").each(function(i, elm){
-            $(elm).fadeOut("slow");
-        }).promise().done( function(){
-            $(".time_spent_part2_form3").fadeIn("slow");
+        $("#time_spent_part1_form3").fadeOut("slow", function(){
+            $("#time_spent_part2_form3").fadeIn("slow");
         });
     }
 }
@@ -164,44 +166,10 @@ function onclick_div_show(divID, flag) {
     }
 }
 
-//triggers when any slider in form part 3 toggles
-function slider_toggles_form3(){
-
-    var ckb1 = $("#slider1").is(":checked");
-    var ckb2 = $("#slider2").is(":checked");
-
-    if(ckb1){
-        $("#public_transp_Div_form3").show("slow");
-    }
-    else{
-        $("#public_transp_Div_form3").hide("slow");
-    }
-
-    if(ckb2){
-        $("#fin_effort_Div_form3").show("slow");
-    }
-    else{
-        $("#fin_effort_Div_form3").hide("slow");
-    }
-
-    //if Public Transporst or Financial Effort toogle sliders in form part 3 are activated,
-    //shows Distance and Time spent in driving form part 3 section
-    if(ckb1 || ckb2){
-        $("#distance_time_spent_driving_form3").show("slow");
-    }
-    else{
-        $("#distance_time_spent_driving_form3").hide("slow");
-    }
-}
-
-//sliders in form part 3
-$("#slider1").change(function() {
-    slider_toggles_form3();
-});
-$("#slider2").change(function() {
-    slider_toggles_form3();
-});
-
+//INCOME - Form Part 3 
+//Shows the active div and Hides the remainder divs. Ex: if "year" selected, shows #income_per_year_form3 and hides remainder
+//If "hour" selected hides also #working_time_form3. It needs working time to calculate the average yearly *income per hour*
+//With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known 
 function income_toggle(value){
     switch(value){
         case "year":
@@ -223,7 +191,7 @@ function income_toggle(value){
     }
 }
 
-//radio button toggle function of "Working time" section in form part 3
+//WORKING TIME - Form Part 3 
 function working_time_toggle(value){
     if(value){
         //selects actively radio button to which this function is associated
