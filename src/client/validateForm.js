@@ -6,13 +6,10 @@
 ************************************************/
 /*File with Javascript functions that check weather the form parts are correctly inserted */
 
-/*In this file for comments ALWAYS use bar-star star-bar / * comments * / */
-/*the minification tool removes newlines and thus double-bar-comments break the code */
-
 /* *** CHECK FORM PART 1 ***** */
 /*check if data from form 1 (standing costs) is correctly filled*/
 
-function is_userdata_formpart1_ok(){
+function isDepreciationOk(){
 
     var f = document.costs_form; /*form*/
     var minCarYear = 1910; /*the year of the first produced car*/
@@ -21,14 +18,16 @@ function is_userdata_formpart1_ok(){
     var acquisitionMonth = f.acquisitionMonth.value; /*car acquisition month*/
     var acquisitionYear  = f.acquisitionYear.value; /*car acquisition year*/
 
-    if(!isNumber(acquisitionMonth) || !isInteger(acquisitionMonth) || acquisitionMonth > 12 || acquisitionMonth <= 0){
+    if(!isNumber(acquisitionMonth) || !isInteger(acquisitionMonth) || 
+       acquisitionMonth > 12 || acquisitionMonth <= 0){
         $.jAlert({
             'title': WORDS.depreciation,
             'content': WORDS.error_depreciation_month + "!"
         });
         return false;
     }
-    if(!isNumber(f.acquisitionYear.value) || !isInteger(f.acquisitionYear.value) || f.acquisitionYear.value < minCarYear){
+    if(!isNumber(f.acquisitionYear.value) || !isInteger(f.acquisitionYear.value) || 
+       f.acquisitionYear.value < minCarYear){
         $.jAlert({
             'title': WORDS.depreciation,
             'content': WORDS.error_depreciation_year + "!"
@@ -62,6 +61,13 @@ function is_userdata_formpart1_ok(){
         });
         return false;
     }
+    
+    return true;   
+}
+
+function isInsuranceOk(){
+
+    var f = document.costs_form; /*form*/
 
     /*insurance*/
     var insurancePaymentPeriod = getCheckedValue(f.insurancePaymentPeriod);
@@ -83,7 +89,14 @@ function is_userdata_formpart1_ok(){
         });
         return false;
     }
+    
+    return true;
+}
 
+function isCarFinanceOk(){
+
+    var f = document.costs_form; /*form*/    
+    
     /*car finance*/
     var AutoCreditRadioBtn=getCheckedValue(f.AutoCreditRadioBtn);
 
@@ -126,7 +139,13 @@ function is_userdata_formpart1_ok(){
         }
     }
 
+    return true;
+}
 
+function isInspectionOk(){
+
+    var f = document.costs_form; /*form*/  
+    
     /*inspection*/
     var numberInspections = f.numberInspections.value;
 
@@ -145,7 +164,14 @@ function is_userdata_formpart1_ok(){
         });
         return false;
     }
+    
+    return true;
+}
 
+function isTaxesOk(){
+
+    var f = document.costs_form; /*form*/  
+    
     /*taxes*/
     if(!isNumber(f.roadTaxes.value)) {
         $.jAlert({
@@ -162,7 +188,8 @@ function is_userdata_formpart1_ok(){
 
 /* *** CHECK FORM PART 2 ***** */
 /*check if data from form 2 (running costs) is correctly filled*/
-function is_userdata_formpart2_ok(){
+
+function isFuelOk(){
 
     var f = document.costs_form; /*form*/
 
@@ -255,7 +282,14 @@ function is_userdata_formpart2_ok(){
         }
         break;
     }
+    
+    return true;
+}
 
+function isMaintenanceOk(){
+
+    var f = document.costs_form; /*form*/
+    
     /*maintenance*/
     if(!isNumber(f.revisoes.value)) {
         $.jAlert({
@@ -264,6 +298,13 @@ function is_userdata_formpart2_ok(){
         });
         return false;
     }
+    
+    return true;
+}
+    
+function isRepairsOk(){
+
+    var f = document.costs_form; /*form*/    
 
     /*repairs*/
     if(!isNumber(f.reparacoes.value)) {
@@ -273,7 +314,14 @@ function is_userdata_formpart2_ok(){
         });
         return false;
     }
+    
+    return true;
+}
 
+function isParkingOk(){
+
+    var f = document.costs_form; /*form*/    
+    
     /*parking*/
     if(!isNumber(f.parqueamento.value)){
         $.jAlert({
@@ -282,7 +330,14 @@ function is_userdata_formpart2_ok(){
         });
         return false;
     }
+    
+    return true;   
+}
 
+function isTollsOk(){
+
+    var f = document.costs_form; /*form*/ 
+    
     /* **** tolls ***** */
     var tolls_calc_method=getCheckedValue(f.tolls_daily_radioBtn);
 
@@ -314,7 +369,13 @@ function is_userdata_formpart2_ok(){
         }
 
     }
+    
+    return true;
+}
 
+function isFinesOk(){
+
+    var f = document.costs_form; /*form*/    
     /*fines*/
     if(!isNumber(f.tickets_value.value)){
         $.jAlert({
@@ -323,7 +384,14 @@ function is_userdata_formpart2_ok(){
         });
         return false;
     }
+    
+    return true;
+}
 
+function isWashingOk(){
+
+    var f = document.costs_form; /*form*/
+    
     /*washing*/
     if(!isNumber(f.washing_value.value)){
         $.jAlert({
@@ -337,174 +405,193 @@ function is_userdata_formpart2_ok(){
 }
 
 
-
 /* *** CHECK FORM PART 3 ***** */
-function is_userdata_formpart3_ok(){
+    
+function isPublicTransportOk(){
 
     var f = document.costs_form; /*form*/
+    
+    var n_pess_familia = f.pessoas_agregado.value;
+    var pmpmpc = f.preco_passe.value;
 
-    var public_transport = getCheckedSliderValue(f.slider1);
+    if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
+        $.jAlert({
+            'title': WORDS.extra_data1,
+            'content': WORDS.invalid_nbr_pp + "!"
+        });
+        return false;
+    }
 
-    if(public_transport){
-        var n_pess_familia=f.pessoas_agregado.value;
-        var pmpmpc=f.preco_passe.value;
+    if(!isNumber(pmpmpc) || pmpmpc<0){
+        $.jAlert({
+            'title': WORDS.extra_data1,
+            'content': WORDS.error_pass_amount + "!"
+        });
+        return false;
+    }
+    
+    return true;
+}
 
-        if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
+function isIncomeOk(){
+
+    var f = document.costs_form; /*form*/
+    
+    /*income*/
+    var income_type = getCheckedValue(f.radio_income);
+    switch(income_type){
+    case 'year':
+            if(!isNumber(f.income_per_year.value)){
             $.jAlert({
-                'title': WORDS.extra_data1,
-                'content': WORDS.invalid_nbr_pp + "!"
+                'title': WORDS.extra_data_income,
+                'content': WORDS.error_income + "!"
             });
             return false;
         }
-
-        if(!isNumber(pmpmpc) || pmpmpc<0){
+        break;
+    case 'month':
+        if(!isNumber(f.income_per_month.value)){
             $.jAlert({
-                'title': WORDS.extra_data1,
-                'content': WORDS.error_pass_amount + "!"
+                'title': WORDS.extra_data_income,
+                'content': WORDS.error_income + "!"
+            });
+            return false;
+        }
+        if(!isNumber(f.income_months_per_year.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_income,
+                'content': WORDS.error_months_per_year + "!"
+            });
+            return false;
+        }
+        break;
+    case 'week':
+        if(!isNumber(f.income_per_week.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_income,
+                'content': WORDS.error_income + "!"
+            });
+            return false;
+        }
+        if(!isNumber(f.income_weeks_per_year.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_income,
+                'content': WORDS.error_weeks_per_year + "!"
+            });
+            return false;
+        }
+        break;
+    }
+    
+    return true;
+}
+
+function isWorkingTimeOk(){
+
+    var f = document.costs_form; /*form*/    
+    
+    /*working time*/
+    var is_working_time = getCheckedValue(f.radio_work_time);
+    if(is_working_time == 'true' && income_type!='hour'){
+        if(!isNumber(f.time_hours_per_week.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_working_time,
+                'content': WORDS.error_hours_per_week + "!"
+            });
+            return false;
+        }
+        if(!isNumber(f.time_month_per_year.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_working_time,
+                'content': WORDS.error_months_per_year + "!"
             });
             return false;
         }
     }
+    
+    return true;
+}
 
-    var fin_effort=getCheckedSliderValue(f.slider2);
+function isDistanceOk(){
 
-    if(fin_effort){
-        /*income*/
-        var income_type = getCheckedValue(f.radio_income);
-        switch(income_type){
-        case 'year':
-                if(!isNumber(f.income_per_year.value)){
+    var f = document.costs_form; /*form*/      
+    
+    /*distance*/
+    if($('#distance_form3').css('display')!='none'){
+        var drive_to_work = getCheckedValue(f.drive_to_work);
+        if(drive_to_work == 'true'){
+            if(!isNumber(f.drive_to_work_days_per_week.value) || f.drive_to_work_days_per_week.value > 7){
                 $.jAlert({
-                    'title': WORDS.extra_data_income,
-                    'content': WORDS.error_income + "!"
+                    'title': WORDS.distance,
+                    'content': WORDS.error_days_per_week + "!"
                 });
                 return false;
             }
-            break;
-        case 'month':
-            if(!isNumber(f.income_per_month.value)){
+            if(!isNumber(f.dist_home_job.value)){
                 $.jAlert({
-                    'title': WORDS.extra_data_income,
-                    'content': WORDS.error_income + "!"
+                    'title': WORDS.distance,
+                    'content': WORDS.error_dist_home_work + "!"
                 });
                 return false;
             }
-            if(!isNumber(f.income_months_per_year.value)){
+            if(!isNumber(f.journey_weekend.value)){
                 $.jAlert({
-                    'title': WORDS.extra_data_income,
-                    'content': WORDS.error_months_per_year + "!"
-                });
-                return false;
-            }
-            break;
-        case 'week':
-            if(!isNumber(f.income_per_week.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_income,
-                    'content': WORDS.error_income + "!"
-                });
-                return false;
-            }
-            if(!isNumber(f.income_weeks_per_year.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_income,
-                    'content': WORDS.error_weeks_per_year + "!"
-                });
-                return false;
-            }
-            break;
-        }
-        /*working time*/
-        var is_working_time = getCheckedValue(f.radio_work_time);
-        if(is_working_time == 'true' && income_type!='hour'){
-            if(!isNumber(f.time_hours_per_week.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_working_time,
-                    'content': WORDS.error_hours_per_week + "!"
-                });
-                return false;
-            }
-            if(!isNumber(f.time_month_per_year.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_working_time,
-                    'content': WORDS.error_months_per_year + "!"
-                });
-                return false;
-            }
-        }
-    }
-
-    if(public_transport || fin_effort){
-        /*distance*/
-        if($('#distance_form3').css('display')!='none'){
-            var drive_to_work = getCheckedValue(f.drive_to_work);
-            if(drive_to_work == 'true'){
-                if(!isNumber(f.drive_to_work_days_per_week.value) || f.drive_to_work_days_per_week.value > 7){
-                    $.jAlert({
-                        'title': WORDS.distance,
-                        'content': WORDS.error_days_per_week + "!"
-                    });
-                    return false;
-                }
-                if(!isNumber(f.dist_home_job.value)){
-                    $.jAlert({
-                        'title': WORDS.distance,
-                        'content': WORDS.error_dist_home_work + "!"
-                    });
-                    return false;
-                }
-                if(!isNumber(f.journey_weekend.value)){
-                    $.jAlert({
-                        'title': WORDS.distance,
-                        'content': WORDS.error_dist_no_job + "!"
-                    });
-                    return false;
-                }
-            }
-            else{
-                if(!isNumber(f.km_per_month.value)){
-                    $.jAlert({
-                        'title': WORDS.distance,
-                        'content': WORDS.error_fuel_dist + "!"
-                    });
-                    return false;
-                }
-            }
-        }
-
-        /*time spent in driving*/
-        if (isVisible('.time_spent_part1_form3')){
-            if(!isNumber(f.time_home_job.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': WORDS.error_min_drive_home_job + "!"
-                });
-                return false;
-            }
-            if(!isNumber(f.time_weekend.value)){
-                $.jAlert({
-                    'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': WORDS.error_min_drive_weekend + "!"
+                    'title': WORDS.distance,
+                    'content': WORDS.error_dist_no_job + "!"
                 });
                 return false;
             }
         }
         else{
-            if(!isNumber(f.min_drive_per_day.value)){
+            if(!isNumber(f.km_per_month.value)){
                 $.jAlert({
-                    'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': WORDS.error_min_drive + "!"
+                    'title': WORDS.distance,
+                    'content': WORDS.error_fuel_dist + "!"
                 });
                 return false;
             }
-            var days_drive_per_month = f.days_drive_per_month.value;
-            if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
-                $.jAlert({
-                    'title': WORDS.extra_data_time_spent_in_driving,
-                    'content': WORDS.error_days_per_month + "!"
-                });
-                return false;
-            }
+        }
+    }
+    
+    return true;
+}
+
+function isTimeSpentInDrivingOk(){
+
+    var f = document.costs_form; /*form*/       
+    
+    /*time spent in driving*/
+    if (isVisible('.time_spent_part1_form3')){
+        if(!isNumber(f.time_home_job.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_time_spent_in_driving,
+                'content': WORDS.error_min_drive_home_job + "!"
+            });
+            return false;
+        }
+        if(!isNumber(f.time_weekend.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_time_spent_in_driving,
+                'content': WORDS.error_min_drive_weekend + "!"
+            });
+            return false;
+        }
+    }
+    else{
+        if(!isNumber(f.min_drive_per_day.value)){
+            $.jAlert({
+                'title': WORDS.extra_data_time_spent_in_driving,
+                'content': WORDS.error_min_drive + "!"
+            });
+            return false;
+        }
+        var days_drive_per_month = f.days_drive_per_month.value;
+        if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
+            $.jAlert({
+                'title': WORDS.extra_data_time_spent_in_driving,
+                'content': WORDS.error_days_per_month + "!"
+            });
+            return false;
         }
     }
 
