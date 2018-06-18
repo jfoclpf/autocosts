@@ -113,8 +113,8 @@ function driveToJob(flag){
         $("#drive_to_work_yes_form3").prop("checked", true);
 
         //Distance section - form part 3
-        $("#car_no_job_distance_form3").fadeOut("slow", function(){
-            $("#car_to_job_distance_form3").fadeIn("slow");
+        $("#car_no_job_distance_form3").hide("slow", function(){
+            $("#car_to_job_distance_form3").show("slow");
         });
 
         //set to "no" the question "Do you have a job or a worthy occupation?"
@@ -135,8 +135,8 @@ function driveToJob(flag){
         $("#drive_to_work_no_form3").prop("checked", true);
 
         //Distance section - form part 3
-        $("#car_to_job_distance_form3").fadeOut("slow", function(){
-            $("#car_no_job_distance_form3").fadeIn("slow");
+        $("#car_to_job_distance_form3").hide("slow", function(){
+            $("#car_no_job_distance_form3").show("slow");
         });
    
         //Working Time - Form Part 3
