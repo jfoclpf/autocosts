@@ -66,10 +66,22 @@ function setLanguageVars(){
 
     initializeForm();
     loadsDefaultValues();
-    loadsButtonsSettings();   
+    loadsButtonsSettings();
+    loadsButtonsHandlers();
 }
 
 function initializeForm(){
+    
+    //hides form part head titles, except first
+    //that is, it only shows Head Title "1. Standing costs"
+    $(".form_part_head_title").each(function(index){
+        if(index == 0){
+            $(this).show();
+        }
+        else{
+            $(this).hide();
+        }
+    });    
     
     $("#main_form select").val('1'); //set all the selects to "month"
     $("#tickets_period_select").val('5'); //set fines period to year
@@ -92,11 +104,8 @@ function initializeForm(){
     fuelCalculationMethodChange('currency');    
          
     //Income in Form Part 3 - set to year
-    income_toggle("year");
-    
-    //align radio button text
-    $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
-
+    income_toggle("year");        
+        
     //Google recaptcha
     IS_HUMAN_CONFIRMED = false;
     $('#run_button').show();
@@ -224,10 +233,38 @@ function loadsButtonsSettings(){
         updateStatsTable(this.value);
     });
     
-    /***********************************************************/
-    /***********************************************************/
+    //hides all fields except the first
+    $(".field_container").each(function( index ) {
+        if(index==0){
+            $( this ).show();
+        }
+        else{
+            $( this ).hide();
+        }
+    });
+
+}
+
+//associate click functions with buttons
+function loadsButtonsHandlers(){
     
-    //associate click functions with buttons
+    $(".button.btn-orange").on( "click", function(){                        
+        
+        var $nextField = $( this ).closest( ".field_container" ).next();        
+        $nextField.show(); //shows the next sibling            
+        
+        //check if the next sibling contains the class 'field_container'
+        //it might be a head title, for example: "2. Running Costs"
+        if (!$nextField.hasClass("field_container")){
+            //if not, show also the next sibling
+            $nextField.next().show();
+        }
+        
+        //this is necessary to avoid default behaviour
+        //avoid from scrolling to the top of page
+        return false;
+    });
+    
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
         
     //associate click functions with buttons (handlers)
@@ -264,8 +301,8 @@ function loadsButtonsSettings(){
     $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
     
     $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
-}
 
+}
 
 //detects whether Google Analytics has loaded
 function check_ga(t) {
