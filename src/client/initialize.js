@@ -90,11 +90,10 @@ function initializeForm(){
     
     //sets radio button in Form Part 2, section Fuel calculations, on Currency
     fuelCalculationMethodChange('currency');    
-
-    //set public transporsts and fin. effort main DIVs to no
-    $("#slider1, #slider2").checked = false;    
-    $("#public_transp_Div_form3, #fin_effort_Div_form3, #distance_time_spent_driving_form3").hide();
-
+         
+    //Income in Form Part 3 - set to year
+    income_toggle("year");
+    
     //align radio button text
     $("#main_form input:radio").siblings("span").css("vertical-align", "text-bottom");
 
@@ -250,6 +249,7 @@ function loadsButtonsSettings(){
     $("#working_time_yes_form3").on( "change", function(){working_time_toggle(true)});
     $("#working_time_no_form3").on( "change", function(){working_time_toggle(false)});
 
+    //Income on Form Part 3
     $("#radio_income_year").on( "change", function(){income_toggle("year")});
     $("#radio_income_month").on( "change", function(){income_toggle("month")});
     $("#radio_income_week").on( "change", function(){income_toggle("week")});
