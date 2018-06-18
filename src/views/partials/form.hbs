@@ -287,6 +287,7 @@
 
         <!--  end form Step 1  -->
 
+        
         <!--************************************************************************-->
         <!--************************************************************************-->
         <!--            Start form Part 2  -  Running Costs                         -->
@@ -665,6 +666,7 @@
         </div>
         <!--  end form Step 2  -->
 
+        
         <!--************************************************************************-->
         <!--************************************************************************-->
         <!--            Start form Step 3   -   Additional Data                     -->
@@ -930,12 +932,13 @@
             </div>
 
             <!-- /////// Option selected = NO /////// -->
-            <div class="car_no_job_distance_form3">
+            <div id="car_no_job_distance_form3">
                 <div class="input_value small_input">
                     <label>
                         {{{fuel_dist}}}
                     </label>
-                    <input type="tel" min="0" step="Any" id="dist_per_month" class="no_padding_left" name="km_per_month" />
+                    <input type="tel" min="0" step="Any" 
+                           id="dist_per_month" class="no_padding_left" name="km_per_month" />
                     <span class="unit_kms">
                         {{{std_dist}}}
                     </span>

@@ -106,41 +106,45 @@ function carToJob(carToJobFlag) {
 //DISTANCE - Form Part 3
 //Drive to Job yes/no radio button
 function driveToJob(flag){
+    
+    //Drive to Job - YES
     if(flag){
         //selects actively radio button to which this function is associated
-        //$("#drive_to_work_yes_form3").prop("checked", true);
+        $("#drive_to_work_yes_form3").prop("checked", true);
 
-        //distance section
-        $("#car_no_job_distance_form3").fadeOut(function(){
+        //Distance section - form part 3
+        $("#car_no_job_distance_form3").fadeOut("slow", function(){
             $("#car_to_job_distance_form3").fadeIn("slow");
         });
 
         //set to "no" the question "Do you have a job or a worthy occupation?"
-        //in Working Time section of Form Part 3
+        //in Working Time section - Form Part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").hide("slow");
         $("#working_time_part2_form3").show("slow");
 
-        //time spent in driving section
+        //Time Spent in Driving - Form Part 3
         $("#time_spent_part2_form3").fadeOut("slow", function(){
             $("#time_spent_part1_form3").fadeIn("slow");
         });
 
     }
+    //NO
     else{
         //selects actively radio button to which this function is associated
         $("#drive_to_work_no_form3").prop("checked", true);
 
+        //Distance section - form part 3
         $("#car_to_job_distance_form3").fadeOut("slow", function(){
             $("#car_no_job_distance_form3").fadeIn("slow");
         });
-
-        //in Working Time section of Form Part 3
+   
+        //Working Time - Form Part 3
         working_time_toggle(true);
         $("#working_time_part1_form3").show("slow");
         $("#working_time_part2_form3").hide("slow");
 
-        //time spent in driving section
+        //Time spent in driving section
         $("#time_spent_part1_form3").fadeOut("slow", function(){
             $("#time_spent_part2_form3").fadeIn("slow");
         });
