@@ -284,7 +284,7 @@
                 </label>
                 <div class="input_value">
                     <input type="tel" min="0" step="Any" name="roadTaxes"
-                           id="roadTaxes" class="currencyInput unit_n_year_left input_300" />
+                           id="roadTaxes" class="currencyInput unit_n_year_left input_300"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
                     </span>
@@ -303,7 +303,7 @@
 
         <!--************************************************************************-->
         <!--************************************************************************-->
-        <!--            Start Form Part 2  -   Running Costs                       -->
+        <!--               Start Form Part 2 - Running Costs                        -->
         <!--************************************************************************-->
         <div class="form_part_head_title">
             <h2 class="lang-fixed_costs_header_1"> 
@@ -327,7 +327,7 @@
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
                             <input type="radio" name="calc_combustiveis" 
-                                   id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');" />
+                                   id="radio_fuel_euros" value="euros" onclick="fuelCalculationMethodChange('currency');"/>
                             <label>
                                 {{{curr_name_plural}}}
                             </label>
@@ -335,7 +335,7 @@
 
                         <div class="radio_tab_container">
                             <input type="radio" name="calc_combustiveis" 
-                                   id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');" />
+                                   id="radio_fuel_km" value="km" onclick="fuelCalculationMethodChange('distance');"/>
                             <label>
                                 {{{std_dist}}}
                             </label>
@@ -352,7 +352,7 @@
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
                             <input type="radio" name="car_job_form2" class="no_left_margin" 
-                                   id="car_job_form2_yes" value="true" onclick="carToJob(true);" />
+                                   id="car_job_form2_yes" value="true" onclick="carToJob(true);"/>
                             <label>
                                 {{{yes}}}
                             </label>
@@ -360,7 +360,7 @@
 
                         <div class="radio_tab_container">
                             <input type="radio" name="car_job_form2" class="no_left_margin" 
-                                   id="car_job_form2_no" value="false" onclick="carToJob(false);" />
+                                   id="car_job_form2_no" value="false" onclick="carToJob(false);"/>
                             <label>
                                 {{{no}}}
                             </label>
@@ -378,7 +378,7 @@
                             {{{fuel_days}}}
                         </label>
                         <input type="tel" min="1" max="7" step="1" class="no_padding_left" 
-                               id="car_to_work_number_days_week" name="dias_por_semana"  />
+                               id="car_to_work_number_days_week" name="dias_por_semana"/>
                          <span class="unit_days-per-week">
                             {{{days_per_week_short}}}
                         </span>
@@ -389,7 +389,7 @@
                             {{{fuel_dist_home_job}}}
                         </label>
                         <input type="tel" min="0" step="Any" name="km_entre_casa_trabalho"
-                               id="car_to_work_distance_home_work" class="no_padding_left" />
+                               id="car_to_work_distance_home_work" class="no_padding_left"/>
                         <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
@@ -400,7 +400,7 @@
                             {{{fuel_dist_no_job}}}
                         </label>
                         <input type="tel" min="0" step="Any" name="km_fds" 
-                               id="car_to_work_distance_weekend" class="no_padding_left" />
+                               id="car_to_work_distance_weekend" class="no_padding_left"/>
                         <span class="unit_kms" style="margin-top: 17px">
                             {{{std_dist}}}
                         </span>
@@ -414,7 +414,7 @@
                             {{{fuel_dist}}}
                         </label>
                         <input type="tel" min="0" step="Any" name="km_por_mes" 
-                               id="no_car_to_work_distance" class="no_padding_left" />
+                               id="no_car_to_work_distance" class="no_padding_left"/>
                          <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
@@ -441,7 +441,7 @@
                     </label>
                     <div class="input_value small_input">
                         <input type="tel" min="0" step="Any" name="fuel_price"
-                               id="fuel_price" class="currencyInput small_input_unit_per_litre unit_left" />
+                               id="fuel_price" class="currencyInput small_input_unit_per_litre unit_left"/>
                         <span class="unit">
                             {{{curr_symbol}}}/{{{std_volume_short}}}
                         </span>
@@ -566,7 +566,7 @@
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
                              <input type="radio" name="tolls_daily_radioBtn"
-                                    id="tolls_daily_true" value="true" onclick="tolls_daily(true);" />
+                                    id="tolls_daily_true" value="true" onclick="tolls_daily(true);"/>
                             <label>
                                 {{{yes}}}
                             </label>
@@ -574,7 +574,7 @@
 
                         <div class="radio_tab_container">
                             <input type="radio" name="tolls_daily_radioBtn" value="false" 
-                                   id="tolls_daily_false"  onclick="tolls_daily(false);" checked="checked" />
+                                   id="tolls_daily_false"  onclick="tolls_daily(false);" checked="checked"/>
                             <label>
                                 {{{no}}}
                             </label>
@@ -591,7 +591,7 @@
                     </label>
                     <div class="input_value">
                         <input type="tel" min="0" step="Any" name="no_daily_tolls_value"
-                               id="no_daily_tolls_value" class="currencyInput input_200 unit_left" />
+                               id="no_daily_tolls_value" class="currencyInput input_200 unit_left"/>
                         <span class="unit">
                             {{{curr_symbol}}}
                         </span>
@@ -612,7 +612,7 @@
                     <span class="during">
                         {{{during}}}
                     </span>
-                    <input type="tel" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls" />
+                    <input type="tel" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls"/>
                     <span class="days_per_month">
                         {{{days}}}
                         {{{word_per}}}
@@ -641,7 +641,7 @@
 
                 <div class="input_value">
                     <input type="tel" min="0" step="Any" name="tickets_value"
-                           id="tickets_value" class="currencyInput input_200 unit_left" />
+                           id="tickets_value" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
@@ -672,7 +672,7 @@
 
                 <div class="input_value">
                     <input type="tel" min="0" step="Any" name="washing_value"
-                           id="washing_value" class="currencyInput input_200 unit_left" />
+                           id="washing_value" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
@@ -694,7 +694,7 @@
 
         <!--************************************************************************-->
         <!--************************************************************************-->
-        <!--            Start Form Part 3  -  Additional Data                       -->
+        <!--            Start Form Part 3 - Additional Data                         -->
         <!--************************************************************************-->
         <div class="form_part_head_title">
             <h2 class="lang-fixed_costs_header_1"> 
