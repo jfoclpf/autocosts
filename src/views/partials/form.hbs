@@ -56,11 +56,11 @@
                 <label>
                     {{{aq_date}}}
                 </label>
-                <input type="tel" data-placeholder="MM" required aria-required="true" step="1"
-                       id="acquisitionMonth" name="acquisitionMonth" class="input_40 input_month" />
-                <!--non breakable hyphen-->
-                <input type="tel" data-placeholder="AAAA" required aria-required="true" step="1"
-                       id="acquisitionYear" name="acquisitionYear" class="input_80 input_year" />
+                <input type="number" data-placeholder="MM" required aria-required="true" step="1"
+                       id="acquisitionMonth" name="acquisitionMonth" class="input_40 input_month" min="1" max="12"/>
+                
+                <input type="number" data-placeholder="AAAA" required aria-required="true" step="1" 
+                       id="acquisitionYear" name="acquisitionYear" class="input_80 input_year" min="1910"/>
 
                 <div class="next">
                     <a href="#" class="button btn-orange">Next &#10230;</a>
@@ -75,7 +75,7 @@
                     {{{com_value}}}
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="commercialValueAtAcquisition"
+                    <input type="number" min="0" step="Any" name="commercialValueAtAcquisition"
                            id="commercialValueAtAcquisition" class="currencyInput unit_left">
                     <span class="unit">
                         {{{curr_symbol}}}
@@ -96,7 +96,7 @@
                     {{{com_value_today}}}
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="commercialValueAtNow"
+                    <input type="number" min="0" step="Any" name="commercialValueAtNow"
                            id="commercialValueAtNow" class="currencyInput unit_left" />
                     <span class="unit">
                         {{{curr_symbol}}}
@@ -148,7 +148,7 @@
                 </div>
 
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" 
+                    <input type="number" min="0" step="Any" 
                            id="insuranceValue" class="currencyInput unit_left" name="insuranceValue" />
                     <span class="unit">
                         {{{curr_symbol}}}
@@ -191,7 +191,7 @@
                         {{{credit_loan}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="tel" min="0" step="Any" name="borrowedAmount"
+                         <input type="number" min="0" step="Any" name="borrowedAmount"
                                 id="borrowedAmount" class="currencyInput unit_left" />
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -202,7 +202,7 @@
                         {{{credit_period}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="tel" min="1" step="1" name="numberInstallments" 
+                         <input type="number" min="1" step="1" name="numberInstallments" 
                                 id="numberInstallments" class="no_padding_left input_200" />
                     </div>
 
@@ -210,7 +210,7 @@
                         {{{credit_average_value}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="tel" min="0" step="Any" name="amountInstallment"
+                         <input type="number" min="0" step="Any" name="amountInstallment"
                                 id="amountInstallment" class="currencyInput unit_left" />
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -221,7 +221,7 @@
                         {{{credit_residual_value}}}
                     </label>
                     <div class="input_value small_input ">
-                        <input type="tel" min="0" step="Any" name="residualValue"
+                        <input type="number" min="0" step="Any" name="residualValue"
                                id="residualValue" class="currencyInput unit_left" />
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -249,7 +249,7 @@
                         <label>
                             {{{inspection_nbmr_times}}}
                         </label>
-                        <input type="tel" min="0" step="1" name="numberInspections" 
+                        <input type="number" min="0" step="1" name="numberInspections" 
                             id="numberInspections" class="no_padding_left input_70" />
                     </div>
 
@@ -257,7 +257,7 @@
                         {{{inspection_price}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="tel" min="0" step="Any" name="averageInspectionCost"
+                         <input type="number" min="0" step="Any" name="averageInspectionCost"
                                 id="averageInspectionCost" class="currencyInput unit_left" disabled />
                          <span class="unit">
                             {{{curr_symbol}}}
@@ -283,7 +283,7 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="roadTaxes"
+                    <input type="number" min="0" step="Any" name="roadTaxes"
                            id="roadTaxes" class="currencyInput unit_n_year_left input_300"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
@@ -377,7 +377,7 @@
                         <label>
                             {{{fuel_days}}}
                         </label>
-                        <input type="tel" min="1" max="7" step="1" class="no_padding_left" 
+                        <input type="number" min="1" max="7" step="1" class="no_padding_left" 
                                id="car_to_work_number_days_week" name="dias_por_semana"/>
                          <span class="unit_days-per-week">
                             {{{days_per_week_short}}}
@@ -388,7 +388,7 @@
                         <label>
                             {{{fuel_dist_home_job}}}
                         </label>
-                        <input type="tel" min="0" step="Any" name="km_entre_casa_trabalho"
+                        <input type="number" min="0" step="Any" name="km_entre_casa_trabalho"
                                id="car_to_work_distance_home_work" class="no_padding_left"/>
                         <span class="unit_kms">
                             {{{std_dist}}}
@@ -399,7 +399,7 @@
                         <label>
                             {{{fuel_dist_no_job}}}
                         </label>
-                        <input type="tel" min="0" step="Any" name="km_fds" 
+                        <input type="number" min="0" step="Any" name="km_fds" 
                                id="car_to_work_distance_weekend" class="no_padding_left"/>
                         <span class="unit_kms" style="margin-top: 17px">
                             {{{std_dist}}}
@@ -413,7 +413,7 @@
                         <label>
                             {{{fuel_dist}}}
                         </label>
-                        <input type="tel" min="0" step="Any" name="km_por_mes" 
+                        <input type="number" min="0" step="Any" name="km_por_mes" 
                                id="no_car_to_work_distance" class="no_padding_left"/>
                          <span class="unit_kms">
                             {{{std_dist}}}
@@ -430,8 +430,8 @@
                         <label>
                             {{{fuel_car_eff}}}
                         </label>
-                        <input type="tel" min="0" step="Any" class="no_padding_left" 
-                               id="fuel_efficiency" name="consumo_auto" />
+                        <input type="number" min="0" step="Any" class="no_padding_left" 
+                               id="fuel_efficiency" name="consumo_auto"/>
                         <span class="unit_litre_100kms">
                             {{{std_fuel_calc}}}
                         </span>
@@ -440,7 +440,7 @@
                         {{{fuel_price}}}
                     </label>
                     <div class="input_value small_input">
-                        <input type="tel" min="0" step="Any" name="fuel_price"
+                        <input type="number" min="0" step="Any" name="fuel_price"
                                id="fuel_price" class="currencyInput small_input_unit_per_litre unit_left"/>
                         <span class="unit">
                             {{{curr_symbol}}}/{{{std_volume_short}}}
@@ -451,8 +451,8 @@
 
                 <!-- /////// Option selected = C$ /////// -->
                 <div id="currency_div_form2" class="input_value">
-                    <input type="tel" min="0" step="Any" size="5" name="combustiveis_euro"
-                           id="fuel_currency_value" class="currencyInput input_200 unit_left" />
+                    <input type="number" min="0" step="Any" size="5" name="combustiveis_euro"
+                           id="fuel_currency_value" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
@@ -481,7 +481,7 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="revisoes" 
+                    <input type="number" min="0" step="Any" name="revisoes" 
                            id="maintenance" class="currencyInput unit_n_year_left input_300">
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
@@ -507,7 +507,7 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="reparacoes" 
+                    <input type="number" min="0" step="Any" name="reparacoes" 
                            id="repairs" class="currencyInput unit_n_year_left input_300">
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
@@ -533,8 +533,8 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="parqueamento"
-                           id="parking" class="currencyInput unit_n_month_left">
+                    <input type="number" min="0" step="Any" name="parqueamento"
+                           id="parking" class="currencyInput unit_n_month_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{month}}}
                     </span>
@@ -590,7 +590,7 @@
                         </span>
                     </label>
                     <div class="input_value">
-                        <input type="tel" min="0" step="Any" name="no_daily_tolls_value"
+                        <input type="number" min="0" step="Any" name="no_daily_tolls_value"
                                id="no_daily_tolls_value" class="currencyInput input_200 unit_left"/>
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -604,15 +604,16 @@
 
                 <!-- /////// Option selected = YES /////// -->
                 <div id="daily_tolls_true_div" class="input_value">
-                    <input type="tel" min="0" step="Any" name="daily_expense_tolls"
-                           id="daily_expense_tolls" class="currencyInput input_200 unit_left" />
+                    <input type="number" min="0" step="Any" name="daily_expense_tolls"
+                           id="daily_expense_tolls" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
                     <span class="during">
                         {{{during}}}
                     </span>
-                    <input type="tel" min='1' max='31' step='1' id="number_days_tolls" name="number_days_tolls"/>
+                    <input type="number" min='1' max='31' step='1' 
+                           id="number_days_tolls" name="number_days_tolls"/>
                     <span class="days_per_month">
                         {{{days}}}
                         {{{word_per}}}
@@ -640,7 +641,7 @@
                 </label>
 
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="tickets_value"
+                    <input type="number" min="0" step="Any" name="tickets_value"
                            id="tickets_value" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
@@ -671,7 +672,7 @@
                 </label>
 
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" name="washing_value"
+                    <input type="number" min="0" step="Any" name="washing_value"
                            id="washing_value" class="currencyInput input_200 unit_left"/>
                     <span class="unit">
                         {{{curr_symbol}}}
@@ -715,16 +716,16 @@
                         <label>
                             {{{extra_data_family_nbr}}}
                         </label>
-                        <input type="tel" min="0" step="1" name="pessoas_agregado"
-                               id="household_number_people" class="no_padding_left input_70" />
+                        <input type="number" min="0" step="1" name="pessoas_agregado"
+                               id="household_number_people" class="no_padding_left input_70"/>
                     </div>
 
                     <label>
                         {{{extra_data_price_pass}}}
                     </label>
                     <div class="input_value small_input">
-                        <input type="tel" min="0" step="Any" name="preco_passe"
-                               id="public_transportation_month_expense" class="currencyInput unit_left" />
+                        <input type="number" min="0" step="Any" name="preco_passe"
+                               id="public_transportation_month_expense" class="currencyInput unit_left"/>
                          <span class="unit">
                             {{{curr_symbol}}}
                         </span>
@@ -756,14 +757,14 @@
 
                     <div class="radio_tab_container">
                         <input type="radio" name="radio_income" value="month" 
-                               id="radio_income_month" onchange="income_toggle(value)" />
+                               id="radio_income_month" onchange="income_toggle(value)"/>
                         <label>
                             {{{month}}}
                         </label>
                     </div>
                     <div class="radio_tab_container">
                         <input type="radio" name="radio_income" value="week" 
-                               id="radio_income_week" onchange="income_toggle(value)" />
+                               id="radio_income_week" onchange="income_toggle(value)"/>
                         <label>
                             {{{week}}}
                         </label>
@@ -771,7 +772,7 @@
 
                     <div class="radio_tab_container">
                         <input type="radio" name="radio_income" value="hour" 
-                               id="radio_income_hour" onchange="income_toggle(value)" />
+                               id="radio_income_hour" onchange="income_toggle(value)"/>
                         <label>
                             {{{hour}}}
                         </label>
@@ -780,8 +781,8 @@
 
                 <!-- Year -->
                 <div id="income_per_year_form3" class="div_element input_value">
-                    <input type="tel" min="0" step="Any" name="income_per_year"
-                           id="income_per_year" class="currencyInput unit_n_year_left input_300" />
+                    <input type="number" min="0" step="Any" name="income_per_year"
+                           id="income_per_year" class="currencyInput unit_n_year_left input_300"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
                     </span>
@@ -789,14 +790,14 @@
 
                 <!-- Month -->
                 <div id="income_per_month_form3" class="input_value div_element hidden">
-                    <input type="tel" min="0" step="Any" name="income_per_month"
+                    <input type="number" min="0" step="Any" name="income_per_month"
                            id="income_per_month" class="currencyInput unit_n_month_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{month}}}
                     </span>
                     <br><br>
-                    <input type="tel" min="1" max="12" step="1" name="income_months_per_year"
-                           id="income_months_per_year" class="input_40" />
+                    <input type="number" min="1" max="12" step="1" name="income_months_per_year"
+                           id="income_months_per_year" class="input_40"/>
                     <span class="months_year">
                         {{{months}}}/{{{year}}}
                     </span>
@@ -804,14 +805,14 @@
 
                 <!-- Week -->
                 <div id="income_per_week_form3" class="input_value div_element hidden">
-                    <input type="tel" min="0" step="Any" name="income_per_week"
-                           id="income_per_week" class="currencyInput unit_n_month_left input_300" />
+                    <input type="number" min="0" step="Any" name="income_per_week"
+                           id="income_per_week" class="currencyInput unit_n_month_left input_300"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{week}}}
                     </span>
                     <br><br>
-                    <input type="tel" min="0" max="53" step="Any" name="income_weeks_per_year"
-                           id="income_weeks_per_year" class="input_40" />
+                    <input type="number" min="0" max="53" step="Any" name="income_weeks_per_year"
+                           id="income_weeks_per_year" class="input_40"/>
                     <span class="months_year">
                         {{{weeks}}}/{{{year}}}
                     </span>
@@ -819,20 +820,20 @@
 
                 <!-- Hour -->
                 <div id="income_per_hour_form3" class="input_value div_element hidden">
-                    <input type="tel" min="0" step="Any" name="income_per_hour"
-                           id="income_per_hour" class="currencyInput unit_n_hour_left input_90" />
+                    <input type="number" min="0" step="Any" name="income_per_hour"
+                           id="income_per_hour" class="currencyInput unit_n_hour_left input_90"/>
                     <span class="unit">
                         {{{curr_symbol}}}/{{{hour}}}
                     </span>
                     <br><br>
-                    <input type="tel" min="0" max="168" step="Any" name="income_hours_per_week"
-                           id="income_hours_per_week" class="input_80" />
+                    <input type="number" min="0" max="168" step="Any" name="income_hours_per_week"
+                           id="income_hours_per_week" class="input_80"/>
                     <span class="hours_week">
                         {{{hours}}}/{{{week}}}
                     </span>
                     <br><br>
-                    <input type="tel" min="0" max="53" step="Any" name="income_hour_weeks_per_year"
-                           id="income_hour_weeks_per_year" class="input_80" />
+                    <input type="number" min="0" max="53" step="Any" name="income_hour_weeks_per_year"
+                           id="income_hour_weeks_per_year" class="input_80"/>
                     <span class="hours_week">
                         {{{weeks}}}/{{{year}}}
                     </span>
@@ -855,7 +856,7 @@
                 <div class="radio_tabs small_tabs">
                     <div class="radio_tab_container">
                         <input type="radio" name="radio_work_time" 
-                               id="working_time_yes_form3" value="true" />
+                               id="working_time_yes_form3" value="true"/>
                         <label>
                             {{{yes}}}
                         </label>
@@ -863,7 +864,7 @@
 
                     <div class="radio_tab_container">
                         <input type="radio" name="radio_work_time" 
-                               id="working_time_no_form3" value="false" />
+                               id="working_time_no_form3" value="false"/>
                         <label>
                             {{{no}}}
                         </label>
@@ -872,13 +873,13 @@
 
                 <!-- /////// Option selected = YES /////// -->
                 <div id="working_time_input_form3" class="input_value">
-                    <input type="tel" min="1" max="12" step="1" name="time_month_per_year"
-                           id="time_month_per_year" class="input_70" />
+                    <input type="number" min="1" max="12" step="1" name="time_month_per_year"
+                           id="time_month_per_year" class="input_70"/>
                     <span class="months_year">
                         {{{months}}}/{{{year}}}
                     </span>
-                    <input type="tel" min="1" max="168" step="Any" name="time_hours_per_week"
-                           id="time_hours_per_week" class="input_70" />
+                    <input type="number" min="1" max="168" step="Any" name="time_hours_per_week"
+                           id="time_hours_per_week" class="input_70"/>
                     <span class="hours_week">
                         {{{hours}}}/{{{week}}}
                     </span>
@@ -907,7 +908,7 @@
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
                             <input type="radio" name="drive_to_work" class="no_left_margin" 
-                                   id="drive_to_work_yes_form3" value="true" />
+                                   id="drive_to_work_yes_form3" value="true"/>
                             <label>
                                 {{{yes}}}
                             </label>
@@ -915,7 +916,7 @@
 
                         <div class="radio_tab_container">
                             <input type="radio" name="drive_to_work" class="no_left_margin" 
-                                   id="drive_to_work_no_form3" value="false" />
+                                   id="drive_to_work_no_form3" value="false"/>
                             <label>
                                 {{{no}}}
                             </label>
@@ -932,8 +933,8 @@
                         <label>
                             {{{fuel_days}}}
                         </label>
-                        <input type="tel" min="1" max="7" step="1" class="no_padding_left"
-                               id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                        <input type="number" min="1" max="7" step="1" class="no_padding_left"
+                               id="drive_to_work_days_per_week" name="drive_to_work_days_per_week"/>  
                          <span class="unit_days-per-week">
                             {{{days_per_week_short}}}
                         </span>
@@ -943,8 +944,8 @@
                         <label>
                             {{{fuel_dist_home_job}}}
                         </label>
-                        <input type="tel" min="0" step="Any" class="no_padding_left small_input_kms"
-                               id="dist_home_job" name="dist_home_job" />
+                        <input type="number" min="0" step="Any" class="no_padding_left small_input_kms"
+                               id="dist_home_job" name="dist_home_job"/>
                         <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
@@ -954,8 +955,8 @@
                         <label>
                             {{{fuel_dist_no_job}}}
                         </label>
-                        <input type="tel" min="0" step="Any" name="journey_weekend" 
-                               id="journey_weekend" class="no_padding_left small_input_kms" />
+                        <input type="number" min="0" step="Any" name="journey_weekend" 
+                               id="journey_weekend" class="no_padding_left small_input_kms"/>
                         <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
@@ -968,8 +969,8 @@
                         <label>
                             {{{fuel_dist}}}
                         </label>
-                        <input type="tel" min="0" step="Any" 
-                               id="dist_per_month" class="no_padding_left" name="km_per_month" />
+                        <input type="number" min="0" step="Any" 
+                               id="dist_per_month" class="no_padding_left" name="km_per_month"/>
                         <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
@@ -995,7 +996,8 @@
                     {{{extra_data_time_question1}}}
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
+                    <input type="number" min="0" step="Any" class="input_90" 
+                           id="time_home_job" name="time_home_job"/>
                     <span class="min">
                         {{{min}}}
                     </span>
@@ -1006,7 +1008,8 @@
                     {{{extra_data_time_question2}}}
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" class="input_90" id="time_weekend" name="time_weekend" />
+                    <input type="number" min="0" step="Any" class="input_90" 
+                           id="time_weekend" name="time_weekend"/>
                     <span class="min">
                         {{{min}}}
                     </span>
@@ -1026,12 +1029,12 @@
                     {{{extra_data_time_question3}}}
                 </label>
                 <div class="input_value">
-                    <input type="tel" min="0" step="Any" 
+                    <input type="number" min="0" step="Any" 
                            id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
                     <span class="minutes_day">
                         {{{minutes}}}/{{{day}}}
                     </span>
-                    <input type="tel" min="0" max="31" step="1" 
+                    <input type="number" min="0" max="31" step="1" 
                            id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
                     <span class="days_per_month">
                         {{{days}}}/{{{month}}}
