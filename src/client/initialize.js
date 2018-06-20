@@ -83,6 +83,8 @@ function initializeForm(){
         }
     });    
     
+    $(".cta_bottom_bar").hide();
+    
     $("#main_form select").val('1'); //set all the selects to "month"
     $("#tickets_period_select").val('5'); //set fines period to year
     $("#washing_period_select").val('3'); //set washing period to trimester
@@ -248,18 +250,40 @@ function loadsButtonsSettings(){
 //associate click functions with buttons
 function loadsButtonsHandlers(){
     
+    //button "next"
     $(".button.btn-orange").on( "click", function(){                        
         
-        var $nextField = $( this ).closest( ".field_container" ).next();        
+        //closest get top parent with class .field_container
+        //and then advances to the next on the same level
+        var n=1, $nextField = $( this ).closest( ".field_container" ).next();        
+        
         $nextField.show(); //shows the next sibling            
         
-        //check if the next sibling contains the class 'field_container'
-        //it might be a head title, for example: "2. Running Costs"
-        if (!$nextField.hasClass("field_container")){
-            //if not, show also the next sibling
-            $nextField.next().show();
-        }
+        while(true){
         
+            //check if the next sibling contains the class 'field_container'
+            //it might be a head title, for example: "2. Running Costs"
+            //check also if its content (first child) is visible; it might be hidden due to definitions in the form
+            //ex.: fuel options show and hide other form sections 
+            if ($nextField.hasClass("field_container") && $nextField.children().first().is(":visible")){
+                break;
+            }
+            
+            //if not, show also the next sibling
+            $nextField = $nextField.next();
+            if($nextField.length==0){
+                break;
+            }            
+            $nextField.show();
+            
+            //backcup to avoid infinit loop
+            if(n>100){
+                console.error('Infinite lopp on Handler of "Next" button');
+                break;
+            }
+            n++;
+        }
+            
         //this is necessary to avoid default behaviour
         //avoid from scrolling to the top of page
         return false;
