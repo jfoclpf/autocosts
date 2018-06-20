@@ -10,6 +10,46 @@ function isVisible(html_ref) {
         return false;
 }
 
+//when button "Next" is clicked
+function buttonNextHandler(){
+    //$( this ) is this button
+    //closest get top parent with class "field_container"
+    //and then advances to the next on the same level
+    var n=1, $nextField = $( this ).closest( ".field_container" ).next();        
+
+    $nextField.show(); //shows the next sibling
+
+    while(true){
+
+        //check if the next sibling contains the class 'field_container'
+        //it might be a head title and not a ".field_container", for example it might be the head "2. Running Costs"
+        //check also if its content (first child) is visible; it might be hidden due to definitions in the form
+        //ex.: fuel options in "2.Running Costs" show and hide form section "Distance" in "3. Additional data" 
+        if ($nextField.hasClass("field_container") && $nextField.children().first().is(":visible")){
+            break;
+        }
+        //otherwise continues the lopp showing the next siblings        
+        $nextField = $nextField.next();
+        
+        //if the next sibling is empty breks the while loop
+        if($nextField.length==0){
+            break;
+        }            
+        $nextField.show();
+
+        //backcup to avoid infinit loop
+        if(n>100){
+            console.error('Infinite lopp on Handler of "Next" button');
+            break;
+        }
+        n++;
+    }
+
+    //this is necessary to avoid default behaviour
+    //avoid from scrolling to the top of page
+    return false;
+}
+
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(nbrInspectOnChanged);
 $("#numberInspections").bind('keyup mouseup', nbrInspectOnChanged);
