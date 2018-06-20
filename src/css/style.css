@@ -71,6 +71,8 @@ input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
@@ -85,6 +87,7 @@ input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 .per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
 .days_per_month, .hours_week, .min {padding: 0 0 0 10px; font-size: 30px}
+
 
 
 /* Small input */
