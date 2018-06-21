@@ -71,8 +71,9 @@ input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}
+input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}
+input[type='number'] {-moz-appearance:textfield;}
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
