@@ -188,6 +188,9 @@ function loadsButtonsSettings(){
     //NEW UI/UX
     $("#form").hide();
 
+    //hides all buttons "next"
+    $(".next").hide();
+    
     $("#calculateButton").on("click", function(){
         $("#hero, footer").hide();
         $("#form").show();
@@ -252,6 +255,12 @@ function loadsButtonsHandlers(){
     
     //button "next"
     $(".button.btn-orange").on( "click", buttonNextHandler);
+    
+    //On 'input' would fire every time the input changes, so when one pastes something 
+    //(even with right click), deletes and types anything. If one uses the 'change' handler, 
+    //this will only fire after the user deselects the input box, which is not what we want.
+    //onInputTypeNumber is defined in formFunctions.js
+    $('input[type="number"]').on("input", onInputTypeNumber);
     
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
         

@@ -50,6 +50,73 @@ function buttonNextHandler(){
     return false;
 }
 
+//This fucntion would fire every time the <input type="number" changes
+function onInputTypeNumber(){
+    
+    //goes to top ascendents till it finds the class "field_container"
+    var $fieldHead = $( this ).closest( ".field_container" ); 
+
+    //goes to every descendent input[type="number"]
+    var $inputElements = $fieldHead.find('input[type="number"]');
+
+    var isValid = true;
+    var val, min, max;
+    $inputElements.each(function(index){
+
+        //if the input element is hidden or disabled doesn't check its value
+        if( $(this).is(":visible") && !$(this).prop('disabled')){
+            //A text input's value attribute will always return a string. 
+            //One needs to parseInt the value to get an integer
+            val = parseInt($( this ).val(), 10);
+            console.log(index + ": " + val);
+
+            if(!isNumber(val)){
+                isValid = false;
+            }
+
+            min = parseInt($( this ).attr('min'), 10); 
+            max = parseInt($( this ).attr('max'), 10);            
+            //console.log(min, max);
+
+            if (isNumber(min) && isNumber(max)){
+                if(val < min || val > max ){
+                    isValid = false;
+                }
+            }
+            else if (isNumber(min)){
+                if(val < min){
+                    isValid = false;
+                }                            
+            }
+            else if (isNumber(max)){
+                if(val > max ){
+                    isValid = false;
+                }                            
+            }
+            else{
+                console.error("Error");
+            }
+
+            if ($( this ).hasClass("input_integer")){
+                if(!isInteger(val)){
+                    isValid = false;
+                }
+            }
+        }
+    });
+
+    console.log("isValid: " + isValid);
+
+    //shows or hides button "next" accordingly
+    if(isValid){
+        $fieldHead.find(".next").show("fast");
+    }
+    else{
+        $fieldHead.find(".next").hide("fast");
+    }
+
+}
+
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 $("#numberInspections").focusout(nbrInspectOnChanged);
 $("#numberInspections").bind('keyup mouseup', nbrInspectOnChanged);
