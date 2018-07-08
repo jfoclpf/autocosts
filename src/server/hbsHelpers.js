@@ -72,8 +72,8 @@ module.exports = {
     json: function(context) {
         return JSON.stringify(context);
     },
-    jsonObj: function(obj){
-        return encodeURI(JSON.stringify(obj));
+    jsonObj: function(obj){        
+        return encodeURI(JSON.stringify(obj?obj:{}));
     },
     striOutHTML: function(str){
         return str.replace(/<(?:.|\n)*?>/gm, '');
@@ -147,8 +147,14 @@ module.exports = {
         }
         return output;
     },
-    getStatsItem(serverData, CC, item){
-        return serverData.statsData[CC][item];
+    
+    getStatsItem(serverData, CC, item){        
+        if(serverData.settings.switches.dataBase){        
+            return serverData.statsData[CC][item];
+        }
+        else{
+            return "";
+        }
     }
 }
 
