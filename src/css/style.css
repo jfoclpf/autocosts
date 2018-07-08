@@ -226,6 +226,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
+.container .form_part .bottom_spacer {padding-top:100px; display: block;}
 
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
