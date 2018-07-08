@@ -10,7 +10,7 @@ var CSPstr0, CSPstr1;
 
 module.exports = {
     
-    render: function(req, res, serverData, wordsOfCountry) {    
+    render: function(req, res, serverData, wordsOfCountry) {                    
         
         var CC = req.params.CC; //ISO 2 letter Country Code        
         debug("Country code: "  + CC);
@@ -31,7 +31,7 @@ module.exports = {
         var clientData = {
             "languageCode" : serverData.languagesCountries[CC], //ISO language code (ex: pt-PT)
             "isThisATest"  : url.isThisATest(req),              //boolean variable regarding if present request is a test
-            "notLocalhost" : !url.isThisLocalhost(req),         //boolean variable regarding if present request is from localhost
+            "notLocalhost" : !url.isThisLocalhost(req),     //boolean variable regarding if present request is from localhost
             "httpProtocol" : url.getProtocol(req, serverData.settings.switches.https)
         }    
         data.clientData = clientData;
