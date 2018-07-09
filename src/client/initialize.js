@@ -64,10 +64,10 @@ function setLanguageVars(){
         });
     });
 
-    initializeForm();
-    loadsDefaultValues();
+    initializeForm();    
     loadsButtonsSettings();
     loadsButtonsHandlers();
+    loadsStandardValues();
 }
 
 function initializeForm(){
@@ -131,57 +131,6 @@ function initializeForm(){
     
 }
 
-function loadsDefaultValues(){
-
-    //the key the name of the variable in WORDS
-    //the value is the name of the id in the form
-    var mappingIDs = {
-        "std_acq_month" : "acquisitionMonth",
-        "std_acq_year" : "acquisitionYear",
-        "std_price_paid" : "commercialValueAtAcquisition",
-        "std_price_today" : "commercialValueAtNow",
-        "std_insurance_sem" : "insuranceValue",
-        "std_loan" : "borrowedAmount",
-        "std_period_of_credit" : "numberInstallments",
-        "std_monthly_pay" : "amountInstallment",
-        "std_residual_value" : "residualValue",
-        "std_nbr_inspection" : "numberInspections",
-        "std_inspection_price" : "averageInspectionCost",
-        "std_road_tax" : "roadTaxes",
-        "std_fuel_paid_per_month" : "fuel_currency_value",
-        "std_days_per_week" : "car_to_work_number_days_week",
-        "std_jorney_2work" : "car_to_work_distance_home_work",
-        "std_jorney_weekend" : "car_to_work_distance_weekend",
-        "std_km_per_month" : "no_car_to_work_distance",
-        "std_car_fuel_efficiency" : "fuel_efficiency",
-        "std_fuel_price" : "fuel_price",
-        "std_maintenance_per_year" : "maintenance",
-        "std_repairs" : "repairs",
-        "std_parking" : "parking",
-        "std_tolls" : "no_daily_tolls_value",
-        "std_tolls_day" : "daily_expense_tolls",
-        "std_tolls_days_per_month" : "number_days_tolls",
-        "std_fines" : "tickets_value",
-        "std_washing" : "washing_value",
-        "std_nr_ppl_family" : "household_number_people",
-        "std_pass_price" : "public_transportation_month_expense",
-        "std_income_year" : "income_per_year",
-        "std_income_month" : "income_per_month",
-        "std_income_week" : "income_per_week",
-        "std_income_hour" : "income_per_hour",
-        "std_months_year" : "income_months_per_year",
-        "std_hours_week" : "income_hours_per_week",
-        "std_weeks_year" : "income_hour_weeks_per_year",
-        "std_time_home_job" : "time_home_job",
-        "std_time_weekend" : "time_weekend",
-        "std_time_in_driving" : "min_drive_per_day",
-        "std_days_month" : "days_drive_per_month"
-    };
-
-    $.each(mappingIDs, function(key, value){
-        $("#"+value).val(WORDS[key]);
-    });
-}
 
 function loadsButtonsSettings(){
     
@@ -253,51 +202,64 @@ function loadsButtonsSettings(){
 //associate click functions with buttons
 function loadsButtonsHandlers(){
     
-    //button "next"
-    $(".button.btn-orange").on( "click", buttonNextHandler);
+    //button "next"; function buttonNextHandler is on formFunctions.js
+    $(".button.btn-orange").on( "click", function(){
+        buttonNextHandler($(this));
+        //this is necessary to avoid default behaviour
+        //avoid from scrolling to the top of page
+        return false;    
+    });
     
     //On 'input' would fire every time the input changes, so when one pastes something 
     //(even with right click), deletes and types anything. If one uses the 'change' handler, 
     //this will only fire after the user deselects the input box, which is not what we want.
-    //onInputTypeNumber is defined in formFunctions.js
-    $('input[type="number"]').on("input", onInputTypeNumber);
+    //isFieldValid is defined in formFunctions.js
+    $('input[type="number"]').on("input", function(){isFieldValid($(this))});
     
-    $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
-        
-    //associate click functions with buttons (handlers)
-    $("#rerun_button").on( "click", function(){reload()});
-    $("#print_button").on( "click", function(){Print()});
-    $("#generate_PDF").on( "click", function(){generatePDF()});
+    //it calls the same functions isFieldValid after the radio button is changed
+    //this onchange event is trigered after the onclick events down here
+    $('input[type="radio"]').on("change", function(){isFieldValid($(this))});      
+    
+    //PART 1
+    //insurance
+    setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly            
 
-    $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
-    $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
+    //credit
+    $("#cred_auto_true").on( "click", function(){console.log(2);onclick_div_show('#sim_credDiv',true)});
+    $("#cred_auto_false").on( "click", function(){console.log(2);onclick_div_show('#sim_credDiv',false)});
+    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"                
+
+    //PART 2
+    //fuel
     $("#radio_fuel_km").on( "click", function(){fuelCalculationMethodChange('distance')});
     $("#radio_fuel_euros").on( "click", function(){fuelCalculationMethodChange('currency')});
     $("#car_job_form2_yes").on( "click", function(){carToJob(true)});
     $("#car_job_form2_no").on( "click", function(){carToJob(false)});
+    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"   
+    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no) 
+    
+    //tolls    
     $("#tolls_daily_true").on( "click", function(){tolls_daily(true)});
     $("#tolls_daily_false").on( "click", function(){tolls_daily(false)});
-
+    $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
+    
+    //PART 3
     $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
     $("#drive_to_work_no_form3").on( "change", function(){driveToJob(false)});
     $("#working_time_yes_form3").on( "change", function(){working_time_toggle(true)});
     $("#working_time_no_form3").on( "change", function(){working_time_toggle(false)});
-
-    //Income on Form Part 3
+    //income
     $("#radio_income_year").on( "change", function(){income_toggle("year")});
     $("#radio_income_month").on( "change", function(){income_toggle("month")});
     $("#radio_income_week").on( "change", function(){income_toggle("week")});
     $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
+    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)    
     
-    //set radio button checked
-    setRadioButton("insurancePaymentPeriod", "semestral"); //insruance radio button set to half-yearly
-    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"
-    
-    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"    
-    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no)    
-    $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
-    
-    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
+    //Final buttons    
+    $("#rerun_button").on( "click", function(){reload()});
+    $("#print_button").on( "click", function(){Print()});
+    $("#generate_PDF").on( "click", function(){generatePDF()});    
+    $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
 
 }
 
@@ -389,5 +351,58 @@ function IsThisAtest() {
     }
 
     return false;
+}
+
+//the standard values are used if we want the form to be pre-filled
+function loadsStandardValues(){
+
+    //the key the name of the variable in WORDS
+    //the value is the name of the id in the form
+    var mappingIDs = {
+        "std_acq_month" : "acquisitionMonth",
+        "std_acq_year" : "acquisitionYear",
+        "std_price_paid" : "commercialValueAtAcquisition",
+        "std_price_today" : "commercialValueAtNow",
+        "std_insurance_sem" : "insuranceValue",
+        "std_loan" : "borrowedAmount",
+        "std_period_of_credit" : "numberInstallments",
+        "std_monthly_pay" : "amountInstallment",
+        "std_residual_value" : "residualValue",
+        "std_nbr_inspection" : "numberInspections",
+        "std_inspection_price" : "averageInspectionCost",
+        "std_road_tax" : "roadTaxes",
+        "std_fuel_paid_per_month" : "fuel_currency_value",
+        "std_days_per_week" : "car_to_work_number_days_week",
+        "std_jorney_2work" : "car_to_work_distance_home_work",
+        "std_jorney_weekend" : "car_to_work_distance_weekend",
+        "std_km_per_month" : "no_car_to_work_distance",
+        "std_car_fuel_efficiency" : "fuel_efficiency",
+        "std_fuel_price" : "fuel_price",
+        "std_maintenance_per_year" : "maintenance",
+        "std_repairs" : "repairs",
+        "std_parking" : "parking",
+        "std_tolls" : "no_daily_tolls_value",
+        "std_tolls_day" : "daily_expense_tolls",
+        "std_tolls_days_per_month" : "number_days_tolls",
+        "std_fines" : "tickets_value",
+        "std_washing" : "washing_value",
+        "std_nr_ppl_family" : "household_number_people",
+        "std_pass_price" : "public_transportation_month_expense",
+        "std_income_year" : "income_per_year",
+        "std_income_month" : "income_per_month",
+        "std_income_week" : "income_per_week",
+        "std_income_hour" : "income_per_hour",
+        "std_months_year" : "income_months_per_year",
+        "std_hours_week" : "income_hours_per_week",
+        "std_weeks_year" : "income_hour_weeks_per_year",
+        "std_time_home_job" : "time_home_job",
+        "std_time_weekend" : "time_weekend",
+        "std_time_in_driving" : "min_drive_per_day",
+        "std_days_month" : "days_drive_per_month"
+    };
+
+    $.each(mappingIDs, function(key, value){
+        $("#"+value).val(WORDS[key]);
+    });
 }
 

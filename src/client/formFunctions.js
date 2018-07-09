@@ -11,11 +11,11 @@ function isVisible(html_ref) {
 }
 
 //when button "Next" is clicked
-function buttonNextHandler(){
+function buttonNextHandler($this){
     //$( this ) is this button
     //closest get top parent with class "field_container"
     //and then advances to the next on the same level
-    var n=1, $nextField = $( this ).closest( ".field_container" ).next();        
+    var n=1, $nextField = $this.closest( ".field_container" ).next();        
 
     $nextField.show(); //shows the next sibling
 
@@ -26,95 +26,100 @@ function buttonNextHandler(){
         //check also if its content (first child) is visible; it might be hidden due to definitions in the form
         //ex.: fuel options in "2.Running Costs" show and hide form section "Distance" in "3. Additional data" 
         if ($nextField.hasClass("field_container") && $nextField.children().first().is(":visible")){
+            $this.closest( ".next" ).hide("slow");//hides own next button
+            isFieldValid($nextField);
+            //scrols the page to the next div, considering the header
+            $('html,body').animate({scrollTop: $nextField.offset().top-$("header").outerHeight()-10}, 600);
             break;
         }
         //otherwise continues the lopp showing the next siblings        
         $nextField = $nextField.next();
         
-        //if the next sibling is empty breks the while loop
+        //if the next sibling is empty breaks the while loop
         if($nextField.length==0){
             break;
         }            
         $nextField.show();
 
-        //backcup to avoid infinit loop
+        //debug backup to avoid infinit loop
         if(n>100){
-            console.error('Infinite lopp on Handler of "Next" button');
+            console.error('Infinite loop on Handler of "Next" button');
             break;
         }
         n++;
     }
-
-    //this is necessary to avoid default behaviour
-    //avoid from scrolling to the top of page
-    return false;
 }
 
-//This fucntion would fire every time the <input type="number" changes
-function onInputTypeNumber(){
+//This function would fire every time the 
+//<input type="number" changes or <input type="radio" onclick
+function isFieldValid($this){    
     
     //goes to top ascendents till it finds the class "field_container"
-    var $fieldHead = $( this ).closest( ".field_container" ); 
+    var $fieldHead = $this.closest( ".field_container" ); 
+    
+    //just runs after all descedents (.find) have completed
+    $fieldHead.find("*").promise().done(function(){   
 
-    //goes to every descendent input[type="number"]
-    var $inputElements = $fieldHead.find('input[type="number"]');
+        //goes to every descendent input[type="number"]
+        var $inputElements = $fieldHead.find('input[type="number"]');
 
-    var isValid = true;
-    var val, min, max;
-    $inputElements.each(function(index){
+        var isValid = true;
+        var val, min, max;
+        $inputElements.each(function(index){
 
-        //if the input element is hidden or disabled doesn't check its value
-        if( $(this).is(":visible") && !$(this).prop('disabled')){
-            //A text input's value attribute will always return a string. 
-            //One needs to parseInt the value to get an integer
-            val = parseInt($( this ).val(), 10);
-            console.log(index + ": " + val);
+            //if the input element is hidden or disabled doesn't check its value
+            if( $(this).is(":visible") && !$(this).prop('disabled')){
+                //A text input's value attribute will always return a string. 
+                //One needs to parseInt the value to get an integer
+                val = parseInt($( this ).val(), 10);
+                //console.log(index + ": " + val);
 
-            if(!isNumber(val)){
-                isValid = false;
-            }
-
-            min = parseInt($( this ).attr('min'), 10); 
-            max = parseInt($( this ).attr('max'), 10);            
-            //console.log(min, max);
-
-            if (isNumber(min) && isNumber(max)){
-                if(val < min || val > max ){
+                if(!isNumber(val)){
                     isValid = false;
                 }
-            }
-            else if (isNumber(min)){
-                if(val < min){
-                    isValid = false;
-                }                            
-            }
-            else if (isNumber(max)){
-                if(val > max ){
-                    isValid = false;
-                }                            
-            }
-            else{
-                console.error("Error");
-            }
 
-            if ($( this ).hasClass("input_integer")){
-                if(!isInteger(val)){
-                    isValid = false;
+                min = parseInt($( this ).attr('min'), 10); 
+                max = parseInt($( this ).attr('max'), 10);            
+                //console.log(min, max);
+
+                if (isNumber(min) && isNumber(max)){
+                    if(val < min || val > max ){
+                        isValid = false;
+                    }
+                }
+                else if (isNumber(min)){
+                    if(val < min){
+                        isValid = false;
+                    }                            
+                }
+                else if (isNumber(max)){
+                    if(val > max ){
+                        isValid = false;
+                    }                            
+                }
+                else{
+                    console.error("Error");
+                }
+
+                if ($( this ).hasClass("input_integer")){
+                    if(!isInteger(val)){
+                        isValid = false;
+                    }
                 }
             }
+        });
+
+        console.log("isFieldValid: " + isValid);
+
+        //shows or hides button "next" accordingly
+        if(isValid){
+            $fieldHead.find(".next").show("fast");
         }
+        else{
+            $fieldHead.find(".next").hide("fast");
+        }
+
     });
-
-    console.log("isValid: " + isValid);
-
-    //shows or hides button "next" accordingly
-    if(isValid){
-        $fieldHead.find(".next").show("fast");
-    }
-    else{
-        $fieldHead.find(".next").hide("fast");
-    }
-
 }
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
@@ -347,7 +352,7 @@ function getCheckedValue(radioObj) {
 
 //sets in a radio button with a specific option
 function setRadioButton(name, option){
-   $('input[name="' + name + '"][value="'+option+'"]').click();
+   $('input[name="' + name + '"][value="'+option+'"]').prop('checked', true);
 }
 
 function getCheckedSliderValue(ObjName) {
