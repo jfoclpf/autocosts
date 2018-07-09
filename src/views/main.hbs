@@ -38,7 +38,9 @@
 
         <header>
             <a href="#" class="btn btn-left-sidebar" data-action="toggle" data-side="left"></a>
-            <a href="#" class="btn btn-right-sidebar" data-action="toggle" data-side="right"></a>
+            {{#if serverData.settings.switches.dataBase}}
+                <a href="#" class="btn btn-right-sidebar" data-action="toggle" data-side="right"></a>
+            {{/if}}
             <h1 class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></h1>
         </header>
 
@@ -46,16 +48,22 @@
             <div class="container">
                 <h1>{{{words.web_page_title}}}</h1>
 
-                <h2>The average total cost in 
-                <select name="country_select" id="country_select">
-                    {{~#each serverData.availableCountries~}}
-                    <option value="{{@key}}"{{{isSelected ../CC @key}}}>
-                        {{~this~}}
-                    </option>
-                    {{/each}}
-                </select>
-                 is <b>{{{words.curr_symbol}}}{{{getStatsItem serverData CC "total_costs_year"}}}</b> per year.<br />
-                Find the true cost of owning a car in your country.</h2>
+                <h2>
+                    {{#if serverData.settings.switches.dataBase}}
+                        The average total cost in
+                    {{/if}} 
+                    <select name="country_select" id="country_select">
+                        {{~#each serverData.availableCountries~}}
+                        <option value="{{@key}}"{{{isSelected ../CC @key}}}>
+                            {{~this~}}
+                        </option>
+                        {{/each}}
+                    </select>
+                    {{#if serverData.settings.switches.dataBase}}is 
+                        <b>{{{words.curr_symbol}}}{{{getStatsItem serverData CC "total_costs_year"}}}</b> per year.<br />
+                        Find the true cost of owning a car in your country.
+                    {{/if}}
+                </h2>
 
                 <input type="button" id="calculateButton" style="cursor: pointer;" 
                        class="button big btn-blue" value="Calculate car cost" />
