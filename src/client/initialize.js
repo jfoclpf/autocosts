@@ -86,25 +86,32 @@ function initializeForm(){
     $(".cta_bottom_bar").hide();
     
     $("#main_form select").val('1'); //set all the selects to "month"
-    $("#tickets_period_select").val('5'); //set fines period to year
-    $("#washing_period_select").val('3'); //set washing period to trimester
 
-    //make some initial settings in the options of the form
+    //PART 1
+    //credit
+    $('#sim_credDiv').hide();
+    
+    //inspection    
     $('#numberInspections').val(0);
     $("#InspectionCost_tr").hide();
+    $("#numberInspections").on("input", nbrInspectOnChanged);
 
-    tolls_daily(false);
-
+    //PART 2
+    //fuel
     $('#currency_div_form2').show();
-    $('#distance_div_form2').hide();
-    $('#sim_credDiv').hide();
+    $('#distance_div_form2').hide();        
+    fuelCalculationMethodChange('currency'); //sets radio button in Form Part 2, section Fuel calculations, to Currency
 
-    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
-    driveToJob(false);
+    //tolls
+    tolls_daily(false);
+    //fines
+    $("#tickets_period_select").val('5'); //set fines period to year
+    //washing    
+    $("#washing_period_select").val('3'); //set washing period to trimester
     
-    //sets radio button in Form Part 2, section Fuel calculations, on Currency
-    fuelCalculationMethodChange('currency');    
-         
+    //PART 3
+    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
+    driveToJob(false);             
     //Income in Form Part 3 - set to year
     income_toggle("year");        
         
@@ -225,8 +232,8 @@ function loadsButtonsHandlers(){
     setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly            
 
     //credit
-    $("#cred_auto_true").on( "click", function(){console.log(2);onclick_div_show('#sim_credDiv',true)});
-    $("#cred_auto_false").on( "click", function(){console.log(2);onclick_div_show('#sim_credDiv',false)});
+    $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
+    $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
     $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"                
 
     //PART 2
