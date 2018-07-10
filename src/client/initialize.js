@@ -220,12 +220,12 @@ function loadsButtonsHandlers(){
     //On 'input' would fire every time the input changes, so when one pastes something 
     //(even with right click), deletes and types anything. If one uses the 'change' handler, 
     //this will only fire after the user deselects the input box, which is not what we want.
-    //isFieldValid is defined in formFunctions.js
-    $('input[type="number"]').on("input", function(){isFieldValid($(this))});
+    //showsOrHidesButtonNext is defined in formFunctions.js
+    $('input[type="number"]').on("input", function(){showsOrHidesButtonNext($(this))});
     
-    //it calls the same functions isFieldValid after the radio button is changed
+    //it calls the same functions showsOrHidesButtonNext after the radio button is changed
     //this onchange event is trigered after the onclick events down here
-    $('input[type="radio"]').on("change", function(){isFieldValid($(this))});      
+    $('input[type="radio"]').on("change", function(){showsOrHidesButtonNext($(this))});      
     
     //PART 1
     //insurance

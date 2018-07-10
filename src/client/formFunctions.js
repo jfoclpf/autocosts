@@ -11,115 +11,151 @@ function isVisible(html_ref) {
 }
 
 //when button "Next" is clicked
-function buttonNextHandler($this){
-    //$( this ) is this button
-    //closest get top parent with class "field_container"
-    //and then advances to the next on the same level
-    var n=1, $nextField = $this.closest( ".field_container" ).next();        
-
-    $nextField.show(); //shows the next sibling
-
-    while(true){
-
-        //check if the next sibling contains the class 'field_container'
-        //it might be a head title and not a ".field_container", for example it might be the head "2. Running Costs"
-        //check also if its content (first child) is visible; it might be hidden due to definitions in the form
-        //ex.: fuel options in "2.Running Costs" show and hide form section "Distance" in "3. Additional data" 
-        if ($nextField.hasClass("field_container") && $nextField.children().first().is(":visible")){
-            $this.closest( ".next" ).hide("slow");//hides own next button
-            isFieldValid($nextField);
-            //scrols the page to the next div, considering the header
-            $('html,body').animate({scrollTop: $nextField.offset().top-$("header").outerHeight()-10}, 600);
-            break;
-        }
-        //otherwise continues the lopp showing the next siblings        
-        $nextField = $nextField.next();
+function buttonNextHandler($thisButton){
+    
+    //closest get top parent finding element with class "field_container", 
+    var $fieldHead = $thisButton.closest(".field_container");
+    
+    //hides own next button
+    $thisButton.closest( ".next" ).hide("slow");
+     
+    $fieldHead.nextAll(".field_container, .form_part_head_title").each(function(index, value){
         
-        //if the next sibling is empty breaks the while loop
-        if($nextField.length==0){
-            break;
-        }            
-        $nextField.show();
-
-        //debug backup to avoid infinit loop
-        if(n>100){
-            console.error('Infinite loop on Handler of "Next" button');
-            break;
+        var $i = $(this); //the $(this) from the loop .each
+        
+        if ($i.hasClass("form_part_head_title")){
+            $i.show("slow");
         }
-        n++;
-    }
+        else{
+            $i.show(); //isFieldValid function only works if the .field_container is visible
+            $i.find(".next").hide(); //hides "next" button
+            if(!isFieldValid($i)){                
+                //scrols the page to the corresponding div, considering the header
+                $('html,body').animate({scrollTop: $i.offset().top-$("header").outerHeight()-15}, 600);                
+                //breaks the .each loop
+                return false; 
+            }
+        }
+    });        
 }
 
-//This function would fire every time the 
-//<input type="number" changes or <input type="radio" onclick
+//in the event that Enter or Tab keys are pressed down
+$(document).keydown(function(e) {
+    //key Enter (13) ot Tab (9)
+    if(e.keyCode == 13 || e.keyCode == 9) {        
+        var $buttonNext = $(".form_part").find(".next:visible");
+        if ($buttonNext.length === 1){
+            buttonNextHandler($buttonNext);
+        }
+        else if($buttonNext.length > 1){
+            console.error("More than one 'Next' button visible");
+        }
+    }
+});
+
+//This function fires every time the 
+//input type="number" changes or input type="radio" is clicked
+//It shows or hides the button "Next" of the corresponding field
+function showsOrHidesButtonNext($this){
+    
+    var $fieldHead = $this.closest(".field_container");    
+    var $buttonNext = $fieldHead.find(".next");
+    
+    //just runs after all descedents (.find) have completed
+    $fieldHead.find("*").promise().done(function(){      
+    
+        //shows or hides button "next" accordingly
+        if(isFieldValid($this)){
+            //only shows "next" button if there are no fields shown afterwards, that is
+            //if the user comes back and changes again fields on the beginning of the form
+            //it will not show "next" button again for such field
+            //the "next" button is thus just applicable for the last field
+            if ($fieldHead.nextAll(".field_container:visible").length == 0){            
+                $buttonNext.show("fast");
+            }
+            else{
+                $buttonNext.hide("fast");
+            }
+        }
+        else{
+            //if the user comes backwards and amends something, making the field invalid
+            //all the subsequent fields are hidden, and since this field is invalid, "next" button is also hidden
+            $fieldHead.nextAll(".field_container, .form_part_head_title").hide("slow", function(){
+                if(isFieldValid($this)){
+                    $buttonNext.show("fast");
+                }
+                else{
+                    $buttonNext.hide("fast");
+                }
+            });            
+        }
+        
+    });
+}
+
+//For a certain element inside the div with class ".field_container", 
+//checks on every visible and active number input element, if all these elements are valid
+//Field refers to insurance, credit, tolls, etc., that is, cost items
 function isFieldValid($this){    
     
     //goes to top ascendents till it finds the class "field_container"
-    var $fieldHead = $this.closest( ".field_container" ); 
+    //.closest: for each element in the set, get the first element that matches the selector by testing 
+    //the element itself and traversing up through its ancestors in the DOM tree.
+    var $fieldHead = $this.closest(".field_container");
     
-    //just runs after all descedents (.find) have completed
-    $fieldHead.find("*").promise().done(function(){   
+    //goes to every descendent input[type="number"]
+    var $inputElements = $fieldHead.find('input[type="number"]');
 
-        //goes to every descendent input[type="number"]
-        var $inputElements = $fieldHead.find('input[type="number"]');
+    var isValid = true;
+    var val, min, max;
+    $inputElements.each(function(index){
 
-        var isValid = true;
-        var val, min, max;
-        $inputElements.each(function(index){
+        //if the input element is hidden or disabled doesn't check its value
+        if( $(this).is(":visible") && !$(this).prop('disabled')){
+            //A text input's value attribute will always return a string. 
+            //One needs to parseInt the value to get an integer
+            val = parseInt($( this ).val(), 10);
+            //console.log(index + ": " + val);
 
-            //if the input element is hidden or disabled doesn't check its value
-            if( $(this).is(":visible") && !$(this).prop('disabled')){
-                //A text input's value attribute will always return a string. 
-                //One needs to parseInt the value to get an integer
-                val = parseInt($( this ).val(), 10);
-                //console.log(index + ": " + val);
+            if(!isNumber(val)){
+                isValid = false;
+            }
 
-                if(!isNumber(val)){
+            min = parseInt($( this ).attr('min'), 10); 
+            max = parseInt($( this ).attr('max'), 10);            
+            //console.log(min, max);
+
+            if (isNumber(min) && isNumber(max)){
+                if(val < min || val > max ){
                     isValid = false;
                 }
+            }
+            else if (isNumber(min)){
+                if(val < min){
+                    isValid = false;
+                }                            
+            }
+            else if (isNumber(max)){
+                if(val > max ){
+                    isValid = false;
+                }                            
+            }
+            else{
+                console.error("Error");
+            }
 
-                min = parseInt($( this ).attr('min'), 10); 
-                max = parseInt($( this ).attr('max'), 10);            
-                //console.log(min, max);
-
-                if (isNumber(min) && isNumber(max)){
-                    if(val < min || val > max ){
-                        isValid = false;
-                    }
-                }
-                else if (isNumber(min)){
-                    if(val < min){
-                        isValid = false;
-                    }                            
-                }
-                else if (isNumber(max)){
-                    if(val > max ){
-                        isValid = false;
-                    }                            
-                }
-                else{
-                    console.error("Error");
-                }
-
-                if ($( this ).hasClass("input_integer")){
-                    if(!isInteger(val)){
-                        isValid = false;
-                    }
+            if ($( this ).hasClass("input_integer")){
+                if(!isInteger(val)){
+                    isValid = false;
                 }
             }
-        });
-
-        console.log("isFieldValid: " + isValid);
-
-        //shows or hides button "next" accordingly
-        if(isValid){
-            $fieldHead.find(".next").show("fast");
+            
         }
-        else{
-            $fieldHead.find(".next").hide("fast");
-        }
-
+                
     });
+    
+    console.log("isFieldValid: " + isValid);
+    return isValid;
 }
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
