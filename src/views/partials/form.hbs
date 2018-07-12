@@ -3,31 +3,31 @@
         <ul>
           <li class="list active number one"> <span>{{{fixed_costs}}}</span> 
             <ul>
-                <li class="active done"><span>{{{depreciation}}}</span></li>
-                <li class="active"><span>{{{insurance}}}</span></li>
-                <li><span>{{{credit}}}</span></li>
-                <li><span>{{{inspection}}}</span></li>
-                <li><span>{{{road_taxes}}}</span></li>
+                <li class="icon field1 active done"><span>{{{depreciation}}}</span></li>
+                <li class="icon field2 active"><span>{{{insurance}}}</span></li>
+                <li class="icon field3"><span>{{{credit}}}</span></li>
+                <li class="icon field4"><span>{{{inspection}}}</span></li>
+                <li class="icon field5"><span>{{{road_taxes}}}</span></li>
             </ul>
           </li>
           <li class="list number two"><span>{{{running_costs}}}</span>
             <ul>
-                <li><span>{{{fuel}}}</span></li>
-                <li><span>{{{maintenance}}}</span></li>
-                <li><span>{{{rep_improv}}}</span></li>
-                <li><span>{{{parking}}}</span></li>
-                <li><span>{{{tolls}}}</span></li>
-                <li><span>{{{fines}}}</span></li>
-                <li><span>{{{washing}}}</span></li>
+                <li class="icon field6"><span>{{{fuel}}}</span></li>
+                <li class="icon field7"><span>{{{maintenance}}}</span></li>
+                <li class="icon field8"><span>{{{rep_improv}}}</span></li>
+                <li class="icon field9"><span>{{{parking}}}</span></li>
+                <li class="icon field10"><span>{{{tolls}}}</span></li>
+                <li class="icon field11"><span>{{{fines}}}</span></li>
+                <li class="icon field12"><span>{{{washing}}}</span></li>
             </ul>
           </li>
           <li class="list number three"><span>{{{extra_data1}}}</span>
             <ul>
-                <li><span>{{{extra_data_public_transp}}}</span></li>
-                <li><span>{{{extra_data_income}}}</span></li>
-                <li><span>{{{extra_data_working_time}}}</span></li>
-                <li><span>{{{distance}}}Distance</span></li>
-                <li><span>{{{extra_data_time_spent_in_driving}}}</span></li>
+                <li class="icon field13"><span>{{{extra_data_public_transp}}}</span></li>
+                <li class="icon field14"><span>{{{extra_data_income}}}</span></li>
+                <li class="icon field15"><span>{{{extra_data_working_time}}}</span></li>
+                <li class="icon field16"><span>{{{distance}}}Distance</span></li>
+                <li class="icon field17"><span>{{{extra_data_time_spent_in_driving}}}</span></li>
             </ul>
           </li>
           
@@ -54,7 +54,7 @@
         
         
         <!--************************** DEPRECIATION **************************-->
-        <div class="field_container">
+        <div class="field_container field1">
             <div id="depreciation_input">
                 <label>
                     {{{aq_date}}}
@@ -103,7 +103,7 @@
 
 
         <!--************************** INSURANCE **************************-->
-        <div class="field_container" id="test">
+        <div class="field_container field2">
             <div id="">
                 <label>
                     {{{insurance}}}
@@ -154,7 +154,7 @@
 
         
         <!--************************** CREDIT **************************-->
-        <div class="field_container">
+        <div class="field_container field3">
             <div id="">
                 <label class="float_left">
                     {{{credit}}}
@@ -229,7 +229,7 @@
 
 
         <!--************************** INSPECTION **************************-->
-        <div class="field_container">
+        <div class="field_container field4">
             <div id="">
                 <label>
                     {{{inspection}}}
@@ -265,7 +265,7 @@
 
 
         <!--************************** ROAD TAX **************************-->
-        <div class="field_container">
+        <div class="field_container field5">
             <div id="p2">
                 <label>
                     {{{road_taxes}}}
@@ -305,7 +305,7 @@
         </div>
 
         <!--************************** FUELS **************************-->
-        <div class="field_container">
+        <div class="field_container field6">
             <div id="depr_input_td">
                 <label>
                     {{{fuel_desc}}}
@@ -462,7 +462,7 @@
 
 
         <!--************************** MAINTENANCE **************************-->
-        <div class="field_container">
+        <div class="field_container field7">
             <div id="">
                 <label>
                     {{{maintenance}}}
@@ -487,7 +487,7 @@
 
 
         <!--************************** REPAIRS AND IMPROVEMENTS **************************-->
-        <div class="field_container">
+        <div class="field_container field8">
             <div id="">
                 <label>
                     {{{rep_improv}}}
@@ -512,7 +512,7 @@
 
 
         <!--************************** PARKING **************************-->
-        <div class="field_container">
+        <div class="field_container field9">
             <div id="">
                 <label>
                     {{{parking}}}
@@ -537,7 +537,7 @@
 
 
         <!--************************** TOLLS **************************-->
-        <div class="field_container">
+        <div class="field_container field10">
             <div id="">
                 <label>
                     {{{tolls}}}
@@ -619,7 +619,7 @@
 
 
         <!--************************** FINES / TICKETS **************************-->
-        <div class="field_container">
+        <div class="field_container field11">
             <div id="">
                 <label>
                     {{{fines}}}
@@ -650,7 +650,7 @@
 
 
         <!--************************** WASHING **************************-->
-        <div class="field_container">
+        <div class="field_container field12">
             <div id="">
                 <label>
                     {{{washing}}}
@@ -693,7 +693,7 @@
 
 
         <!--************************** PUBLIC TRANSPORTS **************************-->
-        <div class="field_container">
+        <div class="field_container field13">
             <div  id="">
                 <label>
                     {{{extra_data_public_transp}}}
@@ -729,7 +729,7 @@
 
 
         <!--************************** INCOME **************************-->
-        <div class="field_container">
+        <div class="field_container field14">
             <div id="fin_effort_Div_form3">
                 <label>
                     {{{extra_data_income_question}}}
@@ -836,7 +836,7 @@
 
 
         <!--************************** WORKING TIME **************************-->
-        <div class="field_container">
+        <div class="field_container field15">
             <div id="working_time_form3">
                 <label class="float_left">
                     {{{extra_data_working_time_question}}}
@@ -883,7 +883,7 @@
 
 
         <!--************************** DISTANCE **************************-->
-        <div class="field_container">
+        <div class="field_container field16">
             <div id="distance_form3">
                 <label>
                     {{{distance}}}
@@ -980,7 +980,7 @@
 
 
         <!--************************** TIME SPENT IN DRIVING **************************-->
-        <div class="field_container">
+        <div class="field_container field17">
             <div id="time_spent_part1_form3">
                 <label>
                     {{{extra_data_time_question1}}}

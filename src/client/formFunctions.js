@@ -2,23 +2,23 @@
 /*====================================================*/
 /*Functions which work only on the form*/
 
-/*function that checks if a certain HTML id or class is visible*/
-function isVisible(html_ref) {
-    if($(html_ref).css("display")!="none")
-        return true;
-    else
-        return false;
-}
-
-//when button "Next" is clicked
+//when button "Next" is clicked, this field must be valid
 function buttonNextHandler($thisButton){
     
     //closest get top parent finding element with class "field_container", 
     var $fieldHead = $thisButton.closest(".field_container");
     
+    if(!isFieldValid($fieldHead)){
+        console.error("Next button clicked, when field was not valid");
+    }
+    
     //hides own next button
     $thisButton.closest( ".next" ).hide("slow");
-     
+    
+    //fades own field
+    $fieldHead.fadeTo("slow", 0.1);
+    
+    //scrolls down till the next non-valid field
     $fieldHead.nextAll(".field_container, .form_part_head_title").each(function(index, value){
         
         var $i = $(this); //the $(this) from the loop .each
@@ -31,7 +31,10 @@ function buttonNextHandler($thisButton){
             $i.find(".next").hide(); //hides "next" button
             if(!isFieldValid($i)){                
                 //scrols the page to the corresponding div, considering the header
-                $('html,body').animate({scrollTop: $i.offset().top-$("header").outerHeight()-15}, 600);                
+                $('html,body').
+                    animate({scrollTop: $i.offset().top-$("header").outerHeight()-15}, 600, "swing", function(){
+                    updatesFieldsAndIcons($i);
+                });
                 //breaks the .each loop
                 return false; 
             }
@@ -48,50 +51,124 @@ $(document).keydown(function(e) {
             buttonNextHandler($buttonNext);
         }
         else if($buttonNext.length > 1){
-            console.error("More than one 'Next' button visible");
+            buttonNextHandler($buttonNext.last());
         }
     }
 });
 
 //This function fires every time the 
-//input type="number" changes or input type="radio" is clicked
+//input type="number" changes OR input type="radio" is clicked
 //It shows or hides the button "Next" of the corresponding field
-function showsOrHidesButtonNext($this){
+function inputHandler($this){
     
-    var $fieldHead = $this.closest(".field_container");    
+    var $fieldHead = $this.closest(".field_container"); 
     var $buttonNext = $fieldHead.find(".next");
+    
+    //shows active field
+    $fieldHead.show().fadeTo("fast", 1);
+    //fades previous fields    
     
     //just runs after all descedents (.find) have completed
     $fieldHead.find("*").promise().done(function(){      
     
         //shows or hides button "next" accordingly
         if(isFieldValid($this)){
-            //only shows "next" button if there are no fields shown afterwards, that is
-            //if the user comes back and changes again fields on the beginning of the form
-            //it will not show "next" button again for such field
-            //the "next" button is thus just applicable for the last field
-            if ($fieldHead.nextAll(".field_container:visible").length == 0){            
-                $buttonNext.show("fast");
-            }
-            else{
-                $buttonNext.hide("fast");
-            }
+            //if the current field is valid, show "next" button
+            $buttonNext.show("fast");
         }
         else{
-            //if the user comes backwards and amends something, making the field invalid
-            //all the subsequent fields are hidden, and since this field is invalid, "next" button is also hidden
-            $fieldHead.nextAll(".field_container, .form_part_head_title").hide("slow", function(){
-                if(isFieldValid($this)){
-                    $buttonNext.show("fast");
-                }
-                else{
-                    $buttonNext.hide("fast");
-                }
-            });            
+            $buttonNext.hide("fast");     
         }
         
     });
 }
+
+//mouse on click event on field containers
+$(".field_container").on("click", function(){
+    var $this = $(this);
+    if($this.is(":visible")){
+        $this.fadeTo("fast", 1, function(){            
+            inputHandler($this);
+            updatesFieldsAndIcons($this);
+        });        
+
+    }
+});
+
+//fades out or fades in all visible fields, except itself, according to validity 
+//also updated icon list
+function updatesFieldsAndIcons($this){
+
+    var $fieldHead = $this.closest(".field_container");
+    
+    setIcon($this, "active");
+    
+    $fieldHead.siblings(".field_container").each(function(){
+        
+        if($(this).is(":visible")){        
+            if(isFieldValid($(this))){
+                $(this).fadeTo("slow", 0.1);
+                $(this).find(".next").hide("slow");
+                setIcon($(this), "done");
+            }
+            else{
+                $(this).fadeTo("fast", 1);
+                setIcon($(this), "wrong");
+            }
+        }
+        else{
+            setIcon($(this), "inactive");
+        }
+    });    
+}
+
+//sets correspondent icon on icon list within the div with class "steps"
+//$this is the current field with class "field_container"
+//status may be "inactive", "active", "done" or "wrong"
+function setIcon($this, status){
+
+    var $fieldHead = $this.closest(".field_container");
+    var fieldN; //the field number will be taken from class name
+    
+    //gets all classes from $fieldHead 
+    var classList = $fieldHead.attr('class').split(/\s+/);
+    $.each(classList, function(index, item) {
+        //if there is a class which contains the string "field"?
+        if (item.indexOf("field") >= 0) {
+            fieldN = item;
+        }
+    });
+    
+    if(!fieldN){
+        console.error("The field has no class with the expression 'field#' ");
+    }
+    //console.log(fieldN);
+    
+    $(".steps").find(".icon").each(function(index, item){
+        if ($(this).hasClass(fieldN)){
+            
+            $(this).removeClass("active done");
+            
+            switch(status) {
+                case "inactive":
+                    break;
+                case "active":
+                    $(this).addClass("active");
+                    break;
+                case "done":
+                    $(this).addClass("active");
+                    $(this).addClass("done");
+                    break;
+                case "wrong":
+                    break;
+                default:
+                    console.error("status in setIcon function not correct");
+            }
+        }
+    });
+    
+}
+
 
 //For a certain element inside the div with class ".field_container", 
 //checks on every visible and active number input element, if all these elements are valid
@@ -391,4 +468,12 @@ function setRadioButton(name, option){
 
 function getCheckedSliderValue(ObjName) {
     return ObjName.checked;
+}
+
+/*function that checks if a certain HTML id or class is visible*/
+function isVisible(html_ref) {
+    if($(html_ref).css("display")!="none")
+        return true;
+    else
+        return false;
 }
