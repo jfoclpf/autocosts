@@ -71,9 +71,6 @@ input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
-input[type='number']::-webkit-inner-spin-button, 
-input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;}
-input[type='number'] {-moz-appearance:textfield;}
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
@@ -88,7 +85,6 @@ input[type='number'] {-moz-appearance:textfield;}
 
 .per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
 .days_per_month, .hours_week, .min {padding: 0 0 0 10px; font-size: 30px}
-
 
 
 /* Small input */
@@ -169,7 +165,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ---------- Steps ---------- */
-.container .steps {display: inline-block; width: 24%; margin: 0 0 0 7%; display: block; }
+.container .steps {position: fixed; width: 24%; margin: 0 0 0 2%; display: block; }
 .container .steps ul {list-style: none;}
 .container .steps ul li {display: block; text-align: left; color: white; position: relative;}
 .container .steps ul li span { display: inline-block; line-height: 35px; margin: 0 0 0 45px; color: #d7dbee; font-weight: 700; font-size: 14px;}
@@ -179,9 +175,9 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li:before {content: ""; width: 35px; height: 35px; background-color: #d7dbee; position: absolute; border-radius: 100%; }
 .container .steps ul li:after {position: absolute; content: ''; background-color: #d7dbee; width: 2px; height: 25px; top: -10px; left: 17px; z-index: -11;}
 .container .steps ul li > ul > li:before {width: 10px; height: 10px;margin: 10px 0 0 13px;}
-.container .steps ul li > ul > li > span {font-size: 12px; font-weight: 400; margin-left: 35px; line-height: 30px;height: 24px;overflow: hidden;}
+.container .steps ul li > ul > li > span {font-size: 12px; font-weight: 400; margin-left: 35px; line-height: 25px;height: 18px;overflow: hidden;}
 
-.container .steps ul .number:before {color: white; padding: 7px 0 0 12px; width: 23px; height: 28px;}
+.container .steps ul .number:before {color: white; padding: 7px 0 0 12px; width: 21px; height: 26px;}
 .container .steps ul .one:before {content: "1"}
 .container .steps ul .two:before {content: "2"}
 .container .steps ul .three:before {content: "3"}
@@ -190,7 +186,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li.active:before {background-color: #2c49b9; color: white}
 .container .steps ul li.active:after {background-color: #2c49b9;}
 .container .steps ul li.active > span, .container .steps ul li.active ul li.active > span {color: #2c49b9}
-.container .steps ul li > ul > li.active:before { background-color: #2c49b9; width: 14px; height: 14px; margin: 7px 0 0 10px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
+.container .steps ul li > ul > li.active:before { background-color: #2c49b9; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
 .container .steps ul li > ul > li.done:before {content: "\2713"; line-height: 16px; font-size: 11px; padding-left: 3px; width: 11px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1);}
 
 
@@ -212,7 +208,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ------------------------------********* FORM CONTENT *********------------------------------ */
-.container .form_part {width: 64%; margin: 0 0 0 5%; display: block; text-align: left;}
+.container .form_part {width: 64%; margin: 0 0 0 30%; display: block; text-align: left;}
 
 .container .form_part h2.lang-fixed_costs_header_1 {font-size: 30px; line-height: 30px; margin: 0 }
 .container .form_part p.lang-fixed_costs_header_2 {color: #868790; margin: 0 }
@@ -221,12 +217,13 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .container .form_part .field_container {display: block; margin-top: 60px;}
 
-.container .form_part .field_container .next {display: none; margin: 17px 0 0;}
+.container .form_part .field1 #commercial_value {margin: 30px 0;}
+
+.container .form_part .field_container .next {/*display: none;*/ margin: 17px 0 0;}
 .container .form_part .field_container .next span{font-size: 12px; color: #868790; margin-left: 6px}
 
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
-.container .form_part .bottom_spacer {padding-top:100px; display: block;}
 
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
