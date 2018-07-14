@@ -190,7 +190,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li.active > span, .container .steps ul li.active ul li.active > span {color: #2c49b9}
 .container .steps ul li > ul > li.active:before { background-color: #2c49b9; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
 .container .steps ul li > ul > li.done:before {content: "\2713"; line-height: 16px; font-size: 11px; padding-left: 3px; width: 11px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1);}
-
+.container .steps ul li > ul > li.wrong:before { background-color: red; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid red; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
 
 /* ---------- Bottom bar ---------- */
 .cta_bottom_bar {
