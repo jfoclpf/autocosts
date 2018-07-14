@@ -123,7 +123,6 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 .time_spent_part1_form3 input, .time_spent_part2_form3 input,
 .fuel_efficiency {margin-bottom: 30px}
 
-
 /* ---------- Radio tabs  ---------- */
 .radio_tabs {display: flex;flex-wrap: wrap; margin: 0px 0 20px;}
 .radio_tab_container {position: relative; height:  41px; width:  122px; margin: 0;}
@@ -227,7 +226,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
-
+.container .form_part .bottom_spacer {padding-top:100px; display: block;}
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
 .btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }
