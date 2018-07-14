@@ -156,7 +156,7 @@ function setIcon($this, status){
     $(".steps").find(".icon").each(function(index, item){
         if ($(this).hasClass(fieldN)){
             
-            $(this).removeClass("active done");
+            $(this).removeClass("active done wrong");
             
             switch(status) {
                 case "inactive":
@@ -169,6 +169,7 @@ function setIcon($this, status){
                     $(this).addClass("done");
                     break;
                 case "wrong":
+                    $(this).addClass("wrong");
                     break;
                 default:
                     console.error("status in setIcon function not correct");
