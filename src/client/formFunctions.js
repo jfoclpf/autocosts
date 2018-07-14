@@ -72,15 +72,24 @@ function inputHandler($this){
     $fieldHead.find("*").promise().done(function(){      
     
         //shows or hides button "next" accordingly
-        if(isFieldValid($this)){
+        if(isFieldValid($this)){                                    
             //if the current field is valid, show "next" button
-            $buttonNext.show("fast");
+            $buttonNext.show("fast");           
         }
         else{
-            $buttonNext.hide("fast");     
+            $buttonNext.hide("fast"); 
         }
         
     });
+    
+    if($this.is('input[type="number"]')){        
+        if(isNumberInputValid($this)){
+            $this.css('border-bottom','1px #b0b2be solid');
+        }
+        else{            
+            $this.css('border-bottom','1px red solid');
+        }
+    }
 }
 
 //mouse on click event on field containers
@@ -186,53 +195,62 @@ function isFieldValid($this){
     var isValid = true;
     var val, min, max;
     $inputElements.each(function(index){
-
         //if the input element is hidden or disabled doesn't check its value
         if( $(this).is(":visible") && !$(this).prop('disabled')){
-            //A text input's value attribute will always return a string. 
-            //One needs to parseInt the value to get an integer
-            val = parseInt($( this ).val(), 10);
-            //console.log(index + ": " + val);
-
-            if(!isNumber(val)){
-                isValid = false;
+            isValid = isNumberInputValid($(this));
+            if(!isValid){
+                return false;
             }
-
-            min = parseInt($( this ).attr('min'), 10); 
-            max = parseInt($( this ).attr('max'), 10);            
-            //console.log(min, max);
-
-            if (isNumber(min) && isNumber(max)){
-                if(val < min || val > max ){
-                    isValid = false;
-                }
-            }
-            else if (isNumber(min)){
-                if(val < min){
-                    isValid = false;
-                }                            
-            }
-            else if (isNumber(max)){
-                if(val > max ){
-                    isValid = false;
-                }                            
-            }
-            else{
-                console.error("Error");
-            }
-
-            if ($( this ).hasClass("input_integer")){
-                if(!isInteger(val)){
-                    isValid = false;
-                }
-            }
-            
         }
-                
     });
     
-    console.log("isFieldValid: " + isValid);
+    //console.log("isFieldValid: " + isValid);
     return isValid;
+}
+
+//$this refers to input type=number
+function isNumberInputValid($this){
+    
+    //A text input's value attribute will always return a string. 
+    //One needs to parseInt the value to get an integer
+    val = parseInt($this.val(), 10);
+    //console.log(index + ": " + val);
+
+    if(!isNumber(val)){
+        return false;
+    }
+
+    min = parseInt($this.attr('min'), 10); 
+    max = parseInt($this.attr('max'), 10);            
+    //console.log(min, max);
+
+    if (isNumber(min) && isNumber(max)){
+        if(val < min || val > max ){
+            return false;
+        }
+    }
+    else if (isNumber(min)){
+        if(val < min){
+            return false;
+        }                            
+    }
+    else if (isNumber(max)){
+        if(val > max ){
+            return false;
+        }                            
+    }
+    else{
+        console.error("Error in function isNumberInputValid");
+        return false;
+    }
+    
+    if ($this.hasClass("input_integer")){
+        if(!isInteger(val)){
+            return false;
+        }
+    }    
+
+    return true;
 }
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
