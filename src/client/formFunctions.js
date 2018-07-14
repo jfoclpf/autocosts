@@ -53,15 +53,33 @@ $(document).keydown(function(e) {
         else if($buttonNext.length > 1){
             buttonNextHandler($buttonNext.last());
         }
-    }
+    }        
 });
+
+/*$('input[type="number"]').keydown(function(e) {
+    
+    //key Enter (13) ot Tab (9)
+    if(e.keyCode == 13 || e.keyCode == 9) { 
+        //goes to the next input        
+        var $inputs = $('input[type="number"]');
+        var thisInputIndex = $inputs.index($(this))
+        var $next = $inputs.eq(thisInputIndex + 1);
+        $next.focus();        
+        
+        return false;
+    }
+});*/
 
 //This function fires every time the 
 //input type="number" changes OR input type="radio" is clicked
-//It shows or hides the button "Next" of the corresponding field
+//check initialize.js in function loadsButtonsHandlers
 function inputHandler($this){
     
     var $fieldHead = $this.closest(".field_container"); 
+    
+    //the icon on the icon list, with class "steps"
+    setIcon($fieldHead, "active");
+    
     var $buttonNext = $fieldHead.find(".next");
     
     //shows active field
@@ -74,10 +92,10 @@ function inputHandler($this){
         //shows or hides button "next" accordingly
         if(isFieldValid($this)){                                    
             //if the current field is valid, show "next" button
-            $buttonNext.show("fast");           
+            $buttonNext.show("fast");            
         }
         else{
-            $buttonNext.hide("fast"); 
+            $buttonNext.hide("fast");            
         }
         
     });
@@ -101,7 +119,7 @@ $(".field_container").on("click", function(){
             updatesFieldsAndIcons($this);
         });        
 
-    }
+    }    
 });
 
 //fades out or fades in all visible fields, except itself, according to validity 
