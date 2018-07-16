@@ -167,7 +167,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ---------- Steps ---------- */
-.container .steps {position: fixed; width: 24%; margin: 0 0 0 2%; display: block; }
+.container .steps {position: fixed; width: 24%; margin: 0 0 0 2%; display: block; z-index: 0;}
 .container .steps ul {list-style: none;}
 .container .steps ul li {display: block; text-align: left; color: white; position: relative;}
 .container .steps ul li span { display: inline-block; line-height: 35px; margin: 0 0 0 45px; color: #d7dbee; font-weight: 700; font-size: 14px;}
@@ -210,7 +210,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ------------------------------********* FORM CONTENT *********------------------------------ */
-.container .form_part {width: 64%; margin: 0 0 0 30%; display: block; text-align: left;}
+.container .form_part {width: 64%; margin: 0 0 0 30%; display: block; text-align: left; z-index: 10;}
 
 .container .form_part h2.lang-fixed_costs_header_1 {font-size: 30px; line-height: 30px; margin: 0 }
 .container .form_part p.lang-fixed_costs_header_2 {color: #868790; margin: 0 }
