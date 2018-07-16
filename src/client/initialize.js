@@ -18,7 +18,13 @@ $(document).ready(function () {
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
     getScriptOnce(JS_FILES.documentFunctions, function(){
-        getScriptOnce(JS_FILES.formFunctions, setLanguageVars);
+        getScriptOnce(JS_FILES.formFunctions, function(){
+            setLanguageVars();
+            loadPageSettings();    
+            loadFormSettings();
+            loadFormHandlers();
+            loadsStandardValues();
+        });
     });
 
     getScriptOnce(JS_FILES.jAlert, function(){
@@ -44,6 +50,9 @@ $(document).ready(function () {
         });                
     }
     
+    //Google recaptcha
+    IS_HUMAN_CONFIRMED = false;    
+    
 });
 
 //function that sets the JS language variables to the correspondent HTML divs
@@ -63,100 +72,28 @@ function setLanguageVars(){
             $dropdown.append($("<option/>").val(key).text(value));
         });
     });
-
-    initializeForm();    
-    loadsButtonsSettings();
-    loadsButtonsHandlers();
-    loadsStandardValues();
-}
-
-function initializeForm(){
-    
-    //hides form part head titles, except first
-    //that is, it only shows Head Title "1. Standing costs"
-    $(".form_part_head_title").each(function(index){
-        if(index == 0){
-            $(this).show();
-        }
-        else{
-            $(this).hide();
-        }
-    });    
-    
-    $(".cta_bottom_bar").hide();
-    
-    $("#main_form select").val('1'); //set all the selects to "month"
-
-    //PART 1
-    //credit
-    $('#sim_credDiv').hide();
-    
-    //inspection    
-    $('#numberInspections').val(0);
-    $("#InspectionCost_tr").hide();
-    $("#numberInspections").on("input", nbrInspectOnChanged);
-
-    //PART 2
-    //fuel
-    $('#currency_div_form2').show();
-    $('#distance_div_form2').hide();        
-    fuelCalculationMethodChange('currency'); //sets radio button in Form Part 2, section Fuel calculations, to Currency
-
-    //tolls
-    tolls_daily(false);
-    //fines
-    $("#tickets_period_select").val('5'); //set fines period to year
-    //washing    
-    $("#washing_period_select").val('3'); //set washing period to trimester
-    
-    //PART 3
-    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
-    driveToJob(false);             
-    //Income in Form Part 3 - set to year
-    income_toggle("year");        
-        
-    //Google recaptcha
-    IS_HUMAN_CONFIRMED = false;
-    $('#run_button').show();
-    $('#run_button_noCapctha').hide();
-
-    //console.log(SWITCHES);
-    //renders according to Global swicthes
-    if(!SWITCHES.print){
-        $("#print_button").hide();
-    }
-    else{
-        $("#print_button").show();    
-    }
-    
-    if(!SWITCHES.pdf){
-        $("#generate_PDF").hide();
-    }
-    else{
-        $("#generate_PDF").show();
-    }
     
 }
 
 
-function loadsButtonsSettings(){
+//settings and handlers of the elements on the landing page
+function loadPageSettings(){     
     
-    //NEW UI/UX
+    //hides the calculator form on the landing page
     $("#form").hide();
-
-    //hides all buttons "next"
-    $(".next").hide();
     
+    //button shown right from the beginning, on the landing page
     $("#calculateButton").on("click", function(){
         $("#hero, footer").hide();
         $("#form").show();
+        setIcon($(".field_container").first(), "active");
     });    
     
     $("#country_select").on('change', function() {
         window.location.href = this.value;
     });
     
-    // Click handlers
+    //General Click handlers
     $(".btn[data-action]").on("click", function () {
         var $this = $(this);
         var action = $this.attr("data-action");
@@ -192,7 +129,27 @@ function loadsButtonsSettings(){
     
     $("#country_select_stats").on('change', function() {
         updateStatsTable(this.value);
-    });
+    });    
+    
+}
+
+//initial settings regarding the calculator form itself
+//that is, after the user has pressed "calculate" button on the landing page
+function loadFormSettings(){
+    
+    //hides all buttons "next"
+    $(".next").hide();    
+    
+    //hides form part head titles, except first
+    //that is, it only shows Head Title "1. Standing costs"
+    $(".form_part_head_title").each(function(index){
+        if(index == 0){
+            $(this).show();
+        }
+        else{
+            $(this).hide();
+        }
+    });   
     
     //hides all fields except the first
     $(".field_container").each(function( index ) {
@@ -202,12 +159,65 @@ function loadsButtonsSettings(){
         else{
             $( this ).hide();
         }
-    });
+    });    
+    
+    $(".cta_bottom_bar").hide();
+    
+    $("#main_form select").val('1'); //set all the selects to "month"
 
+    //PART 1
+    //credit
+    $('#sim_credDiv').hide();
+    
+    //inspection    
+    $('#numberInspections').val(0);
+    $("#InspectionCost_tr").hide();
+    $("#numberInspections").on("input", nbrInspectOnChanged);
+
+    //PART 2
+    //fuel
+    $('#currency_div_form2').show();
+    $('#distance_div_form2').hide();        
+    fuelCalculationMethodChange('currency'); //sets radio button in Form Part 2, section Fuel calculations, to Currency
+
+    //tolls
+    tolls_daily(false);
+    //fines
+    $("#tickets_period_select").val('5'); //set fines period to year
+    //washing    
+    $("#washing_period_select").val('3'); //set washing period to trimester
+    
+    //PART 3
+    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
+    driveToJob(false);             
+    //Income in Form Part 3 - set to year
+    income_toggle("year");   
+    
+    //final buttons of the form
+    $('#run_button').show();
+    $('#run_button_noCapctha').hide();
+
+    //console.log(SWITCHES);
+    //renders according to Global swicthes
+    if(!SWITCHES.print){
+        $("#print_button").hide();
+    }
+    else{
+        $("#print_button").show();    
+    }
+    
+    if(!SWITCHES.pdf){
+        $("#generate_PDF").hide();
+    }
+    else{
+        $("#generate_PDF").show();
+    }   
+    
 }
-
-//associate click functions with buttons
-function loadsButtonsHandlers(){
+    
+//handlers regarding the calculator form itself
+//that is, after the user has pressed "calculate" button on the landing page
+function loadFormHandlers(){
     
     //button "next"; function buttonNextHandler is on formFunctions.js
     $(".button.btn-orange").on( "click", function(){
@@ -267,7 +277,7 @@ function loadsButtonsHandlers(){
     $("#print_button").on( "click", function(){Print()});
     $("#generate_PDF").on( "click", function(){generatePDF()});    
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
-
+    
 }
 
 //detects whether Google Analytics has loaded

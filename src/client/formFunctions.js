@@ -4,6 +4,7 @@
 
 //when button "Next" is clicked, this field must be valid
 function buttonNextHandler($thisButton){
+    console.log("function buttonNextHandler($thisButton)");
     
     //closest get top parent finding element with class "field_container", 
     var $fieldHead = $thisButton.closest(".field_container");
@@ -13,10 +14,10 @@ function buttonNextHandler($thisButton){
     }
     
     //hides own next button
-    $thisButton.closest( ".next" ).hide("slow");
+    $thisButton.closest( ".next" ).stop(true).hide("slow");
     
     //fades own field
-    $fieldHead.fadeTo("slow", 0.1);
+    $fieldHead.stop(true).fadeTo("slow", 0.1);
     
     //scrolls down till the next non-valid field
     $fieldHead.nextAll(".field_container, .form_part_head_title").each(function(index, value){
@@ -24,11 +25,11 @@ function buttonNextHandler($thisButton){
         var $i = $(this); //the $(this) from the loop .each
         
         if ($i.hasClass("form_part_head_title")){
-            $i.show("slow");
+            $i.stop(true).show("slow");
         }
         else{
-            $i.show(); //isFieldValid function only works if the .field_container is visible
-            $i.find(".next").hide(); //hides "next" button
+            $i.stop(true).show(); //isFieldValid function only works if the .field_container is visible
+            $i.find(".next").stop(true).hide(); //hides "next" button
             if(!isFieldValid($i)){                
                 //scrols the page to the corresponding div, considering the header
                 $('html,body').
@@ -42,8 +43,16 @@ function buttonNextHandler($thisButton){
     });        
 }
 
+
+//This function fires every time the 
+//$(document).keydown OR $('input[type="number"]').keydown
+//check initialize.js in function loadsButtonsHandlers
+/*function keyDownHandler*/
+
 //in the event that Enter or Tab keys are pressed down
 $(document).keydown(function(e) {
+    console.log("$(document).keydown(function(e)");
+    
     //key Enter (13) ot Tab (9)
     if(e.keyCode == 13 || e.keyCode == 9) {        
         var $buttonNext = $(".form_part").find(".next:visible");
@@ -56,24 +65,38 @@ $(document).keydown(function(e) {
     }        
 });
 
-/*$('input[type="number"]').keydown(function(e) {
+$('input[type="number"]').keydown(function(e) {
+    console.log("$('input[type=\"number\"]').keydown(function(e)");       
+    e.stopImmediatePropagation();
     
     //key Enter (13) ot Tab (9)
     if(e.keyCode == 13 || e.keyCode == 9) { 
+        e.preventDefault();
+        
+        
         //goes to the next input        
         var $inputs = $('input[type="number"]');
         var thisInputIndex = $inputs.index($(this))
         var $next = $inputs.eq(thisInputIndex + 1);
         $next.focus();        
         
-        return false;
+        var $buttonNext = $(".form_part").find(".next:visible");
+        if ($buttonNext.length === 1){
+            buttonNextHandler($buttonNext);
+        }
+        else if($buttonNext.length > 1){
+            buttonNextHandler($buttonNext.last());
+        }
+        
+        return false;        
     }
-});*/
+});
 
 //This function fires every time the 
 //input type="number" changes OR input type="radio" is clicked
 //check initialize.js in function loadsButtonsHandlers
 function inputHandler($this){
+    console.log("inputHandler($this)");
     
     var $fieldHead = $this.closest(".field_container"); 
     
@@ -83,7 +106,7 @@ function inputHandler($this){
     var $buttonNext = $fieldHead.find(".next");
     
     //shows active field
-    $fieldHead.show().fadeTo("fast", 1);
+    $fieldHead.show().stop(true).fadeTo("fast", 1);
     //fades previous fields    
     
     //just runs after all descedents (.find) have completed
@@ -92,10 +115,10 @@ function inputHandler($this){
         //shows or hides button "next" accordingly
         if(isFieldValid($this)){                                    
             //if the current field is valid, show "next" button
-            $buttonNext.show("fast");            
+            $buttonNext.stop(true).show("fast");            
         }
         else{
-            $buttonNext.hide("fast");            
+            $buttonNext.stop(true).hide("fast");            
         }
         
     });
@@ -112,20 +135,27 @@ function inputHandler($this){
 
 //mouse on click event on field containers
 $(".field_container").on("click", function(){
-    var $this = $(this);
-    if($this.is(":visible")){
-        $this.fadeTo("fast", 1, function(){            
+    console.log('$(".field_container").on("click", function()');
+    
+    var $this = $(this);    
+    
+    //only if is already visible, but faded out, that is, with opacitiy lower than 1
+    if($this.is(":visible")){        
+        //clears the animation queue
+        $this.stop(true, true);     
+        
+        $this.fadeTo("fast", 1, function(){                        
             inputHandler($this);
             updatesFieldsAndIcons($this);
-        });        
-
+        });
     }    
 });
 
 //fades out or fades in all visible fields, except itself, according to validity 
 //also updated icon list
 function updatesFieldsAndIcons($this){
-
+    console.log("updatesFieldsAndIcons($this)");
+    
     var $fieldHead = $this.closest(".field_container");
     
     setIcon($this, "active");
@@ -134,12 +164,12 @@ function updatesFieldsAndIcons($this){
         
         if($(this).is(":visible")){        
             if(isFieldValid($(this))){
-                $(this).fadeTo("slow", 0.1);
-                $(this).find(".next").hide("slow");
+                $(this).stop(true).fadeTo("slow", 0.1);
+                $(this).find(".next").stop(true).hide("slow");
                 setIcon($(this), "done");
             }
             else{
-                $(this).fadeTo("fast", 1);
+                $(this).stop(true).fadeTo("fast", 1);
                 setIcon($(this), "wrong");
             }
         }
@@ -202,6 +232,7 @@ function setIcon($this, status){
 //checks on every visible and active number input element, if all these elements are valid
 //Field refers to insurance, credit, tolls, etc., that is, cost items
 function isFieldValid($this){    
+    console.log("isFieldValid($this)");
     
     //goes to top ascendents till it finds the class "field_container"
     //.closest: for each element in the set, get the first element that matches the selector by testing 
@@ -229,6 +260,7 @@ function isFieldValid($this){
 
 //$this refers to input type=number
 function isNumberInputValid($this){
+    //console.log("isNumberInputValid($this)");
     
     //A text input's value attribute will always return a string. 
     //One needs to parseInt the value to get an integer
@@ -271,6 +303,7 @@ function isNumberInputValid($this){
 
     return true;
 }
+
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 function nbrInspectOnChanged(){
