@@ -2,6 +2,12 @@
 /*====================================================*/
 /*Functions which work only on the form*/
 
+
+/************************************************************************************************************/
+/************************************************************************************************************/
+
+//USER INTERFACE FUNCTIONS
+
 //when button "Next" is clicked, this field must be valid
 function buttonNextHandler($thisButton){
     console.log("function buttonNextHandler($thisButton)");
@@ -47,50 +53,34 @@ function buttonNextHandler($thisButton){
 //This function fires every time the 
 //$(document).keydown OR $('input[type="number"]').keydown
 //check initialize.js in function loadsButtonsHandlers
-/*function keyDownHandler*/
-
-//in the event that Enter or Tab keys are pressed down
-$(document).keydown(function(e) {
-    console.log("$(document).keydown(function(e)");
+function keyDownHandler($this, event){
     
     //key Enter (13) ot Tab (9)
-    if(e.keyCode == 13 || e.keyCode == 9) {        
+    if(event.keyCode == 13 || event.keyCode == 9) { 
+                    
+        //press button "Next" when available
         var $buttonNext = $(".form_part").find(".next:visible");
-        if ($buttonNext.length === 1){
-            buttonNextHandler($buttonNext);
+        if ($buttonNext.length){
+            buttonNextHandler($buttonNext.last());                      
         }
-        else if($buttonNext.length > 1){
-            buttonNextHandler($buttonNext.last());
-        }
-    }        
-});
+                
+        if($this.is('input[type="number"]')){            
+            event.preventDefault();
+            event.stopImmediatePropagation();
 
-$('input[type="number"]').keydown(function(e) {
-    console.log("$('input[type=\"number\"]').keydown(function(e)");       
-    e.stopImmediatePropagation();
-    
-    //key Enter (13) ot Tab (9)
-    if(e.keyCode == 13 || e.keyCode == 9) { 
-        e.preventDefault();
-        
-        
-        //goes to the next input        
-        var $inputs = $('input[type="number"]');
-        var thisInputIndex = $inputs.index($(this))
-        var $next = $inputs.eq(thisInputIndex + 1);
-        $next.focus();        
-        
-        var $buttonNext = $(".form_part").find(".next:visible");
-        if ($buttonNext.length === 1){
-            buttonNextHandler($buttonNext);
-        }
-        else if($buttonNext.length > 1){
-            buttonNextHandler($buttonNext.last());
-        }
+            if (!$buttonNext.length){
+                //goes directly to the next input when "next" button is unavailable
+                var $inputs = $('input[type="number"]:visible');
+                var thisInputIndex = $inputs.index($this)
+                var $nextInput = $inputs.eq(thisInputIndex + 1);
+                $nextInput.focus();      
+            }
+        }        
         
         return false;        
     }
-});
+}
+
 
 //This function fires every time the 
 //input type="number" changes OR input type="radio" is clicked
@@ -126,9 +116,12 @@ function inputHandler($this){
     if($this.is('input[type="number"]')){        
         if(isNumberInputValid($this)){
             $this.css('border-bottom','1px #b0b2be solid');
+            inputErrorMsg($this, "hide");
+            
         }
         else{            
-            $this.css('border-bottom','1px red solid');
+            $this.css('border-bottom','2px solid #ef474c');
+            inputErrorMsg($this, "show");
         }
     }
 }
@@ -304,6 +297,51 @@ function isNumberInputValid($this){
     return true;
 }
 
+//when the input value is wrong
+//status is show or hide the error message
+function inputErrorMsg($this, status){
+
+    if(!$this.is('input[type="number"]')){
+        console.error("Error on inputErrorMsg");
+        return;
+    }
+    
+    var errId = "error_msg_" + $this.prop('id');
+    
+    if(status==="show" && !$("#"+errId).length){
+        $this.after(function(){                        
+            
+            if($(this).attr('min') && $(this).attr('max')){
+                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                       "Enter a value between " + $(this).attr('min') + " and " + $(this).attr('max') + 
+                       "</div>";
+            }
+            else if($(this).attr('min')){
+                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                       "Enter a value greater or equal to " + $(this).attr('min') + 
+                       "</div>";
+            }
+            else if($(this).attr('max')){
+                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                       "Enter a value smaller or equal to " + $(this).attr('max') + 
+                       "</div>";
+            }
+        });    
+    }
+    else if(status==="hide"){
+        $("#"+errId).remove();   
+    }
+
+}
+
+
+/************************************************************************************************************/
+/************************************************************************************************************/
+
+/************************************************************************************************************/
+/************************************************************************************************************/
+
+//FORM CALCULATOR FUNCTIONS
 
 //when number of inspections is zero in form part 1, hides field for cost of each inspection
 function nbrInspectOnChanged(){

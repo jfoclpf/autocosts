@@ -237,6 +237,11 @@ function loadFormHandlers(){
     //this onchange event is trigered after the onclick events down here
     $('input[type="radio"]').on("change", function(){inputHandler($(this))});      
     
+    //keys handlers; function keyDownHandler is in formFunctions.js
+    $(document).keydown(function(e){keyDownHandler($(this), e)});
+    $('input[type="number"]').keydown(function(e){keyDownHandler($(this), e)});
+    
+    
     //PART 1
     //insurance
     setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly            
