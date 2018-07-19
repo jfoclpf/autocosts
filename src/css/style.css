@@ -84,7 +84,7 @@ input[type='number'] {-moz-appearance:textfield;}
 .unit_n_year_left {padding-left: 115px}
 .unit_n_month_left {padding-left: 140px}
 .unit_n_hour_left {padding-left: 110px}
-.unit_gallon_left {padding-left: 95px}
+.unit_gallon_left {padding-left: 95px !important}
 
 
 .per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
@@ -228,6 +228,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
 .container .form_part .bottom_spacer {padding-top:100px; display: block;}
+
+.container .form_part .error_msg {color:#ef474c;}
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
 .btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }

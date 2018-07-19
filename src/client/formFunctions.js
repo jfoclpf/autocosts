@@ -9,7 +9,7 @@
 //USER INTERFACE FUNCTIONS
 
 //when button "Next" is clicked, this field must be valid
-function buttonNextHandler($thisButton){
+function buttonNextHandler($thisButton, callback){
     console.log("function buttonNextHandler($thisButton)");
     
     //closest get top parent finding element with class "field_container", 
@@ -33,7 +33,7 @@ function buttonNextHandler($thisButton){
         if ($i.hasClass("form_part_head_title")){
             $i.stop(true).show("slow");
         }
-        else{
+        else if ($i.hasClass("field_container")){
             $i.stop(true).show(); //isFieldValid function only works if the .field_container is visible
             $i.find(".next").stop(true).hide(); //hides "next" button
             if(!isFieldValid($i)){                
@@ -42,9 +42,20 @@ function buttonNextHandler($thisButton){
                     animate({scrollTop: $i.offset().top-$("header").outerHeight()-15}, 600, "swing", function(){
                     updatesFieldsAndIcons($i);
                 });
+                
+                //returns to the callback the target .field_container, that is, $i
+                if(typeof callback === 'function'){
+                    (function(i){
+                        callback(i);
+                    }($i));
+                }
+                
                 //breaks the .each loop
                 return false; 
             }
+        }
+        else{
+            console.error("Error in buttonNextHandler");
         }
     });        
 }
@@ -55,26 +66,39 @@ function buttonNextHandler($thisButton){
 //check initialize.js in function loadsButtonsHandlers
 function keyDownHandler($this, event){
     
-    //key Enter (13) ot Tab (9)
+    //key Enter (13) ot TAB (9)
     if(event.keyCode == 13 || event.keyCode == 9) { 
-                    
-        //press button "Next" when available
-        var $buttonNext = $(".form_part").find(".next:visible");
-        if ($buttonNext.length){
-            buttonNextHandler($buttonNext.last());                      
-        }
-                
-        if($this.is('input[type="number"]')){            
+        
+        var $buttonNext;
+        
+        if($this.is('input[type="number"]')){
             event.preventDefault();
             event.stopImmediatePropagation();
+                 
+            //press button "Next" when available
+            $buttonNext = $this.closest(".field_container").find(".next:visible");            
+        }
+        else{
+            $buttonNext = $(".next:visible").first();
+        }
+        
 
-            if (!$buttonNext.length){
-                //goes directly to the next input when "next" button is unavailable
-                var $inputs = $('input[type="number"]:visible');
-                var thisInputIndex = $inputs.index($this)
-                var $nextInput = $inputs.eq(thisInputIndex + 1);
-                $nextInput.focus();      
-            }
+        
+        //if there exists a "next" button
+        if ($buttonNext.length){
+            //clicks the "next" button and focus the respective available input
+            buttonNextHandler($buttonNext.last(), function($fieldHead){
+                $fieldHead.find("*").promise().done(function(){ 
+                    $fieldHead.find('input[type="number"]:visible').first().focus();
+                });
+            });                      
+        }
+        //it does not exist a "next" button; just go to the next input
+        else if($this.is('input[type="number"]')){
+            var $inputs = $('input[type="number"]:visible');
+            var thisInputIndex = $inputs.index($this)
+            var $nextInput = $inputs.eq(thisInputIndex + 1);
+            $nextInput.focus();                  
         }        
         
         return false;        
@@ -88,10 +112,15 @@ function keyDownHandler($this, event){
 function inputHandler($this){
     console.log("inputHandler($this)");
     
-    var $fieldHead = $this.closest(".field_container"); 
+    var $fieldHead = $this.closest(".field_container");
     
     //the icon on the icon list, with class "steps"
-    setIcon($fieldHead, "active");
+    if(isFieldValid($this)){
+        setIcon($this, "active");
+    }
+    else{
+        setIcon($this, "wrong");
+    }
     
     var $buttonNext = $fieldHead.find(".next");
     
@@ -113,6 +142,7 @@ function inputHandler($this){
         
     });
     
+    //add red underline in case input is wrong
     if($this.is('input[type="number"]')){        
         if(isNumberInputValid($this)){
             $this.css('border-bottom','1px #b0b2be solid');
@@ -151,7 +181,12 @@ function updatesFieldsAndIcons($this){
     
     var $fieldHead = $this.closest(".field_container");
     
-    setIcon($this, "active");
+    if(isFieldValid($this)){
+        setIcon($this, "active");
+    }
+    else{
+        setIcon($this, "wrong");
+    }
     
     $fieldHead.siblings(".field_container").each(function(){
         
@@ -312,17 +347,17 @@ function inputErrorMsg($this, status){
         $this.after(function(){                        
             
             if($(this).attr('min') && $(this).attr('max')){
-                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                return '<div class="error_msg" id="'+errId+'">' + 
                        "Enter a value between " + $(this).attr('min') + " and " + $(this).attr('max') + 
                        "</div>";
             }
             else if($(this).attr('min')){
-                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                return '<div class="error_msg" id="'+errId+'">' + 
                        "Enter a value greater or equal to " + $(this).attr('min') + 
                        "</div>";
             }
             else if($(this).attr('max')){
-                return '<div style="color:#ef474c" id="'+errId+'">' + 
+                return '<div class="error_msg" id="'+errId+'">' + 
                        "Enter a value smaller or equal to " + $(this).attr('max') + 
                        "</div>";
             }
