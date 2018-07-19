@@ -84,6 +84,7 @@ input[type='number'] {-moz-appearance:textfield;}
 .unit_n_year_left {padding-left: 115px}
 .unit_n_month_left {padding-left: 140px}
 .unit_n_hour_left {padding-left: 110px}
+.unit_gallon_left {padding-left: 95px}
 
 
 .per, .during, .months_year, .minutes_day, .unit_days-per-week {padding: 0 10px; font-size: 30px}
@@ -170,16 +171,16 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps {position: fixed; width: 24%; margin: 0 0 0 2%; display: block; z-index: 0;}
 .container .steps ul {list-style: none;}
 .container .steps ul li {display: block; text-align: left; color: white; position: relative;}
-.container .steps ul li span { display: inline-block; line-height: 35px; margin: 0 0 0 45px; color: #d7dbee; font-weight: 700; font-size: 14px;}
+.container .steps ul li span { display: inline-block; line-height: 35px; margin: 0 0 0 40px; color: #d7dbee; font-weight: 700; font-size: 14px;}
 .container .steps ul li span.optional {font-size: 12px; font-weight: 400; margin: -8px 0 0 0; line-height: 12px; clear: both; display: block;}
 .container .steps ul li:first-child {margin-left: unset;}
 
 .container .steps ul li:before {content: ""; width: 35px; height: 35px; background-color: #d7dbee; position: absolute; border-radius: 100%; }
 .container .steps ul li:after {position: absolute; content: ''; background-color: #d7dbee; width: 2px; height: 25px; top: -10px; left: 17px; z-index: -11;}
-.container .steps ul li > ul > li:before {width: 10px; height: 10px;margin: 10px 0 0 13px;}
-.container .steps ul li > ul > li > span {font-size: 12px; font-weight: 400; margin-left: 35px; line-height: 25px;height: 18px;overflow: hidden;}
+.container .steps ul li > ul > li:before {width: 10px; height: 10px;margin: 7px 0 0 13px;}
+.container .steps ul li > ul > li > span {font-size: 12px; font-weight: 400; margin-left: 30px; line-height: 25px;height: 18px;overflow: hidden;}
 
-.container .steps ul .number:before {color: white; padding: 7px 0 0 12px; width: 21px; height: 26px;}
+.container .steps ul .number:before {color: white; padding: 6px 0 0 11px; width: 22px; height: 27px;}
 .container .steps ul .one:before {content: "1"}
 .container .steps ul .two:before {content: "2"}
 .container .steps ul .three:before {content: "3"}
@@ -190,7 +191,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li.active > span, .container .steps ul li.active ul li.active > span {color: #2c49b9}
 .container .steps ul li > ul > li.active:before { background-color: #2c49b9; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
 .container .steps ul li > ul > li.done:before {content: "\2713"; line-height: 16px; font-size: 11px; padding-left: 3px; width: 11px; border: 1px solid #2c49b9; -webkit-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,1);}
-.container .steps ul li > ul > li.wrong:before { background-color: red; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid red; -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1); box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);}
+.container .steps ul li > ul > li.wrong:before { background-color: #ef474c; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid red; }
 
 /* ---------- Bottom bar ---------- */
 .cta_bottom_bar {
@@ -294,8 +295,8 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 	.sidebar > .sidebar-left-container > .close {margin-left: 44%;}
 
-	.container .steps {margin-left: 2%;}
-	.container .form_part {width: 67%; margin-left: 3%;}
+	.container .steps {width: 27%;}
+	.container .form_part {width: 67%; margin-left: 31%;}
 	
 }
 
@@ -309,7 +310,7 @@ footer .animation {display:block; background: transparent url('../img/animation.
 
 
 	/* ------------------ FORM ELEMENTS ------------------*/
-	.container .form_part {width: 100%}
+	.container .form_part {width: 82%; margin: 0 4%}
 
 	.container .steps {
 		position: fixed;
@@ -325,10 +326,10 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	    overflow-y: hidden;
 	}
 	.container .steps ul {float: left; display: inline-block; width: 100%}
-	.container .steps ul li.one:first-child {width: 160px}
-	.container .steps ul li.two {width: 210px}
-	.container .steps ul li.thre {width: 210px}
-	.container .steps ul li.one ul {float: left; display: inline-block; width: 136px;}
+	.container .steps ul li.one:first-child {width: 143px}
+	.container .steps ul li.two {width: 187px}
+	.container .steps ul li.three {width: 138px; height: 34px; overflow: hidden;}
+	.container .steps ul li.one ul {float: left; display: inline-block;}
 
 	.container .steps ul li,
 	.container .steps ul li:before,
@@ -340,9 +341,9 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.container .steps ul li > ul > li > span,
 	.container .steps ul li span {display: none}
 
-	.container .steps ul li > ul > li:after {display: inline-block; position: relative;width: 25px; height: 2px; top: 3px; left: 35px}
-	.container .steps ul li > ul > li.active:before {float: left; margin: 10px 0 0 47px}
-	.container .steps ul li > ul > li:before {margin: 13px 0 0 45px}
+	.container .steps ul li > ul > li:after {display: inline-block; position: relative;width: 22px; height: 2px; top: 2px; left: 33px}
+	.container .steps ul li > ul > li.active:before {float: left; margin: 9px 0 0 39px}
+	.container .steps ul li > ul > li:before {margin: 13px 0 0 40px}
 
 	.container .steps ul li.number:after {display: none;}
 
@@ -437,6 +438,8 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
 	.small_input .unit {top: 0px!important}
 
+	.small_input input[type='number'] {width: 199px; padding-left: 48px}
+
 	#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
 
 	#currency_div_form2 input[type='number'] {width: 130px}
@@ -453,8 +456,6 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	.time_spent_part2_form3 .input_70 {width: 40px!important }
 
 
-
-
 	
 	/* ------ Footer Animation ------*/
 
@@ -462,5 +463,13 @@ footer .animation {display:block; background: transparent url('../img/animation.
 	footer, footer .animation {height: 250px}
 
 	
+}
+
+
+@media screen and (max-width:460px) {
+
+	footer {background-position: left 90px;}	
+
+
 }
 
