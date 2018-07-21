@@ -8,7 +8,14 @@
 
 //USER INTERFACE FUNCTIONS
 
-//when button "Next" is clicked, this field must be valid
+//When button "Next" is clicked, this function is called; $thisButton males reference to the button itself
+//It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
+//It scrolls down the page till a field_container is: NOT valid OR NOT visible  
+//Example: as it reaches for the 1st time "Credit" cost item, since herein by default radio button is at No, 
+//this "Credit" field_container doesn't show any 'input[type="number"]' and thus function isFieldValid returns true.     
+//But "Credit" field_container is hidden because it was the first time to reach this cost_item/field_container, 
+//and as such it was hidden before. That is, when the cost_item/field_container is reached for the 1st time, 
+//it is hidden because all the fields, except the 1st, are all hidden intially
 function buttonNextHandler($thisButton, callback){
     console.log("function buttonNextHandler($thisButton)");
     
@@ -25,33 +32,58 @@ function buttonNextHandler($thisButton, callback){
     //fades own field
     $fieldHead.stop(true).fadeTo("slow", 0.1);
     
-    //scrolls down till the next non-valid field
+    //scrolls down till a field_container is: not valid OR not visible  
     $fieldHead.nextAll(".field_container, .form_part_head_title").each(function(index, value){
         
         var $i = $(this); //the $(this) from the loop .each
         
+        //these are the section titles
         if ($i.hasClass("form_part_head_title")){
             $i.stop(true).show("slow");
         }
-        else if ($i.hasClass("field_container")){
-            $i.stop(true).show(); //isFieldValid function only works if the .field_container is visible
-            $i.find(".next").stop(true).hide(); //hides "next" button
-            if(!isFieldValid($i)){                
-                //scrols the page to the corresponding div, considering the header
-                $('html,body').
-                    animate({scrollTop: $i.offset().top-$("header").outerHeight()-15}, 600, "swing", function(){
-                    updatesFieldsAndIcons($i);
-                });
+        //these are the field containers, that is, divs with cost items: depreciation, insurance, etc.
+        else if ($i.hasClass("field_container")){            
+            
+            //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
+            //Example: as it reaches for the 1st time "Credit" cost item, since herein by default radio button is at No, 
+            //"Credit" field_container doesn't show any 'input[type="number"]' and thus isFieldValid returns true.     
+            //But $i.is(":visible") returns false because it was the first time to reach this cost item (field_container), 
+            //and as such it was hidden before. That is, $i.is(":visible") always returns false, when the cost item
+            //(field_container) is reached for the 1st time, because all the fields, except the 1st, are all hidden intially
+            if(!isFieldValid($i) || !$i.is(":visible")){                
                 
-                //returns to the callback the target .field_container, that is, $i
-                if(typeof callback === 'function'){
-                    (function(i){
-                        callback(i);
-                    }($i));
+                //Now we show the cost_item/field_container
+                $i.stop(true).show();
+                
+                //by showing the field_container, we check if its content is non empty
+                if($i.children().first().is(":visible")){
+                                        
+                    if(isFieldValid($i)){
+                        $i.find(".next").stop(true).show(); //shows "next" button                    
+                    }
+
+                    //scrols the page to the corresponding div, considering the header
+                    $('html,body').
+                        animate({scrollTop: $i.offset().top-$("header").outerHeight()-40}, 600, "swing", function(){
+                        updatesFieldsAndIcons($i);
+                    });
+
+                    //returns to the callback the target .field_container, that is, $i
+                    if(typeof callback === 'function'){
+                        (function(i){
+                            callback(i);
+                        }($i));
+                    }
+
+                    //breaks the .each loop
+                    return false;
                 }
-                
-                //breaks the .each loop
-                return false; 
+                else{
+                    $i.find(".next").stop(true).hide(); //hides "next" button
+                }
+            }
+            else{
+                $i.find(".next").stop(true).hide(); //hides "next" button
             }
         }
         else{
@@ -65,23 +97,29 @@ function buttonNextHandler($thisButton, callback){
 //$(document).keydown OR $('input[type="number"]').keydown
 //check initialize.js in function loadsButtonsHandlers
 function keyDownHandler($this, event){
+    console.log("keyDownHandler");
     
     //key Enter (13) ot TAB (9)
     if(event.keyCode == 13 || event.keyCode == 9) { 
         
         var $buttonNext;
         
-        if($this.is('input[type="number"]')){
+        if($this.is('input[type="number"]')){            
             event.preventDefault();
             event.stopImmediatePropagation();
                  
-            //press button "Next" when available
-            $buttonNext = $this.closest(".field_container").find(".next:visible");            
+            //get button "Next" when available in the own field
+            $buttonNext = $this.closest(".field_container").find(".next:visible");
+            //otherwise get button "Next" anywhere
+            if(!$buttonNext.length){
+                $buttonNext = $(".next:visible").first();
+            }
         }
-        else{
+        else{            
             $buttonNext = $(".next:visible").first();
         }
         
+        console.log($buttonNext.length);
 
         
         //if there exists a "next" button
