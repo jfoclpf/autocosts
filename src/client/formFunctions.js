@@ -11,19 +11,19 @@
 //When button "Next" is clicked, this function is called; $thisButton males reference to the button itself
 //It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
 //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
-//Example: as it reaches for the 1st time "Credit" cost item, since herein by default radio button is at No, 
-//this "Credit" field_container doesn't show any 'input[type="number"]' and thus function isFieldValid returns true.     
-//But "Credit" field_container is hidden because it was the first time to reach this cost_item/field_container, 
-//and as such it was hidden before. That is, when the cost_item/field_container is reached for the 1st time, 
-//it is hidden because all the fields, except the 1st, are all hidden intially
+//Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "hidden"
+//since all items are hidden initially when the form is loaded (except the 1st item), and as such it breaks herein.
+//But since "Credit" cost item by default has radio button set at NO, this "Credit" field_container doesn't show any
+//'input[type="number"]' and thus after showing this field_container, fieldStatus returns "no_inputs", and as such
+//we show the "Next" button, since when the user sets radio button to NO in "Credit", that is OK, but it shows no inputs
 function buttonNextHandler($thisButton, callback){
-    console.log("function buttonNextHandler($thisButton)");
+    //console.log("function buttonNextHandler($thisButton)");
     
     //closest get top parent finding element with class "field_container", 
     var $fieldHead = $thisButton.closest(".field_container");
     
-    if(!isFieldValid($fieldHead)){
-        console.error("Next button clicked, when field was not valid");
+    if(fieldStatus($fieldHead) !== "fully_valid" && fieldStatus($fieldHead) !== "no_inputs"){
+        console.error("'Next' button clicked, when field was not OK for showing 'next' button");
     }
     
     //hides own next button
@@ -44,21 +44,20 @@ function buttonNextHandler($thisButton, callback){
         //these are the field containers, that is, divs with cost items: depreciation, insurance, etc.
         else if ($i.hasClass("field_container")){            
             
-            //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
-            //Example: as it reaches for the 1st time "Credit" cost item, since herein by default radio button is at No, 
-            //"Credit" field_container doesn't show any 'input[type="number"]' and thus isFieldValid returns true.     
-            //But $i.is(":visible") returns false because it was the first time to reach this cost item (field_container), 
-            //and as such it was hidden before. That is, $i.is(":visible") always returns false, when the cost item
-            //(field_container) is reached for the 1st time, because all the fields, except the 1st, are all hidden intially
-            if(!isFieldValid($i) || !$i.is(":visible")){                
+            //It scrolls down the page till it finds a field_container 
+            //which is not fully_valid and having some available inputs
+            if(fieldStatus($i) !== "fully_valid" && fieldStatus($i) !== "no_inputs"){                
                 
-                //Now we show the cost_item/field_container
+                //we make sure the cost_item/field_container main div is now visible
                 $i.stop(true).show();
                 
-                //by showing the field_container, we check if its content is non empty
-                if($i.children().first().is(":visible")){
-                                        
-                    if(isFieldValid($i)){
+                //now we're sure that, even after showing the field, it is not hidden, since a field
+                //may have the content hidden, due to user form settings
+                if(fieldStatus($i) !== "hidden"){
+                
+                    //by showing now the field_container, if it has no inputs show next button
+                    //for example "Credit" field container
+                    if(fieldStatus($i) === "no_inputs"){
                         $i.find(".next").stop(true).show(); //shows "next" button                    
                     }
 
@@ -78,9 +77,7 @@ function buttonNextHandler($thisButton, callback){
                     //breaks the .each loop
                     return false;
                 }
-                else{
-                    $i.find(".next").stop(true).hide(); //hides "next" button
-                }
+
             }
             else{
                 $i.find(".next").stop(true).hide(); //hides "next" button
@@ -97,7 +94,7 @@ function buttonNextHandler($thisButton, callback){
 //$(document).keydown OR $('input[type="number"]').keydown
 //check initialize.js in function loadsButtonsHandlers
 function keyDownHandler($this, event){
-    console.log("keyDownHandler");
+    //console.log("keyDownHandler");
     
     //key Enter (13) ot TAB (9)
     if(event.keyCode == 13 || event.keyCode == 9) { 
@@ -117,10 +114,7 @@ function keyDownHandler($this, event){
         }
         else{            
             $buttonNext = $(".next:visible").first();
-        }
-        
-        console.log($buttonNext.length);
-
+        }                
         
         //if there exists a "next" button
         if ($buttonNext.length){
@@ -144,20 +138,29 @@ function keyDownHandler($this, event){
 }
 
 
-//This function fires every time the 
-//input type="number" changes OR input type="radio" is clicked
+//This function fires every time on("input") in
+//input[type="number"] OR input input[type="radio"] 
+//that is when the numbers inputs are changed or when the radio buttons are clicked
 //check initialize.js in function loadsButtonsHandlers
 function inputHandler($this){
-    console.log("inputHandler($this)");
+    //console.log("inputHandler($this)");
     
+    //if the number is invalid empty the input
+    if ($this.is('input[type="number"]') && !isNumber(parseInt($this.val(), 10))){
+        $this.val("");
+    }
+        
     var $fieldHead = $this.closest(".field_container");
     
     //the icon on the icon list, with class "steps"
-    if(isFieldValid($this)){
-        setIcon($this, "active");
-    }
-    else{
+    if(fieldStatus($this) === "wrong"){
         setIcon($this, "wrong");
+    }
+    else if (fieldStatus($this) === "fully_valid"){
+        setIcon($this, "done");
+    }
+    else {
+        setIcon($this, "active");
     }
     
     var $buttonNext = $fieldHead.find(".next");
@@ -170,7 +173,8 @@ function inputHandler($this){
     $fieldHead.find("*").promise().done(function(){      
     
         //shows or hides button "next" accordingly
-        if(isFieldValid($this)){                                    
+        //Example: "Credit" field container starts with radio button to NO by default, and thus has no visible inputs
+        if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){                                    
             //if the current field is valid, show "next" button
             $buttonNext.stop(true).show("fast");            
         }
@@ -182,7 +186,7 @@ function inputHandler($this){
     
     //add red underline in case input is wrong
     if($this.is('input[type="number"]')){        
-        if(isNumberInputValid($this)){
+        if(numberInputStatus($this) === "valid"){
             $this.css('border-bottom','1px #b0b2be solid');
             inputErrorMsg($this, "hide");
             
@@ -196,7 +200,7 @@ function inputHandler($this){
 
 //mouse on click event on field containers
 $(".field_container").on("click", function(){
-    console.log('$(".field_container").on("click", function()');
+    //console.log('$(".field_container").on("click", function()');
     
     var $this = $(this);    
     
@@ -215,41 +219,224 @@ $(".field_container").on("click", function(){
 //fades out or fades in all visible fields, except itself, according to validity 
 //also updated icon list
 function updatesFieldsAndIcons($this){
-    console.log("updatesFieldsAndIcons($this)");
+    //console.log("updatesFieldsAndIcons($this)");
     
     var $fieldHead = $this.closest(".field_container");
     
-    if(isFieldValid($this)){
-        setIcon($this, "active");
-    }
-    else{
+    if(fieldStatus($this) === "wrong"){
         setIcon($this, "wrong");
     }
+    else if (fieldStatus($this) === "fully_valid"){
+        setIcon($this, "done");
+    }
+    else {
+        setIcon($this, "active");
+    }
+        
+    //the zero based index within its siblings
+    var thisIndex = $this.index();
     
+    //remainig field_containers except itself
     $fieldHead.siblings(".field_container").each(function(){
         
-        if($(this).is(":visible")){        
-            if(isFieldValid($(this))){
-                $(this).stop(true).fadeTo("slow", 0.1);
-                $(this).find(".next").stop(true).hide("slow");
-                setIcon($(this), "done");
-            }
-            else{
-                $(this).stop(true).fadeTo("fast", 1);
-                setIcon($(this), "wrong");
-            }
-        }
-        else{
+        var status = fieldStatus($(this));
+            
+        if(status == "hidden"){
             setIcon($(this), "inactive");
         }
+        else if (status === "wrong"){
+            $(this).stop(true).fadeTo("fast", 1);
+            setIcon($(this), "wrong");                
+        }
+        else if (status === "fully_valid" || status === "no_inputs"){
+            $(this).stop(true).fadeTo("slow", 0.1);
+            $(this).find(".next").stop(true).hide("slow");
+            setIcon($(this), "done");
+        }
+        
+        if ($(this).index() < thisIndex && 
+            status !== "fully_valid" && status !== "no_inputs"){
+            setIcon($(this), "wrong");
+        }
+            
     });    
 }
+
+
+//For a certain element inside the div with class ".field_container", 
+//checks on every visible and active number input element, if all these elements are valid
+//Field refers to insurance, credit, tolls, etc., that is, cost items
+//Output may be: 
+//"fully_valid" => visible/enabled inputs (>=1); all inputs are filled and with valid numbers
+//"valid"       => visible/enabled inputs (>=1); some inputs are valid, others are empty
+//"empty"       => visible/enabled inputs (>=1); all inputs are empty
+//"wrong"       => visible/enabled inputs (>=1); at least one input is wrong
+//"no_inputs"   => the field_container main div is visible; but no visible/enabled inputs in the field_container
+//"hidden"      => the field_container main div is hidden
+function fieldStatus($this){    
+    //console.log("fieldStatus($this)");
+    
+    //goes to top ascendents till it finds the class "field_container"
+    //.closest: for each element in the set, get the first element that matches the selector by testing 
+    //the element itself and traversing up through its ancestors in the DOM tree.
+    var $fieldHead = $this.closest(".field_container");
+    if(!$fieldHead.is(":visible") || $fieldHead.children(":visible").length == 0){
+        return "hidden";
+    }
+    
+    //goes to every descendent input[type="number"]
+    var $inputElements = $fieldHead.find('input[type="number"]');
+
+    var numberStatus;
+    var inputsCount=0, validCount=0, emptyCount=0, wrongCount=0;
+    
+    $inputElements.each(function(index){
+        //if the input element is hidden or disabled doesn't check its value
+        if( $(this).is(":visible") && !$(this).prop('disabled')){
+            
+            inputsCount++;
+            
+            numberStatus = numberInputStatus($(this));
+            if(numberStatus === "wrong" ){
+                wrongCount++;
+                //since this input is wrong, the whole field is wrong and hence breaks the loop  
+                return false;
+            }    
+            else if (numberStatus === "valid"){
+                validCount++;
+            }
+            else if (numberStatus === "empty"){
+                emptyCount++;
+            }
+            else{
+                console.error("Error in function fieldStatus")
+                return false;            
+            }
+        }
+        
+    });
+        
+    //when at least one input is wrong, returns "wrong"
+    if(wrongCount >= 1){
+        return "wrong";
+    }
+    
+    if(inputsCount === 0){
+        return "no_inputs";
+    }
+        
+    if(emptyCount >= 1 && validCount >= 1) {
+        return "valid";
+    }
+    
+    if(emptyCount >= 1 && validCount === 0){
+        return "empty";
+    }
+    
+    if(emptyCount === 0 && validCount >= 1){
+        return "fully_valid";
+    }
+    
+    console.error("Error in function fieldStatus")
+    return false;
+}
+
+//$this refers to input[type="number"]; output may be:
+//"valid" => It has input numbers/data, the input is valid
+//"empty" => Input has not numbers, that is, it is empty
+//"wrong" => It has input numbers/data, but it is invalid/wrong 
+function numberInputStatus($this){
+    //console.log("numberInputStatus($this)");
+    
+    if ($this.val() === ""){
+        return "empty";
+    }
+
+    var val, min, max;
+    
+    //A text input's value attribute will always return a string. 
+    //One needs to parseInt the value to get an integer
+    val = parseInt($this.val(), 10);
+    //console.log(index + ": " + val);
+
+    if(!isNumber(val)){
+        return "wrong";
+    }
+    
+    min = parseInt($this.attr('min'), 10); 
+    max = parseInt($this.attr('max'), 10);            
+    //console.log(min, max);
+
+    if (isNumber(min) && isNumber(max)){
+        if(val < min || val > max ){
+            return "wrong";
+        }
+    }
+    else if (isNumber(min)){
+        if(val < min){
+            return "wrong";
+        }                            
+    }
+    else if (isNumber(max)){
+        if(val > max ){
+            return "wrong";
+        }                            
+    }
+    else{
+        console.error("Error in function numberInputStatus");
+        return false;
+    }
+    
+    if ($this.hasClass("input_integer")){
+        if(!isInteger(val)){
+            return "wrong";
+        }
+    }    
+
+    return "valid";
+}
+
 
 //sets correspondent icon on icon list within the div with class "steps"
 //$this is the current field with class "field_container"
 //status may be "inactive", "active", "done" or "wrong"
 function setIcon($this, status){
 
+    //getFieldNum returns string "field1", "field2", "field3", etc. of field_container
+    var fieldN = getFieldNum($this); //the field number will be taken from class name
+        
+    $(".steps").find(".icon").each(function(index, item){
+        if ($(this).hasClass(fieldN)){
+            
+            $(this).removeClass("active done wrong");
+            
+            switch(status) {
+                case "inactive":
+                    break;
+                case "active":
+                    $(this).addClass("active");
+                    $(this).closest(".list").addClass("active");
+                    break;
+                case "done":
+                    $(this).addClass("active");
+                    $(this).addClass("done");
+                    $(this).closest(".list").addClass("active");
+                    break;
+                case "wrong":
+                    $(this).addClass("wrong");
+                    break;
+                default:
+                    console.error("status in setIcon function not correct");
+            }
+        }
+    });
+    
+}
+
+
+//returns string "field1", "field2", "field3", etc. of field_container
+function getFieldNum($this){
+    
     var $fieldHead = $this.closest(".field_container");
     var fieldN; //the field number will be taken from class name
     
@@ -265,109 +452,8 @@ function setIcon($this, status){
     if(!fieldN){
         console.error("The field has no class with the expression 'field#' ");
     }
-    //console.log(fieldN);
-    
-    $(".steps").find(".icon").each(function(index, item){
-        if ($(this).hasClass(fieldN)){
-            
-            $(this).removeClass("active done wrong");
-            
-            switch(status) {
-                case "inactive":
-                    break;
-                case "active":
-                    $(this).addClass("active");
-                    break;
-                case "done":
-                    $(this).addClass("active");
-                    $(this).addClass("done");
-                    break;
-                case "wrong":
-                    $(this).addClass("wrong");
-                    break;
-                default:
-                    console.error("status in setIcon function not correct");
-            }
-        }
-    });
-    
-}
 
-
-//For a certain element inside the div with class ".field_container", 
-//checks on every visible and active number input element, if all these elements are valid
-//Field refers to insurance, credit, tolls, etc., that is, cost items
-function isFieldValid($this){    
-    console.log("isFieldValid($this)");
-    
-    //goes to top ascendents till it finds the class "field_container"
-    //.closest: for each element in the set, get the first element that matches the selector by testing 
-    //the element itself and traversing up through its ancestors in the DOM tree.
-    var $fieldHead = $this.closest(".field_container");
-    
-    //goes to every descendent input[type="number"]
-    var $inputElements = $fieldHead.find('input[type="number"]');
-
-    var isValid = true;
-    var val, min, max;
-    $inputElements.each(function(index){
-        //if the input element is hidden or disabled doesn't check its value
-        if( $(this).is(":visible") && !$(this).prop('disabled')){
-            isValid = isNumberInputValid($(this));
-            if(!isValid){
-                return false;
-            }
-        }
-    });
-    
-    //console.log("isFieldValid: " + isValid);
-    return isValid;
-}
-
-//$this refers to input type=number
-function isNumberInputValid($this){
-    //console.log("isNumberInputValid($this)");
-    
-    //A text input's value attribute will always return a string. 
-    //One needs to parseInt the value to get an integer
-    val = parseInt($this.val(), 10);
-    //console.log(index + ": " + val);
-
-    if(!isNumber(val)){
-        return false;
-    }
-
-    min = parseInt($this.attr('min'), 10); 
-    max = parseInt($this.attr('max'), 10);            
-    //console.log(min, max);
-
-    if (isNumber(min) && isNumber(max)){
-        if(val < min || val > max ){
-            return false;
-        }
-    }
-    else if (isNumber(min)){
-        if(val < min){
-            return false;
-        }                            
-    }
-    else if (isNumber(max)){
-        if(val > max ){
-            return false;
-        }                            
-    }
-    else{
-        console.error("Error in function isNumberInputValid");
-        return false;
-    }
-    
-    if ($this.hasClass("input_integer")){
-        if(!isInteger(val)){
-            return false;
-        }
-    }    
-
-    return true;
+    return fieldN;
 }
 
 //when the input value is wrong
