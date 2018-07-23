@@ -11,7 +11,7 @@
 //When button "Next" is clicked, this function is called; $thisButton males reference to the button itself
 //It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
 //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
-//Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "hidden"
+//Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "fully_hidden"
 //since all items are hidden initially when the form is loaded (except the 1st item), and as such it breaks herein.
 //But since "Credit" cost item by default has radio button set at NO, this "Credit" field_container doesn't show any
 //'input[type="number"]' and thus after showing this field_container, fieldStatus returns "no_inputs", and as such
@@ -216,8 +216,29 @@ $(".field_container").on("click", function(){
     }    
 });
 
+//when the form is fully filled and ready to calculate
+function isReadyToCalc(){
+    
+    var status, isOk = true;
+    
+    $(".form_part").find(".field_container").each(function(index, item){
+        status = fieldStatus($(this)); 
+        if (status !== "hidden" && status !== "no_inputs"){
+            if(status !== "fully_valid"){
+                isOk = false;
+                return false;
+            }
+        }
+    });
+                
+    //double-check with validating functions from file validateForm.js                                                      
+    isOk = isOk && isUserDataFormOk();
+    
+    return isOk;
+}
+
 //fades out or fades in all visible fields, except itself, according to validity 
-//also updated icon list
+//also updates icon list on the left panel
 function updatesFieldsAndIcons($this){
     //console.log("updatesFieldsAndIcons($this)");
     
@@ -241,8 +262,11 @@ function updatesFieldsAndIcons($this){
         
         var status = fieldStatus($(this));
             
-        if(status == "hidden"){
+        if(status === "fully_hidden"){
             setIcon($(this), "inactive");
+        }
+        else if(status === "hidden"){
+            setIcon($(this), "hidden");
         }
         else if (status === "wrong"){
             $(this).stop(true).fadeTo("fast", 1);
@@ -254,9 +278,10 @@ function updatesFieldsAndIcons($this){
             setIcon($(this), "done");
         }
         
-        if ($(this).index() < thisIndex && 
-            status !== "fully_valid" && status !== "no_inputs"){
-            setIcon($(this), "wrong");
+        if ($(this).index() < thisIndex){
+            if( status !== "fully_valid" && status !== "no_inputs" && status !== "hidden"){
+                setIcon($(this), "wrong");
+            }
         }
             
     });    
@@ -267,12 +292,13 @@ function updatesFieldsAndIcons($this){
 //checks on every visible and active number input element, if all these elements are valid
 //Field refers to insurance, credit, tolls, etc., that is, cost items
 //Output may be: 
-//"fully_valid" => visible/enabled inputs (>=1); all inputs are filled and with valid numbers
-//"valid"       => visible/enabled inputs (>=1); some inputs are valid, others are empty
-//"empty"       => visible/enabled inputs (>=1); all inputs are empty
-//"wrong"       => visible/enabled inputs (>=1); at least one input is wrong
-//"no_inputs"   => the field_container main div is visible; but no visible/enabled inputs in the field_container
-//"hidden"      => the field_container main div is hidden
+//"fully_valid"  => visible/enabled inputs (>=1); all inputs are filled and with valid numbers
+//"valid"        => visible/enabled inputs (>=1); some inputs are valid, others are empty
+//"empty"        => visible/enabled inputs (>=1); all inputs are empty
+//"wrong"        => visible/enabled inputs (>=1); at least one input is wrong
+//"no_inputs"    => the field_container main div is visible; but no visible/enabled inputs in the field_container
+//"hidden"       => the field container inner divs are all hidden
+//"fully_hidden" => the field_container main div with class "field_container" is hidden
 function fieldStatus($this){    
     //console.log("fieldStatus($this)");
     
@@ -280,7 +306,11 @@ function fieldStatus($this){
     //.closest: for each element in the set, get the first element that matches the selector by testing 
     //the element itself and traversing up through its ancestors in the DOM tree.
     var $fieldHead = $this.closest(".field_container");
-    if(!$fieldHead.is(":visible") || $fieldHead.children(":visible").length == 0){
+    
+    if(!$fieldHead.is(":visible")){
+        return "fully_hidden";
+    }
+    if($fieldHead.children(":visible").length == 0){
         return "hidden";
     }
     
@@ -399,7 +429,7 @@ function numberInputStatus($this){
 
 //sets correspondent icon on icon list within the div with class "steps"
 //$this is the current field with class "field_container"
-//status may be "inactive", "active", "done" or "wrong"
+//status may be "inactive", "active", "done", "wrong" or "hidden"
 function setIcon($this, status){
 
     //getFieldNum returns string "field1", "field2", "field3", etc. of field_container
@@ -409,6 +439,7 @@ function setIcon($this, status){
         if ($(this).hasClass(fieldN)){
             
             $(this).removeClass("active done wrong");
+            $(this).show();
             
             switch(status) {
                 case "inactive":
@@ -424,6 +455,9 @@ function setIcon($this, status){
                     break;
                 case "wrong":
                     $(this).addClass("wrong");
+                    break;
+                case "hidden":
+                    $(this).hide();
                     break;
                 default:
                     console.error("status in setIcon function not correct");
@@ -494,11 +528,11 @@ function inputErrorMsg($this, status){
 }
 
 
-/************************************************************************************************************/
-/************************************************************************************************************/
+/*************************************************************************************************************************/
+/*************************************************************************************************************************/
 
-/************************************************************************************************************/
-/************************************************************************************************************/
+/*************************************************************************************************************************/
+/*************************************************************************************************************************/
 
 //FORM CALCULATOR FUNCTIONS
 
