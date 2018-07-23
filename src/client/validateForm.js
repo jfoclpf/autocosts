@@ -6,6 +6,122 @@
 ************************************************/
 /*File with Javascript functions that check weather the form parts are correctly inserted */
 
+
+function isUserDataFormOk(){
+    
+    if (!is_userdata_formpart1_ok()){
+        console.error("Form Part 1 not Ok");
+        return false;
+    }
+
+    if (!is_userdata_formpart2_ok()){
+        console.error("Form Part 2 not Ok");
+        return false;
+    }
+    
+    if (!is_userdata_formpart3_ok()){
+        console.error("Form Part 3 not Ok");
+        return false;
+    }
+
+    return true;
+}
+
+function is_userdata_formpart1_ok(){
+
+    if (!isDepreciationOk()){
+        console.error("Depreciation not Ok");
+        return false;
+    }
+
+    if (!isInsuranceOk()){
+        console.error("Insurance not Ok");
+        return false;
+    }
+    
+    if (!isCarFinanceOk()){
+        console.error("CarFinance not Ok");
+        return false;
+    }
+    
+    if (!isTaxesOk()){
+        console.error("Taxes not Ok");
+        return false;
+    }  
+    
+    return true;
+}
+
+function is_userdata_formpart2_ok(){
+
+    if (!isFuelOk()){
+        console.error("Fuel not Ok");
+        return false;
+    }
+    
+    if (!isMaintenanceOk()){
+        console.error("Maintenance not Ok");
+        return false;
+    }
+      
+    if (!isRepairsOk()){
+        console.error("Repairs not Ok");
+        return false;
+    }
+    
+    if (!isParkingOk()){
+        console.error("Parking not Ok");
+        return false;
+    }
+    
+    if (!isTollsOk()){
+        console.error("Tolls not Ok");
+        return false;
+    }    
+
+    if (!isFinesOk()){
+        console.error("Fines not Ok");
+        return false;
+    }
+    
+    if (!isWashingOk()){
+        console.error("Washing not Ok");
+        return false;
+    }    
+    
+    return true;
+}
+
+function is_userdata_formpart3_ok(){
+    
+    if (!isPublicTransportOk()){
+        console.error("PublicTransport not Ok");
+        return false;
+    }
+
+    if (!isIncomeOk()){
+        console.error("Income not Ok");
+        return false;
+    }
+
+    if (!isWorkingTimeOk()){
+        console.error("WorkingTime not Ok");
+        return false;
+    }
+
+    if (!isDistanceOk()){
+        console.error("Distance not Ok");
+        return false;
+    }
+
+    if (!isTimeSpentInDrivingOk()){
+        console.error("TimeSpentInDriving not Ok");
+        return false;
+    }
+    
+    return true;
+}
+
 /* *** CHECK FORM PART 1 ***** */
 /*check if data from form 1 (standing costs) is correctly filled*/
 
@@ -13,7 +129,7 @@ function isDepreciationOk(){
 
     var f = document.costs_form; /*form*/
     var minCarYear = 1910; /*the year of the first produced car*/
-
+    
     /*depreciation*/
     var acquisitionMonth = f.acquisitionMonth.value; /*car acquisition month*/
     var acquisitionYear  = f.acquisitionYear.value; /*car acquisition year*/
@@ -301,6 +417,7 @@ function isIncomeOk(){
     
     /*income*/
     var income_type = getCheckedValue(f.radio_income);
+    
     switch(income_type){
     case 'year':
         if(!isNumber(f.income_per_year.value)){
@@ -331,14 +448,17 @@ function isIncomeOk(){
 function isWorkingTimeOk(){
 
     var f = document.costs_form; /*form*/    
-    
+    var income_type = getCheckedValue(f.radio_income);
+
     /*working time*/
-    var is_working_time = getCheckedValue(f.radio_work_time);
-    if(is_working_time == 'true' && income_type!='hour'){
-        if(!isNumber(f.time_hours_per_week.value)){
+    var val, is_working_time = getCheckedValue(f.radio_work_time);
+    if(is_working_time == 'true' && income_type != 'hour'){
+        val = f.time_hours_per_week.value;
+        if(!isNumber(val) || val < f.time_hours_per_week.min || val > f.time_hours_per_week.max){
             return false;
         }
-        if(!isNumber(f.time_month_per_year.value)){
+        val = f.time_month_per_year.value;
+        if(!isNumber(val) || val < f.time_month_per_year.min || val > f.time_month_per_year.max){
             return false;
         }
     }
@@ -351,7 +471,7 @@ function isDistanceOk(){
     var f = document.costs_form; /*form*/      
     
     /*distance*/
-    if($('#distance_form3').css('display')!='none'){
+    if($('#distance_form3').is(":visible")){
         var drive_to_work = getCheckedValue(f.drive_to_work);
         if(drive_to_work == 'true'){
             if(!isNumber(f.drive_to_work_days_per_week.value) || f.drive_to_work_days_per_week.value > 7){
@@ -379,7 +499,7 @@ function isTimeSpentInDrivingOk(){
     var f = document.costs_form; /*form*/       
     
     /*time spent in driving*/
-    if (isVisible('.time_spent_part1_form3')){
+    if (isVisible('#time_spent_part1_form3')){
         if(!isNumber(f.time_home_job.value)){
             return false;
         }

@@ -8,9 +8,7 @@ $(document).ready(function () {
     for (var i = 0; i < sides.length; ++i) {
         var cSide = sides[i];
         $(".sidebar." + cSide).sidebar({side: cSide});
-    }
-    
-    getScriptOnce(JS_FILES.validateForm);
+    }    
 
     //detects old versions of Internet Explorer
     oldIE();
@@ -25,14 +23,6 @@ $(document).ready(function () {
             loadFormHandlers();
             loadsStandardValues();
         });
-    });
-
-    getScriptOnce(JS_FILES.jAlert, function(){
-        //defaults for the alert box
-        $.fn.jAlert.defaults.size = 'sm';
-        $.fn.jAlert.defaults.theme = 'default';
-        $.fn.jAlert.defaults.closeOnClick = 'true';
-
     });
 
     /*Google Analytics*/
@@ -87,6 +77,9 @@ function loadPageSettings(){
         $("#hero, footer").hide();
         $("#form").show();
         setIcon($(".field_container").first(), "active");
+        
+        getScriptOnce(JS_FILES.validateForm);
+        getScriptOnce(JS_FILES.coreFunctions); 
     });    
     
     $("#country_select").on('change', function() {
