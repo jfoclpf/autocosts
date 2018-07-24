@@ -182,6 +182,13 @@ function inputHandler($this){
             $buttonNext.stop(true).hide("fast");            
         }
         
+        if(isReadyToCalc()){
+            $(".cta_bottom_bar").show("slow");
+        }
+        else{
+            $(".cta_bottom_bar").hide("slow");
+        }
+        
     });
     
     //add red underline in case input is wrong
@@ -218,7 +225,7 @@ $(".field_container").on("click", function(){
 
 //when the form is fully filled and ready to calculate
 function isReadyToCalc(){
-    
+        
     var status, isOk = true;
     
     $(".form_part").find(".field_container").each(function(index, item){
@@ -230,11 +237,17 @@ function isReadyToCalc(){
             }
         }
     });
-                
-    //double-check with validating functions from file validateForm.js                                                      
-    isOk = isOk && isUserDataFormOk();
     
-    return isOk;
+    if(!isOk){
+        return false;
+    }
+    
+    //double-check with validating functions from file validateForm.js                                                      
+    if (!isUserDataFormOk()){
+        return false;
+    }    
+    
+    return true;
 }
 
 //fades out or fades in all visible fields, except itself, according to validity 
