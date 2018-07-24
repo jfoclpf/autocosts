@@ -183,10 +183,10 @@ function inputHandler($this){
         }
         
         if(isReadyToCalc()){
-            $(".cta_bottom_bar").show("slow");
+            $(".cta_bottom_bar").fadeIn()("slow");
         }
         else{
-            $(".cta_bottom_bar").hide("slow");
+            $(".cta_bottom_bar").fadeOut("slow");
         }
         
     });
