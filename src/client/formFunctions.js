@@ -183,7 +183,7 @@ function inputHandler($this){
         }
         
         if(isReadyToCalc()){
-            $(".cta_bottom_bar").fadeIn()("slow");
+            $(".cta_bottom_bar").fadeIn("slow");
         }
         else{
             $(".cta_bottom_bar").fadeOut("slow");
