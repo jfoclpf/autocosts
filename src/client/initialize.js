@@ -70,7 +70,7 @@ function setLanguageVars(){
 function loadPageSettings(){     
     
     //hides the calculator form on the landing page
-    $("#form").hide();
+    $("#form, #results").hide();
     
     //button shown right from the beginning, on the landing page
     $("#calculateButton").on("click", function(){
@@ -78,9 +78,18 @@ function loadPageSettings(){
         $("#form").show();
         setIcon($(".field_container").first(), "active");
         
-        getScriptOnce(JS_FILES.validateForm);
-        getScriptOnce(JS_FILES.coreFunctions); 
-    });    
+        //on test version shows everything right from the beginning
+        if(COUNTRY=="XX"){
+            $(".field_container").show();
+        }
+                
+        getScriptOnce(JS_FILES.coreFunctions, function(){
+            getScriptOnce(JS_FILES.validateForm);
+            getScriptOnce(JS_FILES.getData, function(){
+                getScriptOnce(JS_FILES.printResults);
+            });
+        });
+    });
     
     $("#country_select").on('change', function() {
         window.location.href = this.value;
@@ -211,6 +220,9 @@ function loadFormSettings(){
 //handlers regarding the calculator form itself
 //that is, after the user has pressed "calculate" button on the landing page
 function loadFormHandlers(){
+    
+    //run button
+    $("#calculate_costs_btn").on( "click", function(){Run2()});
     
     //button "next"; function buttonNextHandler is on formFunctions.js
     $(".button.btn-orange").on( "click", function(){
