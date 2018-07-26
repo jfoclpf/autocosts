@@ -1,15 +1,5 @@
 $(document).ready(function () {
     
-    // All sides
-    var sides = ["left", "top", "right", "bottom"];
-    $("h1 span.version").text($.fn.sidebar.version);
-
-    // Initialize sidebars
-    for (var i = 0; i < sides.length; ++i) {
-        var cSide = sides[i];
-        $(".sidebar." + cSide).sidebar({side: cSide});
-    }    
-
     //detects old versions of Internet Explorer
     oldIE();
 
@@ -69,8 +59,19 @@ function setLanguageVars(){
 //settings and handlers of the elements on the landing page
 function loadPageSettings(){     
     
+    // All sides
+    var sides = ["left", "top", "right", "bottom"];
+    $("h1 span.version").text($.fn.sidebar.version);
+
+    // Initialize sidebars
+    for (var i = 0; i < sides.length; ++i) {
+        var cSide = sides[i];
+        $(".sidebar." + cSide).sidebar({side: cSide});
+    }    
+    
     //hides the calculator form on the landing page
     $("#form, #results").hide();
+    $(".sidebar").show();
     
     //button shown right from the beginning, on the landing page
     $("#calculateButton").on("click", function(){
@@ -82,7 +83,7 @@ function loadPageSettings(){
         if(COUNTRY=="XX"){
             $(".field_container").show();
         }
-                
+        
         getScriptOnce(JS_FILES.coreFunctions, function(){
             getScriptOnce(JS_FILES.validateForm);
             getScriptOnce(JS_FILES.getData, function(){
