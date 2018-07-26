@@ -43,6 +43,8 @@ p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 
 /* ------------------------------********* FORM ELEMENTS *********------------------------------ */
 
+#form {display: none}
+
 label {font-size: 18px; color: black; display: block; clear: both; margin-bottom: 15px}
 label > span, label > i  {font-size: 14px; font-style: normal; color: #42444a; display: block; clear: both; }
 label.float_left {float: left; margin: 3px 20px 0 0;}
