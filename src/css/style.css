@@ -232,6 +232,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part .error_msg {color:#ef474c;}
 
 /* ------------------------------********* SIDEBARS *********------------------------------ */
+.sidebar {display: none}
+
 .btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }
 .btn-left-sidebar:hover, .btn-right-sidebar:hover {border-color: #385be1}
 .btn-left-sidebar {position: absolute; left: 27px; top: 27px}
