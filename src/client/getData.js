@@ -66,13 +66,11 @@ function get_form_part2(){
 function get_form_part3(){
     var d = document.costs_form; //main form document variable
     var data = {
-        //public transports section
-        IsAlternativeToCarCosts:     getCheckedSliderValue(d.slider1),
+        //public transports section        
         n_pess_familia:              d.pessoas_agregado.value,
         monthly_pass_cost:           d.preco_passe.value,
 
-        //financial effort section
-        IsFinancialEffort:           getCheckedSliderValue(d.slider2),
+        //financial effort section        
         income_type:                 getCheckedValue(d.radio_income),
         income_per_year:             d.income_per_year.value,
         income_per_month:            d.income_per_month.value,

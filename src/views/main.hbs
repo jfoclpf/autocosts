@@ -59,8 +59,9 @@
                         </option>
                         {{/each}}
                     </select>
-                    {{#if serverData.settings.switches.dataBase}}is 
-                        <b>{{{words.curr_symbol}}}{{{getStatsItem serverData CC "total_costs_year"}}}</b> per year.<br />
+                    {{#if serverData.settings.switches.dataBase}}
+                        is <b>{{{words.curr_symbol}}}{{{getStatsItem serverData CC "total_costs_year"}}}</b> 
+                        {{{word_per}}} {{{year}}}.<br />
                         Find the true cost of owning a car in your country.
                     {{/if}}
                 </h2>
@@ -75,6 +76,10 @@
             <form name="costs_form" action="javascript:void(0);">
             {{> form }}
             </form>
+        </section>
+        
+        <section id="results">
+            {{> results }}
         </section>
         {{/with}}
 
