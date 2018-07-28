@@ -243,10 +243,10 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .btn-right-sidebar {position: absolute; right: 27px; top: 27px; background-position: -90px 0}
 .btn-right-sidebar:hover {background-position: -135px 0}
 
-.sidebar.left {position: fixed; top: 0; left: 0; bottom: 0; width: 100%;background: white;}
+.sidebar.left {position: fixed; top: 0; left: 0; bottom: 0; width: 100%; background: white;}
 .sidebar.right {top: 0; right: 0; bottom: 0; width: 100%; background: white;}
 
-.sidebars > .sidebar { position: fixed; color: black; text-align: left; z-index: 9999999; background-color: rgba(0, 0, 0, 0.4);overflow: scroll;}
+.sidebars > .sidebar { position: fixed; color: black; text-align: left; z-index: 9999999; background-color: rgba(0, 0, 0, 0); overflow: hidden;}
 
 .sidebar > .sidebar-left-container, .sidebar > .sidebar-right-container {background: white; width: 30%; height: 110%; padding: 40px 20px; -webkit-box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56); -moz-box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56); box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56);}
 .sidebar > .sidebar-left-container > .sidebar-contact {margin: 40px 0 0;}

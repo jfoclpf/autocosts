@@ -95,7 +95,8 @@ var Run1, Print, generatePDF, TimeCounter;
 
         jQuery :              JSfiles.jquery.uri,
         jQueryLocal :         JSfiles.jquery.local,
-        jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.js",  
+        jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.js",
+        jQueryColor :         rootClientURL + "jquery/jquery.color.js",
         jTimer :              rootClientURL + "jquery/js_timer.js",
 
         PDF : {
@@ -218,6 +219,7 @@ var getScriptOnce = function() {
 }(); //here it executes the function immediately to get the returned function
 
 getScriptOnce(JS_FILES.jQuery, function(){
+    getScriptOnce(JS_FILES.jQueryColor);    
     getScriptOnce(JS_FILES.jQuerySidebar, function(){
         getScriptOnce(JS_FILES.initialize, function(){});
     });

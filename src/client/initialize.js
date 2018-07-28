@@ -60,14 +60,12 @@ function setLanguageVars(){
 function loadPageSettings(){     
     
     // All sides
-    var sides = ["left", "top", "right", "bottom"];
-    $("h1 span.version").text($.fn.sidebar.version);
-
+    var sides = ["left", "right"];
     // Initialize sidebars
     for (var i = 0; i < sides.length; ++i) {
         var cSide = sides[i];
         $(".sidebar." + cSide).sidebar({side: cSide});
-    }    
+    }
     
     //hides the calculator form on the landing page
     $("#form, #results").hide();
@@ -96,15 +94,36 @@ function loadPageSettings(){
         window.location.href = this.value;
     });
     
-    //General Click handlers
+    //Sidebars click handlers
     $(".btn[data-action]").on("click", function () {
         var $this = $(this);
         var action = $this.attr("data-action");
         var side = $this.attr("data-side");
-        $(".sidebar." + side).trigger("sidebar:" + action);
+        
+        if (action === "open"){
+            console.log(side);
+            $(".sidebar." + side).trigger("sidebar:" + action);
+            $(".sidebar." + side).animate({backgroundColor: "rgb(0, 0, 0, 0.4)" });
+        }
+        else if (action === "close"){
+            $(".sidebar." + side).animate({backgroundColor: "rgb(0,0,0,0)"}, function(){
+                $(".sidebar." + side).trigger("sidebar:" + action);
+            });
+        }
+        else{
+            console.error("Error in sidebar click hanlders");
+        }        
+        
         return false;
-    });    
-    
+    });
+
+    $(".sidebar").on("click", function () {
+        var $this = $(this);
+        $this.animate({backgroundColor: "rgb(0,0,0,0)"}, function(){
+            $this.trigger("sidebar:close");
+        });
+    });
+        
     resizeSelectToContent("#country_select");   
     
     //Statistics table on sidebars.hbs
