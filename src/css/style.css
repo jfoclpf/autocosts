@@ -120,7 +120,6 @@ input[type='number'] {-moz-appearance:textfield;}
 .no_margin_bottom {margin-bottom: 0!important}
 input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
-#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 158px}
 .fuel_efficiency {margin-top: 26px}
 
 .time_spent_part1_form3 input, .time_spent_part2_form3 input,
