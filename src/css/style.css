@@ -173,6 +173,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul {list-style: none;}
 .container .steps ul li {display: block; text-align: left; color: white; position: relative;}
 .container .steps ul li span { display: inline-block; line-height: 35px; margin: 0 0 0 40px; color: #d7dbee; font-weight: 700; font-size: 14px;}
+.container .steps ul li span.wrong{color: #ef474c;}
+
 .container .steps ul li span.optional {font-size: 12px; font-weight: 400; margin: -8px 0 0 0; line-height: 12px; clear: both; display: block;}
 .container .steps ul li:first-child {margin-left: unset;}
 

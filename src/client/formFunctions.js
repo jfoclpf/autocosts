@@ -455,6 +455,7 @@ function setIcon($this, status){
         if ($(this).hasClass(fieldN)){
             
             $(this).removeClass("active done wrong");
+            $(this).find("span").removeClass("wrong");
             $(this).show();
             
             switch(status) {
@@ -471,6 +472,7 @@ function setIcon($this, status){
                     break;
                 case "wrong":
                     $(this).addClass("wrong");
+                    $(this).find("span").addClass("wrong");//text
                     break;
                 case "hidden":
                     $(this).hide();
