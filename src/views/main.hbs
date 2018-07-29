@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{{get2letterLangCode clientData.languageCode}}}">
 
 <head>
     <meta charset="UTF-8">
@@ -17,18 +17,13 @@
     
     <title>{{{words.web_page_title}}}</title>    
     
-    <link href="css/fonts/fonts.css" rel="stylesheet" />
-    
+    <link href="css/fonts/fonts.css" rel="stylesheet" />    
     <link href="favicon.png" rel="shortcut icon" type="image/png" />
-
-    <link href="css/style.css" rel="stylesheet" media="screen" />     
-  
-    <!-- Data sent to JS code on browser -->
-    {{> globalData }}                     
+    <link href="css/style.css" rel="stylesheet" media="screen" />  
 </head>
-    
-<body>
 
+<body>
+    
     <main>
         <div class="sidebars">
             {{> sidebars }}
@@ -86,6 +81,9 @@
         </footer>
     </main>
         
+    <!-- Data sent to JS code on browser -->
+    {{> globalData }}
+    
     <script src="client/Globals.js"></script>    
     
 </body>

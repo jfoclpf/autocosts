@@ -129,9 +129,9 @@ function loadPageSettings(){
     //Statistics table on sidebars.hbs
     var updateStatsTable = function (cc){                
         for (var key in STATS[cc]){
-            var elementId = "stats_table-"+key; //see sidebars.hbs
-            if(document.getElementById(elementId)){//element exists
-                var $el = $("#"+elementId); 
+            var elementClass = "stats_table-"+key; //see sidebars.hbs
+            if($("." + elementClass).length){//element exists
+                var $el = $("." + elementClass);
                 var value = STATS[cc][key];
                 var currSymb = STATS[cc].curr_symbol; 
                 if(key == "running_costs_dist" || key == "total_costs_dist"){
