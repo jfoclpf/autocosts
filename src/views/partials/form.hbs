@@ -82,7 +82,7 @@
 
             </div>
 
-            <div id="">
+            <div>
                 <label>
                     {{{com_value_today}}}
                 </label>
@@ -104,7 +104,7 @@
 
         <!--************************** INSURANCE **************************-->
         <div class="field_container field2">
-            <div id="">
+            <div>
                 <label>
                     {{{insurance}}}
                 </label>
@@ -155,22 +155,20 @@
         
         <!--************************** CREDIT **************************-->
         <div class="field_container field3">
-            <div id="">
+            <div>
                 <label class="float_left">
                     {{{credit}}}
                 </label>
                 <div class="radio_tabs small_tabs">
                     <div class="radio_tab_container">
-                        <input type="radio" name="AutoCreditRadioBtn" value="true" 
-                               id="cred_auto_true" class="" onclick="onclick_div_show('#sim_credDiv',true);" />
+                        <input type="radio" name="AutoCreditRadioBtn" value="true" id="cred_auto_true" />
                         <label>
                             {{{yes}}}
                         </label>
                      </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="AutoCreditRadioBtn" value="false" 
-                               id="cred_auto_false" class="" checked>
+                        <input type="radio" name="AutoCreditRadioBtn" value="false" id="cred_auto_false" />
                         <label>
                             {{{no}}}
                         </label>
@@ -230,12 +228,12 @@
 
         <!--************************** INSPECTION **************************-->
         <div class="field_container field4">
-            <div id="">
+            <div>
                 <label>
                     {{{inspection}}}
                 </label>
 
-                <div id="sim_credDiv">
+                <div>
                     <div class="input_value small_input">
                         <label>
                             {{{inspection_nbmr_times}}}
@@ -362,7 +360,7 @@
                 <!-- YES & NO options -->
 
                 <!-- /////// Option selected = YES /////// -->
-                <div class="" id="div_car_job_yes_form2">
+                <div id="div_car_job_yes_form2">
                     <div class="input_value small_input">
                         <label>
                             {{{fuel_days}}}
@@ -398,7 +396,7 @@
                 </div>
 
                 <!-- /////// Option selected = NO /////// -->
-                <div class="" id="div_car_job_no_form2">
+                <div id="div_car_job_no_form2">
                     <div class="input_value small_input">
                         <label>
                             {{{fuel_dist}}}
@@ -463,7 +461,7 @@
 
         <!--************************** MAINTENANCE **************************-->
         <div class="field_container field7">
-            <div id="">
+            <div>
                 <label>
                     {{{maintenance}}}
                     <span>
@@ -488,7 +486,7 @@
 
         <!--************************** REPAIRS AND IMPROVEMENTS **************************-->
         <div class="field_container field8">
-            <div id="">
+            <div>
                 <label>
                     {{{rep_improv}}}
                     <span>
@@ -513,7 +511,7 @@
 
         <!--************************** PARKING **************************-->
         <div class="field_container field9">
-            <div id="">
+            <div>
                 <label>
                     {{{parking}}}
                     <span>
@@ -538,7 +536,7 @@
 
         <!--************************** TOLLS **************************-->
         <div class="field_container field10">
-            <div id="">
+            <div>
                 <label>
                     {{{tolls}}}
                     <span>
@@ -620,7 +618,7 @@
 
         <!--************************** FINES / TICKETS **************************-->
         <div class="field_container field11">
-            <div id="">
+            <div>
                 <label>
                     {{{fines}}}
                     <span>
@@ -651,7 +649,7 @@
 
         <!--************************** WASHING **************************-->
         <div class="field_container field12">
-            <div id="">
+            <div>
                 <label>
                     {{{washing}}}
                     <span>
@@ -694,12 +692,12 @@
 
         <!--************************** PUBLIC TRANSPORTS **************************-->
         <div class="field_container field13">
-            <div  id="">
+            <div >
                 <label>
                     {{{extra_data_public_transp}}}
                 </label>
 
-                <div id="sim_credDiv">
+                <div>
                     <div class="input_value small_input">
                         <label>
                             {{{extra_data_family_nbr}}}
@@ -1014,8 +1012,8 @@
                     <span class="minutes_day">
                         {{{minutes}}}/{{{day}}}
                     </span>
-                    <input type="number" pattern="\d*" min="0" max="31" step="1" class="input_integer"
-                           id="days_drive_per_month" class="input_40" name="days_drive_per_month" />
+                    <input type="number" pattern="\d*" min="0" max="31" step="1" class="input_integer input_40"
+                           id="days_drive_per_month" name="days_drive_per_month" />
                     <span class="days_per_month">
                         {{{days}}}/{{{month}}}
                     </span>
