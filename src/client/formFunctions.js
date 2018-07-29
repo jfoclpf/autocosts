@@ -27,7 +27,7 @@ function buttonNextHandler($thisButton, callback){
     }
     
     //hides own next button
-    $thisButton.closest( ".next" ).stop(true).hide("slow");
+    $thisButton.closest( ".next" ).stop(true).hide();
     
     //fades own field
     $fieldHead.stop(true).fadeTo("slow", 0.1);
@@ -179,10 +179,10 @@ function inputHandler($this){
         if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){                                    
                         
             //if the current field is valid, show "next" button
-            $buttonNext.stop(true).show("fast");            
+            $buttonNext.stop(true).show();            
         }
         else{
-            $buttonNext.stop(true).hide("fast");            
+            $buttonNext.stop(true).hide();            
         }
         
         if(isReadyToCalc()){
@@ -290,7 +290,7 @@ function updatesFieldsAndIcons($this){
         }
         else if (status === "fully_valid" || status === "no_inputs"){
             $(this).stop(true).fadeTo("slow", 0.1);
-            $(this).find(".next").stop(true).hide("slow");
+            $(this).find(".next").stop(true).hide();
             setIcon($(this), "done");
         }
         
