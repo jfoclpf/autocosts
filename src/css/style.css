@@ -233,7 +233,11 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .container .form_part .error_msg {color:#ef474c;}
 
-/* ------------------------------********* SIDEBARS *********------------------------------ */
+/* ------------------------------********* RESULTS CONTENT *********---------------------------- */
+
+section#results {display: none;}
+
+/* ------------------------------********* SIDEBARS *********----------------------------------- */
 .sidebar {display: none}
 
 .btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }

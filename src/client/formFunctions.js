@@ -177,9 +177,7 @@ function inputHandler($this){
         //shows or hides button "next" accordingly
         //Example: "Credit" field container starts with radio button to NO by default, and thus has no visible inputs
         if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){                                    
-            
-            console.log(fieldStatus($this));
-            
+                        
             //if the current field is valid, show "next" button
             $buttonNext.stop(true).show("fast");            
         }
