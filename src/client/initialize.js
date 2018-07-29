@@ -117,11 +117,16 @@ function loadPageSettings(){
         return false;
     });
 
-    $(".sidebar").on("click", function () {
-        var $this = $(this);
-        $this.animate({backgroundColor: "rgb(0,0,0,0)"}, function(){
-            $this.trigger("sidebar:close");
-        });
+    //close the sidebar
+    $(".sidebar").on("click", function (event) {
+        //detect if user clicks outside the sidebar, when sidebar is opened
+        if($(event.target).hasClass("sidebar")){
+            //closing the sidebar
+            var $this = $(this);
+            $this.animate({backgroundColor: "rgb(0,0,0,0)"}, function(){
+                $this.trigger("sidebar:close");
+            });
+        }
     });
         
     resizeSelectToContent("#country_select");   
