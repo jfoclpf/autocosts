@@ -171,10 +171,15 @@ function inputHandler($this){
     
     //just runs after all descedents (.find) have completed
     $fieldHead.find("*").promise().done(function(){      
-    
+        
+        //console.log("Check whether show/hide Next Button on " + $fieldHead.attr('class'));
+        
         //shows or hides button "next" accordingly
         //Example: "Credit" field container starts with radio button to NO by default, and thus has no visible inputs
         if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){                                    
+            
+            console.log(fieldStatus($this));
+            
             //if the current field is valid, show "next" button
             $buttonNext.stop(true).show("fast");            
         }
@@ -712,22 +717,31 @@ function onclick_div_show(divID, flag) {
 //If "hour" selected hides also #working_time_form3. It needs working time to calculate the average yearly *income per hour*
 //With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known 
 function income_toggle(value){
+    var animSpeed = "fast";
     switch(value){
         case "year":
-            $("#income_per_year_form3, #working_time_form3").show("slow");
-            $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").hide("slow");
+            $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").
+                fadeOut(animSpeed).promise().done(function(){
+                    $("#income_per_year_form3, #working_time_form3").fadeIn(animSpeed);
+                });            
             break;
         case "month":
-            $("#income_per_month_form3, #working_time_form3").show("slow");
-            $("#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3").hide("slow");
+            $("#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3").
+                fadeOut(animSpeed).promise().done(function(){
+                    $("#income_per_month_form3, #working_time_form3").fadeIn(animSpeed);
+            });            
             break;
         case "week":
-            $("#income_per_week_form3, #working_time_form3").show("slow");
-            $("#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3").hide("slow");
+            $("#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3").
+                fadeOut(animSpeed).promise().done(function(){
+                    $("#income_per_week_form3, #working_time_form3").fadeIn(animSpeed);
+            });            
             break;
         case "hour":
-            $("#income_per_hour_form3").show("slow");
-            $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").hide("slow");
+            $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").
+                fadeOut(animSpeed).promise().done(function(){
+                    $("#income_per_hour_form3").fadeIn(animSpeed);
+            });            
             break;
     }
 }
