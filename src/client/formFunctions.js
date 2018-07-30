@@ -62,8 +62,7 @@ function buttonNextHandler($thisButton, callback){
                     }
 
                     //scrols the page to the corresponding div, considering the header
-                    $('html,body').
-                        animate({scrollTop: $i.offset().top-$("header").outerHeight()-40}, 600, "swing", function(){
+                    scrollsPageTo($i, function(){
                         updatesFieldsAndIcons($i);
                     });
 
@@ -485,9 +484,9 @@ function setIcon($this, status){
     
 }
 
-
-//returns string "field1", "field2", "field3", etc. of field_container
-function getFieldNum($this){
+//when numBool is false returns string "field1", "field2", "field3", etc. of field_container
+//when numBool is true returns integer 1, 2, 3, etc. of field_container with class field1, field2, etc. 
+function getFieldNum($this, numBool=false){
     
     var $fieldHead = $this.closest(".field_container");
     var fieldN; //the field number will be taken from class name
@@ -505,7 +504,12 @@ function getFieldNum($this){
         console.error("The field has no class with the expression 'field#' ");
     }
 
-    return fieldN;
+    if(numBool){
+        return parseInt(fieldN.replace("field", ""), 10);
+    }
+    else {
+        return fieldN; 
+    }
 }
 
 //when the input value is wrong
@@ -550,7 +554,6 @@ function inputErrorMsg($this, status){
 
 }
 
-
 //FORM PART 1, DEPRECIATION
 //changes the max allowed month, according to selected year
 $("#acquisitionYear").on("input", function(){
@@ -569,6 +572,43 @@ $("#acquisitionYear").on("input", function(){
 
     inputHandler($("#acquisitionMonth"));
 });
+
+
+//scrols the page to the corresponding div, considering the header
+function scrollsPageTo($this, callback=(function(){return;})){
+    
+    //returns integer 1, 2, 3, etc. for "field1", "field2", "field3", etc. of field_container
+    var fieldN = getFieldNum($this, true);
+
+    if(fieldN <= 15){
+        //gets relative postion with respect to parent element
+        var fixedTopPos = $this.offset().top-$(".form_part").scrollTop()-$("header").outerHeight()-200;
+
+        $("html").animate({scrollTop: fixedTopPos}, 600, "linear", function(){                              
+
+            if($(".bottom_spacer").css("padding-top") !== "450px"){
+                $(".bottom_spacer").animate({"padding-top": "450px"}, 600, "linear", callback);
+            }
+            else{
+                callback();
+            }
+        });
+    }
+    else if(fieldN <= 17){                
+        //scrolls to end of page and change bottom spacer
+        if($(".bottom_spacer").css("padding-top") !== "150px"){
+            $(".bottom_spacer").animate({"padding-top": "150px"}, 600, "linear", function(){
+                $("html").animate({ scrollTop: $(document).height()}, 600, "linear", callback);
+            });
+        }
+        else{
+            $("html").animate({ scrollTop: $(document).height()}, 600, "linear", callback);
+        }
+    }
+    else{
+        console.error("Error on scrollsPageTo(), invalid index: " + fieldN);
+    }
+}
 
 /*************************************************************************************************************************/
 /*************************************************************************************************************************/
