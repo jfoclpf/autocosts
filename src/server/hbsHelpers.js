@@ -8,17 +8,21 @@ module.exports = {
     isSelected: function (CC, value) {            
         return CC === value ? ' ' + 'selected' : ''; 
     },
+    
     /*negation*/
     negate: function(boolVar) {
         return !boolVar;
     },
+    
     /*chose the HTML costs table for specific country*/
     costsTable: function (CC){
         return CC;
     },
+    
     bannerFlag: function (CC){
         return CC.toLowerCase() + ' ' + 'flag';
     },
+    
     //function that adpats the title for lower case 
     //having only uppercase on the firt letters of the words bigger than 4 characters
     adaptTitle: function(Title){ 
@@ -36,11 +40,13 @@ module.exports = {
 
         title = words.join(' ');
         return title;
-    },        
+    },  
+    
     //get first sentence of string, with HTML tags stripped out
     metaDescription: function(string){            
         return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');
     },
+    
     //function that gets a string of main/key words from title
     //Ex: "calculadora dos custos do automóvel" returns "calculadora, custos, automóvel"
     getKeywords: function(title, str1, str2){
@@ -68,16 +74,20 @@ module.exports = {
         var keywords_string = keywords.join(',');
 
         return keywords_string;
-    },      
+    },    
+    
     json: function(context) {
         return JSON.stringify(context);
     },
+    
     jsonObj: function(obj){        
         return encodeURI(JSON.stringify(obj?obj:{}));
     },
+    
     striOutHTML: function(str){
         return str.replace(/<(?:.|\n)*?>/gm, '');
     },
+    
     getFuelEfficiencyOptStr: function(optN){
         switch(optN){
             case 1:
@@ -96,6 +106,7 @@ module.exports = {
                 return "error";
         }
     },
+    
     getDistanceOptStr: function(optN){
         switch(optN){
             case 1:
@@ -108,6 +119,7 @@ module.exports = {
                 return "error";
         }
     },
+    
     getDistanceOptStrShort: function(optN){
         switch(optN){
             case 1:
@@ -120,6 +132,7 @@ module.exports = {
                 return "error";
         }
     },    
+    
     getFuelPriceVolumeOptStr: function(optN){
         switch(optN){
             case 1:
@@ -132,13 +145,16 @@ module.exports = {
                 return "error";
         }
     },
+    
     get2letterLangCode: function(langCode){
         return langCode.substr(0, 2);
     },
+    
     //convert number to string with n decimal values
     toFixed: function(num, n){
         return num.toFixed(n);
     },
+    
     createParagraphs: function(text){
         var parArr = paragraphBuilder.toArray(text, 180);
         var output = "";
