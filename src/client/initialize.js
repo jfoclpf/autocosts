@@ -84,6 +84,7 @@ function loadPageSettings(){
         
         getScriptOnce(JS_FILES.coreFunctions, function(){
             getScriptOnce(JS_FILES.validateForm);
+            getScriptOnce(JS_FILES.conversionFunctions);
             getScriptOnce(JS_FILES.getData, function(){
                 getScriptOnce(JS_FILES.printResults);
             });
