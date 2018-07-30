@@ -520,21 +520,26 @@ function inputErrorMsg($this, status){
     var errId = "error_msg_" + $this.prop('id');
     
     if(status==="show" && !$("#"+errId).length){
+        
+        //if default function paramters are not set, get min and max from HTML attributes
+        var min = $this.attr('min');
+        var max = $this.attr('max');
+        
         $this.after(function(){                        
             
-            if($(this).attr('min') && $(this).attr('max')){
+            if(min && max){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value between " + $(this).attr('min') + " and " + $(this).attr('max') + 
+                       "Enter a value between " + min + " and " + max + 
                        "</div>";
             }
-            else if($(this).attr('min')){
+            else if(min){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value greater or equal to " + $(this).attr('min') + 
+                       "Enter a value greater or equal to " + min + 
                        "</div>";
             }
-            else if($(this).attr('max')){
+            else if(max){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value smaller or equal to " + $(this).attr('max') + 
+                       "Enter a value smaller or equal to " + max + 
                        "</div>";
             }
         });    
@@ -545,6 +550,25 @@ function inputErrorMsg($this, status){
 
 }
 
+
+//FORM PART 1, DEPRECIATION
+//changes the max allowed month, according to selected year
+$("#acquisitionYear").on("input", function(){
+    
+    // Return today's date and time
+    var currentTime = new Date();
+    var year = currentTime.getFullYear();  
+    
+    if($(this).val() == year){
+        var month = currentTime.getMonth() + 1;
+        $("#acquisitionMonth").attr("max", month);
+    }
+    else{
+        $("#acquisitionMonth").attr("max", 12);
+    }
+
+    inputHandler($("#acquisitionMonth"));
+});
 
 /*************************************************************************************************************************/
 /*************************************************************************************************************************/

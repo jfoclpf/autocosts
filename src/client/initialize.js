@@ -194,11 +194,13 @@ function loadFormSettings(){
     $("#main_form select").val('1'); //set all the selects to "month"
 
     //PART 1
+    //depreciation
+    $("#acquisitionYear").attr("max", (new Date()).getFullYear());
     //credit
     $('#sim_credDiv').hide();
     
     //inspection    
-    $('#numberInspections').val(0);
+    $("#numberInspections").val(0);
     $("#InspectionCost_tr").hide();
     $("#numberInspections").on("input", nbrInspectOnChanged);
 
