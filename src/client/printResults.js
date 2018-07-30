@@ -62,12 +62,9 @@ function Run2(callback){
 
 function printResults(f1, f2, f3, data){
 
-    $("#form").hide();
-    
-    
-    
-    $("#results").show();
-    
+    $("#form").hide();    
+        
+    $("#results").show();    
     
 }
 
