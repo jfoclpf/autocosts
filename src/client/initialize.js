@@ -132,7 +132,7 @@ function loadPageSettings(){
         
     resizeSelectToContent("#country_select");   
     
-    //Statistics table on sidebars.hbs
+    //Load statistics table on sidebars.hbs
     var updateStatsTable = function (cc){                
         for (var key in STATS[cc]){
             var elementClass = "stats_table-"+key; //see sidebars.hbs
