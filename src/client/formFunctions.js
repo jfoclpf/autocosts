@@ -775,9 +775,9 @@ function tolls_daily(tollsDailyFlag) {
 /*function that toggles some div between visible or hidden*/
 function onclick_div_show(divID, flag) {
     if(flag) {
-        $(divID).show("slow");
+        $(divID).show();
     } else {
-        $(divID).hide("slow");
+        $(divID).hide();
     }
 }
 
