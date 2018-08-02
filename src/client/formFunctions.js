@@ -778,7 +778,9 @@ function onclick_div_show(divID, flag) {
 //If "hour" selected hides also #working_time_form3. It needs working time to calculate the average yearly *income per hour*
 //With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known 
 function income_toggle(value){
-    var animSpeed = "fast";
+    //see why is 0: https://github.com/jfoclpf/autocosts/issues/54
+    var animSpeed = 0;
+    
     switch(value){
         case "year":
             $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").
