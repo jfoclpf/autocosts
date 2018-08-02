@@ -39,7 +39,7 @@ function buttonNextHandler($thisButton, callback){
         
         //these are the section titles
         if ($i.hasClass("form_part_head_title")){
-            $i.stop(true).show("slow");
+            $i.stop(true).show();
         }
         //these are the field containers, that is, divs with cost items: depreciation, insurance, etc.
         else if ($i.hasClass("field_container")){            
