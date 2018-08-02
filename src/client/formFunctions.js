@@ -644,8 +644,8 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_km").prop("checked", true);        
 
-        $("#currency_div_form2").slideUp("slow");  //hide
-        $("#distance_div_form2, .fuel_efficiency").slideDown("slow"); //show
+        $("#currency_div_form2").hide();  //hide
+        $("#distance_div_form2, .fuel_efficiency").show(); //show
 
         carToJob(false);
 
@@ -659,8 +659,8 @@ function fuelCalculationMethodChange(fuelCalculationMethod) {
         //selects actively radio button to which this function is associated
         $("#radio_fuel_euros").prop("checked", true);
                 
-        $("#currency_div_form2").slideDown("slow");  //show
-        $("#distance_div_form2, .fuel_efficiency, #div_car_job_no_form2, #div_car_job_yes_form2").slideUp("slow"); //hide
+        $("#currency_div_form2").show();  //show
+        $("#distance_div_form2, .fuel_efficiency, #div_car_job_no_form2, #div_car_job_yes_form2").hide(); //hide
         
         //DISTANCE - Form Part 3
         //If user sets currency here, the calculator needs anyway to know what the distance traveled, 
@@ -684,10 +684,8 @@ function carToJob(carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_yes").prop("checked", true);
 
-        $("#div_car_job_yes_form2").slideDown("slow");
-        $("#div_car_job_no_form2").slideUp("slow");
-        $("#time_spent_part1_form3").show();
-        $("#time_spent_part2_form3").hide();
+        $("#div_car_job_yes_form2, #time_spent_part1_form3").show();
+        $("#div_car_job_no_form2, #time_spent_part2_form3").hide();
 
         //working time section in form part 3
         working_time_toggle(true);
@@ -700,10 +698,8 @@ function carToJob(carToJobFlag) {
         //selects actively radio button to which this function is associated
         $("#car_job_form2_no").prop("checked", true);
 
-        $("#div_car_job_yes_form2").slideUp("slow");
-        $("#div_car_job_no_form2").slideDown("slow");
-        $("#time_spent_part1_form3").hide();
-        $("#time_spent_part2_form3").show();
+        $("#div_car_job_yes_form2, #time_spent_part1_form3").hide();
+        $("#div_car_job_no_form2, #time_spent_part2_form3").show();
 
         //set to "no" the question "Do you have a job or a worthy occupation?"
         //in Working Time section of Form Part 3
@@ -724,20 +720,18 @@ function driveToJob(flag){
         $("#drive_to_work_yes_form3").prop("checked", true);
 
         //Distance section - form part 3
-        $("#car_no_job_distance_form3").hide("slow", function(){
-            $("#car_to_job_distance_form3").show("slow");
-        });
-
+        $("#car_no_job_distance_form3").hide();
+        $("#car_to_job_distance_form3").show();
+        
         //set to "no" the question "Do you have a job or a worthy occupation?"
         //in Working Time section - Form Part 3
         working_time_toggle(true);
-        $("#working_time_part1_form3").hide("slow");
-        $("#working_time_part2_form3").show("slow");
+        $("#working_time_part1_form3").hide();
+        $("#working_time_part2_form3").show();
 
         //Time Spent in Driving - Form Part 3
-        $("#time_spent_part2_form3").fadeOut("slow", function(){
-            $("#time_spent_part1_form3").fadeIn("slow");
-        });
+        $("#time_spent_part2_form3").hide();
+        $("#time_spent_part1_form3").show();
 
     }
     //NO
@@ -746,29 +740,27 @@ function driveToJob(flag){
         $("#drive_to_work_no_form3").prop("checked", true);
 
         //Distance section - form part 3
-        $("#car_to_job_distance_form3").hide("slow", function(){
-            $("#car_no_job_distance_form3").show("slow");
-        });
+        $("#car_to_job_distance_form3").hide();
+        $("#car_no_job_distance_form3").show();
    
         //Working Time - Form Part 3
         working_time_toggle(true);
-        $("#working_time_part1_form3").show("slow");
-        $("#working_time_part2_form3").hide("slow");
+        $("#working_time_part1_form3").show();
+        $("#working_time_part2_form3").hide();
 
         //Time spent in driving section
-        $("#time_spent_part1_form3").fadeOut("slow", function(){
-            $("#time_spent_part2_form3").fadeIn("slow");
-        });
+        $("#time_spent_part1_form3").hide()
+        $("#time_spent_part2_form3").show();
     }
 }
 
 function tolls_daily(tollsDailyFlag) {
     if (tollsDailyFlag) {
-        $("#daily_tolls_false_div").slideUp("slow");
-        $("#daily_tolls_true_div").slideDown("slow");
+        $("#daily_tolls_false_div").hide();
+        $("#daily_tolls_true_div").show();
     } else {
-        $("#daily_tolls_false_div").slideDown("slow");
-        $("#daily_tolls_true_div").slideUp("slow");
+        $("#daily_tolls_false_div").show();
+        $("#daily_tolls_true_div").hide();
     }
 }
 
@@ -822,12 +814,12 @@ function working_time_toggle(value){
     if(value){
         //selects actively radio button to which this function is associated
         $("#working_time_yes_form3").prop("checked", true);
-        $("#working_time_input_form3").show("slow");
+        $("#working_time_input_form3").show();
     }
     else{
         //selects actively radio button to which this function is associated
         $("#working_time_no_form3").prop("checked", true);
-        $("#working_time_input_form3").hide("slow");
+        $("#working_time_input_form3").hide();
     }
 }
 
