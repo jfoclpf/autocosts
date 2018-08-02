@@ -142,7 +142,7 @@ function inputHandler($this){
     //console.log("inputHandler($this)");
     
     //if the number is invalid empty the input
-    if ($this.is('input[type="number"]') && !isNumber(parseInt($this.val(), 10))){
+    if ( $this.is('input[type="number"]') && !isNumber(parseFloat($this.val())) ){
         $this.val("");
     }
         
@@ -397,16 +397,22 @@ function numberInputStatus($this){
     var val, min, max;
     
     //A text input's value attribute will always return a string. 
-    //One needs to parseInt the value to get an integer
-    val = parseInt($this.val(), 10);
+    //One needs to parseFloat to convert string to float
+    val = parseFloat($this.val());
     //console.log(index + ": " + val);
 
     if(!isNumber(val)){
         return "wrong";
     }
     
-    min = parseInt($this.attr('min'), 10); 
-    max = parseInt($this.attr('max'), 10);            
+    if ($this.hasClass("input_integer")){
+        if(!isInteger(val)){
+            return "wrong";
+        }
+    }    
+    
+    min = parseFloat($this.attr('min')); 
+    max = parseFloat($this.attr('max'));            
     //console.log(min, max);
 
     if (isNumber(min) && isNumber(max)){
@@ -427,13 +433,7 @@ function numberInputStatus($this){
     else{
         console.error("Error in function numberInputStatus");
         return false;
-    }
-    
-    if ($this.hasClass("input_integer")){
-        if(!isInteger(val)){
-            return "wrong";
-        }
-    }    
+    }       
 
     return "valid";
 }
@@ -526,21 +526,29 @@ function inputErrorMsg($this, status){
         var min = $this.attr('min');
         var max = $this.attr('max');
         
+        var strEnterAValue;
+        if ($this.hasClass("input_integer")){
+            strEnterAValue = "Enter an integer value";
+        }
+        else{
+            strEnterAValue = "Enter value";
+        }
+        
         $this.after(function(){                        
             
             if(min && max){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value between " + min + " and " + max + 
+                       strEnterAValue + " " + "between " + min + " and " + max + 
                        "</div>";
             }
             else if(min){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value greater or equal to " + min + 
+                       strEnterAValue + " " + "greater or equal to " + min + 
                        "</div>";
             }
             else if(max){
                 return '<div class="error_msg" id="'+errId+'">' + 
-                       "Enter a value smaller or equal to " + max + 
+                       strEnterAValue + " " + "smaller or equal to " + max + 
                        "</div>";
             }
         });    
