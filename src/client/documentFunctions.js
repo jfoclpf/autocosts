@@ -6,18 +6,11 @@
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
 function loadExtraFiles() {
     
-    //loads second part of CSS files (not critical thus can be deferred)
-    loadStyleSheets(['css/merged-min/merged2.css']);
-    
-    getScriptOnce(JS_FILES.conversionFunctions);    
-    getScriptOnce(JS_FILES.getData);
-
     if (SWITCHES.print){
         getScriptOnce(JS_FILES.print);
     }
 
-    if (SWITCHES.charts){
-        
+    if (SWITCHES.charts){        
         getScriptOnce(JS_FILES.chartjs);
         
         getScriptOnce(JS_FILES.drawCostsCharts, function() {           

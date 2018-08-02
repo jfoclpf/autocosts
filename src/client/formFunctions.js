@@ -62,17 +62,14 @@ function buttonNextHandler($thisButton, callback){
                     }
 
                     //scrols the page to the corresponding div, considering the header
-                    scrollsPageTo($i, function(){
-                        updatesFieldsAndIcons($i);
-                    });
-
+                    scrollsPageTo($i);
+                    
+                    updatesFieldsAndIcons($i);
                     //returns to the callback the target .field_container, that is, $i
                     if(typeof callback === 'function'){
-                        (function(i){
-                            callback(i);
-                        }($i));
-                    }
-
+                        callback($i);
+                    } 
+                    
                     //breaks the .each loop
                     return false;
                 }
