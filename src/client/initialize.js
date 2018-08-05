@@ -452,11 +452,16 @@ function loadsStandardValues(){
         "std_time_home_job" : "time_home_job",
         "std_time_weekend" : "time_weekend",
         "std_time_in_driving" : "min_drive_per_day",
-        "std_days_month" : "days_drive_per_month"
+        "std_days_month" : "days_drive_per_month",
+        "std_time_month_per_year" : "time_month_per_year",
+        "std_time_hours_per_week" : "time_hours_per_week",
+        "std_dist_per_month"      : "dist_per_month"
     };
 
     $.each(mappingIDs, function(key, value){
-        $("#"+value).val(WORDS[key]);
+        if($("#"+value).length && WORDS[key] !== undefined){
+            $("#"+value).val(WORDS[key]);
+        }
     });
 }
 

@@ -88,8 +88,8 @@ module.exports = {
         return str.replace(/<(?:.|\n)*?>/gm, '');
     },
     
-    getFuelEfficiencyOptStr: function(optN){
-        switch(optN){
+    getFuelEfficiencyOptStr: function(){
+        switch(this.fuel_efficiency_std_option){
             case 1:
                 return "l/100km";            
             case 2:
@@ -107,7 +107,7 @@ module.exports = {
         }
     },
     
-    getDistanceOptStr: function(optN){
+    getDistanceOptStr: function(){
         switch(optN){
             case 1:
                 return "kilometres";            
@@ -120,8 +120,9 @@ module.exports = {
         }
     },
     
-    getDistanceOptStrShort: function(optN){
-        switch(optN){
+    getDistanceOptStrShort: function(){
+                        
+        switch(this.distance_std_option){
             case 1:
                 return "km";            
             case 2:
@@ -133,8 +134,8 @@ module.exports = {
         }
     },    
     
-    getFuelPriceVolumeOptStr: function(optN){
-        switch(optN){
+    getFuelPriceVolumeOptStr: function(){
+        switch(this.fuel_price_volume_std){
             case 1:
                 return "litres";            
             case 2:
@@ -165,7 +166,7 @@ module.exports = {
     },
     
     getStatsItem(serverData, CC, item){        
-        if(serverData.settings.switches.dataBase){        
+        if(serverData.settings.switches.dataBase && CC.toUpperCase() !== "XX"){        
             return serverData.statsData[CC][item];
         }
         else{

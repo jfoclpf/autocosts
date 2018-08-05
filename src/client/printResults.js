@@ -60,15 +60,31 @@ function Run2(callback){
     return true;
 }
 
-function printResults(f1, f2, f3, data){
-
-    $("#form").hide();    
-        
-    $("#results").show();    
+function printResults(f1, f2, f3, calculatedData){
+    //console.log(JSON.stringify(calculatedData, null, 4));
+    
+    $("#form").hide();
+    
+    //from complex object with hierarchies, flattens to simple object
+    //see: https://github.com/hughsk/flat
+    var flattenedData = flatten(calculatedData, {delimiter:"_"});    
+    //console.log(flattenedData);                
+    
+    var toFixedN, amount, numToShow;
+    $("#results").show(function(){
+        //scans all calculatedData and assigns each result value to respective HTML element
+        for (var key in flattenedData){
+            var $i = $("#results ." + key);  
+            if($i.length){
+                toFixedN = getToFixedNumFromClasses($i);
+                amount = flattenedData[key].toFixed(toFixedN);
+                numToShow = $i.hasClass("currency") ? currencyShow(amount) : amount;
+                $i.html(numToShow);
+            }
+        }
+    });    
     
 }
-
-
 
 //puts the currency symbol after the money value, for certain countries
 function currencyShow(value){
@@ -83,3 +99,68 @@ function currencyShow(value){
     }
 }
 
+//flatten object
+function flatten (target, opts) {
+    opts = opts || {};
+
+    var delimiter = opts.delimiter || '.';
+    var maxDepth = opts.maxDepth;
+    var output = {};
+
+    function step (object, prev, currentDepth) {
+        currentDepth = currentDepth || 1;
+        Object.keys(object).forEach(function (key) {
+            var value = object[key];
+            var isarray = opts.safe && Array.isArray(value);
+            var type = Object.prototype.toString.call(value);
+            var isbuffer = isBuffer(value);
+            var isobject = (type === '[object Object]' || type === '[object Array]');
+
+            var newKey = prev ? prev + delimiter + key : key;
+
+            if (!isarray && !isbuffer && isobject && Object.keys(value).length &&
+                (!opts.maxDepth || currentDepth < maxDepth)) {
+
+                return step(value, newKey, currentDepth + 1);
+            }
+
+            output[newKey] = value;
+        });
+    }
+    
+    function isBuffer (obj) {
+        return obj != null && obj.constructor != null &&
+               typeof obj.constructor.isBuffer === 'function' && 
+               obj.constructor.isBuffer(obj);
+    }    
+
+    step(target);
+
+    return output;
+}
+
+//get from element with class in the set of toFixed0, toFixed1, toFixed2, etc.
+//respectively the integers 0, 1, 2, etc.  
+function getToFixedNumFromClasses($this){        
+    
+    if(!$this.length){
+        return 0;
+    }
+    
+    var toFixedN;
+    
+    //gets all classes from $fieldHead 
+    var classList = $this.attr('class').split(/\s+/);
+    $.each(classList, function(index, item) {
+        //if there is a class which contains the string "field"?
+        if (item.indexOf("toFixed") >= 0) {
+            toFixedN = item;
+        }
+    });
+    
+    if(!toFixedN){
+        return 0; //default
+    }
+
+    return parseInt(toFixedN.replace("toFixed", ""), 10);
+}
