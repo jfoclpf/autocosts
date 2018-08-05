@@ -1,5 +1,6 @@
 // get from form
 function get_form_part1(){
+    
     var d = document.costs_form; //main form document variable
     var data = {
         //depreciation
@@ -22,10 +23,12 @@ function get_form_part1(){
         //car tax
         car_tax:                d.roadTaxes.value
     };
+    
     return data;
 }
 
 function get_form_part2(){
+    
     var d = document.costs_form; //main form document variable
     var data = {
         //fuel
@@ -60,17 +63,21 @@ function get_form_part2(){
         washing:                d.washing_value.value,
         washing_select:         d.washing_period_select.value
     };
+    
     return data;
 }
 
 function get_form_part3(){
+    
     var d = document.costs_form; //main form document variable
     var data = {
         //public transports section        
+        IsAlternativeToCarCosts:     isPublicTransportsAlternativeOk(),
         n_pess_familia:              d.pessoas_agregado.value,
         monthly_pass_cost:           d.preco_passe.value,
 
         //financial effort section        
+        IsFinancialEffort:           isFinancialEffortOk(),
         income_type:                 getCheckedValue(d.radio_income),
         income_per_year:             d.income_per_year.value,
         income_per_month:            d.income_per_month.value,
@@ -98,11 +105,13 @@ function get_form_part3(){
         min_drive_per_day:           d.min_drive_per_day.value,
         days_drive_per_month:        d.days_drive_per_month.value
     };
+    
     return data;
 }
 
 //get from database
 function get_DB_part1(datab){
+    
     var data = {
         //depreciation
         acquisitionMonth:      datab.acquisition_month,
@@ -124,6 +133,7 @@ function get_DB_part1(datab){
         //car tax
         car_tax:               datab.vehicle_excise_tax
     };
+    
     return data;
 }
 
@@ -164,18 +174,20 @@ function get_DB_part2(datab){
         washing:                datab.washing_value,
         washing_select:         datab.washing_periodicity
     };
+    
     return data;
 }
 
 function get_DB_part3(datab){
+    
     var data = {
         //public transports section
-        IsAlternativeToCarCosts:          false,
+        IsAlternativeToCarCosts:     undefined,
         n_pess_familia:              datab.household_number_people,
         monthly_pass_cost:           datab.public_transportation_month_expense,
 
         //financial effort section
-        IsFinancialEffort:           false,
+        IsFinancialEffort:           undefined,
         income_type:                 datab.income_type,
         income_per_year:             datab.income_per_year,
         income_per_month:            datab.income_per_month,
@@ -205,7 +217,7 @@ function get_DB_part3(datab){
     };
 
     data.IsAlternativeToCarCosts = isThereinDbAlternativeToCarCostsData(data);
-    data.IsFinancialEffort = isThereinDbFinEffortData(data);
+    data.IsFinancialEffort       = isThereinDbFinEffortData(data);
 
     return data;
 }
@@ -228,4 +240,7 @@ function isThereinDbFinEffortData(f3){
         case 'hour':
             return (isDef(f3.income_per_hour) && isDef(f3.income_hours_per_week) && isDef(f3.income_hour_weeks_per_year));
     }
+    
+    console.error("income_type is wrong: " + f3.income_type);
+    return false;
 }

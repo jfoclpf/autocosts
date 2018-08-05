@@ -71,7 +71,7 @@ function loadPageSettings(){
     $("#form, #results").hide();
     $(".sidebar").show();
     
-    //button shown right from the beginning, on the landing page
+    //button shown on the landing page
     $("#calculateButton").on("click", function(){
         $("#hero, footer").hide();
         $("#form").show();
@@ -101,8 +101,7 @@ function loadPageSettings(){
         var action = $this.attr("data-action");
         var side = $this.attr("data-side");
         
-        if (action === "open"){
-            console.log(side);
+        if (action === "open"){            
             $(".sidebar." + side).trigger("sidebar:" + action);
             $(".sidebar." + side).animate({backgroundColor: "rgb(0, 0, 0, 0.4)" });
         }
