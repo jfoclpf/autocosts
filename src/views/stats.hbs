@@ -67,16 +67,16 @@
                     <td class="tdRight">{{toFixed value.Fines 0}}</td>
                     <td class="tdRight right2px">{{toFixed value.Washing 0}}</td>
                     <td class="tdRight">
-                        {{toFixed value.running_costs_dist 2}}/{{{getDistanceOptStrShort value.distance_std_option}}}
+                        {{toFixed value.running_costs_dist 2}}/{{{getDistanceOptStrShort}}}
                     </td>
                     <td class="tdRight right2px">
-                        {{toFixed value.total_costs_dist 2}}/{{{getDistanceOptStrShort value.distance_std_option}}}
+                        {{toFixed value.total_costs_dist 2}}/{{{getDistanceOptStrShort}}}
                     </td>
                     <td class="tdRight">
-                        {{toFixed value.kinetic_speed 0}}{{{getDistanceOptStrShort value.distance_std_option}}}/h
+                        {{toFixed value.kinetic_speed 0}}{{{getDistanceOptStrShort}}}/h
                     </td>
                     <td class="tdRight right2px">
-                        {{toFixed value.virtual_speed 0}}{{{getDistanceOptStrShort value.distance_std_option}}}/h
+                        {{toFixed value.virtual_speed 0}}{{{getDistanceOptStrShort}}}/h
                     </td>
                     <td class="tdRight">
                         <a href="{{{../serverData.directories.client.tables}}}/{{value.country}}.jpg" target="_blank">

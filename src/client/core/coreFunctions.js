@@ -312,7 +312,9 @@ function calculate_costs(f1, f2, f3, country){
     monthly_costs.insurance = calculateInsuranceMonthlyValue(f1.insurance_type, f1.insurance_value);
 
     //credit
-    var credit_object = calculateInterestsMonthlyValue(f1.cred_auto_s_n, f1.credit_amount, f1.credit_period, f1.credit_value_p_month, f1.credit_residual_value, age_months);
+    var credit_object = calculateInterestsMonthlyValue(f1.cred_auto_s_n, f1.credit_amount, f1.credit_period,
+                                                       f1.credit_value_p_month, f1.credit_residual_value, age_months);
+    
     monthly_costs.credit = credit_object.monthly_costs;
 
     //inspection
@@ -349,7 +351,8 @@ function calculate_costs(f1, f2, f3, country){
     monthly_costs.parking = calculateMonthlyParking(f2.parking);
 
     //tolls
-    monthly_costs.tolls = calculateMonthlyTolls(f2.type_calc_tolls, f2.tolls_select, f2.tolls, f2.price_tolls_p_day, f2.tolls_days_p_month);
+    monthly_costs.tolls = calculateMonthlyTolls(f2.type_calc_tolls, f2.tolls_select, 
+                                                f2.tolls, f2.price_tolls_p_day, f2.tolls_days_p_month);
 
     //fines
     monthly_costs.fines = calculateMonthlyFines(f2.fines_select, f2.fines);
@@ -359,17 +362,18 @@ function calculate_costs(f1, f2, f3, country){
 
     //total standing costs
     var total_standing_costs_month = monthly_costs.insurance + monthly_costs.depreciation + monthly_costs.credit +
-            monthly_costs.inspection + 0.5 * monthly_costs.maintenance + monthly_costs.car_tax;
+                                     monthly_costs.inspection + 0.5 * monthly_costs.maintenance + monthly_costs.car_tax;
 
     //total running costs
-    var total_running_costs_month = monthly_costs.fuel + 0.5 * monthly_costs.maintenance + monthly_costs.repairs_improv + monthly_costs.parking +
-            monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
+    var total_running_costs_month = monthly_costs.fuel + 0.5 * monthly_costs.maintenance + 
+                                    monthly_costs.repairs_improv + monthly_costs.parking +
+                                    monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
 
     //totals
     var total_costs_month = monthly_costs.insurance + monthly_costs.fuel + monthly_costs.depreciation +
-                    monthly_costs.credit + monthly_costs.inspection + monthly_costs.maintenance +
-                    monthly_costs.repairs_improv + monthly_costs.car_tax + monthly_costs.parking +
-                    monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
+                            monthly_costs.credit + monthly_costs.inspection + monthly_costs.maintenance +
+                            monthly_costs.repairs_improv + monthly_costs.car_tax + monthly_costs.parking +
+                            monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
 
     var total_costs_year = total_costs_month * 12;
 
@@ -382,14 +386,26 @@ function calculate_costs(f1, f2, f3, country){
         //i.e., how much of public transports could be used with the same amount
         //of money that the user spends totally with automobile
         public_transports = {
-            ptcosts_carcosts_ratio_threshold: 0.9,     //ratio (total price of public transports)/(total price of car) under which it shows the alternatives of public transports
-            other_pt_ratio_threshold: 0.6,             //ratio of costs ptcosts/carcosts under which shows other alternatives with further public transports (intercity trains for example)
-            taxi_price_per_km: country.taxi_price, //average price of taxi per unit distance
+            
+            //ratio (total price of public transports)/(total price of car) 
+            //under which it shows the alternatives of public transports
+            ptcosts_carcosts_ratio_threshold: 0.9,  
+            
+            //ratio of costs ptcosts/carcosts under which shows other alternatives 
+            //with further public transports (intercity trains for example)
+            other_pt_ratio_threshold: 0.6,
+            
+            //average price of taxi per unit distance
+            taxi_price_per_km: country.taxi_price, 
 
             //boolean function that says if public transporst alternatives are shown
             display_pt: function(){
-                if((f3.monthly_pass_cost*f3.n_pess_familia<this.ptcosts_carcosts_ratio_threshold*total_costs_month) && f3.monthly_pass_cost != 0)
+                if((f3.monthly_pass_cost * f3.n_pess_familia < this.ptcosts_carcosts_ratio_threshold * total_costs_month) &&
+                    f3.monthly_pass_cost != 0){
+                    
                     return true;
+                }
+                
                 return false;
             },
 
@@ -401,25 +417,33 @@ function calculate_costs(f1, f2, f3, country){
             display_other_pt: false,   //boolean for further alternative public transports
             other_pt: 0                //amount of costs set to such alternatives
         };
+        
         var percent_taxi= 0.2;//in case above condition is met, the budget percentage alocated to taxi, as alternative to car
         if(public_transports.display_pt()) {
 
-            public_transports.total_price_pt = f3.monthly_pass_cost * f3.n_pess_familia;   //total price of monthly passes
+            //total price of monthly passes
+            public_transports.total_price_pt = f3.monthly_pass_cost * f3.n_pess_familia;   
+            
             public_transports.total_altern = public_transports.total_price_pt;
             public_transports.pt_carcost_ratio= public_transports.total_price_pt / total_costs_month;
 
             //in case other public transports are not shown
             if(public_transports.pt_carcost_ratio > public_transports.other_pt_ratio_threshold){
+                
                 public_transports.display_other_pt = false;
                 public_transports.taxi_cost = total_costs_month - public_transports.total_price_pt;
-                public_transports.km_by_taxi = public_transports.taxi_cost / public_transports.taxi_price_per_km;  //número de km possíveis de fazer de táxi
+                
+                //number of possible km/miles/distance done by taxi
+                public_transports.km_by_taxi = public_transports.taxi_cost / public_transports.taxi_price_per_km;
                 public_transports.total_altern += public_transports.taxi_cost;
             }
             else{
                 public_transports.display_other_pt = true;
                 public_transports.taxi_cost = total_costs_month * (1 - public_transports.pt_carcost_ratio) / 2;
                 public_transports.km_by_taxi = public_transports.taxi_cost / public_transports.taxi_price_per_km;
-                public_transports.other_pt = total_costs_month * (1 - public_transports.pt_carcost_ratio) / 2;    //valor alocado a outros TP, excetuando passe mensal
+                
+                //amount allocated to other Public Transports, besides monthly pass
+                public_transports.other_pt = total_costs_month * (1 - public_transports.pt_carcost_ratio) / 2;
 
                 public_transports.total_altern += public_transports.taxi_cost + public_transports.other_pt;
             }
@@ -481,11 +505,13 @@ function calculate_costs(f1, f2, f3, country){
                 fin_effort.time_month_per_year = f3.time_month_per_year;
             }
 
-            fin_effort.aver_work_time_per_m = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12 / 12;
+            fin_effort.aver_work_time_per_m = 365.25 / 7 * fin_effort.time_hours_per_week *
+                fin_effort.time_month_per_year / 12 / 12;
+            
             fin_effort.work_hours_per_y = 365.25 / 7 * fin_effort.time_hours_per_week * fin_effort.time_month_per_year / 12;
         }
 
-        //****find Net Income per Hour
+        //****find Net Income per Hour ***
         var typeIncome = f3.income_type;
         //alert("typeIncome:"+typeIncome);
         var isJob = f3.is_working_time;
@@ -548,7 +574,8 @@ function calculate_costs(f1, f2, f3, country){
                 driving_distance.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
                 driving_distance.dist_home_job =  parseInt(f3.dist_home_job);
                 driving_distance.journey_weekend = parseInt(f3.journey_weekend);
-                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week * driving_distance.dist_home_job + driving_distance.journey_weekend;
+                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week *
+                    driving_distance.dist_home_job + driving_distance.journey_weekend;
 
                 distance_per_month = 365.25 / 7 * driving_distance.aver_drive_per_week / 12;
                 driving_distance.drive_per_year = 365.25 / 7 * driving_distance.aver_drive_per_week;
@@ -582,7 +609,8 @@ function calculate_costs(f1, f2, f3, country){
                 driving_distance.drive_to_work_days_per_week = f2.days_p_week;
                 driving_distance.dist_home_job = parseInt(f2.distance_home2job);
                 driving_distance.journey_weekend = parseInt(f2.distance_weekend);
-                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week * driving_distance.dist_home_job + driving_distance.journey_weekend;
+                driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week *
+                    driving_distance.dist_home_job + driving_distance.journey_weekend;
             }
             driving_distance.drive_per_year = distance_per_month * 12;
         }
@@ -601,13 +629,15 @@ function calculate_costs(f1, f2, f3, country){
         if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
             time_spent_driving.time_home_job = parseInt(f3.time_home_job);
             time_spent_driving.time_weekend = parseInt(f3.time_weekend);
-            time_spent_driving.min_drive_per_week = 2 * time_spent_driving.time_home_job * driving_distance.drive_to_work_days_per_week + time_spent_driving.time_weekend;
+            time_spent_driving.min_drive_per_week = 2 * time_spent_driving.time_home_job *
+                driving_distance.drive_to_work_days_per_week + time_spent_driving.time_weekend;
             time_spent_driving.hours_drive_per_month = 365.25 / 7 / 12 * time_spent_driving.min_drive_per_week / 60;
         }
         else{
             time_spent_driving.min_drive_per_day = parseInt(f3.min_drive_per_day);
             time_spent_driving.days_drive_per_month = parseInt(f3.days_drive_per_month);
-            time_spent_driving.hours_drive_per_month = time_spent_driving.min_drive_per_day * time_spent_driving.days_drive_per_month / 60;
+            time_spent_driving.hours_drive_per_month = time_spent_driving.min_drive_per_day *
+                time_spent_driving.days_drive_per_month / 60;
         }
 
         time_spent_driving.hours_drive_per_year = time_spent_driving.hours_drive_per_month * 12;
@@ -616,7 +646,8 @@ function calculate_costs(f1, f2, f3, country){
 
         //Virtual/Consumer Speed calculated if info of Financial Effort is available
         if (f3.IsFinancialEffort){
-            virtual_speed = driving_distance.drive_per_year / (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
+            virtual_speed = driving_distance.drive_per_year /
+                (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
         }
 
     }//EOF Driving distance and Time spent in driving
@@ -642,10 +673,14 @@ function calculate_costs(f1, f2, f3, country){
         fatalities: 0.03,     //traffic fatalities in €/km
         congestion: 0.1,      //congestion in €/km
         infrastr: 0.001,      //infrastructures in €/km
-        total_exter: function(){
-            return (this.polution + this.ghg + this.noise + this.fatalities + this.congestion + this.infrastr) * distance_per_month;
+        total_exter: function() {
+            return (this.polution + this.ghg + this.noise + 
+                    this.fatalities + this.congestion + this.infrastr) * 
+                    distance_per_month;
         },
-        total_costs: function(){ return this.total_exter(); }
+        total_costs: function() { 
+            return this.total_exter(); 
+        }
     };
 
     //object to be returned by the function
