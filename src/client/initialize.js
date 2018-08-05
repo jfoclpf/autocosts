@@ -189,7 +189,7 @@ function loadFormSettings(){
         }
     });    
     
-    $(".cta_bottom_bar").hide();
+    $(".calculate_bottom_bar").hide();
     
     $("#main_form select").val('1'); //set all the selects to "month"
 
