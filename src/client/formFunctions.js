@@ -8,11 +8,11 @@
 
 //USER INTERFACE FUNCTIONS
 
-//When button "Next" is clicked, this function is called; $thisButton males reference to the button itself
+//When button "Next" is clicked, this function is called; var $thisButton makes reference to the "Next" button itself
 //It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
 //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
 //Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "fully_hidden"
-//since all items are hidden initially when the form is loaded (except the 1st item), and as such it breaks herein.
+//since all items are hidden initially when the form is loaded (except the 1st item), and as such the loop breaks herein.
 //But since "Credit" cost item by default has radio button set at NO, this "Credit" field_container doesn't show any
 //'input[type="number"]' and thus after showing this field_container, fieldStatus returns "no_inputs", and as such
 //we show the "Next" button, since when the user sets radio button to NO in "Credit", that is OK, but it shows no inputs
@@ -45,17 +45,17 @@ function buttonNextHandler($thisButton, callback){
         else if ($i.hasClass("field_container")){            
             
             //It scrolls down the page till it finds a field_container 
-            //which is not fully_valid and having some available inputs
-            if(fieldStatus($i) !== "fully_valid" && fieldStatus($i) !== "no_inputs"){                
+            //which does have some inputs and, in this condition, it is not fully_valid
+            if(fieldStatus($i) !== "no_inputs" && fieldStatus($i) !== "fully_valid"){                
                 
                 //we make sure the cost_item/field_container main div is now visible
                 $i.stop(true).show();
                 
-                //now we're sure that, even after showing the field, it is not hidden, since a field
-                //may have the content hidden, due to user form settings
+                //now we're sure that, even after showing the field, the content is not hidden, 
+                //since a field may have the content hidden, due to user form settings
                 if(fieldStatus($i) !== "hidden"){
                 
-                    //by showing now the field_container, if it has no inputs show next button
+                    //by ensuring now the field_container is visible, if it has no inputs show next button
                     //for example "Credit" field container
                     if(fieldStatus($i) === "no_inputs"){
                         $i.find(".next").stop(true).show(); //shows "next" button                    
@@ -65,6 +65,7 @@ function buttonNextHandler($thisButton, callback){
                     scrollsPageTo($i);
                     
                     updatesFieldsAndIcons($i);
+                    
                     //returns to the callback the target .field_container, that is, $i
                     if(typeof callback === 'function'){
                         callback($i);
@@ -222,32 +223,6 @@ $(".field_container").on("click", function(){
     }    
 });
 
-//when the form is fully filled and ready to calculate
-function isReadyToCalc(){
-        
-    var status, isOk = true;
-    
-    $(".form_part").find(".field_container").each(function(index, item){
-        status = fieldStatus($(this)); 
-        if (status !== "hidden" && status !== "no_inputs"){
-            if(status !== "fully_valid"){
-                isOk = false;
-                return false;
-            }
-        }
-    });
-    
-    if(!isOk){
-        return false;
-    }
-    
-    //double-check with validating functions from file validateForm.js                                                      
-    if (!isUserDataFormOk()){
-        return false;
-    }    
-    
-    return true;
-}
 
 //fades out or fades in all visible fields, except itself, according to validity 
 //also updates icon list on the left panel
@@ -613,6 +588,49 @@ function scrollsPageTo($this, callback=(function(){return;})){
     else{
         console.error("Error on scrollsPageTo(), invalid index: " + fieldN);
     }
+}
+
+/*************************************************************************************************************************/
+/*************************************************************************************************************************/
+
+/*************************************************************************************************************************/
+/*************************************************************************************************************************/
+
+
+//When the form is filled and the calculator is already ready to calculate car costs
+//The form is ready to be calculated when Standing Costs and Running Costs are filled
+//The Extra data is optional
+function isReadyToCalc(){
+        
+    var status, fieldN, isOk = true;
+    
+    $(".form_part").find(".field_container").each(function(index, item){
+        
+        fieldN = getFieldNum($(this), true);        
+        
+        //fields 1 to 12 refer to Standing and Running Costs
+        if (fieldN >=0 && fieldN <=12){
+            status = fieldStatus($(this));         
+            if (status !== "hidden" && status !== "no_inputs"){
+                if(status !== "fully_valid"){
+                    isOk = false;
+                    return false;
+                }
+            }
+        }        
+    });
+    
+    if(!isOk){
+        return false;
+    }
+    
+    //double-check with validating functions from file validateForm.js 
+    //Standing (part1) and Running (part2) Costs
+    if (!is_userdata_formpart1_ok() || !is_userdata_formpart2_ok()){
+        return false;
+    }    
+    
+    return true;
 }
 
 /*************************************************************************************************************************/

@@ -95,30 +95,79 @@ function is_userdata_formpart2_ok(){
 function is_userdata_formpart3_ok(){
     
     if (!isPublicTransportOk()){
-        console.error("PublicTransport not Ok");
+        console.warn("PublicTransport not Ok");
         return false;
     }
 
     if (!isIncomeOk()){
-        console.error("Income not Ok");
+        console.warn("Income not Ok");
         return false;
     }
 
     if (!isWorkingTimeOk()){
-        console.error("WorkingTime not Ok");
+        console.warn("WorkingTime not Ok");
         return false;
     }
 
     if (!isDistanceOk()){
-        console.error("Distance not Ok");
+        console.warn("Distance not Ok");
         return false;
     }
 
     if (!isTimeSpentInDrivingOk()){
-        console.error("TimeSpentInDriving not Ok");
+        console.warn("TimeSpentInDriving not Ok");
         return false;
     }
     
+    return true;
+}
+
+//the form part 3 is optional and when this function is OK, 
+//the calculator can present results for public transports
+function isPublicTransportsAlternativeOk(){
+
+    if (!isPublicTransportOk()){
+        console.warn("PublicTransport not Ok => isPublicTransportsAlternativeOk() returns false");
+        return false;
+    }
+    
+    if (!isDistanceOk()){
+        console.warn("Distance not Ok => isPublicTransportsAlternativeOk() returns false");
+        return false;
+    }
+    
+    if (!isTimeSpentInDrivingOk()){
+        console.warn("TimeSpentInDriving not Ok => isPublicTransportsAlternativeOk() returns false");
+        return false;
+    }
+    
+    return true;
+}
+
+//the form part 3 is optional and when this function is OK, 
+//the calculator can present results for financial effort
+function isFinancialEffortOk(){
+
+    if (!isIncomeOk()){
+        console.warn("Income not Ok => isFinancialEffortOk() returns false");
+        return false;
+    }
+
+    if (!isWorkingTimeOk()){
+        console.warn("WorkingTime not Ok => isFinancialEffortOk() returns false");
+        return false;
+    }
+    
+    if (!isDistanceOk()){
+        console.warn("Distance not Ok => isFinancialEffortOk() returns false");
+        return false;
+    }
+    
+    if (!isTimeSpentInDrivingOk()){
+        console.warn("TimeSpentInDriving not Ok => isFinancialEffortOk() returns false");
+        return false;
+    }
+        
     return true;
 }
 
@@ -239,7 +288,6 @@ function isTaxesOk(){
 }
 
 
-
 /* *** CHECK FORM PART 2 ***** */
 /*check if data from form 2 (running costs) is correctly filled*/
 
@@ -248,57 +296,58 @@ function isFuelOk(){
     var f = document.costs_form; /*form*/
 
     /*fuel*/
-    var tipo_calc_combustiveis=getCheckedValue(f.calc_combustiveis);
+    var fuelCalculationType = getCheckedValue(f.calc_combustiveis);
 
-    if(tipo_calc_combustiveis == ""){
+    if(fuelCalculationType == ""){
         return false;
     }
 
-    switch(tipo_calc_combustiveis)
-    {
-    case "km": /*fuel calculations made considering distance travelled by month*/
+    switch(fuelCalculationType) {
+            
+        case "km": /*fuel calculations made considering distance travelled by month*/
 
-        if(!isNumber(f.consumo_auto.value)){
-            return false;
-        }
-        if(!isNumber(f.fuel_price.value)){
-            return false;
-        }
-
-        leva_auto_job=getCheckedValue(f.car_job_form2);
-
-        if(leva_auto_job == ""){
-            return false;
-        }
-
-        if (leva_auto_job=="false"){
-
-            if(!isNumber(f.km_por_mes.value)){
+            if(!isNumber(f.consumo_auto.value)){
+                return false;
+            }
+            if(!isNumber(f.fuel_price.value)){
                 return false;
             }
 
-        }
-        else{/*make calculation considering the user takes his car to work on a daily basis*/
+            var leva_auto_job = getCheckedValue(f.car_job_form2);
 
-            if(!isNumber(f.dias_por_semana.value) || (f.dias_por_semana.value)>7){
-                return false;
-            }
-            if(!isNumber(f.km_entre_casa_trabalho.value)){
-                return false;
-            }
-            if(!isNumber(f.km_fds.value)){
+            if (leva_auto_job == ""){
                 return false;
             }
 
-        }
-        break;
+            if (leva_auto_job == "false"){
 
-    case "euros":/*fuel costs based on data input money per period of time*/
+                if(!isNumber(f.km_por_mes.value)){
+                    return false;
+                }
+            }
+            /*make calculation considering the user takes his car to work on a daily basis*/
+            else {
 
-        if(!isNumber(f.combustiveis_euro.value)){
-            return false;
-        }
-        break;
+                if(!isNumber(f.dias_por_semana.value) || (f.dias_por_semana.value)>7){
+                    return false;
+                }
+                if(!isNumber(f.km_entre_casa_trabalho.value)){
+                    return false;
+                }
+                if(!isNumber(f.km_fds.value)){
+                    return false;
+                }
+
+            }
+            
+            break;
+
+        case "euros":/*fuel costs based on data input money per period of time*/
+
+            if(!isNumber(f.combustiveis_euro.value)){
+                return false;
+            }
+            break;
     }
     
     return true;
