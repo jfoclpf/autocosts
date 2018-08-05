@@ -197,7 +197,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul li > ul > li.wrong:before { background-color: #ef474c; width: 14px; height: 14px; margin: 4px 0 0 10px; border: 1px solid red; }
 
 /* ---------- Bottom bar ---------- */
-.cta_bottom_bar {
+.calculate_bottom_bar {
 	-webkit-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
 	-moz-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
 	box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
@@ -209,7 +209,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
     left: 0;
     z-index: 999;
 }
-.cta_bottom_bar a {display: inline-block; margin-top: 10px}
+.calculate_bottom_bar a {display: inline-block; margin-top: 10px}
 
 
 
