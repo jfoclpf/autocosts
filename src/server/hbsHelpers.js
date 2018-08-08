@@ -25,10 +25,10 @@ module.exports = {
     
     //function that adpats the title for lower case 
     //having only uppercase on the firt letters of the words bigger than 4 characters
-    adaptTitle: function(Title){ 
+    getAdaptedTitle: function(){ 
 
         //lower case all string
-        var title = Title.toLowerCase();
+        var title = this.words.web_page_title.toLowerCase();
         //get an array of words stripped by space
         var words = title.split(" ");
         //if a word has a size bigger than 4, uppercase first letter            
@@ -43,18 +43,19 @@ module.exports = {
     },  
     
     //get first sentence of string, with HTML tags stripped out
-    metaDescription: function(string){            
+    getMetaDescription: function(){
+        var string = this.words.initial_text;
         return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');
     },
     
     //function that gets a string of main/key words from title
     //Ex: "calculadora dos custos do automóvel" returns "calculadora, custos, automóvel"
-    getKeywords: function(title, str1, str2){
-
+    getKeywords: function(){
+        
         //lower case all strings
-        var localTitle = title.toLowerCase();
-        var localStr1 = str1.toLowerCase();
-        var localStr2 = str2.toLowerCase();
+        var localTitle = this.words.web_page_title.toLowerCase();
+        var localStr1  = this.words.fixed_costs.toLowerCase();
+        var localStr2  = this.words.running_costs.toLowerCase();
 
         //get an array of words stripped by space
         var words = localTitle.split(" ");

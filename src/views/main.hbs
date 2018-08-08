@@ -4,17 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0' >
-        
+    
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Auto Costs" />
-    <meta property="og:description" content="" />
-    <meta property="og:url" content="http://" />
-    <meta property="og:site_name" content="Auto Costs" />
+    <meta property="og:title" content="{{{ getAdaptedTitle }}}" />
+    <meta property="og:description" content="{{{ getMetaDescription }}}" />
+    <meta property="og:url" content="https://autocosts.info" />
+    <meta property="og:site_name" content="{{{ getAdaptedTitle }}}" />
     <meta property="og:image" content="" />
     <meta property="og:image:secure_url" content="" />
     <meta property="og:locale" content="en_US" />
     
-    <title>{{{words.web_page_title}}}</title>    
+    <title>{{{ getAdaptedTitle }}}</title>
+
+    <!--gets the first sentence of variable $INITIAL_TEXT-->
+    <meta name="description" content="{{{ getMetaDescription }}}" />
+    <meta name="keywords" content="{{{ getKeywords }}}" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Autocosts Org" />
+    <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
     
     <link href="css/fonts/fonts.css" rel="stylesheet" />    
     <link href="favicon.png" rel="shortcut icon" type="image/png" />
