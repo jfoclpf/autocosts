@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
-    getScriptOnce(JS_FILES.documentFunctions, function(){
+    getScriptOnce(JS_FILES.pageFunctions, function(){
         getScriptOnce(JS_FILES.formFunctions, function(){
             setLanguageVars();
             loadPageSettings();    
@@ -470,29 +470,4 @@ function loadsStandardValues(){
     });
 }
 
-/**
- * Determine the mobile operating system.
- * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
- *
- * @returns {String}
- */
-function getMobileOperatingSystem() {
-  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-      // Windows Phone must come first because its UA also contains "Android"
-    if (/windows phone/i.test(userAgent)) {
-        return "Windows Phone";
-    }
-
-    if (/android/i.test(userAgent)) {
-        return "Android";
-    }
-
-    // iOS detection from: http://stackoverflow.com/a/9039885/177710
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return "iOS";
-    }
-
-    return "unknown";
-}
 

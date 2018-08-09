@@ -82,7 +82,7 @@ var Run1, Print, generatePDF, TimeCounter;
         },
 
         initialize :          rootClientURL + "initialize.js",
-        documentFunctions :   rootClientURL + "documentFunctions.js",
+        pageFunctions :       rootClientURL + "pageFunctions.js",
         formFunctions :       rootClientURL + "formFunctions.js",
         validateForm :        rootClientURL + "validateForm.js",    
         g_recaptcha :         rootClientURL + "g-recaptcha.js",
