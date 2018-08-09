@@ -1,8 +1,10 @@
-/************* DOCUMENT JS FUNCTIONS ******************/
-/*====================================================*/
-/*         Functions which work on the page           */
+/******************* DOCUMENT JS FUNCTIONS *******************/
+/*===========================================================*/
+/*    General functions which are used overall on the page   */
+/*************************************************************/
 
-/*function that loads extra files and features, that are not loaded imediately after the page is opened
+
+/*function that loads extra files and features, that are not loaded immediately after the page is opened
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
 function loadExtraFiles() {
     
@@ -195,10 +197,34 @@ function resizeSelectToContent(jqueryId){
     $this.width(width + arrowWidth);    
 }
 
+//rounds a number
 function round(number, precision) {
   var shift = function (number, precision) {
     var numArray = ("" + number).split("e");
     return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
   };
   return shift(Math.round(shift(number, +precision)), -precision);
+}
+
+/* Determine the mobile operating system.
+ * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+ * @returns {String} */
+function getMobileOperatingSystem() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Windows Phone must come first because its UA also contains "Android"
+    if (/windows phone/i.test(userAgent)) {
+        return "Windows Phone";
+    }
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
 }
