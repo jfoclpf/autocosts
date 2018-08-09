@@ -35,7 +35,8 @@ var SWITCHES,               //GLOBAL switches Object
     UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX 
     CALCULATED,             //calculated meta-data after user clicks "Run"
     DISPLAY,                //Object regarding the display of information               
-    SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available
+    SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available,
+    UUID,                   //Unique User Identifier
     NONCE;                  //Number used only once for CSP rules in scrips
 
 //Global Function variables for function expressions

@@ -9,7 +9,7 @@ function submit_data() {
     objectToDb.time_to_fill_form = TimeCounter.getCurrentTimeInSeconds();
     
     //get a user unique generated ID
-    objectToDb.client_uuid = uuid;
+    objectToDb.client_uuid = UUID;
 
     objectToDb.country = COUNTRY; //Country is a global variable
 

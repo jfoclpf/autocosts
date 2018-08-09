@@ -1,11 +1,12 @@
 $(document).ready(function () {
     
-    //detects old versions of Internet Explorer
-    oldIE();
-
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
     getScriptOnce(JS_FILES.pageFunctions, function(){
+        
+        //detects old versions of Internet Explorer
+        oldIE();
+        
         getScriptOnce(JS_FILES.formFunctions, function(){
             setLanguageVars();
             loadPageSettings();    
@@ -13,23 +14,23 @@ $(document).ready(function () {
             loadFormHandlers();
             loadsStandardValues();
         });
+        
+        /*Google Analytics*/
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {        
+            getScriptOnce(JS_FILES.Google.analytics, function(){
+                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();                                
+                //change according to your site
+                ga('create', GA_TRACKING_ID, 'auto');
+                ga('set', 'displayFeaturesTask', null);
+                ga('send', 'pageview');        
+
+                //detects whether Google Analytics has loaded
+                //tries every second
+                check_ga(1000);
+            });                
+        }        
     });
 
-    /*Google Analytics*/
-    if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {        
-        getScriptOnce(JS_FILES.Google.analytics, function(){
-            window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();                                
-            //change according to your site
-            ga('create', GA_TRACKING_ID, 'auto');
-            ga('set', 'displayFeaturesTask', null);
-            ga('send', 'pageview');        
-        
-            //detects whether Google Analytics has loaded
-            //tries every second
-            check_ga(1000);
-        });                
-    }
-    
     //Google recaptcha
     IS_HUMAN_CONFIRMED = false;    
     
@@ -128,30 +129,11 @@ function loadPageSettings(){
             });
         }
     });
-        
+    
+    //adjusts the size of select according to content
     resizeSelectToContent("#country_select");   
     
-    //Load statistics table on sidebars.hbs
-    var updateStatsTable = function (cc){                
-        for (var key in STATS[cc]){
-            var elementClass = "stats_table-"+key; //see sidebars.hbs
-            if($("." + elementClass).length){//element exists
-                var $el = $("." + elementClass);
-                var value = STATS[cc][key];
-                var currSymb = STATS[cc].curr_symbol; 
-                if(key == "running_costs_dist" || key == "total_costs_dist"){
-                    $el.text(currSymb + round(value, 2) + "/" + getDistanceOptStrShort());
-                }
-                else if (key == "kinetic_speed" || key == "virtual_speed"){
-                    $el.text(round(value, 0) + getDistanceOptStrShort() + "/h");
-                }
-                else{
-                    $el.text(currSymb + " " + round(value, 0));
-                }
-            }   
-        }    
-    };
-    
+    //load statistics table on sidebars.hbs    
     updateStatsTable(COUNTRY);
     
     $("#country_select_stats").on('change', function() {
@@ -166,7 +148,7 @@ function loadFormSettings(){
     
     //shows numeric keypad on iOS mobile devices
     if(getMobileOperatingSystem() === "iOS"){
-        $('input[type="number"]').attr("pattern", "\\d*");
+        $('.form_part input[type="number"]').attr("pattern", "\\d*");
     }
     
     //hides all buttons "next"
@@ -277,8 +259,7 @@ function loadFormHandlers(){
     //keys handlers; function keyDownHandler is in formFunctions.js
     $(document).keydown(function(e){keyDownHandler($(this), e)});
     $('input[type="number"]').keydown(function(e){keyDownHandler($(this), e)});
-    
-    
+      
     //PART 1
     //insurance
     setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly            
@@ -320,96 +301,6 @@ function loadFormHandlers(){
     $("#generate_PDF").on( "click", function(){generatePDF()});    
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
     
-}
-
-//detects whether Google Analytics has loaded
-function check_ga(t) {
-
-    if(IsThisAtest()){
-        SERVICE_AVAILABILITY.g_analytics = false;
-        return;
-    }
-
-    if (typeof ga === 'function') {
-        SERVICE_AVAILABILITY.g_analytics = true;
-    } else {
-        SERVICE_AVAILABILITY.g_analytics = false;
-        setTimeout(check_ga, t);
-    }
-}
-
-/*Timer function*/
-/* jshint ignore:start */
-getScriptOnce(JS_FILES.jTimer, function(){
-    TimeCounter = new function () {
-        var incrementTime = 500;
-        var currentTime = 0;
-        $(function () {
-            TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
-        });
-        function updateTimer() {
-            currentTime += incrementTime;
-        }
-        this.resetStopwatch = function () {
-            currentTime = 0;
-        };
-        this.getCurrentTimeInSeconds = function () {
-            return currentTime / 1000;
-        };
-    };
-    TimeCounter.resetStopwatch();    
-});
-/* jshint ignore:end */
-
-/*User Unique Identifier functions*/
-function S4() {
-    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-}
-function guid() {
-    return (S4()+"-"+S4()+"-"+S4());
-}
-uuid = guid();
-
-//gets default protocol defined by Global Variable
-//it returns either "http://" or "https://", i.e., it returns including the "://"
-function getProtocol(){
-
-    if (SWITCHES.https){
-        return location.protocol + "//";
-    }
-    else{
-        return "http://";
-    }
-}
-
-//detects old versions of Internet Explorer
-function oldIE(){
-    var div = document.createElement("div");
-    div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
-    var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
-    if (isIeLessThan9) {
-        document.getElementById("main_div").innerHTML = "Please update your browser!";
-        alert("Please update your browser!");
-    }
-}
-
-/*function which returns whether this session is a (test/develop version) or a prod version */
-function IsThisAtest() {
-
-    if(COUNTRY=="XX"){
-        return true;
-    }
-
-    //verifies top level domain
-    var hostName = window.location.hostname;
-    var hostNameArray = hostName.split(".");
-    var posOfTld = hostNameArray.length - 1;
-    var tld = hostNameArray[posOfTld];
-    if(tld=="work"){
-        return true;
-    }
-
-    return false;
 }
 
 //the standard values are used if we want the form to be pre-filled
