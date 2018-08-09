@@ -148,8 +148,8 @@ module.exports = {
         }
     },
     
-    get2letterLangCode: function(langCode){
-        return langCode.substr(0, 2);
+    get2letterLangCode: function(){
+        return this.clientData.languageCode.substr(0, 2);
     },
     
     //convert number to string with n decimal values
