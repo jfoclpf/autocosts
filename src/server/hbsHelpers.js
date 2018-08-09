@@ -166,9 +166,13 @@ module.exports = {
         return output;
     },
     
-    getStatsItem(serverData, CC, item){        
+    getTotalCostsYear(){
+        
+        var serverData = this.serverData;
+        var CC = this.CC;
+        
         if(serverData.settings.switches.dataBase && CC.toUpperCase() !== "XX"){        
-            return serverData.statsData[CC][item];
+            return serverData.statsData[CC].total_costs_year;
         }
         else{
             return "";

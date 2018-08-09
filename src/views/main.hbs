@@ -16,7 +16,6 @@
     
     <title>{{{ getAdaptedTitle }}}</title>
 
-    <!--gets the first sentence of variable $INITIAL_TEXT-->
     <meta name="description" content="{{{ getMetaDescription }}}" />
     <meta name="keywords" content="{{{ getKeywords }}}" />
     <meta name="viewport" content="width=device-width" />
@@ -59,7 +58,7 @@
                         {{/each}}
                     </select>
                     {{#if serverData.settings.switches.dataBase}}
-                        is <b>{{{words.curr_symbol}}}{{{getStatsItem serverData CC "total_costs_year"}}}</b> 
+                        is <b>{{{words.curr_symbol}}}{{{ getTotalCostsYear }}}</b> 
                         {{{word_per}}} {{{year}}}.<br />
                         Find the true cost of owning a car in your country.
                     {{/if}}
