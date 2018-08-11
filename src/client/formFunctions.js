@@ -875,10 +875,6 @@ function setRadioButton(name, option){
    $('input[name="' + name + '"][value="'+option+'"]').prop('checked', true);
 }
 
-function getCheckedSliderValue(ObjName) {
-    return ObjName.checked;
-}
-
 /*function that checks if a certain HTML id or class is visible*/
 function isVisible(html_ref) {
     if($(html_ref).css("display")!="none")
