@@ -184,11 +184,11 @@ function isDepreciationOk(){
     var acquisitionYear  = f.acquisitionYear.value; /*car acquisition year*/
 
     if(!isNumber(acquisitionMonth) || !isInteger(acquisitionMonth) || 
-       acquisitionMonth > 12 || acquisitionMonth <= 0){
+       parseFloat(acquisitionMonth) > 12 || parseFloat(acquisitionMonth) <= 0){
         return false;
     }
-    if(!isNumber(f.acquisitionYear.value) || !isInteger(f.acquisitionYear.value) || 
-       f.acquisitionYear.value < minCarYear){
+    if(!isNumber(acquisitionYear) || !isInteger(acquisitionYear) || 
+       parseFloat(acquisitionYear) < minCarYear){
         return false;
     }
     if(!isNumber(f.commercialValueAtAcquisition.value)){
@@ -233,7 +233,7 @@ function isCarFinanceOk(){
     var f = document.costs_form; /*form*/    
     
     /*car finance*/
-    var AutoCreditRadioBtn=getCheckedValue(f.AutoCreditRadioBtn);
+    var AutoCreditRadioBtn = getCheckedValue(f.AutoCreditRadioBtn);
 
     if(AutoCreditRadioBtn == ""){
         return false;
@@ -268,7 +268,7 @@ function isInspectionOk(){
         return false;
     }
 
-    if(numberInspections!=0 && !isNumber(f.averageInspectionCost.value)) {
+    if(parseFloat(numberInspections) != 0 && !isNumber(f.averageInspectionCost.value)) {
         return false;
     }
     
@@ -313,22 +313,23 @@ function isFuelOk(){
                 return false;
             }
 
-            var leva_auto_job = getCheckedValue(f.car_job_form2);
+            var carToJob = getCheckedValue(f.car_job_form2);
 
-            if (leva_auto_job == ""){
+            if (carToJob == ""){
                 return false;
             }
 
-            if (leva_auto_job == "false"){
+            if (carToJob == "false"){
 
                 if(!isNumber(f.km_por_mes.value)){
                     return false;
                 }
             }
-            /*make calculation considering the user takes his car to work on a daily basis*/
+            /*make calculation considering the user takes his car to job on a daily basis*/
             else {
 
-                if(!isNumber(f.dias_por_semana.value) || (f.dias_por_semana.value)>7){
+                var daysPerWeek = f.dias_por_semana.value;
+                if(!isNumber(daysPerWeek) || !isInteger(daysPerWeek) || parseFloat(daysPerWeek) > 7){
                     return false;
                 }
                 if(!isNumber(f.km_entre_casa_trabalho.value)){
@@ -342,12 +343,16 @@ function isFuelOk(){
             
             break;
 
-        case "euros":/*fuel costs based on data input money per period of time*/
+        case "euros": /*fuel costs based on data input money per period of time*/
 
             if(!isNumber(f.combustiveis_euro.value)){
                 return false;
             }
             break;
+            
+        default:
+            
+            return false;
     }
     
     return true;
@@ -394,10 +399,10 @@ function isTollsOk(){
     var f = document.costs_form; /*form*/ 
     
     /* **** tolls ***** */
-    var tolls_calc_method=getCheckedValue(f.tolls_daily_radioBtn);
+    var tollsCalculationMethod = getCheckedValue(f.tolls_daily_radioBtn);
 
     /*if tolls costs are calculated on a daily basis*/
-    if(tolls_calc_method == "false") {/*no daily basis*/
+    if(tollsCalculationMethod == "false") {/*no daily basis*/
         if(!isNumber(f.no_daily_tolls_value.value)) {
             return false;
         }
@@ -406,8 +411,8 @@ function isTollsOk(){
         if(!isNumber(f.daily_expense_tolls.value)) {
             return false;
         }
-        var toll_days_pmonth=f.number_days_tolls.value;
-        if(!isNumber(toll_days_pmonth) || !isInteger(toll_days_pmonth) || toll_days_pmonth>31) {
+        var tollsDaysPerMonth = f.number_days_tolls.value;
+        if(!isNumber(tollsDaysPerMonth) || !isInteger(tollsDaysPerMonth) || parseFloat(tollsDaysPerMonth) > 31) {
             return false;
         }
 
@@ -446,14 +451,14 @@ function isPublicTransportOk(){
 
     var f = document.costs_form; /*form*/
     
-    var n_pess_familia = f.pessoas_agregado.value;
-    var pmpmpc = f.preco_passe.value;
+    var nbrPeopleInFamily = f.pessoas_agregado.value;
+    var priceMonthlyPass = f.preco_passe.value;
 
-    if(!isNumber(n_pess_familia) || !isInteger(n_pess_familia) || n_pess_familia<=0){
+    if(!isNumber(nbrPeopleInFamily) || !isInteger(nbrPeopleInFamily) || parseFloat(nbrPeopleInFamily) <= 0){
         return false;
     }
 
-    if(!isNumber(pmpmpc) || pmpmpc<0){
+    if(!isNumber(priceMonthlyPass) || parseFloat(priceMonthlyPass) < 0){
         return false;
     }
     
@@ -496,18 +501,25 @@ function isIncomeOk(){
 
 function isWorkingTimeOk(){
 
-    var f = document.costs_form; /*form*/    
-    var income_type = getCheckedValue(f.radio_income);
+    var f = document.costs_form; /*form*/        
 
     /*working time*/
-    var val, is_working_time = getCheckedValue(f.radio_work_time);
-    if(is_working_time == 'true' && income_type != 'hour'){
-        val = f.time_hours_per_week.value;
-        if(!isNumber(val) || val < f.time_hours_per_week.min || val > f.time_hours_per_week.max){
+    var isWorkingTime = getCheckedValue(f.radio_work_time);
+    var incomeType = getCheckedValue(f.radio_income);
+    
+    if(isWorkingTime == 'true' && incomeType != 'hour'){
+        
+        if(!isNumber(f.time_hours_per_week.value) || 
+            parseFloat(f.time_hours_per_week.value) < parseFloat(f.time_hours_per_week.min)  || 
+            parseFloat(f.time_hours_per_week.value) > parseFloat(f.time_hours_per_week.max)){
+            
             return false;
         }
-        val = f.time_month_per_year.value;
-        if(!isNumber(val) || val < f.time_month_per_year.min || val > f.time_month_per_year.max){
+        
+        if(!isNumber(f.time_month_per_year.value) || 
+            parseFloat(f.time_month_per_year.value) < parseFloat(f.time_month_per_year.min)  || 
+            parseFloat(f.time_month_per_year.value) > parseFloat(f.time_month_per_year.max)){
+            
             return false;
         }
     }
@@ -519,11 +531,16 @@ function isDistanceOk(){
 
     var f = document.costs_form; /*form*/      
     
-    /*distance*/
-    if($('#distance_form3').is(":visible")){
+    var fuelCalcMethodOnFormPart2 = getCheckedValue(f.calc_combustiveis);
+    
+    //If user sets "currency" on Fuel section on Form Part 2, the calculator needs anyway to know the distance traveled, 
+    //and thus it will ask the distance travelled by the user here on Form Part 3
+    if(fuelCalcMethodOnFormPart2 === "euros"){
+        
         var drive_to_work = getCheckedValue(f.drive_to_work);
+                
         if(drive_to_work == 'true'){
-            if(!isNumber(f.drive_to_work_days_per_week.value) || f.drive_to_work_days_per_week.value > 7){
+            if(!isNumber(f.drive_to_work_days_per_week.value) || parseFloat(f.drive_to_work_days_per_week.value) > 7){
                 return false;
             }
             if(!isNumber(f.dist_home_job.value)){
@@ -545,10 +562,25 @@ function isDistanceOk(){
 
 function isTimeSpentInDrivingOk(){
 
-    var f = document.costs_form; /*form*/       
+    var f = document.costs_form; /*form*/
+    
+    var distanceBasedOnDrivingToJob;    
+    
+    var fuelCalcMethodOnFormPart2 = getCheckedValue(f.calc_combustiveis);        
+    if (fuelCalcMethodOnFormPart2 === "km"){
+        //check now Distance Section in Form Part 2 
+        distanceBasedOnDrivingToJob = (getCheckedValue(f.car_job_form2) == "true");
+    }    
+    else if (fuelCalcMethodOnFormPart2 === "euros"){
+        //check now Distance Section in Form Part 3 
+        distanceBasedOnDrivingToJob = (getCheckedValue(f.drive_to_work) == "true");
+    }    
+    else{
+        return false;
+    }
     
     /*time spent in driving*/
-    if (isVisible('#time_spent_part1_form3')){
+    if (distanceBasedOnDrivingToJob){
         if(!isNumber(f.time_home_job.value)){
             return false;
         }
@@ -561,7 +593,7 @@ function isTimeSpentInDrivingOk(){
             return false;
         }
         var days_drive_per_month = f.days_drive_per_month.value;
-        if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || days_drive_per_month>31){
+        if(!isNumber(days_drive_per_month) || !isInteger(days_drive_per_month) || parseFloat(days_drive_per_month) > 31){
             return false;
         }
     }
