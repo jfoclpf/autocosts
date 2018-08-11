@@ -1,4 +1,4 @@
-/*Node script which populates the average DB tables for each country*/
+/*Node script which populates the costs statistical DB tables for each country*/
 
 console.log("\nRunning script " + __filename + "\n");
 
