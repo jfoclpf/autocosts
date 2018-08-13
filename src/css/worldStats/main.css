@@ -72,6 +72,10 @@ th:hover::after {
 
 
 /*colours*/
+.white {
+    background-color: white;
+    padding: 1px;
+}
 .navy{
     background-color:navy;
 }

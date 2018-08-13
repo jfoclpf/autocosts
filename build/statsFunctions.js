@@ -38,12 +38,19 @@ var statsConstants = {
     }
 };
 
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*************************  Object Constructors and Templates ********************************************/
+/*********************************************************************************************************/
+
 //Object Constructor for the Results, where the calculated averages are stored
-function resultsObj(){    
-    this.monthly_costs          = new monthlyCostsObj();
+//see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Using_a_constructor_function
+//"There is a strong convention, with good reason, to use a capital initial letter" for constructors.
+function ResultsObj(){
+    this.monthly_costs          = new MonthlyCostsObj();
 
     this.fin_effort_calculated  = false;
-    this.fin_effort             = new finEffortObj();
+    this.fin_effort             = new FinEffortObj();
 
     this.kinetic_speed          = 0;
     this.virtual_speed          = 0;
@@ -51,7 +58,7 @@ function resultsObj(){
 }
 
 //Object Constructor for Monthly Costs
-function monthlyCostsObj() {
+function MonthlyCostsObj() {
     this.depreciation   = 0;
     this.insurance      = 0;
     this.credit         = 0;
@@ -67,7 +74,7 @@ function monthlyCostsObj() {
 }
 
 //Object Constructor for Financial Effort
-function finEffortObj() {
+function FinEffortObj() {
     this.aver_income_per_hour         = 0;
     this.aver_income_per_month        = 0;
     this.hours_per_year_to_afford_car = 0;
@@ -78,15 +85,36 @@ function finEffortObj() {
     this.work_hours_per_y             = 0;
 }
 
+//Object Constructor for the final Statistical Object
+//that is, the object which stores the statistical final results
+function StatsObj(){
+    this.monthly_costs   = new MonthlyCostsObj();
+    this.standCos        = 0;
+    this.runnCos         = 0;
+    
+    this.totCos          = 0;
+    this.totCostsPerYear = 0;
+
+    this.runCostsProDist = 0;
+    this.totCostsProDist = 0;
+    this.kinetic_speed   = 0;
+    this.virtual_speed   = 0;
+
+    this.users_counter   = 0;
+}
+
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*********************************************************************************************************/
 
 //Gets the average of array of Objects 
-//results_array is an array of objects previously defined in coreFunctions.js, similar to resultsObj
+//results_array is an array of objects previously defined in coreFunctions.js, similar to ResultsObj
 function get_average_costs(results_array){
 
     var i, key, virtual_speed_len, fin_effort_len;
     var length = results_array.length;
     
-    var output = new resultsObj();
+    var output = new ResultsObj();
 
     if(length == 0){
         return null;
@@ -108,7 +136,7 @@ function get_average_costs(results_array){
 
     if(length > 1){
         
-        var results_total = new resultsObj();
+        var results_total = new ResultsObj();
 
         for(i=0, virtual_speed_len=0, fin_effort_len=0; i<length; i++){
             
@@ -172,7 +200,9 @@ function CalculateStatistics(userIds, data, country){
 //console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
 //console.log("************************************************************************");
 
-    var output;
+    //object to be output as result
+    var output = new StatsObj();
+    
     if(userIds.length != 0 && data.length != 0){
         var temp_i = []; //array with unique users, having one element per user
         var temp_j = []; //array having the several inputs from the same user
@@ -216,33 +246,7 @@ function CalculateStatistics(userIds, data, country){
 
         //if the array with the average results is empty
         if(temp_i.length==0){
-            return {
-                dep:      0,
-                ins:      0,
-                cred:     0,
-                insp:     0,
-                carTax:   0,
-                standCos: 0,
-
-                fuel:     0,
-                maint:    0,
-                rep:      0,
-                park:     0,
-                tolls:    0,
-                fines:    0,
-                wash:     0,
-                runnCos:  0,
-
-                totCos:   0,
-                totCostsPerYear: 0,
-
-                runCostsProDist: 0,
-                totCostsProDist: 0,
-                kinetic_speed:   0,
-                virtual_speed:   0,
-
-                users_counter:   0
-            };
+            return new StatsObj();
         }
 
         //console.log("get_average_costs");
@@ -268,64 +272,22 @@ function CalculateStatistics(userIds, data, country){
 
         var total_costs_per_year = total_costs_month * 12;
 
-        //object to be output as result
-        output = {
-            dep:      avg.monthly_costs.depreciation,
-            ins:      avg.monthly_costs.insurance,
-            cred:     avg.monthly_costs.credit,
-            insp:     avg.monthly_costs.inspection,
-            carTax:   avg.monthly_costs.car_tax,
-            standCos: total_standing_costs_month,
+        output.monthly_costs = Object.assign({}, avg.monthly_costs); //clone object
+        
+        output.standCos = total_standing_costs_month;
+        output.runnCos  = total_running_costs_month;
 
-            fuel:     avg.monthly_costs.fuel,
-            maint:    avg.monthly_costs.maintenance,
-            rep:      avg.monthly_costs.repairs_improv,
-            park:     avg.monthly_costs.parking,
-            tolls:    avg.monthly_costs.tolls,
-            fines:    avg.monthly_costs.fines,
-            wash:     avg.monthly_costs.washing,
-            runnCos:  total_running_costs_month,
+        output.totCos   = total_costs_month;
+        output.totCostsPerYear = total_costs_per_year;
 
-            totCos:   total_costs_month,
-            totCostsPerYear: total_costs_per_year,
+        output.runCostsProDist = running_costs_p_unit_distance;
+        output.totCostsProDist = total_costs_p_unit_distance;
+        output.kinetic_speed =   avg.kinetic_speed;
+        output.virtual_speed =   avg.virtual_speed;
 
-            runCostsProDist: running_costs_p_unit_distance,
-            totCostsProDist: total_costs_p_unit_distance,
-            kinetic_speed:   avg.kinetic_speed,
-            virtual_speed:   avg.virtual_speed,
-
-            users_counter:   temp_i.length
-        };
+        output.users_counter =   temp_i.length;
     }
-    else{
-        output = {
-            dep: 0,
-            ins: 0,
-            cred: 0,
-            insp: 0,
-            carTax: 0,
-            standCos: 0,
-
-            fuel: 0,
-            maint: 0,
-            rep: 0,
-            park: 0,
-            tolls: 0,
-            fines: 0,
-            wash: 0,
-            runnCos: 0,
-
-            totCos: 0,
-            totCostsPerYear: 0,
-
-            runCostsProDist: 0,
-            totCostsProDist: 0,
-            kinetic_speed: 0,
-            virtual_speed: 0,
-
-            users_counter: 0
-        };
-    }
+    
     //console.log(output);
     return output;
 }

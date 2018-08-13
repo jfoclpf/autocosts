@@ -3,6 +3,7 @@ const url   = require(path.join(__dirname, 'url'));
 const mysql = require('mysql'); //module to get info from DB
 const async = require('async'); //module to allow to execute the queries in series
 const debug = require('debug')('app:stats');
+const fs    = require('fs');
 
 const MIN_VALID_USERS = 20; //minimum number of valid users to show the country on world chart
 
@@ -44,6 +45,9 @@ module.exports = {
     },
     
     prepareStats : function(serverData, WORDS, eventEmitter){
+        
+        //get statsFunctions.js Object Constructors/Templates
+        eval(fs.readFileSync(serverData.fileNames.server["statsFunctions.js"])+'');
         
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(dbInfo);
@@ -102,19 +106,13 @@ module.exports = {
                             }
                         }
                         debug(results);
-                    
-                        var costsStrs = ["Depreciation", 
-                            "Insurance", 
-                            "Loan_interests", 
-                            "Inspection", 
-                            "Car_tax", 
-                            "Maintenance", 
-                            "Fuel", 
-                            "Repairs", 
-                            "Parking", 
-                            "Tolls", 
-                            "Fines", 
-                            "Washing"]; 
+
+                        //fills array costsSrts with the keys of object MonthlyCostsObj; see statsFunctions.js
+                        var costsStrs = [];
+                        var monthlyCosts = new MonthlyCostsObj();
+                        for (let key of Object.keys(monthlyCosts)){
+                            costsStrs.push(key);
+                        }
                     
                         results.sort(function(a,b){
                             return b.total_costs_year-a.total_costs_year
@@ -185,51 +183,51 @@ module.exports = {
                 var dataset = [
                     {
                         label: wordsOfUK.depreciation_st,
-                        data: costs.Depreciation,
+                        data: costs.depreciation,
                         backgroundColor: 'navy'
                     }, {
                         label: wordsOfUK.insurance_short,
-                        data: costs.Insurance,
+                        data: costs.insurance,
                         backgroundColor: 'blue'
                     }, {
                         label: wordsOfUK.credit,
-                        data: costs.Loan_interests,
+                        data: costs.credit,
                         backgroundColor: 'aqua'
                     }, {
                         label: wordsOfUK.inspection_short,
-                        data: costs.Inspection,
+                        data: costs.inspection,
                         backgroundColor: 'teal'
                     }, {
                         label: wordsOfUK.road_taxes_short,
-                        data: costs.Car_tax,
+                        data: costs.car_tax,
                         backgroundColor: 'olive'
                     }, {
                         label: wordsOfUK.maintenance,
-                        data: costs.Maintenance,
+                        data: costs.maintenance,
                         backgroundColor: 'green'
                     }, {
                         label: wordsOfUK.rep_improv,
-                        data: costs.Repairs,
+                        data: costs.repairs_improv,
                         backgroundColor: 'lime'
                     }, {
                         label: wordsOfUK.fuel,
-                        data: costs.Fuel,
+                        data: costs.fuel,
                         backgroundColor: 'maroon'
                     }, {
                         label: wordsOfUK.parking,
-                        data: costs.Parking,
+                        data: costs.parking,
                         backgroundColor: 'yellow'
                     }, {
                         label: wordsOfUK.tolls,
-                        data: costs.Tolls,
+                        data: costs.tolls,
                         backgroundColor: 'orange'
                     }, {
                         label: wordsOfUK.fines,
-                        data: costs.Fines,
+                        data: costs.fines,
                         backgroundColor: 'red'
                     }, {
                         label: wordsOfUK.washing,
-                        data: costs.Washing,
+                        data: costs.washing,
                         backgroundColor: 'purple'
                     }
                 ];                

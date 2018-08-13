@@ -29,18 +29,44 @@
         <table class="hoverTable">
             <tr>                
                 <th class="right2px">Country</th>
-                <th class="navy">{{{wordsOfUK.depreciation_st}}}</th>
-                <th class="blue">{{{wordsOfUK.insurance_short}}}</th>
-                <th class="aqua">{{{wordsOfUK.credit}}}</th>
-                <th class="teal">{{{wordsOfUK.inspection_short}}}</th>
-                <th class="olive">{{{wordsOfUK.road_taxes_short}}}</th>
-                <th class="green">{{{wordsOfUK.maintenance}}}</th>
-                <th class="lime">{{{wordsOfUK.rep_improv}}}</th>
-                <th class="maroon">{{{wordsOfUK.fuel}}}</th>
-                <th class="yellow">{{{wordsOfUK.parking}}}</th>
-                <th class="orange">{{{wordsOfUK.tolls}}}</th>
-                <th class="red">{{{wordsOfUK.fines}}}</th>
-                <th class="purple right2px">{{{wordsOfUK.washing}}}</th>
+                
+                <th class="navy">
+                    <span class="white">{{{wordsOfUK.depreciation_st}}}</span>
+                </th>
+                <th class="blue">
+                    <span class="white">{{{wordsOfUK.insurance_short}}}</span>
+                </th>
+                <th class="aqua">
+                    <span class="white">{{{wordsOfUK.credit}}}</span>
+                </th>
+                <th class="teal">
+                    <span class="white">{{{wordsOfUK.inspection_short}}}</span>
+                </th>
+                <th class="olive">
+                    <span class="white">{{{wordsOfUK.road_taxes_short}}}</span>
+                </th>
+                <th class="green">
+                    <span class="white">{{{wordsOfUK.maintenance}}}</span>
+                </th>
+                <th class="lime">
+                    <span class="white">{{{wordsOfUK.rep_improv}}}</span>
+                </th>
+                <th class="maroon">
+                    <span class="white">{{{wordsOfUK.fuel}}}</span>
+                </th>
+                <th class="yellow">
+                    <span class="white">{{{wordsOfUK.parking}}}</span>
+                </th>
+                <th class="orange">
+                    <span class="white">{{{wordsOfUK.tolls}}}</span>
+                </th>
+                <th class="red">
+                    <span class="white">{{{wordsOfUK.fines}}}</span>
+                </th>
+                <th class="purple right2px">
+                    <span class="white">{{{wordsOfUK.washing}}}</span>
+                </th>
+                
                 <th>Running costs per distance</th>
                 <th class="right2px">Total costs per distance</th>
                 <th>{{{wordsOfUK.kinetic_speed}}}</th>
@@ -54,18 +80,18 @@
                             {{value.countryName}} ({{value.country}})
                         </a>
                     </td>
-                    <td class="tdRight">{{toFixed value.Depreciation 0}}</td>
-                    <td class="tdRight">{{toFixed value.Insurance 0}}</td>
-                    <td class="tdRight">{{toFixed value.Loan_interests 0}}</td>
-                    <td class="tdRight">{{toFixed value.Inspection 0}}</td>
-                    <td class="tdRight">{{toFixed value.Car_tax 0}}</td>
-                    <td class="tdRight">{{toFixed value.Maintenance 0}}</td>
-                    <td class="tdRight">{{toFixed value.Repairs 0}}</td>
-                    <td class="tdRight">{{toFixed value.Fuel 0}}</td>
-                    <td class="tdRight">{{toFixed value.Parking 0}}</td>
-                    <td class="tdRight">{{toFixed value.Tolls 0}}</td>
-                    <td class="tdRight">{{toFixed value.Fines 0}}</td>
-                    <td class="tdRight right2px">{{toFixed value.Washing 0}}</td>
+                    <td class="tdRight">{{toFixed value.depreciation 0}}</td>
+                    <td class="tdRight">{{toFixed value.insurance 0}}</td>
+                    <td class="tdRight">{{toFixed value.credit 0}}</td>
+                    <td class="tdRight">{{toFixed value.inspection 0}}</td>
+                    <td class="tdRight">{{toFixed value.car_tax 0}}</td>
+                    <td class="tdRight">{{toFixed value.maintenance 0}}</td>
+                    <td class="tdRight">{{toFixed value.repairs_improv 0}}</td>
+                    <td class="tdRight">{{toFixed value.fuel 0}}</td>
+                    <td class="tdRight">{{toFixed value.parking 0}}</td>
+                    <td class="tdRight">{{toFixed value.tolls 0}}</td>
+                    <td class="tdRight">{{toFixed value.fines 0}}</td>
+                    <td class="tdRight right2px">{{toFixed value.washing 0}}</td>
                     <td class="tdRight">
                         {{toFixed value.running_costs_dist 2}}/{{{getDistanceOptStrShort}}}
                     </td>
