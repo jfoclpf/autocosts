@@ -38,149 +38,153 @@ var statsConstants = {
     }
 };
 
-//gets the average of array of objects
-//results_array is an array of objects previously defined in coreFunctions.js
+//Object Constructor for the Results, where the calculated averages are stored
+function resultsObj(){    
+    this.monthly_costs          = new monthlyCostsObj();
+
+    this.fin_effort_calculated  = false;
+    this.fin_effort             = new finEffortObj();
+
+    this.kinetic_speed          = 0;
+    this.virtual_speed          = 0;
+    this.distance_per_month     = 0;
+}
+
+//Object Constructor for Monthly Costs
+function monthlyCostsObj() {
+    this.depreciation   = 0;
+    this.insurance      = 0;
+    this.credit         = 0;
+    this.inspection     = 0;
+    this.car_tax        = 0;
+    this.fuel           = 0;
+    this.maintenance    = 0;
+    this.repairs_improv = 0;
+    this.parking        = 0;
+    this.tolls          = 0;
+    this.fines          = 0;
+    this.washing        = 0;
+}
+
+//Object Constructor for Financial Effort
+function finEffortObj() {
+    this.aver_income_per_hour         = 0;
+    this.aver_income_per_month        = 0;
+    this.hours_per_year_to_afford_car = 0;
+    this.days_car_paid                = 0;
+    this.month_per_year_to_afford_car = 0;
+    this.income_per_year              = 0;
+    this.total_costs_year             = 0;
+    this.work_hours_per_y             = 0;
+}
+
+
+//Gets the average of array of Objects 
+//results_array is an array of objects previously defined in coreFunctions.js, similar to resultsObj
 function get_average_costs(results_array){
 
-    var i, virtual_speed_len;
+    var i, key, virtual_speed_len, fin_effort_len;
     var length = results_array.length;
+    
+    var output = new resultsObj();
 
-    var monthly_costs = {
-        depreciation: 0,
-        insurance: 0,
-        credit: 0,
-        inspection: 0,
-        car_tax: 0,
-        fuel: 0,
-        maintenance: 0,
-        repairs_improv: 0,
-        parking: 0,
-        tolls: 0,
-        fines: 0,
-        washing: 0
-    };
-    var output = {
-        monthly_costs: monthly_costs,
-        kinetic_speed: 0,
-        virtual_speed: 0,
-        distance_per_month: 0
-    };
-
-    if(length==0){
+    if(length == 0){
         return null;
     }
 
     //if the length if the array of objects is 1, simply returns the own array
-    if(length==1){
-        output.monthly_costs.depreciation   = results_array[0].monthly_costs.depreciation;
-        output.monthly_costs.insurance      = results_array[0].monthly_costs.insurance;
-        output.monthly_costs.credit         = results_array[0].monthly_costs.credit;
-        output.monthly_costs.inspection     = results_array[0].monthly_costs.inspection;
-        output.monthly_costs.car_tax        = results_array[0].monthly_costs.car_tax;
-        output.monthly_costs.fuel           = results_array[0].monthly_costs.fuel;
-        output.monthly_costs.maintenance    = results_array[0].monthly_costs.maintenance;
-        output.monthly_costs.repairs_improv = results_array[0].monthly_costs.repairs_improv;
-        output.monthly_costs.parking        = results_array[0].monthly_costs.parking;
-        output.monthly_costs.tolls          = results_array[0].monthly_costs.tolls;
-        output.monthly_costs.fines          = results_array[0].monthly_costs.fines;
-        output.monthly_costs.washing        = results_array[0].monthly_costs.washing;
-        output.distance_per_month = results_array[0].distance_per_month;
-        output.kinetic_speed     = results_array[0].kinetic_speed;
-        output.virtual_speed     = results_array[0].virtual_speed;
+    if(length == 1){
+        output.monthly_costs         = Object.assign({}, results_array[0].monthly_costs); //clones Object
+        
+        output.fin_effort_calculated = results_array[0].fin_effort_calculated;
+        output.fin_effort            = results_array[0].fin_effort_calculated ? 
+                                       Object.assign({}, results_array[0].fin_effort) : 
+                                       {};
+        
+        output.distance_per_month    = results_array[0].distance_per_month;
+        output.kinetic_speed         = results_array[0].kinetic_speed;
+        output.virtual_speed         = results_array[0].virtual_speed;
     }
 
-    if(length>1){
-        var depTotal = 0;
-        var insTotal = 0;
-        var credTotal = 0;
-        var inspTotal = 0;
-        var carTaxTotal = 0;
-        var fuelTotal = 0;
-        var maintTotal = 0;
-        var repTotal = 0;
-        var parkTotal = 0;
-        var tollsTotal = 0;
-        var finesTotal = 0;
-        var washTotal = 0;
-        var distTotal = 0;
-        var kineticTotal = 0;
-        var virtualTotal = 0;
+    if(length > 1){
+        
+        var results_total = new resultsObj();
 
-        for(i=0, virtual_speed_len=0; i<length; i++){
-            depTotal += results_array[i].monthly_costs.depreciation;
-            insTotal += results_array[i].monthly_costs.insurance;
-            credTotal += results_array[i].monthly_costs.credit;
-            inspTotal += results_array[i].monthly_costs.inspection;
-            carTaxTotal += results_array[i].monthly_costs.car_tax;
-            fuelTotal += results_array[i].monthly_costs.fuel;
-            maintTotal += results_array[i].monthly_costs.maintenance;
-            repTotal += results_array[i].monthly_costs.repairs_improv;
-            parkTotal += results_array[i].monthly_costs.parking;
-            tollsTotal += results_array[i].monthly_costs.tolls;
-            finesTotal += results_array[i].monthly_costs.fines;
-            washTotal += results_array[i].monthly_costs.washing;
-            distTotal += results_array[i].distance_per_month;
-            kineticTotal += results_array[i].kinetic_speed;
+        for(i=0, virtual_speed_len=0, fin_effort_len=0; i<length; i++){
+            
+            for(key of Object.keys(results_array[i].monthly_costs)){
+                results_total.monthly_costs[key] += results_array[i].monthly_costs[key];
+            }
+            
+            //some results have no financial effort info, because it's optional
+            if(results_array[i].fin_effort_calculated){
+                for(key of Object.keys(results_array[i].fin_effort)){
+                    results_total.fin_effort[key] += results_array[i].fin_effort[key];
+                }                
+                fin_effort_len++;
+            }
+            
+            results_total.distance_per_month += results_array[i].distance_per_month;
+            results_total.kinetic_speed      += results_array[i].kinetic_speed;
 
             //some virtual_speed fields have no info because the user
             //did not introduce financial effort information
             //thus calculate the average only from the fields that have info
             if(isDef(results_array[i].virtual_speed)){
-                virtualTotal += results_array[i].virtual_speed;
+                results_total.virtual_speed += results_array[i].virtual_speed;
                 virtual_speed_len++;
-            }
+            }            
         }
-
-        output.monthly_costs.depreciation   = depTotal/length;
-        output.monthly_costs.insurance      = insTotal/length;
-        output.monthly_costs.credit         = credTotal/length;
-        output.monthly_costs.inspection     = inspTotal/length;
-        output.monthly_costs.car_tax        = carTaxTotal/length;
-        output.monthly_costs.fuel           = fuelTotal/length;
-        output.monthly_costs.maintenance    = maintTotal/length;
-        output.monthly_costs.repairs_improv = repTotal/length;
-        output.monthly_costs.parking        = parkTotal/length;
-        output.monthly_costs.tolls          = tollsTotal/length;
-        output.monthly_costs.fines          = finesTotal/length;
-        output.monthly_costs.washing        = washTotal/length;
-        output.distance_per_month           = distTotal/length;
-        output.kinetic_speed                = kineticTotal/length;
-
-        if(virtual_speed_len!=0){
-            output.virtual_speed      = virtualTotal/virtual_speed_len;
+        
+        for (key of Object.keys(output.monthly_costs)){
+            output.monthly_costs[key] = results_total.monthly_costs[key]/length;
         }
-        else{
-            output.virtual_speed = 0;
+        
+        //financial effort, if available
+        if(fin_effort_len != 0){
+            for (key of Object.keys(output.fin_effort)){
+                output.fin_effort[key] = results_total.fin_effort[key]/fin_effort_len;
+            }            
+        }    
+        
+        output.distance_per_month = results_total.distance_per_month/length;
+        output.kinetic_speed      = results_total.distance_per_month/length;
+
+        //financial/consumer effort, if available
+        if(virtual_speed_len != 0){
+            output.virtual_speed      = results_total.virtual_speed/virtual_speed_len;
         }
     }
 
     return output;
 }
 
-//********************
+//***************************************************************************************
 //this functions calculates the avearge of the averages of the same user inputs
 //for a corresponding country
 function CalculateStatistics(userIds, data, country){
-//matrix *userIds* is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client),
+// userIds => is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client),
 //the 2nd column has always the same country
-//matrix *data* is a matrix with everything for the specific country
-//*country* is the country whose average is being calculated
+// data    => is a matrix with everything for the specific country
+// country => is the country whose average is being calculated
 //userIds.length is smaller than data.length, because some users fill in more than one time
 
 //console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
 //console.log("************************************************************************");
 
     var output;
-    if(userIds.length!=0 && data.length!=0){
+    if(userIds.length != 0 && data.length != 0){
         var temp_i = []; //array with unique users, having one element per user
         var temp_j = []; //array having the several inputs from the same user
 
-        for(var i=0; i<userIds.length;i++){
-            for(var j=0, n=0; j<data.length;j++){
-                if(data[j].uuid_client==userIds[i].uuid_client){
+        for(var i=0; i<userIds.length; i++){
+            
+            for(var j=0, n=0; j<data.length; j++){
+                if(data[j].uuid_client == userIds[i].uuid_client){
 
                     //checks if the entry is ok
-                    //and if it is an input spam/bot (the time to fill the form for the first input mus be greater than a time value)
+                    //and if it is an input spam/bot 
+                    //(the time to fill the form for the first input mus be greater than a time value)
                     //console.log("(i,j)=("+i+","+j+")"); console.log(data[j]);console.log(country);
                     if(is_DBentry_ok(data[j], country) &&
                        ((n==0 && data[j].time_to_fill_form>statsConstants.MIN_TIME_TO_FILL_FORM) || n>0)){
@@ -203,6 +207,7 @@ function CalculateStatistics(userIds, data, country){
                     }
                 }
             }
+            
             if (temp_j.length){
                 temp_i.push(get_average_costs(temp_j));
             }
@@ -244,16 +249,18 @@ function CalculateStatistics(userIds, data, country){
         var avg = get_average_costs(temp_i);
 
         //standing costs
-        var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + avg.monthly_costs.credit +
-            avg.monthly_costs.inspection + 0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
+        var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + 
+                                         avg.monthly_costs.credit + avg.monthly_costs.inspection + 
+                                         0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
         //running costs
-        var total_running_costs_month = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.repairs_improv +
-            avg.monthly_costs.parking + avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+        var total_running_costs_month = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance +
+                                        avg.monthly_costs.repairs_improv + avg.monthly_costs.parking + 
+                                        avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
         //total
         var total_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.fuel + avg.monthly_costs.depreciation +
-            avg.monthly_costs.credit + avg.monthly_costs.inspection + avg.monthly_costs.maintenance +
-            avg.monthly_costs.repairs_improv + avg.monthly_costs.car_tax + avg.monthly_costs.parking +
-            avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+                                avg.monthly_costs.credit + avg.monthly_costs.inspection + avg.monthly_costs.maintenance +
+                                avg.monthly_costs.repairs_improv + avg.monthly_costs.car_tax + avg.monthly_costs.parking +
+                                avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
 
         var running_costs_p_unit_distance = avg.distance_per_month ? total_running_costs_month / avg.distance_per_month : 0;
 
@@ -339,104 +346,189 @@ function is_DBentry_ok(data, country) {
             return false;
         }
     }
-    else{
+    else {
         return false;
     }
 
     //depreciation must be positive
     if((!data.commercial_value_at_acquisition || !data.commercial_value_at_now) ||
        (Number(data.commercial_value_at_acquisition) < Number(data.commercial_value_at_now))){
+        
         return false;
     }
 
     //car value at acquisition date must not exceed a certain value (MAX_EUR_CAR_VALUE)
     var converted_value = convert_from_EUR(statsConstants.MAX_EUR_CAR_VALUE, country.currency, EURcurrConverterStats);
-    if (converted_value!=-1 && Number(data.commercial_value_at_acquisition) > converted_value)
+    if (converted_value != -1 && Number(data.commercial_value_at_acquisition) > converted_value){
         return false;
+    }
 
     //insurance
-    if(!data.insure_type || !data.insurance_value)
+    if(!data.insure_type || !data.insurance_value){
         return false;
+    }
+    
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.INSURANCE, country.currency, EURcurrConverterStats);
-    if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > converted_value)
+    if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) > converted_value){
         return false;
+    }
+    
     converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.INSURANCE, country.currency, EURcurrConverterStats);
-    if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) < converted_value)
+    if (converted_value!=-1 && calculateInsuranceMonthlyValue(data.insure_type, data.insurance_value) < converted_value){
         return false;
+    }
 
     //credit
-    if(data.credit=="true" && (!data.credit_number_installments || !data.credit_amount_installment || !data.credit_residual_value || !data.credit_borrowed_amount))
+    if(data.credit == "true" && (!data.credit_number_installments || 
+                                 !data.credit_amount_installment || 
+                                 !data.credit_residual_value || 
+                                 !data.credit_borrowed_amount)){
         return false;
+    }
 
-    var credit_object = calculateInterestsMonthlyValue(data.credit, data.credit_borrowed_amount, data.credit_number_installments, data.credit_amount_installment, data.credit_residual_value, age_months);
+    var credit_object = calculateInterestsMonthlyValue(data.credit, 
+                                                       data.credit_borrowed_amount, 
+                                                       data.credit_number_installments, 
+                                                       data.credit_amount_installment, 
+                                                       data.credit_residual_value, 
+                                                       age_months);
+    
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.CREDIT, country.currency, EURcurrConverterStats);
-    if (credit_object.monthly_costs > converted_value)
+    
+    if (credit_object.monthly_costs > converted_value){
         return false;
+    }
 
     //inspection
-    if(!data.inspection_number_inspections || !data.inspection_average_inspection_cost)
+    if(!data.inspection_number_inspections || !data.inspection_average_inspection_cost){
         return false;
+    }
 
-    converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.INSPECTION, country.currency, EURcurrConverterStats);
-    var inspection_per_month = calculateMonthlyInspection(data.inspection_number_inspections, data.inspection_average_inspection_cost, age_months);
-    if (inspection_per_month > converted_value)
+    converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.INSPECTION, 
+                                       country.currency, 
+                                       EURcurrConverterStats);
+    
+    var inspection_per_month = calculateMonthlyInspection(data.inspection_number_inspections,
+                                                          data.inspection_average_inspection_cost, 
+                                                          age_months);
+    
+    if (inspection_per_month > converted_value){
         return false;
+    }
 
     //car taxes
-    converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.TAXES, country.currency, EURcurrConverterStats);
-    if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) > converted_value)
+    converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.TAXES, 
+                                       country.currency, 
+                                       EURcurrConverterStats);
+    
+    if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) > converted_value){
         return false;
+    }
+    
     converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.TAXES, country.currency, EURcurrConverterStats);
-    if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) < converted_value)
+    if(!data.vehicle_excise_tax || calculateMonthlyTaxes(data.vehicle_excise_tax) < converted_value){
         return false;
+    }
 
     //fuel & distance
     switch(data.fuel_calculation){
+            
         case "km":
-            if(!data.fuel_distance_based_fuel_efficiency || !data.fuel_distance_based_fuel_price)
+            
+            if(!data.fuel_distance_based_fuel_efficiency || !data.fuel_distance_based_fuel_price){
                 return false;
+            }
+            
             //remove outliers
-            if (convert_to_fuel_eff_l100km(data.fuel_distance_based_fuel_efficiency, country.fuel_efficiency_std) > statsConstants.MAX_FUEL_EFF_L100KM)
+            if (convert_to_fuel_eff_l100km(data.fuel_distance_based_fuel_efficiency, country.fuel_efficiency_std) >
+                statsConstants.MAX_FUEL_EFF_L100KM){
+                
                 return false;
+            }
+            
             switch(data.fuel_distance_based_car_to_work){
+                
                 case "true":
-                    if(!data.fuel_distance_based_car_to_work_distance_home_work || !data.fuel_distance_based_car_to_work_distance_weekend || !data.fuel_distance_based_car_to_work_number_days_week)
+                    
+                    if(!data.fuel_distance_based_car_to_work_distance_home_work ||
+                       !data.fuel_distance_based_car_to_work_distance_weekend ||
+                       !data.fuel_distance_based_car_to_work_number_days_week){
+                        
                         return false;
+                    }
+                    
                     //remove outliers
-                    if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_home_work, country.distance_std) > statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK)
+                    if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_home_work, country.distance_std) >
+                        statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK){
+                        
                         return false;
-                    if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_weekend, country.distance_std) > statsConstants.MAX_KM_DRIVEN_WEEKEND)
+                    }
+                    
+                    if (convert_std_dist_to_km(data.fuel_distance_based_car_to_work_distance_weekend, country.distance_std) >
+                        statsConstants.MAX_KM_DRIVEN_WEEKEND){
+                        
                         return false;
+                    }
+                    
                     break;
+                
                 case "false":
-                    if(!data.fuel_distance_based_no_car_to_work_distance)
+                    
+                    if(!data.fuel_distance_based_no_car_to_work_distance){
                         return false;
+                    }
+                    
                     break;
+                    
+                default:                    
+                    return false;
             }
 
             //remove outliers for fuel price
-            converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, country.currency, country.fuel_price_volume_std, EURcurrConverterStats);
-            if (converted_value!=-1 && converted_value>statsConstants.MAX_EUR_PER_LITRE_FUEL)
+            converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, 
+                                                              country.currency, 
+                                                              country.fuel_price_volume_std, EURcurrConverterStats);
+            
+            if (converted_value!=-1 && converted_value>statsConstants.MAX_EUR_PER_LITRE_FUEL){
                 return false;
+            }
+            
             break;
 
         case "euros":
-            if(!data.fuel_currency_based_currency_value)
+            
+            if(!data.fuel_currency_based_currency_value){
                 return false;
-            switch(data.distance_drive_to_work){
-                case "true":
-                    if(!data.distance_days_per_week || !data.distance_home_job || !data.distance_journey_weekend)
-                        return false;
-                    break;
-                case "false":
-                    if(!data.distance_per_month)
-                        return false;
-                    break;
             }
+            
+            switch(data.distance_drive_to_work){
+                
+                case "true":
+                    if(!data.distance_days_per_week || !data.distance_home_job || !data.distance_journey_weekend){
+                        return false;
+                    } 
+                    
+                    break;
+                    
+                case "false":
+                    if(!data.distance_per_month){
+                        return false;
+                    }
+                    
+                    break;
+                    
+                default:
+                    return false;
+            }
+            
             break;
+            
+        default:
+            return false;
     }
 
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.FUEL, country.currency, EURcurrConverterStats);
+    
     var fuel_object = calculateMonthlyFuel(
             data.fuel_calculation,                                      //calculation based on money or distance (bool)
             data.fuel_efficiency,                                       //fuel efficiency in standard format
@@ -451,26 +543,32 @@ function is_DBentry_ok(data, country) {
             data.fuel_currency_based_currency_value,                    //in case money is selected, fuel money value
             country);                                                   //country object
 
-    if (fuel_object.monthly_cost > converted_value)
+    if (fuel_object.monthly_cost > converted_value){
         return false;
+    }
 
     //maintenance
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.MAINTENANCE, country.currency, EURcurrConverterStats);
-    if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) > converted_value)
+    if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) > converted_value){
         return false;
+    }
+    
     converted_value = convert_from_EUR(statsConstants.MIN_EUR_MONTHLY.MAINTENANCE, country.currency, EURcurrConverterStats);
-    if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) < converted_value)
+    if(!data.maintenance || calculateMonthlyMaintenance(data.maintenance) < converted_value){
         return false;
+    }
 
     //repairs and improvements
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.REPAIRS, country.currency, EURcurrConverterStats);
-    if(!data.repairs || calculateMonthlyRepairsAndImprovements(data.repairs) > converted_value)
+    if(!data.repairs || calculateMonthlyRepairsAndImprovements(data.repairs) > converted_value){
         return false;
+    }
 
     //parking
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.PARKING, country.currency, EURcurrConverterStats);
-    if(!data.parking || calculateMonthlyParking(data.parking) > converted_value)
+    if(!data.parking || calculateMonthlyParking(data.parking) > converted_value){
         return false;
+    }
 
     //tolls
     switch(data.tolls_daily){
@@ -482,31 +580,43 @@ function is_DBentry_ok(data, country) {
             if(!data.tolls_daily_expense || !data.tolls_daily_number_days)
                 return false;
             break;
+        default:
+            return false;
     }
 
-    var monthly_tolls = calculateMonthlyTolls(data.tolls_daily, data.tolls_no_daily_value, data.tolls_no_daily_value, data.tolls_daily_expense, data.tolls_daily_number_days);
+    var monthly_tolls = calculateMonthlyTolls(data.tolls_daily, 
+                                              data.tolls_no_daily_value, 
+                                              data.tolls_no_daily_value, 
+                                              data.tolls_daily_expense, 
+                                              data.tolls_daily_number_days);
+    
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.TOLLS, country.currency, EURcurrConverterStats);
-    if (monthly_tolls > converted_value)
+    if (monthly_tolls > converted_value){
         return false;
+    }
 
     //fines
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.FINES, country.currency, EURcurrConverterStats);
-    if(!data.tickets_value || calculateMonthlyFines(data.tickets_periodicity , data.tickets_value) > converted_value)
+    if(!data.tickets_value || calculateMonthlyFines(data.tickets_periodicity , data.tickets_value) > converted_value){
         return false;
+    }
 
     //washing
     converted_value = convert_from_EUR(statsConstants.MAX_EUR_MONTHLY.WASHING, country.currency, EURcurrConverterStats);
-    if(!data.washing_value || calculateMonthlyWashing(data.washing_periodicity, data.washing_value) > converted_value)
+    if(!data.washing_value || calculateMonthlyWashing(data.washing_periodicity, data.washing_value) > converted_value){
         return false;
+    }
 
     //hours
     if(data.distance_drive_to_work == 'true' || data.fuel_distance_based_car_to_work == 'true'){
-        if(!data.time_spent_home_job || !data.time_spent_weekend)
+        if(!data.time_spent_home_job || !data.time_spent_weekend){
             return false;
+        }
     }
     else{
-        if(!data.time_spent_min_drive_per_day || !data.time_spent_days_drive_per_month)
+        if(!data.time_spent_min_drive_per_day || !data.time_spent_days_drive_per_month){
             return false;
+        }
     }
     return true;
 }
@@ -514,20 +624,25 @@ function is_DBentry_ok(data, country) {
 //checks if the computed result was OK and is not an outlier
 function was_result_ok(result, country) {
 
-    if(!isFinite(result.kinetic_speed))
+    if(!isFinite(result.kinetic_speed)){
         return false;
+    }
 
-    if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED)
+    if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED){
         return false;
+    }
 
-    if(!isFinite(result.virtual_speed) || result.virtual_speed <= 0)
+    if(!isFinite(result.virtual_speed) || result.virtual_speed <= 0){
         return false;
+    }
 
     //distance per month
     var distance_per_month_km = convert_std_dist_to_km(result.distance_per_month, country.distance_std);
-    if(distance_per_month_km > statsConstants.MAX_KM_DRIVEN_PER_MONTH)
+    if(distance_per_month_km > statsConstants.MAX_KM_DRIVEN_PER_MONTH){
         return false;
+    }
 
     return true;
 }
+
 
