@@ -29,10 +29,10 @@ isOnline().then(function(online) {
         process.exit();
     }
     
-    eval(fs.readFileSync(fileNames.src["conversionFunctions.js"])+'');
-    eval(fs.readFileSync(fileNames.src["coreFunctions.js"])+'');
-    eval(fs.readFileSync(fileNames.src["getData.js"])+'');
-    eval(fs.readFileSync(fileNames.server["statsFunctions.js"])+'');
+    eval(fs.readFileSync(fileNames.src["conversionFunctions.js"]).toString());
+    eval(fs.readFileSync(fileNames.src["coreFunctions.js"]).toString());
+    eval(fs.readFileSync(fileNames.src["getData.js"]).toString());
+    eval(fs.readFileSync(fileNames.server["statsFunctions.js"]).toString());
 
     var DB_INFO    = settings.dataBase.credentials;
     var MoneyApiId = settings.money.ApiId;
@@ -162,35 +162,41 @@ isOnline().then(function(online) {
                         'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
             var country_users = []; //array with unique users for one specific country
             var country_data  = []; //array where all data for one specific country is inserted
+            
             var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
-
+            var fin_effort    = new FinEffortObj();
+            
             //queries header
             queryInsert     = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_statistics + " ";
             queryInsertNorm = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_normalized + " ";
             
+            /*builds sql query Header */
             var queriesHeader = "(\
-                country,\
-                Date_of_calculation,\
-                Currency,\
-                CurrToEUR,";
+                country, \
+                Date_of_calculation, \
+                Currency, \
+                CurrToEUR, ";
+            
             for (let key of Object.keys(monthly_costs)){
-                queriesHeader += key + ",";
+                queriesHeader += key + ", ";
             }
+            
             queriesHeader += "\
-                standing_costs,\
-                running_costs,\
-                total_costs,\
-                \
-                running_costs_dist,\
-                total_costs_dist,\
-                \
-                kinetic_speed,\
-                virtual_speed,\
-                \
-                total_costs_year,\
-                \
-                valid_users,\
-                total_users,\
+                standing_costs, \
+                running_costs, \
+                total_costs, ";
+            
+            for (let key of Object.keys(fin_effort)){
+                queriesHeader += key + ", ";
+            }
+            
+            queriesHeader += "\
+                running_costs_dist, \
+                total_costs_dist, \
+                kinetic_speed, \
+                virtual_speed, \
+                valid_users, \
+                total_users, \
                 global_total_users)\
                 \
                 VALUES ";
@@ -231,66 +237,94 @@ isOnline().then(function(online) {
                 };
                 //if(true) {console.log("country_object:");console.log(country_object);}
 
-                let stats_results = CalculateStatistics(country_users, country_data, country_object);
+                let stats_results = calculateStatistics(country_users, country_data, country_object);
 
                 //add computed data to countries array of objects
                 countries[i].valid_users = stats_results.users_counter;
                 countries[i].total_users = country_users.length;
-                countries[i].total_costs = stats_results.totCos.toFixed(1);
+                countries[i].total_costs = stats_results.totCostsPerMonth.toFixed(1);
                 
                 //currency conversion to EUR
                 let curr = countries[i].currency;
                 let currToEUR = fx(1).from('EUR').to(curr);
                 //console.log(currToEUR);
 
+                /**********************************************************************/
+                //builds sql query for respective country
                 let queryInsertCountry =                                       " ('"  + 
                     countries[i].Country                                     + "', '" +
                     date_string                                              + "', '" +
                     curr                                                     + "', '" +
-                    currToEUR                                                + "', '";                
+                    currToEUR                                                + "', '";
+                
                 for (let key of Object.keys(stats_results.monthly_costs)){
                     queryInsertCountry += stats_results.monthly_costs[key]   + "', '";
-                }                
+                }
+                
                 queryInsertCountry += 
                     stats_results.standCos                                   + "', '" +
                     stats_results.runnCos                                    + "', '" +
-                    stats_results.totCos                                     + "', '" +
-                    stats_results.runCostsProDist                            + "', '" +
-                    stats_results.totCostsProDist                            + "', '" +
+                    stats_results.totCostsPerMonth                           + "', '";
+                
+                for (let key of Object.keys(stats_results.fin_effort)){
+                    queryInsertCountry += stats_results.fin_effort[key]      + "', '";
+                }
+                
+                queryInsertCountry += 
+                    stats_results.runCostsPerDist                            + "', '" +
+                    stats_results.totCostsPerDist                            + "', '" +               
                     stats_results.kinetic_speed                              + "', '" +
                     stats_results.virtual_speed                              + "', '" +
-                    ((stats_results.totCostsPerYear/100).toFixed(0))*100     + "', '" +
                     countries[i].valid_users                                 + "', '" +
                     countries[i].total_users                                 + "', '" +
                     unique_users.length + 
                     "' )";
+                
                 //console.log(queryInsertCountry, "\n\n");
                 queryInsert += queryInsertCountry;
+                /**************************************************************/
                 
+                
+                /**************************************************************/
                 //sql query for table for the normalized costs (all costs in EUR)
                 let queryInsertNormCountry =                                     " ('"  + 
                     countries[i].Country                                       + "', '" +
                     date_string                                                + "', '" +
                     ('EUR')                                                    + "', '" +
-                    currToEUR                                                  + "', '";                
+                    currToEUR                                                  + "', '";  
+                
                 for (let key of Object.keys(stats_results.monthly_costs)){
-                    queryInsertNormCountry += fx(stats_results.monthly_costs[key]).
-                                       from(curr).to('EUR')                    + "', '";
-                }                                
+                    queryInsertNormCountry += 
+                        fx(stats_results.monthly_costs[key]).from(curr).to('EUR') + "', '";
+                }
+                
                 queryInsertNormCountry += 
                     fx(stats_results.standCos).from(curr).to('EUR')            + "', '" +
                     fx(stats_results.runnCos).from(curr).to('EUR')             + "', '" +
-                    fx(stats_results.totCos).from(curr).to('EUR')              + "', '" +
-                    fx(stats_results.runCostsProDist).from(curr).to('EUR')     + "', '" +
-                    fx(stats_results.totCostsProDist).from(curr).to('EUR')     + "', '" +
+                    fx(stats_results.totCostsPerMonth).from(curr).to('EUR')    + "', '";                    
+                
+                let fe = stats_results.fin_effort;
+                queryInsertNormCountry += 
+                    fx(fe.aver_income_per_hour).from(curr).to('EUR')           + "', '" +
+                    fx(fe.aver_income_per_month).from(curr).to('EUR')          + "', '" +
+                    fx(fe.income_per_year).from(curr).to('EUR')                + "', '" +
+                    fx(fe.total_costs_year).from(curr).to('EUR')               + "', '" +
+                    fe.hours_per_year_to_afford_car                            + "', '" +
+                    fe.days_car_paid                                           + "', '" +
+                    fe.month_per_year_to_afford_car                            + "', '";
+                
+                queryInsertNormCountry +=                    
+                    fx(stats_results.runCostsPerDist).from(curr).to('EUR')     + "', '" +
+                    fx(stats_results.totCostsPerDist).from(curr).to('EUR')     + "', '" +
                     stats_results.kinetic_speed                                + "', '" +
                     stats_results.virtual_speed                                + "', '" +
-                    fx(stats_results.totCostsPerYear).from(curr).to('EUR')     + "', '" +
                     countries[i].valid_users                                   + "', '" +
                     countries[i].total_users                                   + "', '" +
                     unique_users.length + 
-                    "' )";
+                    "' )";      
+                
                 queryInsertNorm += queryInsertNormCountry;
+                /**************************************************************/
                 
                 if (i != countries.length-1){//doesn't add "," on the last set of values
                     queryInsert     += ", ";
@@ -359,6 +393,7 @@ isOnline().then(function(online) {
             console.log("\nCreating new table into DB");
 
             var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
+            var fin_effort    = new FinEffortObj();
             
             var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_statistics + " (\
                 country                          text,\
@@ -371,15 +406,16 @@ isOnline().then(function(online) {
             createTableQuery += "\
                 standing_costs                   float,\
                 running_costs                    float,\
-                total_costs                      float,\
-                \
+                total_costs                      float,";
+            for (let key of Object.keys(fin_effort)){
+                createTableQuery += key + " " + "float,";
+            } 
+            createTableQuery += "\
                 running_costs_dist               float,\
                 total_costs_dist                 float,\
                 \
                 kinetic_speed                    float,\
                 virtual_speed                    float,\
-                \
-                total_costs_year                 float,\
                 \
                 valid_users                      int(11),\
                 total_users                      int(11),\
@@ -399,6 +435,7 @@ isOnline().then(function(online) {
             console.log("\nCreating new table into DB");
 
             var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
+            var fin_effort    = new FinEffortObj();
 
             var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_normalized + " (\
                 country                          text,\
@@ -411,15 +448,16 @@ isOnline().then(function(online) {
             createTableQuery += "\
                 standing_costs                   float,\
                 running_costs                    float,\
-                total_costs                      float,\
-                \
+                total_costs                      float,";
+            for (let key of Object.keys(fin_effort)){
+                createTableQuery += key + " " + "float,";
+            }   
+            createTableQuery += "\
                 running_costs_dist               float,\
                 total_costs_dist                 float,\
                 \
                 kinetic_speed                    float,\
                 virtual_speed                    float,\
-                \
-                total_costs_year                 float,\
                 \
                 valid_users                      int(11),\
                 total_users                      int(11),\

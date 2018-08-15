@@ -35,7 +35,10 @@ var statsConstants = {
         INSURANCE:    3,
         TAXES:        3,
         MAINTENANCE:  3
-    }
+    },
+    
+    MAX_EUR_INCOME_PER_HOUR: 500,
+    MAX_HOURS_DRIVE_PER_YEAR: 20*365
 };
 
 /*********************************************************************************************************/
@@ -48,13 +51,20 @@ var statsConstants = {
 //"There is a strong convention, with good reason, to use a capital initial letter" for constructors.
 function ResultsObj(){
     this.monthly_costs          = new MonthlyCostsObj();
+    this.total_costs_month      = 0;
+    this.total_costs_year       = 0;
 
     this.fin_effort_calculated  = false;
     this.fin_effort             = new FinEffortObj();
 
+    this.distance_per_month     = 0;
+    
+    this.time_spent_driving = {
+        hours_drive_per_year : 0
+    };
+    
     this.kinetic_speed          = 0;
     this.virtual_speed          = 0;
-    this.distance_per_month     = 0;
 }
 
 //Object Constructor for Monthly Costs
@@ -75,32 +85,39 @@ function MonthlyCostsObj() {
 
 //Object Constructor for Financial Effort
 function FinEffortObj() {
-    this.aver_income_per_hour         = 0;
-    this.aver_income_per_month        = 0;
+    this.aver_income_per_hour  = 0;
+    this.aver_income_per_month = 0;
+    this.income_per_year       = 0;
+    this.total_costs_year      = 0;
+    
+    //these values have no linear operation, that is, the linear averages will not work
     this.hours_per_year_to_afford_car = 0;
     this.days_car_paid                = 0;
-    this.month_per_year_to_afford_car = 0;
-    this.income_per_year              = 0;
-    this.total_costs_year             = 0;
-    this.work_hours_per_y             = 0;
+    this.month_per_year_to_afford_car = 0;    
 }
 
 //Object Constructor for the final Statistical Object
-//that is, the object which stores the statistical final results
+//that is, the object which stores the statistical final results to be sent to DB
 function StatsObj(){
-    this.monthly_costs   = new MonthlyCostsObj();
-    this.standCos        = 0;
-    this.runnCos         = 0;
+    this.monthly_costs        = new MonthlyCostsObj();
+    this.standCos             = 0;
+    this.runnCos              = 0;
     
-    this.totCos          = 0;
-    this.totCostsPerYear = 0;
+    this.totCostsPerMonth     = 0;
+    this.totCostsPerYear      = 0;
 
-    this.runCostsProDist = 0;
-    this.totCostsProDist = 0;
-    this.kinetic_speed   = 0;
-    this.virtual_speed   = 0;
+    this.fin_effort           = new FinEffortObj();
+    
+    this.runCostsPerDist      = 0;
+    this.totCostsPerDist      = 0;
+    
+    this.distance_per_month   = 0;
+    this.hours_drive_per_year = 0;
+    
+    this.kinetic_speed        = 0;
+    this.virtual_speed        = 0;
 
-    this.users_counter   = 0;
+    this.users_counter        = 0;
 }
 
 /*********************************************************************************************************/
@@ -109,9 +126,10 @@ function StatsObj(){
 
 //Gets the average of array of Objects 
 //results_array is an array of objects previously defined in coreFunctions.js, similar to ResultsObj
+//this function should be able to feed itself, that is, the returned object must be valid as a function parameter
 function get_average_costs(results_array){
 
-    var i, key, virtual_speed_len, fin_effort_len;
+    var i, key, fin_effort_len, distance_per_month_len, time_spent_driving_len;
     var length = results_array.length;
     
     var output = new ResultsObj();
@@ -120,67 +138,102 @@ function get_average_costs(results_array){
         return null;
     }
 
-    //if the length if the array of objects is 1, simply returns the own array
+    //if the length if the array of objects is 1, simply returns the first element of array,
     if(length == 1){
-        output.monthly_costs         = Object.assign({}, results_array[0].monthly_costs); //clones Object
-        
-        output.fin_effort_calculated = results_array[0].fin_effort_calculated;
-        output.fin_effort            = results_array[0].fin_effort_calculated ? 
-                                       Object.assign({}, results_array[0].fin_effort) : 
-                                       {};
-        
-        output.distance_per_month    = results_array[0].distance_per_month;
-        output.kinetic_speed         = results_array[0].kinetic_speed;
-        output.virtual_speed         = results_array[0].virtual_speed;
+        output = Object.assign({}, results_array[0]);  //clones Object
     }
 
+    //If the length is greater than 1, finds the average of variables whose function is linear, such as Costs
+    //Costs are linear functions because they are of the type f(x,y,z)=a*x+b*y+c*z, and therefore
+    //the average of the functions is equal to the function of the averages, that is
+    //(f(x1,y1,z1) + f(x2,y2,z2))/2 = f((x1+x2))/2,(y1+y2))/2,(z1+z2))/2 and therefore 
+    //we just sum all the entries of the array, and divide by the number of items (length of the array)
     if(length > 1){
         
         var results_total = new ResultsObj();
 
-        for(i=0, virtual_speed_len=0, fin_effort_len=0; i<length; i++){
+        //calculates the sums, such that it can compute averages, dividing by the number of items (length)
+        for(i=0, fin_effort_len=0, distance_per_month_len=0, time_spent_driving_len=0; i<length; i++){
             
             for(key of Object.keys(results_array[i].monthly_costs)){
                 results_total.monthly_costs[key] += results_array[i].monthly_costs[key];
             }
             
-            //some results have no financial effort info, because it's optional
+            results_total.total_costs_month += results_array[i].total_costs_month;
+            results_total.total_costs_year += results_array[i].total_costs_year;
+            
+            //some results have no financial effort info, because they are optional
             if(results_array[i].fin_effort_calculated){
-                for(key of Object.keys(results_array[i].fin_effort)){
-                    results_total.fin_effort[key] += results_array[i].fin_effort[key];
-                }                
-                fin_effort_len++;
+                let aviph = results_array[i].fin_effort.aver_income_per_hour;
+                /*filters out outliers by aver_income_per_hour, it should be a number x: 0<x<Inf */             
+                if(!isNaN(aviph) && aviph > 0 && isFinite(aviph)){                
+                    for(key of Object.keys(results_array[i].fin_effort)){
+                        results_total.fin_effort[key] += results_array[i].fin_effort[key];
+                    }                
+                    fin_effort_len++;
+                }
             }
             
-            results_total.distance_per_month += results_array[i].distance_per_month;
-            results_total.kinetic_speed      += results_array[i].kinetic_speed;
-
-            //some virtual_speed fields have no info because the user
-            //did not introduce financial effort information
-            //thus calculate the average only from the fields that have info
-            if(isDef(results_array[i].virtual_speed)){
-                results_total.virtual_speed += results_array[i].virtual_speed;
-                virtual_speed_len++;
-            }            
-        }
+            //Driving Distance may, in some cases, not be calculated (form part 3 is optional)
+            if(results_array[i].driving_distance_calculated){
+                results_total.distance_per_month += results_array[i].distance_per_month;    
+                distance_per_month_len++;
+            }
+            
+            //Time spent in Driving may, in some cases, not be calculated (form part 3 is optional)
+            if(results_array[i].time_spent_driving_calculated){
+                results_total.time_spent_driving.hours_drive_per_year += 
+                    results_array[i].time_spent_driving.hours_drive_per_year; 
+                time_spent_driving_len++;
+            }
+            
+        }//for
+        
+        /**************************************************************************************************/
+        //Now, it has the sums in results_total, it can calculate averages by divinding by respective length
         
         for (key of Object.keys(output.monthly_costs)){
             output.monthly_costs[key] = results_total.monthly_costs[key]/length;
         }
         
+        output.total_costs_month = results_total.total_costs_month/length;
+        output.total_costs_year = results_total.total_costs_year/length;        
+        
         //financial effort, if available
-        if(fin_effort_len != 0){
+        if(fin_effort_len > 0){
+            
+            output.fin_effort_calculated = true;
+            
             for (key of Object.keys(output.fin_effort)){
                 output.fin_effort[key] = results_total.fin_effort[key]/fin_effort_len;
-            }            
-        }    
+            }
+            
+            //some variables have no linear calculation formulas, i.e., 
+            //the average of the functions is different from the fuction of the averages, and as such
+            //the functions/operations must be performed, after having the averages of linear variables         
+            output.fin_effort.hours_per_year_to_afford_car = 
+                output.total_costs_year / output.fin_effort.aver_income_per_hour; 
+            output.fin_effort.days_car_paid = 
+                output.total_costs_year / output.fin_effort.income_per_year * 365.25;
+            output.fin_effort.month_per_year_to_afford_car =
+                output.total_costs_year / output.fin_effort.income_per_year * 12;            
+        }
         
-        output.distance_per_month = results_total.distance_per_month/length;
-        output.kinetic_speed      = results_total.distance_per_month/length;
+        if(distance_per_month_len > 0){
+            output.distance_per_month = results_total.distance_per_month/distance_per_month_len;
+        }
+        
+        if(time_spent_driving_len > 0 && distance_per_month_len > 0){
+            
+            output.time_spent_driving.hours_drive_per_year =
+                results_total.time_spent_driving.hours_drive_per_year/time_spent_driving_len;
+            
+            output.kinetic_speed = output.distance_per_month * 12 / output.time_spent_driving.hours_drive_per_year;
+        }
 
-        //financial/consumer effort, if available
-        if(virtual_speed_len != 0){
-            output.virtual_speed      = results_total.virtual_speed/virtual_speed_len;
+        if(fin_effort_len > 0 && time_spent_driving_len > 0 && distance_per_month_len > 0){  
+            output.virtual_speed = output.distance_per_month * 12 /
+                (output.time_spent_driving.hours_drive_per_year + output.fin_effort.hours_per_year_to_afford_car); 
         }
     }
 
@@ -190,7 +243,7 @@ function get_average_costs(results_array){
 //***************************************************************************************
 //this functions calculates the avearge of the averages of the same user inputs
 //for a corresponding country
-function CalculateStatistics(userIds, data, country){
+function calculateStatistics(userIds, data, country){
 // userIds => is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client),
 //the 2nd column has always the same country
 // data    => is a matrix with everything for the specific country
@@ -251,41 +304,33 @@ function CalculateStatistics(userIds, data, country){
 
         //console.log("get_average_costs");
         var avg = get_average_costs(temp_i);
+        
+        output.monthly_costs = Object.assign({}, avg.monthly_costs); //clone object   
 
         //standing costs
-        var total_standing_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + 
-                                         avg.monthly_costs.credit + avg.monthly_costs.inspection + 
-                                         0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
+        output.standCos = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + 
+                          avg.monthly_costs.credit + avg.monthly_costs.inspection + 
+                          0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
         //running costs
-        var total_running_costs_month = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance +
-                                        avg.monthly_costs.repairs_improv + avg.monthly_costs.parking + 
-                                        avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+        output.runnCos = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance +
+                         avg.monthly_costs.repairs_improv + avg.monthly_costs.parking + 
+                         avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
         //total
-        var total_costs_month = avg.monthly_costs.insurance + avg.monthly_costs.fuel + avg.monthly_costs.depreciation +
-                                avg.monthly_costs.credit + avg.monthly_costs.inspection + avg.monthly_costs.maintenance +
-                                avg.monthly_costs.repairs_improv + avg.monthly_costs.car_tax + avg.monthly_costs.parking +
-                                avg.monthly_costs.tolls + avg.monthly_costs.fines + avg.monthly_costs.washing;
+        output.totCostsPerMonth = avg.total_costs_month;
+        output.totCostsPerYear = output.totCostsPerMonth * 12;
 
-        var running_costs_p_unit_distance = avg.distance_per_month ? total_running_costs_month / avg.distance_per_month : 0;
+        output.runCostsPerDist = avg.distance_per_month ? output.runnCos / avg.distance_per_month : 0;
+        output.totCostsPerDist = avg.distance_per_month? avg.total_costs_month / avg.distance_per_month: 0;            
 
-        var total_costs_p_unit_distance = avg.distance_per_month? total_costs_month / avg.distance_per_month: 0;
+        output.fin_effort = Object.assign({}, avg.fin_effort); //clone object
 
-        var total_costs_per_year = total_costs_month * 12;
+        output.distance_per_month   = avg.distance_per_month;
+        output.hours_drive_per_year = avg.time_spent_driving.hours_drive_per_year;
+                
+        output.kinetic_speed = !isNaN(avg.kinetic_speed) && isFinite(avg.kinetic_speed) ? avg.kinetic_speed : 0;
+        output.virtual_speed = !isNaN(avg.virtual_speed) && isFinite(avg.virtual_speed) ? avg.virtual_speed : 0;;
 
-        output.monthly_costs = Object.assign({}, avg.monthly_costs); //clone object
-        
-        output.standCos = total_standing_costs_month;
-        output.runnCos  = total_running_costs_month;
-
-        output.totCos   = total_costs_month;
-        output.totCostsPerYear = total_costs_per_year;
-
-        output.runCostsProDist = running_costs_p_unit_distance;
-        output.totCostsProDist = total_costs_p_unit_distance;
-        output.kinetic_speed =   avg.kinetic_speed;
-        output.virtual_speed =   avg.virtual_speed;
-
-        output.users_counter =   temp_i.length;
+        output.users_counter = temp_i.length;
     }
     
     //console.log(output);
@@ -586,22 +631,41 @@ function is_DBentry_ok(data, country) {
 //checks if the computed result was OK and is not an outlier
 function was_result_ok(result, country) {
 
-    if(!isFinite(result.kinetic_speed)){
-        return false;
-    }
-
-    if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED){
-        return false;
-    }
-
-    if(!isFinite(result.virtual_speed) || result.virtual_speed <= 0){
-        return false;
+    //kinetic speed and virtual/consumer speed
+    if(result.driving_distance_calculated && result.time_spent_driving_calculated){
+        
+        if (!isFinite(result.kinetic_speed)){
+            return false;
+        }
+        if(result.kinetic_speed > statsConstants.MAX_AVERAGE_SPEED){
+            return false;
+        }
+        
+        if(result.fin_effort_calculated){
+            if(!isFinite(result.virtual_speed) || result.virtual_speed <= 0){
+                return false;
+            }
+        }        
     }
 
     //distance per month
-    var distance_per_month_km = convert_std_dist_to_km(result.distance_per_month, country.distance_std);
-    if(distance_per_month_km > statsConstants.MAX_KM_DRIVEN_PER_MONTH){
-        return false;
+    if(result.driving_distance_calculated){
+        var distance_per_month_km = convert_std_dist_to_km(result.distance_per_month, country.distance_std);
+        if(distance_per_month_km > statsConstants.MAX_KM_DRIVEN_PER_MONTH){
+            return false;
+        }
+    }
+    
+    if(result.fin_effort_calculated){
+        if(country.currency == "EUR" && result.fin_effort.aver_income_per_hour > statsConstants.MAX_EUR_INCOME_PER_HOUR){
+            return false;
+        }
+    }
+    
+    if(result.time_spent_driving_calculated){
+        if(result.time_spent_driving.hours_drive_per_year > statsConstants.MAX_HOURS_DRIVE_PER_YEAR){
+            return false;
+        }
     }
 
     return true;
