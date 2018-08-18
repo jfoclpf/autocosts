@@ -73,24 +73,7 @@ function loadPageSettings(){
     $(".sidebar").show();
     
     //button shown on the landing page
-    $("#calculateButton").on("click", function(){
-        $("#hero, footer").hide();
-        $("#form").show();
-        setIcon($(".field_container").first(), "active");
-        
-        //on test version shows everything right from the beginning
-        if(COUNTRY=="XX"){
-            $(".field_container").show();
-        }
-        
-        getScriptOnce(JS_FILES.coreFunctions, function(){
-            getScriptOnce(JS_FILES.validateForm);
-            getScriptOnce(JS_FILES.conversionFunctions);
-            getScriptOnce(JS_FILES.getData, function(){
-                getScriptOnce(JS_FILES.printResults);
-            });
-        });
-    });
+    $("#calculateButton").on("click", calculateButton);
     
     $("#country_select").on('change', function() {
         window.location.href = this.value;
@@ -140,6 +123,29 @@ function loadPageSettings(){
         updateStatsTable(this.value);
     });    
     
+}
+
+//button shown on the landing page
+function calculateButton(){
+    $("#hero, footer").hide();
+    $("#form").show();
+    setIcon($(".field_container").first(), "active");
+
+    //on test version shows everything right from the beginning
+    if(COUNTRY=="XX"){
+        $(".field_container").show();
+    }
+
+    getScriptOnce(JS_FILES.coreFunctions, function(){
+        getScriptOnce(JS_FILES.validateForm);
+        getScriptOnce(JS_FILES.conversionFunctions);
+        getScriptOnce(JS_FILES.getData, function(){
+            getScriptOnce(JS_FILES.printResults);
+        });
+    });
+    
+    loadStyleSheets(['css/responsive.css']);
+    loadStyleSheets(['css/results.css']);
 }
 
 //initial settings regarding the calculator form itself
@@ -360,5 +366,6 @@ function loadsStandardValues(){
         }
     });
 }
+
 
 
