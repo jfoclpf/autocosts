@@ -3,185 +3,185 @@
 /* ------------------------------********* RESPONSIVE *********------------------------------ */
 
 @media screen and (max-width:1150px) {
-	.sidebar > .sidebar-left-container, 
-	.sidebar > .sidebar-right-container {width: 40%;}
+    .sidebar > .sidebar-left-container, 
+    .sidebar > .sidebar-right-container {width: 40%;}
 
-	.sidebar > .sidebar-left-container > .close {margin-left: 44%;}
+    .sidebar > .sidebar-left-container > .close {margin-left: 44%;}
 
-	.container .steps {width: 27%;}
-	.container .form_part {width: 67%; margin-left: 31%;}
-	
+    .container .steps {width: 27%;}
+    .container .form_part {width: 67%; margin-left: 31%;}
+    
 }
 
 
 @media screen and (max-width:768px) {
 
-	.sidebars > .left > .sidebar-left-container, 
-	.sidebars > .right > .sidebar-right-container {width: 50%;}
+    .sidebars > .left > .sidebar-left-container, 
+    .sidebars > .right > .sidebar-right-container {width: 50%;}
 
-	.sidebars > .left > .sidebar-left-container > .close {margin-left: 54%;}
+    .sidebars > .left > .sidebar-left-container > .close {margin-left: 54%;}
 
 
-	/* ------------------ FORM ELEMENTS ------------------*/
-	.container .form_part {width: 82%; margin: 0 4%}
+    /* ------------------ FORM ELEMENTS ------------------*/
+    .container .form_part {width: 82%; margin: 0 4%}
 
-	.container .steps {position: fixed; z-index: 99; background: #f4f6fe; bottom: 0; width: 92%; margin: 0; height: 27px; padding: 4%; min-width: 640px; overflow-x: scroll; overflow-y: hidden;}
-	.container .steps ul {float: left; display: inline-block; width: 100%}
-	.container .steps ul li.one:first-child {width: 143px}
-	.container .steps ul li.two {width: 187px}
-	.container .steps ul li.three {width: 138px; height: 34px; overflow: hidden;}
-	.container .steps ul li.one ul {float: left; display: inline-block;}
+    .container .steps {position: fixed; z-index: 99; background: #f4f6fe; bottom: 0; width: 92%; margin: 0; height: 27px; padding: 4%; min-width: 640px; overflow-x: scroll; overflow-y: hidden;}
+    .container .steps ul {float: left; display: inline-block; width: 100%}
+    .container .steps ul li.one:first-child {width: 143px}
+    .container .steps ul li.two {width: 187px}
+    .container .steps ul li.three {width: 138px; height: 34px; overflow: hidden;}
+    .container .steps ul li.one ul {float: left; display: inline-block;}
 
-	.container .steps ul li,
-	.container .steps ul li:before,
-	.container .steps ul li > ul > li.done:before,
-	.container .steps ul li > ul > li.active:before {float: left;}
+    .container .steps ul li,
+    .container .steps ul li:before,
+    .container .steps ul li > ul > li.done:before,
+    .container .steps ul li > ul > li.active:before {float: left;}
 
-	.container .steps ul li.active > span, 
-	.container .steps ul li.active ul li.active > span,
-	.container .steps ul li > ul > li > span,
-	.container .steps ul li span {display: none}
+    .container .steps ul li.active > span, 
+    .container .steps ul li.active ul li.active > span,
+    .container .steps ul li > ul > li > span,
+    .container .steps ul li span {display: none}
 
-	.container .steps ul li > ul > li:after {display: inline-block; position: relative;width: 22px; height: 2px; top: 2px; left: 33px}
-	.container .steps ul li > ul > li.active:before {float: left; margin: 9px 0 0 39px}
-	.container .steps ul li > ul > li:before {margin: 13px 0 0 40px}
+    .container .steps ul li > ul > li:after {display: inline-block; position: relative;width: 22px; height: 2px; top: 2px; left: 33px}
+    .container .steps ul li > ul > li.active:before {float: left; margin: 9px 0 0 39px}
+    .container .steps ul li > ul > li:before {margin: 13px 0 0 40px}
 
-	.container .steps ul li.number:after {display: none;}
+    .container .steps ul li.number:after {display: none;}
 
 }
 
 
 @media screen and (max-width:600px) {
 
-	.sidebars > .left > .sidebar-left-container, 
-	.sidebars > .right > .sidebar-right-container {width: 70%;}
+    .sidebars > .left > .sidebar-left-container, 
+    .sidebars > .right > .sidebar-right-container {width: 70%;}
 
-	.sidebars > .left > .sidebar-left-container > .close {margin-left: 74%;}
+    .sidebars > .left > .sidebar-left-container > .close {margin-left: 74%;}
 
 }
 
 
 @media screen and (max-width:540px) {
 
-	h1 {font-size: 35px; line-height: 40px}
-	h2 {font-size: 16px}
-	h3 {font-size: 22px}
-	h4 {font-size: 18px}
+    h1 {font-size: 35px; line-height: 40px}
+    h2 {font-size: 16px}
+    h3 {font-size: 22px}
+    h4 {font-size: 18px}
 
-	/* ------ Header ------*/
-	.btn-left-sidebar, .btn-right-sidebar {background-size: 560%; width: 30px; height: 30px; border-width: 2px;}
-	.btn-left-sidebar {left: 10px; top: 10px;}
-	.btn-right-sidebar {right: 10px; top: 10px; background-position: -61px 0;}
+    /* ------ Header ------*/
+    .btn-left-sidebar, .btn-right-sidebar {background-size: 560%; width: 30px; height: 30px; border-width: 2px;}
+    .btn-left-sidebar {left: 10px; top: 10px;}
+    .btn-right-sidebar {right: 10px; top: 10px; background-position: -61px 0;}
 
-	.btn-left-sidebar:hover {background-position: -30px 0}
-	.btn-right-sidebar:hover {background-position: -91px 0}
+    .btn-left-sidebar:hover {background-position: -30px 0}
+    .btn-right-sidebar:hover {background-position: -91px 0}
 
-	header h1.logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
-
-
-	/* ------ Hero ------*/
-	#hero {padding: 0px 0 30px;}
-	#hero .container h2 {margin: 7px 0 20px; }
-	#hero .container .big {max-width: 80%}
-
-	/* ------ Sidebars ------*/
-	.sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
-	.sidebars > .right > .sidebar-right-container {width: 100%;}
-	.sidebars > .right > .sidebar-right-container select {width: 150px;}
-
-	.sidebars > .left > .sidebar-left-container > .close {margin: -13px 0 0 80%;}
-	.sidebars > .right > .sidebar-right-container > .close {margin: 10px 0 0 86%;}
-
-	.close {border: 2px solid #2c49b9; width: 30px; height: 30px}
-	.close span {width: 20px; height: 20px; margin: 8px 0 0 5px;}
-	.close span::before, .close span::after {background: #2c49b9; height: 3px;}
+    header h1.logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
 
 
-	/* ------------------ FORM ELEMENTS ------------------*/
-	main {margin-top: 90px}
-	main #form, #results {width: 100%;}
-	main #form .container {margin-top: 0px}
+    /* ------ Hero ------*/
+    #hero {padding: 0px 0 30px;}
+    #hero .container h2 {margin: 7px 0 20px; }
+    #hero .container .big {max-width: 80%}
 
-	.container .form_part {width: 90%; margin: 0 5%;}
-	
-	.container .form_part .form_part_head_title {margin: 3% 0 25px;}
-	.container .form_part h2.lang-fixed_costs_header_1 {font-size: 22px}
+    /* ------ Sidebars ------*/
+    .sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
+    .sidebars > .right > .sidebar-right-container {width: 100%;}
+    .sidebars > .right > .sidebar-right-container select {width: 150px;}
 
-	.container .form_part .field_container {margin: 0 0 50px;}
+    .sidebars > .left > .sidebar-left-container > .close {margin: -13px 0 0 80%;}
+    .sidebars > .right > .sidebar-right-container > .close {margin: 10px 0 0 86%;}
 
-	.small_input {margin-right: 0}
-
-	label {font-size: 16px; line-height: 18px}
-	input {font-size: 22px; width: 84%; border-radius: 0; -webkit-appearance: none}
-	input[type='date'] {width: 100%; min-height: 2.5rem;}
-	input[type="tel"].input_month::before, input[type="tel"].input_year::before { content: attr(data-placeholder); width: 100%;}
-	input[type="tel"].input_month:focus::before, input[type="tel"].input_year:focus::before,
-	input[type="tel"].input_month:valid::before, input[type="tel"].input_year:valid::before { display: none }
-
-	.input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
-	.input_200 {width: 65%!important}
-	.input_70, select {width: 100%!important}
-	#hero select {width: 118px!important}
-	input.unit_n_month_left {padding-left: 90px}
-	input.unit_n_hour_left {padding-left: 80px}
-	input.no_padding_left {width: 66%}
-
-	select.big-dropdown {font-size: 22px; }
-	.input_value select {margin-top: 10px}
-
-	.radio_tab_container {width: 70px}
-	.radio_tab_container label {font-size: 12px; padding: 4px 0}
-	.small_tabs .radio_tab_container label {font-size: 12px}
-
-	label.float_left {float: inherit; margin-bottom: 10px}
-
-	.unit, .per, .during, .months_year, .minutes_day, 
-	.unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
-
-	.unit {top: 9px}
-	
-	.small_input .unit {top: 9px!important}
-	.small_input input[type='number'] {font-size: 30px; width: 199px; padding-left: 48px}
-
-	#div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
-
-	#currency_div_form2 input[type='number'] {width: 130px}
-
-	#working_time_input_form3 input, #daily_tolls_true_div input {margin-bottom: 10px}
-
-	#div_car_job_yes_form2 input[type='number'] {width: 80px}
-
-	#daily_tolls_false_div label span {max-width: 100%}
-	#daily_tolls_false_div input {width: 50%!important }
-
-	#working_time_input_form3 input.input_70 {width: 40%!important }
-	
-	.time_spent_part2_form3 .input_70 {width: 40px!important }
+    .close {border: 2px solid #2c49b9; width: 30px; height: 30px}
+    .close span {width: 20px; height: 20px; margin: 8px 0 0 5px;}
+    .close span::before, .close span::after {background: #2c49b9; height: 3px;}
 
 
-	/* Calculate car cost button */
-	.calculate_bottom_bar {background: none; height: auto; bottom: 64px; box-shadow: none;}
-	.calculate_bottom_bar a {max-width: 60%; font-size: 14px!important; padding: 8px 0px!important;}
+    /* ------------------ FORM ELEMENTS ------------------*/
+    main {margin-top: 90px}
+    main #form, #results {width: 100%;}
+    main #form .container {margin-top: 0px}
 
-	/* Steps */
-	.container .steps ul li > ul > li:before {}
-	.container .steps ul li > ul > li.active:before {margin: 13px 0 0 39px; width: 3px; height: 7px; content: "";}
-	.container .steps ul li > ul > li.done:before {}
+    .container .form_part {width: 90%; margin: 0 5%;}
+    
+    .container .form_part .form_part_head_title {margin: 3% 0 25px;}
+    .container .form_part h2.lang-fixed_costs_header_1 {font-size: 22px}
+
+    .container .form_part .field_container {margin: 0 0 50px;}
+
+    .small_input {margin-right: 0}
+
+    label {font-size: 16px; line-height: 18px}
+    input {font-size: 22px; width: 84%; border-radius: 0; -webkit-appearance: none}
+    input[type='date'] {width: 100%; min-height: 2.5rem;}
+    input[type="tel"].input_month::before, input[type="tel"].input_year::before { content: attr(data-placeholder); width: 100%;}
+    input[type="tel"].input_month:focus::before, input[type="tel"].input_year:focus::before,
+    input[type="tel"].input_month:valid::before, input[type="tel"].input_year:valid::before { display: none }
+
+    .input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
+    .input_200 {width: 65%!important}
+    .input_70, select {width: 100%!important}
+    #hero select {width: 118px!important}
+    input.unit_n_month_left {padding-left: 90px}
+    input.unit_n_hour_left {padding-left: 80px}
+    input.no_padding_left {width: 66%}
+
+    select.big-dropdown {font-size: 22px; }
+    .input_value select {margin-top: 10px}
+
+    .radio_tab_container {width: 70px}
+    .radio_tab_container label {font-size: 12px; padding: 4px 0}
+    .small_tabs .radio_tab_container label {font-size: 12px}
+
+    label.float_left {float: inherit; margin-bottom: 10px}
+
+    .unit, .per, .during, .months_year, .minutes_day, 
+    .unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
+
+    .unit {top: 9px}
+    
+    .small_input .unit {top: 9px!important}
+    .small_input input[type='number'] {font-size: 30px; width: 199px; padding-left: 48px}
+
+    #div_car_job_yes_form2, #div_car_job_no_form2, .fuel_efficiency {margin-left: 0}
+
+    #currency_div_form2 input[type='number'] {width: 130px}
+
+    #working_time_input_form3 input, #daily_tolls_true_div input {margin-bottom: 10px}
+
+    #div_car_job_yes_form2 input[type='number'] {width: 80px}
+
+    #daily_tolls_false_div label span {max-width: 100%}
+    #daily_tolls_false_div input {width: 50%!important }
+
+    #working_time_input_form3 input.input_70 {width: 40%!important }
+    
+    .time_spent_part2_form3 .input_70 {width: 40px!important }
 
 
-	
-	/* ------ Footer Animation ------*/
+    /* Calculate car cost button */
+    .calculate_bottom_bar {background: none; height: auto; bottom: 64px; box-shadow: none;}
+    .calculate_bottom_bar a {max-width: 60%; font-size: 14px!important; padding: 8px 0px!important;}
 
-	footer .animation {width: 100%; background-size: 160%;}
-	footer, footer .animation {height: 250px}
+    /* Steps */
+    .container .steps ul li > ul > li:before {}
+    .container .steps ul li > ul > li.active:before {margin: 13px 0 0 39px; width: 3px; height: 7px; content: "";}
+    .container .steps ul li > ul > li.done:before {}
 
-	
+
+    
+    /* ------ Footer Animation ------*/
+
+    footer .animation {width: 100%; background-size: 160%;}
+    footer, footer .animation {height: 250px}
+
+    
 }
 
 
 @media screen and (max-width:460px) {
 
-	footer {background-position: left 90px;}	
+    footer {background-position: left 90px;}    
 
 
 }
