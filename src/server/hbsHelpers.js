@@ -166,13 +166,17 @@ module.exports = {
         return output;
     },
     
-    getTotalCostsYear(){
-        
-        var serverData = this.serverData;
-        var CC = this.CC;
-        
-        if(serverData.settings.switches.dataBase && CC.toUpperCase() !== "XX"){        
-            return serverData.statsData[CC].total_costs_year;
+    //gets an entry from the statistical DB
+    getStatsData(entry, toFixed){
+        if(isDB(this)){
+            let val = this.serverData.statsData[this.CC][entry];   
+            
+            if(typeof toFixed !== "undefined" && typeof val === "number"){
+                return val.toFixed(toFixed);
+            }
+            else{
+                return val;
+            }
         }
         else{
             return "";
@@ -180,3 +184,7 @@ module.exports = {
     }
 }
 
+/*server side Handlebars function to tell whether the Statistical Database Information is activated*/
+function isDB(_this){
+    return _this.serverData.settings.switches.dataBase && _this.CC.toUpperCase() !== "XX";
+}
