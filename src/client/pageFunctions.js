@@ -164,18 +164,18 @@ function resizeSelectToContent(jqueryId){
 
 //rounds a number
 function round(number, precision) {
-  var shift = function (number, precision) {
+    var shift = function (number, precision) {
     var numArray = ("" + number).split("e");
-    return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
-  };
-  return shift(Math.round(shift(number, +precision)), -precision);
+        return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+    };
+    return shift(Math.round(shift(number, +precision)), -precision);
 }
 
 /* Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
  * @returns {String} */
 function getMobileOperatingSystem() {
-  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
       // Windows Phone must come first because its UA also contains "Android"
     if (/windows phone/i.test(userAgent)) {
