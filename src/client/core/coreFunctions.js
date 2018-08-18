@@ -376,6 +376,8 @@ function calculate_costs(f1, f2, f3, country){
                             monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
 
     var total_costs_year = total_costs_month * 12;
+    
+    var total_costs_ever = total_costs_month * age_months;
 
 
     //*************** PUBLIC TRANSPORTS ************
@@ -471,6 +473,7 @@ function calculate_costs(f1, f2, f3, country){
             hours_per_year_to_afford_car: 0,    //hours per year to afford the car
             month_per_year_to_afford_car: 0,    //months per year to afford the car
             days_car_paid: 0,                   //number of days till the car is paid
+            percentage_of_income: 0             //percentage of income that car costs represent
         };
 
         //income
@@ -549,6 +552,7 @@ function calculate_costs(f1, f2, f3, country){
         fin_effort.hours_per_year_to_afford_car = total_costs_year / fin_effort.aver_income_per_hour;
         fin_effort.month_per_year_to_afford_car = total_costs_year / fin_effort.income_per_year * 12;
         fin_effort.days_car_paid = total_costs_year / fin_effort.income_per_year * 365.25;
+        fin_effort.percentage_of_income = total_costs_year / fin_effort.income_per_year * 100;
 
     }//EOF FINANCIAL EFFORT
 
@@ -723,6 +727,7 @@ function calculate_costs(f1, f2, f3, country){
         total_running_costs_month: total_running_costs_month,
         total_costs_month: total_costs_month,
         total_costs_year: total_costs_year,
+        total_costs_ever : total_costs_ever,
         running_costs_p_unit_distance: running_costs_p_unit_distance,
         total_costs_p_unit_distance: total_costs_p_unit_distance,
 
