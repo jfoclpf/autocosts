@@ -33,7 +33,46 @@ isOnline().then(function(online) {
     eval(fs.readFileSync(fileNames.src["coreFunctions.js"]).toString());
     eval(fs.readFileSync(fileNames.src["getData.js"]).toString());
     eval(fs.readFileSync(fileNames.server["statsFunctions.js"]).toString());
+    
+    //**************************************************************************************************
+    //                            Database for Average template
+    // Template of the DBs (monthly_costs_statistics and monthly_costs_normalized) that will be created 
+    // and into which the averages from the users will be stored, with a row of said DB for each country                                                          
+    var AVG_DB_TEMPLATE = [        
+        [ "country",               "text" ],
+        [ "Date_of_calculation",   "date" ],
+        [ "Currency",              "text" ],
+        [ "CurrToEUR",            "float" ],
+        /*Monthly costs elems. will come here, see statsFunctions.js*/
+        [ "standing_costs",       "float" ],
+        [ "running_costs",        "float" ],
+        [ "total_costs",          "float" ],
+        /*Financial Effort elms. will come here, see statsFunctions.js*/
+        [ "running_costs_dist",   "float" ],  
+        [ "total_costs_dist",     "float" ],
+        [ "kinetic_speed",        "float" ],
+        [ "virtual_speed",        "float" ],
+        [ "valid_users",        "int(11)" ],
+        [ "total_users",        "int(11)" ],
+        [ "global_total_users", "int(11)" ]
+    ];
 
+    //inserts monthly costs elements into array, after "CurrToEUR"
+    var keys = Object.keys(new MonthlyCostsObj()); //template with Object, see statFunctions.js
+    var monthly_costs_length = keys.length;
+    for (let i = monthly_costs_length-1; i >= 0; i--){        
+        AVG_DB_TEMPLATE.splice(4, 0, [keys[i], "float"]);
+    }
+        
+    //inserts financial effort elements into array, after "total_costs"
+    keys = Object.keys(new FinEffortObj()); //template with Object, see statFunctions.js
+    for (let i = keys.length-1; i>=0; i--){        
+        AVG_DB_TEMPLATE.splice(7 + monthly_costs_length, 0, [keys[i], "float"]);
+    }
+    
+    //console.log(AVG_DB_TEMPLATE);
+    /*********************************************************************************************/
+    
     var DB_INFO    = settings.dataBase.credentials;
     var MoneyApiId = settings.money.ApiId;
     //detect for null or empty object
@@ -161,45 +200,19 @@ isOnline().then(function(online) {
             console.log('\nCalculating data and building DB insertion data for ' + 
                         'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
             var country_users = []; //array with unique users for one specific country
-            var country_data  = []; //array where all data for one specific country is inserted
-            
-            var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
-            var fin_effort    = new FinEffortObj();
+            var country_data  = []; //array where all data for one specific country is inserted           
             
             //queries header
             queryInsert     = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_statistics + " ";
             queryInsertNorm = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_normalized + " ";
             
-            /*builds sql query Header */
-            var queriesHeader = "(\
-                country, \
-                Date_of_calculation, \
-                Currency, \
-                CurrToEUR, ";
+            /*builds sql query Header based on AVG_DB_TEMPLATE*/
+            var queriesHeader = "(";
+            for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
+                queriesHeader += AVG_DB_TEMPLATE[i][0] + (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") ");    
+            }            
             
-            for (let key of Object.keys(monthly_costs)){
-                queriesHeader += key + ", ";
-            }
-            
-            queriesHeader += "\
-                standing_costs, \
-                running_costs, \
-                total_costs, ";
-            
-            for (let key of Object.keys(fin_effort)){
-                queriesHeader += key + ", ";
-            }
-            
-            queriesHeader += "\
-                running_costs_dist, \
-                total_costs_dist, \
-                kinetic_speed, \
-                virtual_speed, \
-                valid_users, \
-                total_users, \
-                global_total_users)\
-                \
-                VALUES ";
+            queriesHeader += "VALUES ";
             
             queryInsert     += queriesHeader;
             queryInsertNorm += queriesHeader;
@@ -250,7 +263,7 @@ isOnline().then(function(online) {
                 //console.log(currToEUR);
 
                 /**********************************************************************/
-                //builds sql query for respective country
+                //builds sql query for respective country, check var AVG_DB_TEMPLATE
                 let queryInsertCountry =                                       " ('"  + 
                     countries[i].Country                                     + "', '" +
                     date_string                                              + "', '" +
@@ -286,8 +299,8 @@ isOnline().then(function(online) {
                 
                 
                 /**************************************************************/
-                //sql query for table for the normalized costs (all costs in EUR)
-                let queryInsertNormCountry =                                     " ('"  + 
+                //sql query for table for the normalized costs (all costs in EUR), check var AVG_DB_TEMPLATE
+                let queryInsertNormCountry =                                    " ('"   + 
                     countries[i].Country                                       + "', '" +
                     date_string                                                + "', '" +
                     ('EUR')                                                    + "', '" +
@@ -391,35 +404,15 @@ isOnline().then(function(online) {
         //Creates new table: monthly_costs_statistics
         function(callback) {
             console.log("\nCreating new table into DB");
-
-            var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
-            var fin_effort    = new FinEffortObj();
             
-            var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_statistics + " (\
-                country                          text,\
-                Date_of_calculation              date,\
-                Currency                         text,\
-                CurrToEUR                        float,";                
-            for (let key of Object.keys(monthly_costs)){
-                createTableQuery += key + " " + "float,";
+            var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_statistics; 
+            
+            createTableQuery += " (";
+            
+            for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
+                createTableQuery += AVG_DB_TEMPLATE[i][0] + " " + AVG_DB_TEMPLATE[i][1];
+                createTableQuery += (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") "); 
             }
-            createTableQuery += "\
-                standing_costs                   float,\
-                running_costs                    float,\
-                total_costs                      float,";
-            for (let key of Object.keys(fin_effort)){
-                createTableQuery += key + " " + "float,";
-            } 
-            createTableQuery += "\
-                running_costs_dist               float,\
-                total_costs_dist                 float,\
-                \
-                kinetic_speed                    float,\
-                virtual_speed                    float,\
-                \
-                valid_users                      int(11),\
-                total_users                      int(11),\
-                global_total_users               int(11))";
             
             db.query(createTableQuery, function(err, results, fields) {
                 if (err){console.log(err); return callback(err);}
@@ -434,34 +427,14 @@ isOnline().then(function(online) {
         function(callback) {
             console.log("\nCreating new table into DB");
 
-            var monthly_costs = new MonthlyCostsObj(); //template with Object, see statFunctions.js
-            var fin_effort    = new FinEffortObj();
+            var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_normalized;
 
-            var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_normalized + " (\
-                country                          text,\
-                Date_of_calculation              date,\
-                Currency                         text,\
-                CurrToEUR                        float,";
-            for (let key of Object.keys(monthly_costs)){
-                createTableQuery += key + " " + "float,";
+            createTableQuery += " (";
+            
+            for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
+                createTableQuery += AVG_DB_TEMPLATE[i][0] + " " + AVG_DB_TEMPLATE[i][1];
+                createTableQuery += (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") "); 
             }
-            createTableQuery += "\
-                standing_costs                   float,\
-                running_costs                    float,\
-                total_costs                      float,";
-            for (let key of Object.keys(fin_effort)){
-                createTableQuery += key + " " + "float,";
-            }   
-            createTableQuery += "\
-                running_costs_dist               float,\
-                total_costs_dist                 float,\
-                \
-                kinetic_speed                    float,\
-                virtual_speed                    float,\
-                \
-                valid_users                      int(11),\
-                total_users                      int(11),\
-                global_total_users               int(11))";
             
             db.query(createTableQuery, function(err, results, fields) {
                 if (err){console.log(err); return callback(err);}
