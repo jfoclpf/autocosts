@@ -64,7 +64,7 @@ function printResults(f1, f2, f3, calculatedData){
     //console.log(JSON.stringify(calculatedData, null, 4));
     
     $("#form").hide();
-    
+        
     //from complex object with hierarchies, flattens to simple object
     //see: https://github.com/hughsk/flat
     var flattenedData = flatten(calculatedData, {delimiter:"_"});    
@@ -82,8 +82,30 @@ function printResults(f1, f2, f3, calculatedData){
                 $i.html(numToShow);
             }
         }
+        
+        setFuelDetails(f2, calculatedData);        
+        setClassAccordionHandler();
     });    
     
+}
+
+function setClassAccordionHandler(){
+    
+    var i, acc = document.getElementsByClassName("accordion");
+    
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            
+            if (panel.style.maxHeight){
+                panel.style.maxHeight = null;
+            } 
+            else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+    }
 }
 
 //puts the currency symbol after the money value, for certain countries
@@ -99,8 +121,73 @@ function currencyShow(value){
     }
 }
 
+function setFuelDetails(f2, calculatedData){
+    
+    var addLiElm = function(text){
+        var $fuelDesc = $("#results .fuel_description ul");
+        $fuelDesc.append($("<li>").text(text));
+    };            
+    
+    switch(f2.type_calc_fuel){
+        case "km":
+            if (f2.take_car_to_job == "false"){
+                switch(calculatedData.fuel_period_km)
+                {
+                    case "1":
+                        addLiElm(f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.month);
+                        break;
+                    case "2":
+                        addLiElm(f2.distance + " " + WORDS.dist_each_two_months);
+                        break;
+                    case "3":
+                        addLiElm(f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.trimester);
+                        break;
+                    case "4":
+                        addLiElm(f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.semester);
+                        break;
+                    case "5":
+                        addLiElm(f2.distance + " " + WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.year);
+                        break;
+                }
+                addLiElm(WORDS.fuel_car_eff + ": " + f2.car_consumption + " " + WORDS.std_fuel_calc);
+                addLiElm(WORDS.fuel_price1 + ": " + f2.fuel_price + " " + WORDS.curr_symbol + "/" + WORDS.std_volume_short);
+            }
+            else{
+                addLiElm(f2.days_p_week + " " + WORDS.fuel_job_calc1);
+                addLiElm(WORDS.you_drive + " " + f2.distance_home2job + " " + WORDS.fuel_dist_home_job1);
+                addLiElm(WORDS.you_drive + " " + f2.distance_weekend + " " + WORDS.fuel_dist_no_job1);
+                addLiElm(WORDS.you_drive_totally_avg + " " + calculatedData.distance_per_month.toFixed(1) + " " + 
+                         WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.month + " (~30.5 " + WORDS.days + ")");
+                addLiElm(WORDS.fuel_car_eff + ": " + f2.car_consumption + " " + WORDS.std_fuel_calc);
+                addLiElm(WORDS.fuel_price + ": " + f2.fuel_price + " " + WORDS.curr_symbol + "/" + WORDS.std_volume_short);
+            }
+            break;
+            
+        case "euros":
+            switch(calculatedData.fuel_cost_period)
+            {
+                case "1":
+                    addLiElm(f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month);
+                    break;
+                case "2":
+                    addLiElm(f2.fuel_money + " " + WORDS.dist_each_two_months);
+                    break;
+                case "3":
+                    addLiElm(f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.trimester);
+                    break;
+                case "4":
+                    addLiElm(f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.semester);
+                    break;
+                case "5":
+                    addLiElm(f2.fuel_money + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
+                    break;
+            }
+            break;
+    }        
+}
+
 //flatten object
-function flatten (target, opts) {
+function flatten(target, opts) {
     opts = opts || {};
 
     var delimiter = opts.delimiter || '.';
