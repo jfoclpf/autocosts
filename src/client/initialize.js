@@ -73,7 +73,7 @@ function loadPageSettings(){
     $(".sidebar").show();
     
     //button shown on the landing page
-    $("#calculateButton").on("click", calculateButton);
+    $("#calculateButton").on("click", calculateButtonOnclick);
     
     $("#country_select").on('change', function() {
         window.location.href = this.value;
@@ -125,8 +125,8 @@ function loadPageSettings(){
     
 }
 
-//button shown on the landing page
-function calculateButton(){
+//When clicked the Calculate Button shown on the landing page
+function calculateButtonOnclick(){
     $("#hero, footer").hide();
     $("#form").show();
     setIcon($(".field_container").first(), "active");
