@@ -285,3 +285,23 @@ getScriptOnce(JS_FILES.jTimer, function(){
     TimeCounter.resetStopwatch();    
 });
 /* jshint ignore:end */
+
+/*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
+(But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
+function loadStyleSheets(styleSheets) {
+    var head = document.getElementsByTagName('head')[0];
+
+    for (var i = 0; i < styleSheets.length; i++) {
+        var link = document.createElement('link');
+        var rel = document.createAttribute('rel');
+        var href = document.createAttribute('href');
+
+        rel.value = 'stylesheet';
+        href.value = styleSheets[i];
+
+        link.setAttributeNode(rel);
+        link.setAttributeNode(href);
+
+        head.appendChild(link);
+    }
+}
