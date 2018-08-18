@@ -1,0 +1,135 @@
+
+/* ------------------------------********* RESULTS *********------------------------------ */
+
+.results {margin: 0 auto}
+.results header {position: relative; margin-bottom: 50px}
+
+/*******------ 3 boxes at the top ------*******/
+#info-boxes .container {display: block; margin: 0 auto; padding: 0; max-width: 880px; height: 175px;}
+#info-boxes .container .info-box {float: left; color: white; border-radius: 5px; width: 30.333333%; height: 115px; background-color: #2c49b9; padding: 30px 0; margin: 0 1.5%;}
+
+#info-boxes .container .info-box h2 {font-size: 55px; line-height: 45px; margin: 0 30px;}
+#info-boxes .container .info-box h2 sup {font-size: 25px; font-weight: 300; margin-top: 4px }
+#info-boxes .container .info-box h3 {font-size: 18px; margin: 0 30px;}
+#info-boxes .container .info-box span {font-weight: 300}
+#info-boxes .container .info-box .per {font-size: 22px; margin-left: 20px; font-weight: 300}
+#info-boxes .container .info-box select {background: url('../img/dd_arrow-white.png'); color: white; border-color: white; font-size: 22px; text-transform: lowercase;}
+
+#info-boxes .container .box-2 h2 {font-size: 45px; line-height: 35px; margin: 23px 30px 5px;}
+
+#info-boxes .container .box-3 .cake-income {float: left; margin: 14px 10px 0 30px; width: 60px; height: 60px; border-radius: 50%; border: 15px solid #4c6ef2 }
+#info-boxes .container .box-3 .text {text-align: left;}
+#info-boxes .container .box-3 .text h2 {font-size: 50px; margin: 29px 0 0}
+
+/*******------ Average Monthly Cost ------*******/
+#avg-monthly-cost {margin: 100px 0 80px}
+#avg-monthly-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
+#avg-monthly-cost .stats {width: 100%; height: 300px; border: 2px solid #b0b2be; border-style: dashed; margin-bottom: 20px}
+#avg-monthly-cost .stats-references {display: inline-block; width: 100%;}
+
+#avg-monthly-cost .three-boxes {display: inline-block; margin-top: 50px }
+#avg-monthly-cost .three-boxes .box {border-radius: 5px; width: 31%; min-height: 280px; margin: 0 1%; float: left; display: inline-block; background-color: white; -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);}
+#avg-monthly-cost .three-boxes .box .title {border-left: 10px solid #2c49b9; margin: 10px 0; text-align: left;width: 94%; padding: 3px 0;}
+#avg-monthly-cost .three-boxes .box .title h3 {display: inline-block; margin-left: 10px}
+#avg-monthly-cost .three-boxes .box .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-top: 8px}
+#avg-monthly-cost .three-boxes .total .title {border-color: #efa00b}
+
+
+/******----- References -----******/
+.stats-references ul {margin-top: 10px; color: #868790; font-size: 12px}
+.stats-references ul li {list-style: none; padding: 0 10px 0 15px; display: inline-block; line-height: 23px;}
+.stats-references ul li:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 5px 0 0 -15px;}
+
+.stats-references .standing-costs,
+.stats-references .running-costs {float: left; text-align: left;}
+.stats-references .standing-costs {width: 40%}
+.stats-references .running-costs {margin-left: 5%; width: 55%}
+
+/* References colors */
+.depreciation_color:before {background-color: #2ba3d6;}
+.vehicle-insurance_color:before {background-color: #10c6e6;}
+.car-finance_color:before {background-color: #5ae0e2;}
+.vehicle-inspection_color:before {background-color: #99e6bc;}
+.vehicle-excise_color:before {background-color: #ffda70;}
+.fuel_color:before {background-color: #ff9e84;}
+.maintenance_color:before {background-color: #ff7192;}
+.repair_color:before {background-color: #e562aa;}
+.parking_color:before {background-color: #ea90cd;}
+.tolls_color:before {background-color: #eabcef;}
+.traffic_color:before {background-color: #9f97ef;}
+.washing_color:before {background-color: #867ae3;}
+.net-income_color:before {background-color: #2ba3d6;}
+.total-costs_color:before {background-color: #10c6e6;}
+.car-cost_color:before {background-color: #5ae0e2;}
+.public-trans_color:before {background-color: #99e6bc;}
+.taxi-trans_color:before {background-color: #ffda70;}
+.other-trans_color:before {background-color: #ff9e84;}
+.uber_color:before {background-color: #ff7192;}
+.other-trans-2_color:before {background-color: #e562aa;}
+
+
+/*******------ Financial efforts  |  Equivalent transport costs ------*******/
+.results-section {display: block; float: left; width: 100%; margin-bottom: 80px }
+.results-section h2 span{text-align: center; font-weight: 400; color: #868790; font-size: 16px}
+.results-section .graph {display: inline-block; float: left; width: 50%; text-align: left;}
+.results-section .graph h5 {margin: 0 0 20px}
+.results-section .graph .stats {width: 100%; height: 400px; border: 2px solid #b0b2be; border-style: dashed; margin-bottom: 20px}
+
+.results-section .values {float: right; display: inline-block; width: 35%; }
+.results-section .values .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-bottom: 10px;}
+.results-section .values {margin-bottom: 50px  }
+.results-section .values h5, .results-section .values span {font-size: 18px}
+.results-section .values .accordion {padding: 5px 0}
+
+.results-section .values .accordion h5:before { margin: 6px 0 0 -18px}
+
+.results-section .values .total-ammount {width: 100%}
+.results-section .values .total-ammount h4 {margin-left: 0}
+
+#transport-costs {margin-bottom: 160px}
+
+
+/*******------ Accordions ------*******/
+.accordion, .total-item {background: none; color: #2c49b9; cursor: pointer; padding: 3px 20px; width: 100%; border: none; text-align: left; outline: none; transition: 0.4s; font-family: 'Nunito', Arial, sans-serif;}
+.active, .accordion:hover {}
+.accordion h5 {max-width: 70%; padding-left: 15px; font-size: 14px; display: inline-block; font-weight: 700;}
+.accordion span,
+.total-item span {font-size: 14px; color: black; display: inline-block; float: right;}
+.accordion h5:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
+.accordion h5:after {display: inline-block; position: relative; content: ""; top: -2px; right: 0; margin-left: 4px; width: 7px; height: 7px; transform: rotate(45deg); border-right: 1px solid #2c49b9; border-bottom: 1px solid #2c49b9;}
+
+.active h5:after {transform: rotate(-135deg); top: 2px;}
+
+.panel {padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out;}
+.panel ul {width: 78%}
+.panel ul li {list-style: none; text-align: left; font-size: 14px; color: #797b82; padding: 3px 0 3px 17px}
+
+.total-ammount {text-align: left;width: 94%; padding: 3px 0;}
+.total-ammount h4,
+.total-ammount span {display: inline-block; font-weight: 700; font-size: 18px}
+.total-ammount h4 {margin-left: 20px}
+.total-ammount span {text-align: right; float: right; }
+
+.total-item {display: inline-block; font-weight: 400; color: black; width: 88%; padding: 3px 6%}
+.total-item h5 {display: inline-block; cursor: auto;}
+
+
+/*******------ Bottom Action Bar ------*******/
+.bottom-actions-bar {background-color: white; -webkit-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); -moz-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); display: block; position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px 0;}
+.bottom-actions-bar .left-actions {float: left;}
+.bottom-actions-bar .left-actions a {margin-top: 8px}
+
+.bottom-actions-bar .center-actions {margin: 0 auto; display: inline-flex;}
+.bottom-actions-bar .center-actions a {margin: 0 5px;}
+.bottom-actions-bar .center-actions a svg {margin-right: 5px; vertical-align: middle;}
+
+.bottom-actions-bar .right-actions {float: right;}
+.bottom-actions-bar .right-actions ul {display: flex;}
+.bottom-actions-bar .right-actions ul li{display: inline-block; margin-left: 10px}
+.bottom-actions-bar .right-actions ul li a {width: 25px; height: 25px; border: 1px solid #b0b2be; border-radius: 50%; padding: 5px;}
+
+.bottom-actions-bar .right-actions ul li.facebook a {color: #3c5a9a; fill: #3c5a9a}
+.bottom-actions-bar .right-actions ul li.twitter a {color: #5da8dc; fill: #5da8dc}
+.bottom-actions-bar .right-actions ul li.linkedin a {color: #0077b5; fill: #0077b5}
+.bottom-actions-bar .right-actions ul li.pinterest a {color: #bd081c; fill: #bd081c}
+
