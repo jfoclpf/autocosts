@@ -94,8 +94,7 @@ async.series([
     function(callback){
         if(options.copy){
             copy();
-            //concatCSSFiles(callback);
-            callback();
+            concatCSSFiles(callback);
         }
         else{
             callback();
@@ -165,7 +164,7 @@ async.series([
             //when option run is selected, at least makes a new copy from src/ to bin/ if not enabled
             if(!options.copy){
                 copy();
-                //concatCSSFiles(callback);
+                concatCSSFiles(callback);
             }                        
             runApp();
         }        
@@ -207,52 +206,68 @@ function copy(){
 }
 
 //concatenate some CSS files
-function concatCSSFiles(mainCallback){    
-     
-    var CSS_DIR = directories.bin.css;
-    
-    //creates directory if it doesn't exist
-    if (!fs.existsSync(path.join(CSS_DIR, 'merged-min'))){
-        fs.mkdirSync(path.join(CSS_DIR, 'merged-min'));
-    }    
+function concatCSSFiles(mainCallback){  
     
     //CSS files to be concatenated, 
     //the ones which are needed for initial main page loading
     var files1Arr = [
-        path.join(CSS_DIR, 'main.css'),
-        path.join(CSS_DIR, 'central.css'),
-        path.join(CSS_DIR, 'form.css'),
-        path.join(CSS_DIR, 'left.css'),
-        path.join(CSS_DIR, 'right.css'),
-        path.join(CSS_DIR, 'header.css'),
-        path.join(CSS_DIR, 'flags.css'),
-        path.join(CSS_DIR, 'mobile.css')
+        'style.css', 'responsive.css', 'fonts.css'
     ];
+    //name given to the merged file
+    var files1MergedName = 'merged_init.css';
 
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
     var files2Arr = [
-        path.join(CSS_DIR, 'jAlert.css'),
-        path.join(CSS_DIR, 'results.css')
-
-    ];
+        'results.css'
+    ];       
+    //name given to the merged file
+    var files2MergedName = 'merged_deferred.css';    
+    
+    /*************************************************************/
+    
+    var CSS_DIR = directories.bin.css;      
+    
+    //joins the CSS dir
+    var files1ArrFullPath = [];
+    for(let i=0; i<files1Arr.length; i++){
+        files1ArrFullPath[i] = path.join(CSS_DIR, files1Arr[i]);
+    }
+    var files2ArrFullPath = [];
+    for(let i=0; i<files2Arr.length; i++){
+        files2ArrFullPath[i] = path.join(CSS_DIR, files2Arr[i]);
+    }               
 
     //concatenating files
     async.series([        
         function(callback){
-            concat(files1Arr, path.join(CSS_DIR, 'merged-min', 'merged1.css.hbs'),
+            concat(files1ArrFullPath, path.join(CSS_DIR, files1MergedName),
                 function(err) {
-                    if (err) throw err
-                    console.log('merged1.css.hbs concatenation done');
+                    if (err) {throw err};
+                    
+                    //builds console.log msg
+                    let consoleMsg = 'Concatenation done on ' + files1MergedName + ' from: ';
+                    for(let i=0; i<files1Arr.length; i++){
+                        consoleMsg += files1Arr[i] + ', ';
+                    }                 
+                    console.log(consoleMsg);
+                
                     callback();
                 }
             );
         },    
         function(callback){
-            concat(files2Arr, path.join(CSS_DIR, 'merged-min', 'merged2.css'),
+            concat(files2ArrFullPath, path.join(CSS_DIR, files2MergedName),
                 function(err) {
-                    if (err) throw err
-                    console.log('merged2.css concatenation done');
+                    if (err) {throw err};
+                
+                    //builds console.log msg
+                    let consoleMsg = 'Concatenation done on ' + files2MergedName + ' from: ';
+                    for(let i=0; i<files2Arr.length; i++){
+                        consoleMsg += files2Arr[i] + ', ';
+                    }                 
+                    console.log(consoleMsg);                    
+                
                     callback();
                 }
             );
