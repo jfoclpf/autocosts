@@ -140,7 +140,7 @@ function calculateButtonOnclick(){
         getScriptOnce(JS_FILES.validateForm);
         getScriptOnce(JS_FILES.conversionFunctions);
         getScriptOnce(JS_FILES.getData, function(){
-            getScriptOnce(JS_FILES.printResults);
+            loadExtraFiles();
         });
     });
     
@@ -241,7 +241,7 @@ function loadFormSettings(){
 function loadFormHandlers(){
     
     //run button
-    $("#calculate_costs_btn").on( "click", function(){Run2()});
+    $("#calculate_costs_btn").on( "click", function(){Run2()});        
     
     //button "next"; function buttonNextHandler is on formFunctions.js
     $(".button.btn-orange").on( "click", function(){
@@ -305,6 +305,12 @@ function loadFormHandlers(){
     $("#print_button").on( "click", function(){Print()});
     $("#generate_PDF").on( "click", function(){generatePDF()});    
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
+    
+    //edit form on results
+    $("#results #edit_form_btn").on( "click", function(){
+        $("#form").show();               
+        $("#results").hide();
+    });
     
 }
 

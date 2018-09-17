@@ -28,7 +28,7 @@ function loadExtraFiles() {
     }
 
     //file JS_FILES.g_recaptcha is from this project and must always be loaded
-    getScriptOnce(JS_FILES.g_recaptcha, function(){
+   /* getScriptOnce(JS_FILES.g_recaptcha, function(){
         //Google Captcha API doesn't work nor applies on localhost
         if (SWITCHES.g_captcha && NOT_LOCALHOST){
             getScriptOnce(JS_FILES.Google.recaptchaAPI, function(){
@@ -38,7 +38,7 @@ function loadExtraFiles() {
         else{
             SERVICE_AVAILABILITY.g_captcha = false;
         }                 
-     });
+     });*/
    
 
     if (SWITCHES.social){
@@ -305,3 +305,77 @@ function loadStyleSheets(styleSheets) {
         head.appendChild(link);
     }
 }
+
+//Get the applicable standard values
+function getFuelEfficiencyOptStr(){
+    switch(WORDS.fuel_efficiency_std_option){
+        case 1:
+            return "l/100km";            
+        case 2:
+            return "km/l";            
+        case 3:
+            return "mpg(imp)";
+        case 4:
+            return "mpg(US)";           
+        case 5:
+            return "l/mil";
+        case 6:
+            return "km/gal(US)";
+        default: 
+            return "error";
+    }
+}
+
+function getDistanceOptStr(){
+    switch(WORDS.distance_std_option){
+        case 1:
+            return "kilometres";            
+        case 2:
+            return "miles";            
+        case 3:
+            return "mil";
+        default: 
+            return "error";
+    }
+}
+
+function getDistanceOptStrShort(){
+    switch(WORDS.distance_std_option){
+        case 1:
+            return "km";            
+        case 2:
+            return "mi";            
+        case 3:
+            return "Mil";
+        default: 
+            return "error";
+    }
+}
+
+function getFuelPriceVolumeOptStr(){
+    switch(WORDS.fuel_price_volume_std){
+        case 1:
+            return "litres";            
+        case 2:
+            return "imperial gallons";            
+        case 3:
+            return "US gallons";
+        default: 
+            return "error";
+    }
+}
+
+//puts the currency symbol after the money value, for certain countries
+function currencyShow(value){
+
+    if (typeof WORDS.invert_currency !== 'undefined' && 
+            (WORDS.invert_currency == "true" || WORDS.invert_currency === true || WORDS.invert_currency=="1"))
+    {
+        return (value + " " + WORDS.curr_symbol);
+    }
+    else{
+        return (WORDS.curr_symbol + " " + value);
+    }
+}
+
+
