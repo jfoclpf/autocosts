@@ -33,7 +33,7 @@ var SWITCHES,               //GLOBAL switches Object
     IS_HUMAN_CONFIRMED,     //for Google reCaptcha
     UBER_API,               //UBER API object with city specific costs (cost per km, per minute, etc.)
     UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX 
-    CALCULATED,             //calculated meta-data after user clicks "Run"
+    CALCULATED_DATA,        //calculated meta-data after user clicks "Run"
     DISPLAY,                //Object regarding the display of information               
     SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available,
     UUID,                   //Unique User Identifier
@@ -133,10 +133,7 @@ var Run1, Print, generatePDF, TimeCounter;
     IS_HUMAN_CONFIRMED = false;        
 
     /*calculated information after user clicks "Run", calculated from coreFunctions.js*/
-    CALCULATED = {
-        data:     {},  /*calculated data (costs, financial effort, etc.)*/
-        uber:     {}   /*calculated UBER as alternative to car, calculated from core functions*/
-    };
+    CALCULATED_DATA;  /*calculated data (costs, financial effort, uber, etc.)*/
 
     /*Global Object regarding the display of information*/
     DISPLAY = {
