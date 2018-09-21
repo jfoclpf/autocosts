@@ -144,7 +144,8 @@ function calculateButtonOnclick(){
         });
     });
     
-    loadStyleSheets(['css/merged_deferred.css']);
+    //loadStyleSheets(['css/merged_deferred.css']);
+    loadStyleSheets(['css/results.css']); //temporary line
 }
 
 //initial settings regarding the calculator form itself
