@@ -13,7 +13,7 @@
 #info-boxes .container .info-box h3 {font-size: 18px; margin: 0 30px;}
 #info-boxes .container .info-box span {font-weight: 300}
 #info-boxes .container .info-box .per {font-size: 22px; margin-left: 20px; font-weight: 300}
-#info-boxes .container .info-box select {background: url('../img/dd_arrow-white.jpg'); color: white; border-color: white; font-size: 22px; text-transform: lowercase;}
+#info-boxes .container .info-box select {background: url('../img/dd_arrow-white.jpg') no-repeat right bottom; color: white; border-color: white; font-size: 22px; text-transform: lowercase;}
 
 #info-boxes .container .box-2 h2 {font-size: 45px; line-height: 35px; margin: 23px 30px 5px;}
 
