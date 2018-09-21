@@ -145,6 +145,7 @@ input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
 /* ---------- Dropdown ---------- */
 select {font-family: 'Nunito',Arial,sans-serif; text-transform: capitalize; margin: 0; background: transparent; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
+select:focus {outline: none;}
 select.big-dropdown {font-size: 30px; padding: 0px 30px 0 0;}
 
 /* CAUTION: IE hackery ahead */
