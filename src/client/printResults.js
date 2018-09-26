@@ -113,10 +113,13 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         
         setMonthlyCostsDetails(f1, f2, f3, calculatedData);
         
+        drawMonthlyCostsChart(calculatedData);        
+        
         //financial effort result 
         if(calculatedData.fin_effort_calculated){
             $("#financial-effort").show(function(){
                 setFinancialEffortDetails(f1, f2, f3, calculatedData);
+                //drawFinEffortChart(calculatedData);
             });            
             DISPLAY.result.fin_effort = true; //global variable
         }
@@ -126,10 +129,10 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         }
 
         //equivalent transport costs results: public transports and uber
-        if(calculatedData.alternative_to_car_costs_calculated){
-            
+        if(calculatedData.alternative_to_car_costs_calculated){            
             $("#equivalent-transport-costs").show(function(){
                 setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
+                //drawAlterToCarChart(calculatedData);
             }); 
         }
         else{
