@@ -35,7 +35,9 @@
 <!-- ************************** AVERAGE MONTHLY COST ************************** -->
 <section id="avg-monthly-cost">
     <h2>{{{average_costs_per_type}}}</h2>
-    <div class="stats"></div>
+    <div class="stats">
+        <canvas id="monthlyCostsChart" width="400" height="400"></canvas>
+    </div>
     <div class="stats-references">
         <div class="standing-costs">
             <h5>{{{fixed_costs}}}</h5>
@@ -223,7 +225,9 @@
 
     <div class="graph">
         <h5>{{{net_income_per}}} {{{year}}} vs {{{total_costs_per_year}}}</h5>
-        <div class="stats"></div>
+        <div class="stats">
+            <canvas id="finEffortChart" width="400" height="400"></canvas>       
+        </div>
         <div class="stats-references">
             <ul>
                 <li class="net-income_color">{{{net_income_per}}} {{{year}}}</li>

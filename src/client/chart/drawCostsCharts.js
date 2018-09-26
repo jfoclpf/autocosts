@@ -7,63 +7,39 @@
 
 /*File with Javascript Charts Functions */
 
-//draw all charts
-function drawCharts(){
+function drawMonthlyCostsChart(calculatedData) {
 
-    drawMonthlyCostsPieChart();
-    drawMonthlyCostsBarChart();
+    var c = pfto(calculatedData.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
 
-    //draw Financial Effort Chart
-    if(CALCULATED.data.fin_effort_calculated){//if the financial effort was calculated   
-        drawFinEffortChart();
+    //always creates a new chart
+    if (DISPLAY.charts.monthlyCosts){
+        DISPLAY.charts.monthlyCosts.destroy();
     }
 
-    //draw Alternative to Car Costs Chart
-    if(CALCULATED.data.alternative_to_car_costs_calculated){//if the alternative to car transports were calculated
-        drawAlterToCarChart();
-    }
-}
-
-//draw Pie Chart
-function drawMonthlyCostsPieChart() {
-
-    var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
-
-    //checks if depreciation is greater or equal to zero, to print chart with no error
-    if (c.depreciation < 0){
-        c.depreciation = 0;
-    }  
-    
     var labels = [
         WORDS.depreciation_st,
         WORDS.insurance_short,
         WORDS.credit,
         WORDS.inspection_short,
         WORDS.road_taxes_short,
-        WORDS.maintenance,
         WORDS.fuel,
+        WORDS.maintenance,        
         WORDS.rep_improv,
         WORDS.parking,
         WORDS.tolls,
         WORDS.fines,
         WORDS.washing
-    ];    
+    ];  
     
-    //always creates a new chart
-    if (DISPLAY.charts.pieChart){
-        DISPLAY.charts.pieChart.destroy();
-    }
-
     var dataset = [{
-        label: WORDS.costs,
         data: [
             c.depreciation,
             c.insurance,
             c.credit,
             c.inspection,
             c.car_tax,
-            c.maintenance,
             c.fuel,
+            c.maintenance,            
             c.repairs_improv,
             c.parking,
             c.tolls,
@@ -71,138 +47,43 @@ function drawMonthlyCostsPieChart() {
             c.washing
         ],
         backgroundColor: [
-            'navy',
-            'blue',
-            'aqua',
-            'teal',
-            'olive',
-            'green',
-            'maroon',
-            'lime',
-            'yellow',
-            'orange',
-            'red',
+            '#2ba3d6',
+            '#10c6e6',
+            '#5ae0e2',
+            '#99e6bc',
+            '#ffda70',
+            '#ff9e84',
+            '#ff7192',
+            '#e562aa',
+            '#ea90cd',
+            '#eabcef',
+            '#9f97ef',
             'purple'
         ]
     }];
 
     var options = {
         maintainAspectRatio: false,
-        animation : {
-            onComplete : function(){    
-                DISPLAY.charts.URIs.pieChart = DISPLAY.charts.pieChart.toBase64Image();
-            }
-        }
-    };
-    
-    var content = {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: dataset
-        },
-        options: options        
-    };    
-    
-    DISPLAY.charts.pieChart = new Chart(pieChart, content);
-    DISPLAY.charts.isMonthlyCostsPieChart = true;
-
-}
-
-//draw bar chart
-function drawMonthlyCostsBarChart() {
-
-    var c = pfto(CALCULATED.data.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
-
-    //always creates a new chart
-    if (DISPLAY.charts.barChart){
-        DISPLAY.charts.barChart.destroy();
-    }
-
-    var labels = [WORDS.fixed_costs, WORDS.running_costs];
-
-    var dataset = [
-        //standing costs
-        {
-            label: WORDS.depreciation_st,
-            data: [c.depreciation, 0],
-            backgroundColor: 'navy'
-        }, {
-            label: WORDS.insurance_short,
-            data: [c.insurance, 0],
-            backgroundColor: 'blue'
-        }, {
-            label: WORDS.credit,
-            data: [c.credit, 0],
-            backgroundColor: 'aqua'
-        }, {
-            label: WORDS.inspection_short,
-            data: [c.inspection, 0],
-            backgroundColor: 'teal'
-        }, {
-            label: WORDS.road_taxes_short,
-            data: [c.car_tax, 0],
-            backgroundColor: 'olive'
-        }, {
-            label: WORDS.maintenance,
-            data: [(1/2*c.maintenance), 0],
-            backgroundColor: 'green'
-        },
-        //running costs
-        {
-            label: WORDS.rep_improv,
-            data: [0, c.repairs_improv],
-            backgroundColor: 'lime'
-        }, {
-            label: WORDS.fuel,
-            data: [0, c.fuel],
-            backgroundColor: 'maroon'
-        }, {
-            label: WORDS.parking,
-            data: [0, c.parking],
-            backgroundColor: 'yellow'
-        }, {
-            label: WORDS.tolls,
-            data: [0, c.tolls],
-            backgroundColor: 'orange'
-        }, {
-            label: WORDS.fines,
-            data: [0, c.fines],
-            backgroundColor: 'red'
-        }, {
-            label: WORDS.washing,
-            data: [0, c.washing],
-            backgroundColor: 'purple'
-        }, {
-            label: WORDS.maintenance,
-            data: [0, (1/2*c.maintenance)],
-            backgroundColor: 'green'
-        }
-    ];
-
-    var options = {
-        maintainAspectRatio: false,
         legend: {
-            position: 'right', // place legend on the right side of chart
-            display: false, //do not display
-            labels : {
-                fontSize: 9,
-                fontColor: 'black'
-            }
-        },
+            display: false
+        },        
         scales: {
             xAxes: [{
-                stacked: true, // this should be set to make the bars stacked
-                beginAtZero: true
+                beginAtZero: true,
+                categoryPercentage: 0.9,
+                barPercentage: 0.95,
+                ticks: {
+                    display: false //this will remove the label
+                }
             }],
             yAxes: [{
-                stacked: true, // this also..
+                stacked: false, 
                 beginAtZero: true
             }]
         },
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.barChart = DISPLAY.charts.barChart.toBase64Image();
+                DISPLAY.charts.URIs.monthlyCosts = DISPLAY.charts.monthlyCosts.toBase64Image();
             }
         }
     };
@@ -216,8 +97,8 @@ function drawMonthlyCostsBarChart() {
         options: options
     };
 
-    DISPLAY.charts.barChart = new Chart(barChart, content);
-    DISPLAY.charts.isMonthlyCostsBarChart = true;
+    DISPLAY.charts.monthlyCosts = new Chart("monthlyCostsChart", content);
+    DISPLAY.charts.isMonthlyCostsChart = true;
 }
 
 //draws horizontal bars chart for Financial Effort
