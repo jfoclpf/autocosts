@@ -277,10 +277,10 @@ section#results {display: none;}
 
 /* ---------- Tables ---------- */
 table {width: 80%; font-size: 16px; line-height: 16px; color: #797b82; margin: 3px 0 0 20px}
-table tr {margin-bottom: 5px}
-table tr td {margin-left: 20px}
+table tr {border-bottom: 1px solid #e3e3e3; display: flex; padding: 4px 0;}
+table tr td {margin-left: 10px; width: 82%}
 table tr td:first-child {display: block}
-table tr td + td {text-align: right; width: 30%}
+table tr td + td {text-align: right; width: 18%}
 
 table tr.subtotal td, table.total tr th {color: black; font-weight: 700}
 
@@ -290,8 +290,8 @@ table.total::before {content:""; width:100%; position:absolute; height:35px; lef
 table.blue-bg::before {background-color:#e9ecf8;}
 table.yellow-bg::before {background-color:#fdf5e6;}
 
-table.total tr th {font-size: 18px; line-height: 18px; z-index:2;position: relative;padding-top: 3px}
-table.total tr th + th {text-align: right; width: 30%}
+table.total tr th {font-size: 16px; line-height: 18px; z-index:2; position: relative; padding-top: 3px; width: 75%}
+table.total tr th + th {text-align: right; width: 25%}
 
 
 /* ---------- Home Footer Animation ---------- */
