@@ -276,7 +276,7 @@ section#results {display: none;}
 
 
 /* ---------- Tables ---------- */
-table {width: 80%; font-size: 16px; line-height: 16px; color: #797b82; margin: 3px 0 0 20px}
+table {width: 90%; font-size: 14px; line-height: 16px; color: #797b82; margin: 3px 0 0 20px}
 table tr {border-bottom: 1px solid #e3e3e3; display: flex; padding: 4px 0;}
 table tr td {margin-left: 10px; width: 82%}
 table tr td:first-child {display: block}
