@@ -7,6 +7,52 @@
 
 /*File with Javascript Charts Functions */
 
+function drawDoughnutChart(calculatedData){
+
+    var finEffortPerc = calculatedData.fin_effort.percentage_of_income;
+    
+    var datasets = [{
+        data: [finEffortPerc, 100 - finEffortPerc],
+        backgroundColor: ["white", "#4c6ef2"],
+        borderWidth: [0, 0]
+    }];
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    var labels = [WORDS.financial_effort, ""];
+    
+    var options = {
+        maintainAspectRatio: false,
+        legend: {
+            display: false
+        },
+        cutoutPercentage: 70,
+        tooltips: {
+            enabled: false
+        },
+        hover: {
+            mode: null
+        },        
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.URIs.doughnutChart = DISPLAY.charts.doughnutChart.toBase64Image();
+            }
+        }
+    };    
+    
+    var content = {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: options
+    };
+
+    DISPLAY.charts.doughnutChart = new Chart("doughnutChart", content);
+    DISPLAY.charts.isDoughnutChart = true;
+    
+}
+
 function drawMonthlyCostsChart(calculatedData) {
 
     var c = pfto(calculatedData.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)

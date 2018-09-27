@@ -113,6 +113,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         
         setMonthlyCostsDetails(f1, f2, f3, calculatedData);
         
+        drawDoughnutChart(calculatedData);
         drawMonthlyCostsChart(calculatedData);        
         
         //financial effort result 
