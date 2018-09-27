@@ -15,7 +15,7 @@ function drawMonthlyCostsChart(calculatedData) {
     if (DISPLAY.charts.monthlyCosts){
         DISPLAY.charts.monthlyCosts.destroy();
     }
-
+    
     var labels = [
         WORDS.depreciation_st,
         WORDS.insurance_short,
@@ -30,6 +30,10 @@ function drawMonthlyCostsChart(calculatedData) {
         WORDS.fines,
         WORDS.washing
     ];  
+    
+    for (var i=0; i<labels.length; i++){
+        labels[i] = formatLabel(labels[i], 16);
+    }       
     
     var dataset = [{
         data: [
@@ -58,10 +62,10 @@ function drawMonthlyCostsChart(calculatedData) {
             '#ea90cd',
             '#eabcef',
             '#9f97ef',
-            'purple'
+            '#867ae3'
         ]
     }];
-
+    
     var options = {
         maintainAspectRatio: false,
         legend: {
@@ -73,7 +77,9 @@ function drawMonthlyCostsChart(calculatedData) {
                 categoryPercentage: 0.9,
                 barPercentage: 0.95,
                 ticks: {
-                    display: false //this will remove the label
+                    display: true, //this will remove the label
+                    fontSize: 10
+                    
                 }
             }],
             yAxes: [{
