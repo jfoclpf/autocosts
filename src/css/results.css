@@ -24,7 +24,7 @@
 /*******------ Average Monthly Cost ------*******/
 #avg-monthly-cost {margin: 100px 0 80px}
 #avg-monthly-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-monthly-cost .stats {width: 100%; height: 300px; border: 2px solid #b0b2be; border-style: dashed; margin-bottom: 20px}
+#avg-monthly-cost .stats {width: 100%; height: 350px; margin-bottom: 20px}
 #avg-monthly-cost .stats-references {display: inline-block; width: 100%;}
 
 #avg-monthly-cost .three-boxes {display: inline-block; margin-top: 50px }
@@ -42,8 +42,8 @@
 
 .stats-references .standing-costs,
 .stats-references .running-costs {float: left; text-align: left;}
-.stats-references .standing-costs {width: 40%}
-.stats-references .running-costs {margin-left: 5%; width: 55%}
+.stats-references .standing-costs {width: 40%; margin-left: 3%;}
+.stats-references .running-costs {width: 55%;}
 
 /* References colors */
 .depreciation_color:before {background-color: #2ba3d6;}
