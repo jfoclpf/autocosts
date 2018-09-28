@@ -120,7 +120,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         if(calculatedData.fin_effort_calculated){
             $("#financial-effort").show(function(){
                 setFinancialEffortDetails(f1, f2, f3, calculatedData);
-                //drawFinEffortChart(calculatedData);
+                drawFinEffortChart(calculatedData);
             });            
             DISPLAY.result.fin_effort = true; //global variable
         }
