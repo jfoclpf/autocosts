@@ -1,5 +1,4 @@
 
-
 /* ------------------------------********* RESPONSIVE *********------------------------------ */
 
 @media screen and (max-width:1150px) {
@@ -81,16 +80,20 @@
 
     /* ------ Hero ------*/
     #hero {padding: 0px 0 30px;}
-    #hero .container h2 {margin: 7px 0 20px; }
+    #hero .container h2 {margin: 7px 0 20px; line-height: 30px; font-size: 18px }
+    #hero .container h2 select {font-size: 18px }
     #hero .container .big {max-width: 80%}
 
     /* ------ Sidebars ------*/
     .sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
-    .sidebars > .right > .sidebar-right-container {width: 100%;}
-    .sidebars > .right > .sidebar-right-container select {width: 150px;}
+    .sidebars > .right > .sidebar-right-container {width: 100%; overflow-y: scroll; height: 100%;}
+    .sidebars > .right > .sidebar-right-container table.yellow-bg {margin-bottom: 20px}
+    .sidebars > .right > .sidebar-right-container select {width: 150px!important;}
 
     .sidebars > .left > .sidebar-left-container > .close {margin: -13px 0 0 80%;}
     .sidebars > .right > .sidebar-right-container > .close {margin: 10px 0 0 86%;}
+
+    table.yellow-bg::before {height: 50px}
 
     .close {border: 2px solid #2c49b9; width: 30px; height: 30px}
     .close span {width: 20px; height: 20px; margin: 8px 0 0 5px;}
