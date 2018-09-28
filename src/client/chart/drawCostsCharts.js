@@ -123,9 +123,7 @@ function drawMonthlyCostsChart(calculatedData) {
                 categoryPercentage: 0.9,
                 barPercentage: 0.95,
                 ticks: {
-                    display: true, //this will remove the label
-                    fontSize: 10
-                    
+                    display: false,                    
                 }
             }],
             yAxes: [{
