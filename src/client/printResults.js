@@ -148,8 +148,11 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
 
 function setMonthlyCostsDetails(f1, f2, f3, calculatedData){
 
+    //html element in which the costs details will be added 
+    var htmlEl = "#results #avg-monthly-cost .three-boxes";
+    
     //remove existing <ul> if they exist, to add new ones
-    $("#results #avg-monthly-cost ul").remove();
+    $(htmlEl + " ul").remove();
     
     //add Cost <ul> for each cost details, for example add <ul> to div with class "fuel_details"
     for (var cost in calculatedData.monthly_costs) {
@@ -157,13 +160,13 @@ function setMonthlyCostsDetails(f1, f2, f3, calculatedData){
             continue;
         }
         
-        if($("#results #avg-monthly-cost ." + cost + "_details").length){            
-            $("#results #avg-monthly-cost ." + cost + "_details").append($("<ul>"));
+        if($(htmlEl + " ." + cost + "_details").length){            
+            $(htmlEl + " ." + cost + "_details").append($("<ul>"));
         }
     }
     
     var addLiElm = function(costItem, text, text2){
-        var $item = $("#results #avg-monthly-cost ." + costItem + "_details ul");
+        var $item = $(htmlEl + " ." + costItem + "_details ul");
         if(typeof text2 === 'undefined' || text2 === null){
             $item.append($("<li>").text(text));
         }
@@ -369,16 +372,19 @@ function setMonthlyCostsDetails(f1, f2, f3, calculatedData){
 
 function setFinancialEffortDetails(f1, f2, f3, calculatedData){
 
+    //html element in which the costs details will be added 
+    var htmlEl = "#results #financial-effort .values"; 
+    
     //remove existing <ul> if they exist, to add new ones
-    $("#results #financial-effort ul").remove();
+    $(htmlEl + " ul").remove();
     
     //add <ul> for each item details in financial effort
-    if(!$("#results #financial-effort .panel ul").length){
-        $("#results #financial-effort .panel").append($("<ul>"));
+    if(!$(htmlEl + " .panel ul").length){
+        $(htmlEl + " .panel").append($("<ul>"));
     }
     
     var addLiElm = function(item, text, text2){
-        var $item = $("#results #financial-effort ." + item + "_details ul");
+        var $item = $(htmlEl + " ." + item + "_details ul");
         if(typeof text2 === 'undefined' || text2 === null){
             $item.append($("<li>").text(text));
         }
@@ -480,16 +486,19 @@ function setFinancialEffortDetails(f1, f2, f3, calculatedData){
 
 function setEquivTransportCostsDetails(f1, f2, f3, calculatedData){        
 
+    //html element in which the costs details will be added 
+    var htmlEl = "#results #equivalent-transport-costs .values";     
+    
     //remove existing <ul> if they exist, to add new ones
-    $("#results #equivalent-transport-costs ul").remove();
+    $(htmlEl + " ul").remove();
     
     //add <ul> for each item details in  equivalent transport costs
-    if (!$("#results #equivalent-transport-costs .panel ul").length){
-        $("#results #equivalent-transport-costs .panel").append($("<ul>"));
+    if (!$(htmlEl + " .panel ul").length){
+        $(htmlEl + " .panel").append($("<ul>"));
     }
     
     var addLiElm = function(item, text, text2){
-        var $item = $("#results #equivalent-transport-costs ." + item + "_details ul");
+        var $item = $(htmlEl + " ." + item + "_details ul");
         if(typeof text2 === 'undefined' || text2 === null){
             $item.append($("<li>").text(text));
         }
