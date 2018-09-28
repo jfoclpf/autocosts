@@ -152,18 +152,19 @@ function drawMonthlyCostsChart(calculatedData) {
 }
 
 //draws horizontal bars chart for Financial Effort
-function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth, chartHeight){
+function drawFinEffortChart(calculatedData){
 
-    var c = pfto(CALCULATED.data.fin_effort); //Monthly costs object of calculated data, parsed to fixed(1)
+    var c = pfto(calculatedData.fin_effort); //Monthly costs object of calculated data, parsed to fixed(1)
 
     //always creates a new chart
     if (DISPLAY.charts.finEffort){
         DISPLAY.charts.finEffort.destroy();
     }
 
-    var labels = [ formatLabel(WORDS.net_income_per + " " + 
-                              WORDS.year, 20), 
-                  formatLabel(WORDS.total_costs_per_year, 20) ];
+    var labels = [ 
+        formatLabel(WORDS.net_income_per + " " + WORDS.year, 20), 
+        formatLabel(WORDS.total_costs_per_year, 20) 
+    ];
     
     var dataset = [
         {
@@ -173,8 +174,8 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
                 c.total_costs_year
             ],
             backgroundColor:[
-                'blue',
-                'red'
+                '#2ba3d6',
+                '#10c6e6'
             ]
         }
     ];
@@ -186,12 +187,13 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
         },
         scales: {
             xAxes: [{
-                ticks: {
-                    beginAtZero: true
+                ticks: {                    
+                    display: false
                 }
             }],
             yAxes: [{
                 ticks: {
+                    beginAtZero: true,
                     fontSize: 9
                 }
             }]
@@ -204,7 +206,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
     };
 
     var content = {
-        type: 'horizontalBar',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: dataset
@@ -212,7 +214,7 @@ function drawFinEffortChart(total_cost_per_year, net_income_per_year, chartWidth
         options: options
     };
 
-    DISPLAY.charts.finEffort = new Chart(finEffChart, content);   
+    DISPLAY.charts.finEffort = new Chart("finEffortChart", content);   
     DISPLAY.charts.isFinEffortChart = true;
 }
 
