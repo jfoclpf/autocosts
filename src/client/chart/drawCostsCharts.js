@@ -7,8 +7,9 @@
 
 /*File with Javascript Charts Functions */
 
-function drawDoughnutChart(calculatedData){
 
+function drawDoughnutChart(calculatedData){
+    
     var finEffortPerc = calculatedData.fin_effort.percentage_of_income;
     
     var datasets = [{
@@ -23,7 +24,7 @@ function drawDoughnutChart(calculatedData){
     var options = {
         maintainAspectRatio: false,
         legend: {
-            display: false
+            display: false,            
         },
         cutoutPercentage: 70,
         tooltips: {
@@ -115,11 +116,10 @@ function drawMonthlyCostsChart(calculatedData) {
     var options = {
         maintainAspectRatio: false,
         legend: {
-            display: false
-        },        
+            display: false,            
+        }, 
         scales: {
             xAxes: [{
-                beginAtZero: true,
                 categoryPercentage: 0.9,
                 barPercentage: 0.95,
                 ticks: {
@@ -127,10 +127,24 @@ function drawMonthlyCostsChart(calculatedData) {
                 }
             }],
             yAxes: [{
-                stacked: false, 
-                beginAtZero: true
+                stacked: false,                 
+                ticks: {
+                    beginAtZero: true,
+                    // Include a currency sign in the ticks
+                    callback: function(value, index, values) {
+                        return WORDS.curr_symbol + value;
+                    },                    
+                }                
             }]
         },
+        tooltips: {
+            enabled: true,
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    return WORDS.curr_symbol + tooltipItem.yLabel;
+                }
+            }
+        }, 
         animation : {
             onComplete : function(){    
                 DISPLAY.charts.URIs.monthlyCosts = DISPLAY.charts.monthlyCosts.toBase64Image();
@@ -184,7 +198,7 @@ function drawFinEffortChart(calculatedData){
         maintainAspectRatio: false,
         legend: {
             display: false
-        },
+        },      
         scales: {
             xAxes: [{
                 ticks: {                    
@@ -194,7 +208,11 @@ function drawFinEffortChart(calculatedData){
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    fontSize: 9
+                    fontSize: 9,
+                    // Include a currency sign in the ticks
+                    callback: function(value, index, values) {
+                        return WORDS.curr_symbol + value;
+                    }
                 }
             }]
         },
@@ -219,13 +237,15 @@ function drawFinEffortChart(calculatedData){
 }
 
 //draw bar chart
-function drawAlterToCarChart() {
+function drawAlterToCarChart(calculatedData) {
 
-    var i;
-    var c = pfto(CALCULATED.data.monthly_costs);     //Monthly costs object of calculated data, parsed to fixed(1)
-    var p = pfto(CALCULATED.data.public_transports);
-    var u = pfto(CALCULATED.uber);
+    var i;    
+    var c = pfto(calculatedData.monthly_costs);     //Monthly costs object of calculated data, parsed to fixed(1)
+    var p = pfto(calculatedData.public_transports);
+    var u = pfto(calculatedData.uber);
 
+    var totCostsPerMonth = parseFloat(calculatedData.total_costs_month.toFixed(1));
+    
     //always creates a new chart
     if (DISPLAY.charts.alterToCar){
         DISPLAY.charts.alterToCar.destroy();
@@ -236,8 +256,7 @@ function drawAlterToCarChart() {
     var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
     
     var labels = [
-        formatLabel( WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + 
-                     " " + WORDS.month, 25)
+        formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25)
     ];
         
     var dataset = [                      
@@ -245,56 +264,10 @@ function drawAlterToCarChart() {
         //1st column
         //standing costs
         {
-            label: WORDS.depreciation_st,
-            data: [c.depreciation],
-            backgroundColor: 'navy'
-        }, {
-            label: WORDS.insurance_short,
-            data: [c.insurance],
-            backgroundColor: 'blue'
-        }, {
-            label: WORDS.credit,
-            data: [c.credit],
-            backgroundColor: 'aqua'
-        }, {
-            label: WORDS.inspection_short,
-            data: [c.inspection],
-            backgroundColor: 'teal'
-        }, {
-            label: WORDS.road_taxes_short,
-            data: [c.car_tax],
-            backgroundColor: 'olive'
-        }, {
-            label: WORDS.maintenance,
-            data: [c.maintenance],
-            backgroundColor: 'green'
-        },
-        //running costs
-        {
-            label: WORDS.rep_improv,
-            data: [c.repairs_improv],
-            backgroundColor: 'lime'
-        }, {
-            label: WORDS.fuel,
-            data: [c.fuel],
-            backgroundColor: 'maroon'
-        }, {
-            label: WORDS.parking,
-            data: [c.parking],
-            backgroundColor: 'yellow'
-        }, {
-            label: WORDS.tolls,
-            data: [c.tolls],
-            backgroundColor: 'orange'
-        }, {
-            label: WORDS.fines,
-            data: [c.fines],
-            backgroundColor: 'red'
-        }, {
-            label: WORDS.washing,
-            data: [c.washing],
-            backgroundColor: 'purple'
-        }      
+            label: WORDS.your_car_costs_you,
+            data: [totCostsPerMonth],
+            backgroundColor: '#5ae0e2'
+        }   
     ];
     
     //adds zeros to "data" properties on the previous dataset, since the previous monthly costs values
@@ -322,15 +295,15 @@ function drawAlterToCarChart() {
             {
                 label: WORDS.other_pub_trans,
                 data: [0, p.other_pt],
-                backgroundColor: 'fuchsia'
+                backgroundColor: '#ff9e84'
             }, {
                 label: WORDS.taxi_desl,
                 data: [0, p.taxi_cost],
-                backgroundColor: '#b3b300'
+                backgroundColor: '#ffda70'
             }, {
                 label: WORDS.pub_trans_text,
                 data: [0, p.total_price_pt],
-                backgroundColor: '#006600'
+                backgroundColor: '#99e6bc'
             }                  
         ];
         
@@ -349,7 +322,8 @@ function drawAlterToCarChart() {
         }
         
         dataset = dataset.concat(p_dataset);        
-        labels.push(formatLabel(WORDS.publ_tra_equiv, 25));                  
+        //labels.push(formatLabel(WORDS.publ_tra_equiv, 25)); 
+        labels.push(""); 
     }
     
     
@@ -361,36 +335,34 @@ function drawAlterToCarChart() {
         //2nd or 3d column        
         var u_dataset;
 
-        if(u.result_type == 1){
-            
+        if(u.result_type == 1){            
             u_dataset = [
                 {
-                    label: u.dpm.toFixed(0) + " " + WORDS.fuel_dist + " " + 
-                           WORDS.word_per.replace(/&#32;/g,"") + ' ' + WORDS.month,
-                    data: [0, u.tuc],
-                    backgroundColor: '#b3b365'
-                }, {
                     label: WORDS.other_pub_trans,
                     data: [0, u.delta],
-                    backgroundColor: '#b3b315'
+                    backgroundColor: '#e562aa'
+
+                }, {
+                    label: "Uber - " + u.dpm.toFixed(0) + " " + WORDS.fuel_dist + " " + 
+                           WORDS.word_per.replace(/&#32;/g,"") + ' ' + WORDS.month,
+                    data: [0, u.tuc],
+                    backgroundColor: '#ff7192'
                 }               
             ];                        
-                        
         }
         //the case where uber equivalent is more expensive
-        else if(u.result_type == 2){
-            
+        else if(u.result_type == 2){            
             u_dataset = [
                 {
-                    label: WORDS.pub_trans_text,
+                    label: WORDS.other_pub_trans,
                     data: [0, u.tcpt],
-                    backgroundColor: '#b3b365'
+                    backgroundColor: '#e562aa' 
                 }, {
-                    label: u.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + " " + 
+                    label: "Uber - " + u.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + " " + 
                            WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month,
                     data: [0, u.delta],
-                    backgroundColor: '#b3b315'
-                }               
+                    backgroundColor: '#ff7192'                   
+                } 
             ];            
         }
         else{
@@ -406,7 +378,8 @@ function drawAlterToCarChart() {
         }
               
         dataset = dataset.concat(u_dataset);
-        labels.push("UBER");
+        //labels.push("UBER");
+        labels.push("");
     
     }    
 
@@ -418,13 +391,17 @@ function drawAlterToCarChart() {
                 stacked: true, // this should be set to make the bars stacked
                 ticks: {
                     beginAtZero: true,
-                    fontSize: 9
+                    display: false
                 }
             }],
             yAxes: [{
                 stacked: true, // this also..
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    // Include a currency sign in the ticks
+                    callback: function(value, index, values) {
+                        return WORDS.curr_symbol + value;
+                    }                    
                 }
             }]
         },
@@ -447,7 +424,7 @@ function drawAlterToCarChart() {
         options: options
     };
 
-    DISPLAY.charts.alterToCar = new Chart(alterToCarCostsChart, content);
+    DISPLAY.charts.alterToCar = new Chart("equivalentTransportChart", content);
     DISPLAY.charts.isAlterToCarChart = true;
 }
 
@@ -513,3 +490,5 @@ function formatLabel(str, maxwidth){
 
     return sections;
 }
+
+
