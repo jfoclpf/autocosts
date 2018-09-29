@@ -133,7 +133,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         if(calculatedData.alternative_to_car_costs_calculated){            
             $("#equivalent-transport-costs").show(function(){
                 setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
-                //drawAlterToCarChart(calculatedData);
+                drawAlterToCarChart(calculatedData);
             }); 
         }
         else{
