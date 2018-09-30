@@ -54,13 +54,39 @@ function drawDoughnutChart(calculatedData){
     
 }
 
-function drawMonthlyCostsChart(calculatedData) {
+function drawCostsChart(calculatedData, period) {
+    
+    var numMonths;
+    
+    switch(period){
+        case "month" :
+            numMonths = 1;
+            break;
+        case "trimester" :
+            numMonths = 3;
+            break;
+        case "semester" :
+            numMonths = 6;
+            break;
+        case "year" :
+            numMonths = 12;
+            break;
+        default:
+            console.error("Period not valid " + period);
+    }    
 
-    var c = pfto(calculatedData.monthly_costs); //Monthly costs object of calculated data, parsed to fixed(1)
+    var periodicCosts = {};
+    for (var key in calculatedData.monthly_costs){
+        if(calculatedData.monthly_costs.hasOwnProperty(key)){
+            periodicCosts[key] = calculatedData.monthly_costs[key]*numMonths;
+        }
+    }
 
+    var c = pfto(periodicCosts); //Monthly costs object of calculated data, parsed to fixed(1)
+    
     //always creates a new chart
-    if (DISPLAY.charts.monthlyCosts){
-        DISPLAY.charts.monthlyCosts.destroy();
+    if (DISPLAY.charts.costs){
+        DISPLAY.charts.costs.destroy();
     }
     
     var labels = [
@@ -147,7 +173,7 @@ function drawMonthlyCostsChart(calculatedData) {
         }, 
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.monthlyCosts = DISPLAY.charts.monthlyCosts.toBase64Image();
+                DISPLAY.charts.URIs.costs = DISPLAY.charts.costs.toBase64Image();
             }
         }
     };
@@ -161,8 +187,8 @@ function drawMonthlyCostsChart(calculatedData) {
         options: options
     };
 
-    DISPLAY.charts.monthlyCosts = new Chart("monthlyCostsChart", content);
-    DISPLAY.charts.isMonthlyCostsChart = true;
+    DISPLAY.charts.costs = new Chart("costsChart", content);
+    DISPLAY.charts.isCostsChart = true;
 }
 
 //draws horizontal bars chart for Financial Effort
