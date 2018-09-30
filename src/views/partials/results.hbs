@@ -4,12 +4,15 @@
         <div class="info-box box-1">
             <h3>{{{your_car_costs_you}}}</h3>
             <h2>
-                <sup>{{{curr_symbol}}}</sup><span class="total_costs_year toFixed0"></span>
+                <sup>{{{curr_symbol}}}</sup><span class="total_costs_per_period"></span>
             </h2>
 
             <span class="per">{{{word_per}}}</span> 
-            <select name="" id="">
-                <option value="month">{{{month}}}</option>  
+            <select id="totalCostsPeriod">
+                <option value="month">{{{month}}}</option>
+                <option value="trimester">{{{trimester}}}</option>
+                <option value="semester">{{{semester}}}</option>
+                <option value="year">{{{year}}}</option>
             </select>
         </div>
 
@@ -34,11 +37,11 @@
     </div>    
 </section>
 
-<!-- ************************** AVERAGE MONTHLY COST ************************** -->
-<section id="avg-monthly-cost">
-    <h2>{{{average_costs_per_type}}}</h2>
+<!-- ************************** AVERAGE PERIODIC COST ************************** -->
+<section id="avg-periodic-cost">
+    <h2 class="costs_per_type"></h2>
     <div class="stats">
-        <canvas id="monthlyCostsChart"></canvas>
+        <canvas id="costsChart"></canvas>
     </div>
     <div class="stats-references">
         <div class="standing-costs">
@@ -70,54 +73,54 @@
         <div class="standing-costs box">
             <div class="title">
                 <h3>{{{fixed_costs}}}</h3>
-                <span>{{{average_costs_per_type}}}</span>
+                <span class="average_costs_per_type"></span>
             </div>
 
             <button class="accordion">
                 <h5 class="depreciation_color">{{{depreciation}}}</h5>
-                <span class="monthly_costs_depreciation currency toFixed2"></span>
+                <span class="periodic_costs_depreciation"></span>
             </button>
             <div class="panel depreciation_details">
             </div>
 
             <button class="accordion">
                 <h5 class="vehicle-insurance_color">{{{insurance_short}}}</h5>
-                <span class="monthly_costs_insurance currency toFixed2"></span>
+                <span class="periodic_costs_insurance"></span>
             </button>
             <div class="panel insurance_details">
             </div>
 
             <button class="accordion">
                 <h5 class="car-finance_color">{{{credit}}}</h5>
-                <span class="monthly_costs_credit currency toFixed2"></span>
+                <span class="periodic_costs_credit"></span>
             </button>
             <div class="panel credit_details">
             </div>
 
             <button class="accordion">
                 <h5 class="vehicle-inspection_color">{{{inspection}}}</h5>
-                <span class="monthly_costs_inspection currency toFixed2"></span>
+                <span class="periodic_costs_inspection"></span>
             </button>
             <div class="panel inspection_details">
             </div>
 
             <button class="accordion">
                 <h5 class="vehicle-excise_color">{{{road_taxes_short}}}</h5>
-                <span class="monthly_costs_car_tax currency toFixed2"></span>
+                <span class="periodic_costs_car_tax"></span>
             </button>
             <div class="panel car_tax_details">
             </div>
 
             <button class="accordion">
                 <h5 class="maintenance_color">50% {{{maintenance}}}</h5>
-                <span class="monthly_costs_halfOfMaintenance currency toFixed2"></span>
+                <span class="periodic_costs_halfOfMaintenance"></span>
             </button>
             <div class="panel maintenance_details">
             </div>
 
             <div class="total-ammount">
                 <h4>{{{total_fixed}}}</h4>
-                <span class="total_standing_costs_month currency toFixed2"></span>
+                <span class="periodic_costs_total_standing_costs"></span>
             </div>
         </div>
 
@@ -125,61 +128,61 @@
         <div class="running-costs box">
             <div class="title">
                 <h3>{{{running_costs}}}</h3>
-                <span>{{{average_costs_per_type}}}</span>
+                <span class="average_costs_per_type"></span>
             </div>
 
             <button class="accordion">
                 <h5 class="fuel_color">{{{fuel}}}</h5>
-                <span class="monthly_costs_fuel currency toFixed2"></span>
+                <span class="periodic_costs_fuel"></span>
             </button>
             <div class="panel fuel_details">
             </div>
 
             <button class="accordion">
                 <h5 class="maintenance_color">50% {{{maintenance}}}</h5>
-                <span class="monthly_costs_halfOfMaintenance currency toFixed2"></span>
+                <span class="periodic_costs_halfOfMaintenance"></span>
             </button>
             <div class="panel maintenance_details">
             </div>
 
             <button class="accordion">
                 <h5 class="repair_color">{{{rep_improv}}}</h5>
-                <span class="monthly_costs_repairs_improv currency toFixed2"></span>
+                <span class="periodic_costs_repairs_improv"></span>
             </button>
             <div class="panel repairs_improv_details">
             </div>
 
             <button class="accordion">
                 <h5 class="parking_color">{{{parking}}}</h5>
-                <span class="monthly_costs_parking currency toFixed2"></span>
+                <span class="periodic_costs_parking"></span>
             </button>
             <div class="panel parking_details">
             </div>
 
             <button class="accordion">
                 <h5 class="tolls_color">{{{tolls}}}</h5>
-                <span class="monthly_costs_tolls currency toFixed2"></span>
+                <span class="periodic_costs_tolls"></span>
             </button>
             <div class="panel tolls_details">
             </div>
 
             <button class="accordion">
                 <h5 class="traffic_color">{{{fines}}}</h5>
-                <span class="monthly_costs_fines currency toFixed2"></span>
+                <span class="periodic_costs_fines"></span>
             </button>
             <div class="panel fines_details">
             </div>
 
             <button class="accordion">
                 <h5 class="washing_color">{{{washing}}}</h5>
-                <span class="monthly_costs_repairs_washing currency toFixed2"></span>
+                <span class="periodic_costs_washing"></span>
             </button>
             <div class="panel washing_details">
             </div>
 
             <div class="total-ammount">
                 <h4>{{{total_variable}}}</h4>
-                <span class="total_running_costs_month currency toFixed2"></span>
+                <span class="periodic_costs_total_running_costs"></span>
             </div>
 
         </div>
@@ -201,17 +204,17 @@
 
             <div class="total-item">
                 <h5>{{{fixed_costs}}}</h5>
-                <span class="total_standing_costs_month currency toFixed2"></span>
+                <span class="periodic_costs_total_standing_costs"></span>
             </div>
 
             <div class="total-item">
                 <h5>{{{running_costs}}}</h5>
-                <span class="total_running_costs_month currency toFixed2"></span>
+                <span class="periodic_costs_total_running_costs"></span>
             </div>
 
             <div class="total-ammount">
                 <h4>{{{word_total_cap}}}</h4>
-                <span class="total_costs_month currency toFixed2"></span>
+                <span class="periodic_costs_total_costs"></span>
             </div>
 
         </div>

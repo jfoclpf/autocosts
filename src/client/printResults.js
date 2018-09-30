@@ -111,10 +111,16 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
             }
         }
         
-        setMonthlyCostsDetails(f1, f2, f3, calculatedData);
-        
         drawDoughnutChart(calculatedData);
-        drawMonthlyCostsChart(calculatedData);        
+        
+        setPeriodicCosts(calculatedData, "month");
+        drawCostsChart(calculatedData, "month");
+        $("#totalCostsPeriod").on("change", function(){
+            setPeriodicCosts(calculatedData, $(this).val());
+            drawCostsChart(calculatedData, $(this).val());
+        });
+        
+        setPeriodicCostsDetails(f1, f2, f3, calculatedData);                                
         
         //financial effort result 
         if(calculatedData.fin_effort_calculated){
@@ -146,10 +152,75 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     
 }
 
-function setMonthlyCostsDetails(f1, f2, f3, calculatedData){
+
+function setPeriodicCosts(calculatedData, period){
+    
+    var numMonths, strPeriod;
+    var currSymb = WORDS.curr_symbol;
+    
+    switch(period){
+        case "month" :
+            numMonths = 1;
+            strPeriod = WORDS.month;
+            break;
+        case "trimester" :
+            numMonths = 3;
+            strPeriod = WORDS.trimester;
+            break;
+        case "semester" :
+            numMonths = 6;
+            strPeriod = WORDS.semester;
+            break;
+        case "year" :
+            numMonths = 12;
+            strPeriod = WORDS.year;
+            break;
+        default:
+            console.error("Period not valid " + period);
+    }
+
+    //main info box total costs    
+    $("#results #info-boxes .total_costs_per_period").html((calculatedData.total_costs_month*numMonths).toFixed(0));
+    
+    //section h2 title
+    $("#results #avg-periodic-cost .costs_per_type").html(WORDS.costs + " " + WORDS.word_per + strPeriod);
+    
+    var $htmlEl = $("#results #avg-periodic-cost .three-boxes");
+    
+    $htmlEl.find(".average_costs_per_type").html(WORDS.word_per + strPeriod);
+    
+    //sets the periodic costs according to period on span elements with class starting with "periodic_costs"
+    $htmlEl.find("span").each(function(){
+        var classNames = $(this).attr("class");
+        //check if there is any class that contains expression "periodic_costs"
+        if (classNames && classNames.indexOf("periodic_costs") >= 0){
+            var classesArr = classNames.split(" ");
+            for (var i=0; i<classesArr.length; i++){
+                var className, costItem, val;
+                if (classesArr[i].indexOf("periodic_costs") >= 0){
+                    className = classesArr[i];
+                    costItem = className.replace("periodic_costs_", "");
+                    val = calculatedData.monthly_costs[costItem] * numMonths;
+                    $(this).html(currSymb + " " + val.toFixed(1));
+                }
+            }
+        }
+                              
+    });
+    
+    //extra items
+    $htmlEl.find(".periodic_costs_halfOfMaintenance").html(currSymb + " " + (calculatedData.monthly_costs.maintenance/2*numMonths).toFixed(1));
+    
+    $htmlEl.find(".periodic_costs_total_standing_costs").html(currSymb + " " + (calculatedData.total_standing_costs_month*numMonths).toFixed(2));
+    $htmlEl.find(".periodic_costs_total_running_costs").html(currSymb + " " + (calculatedData.total_running_costs_month*numMonths).toFixed(2));
+    $htmlEl.find(".periodic_costs_total_costs").html(currSymb + " " + (calculatedData.total_costs_month*numMonths).toFixed(2));
+    
+}
+
+function setPeriodicCostsDetails(f1, f2, f3, calculatedData){
 
     //html element in which the costs details will be added 
-    var htmlEl = "#results #avg-monthly-cost .three-boxes";
+    var htmlEl = "#results #avg-periodic-cost .three-boxes";
     
     //remove existing <ul> if they exist, to add new ones
     $(htmlEl + " ul").remove();

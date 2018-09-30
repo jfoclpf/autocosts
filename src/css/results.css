@@ -14,6 +14,7 @@
 #info-boxes .container .info-box span {font-weight: 300}
 #info-boxes .container .info-box .per {font-size: 22px; margin-left: 20px; font-weight: 300}
 #info-boxes .container .info-box select {background: url('../img/dd_arrow-white.jpg') no-repeat right bottom; color: white; border-color: white; font-size: 22px; text-transform: lowercase;}
+#info-boxes .container .info-box select option {color: #2c49b9;}
 
 #info-boxes .container .box-2 h2 {font-size: 45px; line-height: 35px; margin: 23px 30px 5px;}
 
@@ -22,17 +23,17 @@
 #info-boxes .container .box-3 .text h2 {font-size: 50px; margin: 29px 0 0}
 
 /*******------ Average Monthly Cost ------*******/
-#avg-monthly-cost {margin: 100px 0 80px}
-#avg-monthly-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-monthly-cost .stats {width: 100%; height: 350px; margin-bottom: 20px}
-#avg-monthly-cost .stats-references {display: inline-block; width: 100%;}
+#avg-periodic-cost {margin: 100px 0 80px}
+#avg-periodic-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
+#avg-periodic-cost .stats {width: 100%; height: 350px; margin-bottom: 20px}
+#avg-periodic-cost .stats-references {display: inline-block; width: 100%;}
 
-#avg-monthly-cost .three-boxes {display: inline-block; margin-top: 50px }
-#avg-monthly-cost .three-boxes .box {border-radius: 5px; width: 31%; min-height: 280px; margin: 0 1%; float: left; display: inline-block; background-color: white; -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);}
-#avg-monthly-cost .three-boxes .box .title {border-left: 10px solid #2c49b9; margin: 10px 0; text-align: left;width: 94%; padding: 3px 0;}
-#avg-monthly-cost .three-boxes .box .title h3 {display: inline-block; margin-left: 10px}
-#avg-monthly-cost .three-boxes .box .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-top: 8px}
-#avg-monthly-cost .three-boxes .total .title {border-color: #efa00b}
+#avg-periodic-cost .three-boxes {display: inline-block; margin-top: 50px }
+#avg-periodic-cost .three-boxes .box {border-radius: 5px; width: 31%; min-height: 280px; margin: 0 1%; float: left; display: inline-block; background-color: white; -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);}
+#avg-periodic-cost .three-boxes .box .title {border-left: 10px solid #2c49b9; margin: 10px 0; text-align: left;width: 94%; padding: 3px 0;}
+#avg-periodic-cost .three-boxes .box .title h3 {display: inline-block; margin-left: 10px}
+#avg-periodic-cost .three-boxes .box .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-top: 8px}
+#avg-periodic-cost .three-boxes .total .title {border-color: #efa00b}
 
 
 /******----- References -----******/

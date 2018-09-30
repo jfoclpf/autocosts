@@ -149,18 +149,18 @@ var Run1, Print, generatePDF, TimeCounter;
         },
         charts: {
             isDoughnutChart:     false,  /*prints chart bool variable*/
-            isMonthlyCostsChart: false,  /*prints chart bool variable*/
+            isCostsChart:        false,  /*prints chart bool variable*/
             isFinEffortChart:    false,  /*prints chart bool variable*/
             isAlterToCarChart:   false,  /*prints chart bool variable*/
             doughnutChart: 0,
-            monthlyCosts: 0,
+            costs: 0,
             finEffort: 0,
             alterToCar: 0,
             /*the charts images data URI*/
             //https://en.wikipedia.org/wiki/Data_URI_scheme#SVG
             URIs: {
                 doughnutChart: 0,
-                monthlyCosts: 0,
+                costs: 0,
                 finEffort: 0,
                 alterToCar: 0
             }
