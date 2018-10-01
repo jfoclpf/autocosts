@@ -1,36 +1,11 @@
-generatePDF = function generatePDF(){
+function generatePDF(calculatedData){
     
-    var main_title = WORDS.main_title;
-
-    var body0,
-        body11, body12, body13, body14,
-        body21, body22, body23, body24, body25,
-        body31, body32, body33, body34, body35, body36, body37,
-        body41, body42;
-    var title1, title2, title3, title4;
-    var chartData1, chartData2, chartData3, chartData4;  //chart images
-
     //are there charts available to be rendered to pdf?
     var isCharts = SWITCHES.charts;
-    
-    //main top table with total costs
-    body0 = get_main_table("#result_table0");
-
-    //monthly costs title and table
-    title1 = gstr($('#monthly_costs_title').html());
-    body11 = [[{text: title1, style: "header"}]];
-
-    //monthly costs tables
-    body12 = get_monthly_costs_table("#standing_costs_table");
-    body13 = get_monthly_costs_table("#running_costs_table");
-    body14 = get_monthly_costs_table("#total_costs_table");
-
-    chartData1 = DISPLAY.charts.URIs.pieChart;
-    chartData2 = DISPLAY.charts.URIs.barChart;
       
     var docDefinition = {
         header: {
-            text: main_title,
+            text: WORDS.main_title,
             style: 'title'
         },
         content:[
@@ -39,7 +14,7 @@ generatePDF = function generatePDF(){
                 table:{
                     headerRows: 0,
                     widths: [ '*', '*', '*', '*' ],
-                    body: body0
+                    body: get_main_table(calculatedData)
                 }
             },
             {
@@ -47,30 +22,26 @@ generatePDF = function generatePDF(){
                 table:{
                     headerRows: 0,
                     widths: ['*'],
-                    body: body11
+                    body: [
+                        [
+                            {text: WORDS.average_costs_per_type, style: "header"}
+                        ]
+                    ]
                 }
             },
             isCharts ? 
                 {
-                    image: chartData1,
-                    width: 230,
-                    height: 267,
+                    image: DISPLAY.charts.URIs.costs,
+                    width: 500,
+                    height: 230,
                     style: 'img_style'
                 } : {},
-            isCharts ?                
-                {
-                    image: chartData2,
-                    width: 300,
-                    height: 300,
-                    style: 'img_style',
-                    pageBreak: 'after'
-                } : {},
             {
                 style: 'tableMarging',
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body12
+                    body: getStandingCostsTable(calculatedData)
                 }
             },
             {
@@ -78,7 +49,7 @@ generatePDF = function generatePDF(){
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body13
+                    body: getRunningCostsTable(calculatedData)
                 }
             },
             {
@@ -86,7 +57,7 @@ generatePDF = function generatePDF(){
                 table:{
                     headerRows: 0,
                     widths: [ 390, '*' ],
-                    body: body14
+                    body: getTotalCostsTable(calculatedData)
                 }
             }
         ],
@@ -98,40 +69,13 @@ generatePDF = function generatePDF(){
                 bold: true
             },
             header: {
-                fontSize: 12,
+                fontSize: 14,
                 bold: true,
                 alignment: 'center',
                 color: '#000'
             },
-            total: {
-                fontSize: 10,
-                bold: true,
-                alignment: 'right',
-                color: '#000'
-            },
-            main_total: {
-                fontSize: 12,
-                bold: true,
-                alignment:    'right',
-                color: '#000'
-            },
-            main_total_value: {
-                fontSize: 12,
-                bold: true,
-                alignment:    'left',
-                color: '#000'
-            },
-            cell: {
-                fontSize: 10,
-            },
-            header2: {
-                fontSize: 12,
-                bold: true,
-                alignment:    'left',
-                color: '#000'
-            },
             tableMarging: {
-                margin: [0, 0, 0, 20],
+                margin: [0, 20, 0, 20],
                 color: '#1C1C1C'
             },
             img_style: {
@@ -143,53 +87,56 @@ generatePDF = function generatePDF(){
         }
     };
 
+    
     //financial effort title and table
     if(DISPLAY.result.fin_effort){
-        //header
-        title2 = gstr($('#fin_effort_title').html());
-        body21 = [[{text: title2, style: "header"}]];
-        body22 = {
-                    style: 'tableMarging',
-                    table:{
-                        headerRows: 0,
-                        widths: ['*'],
-                        body: body21
-                    },
-                    pageBreak: 'before'
-                };
-        docDefinition.content.push(body22);
+        //header        
+        docDefinition.content.push({
+            style: 'tableMarging',
+            table:{
+                headerRows: 0,
+                widths: ['*'],
+                body: [
+                    [
+                        {text: WORDS.financial_effort, style: "header"}
+                    ]
+                ]
+            },
+                pageBreak: 'before'
+            }
+        );
 
         //chart
-        if(DISPLAY.charts.isFinEffortChart){
-            chartData3 = DISPLAY.charts.URIs.finEffort;
-            body23 = isCharts ? {
-                        image: chartData3,
-                        width: 450,
-                        height: 220,
-                        style: 'img_style'
-                    } : {} ;
-            docDefinition.content.push(body23);
+        if(DISPLAY.charts.isFinEffortChart && isCharts){
+            docDefinition.content.push(                
+                {
+                    image: DISPLAY.charts.URIs.finEffort,
+                    width: 450,
+                    height: 220,
+                    style: 'img_style'
+                } 
+            );
         }
 
         //table
-        body24 = getBodyFinEffort("#result_table3");
-        body25 = {
-                    style:'tableMarging',
-                    table:{
-                        headerRows: 1,
-                        widths: [ 390, '*' ],
-                        body: body24
-                    }
-                };
-        docDefinition.content.push(body25);
+        docDefinition.content.push(
+            {
+                style:'tableMarging',
+                table:{
+                    headerRows: 1,
+                    widths: [ 390, '*' ],
+                    body: getBodyFinEffort(calculatedData)
+                }
+            }
+        );
 
     }
 
+    /*
     //optional public transports table
     if (DISPLAY.result.public_transports || DISPLAY.result.uber){
-        //header
-        title3 = gstr($('#alternative_to_carcosts_section').html());
-        body31 = [[{text: title3, style: "header"}]];
+        //header        
+        body31 = [[{text: WORDS.publ_tra_equiv, style: "header"}]];
         body32 =  {
                                 style: 'tableMarging',
                                 table:{
@@ -214,7 +161,7 @@ generatePDF = function generatePDF(){
         }
 
         if(DISPLAY.result.public_transports){
-            body34 = get_publict_table("#result_table2");
+            body34 = []; //get_publict_table("#result_table2");
             body35 = {
                 style:'tableMarging',
                 table:{
@@ -228,7 +175,7 @@ generatePDF = function generatePDF(){
 
         //uber
         if(DISPLAY.result.uber){
-            body36 = get_uber_table("#result_table_uber");
+            body36 = []; //get_uber_table("#result_table_uber");
             body37 = {
                 style:'tableMarging',
                 table:{
@@ -291,11 +238,10 @@ generatePDF = function generatePDF(){
             }
         };
         docDefinition.defaultStyle.font = "Hindi";
-    }
+    }*/
 
     //creates PDF file
-    console.log("docDefinition to be PDFed", docDefinition);
-    pdfMake.createPdf(docDefinition).download(main_title+'.pdf');
+    pdfMake.createPdf(docDefinition).download(WORDS.web_page_title + '.pdf');
 
 }
 
@@ -304,166 +250,216 @@ generatePDF = function generatePDF(){
 //******************************************************
 //functions that generate the respective tables
 
-function get_main_table(tableID){
+function get_main_table(calculatedData){
+            
+    var body = [
+        [
+            {text:WORDS.your_car_costs_you, colSpan: 4, alignment: 'center'},
+            {},{},{}
+        ],
+        [
+            WORDS.word_per + WORDS.month + "\n" + WORDS.curr_symbol + calculatedData.total_costs_month.toFixed(), 
+            WORDS.word_per + WORDS.trimester + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*3).toFixed(), 
+            WORDS.word_per + WORDS.semester + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*6).toFixed(), 
+            WORDS.word_per + WORDS.year + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*12).toFixed() 
+        ],
+        [
+            {text: WORDS.with_this_level_of_costs + " " + calculatedData.age_months + " " + 
+                   WORDS.months_poss + " " + WORDS.curr_symbol + calculatedData.total_costs_ever.toFixed(0), 
+            colSpan: 4, alignment: 'center'},
+            {},{},{}
+        ],
+        [
+            {text:WORDS.financial_effort + ": " + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%",
+            colSpan: 4, alignment: 'center'},
+            {},{},{}
+        ]
+    ];
 
-    //gets an array of jQuery objects representing the "td" elements of the table
-    var data = $(tableID +' td');
-
-    var body = [];
-    var str, el, el2, el3, el4;
-
-    for(var i=0; i<data.length; i++){
-
-        switch(i){
-            case 0:
-                str = gstr(data[i]);
-                el = {text: str, colSpan:4, style: 'header'};
-                body.push([el,'','','']);
-                break;
-            case 1:
-                str = gstr(data[i]);
-                el  = {text: str, style: 'header'};
-                str = gstr(data[i+1]);
-                el2 = {text: str, style: 'header'};
-                str = gstr(data[i+2]);
-                el3 = {text: str, style: 'header'};
-                str = gstr(data[i+3]);
-                el4 = {text: str, style: 'header'};
-                body.push([el,el2,el3,el4]);
-                break;
-            case 5:
-                str = gstr(data[i]);
-                el = {text: str, colSpan:4, style: 'header'};
-                body.push([el,'','','']);
-                break;
-            case 6:
-                str = gstr(data[i]);
-                el = {text: str, colSpan:4, style: 'header'};
-                body.push([el,'','','']);
-                break;
-        }
-    }
-    return body;
+    return body;    
 }
 
 
-function get_monthly_costs_table(tableID){
+function getStandingCostsTable(calculatedData){
 
-    //gets an array of jQuery objects representing the "td" elements of the table
-    var data = $(tableID +' td');
-
-    var body = [];
-    var str, str2, el, el2;
-
-    for(var i=0; i<data.length; i+=2){
-        str = gstr(data[i]);
-        switch(i){
-            case 0: //header
-                el = {text: str, colSpan:2, style: 'header'};
-                body.push([el,'']);
-                i=-1; //so the next step is i=1
-                break;
-            case 1://first line header  || Costs | Monthly Amount ||
-                str2 = gstr(data[i+1]);
-                el2 = {text: str2, style: 'header'};
-                str = str.split('\n')[0]; //gets just the first line of the <td> info
-                el = {text: str, style: 'header'};
-                body.push([el, el2]);
-                break;
-            case (data.length-2)://first td on the last line
-                str2 = gstr(data[i+1]);
-                el2 = {text: str2, style: 'main_total_value'};
-                el = {text: str, style: 'main_total'};
-                body.push([el, el2]);
-                i=data.length; //breaks the "for" loop
-                break;
-            default:
-                str2 = gstr(data[i+1]);
-                el2 = {text: str2, style: 'cell'};
-                el = {text: str, style: 'cell'};
-                body.push([el, el2]);
-        }
-    }
+    var cc = DISPLAY.costsColors;
+    
+    var body = [
+        [
+            {text: WORDS.fixed_costs + "\n" + WORDS.total_fixed_descr, colSpan: 2, style: "header"}, 
+            {}
+        ],
+        [
+            {text: WORDS.costs, alignment: 'center'},
+            {text: WORDS.monthly_amount, alignment: 'center'},
+        ],    
+        [
+            {text: WORDS.depreciation + "\n" + gstr("#avg-periodic-cost .depreciation_details"), fillColor: cc.depreciation},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.depreciation.toFixed(1), fillColor: cc.depreciation, bold: true}
+        ],
+        [
+            {text: WORDS.insurance + "\n" + gstr("#avg-periodic-cost .insurance_details"), fillColor: cc.insurance},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.insurance.toFixed(1), fillColor: cc.insurance, bold: true}
+        ],
+        [
+            {text: WORDS.credit + "\n" + gstr("#avg-periodic-cost .credit_details"), fillColor: cc.credit},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.credit.toFixed(1), fillColor: cc.credit, bold: true}
+        ],
+        [
+            {text: WORDS.inspection + "\n" + gstr("#avg-periodic-cost .inspection_details"), fillColor: cc.inspection},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.inspection.toFixed(1), fillColor: cc.inspection, bold: true}
+        ],
+        [
+            {text: WORDS.road_taxes + "\n" + gstr("#avg-periodic-cost .car_tax_details"), fillColor: cc.car_tax},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.car_tax.toFixed(1), fillColor: cc.car_tax, bold: true}
+        ],
+        [
+            {text: "1/2" + " " + WORDS.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details"), fillColor: cc.maintenance},
+            {text: WORDS.curr_symbol + (calculatedData.monthly_costs.maintenance/2).toFixed(1), fillColor: cc.maintenance}
+        ],
+        [
+            {text: WORDS.total_fixed, alignment: "right", bold: true, fontSize: 14},
+            {text: WORDS.curr_symbol + (calculatedData.total_standing_costs_month).toFixed(0), bold: true, fontSize: 14}
+        ] 
+    ];
+    
     return body;
 }
 
-function getBodyFinEffort(tableID){
+function getRunningCostsTable(calculatedData){
 
-    //gets an array of jQuery objects representing the "td" elements of the table
-    var data = $(tableID +' td');
-
-    var body = [];
-    var str, str2, el, el2;
-
-    for(var i=0; i<data.length; i++){
-        str = gstr(data[i]);
-        if($(data[i]).find('b').length > 0){
-            el2 = {};
-            el = {text: str, style: i==0 ? 'header': 'header2', colSpan:2};
-            body.push([el, {}]);
-        }
-        else{
-            str2 = $(data[i+1]).text();
-            el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el,el2]);
-            i++;
-        }
-    }
+    var cc = DISPLAY.costsColors;
+    
+    var body = [
+        [
+            {text: WORDS.running_costs + "\n" + WORDS.running_costs_header_2, colSpan: 2, style: "header"}, 
+            {}
+        ],
+        [
+            {text: WORDS.costs, alignment: 'center'},
+            {text: WORDS.monthly_amount, alignment: 'center'},
+        ],    
+        [
+            {text: WORDS.fuel + "\n" + gstr("#avg-periodic-cost .fuel_details"), fillColor: cc.fuel},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.fuel.toFixed(1), fillColor: cc.fuel, bold: true}
+        ],
+        [
+            {text: "1/2" + " " + WORDS.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details"), fillColor: cc.maintenance},
+            {text: WORDS.curr_symbol + (calculatedData.monthly_costs.maintenance/2).toFixed(1), fillColor: cc.maintenance, bold: true}
+        ],
+        [
+            {text: WORDS.rep_improv + "\n" + gstr("#avg-periodic-cost .repairs_improv_details"), fillColor: cc.repairs_improv},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.repairs_improv.toFixed(1), fillColor: cc.repairs_improv, bold: true}
+        ],
+        [
+            {text: WORDS.parking + "\n" + gstr("#avg-periodic-cost .parking_details"), fillColor: cc.parking},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.parking.toFixed(1), fillColor: cc.parking, bold: true}
+        ],
+        [
+            {text: WORDS.tolls + "\n" + gstr("#avg-periodic-cost .tolls_details"), fillColor: cc.tolls},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.tolls.toFixed(1), fillColor: cc.tolls, bold: true}
+        ],
+        [
+            {text: WORDS.fines + "\n" + gstr("#avg-periodic-cost .fines_details"), fillColor: cc.fines},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.fines.toFixed(1), fillColor: cc.fines, bold: true}
+        ],
+        [
+            {text: WORDS.washing + "\n" + gstr("#avg-periodic-cost .washing_details"), fillColor: cc.washing},
+            {text: WORDS.curr_symbol + calculatedData.monthly_costs.washing.toFixed(1), fillColor: cc.washing, bold: true}
+        ],        
+        [
+            {text: WORDS.total_variable, alignment: "right", bold: true, fontSize: 14},
+            {text: WORDS.curr_symbol + (calculatedData.total_running_costs_month).toFixed(0), bold: true, fontSize: 14}
+        ] 
+    ];
+    
     return body;
 }
 
-function get_publict_table(tableID){
+function getTotalCostsTable(calculatedData){
 
-    //gets an array of jQuery objects representing the "td" elements of the table
-    var data = $(tableID +' td');
-
-    var body = [];
-    var str, str2, el, el2;
-
-    for(var i=0; i<data.length; i+=2){
-        str = gstr(data[i]);
-        if(i<2){
-            str2 = $(data[i+1]).text().trim();
-            el2 = {text: str2, style: 'header'};
-            el = {text: str, style: 'header'};
-            body.push([el, el2]);
-        }
-        else{
-            str2 = $(data[i+1]).text();
-            el2 = {text: str2, style: 'cell'};
-            el = {text: str, style: 'cell'};
-            body.push([el, el2]);
-        }
+    var body = [
+        [
+            {text: WORDS.word_total_cap, colSpan: 2, style: "header"}, 
+            {}
+        ]
+    ];
+    
+    if(calculatedData.running_costs_p_unit_distance){
+        body.push(
+            [
+                {text: WORDS.run_cp_dist},
+                {text: WORDS.curr_symbol + calculatedData.running_costs_p_unit_distance.toFixed(2)}
+            ]        
+        ); 
     }
+
+    if(calculatedData.total_costs_p_unit_distance){
+        body.push(
+            [
+                {text: WORDS.total_cp_dist},
+                {text: WORDS.curr_symbol + calculatedData.total_costs_p_unit_distance.toFixed(2)}
+            ]        
+        ); 
+    } 
+    
+    body.push(
+        [
+            {text: WORDS.total_fixed},
+            {text: WORDS.curr_symbol + (calculatedData.total_standing_costs_month).toFixed(0)}
+        ],
+        [
+            {text: WORDS.total_variable},
+            {text: WORDS.curr_symbol + (calculatedData.total_running_costs_month).toFixed(0)}
+        ],
+        [
+            {text: WORDS.word_total_cap, bold: true, fontSize: 14},
+            {text: WORDS.curr_symbol + (calculatedData.total_costs_month).toFixed(0), bold: true, fontSize: 14}
+        ] 
+    );    
+
     return body;
 }
 
-function get_uber_table(tableID){
+function getBodyFinEffort(calculatedData){
 
-    //gets an array of jQuery objects representing the "td" elements of the table
-    var data = $(tableID +' td');
+    var body = [
+        [
+            {text: WORDS.financial_effort, colSpan: 2, style: "header"}, 
+            {}
+        ],
+        [
+            {text: WORDS.extra_data_income + "\n" + gstr("#financial-effort .income_details")},
+            {text: WORDS.curr_symbol + calculatedData.fin_effort.income_per_year.toFixed(0)}
+        ],
+        [
+            {text: WORDS.extra_data_working_time + "\n" + gstr("#financial-effort .working_time_details")},
+            {text: calculatedData.fin_effort.work_hours_per_y.toFixed(0) + " " + WORDS.hour_abbr}
+        ],
+        [
+            {text: WORDS.distance + "\n" + gstr("#financial-effort .distance_details")},
+            {text: calculatedData.driving_distance.drive_per_year.toFixed(0) + " " + WORDS.std_dist}
+        ],
+        [
+            {text: WORDS.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
+            {text: calculatedData.time_spent_driving.hours_drive_per_year.toFixed(0) + " " + WORDS.hour_abbr}
+        ],
+        [
+            {text: WORDS.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
+            {text: WORDS.curr_symbol + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%"}
+        ]        
+    ];        
 
-    var body = [];
-    var str, str2, el, el2;
-
-    for(var i=0; i<data.length; i+=2){
-        str = gstr(data[i]);
-
-        str2 = $(data[i+1]).text();
-        el2 = {text: str2, style: 'cell'};
-        el = {text: str, style: 'cell'};
-        body.push([el, el2]);
-
-    }
     return body;
 }
+
 
 //gets the string and converts such HTML info into pure string info.
 function gstr(data_i){
 
     var string1 = $(data_i).html();
     var str = string1.replace(new RegExp("<br>", "g"), "\n").trim();
+    str = str.replace(new RegExp("<li>", "g"), "\n").trim();
     str = str.replace(/(<([^>]+)>)/ig,"").replace(new RegExp("&nbsp;", "g"), '');
 
     return str;

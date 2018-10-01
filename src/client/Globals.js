@@ -40,7 +40,7 @@ var SWITCHES,               //GLOBAL switches Object
     NONCE;                  //Number used only once for CSP rules in scrips
 
 //Global Function variables for function expressions
-var Run1, Print, generatePDF, TimeCounter;
+var Run1, Print, TimeCounter;
 
 (function(){
 
@@ -164,6 +164,20 @@ var Run1, Print, generatePDF, TimeCounter;
                 finEffort: 0,
                 alterToCar: 0
             }
+        },
+        costsColors: {        
+            depreciation:   '#2ba3d6',
+            insurance:      '#10c6e6',
+            credit:         '#5ae0e2',
+            inspection:     '#99e6bc',
+            car_tax:        '#ffda70',
+            fuel:           '#ff9e84',
+            maintenance:    '#ff7192',
+            repairs_improv: '#e562aa',
+            parking:        '#ea90cd',
+            tolls:          '#eabcef',
+            fines:          '#9f97ef',
+            washing:        '#867ae3'        
         }
     };
 
