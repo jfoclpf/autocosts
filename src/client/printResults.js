@@ -148,7 +148,12 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         }        
                 
         setClassAccordionHandler();
-    });    
+        
+        //download pdf button handler
+        $("#results #button-pdf").on( "click", function(){
+            generatePDF(calculatedData);
+        }); 
+    });
     
 }
 

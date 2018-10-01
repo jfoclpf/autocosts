@@ -108,6 +108,8 @@ function drawCostsChart(calculatedData, period) {
         labels[i] = formatLabel(labels[i], 16);
     }       
     
+    var cc = DISPLAY.costsColors;
+        
     var dataset = [{
         data: [
             c.depreciation,
@@ -124,18 +126,18 @@ function drawCostsChart(calculatedData, period) {
             c.washing
         ],
         backgroundColor: [
-            '#2ba3d6',
-            '#10c6e6',
-            '#5ae0e2',
-            '#99e6bc',
-            '#ffda70',
-            '#ff9e84',
-            '#ff7192',
-            '#e562aa',
-            '#ea90cd',
-            '#eabcef',
-            '#9f97ef',
-            '#867ae3'
+            cc.depreciation,
+            cc.insurance,
+            cc.credit,
+            cc.inspection,
+            cc.car_tax,
+            cc.fuel,
+            cc.maintenance,            
+            cc.repairs_improv,
+            cc.parking,
+            cc.tolls,
+            cc.fines,
+            cc.washing
         ]
     }];
     

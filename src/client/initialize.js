@@ -213,27 +213,21 @@ function loadFormSettings(){
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
     driveToJob(false);             
     //Income in Form Part 3 - set to year
-    income_toggle("year");   
-    
-    //final buttons of the form
-    $('#run_button').show();
-    $('#run_button_noCapctha').hide();
-
-    //console.log(SWITCHES);
-    //renders according to Global swicthes
-    if(!SWITCHES.print){
-        $("#print_button").hide();
-    }
-    else{
-        $("#print_button").show();    
-    }
+    income_toggle("year");       
     
     if(!SWITCHES.pdf){
-        $("#generate_PDF").hide();
+        $("#results #button-pdf").hide();
     }
     else{
-        $("#generate_PDF").show();
+        $("#results #button-pdf").show();
     }   
+    
+    if(!SWITCHES.print){
+        $("#results #button-print").hide();
+    }
+    else{
+        $("#results #button-print").show();
+    }    
     
 }
     
@@ -311,7 +305,7 @@ function loadFormHandlers(){
     $("#results #edit_form_btn").on( "click", function(){
         $("#form").show();               
         $("#results").hide();
-    });
+    });           
     
 }
 
