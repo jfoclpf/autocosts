@@ -10,7 +10,7 @@ https://autocosts.info<br>
 Playground: https://autocosts.info/XX 
 
 ### The list of available countries
-https://autocustos.info/list
+https://autocosts.info/list
 
 The translations are in corresponding `json` files, namely in the folder `src/countries/`.<br>
 The list of available countries is from the file `src/countries/list.json`
