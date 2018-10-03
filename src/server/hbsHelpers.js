@@ -89,6 +89,11 @@ module.exports = {
         return str.replace(/<(?:.|\n)*?>/gm, '');
     },
     
+    //return, for example, "pt_PT" or "en_US"
+    getLocale: function(){
+        return this.clientData.languageCode.substring(0, 2) + "_" + this.CC;
+    },
+    
     getFuelEfficiencyOptStr: function(){
         switch(this.fuel_efficiency_std_option){
             case 1:
