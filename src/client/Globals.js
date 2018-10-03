@@ -111,7 +111,6 @@ var Run1, Print, TimeCounter;
 
         drawCostsCharts :     rootClientURL + "chart/drawCostsCharts.js",
         chartjs :             JSfiles.chartjs.uri,
-        jAlert :              rootClientURL + "jAlert/jAlert.js",
         jssocials :           JSfiles.jssocials
     };
 
