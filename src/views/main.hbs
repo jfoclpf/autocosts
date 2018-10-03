@@ -40,9 +40,9 @@
         </div>
 
         <header>
-            <a href="#" class="btn btn-left-sidebar" data-action="open" data-side="left"></a>
+            <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
             {{#if serverData.settings.switches.dataBase}}
-                <a href="#" class="btn btn-right-sidebar" data-action="open" data-side="right"></a>
+                <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
             {{/if}}
             <h1 class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></h1>
         </header>
@@ -70,8 +70,7 @@
                     {{/if}}
                 </h2>
 
-                <input type="button" id="calculateButton" style="cursor: pointer;" 
-                       class="button big btn-blue" value="Calculate car cost" />
+                <input type="button" id="calculateButton" class="button big btn-blue cursor_pointer" value="Calculate car cost" />
             </div>    
         </section>
 
