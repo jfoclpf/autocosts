@@ -302,8 +302,7 @@ function checkJS(callback){
         //gets file extension and avoids exceptions
         if(getFileExtension(filename) == 'js' && 
            !filename.includes("vfs_fonts")    && 
-           !filename.includes("js_timer.js")  &&
-           !filename.includes("jAlert.js")    ){
+           !filename.includes("js_timer.js")){
 
             var code = fs.readFileSync(filename, 'utf-8'); 
 
