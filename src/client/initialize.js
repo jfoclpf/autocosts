@@ -12,6 +12,7 @@ $(document).ready(function () {
             loadPageSettings();    
             loadFormSettings();
             loadFormHandlers();
+            loadResultsHandlers();
             loadsStandardValues();
         });
         
@@ -213,21 +214,7 @@ function loadFormSettings(){
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
     driveToJob(false);             
     //Income in Form Part 3 - set to year
-    income_toggle("year");       
-    
-    if(!SWITCHES.pdf){
-        $("#results #button-pdf").hide();
-    }
-    else{
-        $("#results #button-pdf").show();
-    }   
-    
-    if(!SWITCHES.print){
-        $("#results #button-print").hide();
-    }
-    else{
-        $("#results #button-print").show();
-    }    
+    income_toggle("year");             
     
 }
     
@@ -295,18 +282,39 @@ function loadFormHandlers(){
     $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
     $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)    
     
-    //Final buttons    
-    $("#rerun_button").on( "click", function(){reload()});
-    $("#print_button").on( "click", function(){Print()});
-    $("#generate_PDF").on( "click", function(){generatePDF()});    
+    //Final buttons on results    
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
+              
+}
+
+function loadResultsHandlers(){
+    
+    if(SWITCHES.pdf){
+        $("#results #button-pdf").show();
+        //download pdf button handler
+        $("#results #button-pdf").on( "click", function(){
+            console.log("Download pdf clicked");
+            generatePDF(CALCULATED_DATA);
+        });   
+    }
+    else{
+        $("#results #button-pdf").hide();
+    }   
+    
+    /*if(SWITCHES.print){
+        $("#results #button-print").show();
+        $("#print_button").on( "click", function(){Print()});
+    }
+    else{
+        $("#results #button-print").hide();
+    }*/  
+        
     
     //edit form on results
     $("#results #edit_form_btn").on( "click", function(){
         $("#form").show();               
         $("#results").hide();
-    });           
-    
+    }); 
 }
 
 //the standard values are used if we want the form to be pre-filled

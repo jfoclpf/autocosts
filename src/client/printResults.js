@@ -82,36 +82,19 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     var toFixedN, amount, numToShow;
     $("#results").show(function(){
         
-        //scans all calculatedData and assigns each result value to respective HTML element,         
-        for (var key in flattenedData){
-            var $i = $("#results ." + key);  
-            if($i.length){
-                
-                //organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
-                toFixedN = getToFixedNumFromClasses($i);
-                amount = flattenedData[key].toFixed(toFixedN);
-                
-                if($i.hasClass("currency")){
-                    numToShow = currencyShow(amount);
-                }
-                else if($i.hasClass("hours")){
-                    numToShow = amount + " " + WORDS.hour_abbr; 
-                }
-                else if($i.hasClass("distance")){
-                    numToShow = amount + " " + getDistanceOptStrShort(); 
-                }
-                else if($i.hasClass("percentage")){
-                    numToShow = amount + "&#37;"; //percentage symbol 
-                }                
-                else{
-                    numToShow = amount;
-                }
-                
-                $i.html(numToShow);
-            }
-        }
+        setCalculatedDataToHTML(flattenedData);
         
-        drawDoughnutChart(calculatedData);
+        //in financial effort was not calculated, does not show doughnut chart
+        //and adapt the three boxes css
+        if(calculatedData.fin_effort_calculated){            
+            drawDoughnutChart(calculatedData);
+            $("#results #info-boxes .info-box.box-3").show();
+            $("#results #info-boxes .container .info-box").css("width", "30.333333%");
+        }
+        else{
+            $("#results #info-boxes .info-box.box-3").hide();
+            $("#results #info-boxes .container .info-box").css("width", "46%");
+        }
         
         setPeriodicCosts(calculatedData, "month");
         drawCostsChart(calculatedData, "month");
@@ -141,6 +124,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
                 setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
                 drawAlterToCarChart(calculatedData);
             }); 
+            DISPLAY.result.public_transports = DISPLAY.result.uber = true;
         }
         else{
             $("#equivalent-transport-costs").hide();
@@ -149,15 +133,45 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
                 
         setClassAccordionHandler();
         
-        //download pdf button handler
-        $("#results #button-pdf").on( "click", function(){
-            generatePDF(calculatedData);
-        }); 
     });
     
 }
 
+//scans all calculatedData flattened to flattenedData and assigns each result value to respective HTML element  
+function setCalculatedDataToHTML(flattenedData){
+    
+    for (var key in flattenedData){
+        var $i = $("#results ." + key);  
+        //check that the element with that class exists in the html page
+        //and that the element is valid in the array of calculated data
+        if(flattenedData.hasOwnProperty(key) && $i.length &&  flattenedData[key]){
 
+            //organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
+            toFixedN = getToFixedNumFromClasses($i); 
+            amount = flattenedData[key].toFixed(toFixedN);
+
+            if($i.hasClass("currency")){
+                numToShow = currencyShow(amount);
+            }
+            else if($i.hasClass("hours")){
+                numToShow = amount + " " + WORDS.hour_abbr; 
+            }
+            else if($i.hasClass("distance")){
+                numToShow = amount + " " + getDistanceOptStrShort(); 
+            }
+            else if($i.hasClass("percentage")){
+                numToShow = amount + "&#37;"; //percentage symbol 
+            }                
+            else{
+                numToShow = amount;
+            }
+
+            $i.html(numToShow);
+        }
+    }
+}
+
+//The first section of results page, showing the monthly/trimester/semester/yearly costs
 function setPeriodicCosts(calculatedData, period){
     
     var numMonths, strPeriod;
