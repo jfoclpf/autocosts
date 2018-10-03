@@ -268,14 +268,19 @@ function get_main_table(calculatedData){
                    WORDS.months_poss + " " + WORDS.curr_symbol + calculatedData.total_costs_ever.toFixed(0), 
             colSpan: 4, alignment: 'center'},
             {},{},{}
-        ],
-        [
-            {text:WORDS.financial_effort + ": " + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%",
-            colSpan: 4, alignment: 'center'},
-            {},{},{}
         ]
     ];
-
+    
+    if (calculatedData.fin_effort_calculated){
+        body.push(
+            [
+                {text:WORDS.financial_effort + ": " + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%",
+                colSpan: 4, alignment: 'center'},
+                {},{},{}
+            ]
+        );
+    }
+    
     return body;    
 }
 
