@@ -53,13 +53,7 @@ label.float_left {float: left; margin: 3px 20px 0 0;}
 /* ---------- Inputs ---------- */
 .input_value { position: relative; }
 
-textarea,
-input[type="text"],
-input[type="button"],
-input[type="submit"]{
--webkit-appearance: none;
-border-radius: 0;
-}
+textarea, input[type="text"], input[type="button"], input[type="submit"]{-webkit-appearance: none;border-radius: 0;}
 
 input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 30px }
 input:focus {border-bottom: 1px solid black; outline: none;}
@@ -158,7 +152,9 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ---------- Buttons ---------- */
-.button, input[type="button"].button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700}
+.button, input[type="button"].button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700; text-align: center;}
+
+.cursor_pointer:hover {cursor: pointer;}
 
 .big {width: 370px; font-size: 18px!important; /*padding: 18px 30px!important;*/}
 .medium {padding: 8px 30px!important;}
@@ -167,7 +163,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .btn-blue:hover {color: white; background-color: #385be1}
 
 .btn-orange {background-color: #efa00b; padding: 8px 20px;} 
-.btn-orange:hover {color: white; background-color: #ffae16}
+.btn-orange:hover {color: white; background-color: #ffae16; cursor: pointer;}
 
 
 /* ---------- Steps ---------- */
