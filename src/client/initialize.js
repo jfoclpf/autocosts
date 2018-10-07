@@ -289,6 +289,11 @@ function loadFormHandlers(){
 
 function loadResultsHandlers(){
     
+    $("#results #totalCostsPeriod").on("change", function(){
+        setPeriodicCosts(CALCULATED_DATA, $(this).val());
+        drawCostsChart(CALCULATED_DATA, $(this).val());
+    });    
+    
     if(SWITCHES.pdf){
         $("#results #button-pdf").show();
         //download pdf button handler
