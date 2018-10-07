@@ -77,59 +77,60 @@ function Run2(callback){
 function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     //console.log(JSON.stringify(calculatedData, null, 4));
     
-    $("#form").hide();       
+    $("#form").hide(); 
     
-    var toFixedN, amount, numToShow;
+    //in financial effort was not calculated, does not show doughnut chart
+    //and adapt the three boxes css
+    if(calculatedData.fin_effort_calculated){            
+        drawDoughnutChart(calculatedData);
+        //shows third box where the financial effort doughnut chart appears
+        $("#results #info-boxes .info-box.box-3").show();
+        $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");
+        
+        //shows financial effort section 
+        $("#results #financial-effort").show();
+        DISPLAY.result.fin_effort = true; //global variable
+    }
+    else{
+        //hides third box where the financial effort doughnut chart appears
+        $("#results #info-boxes .info-box.box-3").hide();
+        $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");
+        
+        //hides financial effort section
+        $("#results #financial-effort").hide();
+        DISPLAY.result.fin_effort = false;        
+    }    
+    
+    //equivalent transport costs results: public transports and uber
+    if(calculatedData.alternative_to_car_costs_calculated){            
+        $("#results #equivalent-transport-costs").show();
+        DISPLAY.result.public_transports = DISPLAY.result.uber = true;
+    }
+    else{
+        $("#results #equivalent-transport-costs").hide();
+        DISPLAY.result.public_transports = DISPLAY.result.uber = false;
+    }     
+    
     $("#results").show(function(){
         
         setCalculatedDataToHTML(flattenedData);
-        
-        //in financial effort was not calculated, does not show doughnut chart
-        //and adapt the three boxes css
-        if(calculatedData.fin_effort_calculated){            
-            drawDoughnutChart(calculatedData);
-            $("#results #info-boxes .info-box.box-3").show();
-            $("#results #info-boxes .container .info-box").css("width", "30.333333%");
-        }
-        else{
-            $("#results #info-boxes .info-box.box-3").hide();
-            $("#results #info-boxes .container .info-box").css("width", "46%");
-        }
-        
+                
         setPeriodicCosts(calculatedData, "month");
         drawCostsChart(calculatedData, "month");
-        $("#totalCostsPeriod").on("change", function(){
-            setPeriodicCosts(calculatedData, $(this).val());
-            drawCostsChart(calculatedData, $(this).val());
-        });
         
         setPeriodicCostsDetails(f1, f2, f3, calculatedData);                                
         
         //financial effort result 
-        if(calculatedData.fin_effort_calculated){
-            $("#financial-effort").show(function(){
-                setFinancialEffortDetails(f1, f2, f3, calculatedData);
-                drawFinEffortChart(calculatedData);
-            });            
-            DISPLAY.result.fin_effort = true; //global variable
-        }
-        else{
-            $("#financial-effort").hide();
-            DISPLAY.result.fin_effort = false;
+        if(calculatedData.fin_effort_calculated){            
+            setFinancialEffortDetails(f1, f2, f3, calculatedData);
+            drawFinEffortChart(calculatedData);            
         }
 
         //equivalent transport costs results: public transports and uber
         if(calculatedData.alternative_to_car_costs_calculated){            
-            $("#equivalent-transport-costs").show(function(){
-                setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
-                drawAlterToCarChart(calculatedData);
-            }); 
-            DISPLAY.result.public_transports = DISPLAY.result.uber = true;
+            setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
+            drawAlterToCarChart(calculatedData);
         }
-        else{
-            $("#equivalent-transport-costs").hide();
-            DISPLAY.result.public_transports = DISPLAY.result.uber = false;
-        }        
                 
         setClassAccordionHandler();
         

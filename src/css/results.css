@@ -4,9 +4,11 @@
 .results {margin: 0 auto}
 .results header {position: relative; margin-bottom: 50px}
 
-/*******------ 3 boxes at the top ------*******/
+/*******------ 3 or 2 boxes at the top ------*******/
 #info-boxes .container {display: block; margin: 0 auto; padding: 0; max-width: 880px; height: 175px;}
-#info-boxes .container .info-box {float: left; color: white; border-radius: 5px; width: 30.333333%; height: 115px; background-color: #2c49b9; padding: 30px 0; margin: 0 1.5%;}
+#info-boxes .container .info-box {float: left; color: white; border-radius: 5px; height: 115px; background-color: #2c49b9; padding: 30px 0; margin: 0 1.5%;}
+#info-boxes .container .info-box.three-boxes { width: 30.333333%;}
+#info-boxes .container .info-box.two-boxes { width: 46%;}
 
 #info-boxes .container .info-box h2 {font-size: 55px; line-height: 45px; margin: 0 30px;}
 #info-boxes .container .info-box h2 sup {font-size: 25px; font-weight: 300; margin-top: 4px }
