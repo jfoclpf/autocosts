@@ -620,7 +620,9 @@ function setEquivTransportCostsDetails(f1, f2, f3, calculatedData){
     //UBER
     var calculatedUber = calculatedData.uber;
     
-    if(SWITCHES.uber && !$.isEmptyObject(calculatedUber)){
+    if(SWITCHES.uber && calculatedUber && !$.isEmptyObject(calculatedUber)){
+        
+        $("#equivalent-transport-costs .uber").show();
         DISPLAY.result.uber = true; //says uber table is to be printed; global variable                
 
         //in which driver can replace every km by uber
@@ -659,6 +661,7 @@ function setEquivTransportCostsDetails(f1, f2, f3, calculatedData){
         }
     }
     else{
+        $("#equivalent-transport-costs .uber").hide();
         DISPLAY.result.uber = false; //says uber table is not to be printed; global variable
     }
     
