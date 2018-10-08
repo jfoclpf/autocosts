@@ -47,6 +47,51 @@
 
     .container .steps ul li.number:after {display: none;}
 
+
+    /* ------------------ RESULTS ------------------*/
+    section#results {width: 94%; margin: 0 auto}
+
+    #results .results-section {margin-bottom: 150px }
+
+    #results #avg-periodic-cost {display: inline-block;}
+
+    #results #info-boxes .container .info-box {float: none; margin: 10px auto; width: 90%; max-width: 280px}
+    #info-boxes .container .info-box select {width: auto!important}
+
+    #results .results-section .values .accordion {padding: 5px 0% 0 3%}
+    #results #financial-effort .values .accordion {padding: 5px 0 0}
+
+    #results #avg-monthly-cost {display: inline-block; width: 94%; margin-bottom: 30px}
+
+    #results .stats-references .standing-costs {width: 47%}
+    #results .stats-references .running-costs {width: 50%}
+    #results .stats-references ul li {display: block;}
+
+    #results #avg-periodic-cost .three-boxes .box {width: 100%; margin: 10px auto; min-height: auto; float: none; padding-bottom: 20px}
+    #results #avg-periodic-cost .three-boxes .box .title {width: 94%; padding: 3px 3% 0 8px;}
+    #results #avg-periodic-cost .three-boxes .box .total-item {width: 94%; padding: 3px 3% 0 3% }
+    #results #avg-periodic-cost .three-boxes .box .total-ammount {  width: 94%; padding: 5px 3%;}
+    #results #avg-periodic-cost .three-boxes .box .total-ammount h4 {margin-left: 0}
+    #results #avg-periodic-cost .three-boxes .box .title h3 {font-size: 18px; margin-left: 0;}
+    #results #avg-periodic-cost .three-boxes .box .title span {max-width: 160px; margin-bottom: 5px}
+
+    #results .results-section .graph, #results .results-section .values {width: 100%; float: none; margin: 0 auto}
+    #results .results-section .values {margin: 20px auto}
+
+    #results #avg-periodic-cost h2, #results .results-section h2 {line-height: 30px;}
+    #results .results-section .graph h5 {text-align: center;}
+    #results .results-section .values h5 {padding-left:  0}
+
+
+    #results .bottom-actions-bar {width: 92%; padding: 2% 4%}
+
+    #results .bottom-actions-bar .center-actions {display: none;}
+    #results .bottom-actions-bar .center-actions-mobile {display: block;}
+    #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; vertical-align: middle;}
+
+
+
+
 }
 
 
@@ -178,11 +223,133 @@
     footer .animation {width: 100%; background-size: 160%;}
     footer, footer .animation {height: 250px}
 
-    
+
+    }   
+
+    /* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Button styling */
+.menu-toggle {
+  display: inline-block;
+  padding: .75em 15px;
+  line-height: 1em;
+  font-size: 1em;
+  color: #333;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus {
+  color: #c00;
+}
+
+/*
+ Default styles + Mobile first
+ Offscreen menu style
+*/
+.main-menu {
+  position: absolute;
+  left: -200px;
+  top: 0;
+  height: 100%;
+    overflow-y: scroll;
+    overflow-x: visible;
+    transition: left 0.3s ease,
+                      box-shadow 0.3s ease;
+    z-index: 999;
+}
+
+.main-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 2.5em 0 0;
+  /* Hide shadow w/ -8px while 'closed' */
+  -webkit-box-shadow: -8px 0 8px rgba(0,0,0,.5);
+     -moz-box-shadow: -8px 0 8px rgba(0,0,0,.5);
+          box-shadow: -8px 0 8px rgba(0,0,0,.5);
+  min-height: 100%;
+  width: 200px;
+  background: #1a1a1a;
+}
+
+.main-menu a {
+  display: block;
+  padding: .75em 15px;
+  line-height: 1em;
+  font-size: 1em;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #383838;
+}
+
+.main-menu li:first-child a {
+  border-top: 1px solid #383838;
+}
+
+.main-menu a:hover,
+.main-menu a:focus {
+  background: #333;
+  text-decoration: underline;
+}
+
+.main-menu .menu-close {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 
+.main-menu:target,
+.main-menu[aria-expanded="true"] {
+  left: 0;
+  outline: none;
+  -moz-box-shadow: 3px 0 12px rgba(0,0,0,.25);
+  -webkit-box-shadow: 3px 0 12px rgba(0,0,0,.25);
+  box-shadow: 3px 0 12px rgba(0,0,0,.25);
+}
+
+.main-menu:target .menu-close,
+.main-menu[aria-expanded="true"] .menu-close {
+  z-index: 1001;
+}
+
+.main-menu:target ul,
+.main-menu[aria-expanded="true"] ul {
+  position: relative;
+  z-index: 1000;
+}
+
+
+.main-menu:target + .backdrop,
+.main-menu[aria-expanded="true"] + .backdrop {
+  position: absolute;
+  display: block;  
+  content: "";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+  background: #000;
+  background: rgba(0,0,0,.85);
+  cursor: default;
+}
+
+
+
 @media screen and (max-width:460px) {
+
+
+    #results #avg-monthly-cost h2, #results .results-section h2 {font-size: 22px; line-height: 25px;}
 
     footer {background-position: left 90px;}    
 
