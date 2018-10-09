@@ -85,7 +85,7 @@
 .results-section .values h5, .results-section .values span {font-size: 18px}
 .results-section .values .accordion {padding: 5px 0}
 
-.results-section .values .accordion h5:before { margin: 6px 0 0 -18px}
+.results-section .values .accordion span.expandable-item:before { margin: 6px 0 0 -18px}
 
 .results-section .values .total-ammount {width: 100%}
 .results-section .values .total-ammount h4 {margin-left: 0}
@@ -96,7 +96,7 @@
 /*******------ Accordions ------*******/
 .accordion, .total-item {background: none; color: #2c49b9; cursor: pointer; padding: 3px 20px; width: 100%; border: none; text-align: left; outline: none; transition: 0.4s; font-family: 'Nunito', Arial, sans-serif;}
 .active, .accordion:hover {}
-.accordion h5 {max-width: 70%; padding-left: 15px; font-size: 14px; display: inline-block; font-weight: 700;}
+.accordion span.expandable-item {max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
 .accordion span,
 .total-item span {font-size: 14px; color: black; display: inline-block; float: right;}
 .accordion h5:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
