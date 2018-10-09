@@ -96,13 +96,13 @@
 /*******------ Accordions ------*******/
 .accordion, .total-item {background: none; color: #2c49b9; cursor: pointer; padding: 3px 20px; width: 100%; border: none; text-align: left; outline: none; transition: 0.4s; font-family: 'Nunito', Arial, sans-serif;}
 .active, .accordion:hover {}
-.accordion span.expandable-item {max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
+.accordion span.expandable-item {float: left; max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
 .accordion span,
 .total-item span {font-size: 14px; color: black; display: inline-block; float: right;}
-.accordion h5:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
-.accordion h5:after {display: inline-block; position: relative; content: ""; top: -2px; right: 0; margin-left: 4px; width: 7px; height: 7px; transform: rotate(45deg); border-right: 1px solid #2c49b9; border-bottom: 1px solid #2c49b9;}
+.accordion span.expandable-item:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
+.accordion span.expandable-item:after {display: inline-block; position: relative; content: ""; top: -2px; right: 0; margin-left: 4px; width: 7px; height: 7px; transform: rotate(45deg); border-right: 1px solid #2c49b9; border-bottom: 1px solid #2c49b9;}
 
-.active h5:after {transform: rotate(-135deg); top: 2px;}
+.active span.expandable-item:after {transform: rotate(-135deg); top: 2px;}
 
 .panel {padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out;}
 .panel ul {width: 78%}
