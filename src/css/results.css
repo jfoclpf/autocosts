@@ -96,7 +96,7 @@
 /*******------ Accordions ------*******/
 .accordion, .total-item {background: none; color: #2c49b9; cursor: pointer; padding: 3px 20px; width: 100%; border: none; text-align: left; outline: none; transition: 0.4s; font-family: 'Nunito', Arial, sans-serif;}
 .active, .accordion:hover {}
-.accordion span.expandable-item {float: left; max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
+.accordion .expandable-item, .accordion h5 {float: left; max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
 .accordion span,
 .total-item span {font-size: 14px; color: black; display: inline-block; float: right;}
 .accordion span.expandable-item:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
