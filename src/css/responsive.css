@@ -28,7 +28,7 @@
     .container .steps ul {float: left; display: inline-block; width: 100%}
     .container .steps ul li.one:first-child {width: 143px}
     .container .steps ul li.two {width: 187px}
-    .container .steps ul li.three {width: 138px; height: 34px; overflow: hidden;}
+    .container .steps ul li.three {width: 145px; height: 34px; overflow: hidden;}
     .container .steps ul li.one ul {float: left; display: inline-block;}
 
     .container .steps ul li,
@@ -46,6 +46,10 @@
     .container .steps ul li > ul > li:before {margin: 13px 0 0 40px}
 
     .container .steps ul li.number:after {display: none;}
+
+    /* Calculate car cost button */
+    .calculate_bottom_bar {background: none; height: auto; bottom: 64px; box-shadow: none;}
+    .calculate_bottom_bar a {max-width: 60%; font-size: 14px!important; padding: 8px 0px!important;}
 
 
     /* ------------------ RESULTS ------------------*/
@@ -213,14 +217,37 @@
     .time_spent_part2_form3 .input_70 {width: 40px!important }
 
 
-    /* Calculate car cost button */
-    .calculate_bottom_bar {background: none; height: auto; bottom: 64px; box-shadow: none;}
-    .calculate_bottom_bar a {max-width: 60%; font-size: 14px!important; padding: 8px 0px!important;}
-
     /* Steps */
-    .container .steps ul li > ul > li:before {}
-    .container .steps ul li > ul > li.active:before {margin: 13px 0 0 39px; width: 3px; height: 7px; content: "";}
-    .container .steps ul li > ul > li.done:before {}
+    .container .steps {min-width: auto; height: 32px; }
+    .container .steps ul {margin: 5px auto 0; max-width: 300px; float: none;}
+
+    .container .steps ul .number:before { padding: 5px 0 0 10px; width: 19px; height: 23px; font-size: 14px;}
+
+    .container .steps ul li.one:first-child,
+    .container .steps ul li.two,
+    .container .steps ul li.three {width: auto;}
+
+    .container .steps ul li.one ul,
+    .container .steps ul li.two ul,
+    .container .steps ul li.three ul {margin-left: 29px}
+
+    .container .steps ul li.active > span, 
+    .container .steps ul li.active ul li.active > span, 
+    .container .steps ul li > ul > li > span {text-indent: -9999px; display: inline-block; width: 8px; height: 8px; background-color: #d7dbee; margin: 0; border: 1px solid #f4f6ff; border-radius: 50%;}
+
+    .container .steps ul li.active ul li.active {margin-top: 0}
+    .container .steps ul li {margin-top: -3px}
+    .container .steps ul li.active ul li.done {margin-top: -3px!important}
+
+    .container .steps ul li.active ul li.active > span,
+    .container .steps ul li.active ul li.done > span {background: #2c49b9;}
+    .container .steps ul li.active ul li.active > span {width: 16px; height: 16px;}
+    .container .steps ul li.active ul li.done > span {width: 8px!important; height: 8px!important}
+
+    .container .steps ul li span,
+    .container .steps ul li > ul > li:before,
+    .container .steps ul li > ul > li:after,
+    .container .steps ul li.active > span {display: none}
 
 
     
@@ -320,7 +347,4 @@
   background: rgba(0,0,0,.85);
   cursor: default;
 }
-
-
-
 
