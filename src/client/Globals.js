@@ -26,7 +26,8 @@ var SWITCHES,               //GLOBAL switches Object
     GA_TRACKING_ID,         //Google analytics Tracking ID
     NOT_LOCALHOST,          //true when this session does not come from localhost
     JS_FILES,               //Object with locations of Javascript Files    
-    PAGE_URL,               //current page URL
+    DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'     
+    PAGE_URL,               //current page URL, example 'http://autocosts.info/UK'     
     LANG_JSON_DIR,          //Directory of JSON Translation files
     STATS_HTML_TABLES_DIR,  //Directory of statistical html tables
     STATS_JPG_TABLES_DIR,   //Directory of statistical jpg tables
@@ -117,6 +118,9 @@ var Run1, Print, TimeCounter;
 
     UBER_API = {};
     UBER_API_LOCAL_URL = "getUBER/" + COUNTRY;
+    
+    /*forms present page full url, example 'http://autocosts.info' */
+    DOMAIN_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY]; 
     
     /*forms present page full url, example 'http://autocosts.info/UK' */
     PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;

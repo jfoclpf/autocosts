@@ -140,10 +140,13 @@ function calculateButtonOnclick(){
     getScriptOnce(JS_FILES.coreFunctions, function(){
         getScriptOnce(JS_FILES.validateForm);
         getScriptOnce(JS_FILES.conversionFunctions);
-        getScriptOnce(JS_FILES.smartAppBanner);
+        
+        getScriptOnce(JS_FILES.smartAppBanner, loadSmartBanner);
+        
         getScriptOnce(JS_FILES.getData, function(){
             loadExtraFiles();
         });
+
     });
     
     //loadStyleSheets(['css/merged_deferred.css']);
@@ -381,5 +384,27 @@ function loadsStandardValues(){
     });
 }
 
+function loadSmartBanner(){    
+    
+    new SmartBanner({
+        daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
+        daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
+        appStoreLanguage: LANGUAGE, // language code for the App Store (defaults to user's browser language)
+        title: WORDS.ac_mobile,
+        author: 'Autocosts Org',
+        button: 'APP',
+        store: {
+            android: 'Google Play'                    
+        },
+        price: {
+            android: 'FREE'
+        },
+        // Add an icon (in this example the icon of Our Code Editor)
+        icon: "/img/logo/logo_sm.png",
+        theme: 'android', // put platform type ('ios', 'android', etc.) here to force single theme on all device
+        force: 'android'
+    }); 
 
+    $(".smartbanner-icon").css("padding-right", "22px");
+}
 
