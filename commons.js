@@ -454,9 +454,9 @@ function setFILENAMES(){
                 "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
                 "uri"   : "" //it will be one of the above
             },
-            "uaparserjs" : {
-                "local" :  path.join(DIRECTORIES.client.client, 'ua-parser.min.js'),
-                "cdn"   : "https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js",
+            "smartappbanner" : {
+                "local" :  path.join(DIRECTORIES.client.client, 'smart-app-banner.js'),
+                "cdn"   : "https://cdn.jsdelivr.net/npm/smart-app-banner@1.5.1/dist/smart-app-banner.js",
                 "uri"   : "" //it will be one of the above
             },                                    
             "jssocials"     : "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js",
