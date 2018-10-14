@@ -182,14 +182,15 @@ function copy(){
     
     fse.copySync(SRC_DIR, BIN_DIR);
     
-    console.log("Copy node modules to bin/");            
+    console.log("Copy node npm modules to bin/");            
     
-    //copy jquery file
+    //copy jquery file from NPM package
     var jqueryDir = path.dirname(require.resolve('jquery'));
     fse.copySync(path.join(jqueryDir, 'jquery.min.js'), 
                  path.join(BIN_DIR, 'client', 'jquery', 'jquery.min.js'));
     
-    //copy pdfmake files
+    //copy pdfmake files from NPM package
+    //returns main directory from npm package on directory node_modules/
     var pdfmakeBuildDir = path.resolve(path.dirname(require.resolve('pdfmake')), '..', 'build');    
     
     fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js'),
@@ -199,10 +200,17 @@ function copy(){
     fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js.map'), 
                  path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
     
-    //copy chartjs file
-    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')), '..', 'dist');        
+    //copy chartjs file from NPM package
+    //returns main directory from npm package on directory node_modules/
+    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')), '..', 'dist');            
     fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
                  path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));
+    
+    //copy ua-parser file from NPM package
+    //returns main directory from npm package on directory node_modules/
+    var uaParserDistDir = path.resolve(path.dirname(require.resolve('ua-parser-js')), '..', 'dist');            
+    fse.copySync(path.join(uaParserDistDir, 'ua-parser.min.js'), 
+                 path.join(BIN_DIR, 'client', 'ua-parser.min.js'));    
 }
 
 //concatenate some CSS files
@@ -219,8 +227,8 @@ function concatCSSFiles(mainCallback){
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
     var files2Arr = [
-        'results.css'
-    ];       
+        'results.css', 'smart-app-banner.css'
+    ]; 
     //name given to the merged file
     var files2MergedName = 'merged_deferred.css';    
     

@@ -140,13 +140,14 @@ function calculateButtonOnclick(){
     getScriptOnce(JS_FILES.coreFunctions, function(){
         getScriptOnce(JS_FILES.validateForm);
         getScriptOnce(JS_FILES.conversionFunctions);
+        getScriptOnce(JS_FILES.uaParserJs);
         getScriptOnce(JS_FILES.getData, function(){
             loadExtraFiles();
         });
     });
     
     //loadStyleSheets(['css/merged_deferred.css']);
-    loadStyleSheets(['css/results.css']); //temporary line
+    loadStyleSheets(['css/results.css', 'css/smart-app-banner.css']); //temporary line
 }
 
 //initial settings regarding the calculator form itself
