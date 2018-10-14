@@ -204,13 +204,15 @@ function copy(){
     //returns main directory from npm package on directory node_modules/
     var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')), '..', 'dist');            
     fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
-                 path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));
+                 path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));        
     
-    //copy ua-parser file from NPM package
+    //copy smart-app-banner file from NPM package
     //returns main directory from npm package on directory node_modules/
-    var uaParserDistDir = path.resolve(path.dirname(require.resolve('ua-parser-js')), '..', 'dist');            
-    fse.copySync(path.join(uaParserDistDir, 'ua-parser.min.js'), 
-                 path.join(BIN_DIR, 'client', 'ua-parser.min.js'));    
+    var smartAppBannerDistDir = path.resolve(path.dirname(require.resolve('smart-app-banner')), 'dist');            
+    fse.copySync(path.join(smartAppBannerDistDir, 'smart-app-banner.js'), 
+                 path.join(BIN_DIR, 'client', 'smart-app-banner.js')); 
+    fse.copySync(path.join(smartAppBannerDistDir, 'smart-app-banner.css'), 
+                 path.join(BIN_DIR, 'css', 'smart-app-banner.css')); 
 }
 
 //concatenate some CSS files

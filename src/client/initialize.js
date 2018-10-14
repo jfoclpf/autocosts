@@ -140,7 +140,7 @@ function calculateButtonOnclick(){
     getScriptOnce(JS_FILES.coreFunctions, function(){
         getScriptOnce(JS_FILES.validateForm);
         getScriptOnce(JS_FILES.conversionFunctions);
-        getScriptOnce(JS_FILES.uaParserJs);
+        getScriptOnce(JS_FILES.smartAppBanner);
         getScriptOnce(JS_FILES.getData, function(){
             loadExtraFiles();
         });
