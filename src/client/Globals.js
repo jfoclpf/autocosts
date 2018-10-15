@@ -92,7 +92,6 @@ var Run1, Print, TimeCounter;
         coreFunctions :       rootClientURL + "core/coreFunctions.js",
         getData :             rootClientURL + "getData.js",
         printResults :        rootClientURL + "printResults.js",
-        print :               rootClientURL + "print.js",
         dbFunctions :         rootClientURL + "dbFunctions.js",
 
         jQuery :              JSfiles.jquery.uri,

@@ -6,11 +6,7 @@
 
 /*function that loads extra files and features, that are not loaded immediately after the page is opened
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-function loadExtraFiles() {
-    
-    if (SWITCHES.print){
-        getScriptOnce(JS_FILES.print);
-    }
+function loadExtraFiles() {    
 
     if (SWITCHES.charts){        
         getScriptOnce(JS_FILES.chartjs);
