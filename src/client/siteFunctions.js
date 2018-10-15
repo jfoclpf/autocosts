@@ -1,6 +1,6 @@
 /******************* DOCUMENT JS FUNCTIONS *******************/
 /*===========================================================*/
-/*    General functions which are used overall on the page   */
+/*    General functions which are used overall on the site   */
 /*************************************************************/
 
 
@@ -376,6 +376,89 @@ function currencyShow(value){
     else{
         return (WORDS.curr_symbol + " " + value);
     }
+}
+
+//the standard values are used if we want the form to be pre-filled
+function loadsStandardValues(){
+
+    //the key the name of the variable in WORDS
+    //the value is the name of the id in the form
+    var mappingIDs = {
+        "std_acq_month" : "acquisitionMonth",
+        "std_acq_year" : "acquisitionYear",
+        "std_price_paid" : "commercialValueAtAcquisition",
+        "std_price_today" : "commercialValueAtNow",
+        "std_insurance_sem" : "insuranceValue",
+        "std_loan" : "borrowedAmount",
+        "std_period_of_credit" : "numberInstallments",
+        "std_monthly_pay" : "amountInstallment",
+        "std_residual_value" : "residualValue",
+        "std_nbr_inspection" : "numberInspections",
+        "std_inspection_price" : "averageInspectionCost",
+        "std_road_tax" : "roadTaxes",
+        "std_fuel_paid_per_month" : "fuel_currency_value",
+        "std_days_per_week" : "car_to_work_number_days_week",
+        "std_jorney_2work" : "car_to_work_distance_home_work",
+        "std_jorney_weekend" : "car_to_work_distance_weekend",
+        "std_km_per_month" : "no_car_to_work_distance",
+        "std_car_fuel_efficiency" : "fuel_efficiency",
+        "std_fuel_price" : "fuel_price",
+        "std_maintenance_per_year" : "maintenance",
+        "std_repairs" : "repairs",
+        "std_parking" : "parking",
+        "std_tolls" : "no_daily_tolls_value",
+        "std_tolls_day" : "daily_expense_tolls",
+        "std_tolls_days_per_month" : "number_days_tolls",
+        "std_fines" : "tickets_value",
+        "std_washing" : "washing_value",
+        "std_nr_ppl_family" : "household_number_people",
+        "std_pass_price" : "public_transportation_month_expense",
+        "std_income_year" : "income_per_year",
+        "std_income_month" : "income_per_month",
+        "std_income_week" : "income_per_week",
+        "std_income_hour" : "income_per_hour",
+        "std_months_year" : "income_months_per_year",
+        "std_hours_week" : "income_hours_per_week",
+        "std_weeks_year" : "income_hour_weeks_per_year",
+        "std_time_home_job" : "time_home_job",
+        "std_time_weekend" : "time_weekend",
+        "std_time_in_driving" : "min_drive_per_day",
+        "std_days_month" : "days_drive_per_month",
+        "std_time_month_per_year" : "time_month_per_year",
+        "std_time_hours_per_week" : "time_hours_per_week",
+        "std_dist_per_month"      : "dist_per_month"
+    };
+
+    $.each(mappingIDs, function(key, value){
+        if($("#"+value).length && WORDS[key] !== undefined){
+            $("#"+value).val(WORDS[key]);
+        }
+    });
+}
+
+//Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App 
+//Based on this npm package: https://www.npmjs.com/package/smart-app-banner
+function loadSmartBanner(){    
+    
+    new SmartBanner({
+        daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
+        daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
+        appStoreLanguage: LANGUAGE, // language code for the App Store (defaults to user's browser language)
+        title: WORDS.ac_mobile,
+        author: 'Autocosts Org',
+        button: 'APP',
+        store: {
+            android: 'Google Play'                    
+        },
+        price: {
+            android: 'FREE'
+        },
+        // Add an icon (in this example the icon of Our Code Editor)
+        icon: "/img/logo/logo_sm.png",
+        theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
+    }); 
+
+    $(".smartbanner-icon").css("padding-right", "22px");
 }
 
 
