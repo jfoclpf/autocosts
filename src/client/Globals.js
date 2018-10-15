@@ -84,7 +84,7 @@ var Run1, Print, TimeCounter;
         },
 
         initialize :          rootClientURL + "initialize.js",
-        pageFunctions :       rootClientURL + "pageFunctions.js",
+        siteFunctions :       rootClientURL + "siteFunctions.js",
         formFunctions :       rootClientURL + "formFunctions.js",
         validateForm :        rootClientURL + "validateForm.js",    
         g_recaptcha :         rootClientURL + "g-recaptcha.js",

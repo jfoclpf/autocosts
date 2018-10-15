@@ -2,7 +2,7 @@ $(document).ready(function () {
     
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
-    getScriptOnce(JS_FILES.pageFunctions, function(){
+    getScriptOnce(JS_FILES.siteFunctions, function(){
         
         //detects old versions of Internet Explorer
         oldIE();
