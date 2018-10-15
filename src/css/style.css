@@ -224,7 +224,6 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part .field1 #commercial_value {margin: 30px 0;}
 
 .container .form_part .field_container .next {/*display: none;*/ margin: 17px 0 0;}
-.container .form_part .field_container .next span{font-size: 12px; color: #868790; margin-left: 6px}
 
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 

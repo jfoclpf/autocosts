@@ -120,14 +120,15 @@
 
 /*******------ Bottom Action Bar ------*******/
 .bottom-actions-bar {background-color: white; -webkit-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); -moz-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); display: block; position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px 0;}
+
 .bottom-actions-bar .left-actions {float: left; margin-left: 2%}
-.bottom-actions-bar .left-actions a {margin-top: 8px}
+.bottom-actions-bar .left-actions span {display:block; margin-top: 8px; font-size: 16px; font-weight: 700; color:#2c49b9; text-decoration:none;}
 
 .bottom-actions-bar .center-actions {margin: 0 auto; display: inline-flex;}
 .bottom-actions-bar .center-actions-mobile {display: none;}
 
-.bottom-actions-bar .center-actions a {margin: 0 5px;}
-.bottom-actions-bar .center-actions a svg {margin-right: 5px; vertical-align: middle;}
+.bottom-actions-bar .center-actions span {margin: 0 5px;}
+.bottom-actions-bar .center-actions span svg {margin-right: 5px; vertical-align: middle;}
 
 .bottom-actions-bar .right-actions {float: right; margin-right: 2%}
 .bottom-actions-bar .right-actions-mobile {display: none;}
