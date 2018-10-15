@@ -112,7 +112,7 @@ input[type='number'] {-moz-appearance:textfield;}
 .input_70 {width: 70px!important}
 .input_40 {width: 40px!important}
 .no_margin_bottom {margin-bottom: 0!important}
-input:disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
+input:disabled, span.disabled, label.disabled, input:disabled + .unit  {opacity: 0.3}
 
 .fuel_efficiency {margin-top: 26px}
 
