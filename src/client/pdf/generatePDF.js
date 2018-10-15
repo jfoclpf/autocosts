@@ -1,4 +1,4 @@
-function generatePDF(calculatedData){
+function generatePDF(calculatedData, action){
     
     //are there charts available to be rendered to pdf?
     var isCharts = SWITCHES.charts;
@@ -241,7 +241,15 @@ function generatePDF(calculatedData){
     }*/
 
     //creates PDF file
-    pdfMake.createPdf(docDefinition).download(WORDS.web_page_title + '.pdf');
+    if (action == "download"){
+        pdfMake.createPdf(docDefinition).download(WORDS.web_page_title + '.pdf');
+    }
+    else if (action == "print"){
+        pdfMake.createPdf(docDefinition).print();
+    }
+    else{
+        console.error("Wrong action on pdfMake: " + action + ". It should be 'download' or 'print'");
+    }
 
 }
 

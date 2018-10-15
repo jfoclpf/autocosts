@@ -75,7 +75,7 @@ function loadExtraFiles() {
         }
     }
 
-    if(SWITCHES.pdf){
+    if(SWITCHES.pdf || SWITCHES.print){
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
         getScriptOnce(JS_FILES.PDF.generatePDF, function() {
@@ -95,7 +95,7 @@ function loadExtraFiles() {
                     pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
                 }
                 getScriptOnce(pdf_fonts_path, function() {
-                    $('#generate_PDF').prop('disabled', false).removeClass('buttton_disabled');
+                    $('#button-pdf, #button-print').removeClass('disabled');
                 });
             });
         });

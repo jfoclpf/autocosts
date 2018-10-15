@@ -299,24 +299,27 @@ function loadResultsHandlers(){
     });    
     
     if(SWITCHES.pdf){
-        $("#results #button-pdf").show();
+        $("#results #button-pdf").show().addClass("disabled");                
         //download pdf button handler
         $("#results #button-pdf").on( "click", function(){
             console.log("Download pdf clicked");
-            generatePDF(CALCULATED_DATA);
+            generatePDF(CALCULATED_DATA, "download");
         });   
     }
     else{
         $("#results #button-pdf").hide();
     }   
     
-    /*if(SWITCHES.print){
-        $("#results #button-print").show();
-        $("#print_button").on( "click", function(){Print()});
+    if(SWITCHES.print){
+        $("#results #button-print").show().addClass("disabled");
+        $("#print_button").on( "click", function(){
+            console.log("Print button clicked");
+            generatePDF(CALCULATED_DATA, "print");
+        });
     }
     else{
         $("#results #button-print").hide();
-    }*/  
+    }  
         
     
     //edit form on results
