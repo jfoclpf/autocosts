@@ -348,3 +348,63 @@
   cursor: default;
 }
 
+
+
+/*
+ Smart Banner App
+*/
+
+.smartbanner-show .smartbanner {
+    background: white!important;
+    line-height: inherit!important;
+    box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.12)!important;
+    height: 70px!important
+}
+
+.smartbanner > .smartbanner-container {margin: 5px 0!important}
+
+.smartbanner > .smartbanner-container > .smartbanner-close { 
+    background: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: #42444a;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.smartbanner > .smartbanner-container > .smartbanner-close > .smartbanner-icon { 
+    background: #ebeef9 url(/img/logo/logo_sm.png) no-repeat center;
+    padding: 10px;
+    background-size: 65%;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin: 0 15px 0 10px;
+}
+
+.smartbanner > .smartbanner-container > .smartbanner-info { text-shadow: none; color: #868790; font-family: 'Nunito';}
+.smartbanner > .smartbanner-container > .smartbanner-info > .smartbanner-title {color: black; line-height: 16px}
+
+.smartbanner > .smartbanner-container > .smartbanner-button {
+    box-shadow: none;
+    background: #efa00b;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Nunito';
+    font-weight: 700;
+    height: 35px
+}
+.smartbanner > .smartbanner-container > .smartbanner-button > .smartbanner-button-text {
+    box-shadow: none;font-weight: 700; background: #efa00b; padding: 5px 16px; border-radius: 5px;}
+
+.smartbanner > .smartbanner-container > .smartbanner-icon {
+    background: #ebeef9 url(/img/logo/logo_sm.png) no-repeat center center;
+    background-size: 70%;
+    width: 20px;
+    height: 20px;
+    padding: 10px!important;
+    border-radius: 5px;
+    margin: 0 15px 0 10px;
+
+}
+
