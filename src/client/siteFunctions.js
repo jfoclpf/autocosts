@@ -452,9 +452,9 @@ function loadSmartBanner(){
         // Add an icon (in this example the icon of Our Code Editor)
         icon: "/img/logo/logo_sm.png",
         theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
+        //force: 'android' // Uncomment for platform emulation
     }); 
-
-    $(".smartbanner-icon").css("padding-right", "22px");
+    
 }
 
 
