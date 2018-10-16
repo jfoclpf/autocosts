@@ -395,7 +395,7 @@
     height: 35px
 }
 .smartbanner > .smartbanner-container > .smartbanner-button > .smartbanner-button-text {
-    box-shadow: none;font-weight: 700; background: #efa00b; padding: 5px 16px; border-radius: 5px;}
+    box-shadow: none;font-weight: 700; background: #efa00b; padding: 6px 16px; border-radius: 5px;}
 
 .smartbanner > .smartbanner-container > .smartbanner-icon {
     background: #ebeef9 url(/img/logo/logo_sm.png) no-repeat center center;
