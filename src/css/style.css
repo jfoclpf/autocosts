@@ -152,7 +152,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 
 /* ---------- Buttons ---------- */
-.button, input[type="button"].button {display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700; text-align: center;}
+.button, input[type="button"].button{display: initial; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding: 15px 30px; color: white; font-size: 15px; font-weight: 700; text-align: center;}
 
 .cursor_pointer:hover {cursor: pointer;}
 
@@ -196,10 +196,6 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* ---------- Bottom bar ---------- */
 .calculate_bottom_bar {
-    /*-webkit-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
-    -moz-box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
-    box-shadow: 0px -5px 12px -3px rgba(0,0,0,0.05);
-    background: white;*/
     position: fixed;
     bottom: 20px;
     width: 100%;
@@ -224,6 +220,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part .field1 #commercial_value {margin: 30px 0;}
 
 .container .form_part .field_container .next {/*display: none;*/ margin: 17px 0 0;}
+.container .form_part .field_container .next > span + span {font-size: 12px; color: #868790; margin-left: 5px}
 
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
