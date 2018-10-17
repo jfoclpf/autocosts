@@ -58,8 +58,9 @@
     #results .results-section {margin-bottom: 20px }
     #results #equivalent-transport-costs {margin-bottom: 160px }
 
-    #results #avg-periodic-cost {display: inline-block;margin-bottom: 36px}
+    #results #avg-periodic-cost {display: inline-block; margin: 36px 0 60px} 
 
+    #results #info-boxes .container {height: auto}
     #results #info-boxes .container .info-box {float: none; margin: 10px auto; width: 90%; max-width: 280px}
     #info-boxes .container .info-box select {width: auto!important}
 
@@ -75,10 +76,11 @@
     #results #avg-periodic-cost .three-boxes .box {width: 100%; margin: 10px auto; min-height: auto; float: none; padding-bottom: 20px}
     #results #avg-periodic-cost .three-boxes .box .title {width: 94%; padding: 3px 3% 0 8px;}
     #results #avg-periodic-cost .three-boxes .box .total-item {width: 94%; padding: 3px 3% 0 3% }
-    #results #avg-periodic-cost .three-boxes .box .total-ammount {  width: 94%; padding: 5px 3%;}
+    #results #avg-periodic-cost .three-boxes .box .total-ammount { width: 94%; padding: 5px 3%;}
     #results #avg-periodic-cost .three-boxes .box .total-ammount h4 {margin-left: 0}
     #results #avg-periodic-cost .three-boxes .box .title h3 {font-size: 18px; margin-left: 0;}
     #results #avg-periodic-cost .three-boxes .box .title span {max-width: 160px; margin-bottom: 5px}
+    #results #avg-periodic-cost .three-boxes .box .accordion {padding: 3px 3%;}
 
     #results .results-section .graph, #results .results-section .values {width: 100%; float: none; margin: 0 auto}
     #results .results-section .values {margin: 20px auto}
@@ -87,17 +89,25 @@
     #results .results-section .graph h5 {text-align: center;}
     #results .results-section .values h5 {padding-left:  0}
 
-
     #results .bottom-actions-bar {width: 96%; padding: 2%}
 
-    #results .bottom-actions-bar .left-actions a {margin-top: 0px}
+    #results .bottom-actions-bar .left-actions #edit_form_btn {margin-top: 0px}
 
     #results .bottom-actions-bar .center-actions {display: none;}
     #results .bottom-actions-bar .center-actions-mobile {display: inline-block;}
-    #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; vertical-align: middle;}
+    #results .bottom-actions-bar .center-actions-mobile a,
+    #results .bottom-actions-bar .right-actions-mobile a.menu-toggle,
+    #results .bottom-actions-bar .right-actions-mobile a.menu-close {padding: 5px 10px!important}
+    #results .bottom-actions-bar .center-actions-mobile #button-pdf {margin-right: 5px}
+    #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; padding: 0px 2px 0px 5px; vertical-align: middle;}
 
     #results .bottom-actions-bar .right-actions {display: none;}
     #results .bottom-actions-bar .right-actions-mobile {display: inline-block; float: right;}
+
+    .bottom-actions-bar .right-actions-mobile .main-menu ul li a,
+    .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
+
+    #results .panel ul li {padding-left:  9px}
 
 
 
@@ -250,6 +260,10 @@
     .container .steps ul li.active > span {display: none}
 
 
+    /* ------ Results ------*/
+    #results .results-section .values .accordion {padding: 5px 0 0 4%}
+    #results .results-section .values span {padding-left: 0} 
+
     
     /* ------ Footer Animation ------*/
 
@@ -315,9 +329,9 @@
    left: 0;
     outline: none;
     width: 100%;
-    height: 50px;
+    height: 41px;
     padding: 0;
-    top: -13px;
+    top: -10px;
     background: white;
 }
 
