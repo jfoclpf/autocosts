@@ -312,7 +312,7 @@ function loadResultsHandlers(){
     
     if(SWITCHES.print){
         $("#results #button-print").show().addClass("disabled");
-        $("#print_button").on( "click", function(){
+        $("#button-print").on( "click", function(){
             console.log("Print button clicked");
             generatePDF(CALCULATED_DATA, "print");
         });
