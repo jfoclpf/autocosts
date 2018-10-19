@@ -241,7 +241,7 @@ function oldIE(){
 /*function which returns whether this session is a (test/develop version) or a prod version */
 function IsThisAtest() {
 
-    if(COUNTRY=="XX"){
+    if(TEST_SERVER || COUNTRY=="XX"){
         return true;
     }
 
@@ -250,7 +250,8 @@ function IsThisAtest() {
     var hostNameArray = hostName.split(".");
     var posOfTld = hostNameArray.length - 1;
     var tld = hostNameArray[posOfTld];
-    if(tld=="work"){
+    
+    if(tld == "work"){
         return true;
     }
 
