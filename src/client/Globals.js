@@ -72,6 +72,7 @@ var Run1, Print, TimeCounter;
     GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
     NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);
     NONCE           = globalVariables.dataset.nonce;
+    TEST_SERVER     = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test 
     
     //Location of Javascript Files (define in /commons.js)
     var JSfiles = JSON.parse(decodeURI(globalVariables.dataset.js_files));
