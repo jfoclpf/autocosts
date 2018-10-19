@@ -14,7 +14,7 @@ function generatePDF(calculatedData, action){
                 table:{
                     headerRows: 0,
                     widths: [ '*', '*', '*', '*' ],
-                    body: get_main_table(calculatedData)
+                    body: getMainTable(calculatedData)
                 }
             },
             {
@@ -33,7 +33,7 @@ function generatePDF(calculatedData, action){
                 {
                     image: DISPLAY.charts.URIs.costs,
                     width: 500,
-                    height: 230,
+                    height: Math.round(500 * $("#costsChart").height() / $("#costsChart").width()),
                     style: 'img_style'
                 } : {},
             {
@@ -111,8 +111,8 @@ function generatePDF(calculatedData, action){
             docDefinition.content.push(                
                 {
                     image: DISPLAY.charts.URIs.finEffort,
-                    width: 450,
-                    height: 220,
+                    width: 350,
+                    height: Math.round(350 * $("#finEffortChart").height() / $("#finEffortChart").width()),
                     style: 'img_style'
                 } 
             );
@@ -131,81 +131,86 @@ function generatePDF(calculatedData, action){
         );
 
     }
-
-    /*
-    //optional public transports table
+    
+    //Equivalent transport costs / uber / public transports
     if (DISPLAY.result.public_transports || DISPLAY.result.uber){
-        //header        
-        body31 = [[{text: WORDS.publ_tra_equiv, style: "header"}]];
-        body32 =  {
-                                style: 'tableMarging',
-                                table:{
-                                        headerRows: 0,
-                                        widths: ['*'],
-                                        body: body31
-                                    },
-                                    pageBreak: 'before'
-                            };
-        docDefinition.content.push(body32);
+        //header
+        docDefinition.content.push(
+            {
+                style: 'tableMarging',
+                table: {
+                    headerRows: 0,
+                    widths: ['*'],
+                    body: [
+                        [
+                            {text: WORDS.publ_tra_equiv, style: "header"}
+                        ]
+                    ]
+                },
+                pageBreak: 'before'
+            }
+        );
 
         //chart
-        if(DISPLAY.charts.isAlterToCarChart){
-            chartData4 = DISPLAY.charts.URIs.alterToCar;
-            body33 = isCharts ? {
-                        image: chartData4,
-                        width: 300,
-                        height: 400,
-                        style: 'img_style'
-                    } : {} ;
-            docDefinition.content.push(body33);
+        if(DISPLAY.charts.isAlterToCarChart && isCharts){
+            docDefinition.content.push(
+                {
+                    image: DISPLAY.charts.URIs.alterToCar,
+                    width: 400,
+                    height: Math.round(400 * $("#equivalentTransportChart").height() / $("#equivalentTransportChart").width()),
+                    style: 'img_style'
+                }
+            );
         }
 
         if(DISPLAY.result.public_transports){
-            body34 = []; //get_publict_table("#result_table2");
-            body35 = {
-                style:'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: [ 390, '*' ],
-                    body: body34
+            docDefinition.content.push(
+                {
+                    style: 'tableMarging',
+                    table: {
+                        headerRows: 0,
+                        widths: [ 390, '*' ],
+                        body: getPublicTransportsTable(calculatedData)
+                    }
                 }
-            };
-            docDefinition.content.push(body35);
+            );
         }
 
         //uber
         if(DISPLAY.result.uber){
-            body36 = []; //get_uber_table("#result_table_uber");
-            body37 = {
-                style:'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: [ 390, '*' ],
-                    body: body36
+            docDefinition.content.push(
+                {
+                    style:'tableMarging',
+                    table:{
+                        headerRows: 0,
+                        widths: [ 390, '*' ],
+                        body: getUberTable(calculatedData)
+                    }
                 }
-            };
-            docDefinition.content.push(body37);
+            );
         }
+    } 
+
+    setFonts(docDefinition);
+    
+    //creates PDF file
+    if (action == "download"){
+        pdfMake.createPdf(docDefinition).download(WORDS.web_page_title + '.pdf');
+    }
+    else if (action == "print"){
+        pdfMake.createPdf(docDefinition).print();
+    }
+    else{
+        console.error("Wrong action on pdfMake: " + action + ". It should be 'download' or 'print'");
     }
 
-    //optional external costs table
-    if(DISPLAY.result.ext_costs){
-        body41 = get_publict_table("#result_table4");
-        body42 = {
-                        style:'tableMarging',
-                        table:{
-                            headerRows: 0,
-                            widths: [ 390, '*' ],
-                            body: body41
-                        },
-                        pageBreak: 'before'
-                    };
-        docDefinition.content.push(body42);
-    }
+}
 
-    //Languages/alphabets that need special fonts, load such fonts from different files
-    //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
-    //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
+//Languages/alphabets that need special fonts, load such fonts from different files
+//These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
+//more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
+function setFonts(docDefinition){
+
     if (COUNTRY=='CN'){
         pdfMake.fonts = {
             Chinese: {
@@ -238,27 +243,14 @@ function generatePDF(calculatedData, action){
             }
         };
         docDefinition.defaultStyle.font = "Hindi";
-    }*/
-
-    //creates PDF file
-    if (action == "download"){
-        pdfMake.createPdf(docDefinition).download(WORDS.web_page_title + '.pdf');
     }
-    else if (action == "print"){
-        pdfMake.createPdf(docDefinition).print();
-    }
-    else{
-        console.error("Wrong action on pdfMake: " + action + ". It should be 'download' or 'print'");
-    }
-
 }
-
 
 //******************************************************
 //******************************************************
 //functions that generate the respective tables
 
-function get_main_table(calculatedData){
+function getMainTable(calculatedData){
             
     var body = [
         [
@@ -461,6 +453,58 @@ function getBodyFinEffort(calculatedData){
             {text: WORDS.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
             {text: WORDS.curr_symbol + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%"}
         ]        
+    ];        
+
+    return body;
+}
+
+function getPublicTransportsTable(calculatedData){
+
+    var body = [
+        [
+            {text: WORDS.extra_data_public_transp, colSpan: 2, style: "header"}, 
+            {}
+        ],
+        [
+            {text: WORDS.pub_trans_text + "\n" + gstr("#equivalent-transport-costs .public_transports_details")},
+            {text: WORDS.curr_symbol + calculatedData.public_transports.total_price_pt.toFixed(0)}
+        ],
+        [
+            {text: WORDS.taxi_desl + "\n" + gstr("#equivalent-transport-costs .taxi_details")},
+            {text: WORDS.curr_symbol + calculatedData.public_transports.taxi_cost.toFixed(0)}
+        ],
+        [
+            {text: WORDS.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_details")},
+            {text: WORDS.curr_symbol + calculatedData.public_transports.other_pt.toFixed(0)}
+        ],
+        [
+            {text: WORDS.word_total_cap, alignment: "right", bold: true, fontSize: 14},
+            {text: WORDS.curr_symbol + (calculatedData.public_transports.total_altern).toFixed(0), bold: true, fontSize: 14}
+        ]         
+    ];        
+
+    return body;
+}
+
+function getUberTable(calculatedData){
+
+    var body = [
+        [
+            {text: "Uber", colSpan: 2, style: "header"}, 
+            {}
+        ],
+        [
+            {text: "Uber" + "\n" + gstr("#equivalent-transport-costs .uber_details")},
+            {text: WORDS.curr_symbol + calculatedData.uber.total_costs_by_uber.toFixed(0)}
+        ],
+        [
+            {text: WORDS.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_for_uber_details")},
+            {text: WORDS.curr_symbol + calculatedData.uber.other_public_transports.toFixed(0)}
+        ],
+        [
+            {text: WORDS.word_total_cap, alignment: "right", bold: true, fontSize: 14},
+            {text: WORDS.curr_symbol + (calculatedData.total_costs_month).toFixed(0), bold: true, fontSize: 14}
+        ] 
     ];        
 
     return body;
