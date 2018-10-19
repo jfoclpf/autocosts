@@ -627,25 +627,22 @@ function setEquivTransportCostsDetails(f1, f2, f3, calculatedData){
 
         //in which driver can replace every km by uber
         //the remaining money is applied to public transport
-        if(calculatedUber.result_type == 1){
+        if(calculatedUber.result_type == 1){                         
             
-            $("#equivalent-transport-costs .uber_amount").text(currencyShow(calculatedUber.tuc.toFixed(0)));            
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.std_dist_full, 
                     currencyShow(calculatedUber.ucd.toFixed(2)) + "/" + WORDS.std_dist);
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.minutes, 
                     currencyShow(calculatedUber.ucm.toFixed(2)) + "/" + WORDS.min);
             addLiElm("uber", WORDS.fuel_dist + " " + WORDS.word_per + " " + WORDS.month, calculatedUber.dpm.toFixed(0) + " " + WORDS.std_dist_full);
-            addLiElm("uber", WORDS.minutes_drive_per + " " + WORDS.month, calculatedUber.mdpm.toFixed(0) + " " + WORDS.minutes); 
+            addLiElm("uber", WORDS.minutes_drive_per + " " + WORDS.month, calculatedUber.mdpm.toFixed(0) + " " + WORDS.minutes);                         
             
-            $("#equivalent-transport-costs .other_pub_trans_for_uber_amount").text(currencyShow(calculatedUber.tcpt.toFixed(0)));              
             addLiElm("other_pub_trans_for_uber", WORDS.other_pub_trans_desc); 
         }
 
         //the case where uber equivalent is more expensive
         //the driver shall spend the equivalent car money in public transports and the remaining in uber
         else if(calculatedUber.result_type == 2){
-            
-            $("#equivalent-transport-costs .uber_amount").text(currencyShow(calculatedUber.delta.toFixed(0)));                        
+                        
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.std_dist_full,
                     currencyShow(calculatedUber.ucd.toFixed(2)) + "/" + WORDS.std_dist);
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.minutes,
@@ -654,8 +651,7 @@ function setEquivTransportCostsDetails(f1, f2, f3, calculatedData){
             addLiElm("uber", "UBER - " + WORDS.std_dist_full + " " + WORDS.word_per + " " + WORDS.month, 
                     calculatedUber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full);
             addLiElm("uber", "UBER: " + WORDS.costs + " - " + WORDS.word_total_cap, currencyShow(calculatedUber.delta.toFixed(0))); 
-            
-            $("#equivalent-transport-costs .other_pub_trans_for_uber_amount").text(currencyShow(calculatedUber.tcpt.toFixed(0)));            
+                        
             addLiElm("other_pub_trans_for_uber", WORDS.fam_nbr, f3.n_pess_familia + " " + WORDS.person_or_people);
             addLiElm("other_pub_trans_for_uber", WORDS.pass_month_avg, currencyShow(f3.monthly_pass_cost)); 
         }
