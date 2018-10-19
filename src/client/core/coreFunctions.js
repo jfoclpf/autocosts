@@ -759,9 +759,9 @@ function calculate_costs(f1, f2, f3, country){
 
 //gets uber object to compare uber costs with private car costs
 function get_uber(uber_obj, data, country){
-//uber_obj is an object with four fields:
-//cost_per_distance, cost_per_minute, currency_code, distance_unit
-//data is the object output of functions calculate_costs
+/* uber_obj is an object with four properties:
+   cost_per_distance, cost_per_minute, currency_code, distance_unit
+   data is the object output of function calculate_costs  */
 
     //if public transporst information was not obtained from user
     //in form part 3, then leaves by returning false
@@ -786,12 +786,12 @@ function get_uber(uber_obj, data, country){
 
     //checks if the uber distance unit is the same as the user's
     var uber_du = (uber_obj.distance_unit).toLowerCase();
-    if (country.distance_std == 1){ //according to Cuuntry XX.php file, 1 means "km"
+    if (country.distance_std == 1){ //according to countries' standards file, 1 means "km"
         if (uber_du != "km"){
             return false;
         }
     }
-    else if (country.distance_std == 2) { //according to Cuuntry XX.php file, 2 means "mile"
+    else if (country.distance_std == 2) { //according to countries' standards file, 1 means "mile"
         if (uber_du!="mile" && uber_du!="miles" && uber_du!="mi" && uber_du!="mi."){
             return false;
         }
@@ -801,26 +801,32 @@ function get_uber(uber_obj, data, country){
     }
     //from here uber strandards (currency and distance) are the same as the user country
 
-    var result_type, dist_uber, delta;
+    var total_costs_by_uber, other_public_transports, result_type, dist_uber, delta;
 
     var ucd = uber_obj.cost_per_distance*1;            //uber cost per unit distance
     var ucm = uber_obj.cost_per_minute*1;              //uber costs per minute
     var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
     var dpm = data.distance_per_month;                 //total distance per month
-    var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance
-    var tcpm = data.total_costs_month;                 //total costs per month
+    var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance    
     var hdpm = data.time_spent_driving.hours_drive_per_month;     //hours driven per month
     var mdpm = data.time_spent_driving.hours_drive_per_month*60;  //minutes driven per month
+    
+    var tcpm = data.total_costs_month;                 //total costs per month
 
     //total costs of uber for the same distance and time as the ones driven using private car
     //Total equivalent Uber Costs
-    tuc = ucd * dpm + ucm * mdpm;
+    var tuc = ucd * dpm + ucm * mdpm;
 
     //1st case, in which driver can replace every journey by uber
-    if (tuc<tcpm){
+    if ( tuc < tcpm ){
         result_type = 1;
+        
         delta = tcpm-tuc;
+        
+        total_costs_by_uber = tuc;
+        other_public_transports = delta;
     }
+    
     //2nd case, where uber equivalent is more expensive
     //tries to combine uber with other public transports less expensive per unit-distance
     else {
@@ -831,7 +837,7 @@ function get_uber(uber_obj, data, country){
             return false;
         }
 
-        //amount that is left after public transports (monthly passes) are paid
+        //amount that is left to uber after public transports (monthly passes) are paid
         delta = tcpm - tcpt;
         if(delta < 0){
             return false;
@@ -842,26 +848,31 @@ function get_uber(uber_obj, data, country){
 
         if (dist_uber < 0){
             return false;
-        }
+        }        
+        
+        total_costs_by_uber = delta;
+        other_public_transports = tcpt;
     }
-
+    
     //object to be returned by this function
-    var res_uber_obj = {
-        result_type: result_type,  //result type: 1 or 2
-        ucd: ucd,            //uber cost per unit distance
-        ucm: ucm,            //uber costs per minute
-        tuc: tuc,            //total uber costs for the same distance and time as the ones driven using private car
-        dpm: dpm,            //total distance per month
-        hdpm: hdpm,          //hours driven per month
-        mdpm: mdpm,          //minutes driven per month
-        tcpd: tcpd,          //total costs per unit distance
-        tcpm: tcpm,          //total costs per month
-        dist_uber:dist_uber, //in case result_type is 2, how many distance can be done with uber
-        tcpt: tcpt,          //total costs public transports (monthly passes for family)
-        delta: delta         //money that is left. Meaning depends on result_type
+    var resUberObj = {
+        total_costs_by_uber: total_costs_by_uber,           //total costs for using uber independently of result type
+        other_public_transports : other_public_transports,  //Amount available to other public independently of result type
+        result_type: result_type,    //result type: 1 or 2
+        ucd: ucd,                    //uber cost per unit distance
+        ucm: ucm,                    //uber costs per minute
+        tuc: tuc,                    //total uber costs for the same distance and time as the ones driven using private car
+        dpm: dpm,                    //total distance per month
+        hdpm: hdpm,                  //hours driven per month
+        mdpm: mdpm,                  //minutes driven per month
+        tcpd: tcpd,                  //total costs per unit distance
+        tcpm: tcpm,                  //total costs per month
+        dist_uber:dist_uber,         //in case result_type is 2, how many distance can be done with uber
+        tcpt: tcpt,                  //total costs public transports (monthly passes for family)
+        delta: delta                 //money that is left. Meaning depends on result_type
     };
 
-    return res_uber_obj;
+    return resUberObj;
 }
 
 
