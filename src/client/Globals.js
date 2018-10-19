@@ -17,6 +17,8 @@ var SWITCHES,               //GLOBAL switches Object
     LANGUAGE,               //Current Language Code according to ISO_639-1 codes
     COUNTRY_LIST,           //List of countries in a Javascript Object
     DOMAIN_LIST,            //List of domains in a Javascript Object
+    DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'  
+    FULL_URL,               //full URL of the page, example 'http://autocosts.info/XX'     
     CDN_URL,                //it's defined in the node server side index.js
     HTTP_Protocol,          //it's defined in node server side index.js*/
     clientDir,              //client directory seen by the browser
@@ -25,8 +27,7 @@ var SWITCHES,               //GLOBAL switches Object
     INITIAL_TEX,            //Informative text about the calculator
     GA_TRACKING_ID,         //Google analytics Tracking ID
     NOT_LOCALHOST,          //true when this session does not come from localhost
-    JS_FILES,               //Object with locations of Javascript Files    
-    DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'     
+    JS_FILES,               //Object with locations of Javascript Files     
     PAGE_URL,               //current page URL, example 'http://autocosts.info/UK'     
     LANG_JSON_DIR,          //Directory of JSON Translation files
     STATS_HTML_TABLES_DIR,  //Directory of statistical html tables
@@ -120,6 +121,7 @@ var Run1, Print, TimeCounter;
     
     /*forms present page full url, example 'http://autocosts.info' */
     DOMAIN_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY]; 
+    FULL_URL = window.location.href;
     
     /*forms present page full url, example 'http://autocosts.info/UK' */
     PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;

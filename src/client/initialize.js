@@ -327,12 +327,14 @@ function loadResultsSettingsAndHandlers(){
         $("#results").hide();
     }); 
     
-    if (SWITCHES.social){
+    if (SWITCHES.social && !IsThisAtest()){
         $("#socialmedia_buttons").show();
+        $("#socialmedia_buttons .facebook a").attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL);
+        $("#socialmedia_buttons .twitter a").attr("href", "https://twitter.com/share?url=" + FULL_URL);
+        $("#socialmedia_buttons .linkedin a").attr("href", "https://www.linkedin.com/shareArticle?url=" + FULL_URL);        
     }
     else{
         $("#socialmedia_buttons").hide();
     }    
 }
-
 
