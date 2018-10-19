@@ -327,7 +327,7 @@ function loadResultsSettingsAndHandlers(){
         $("#results").hide();
     }); 
     
-    if (SWITCHES.social && !IsThisAtest()){
+    if (SWITCHES.social /*&& !IsThisAtest()*/){
         $("#socialmedia_buttons").show();
         $("#socialmedia_buttons .facebook a").attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL);
         $("#socialmedia_buttons .twitter a").attr("href", "https://twitter.com/share?url=" + FULL_URL);
