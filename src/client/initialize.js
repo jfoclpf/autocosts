@@ -12,7 +12,7 @@ $(document).ready(function () {
             loadPageSettings();    
             loadFormSettings();
             loadFormHandlers();
-            loadResultsHandlers();
+            loadResultsSettingsAndHandlers();
             loadsStandardValues();
         });
         
@@ -218,7 +218,7 @@ function loadFormSettings(){
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
     driveToJob(false);             
     //Income in Form Part 3 - set to year
-    income_toggle("year");             
+    income_toggle("year");      
     
 }
     
@@ -291,7 +291,7 @@ function loadFormHandlers(){
               
 }
 
-function loadResultsHandlers(){
+function loadResultsSettingsAndHandlers(){
     
     $("#results #totalCostsPeriod").on("change", function(){
         setPeriodicCosts(CALCULATED_DATA, $(this).val());
@@ -320,13 +320,19 @@ function loadResultsHandlers(){
     else{
         $("#results #button-print").hide();
     }  
-        
-    
+            
     //edit form on results
     $("#results #edit_form_btn").on( "click", function(){
         $("#form").show();               
         $("#results").hide();
     }); 
+    
+    if (SWITCHES.social){
+        $("#socialmedia_buttons").show();
+    }
+    else{
+        $("#socialmedia_buttons").hide();
+    }    
 }
 
 

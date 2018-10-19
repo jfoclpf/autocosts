@@ -459,7 +459,6 @@ function setFILENAMES(){
                 "cdn"   : "https://cdn.jsdelivr.net/npm/smart-app-banner@1.5.1/dist/smart-app-banner.js",
                 "uri"   : "" //it will be one of the above
             },                                    
-            "jssocials"     : "https://cdnjs.cloudflare.com/ajax/libs/jsSocials/1.5.0/jssocials.min.js",
             "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
             "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
         }
@@ -573,7 +572,7 @@ function getArgvHelpMsg(){
         "    --https                Enables protocol https when available\n" +
         "    --print                Enables the standard printing of final report\n" +
         "    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n" +
-        "    --social               Enables social media plugin (js-socials)\n" +
+        "    --social               Enables social media plugin\n" +
         "    --disableCharts        Disables Charts on final report\n" +        
         "\n" +
         "    External API services, disabled by default\n" +
