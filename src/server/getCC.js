@@ -93,10 +93,6 @@ module.exports = {
             reliableDomains.push("https://api.uber.com");
         }    
 
-        if(switches.social){
-            reliableDomains.push(fileNames.client.jssocials);
-        }
-
         //filters repeated values
         var uniqueReliableDomains = reliableDomains.filter(function(item, pos) {
             return reliableDomains.indexOf(item) == pos;

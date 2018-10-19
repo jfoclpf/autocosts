@@ -35,21 +35,6 @@ function loadExtraFiles() {
             SERVICE_AVAILABILITY.g_captcha = false;
         }                 
      });*/
-   
-
-    if (SWITCHES.social){
-        //Jquery social media share plugins
-        getScriptOnce(JS_FILES.jssocials, function(){
-            $('<link/>', {
-               rel: 'stylesheet', type: 'text/css',
-               href: 'css/social/jssocials.css'
-            }).appendTo('head');
-            $('<link/>', {
-               rel: 'stylesheet', type: 'text/css',
-               href: 'css/social/jssocials-theme-classic.css'
-            }).appendTo('head');
-        });
-    }
 
     //uber
     if (SWITCHES.uber){

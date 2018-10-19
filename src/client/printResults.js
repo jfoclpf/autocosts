@@ -48,17 +48,6 @@ function Run2(callback){
     //console.log(flattenedData);       
 
     printResults(f1, f2, f3, calculatedData, flattenedData, countryObj);
-
-    //shows social media buttons
-    if(SWITCHES.social){
-        $("#shareIcons").jsSocials({
-            url: PAGE_URL,
-            text: INITIAL_TEX,
-            showLabel: false,
-            showCount: false,
-            shares: ["whatsapp", "facebook", "twitter", "googleplus"]
-        });
-    }
         
     $("*").promise().done(function(){    
         
