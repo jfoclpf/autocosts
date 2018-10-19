@@ -45,7 +45,6 @@
     "jsdom": "^11.12.0",
     "jshint": "^2.9.6",
     "jsonminify": "^0.4.1",
-    "jssocials": "^1.5.0",
     "money": "^0.2.0",
     "mysql": "^2.16.0",
     "paragraph-builder": "^1.0.7",
