@@ -82,7 +82,7 @@ function drawCostsChart(calculatedData, period) {
         }
     }
 
-    var c = pfto(periodicCosts); //Monthly costs object of calculated data, parsed to fixed(1)
+    var c = periodicCosts; //Monthly costs object of calculated data, parsed to fixed(1)
     
     //always creates a new chart
     if (DISPLAY.charts.costs){
@@ -169,7 +169,7 @@ function drawCostsChart(calculatedData, period) {
             enabled: true,
             callbacks: {
                 label: function(tooltipItem, data) {
-                    return WORDS.curr_symbol + tooltipItem.yLabel;
+                    return WORDS.curr_symbol + tooltipItem.yLabel.toFixed(1);
                 }
             }
         }, 
@@ -196,7 +196,7 @@ function drawCostsChart(calculatedData, period) {
 //draws horizontal bars chart for Financial Effort
 function drawFinEffortChart(calculatedData){
 
-    var c = pfto(calculatedData.fin_effort); //Monthly costs object of calculated data, parsed to fixed(1)
+    var c = calculatedData.fin_effort; //Monthly costs object of calculated data, parsed to fixed(1)
 
     //always creates a new chart
     if (DISPLAY.charts.finEffort){
@@ -244,6 +244,14 @@ function drawFinEffortChart(calculatedData){
                 }
             }]
         },
+        tooltips: {
+            enabled: true,
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    return WORDS.curr_symbol + tooltipItem.yLabel.toFixed(0);
+                }
+            }
+        },        
         animation : {
             onComplete : function(){    
                 DISPLAY.charts.URIs.finEffort = DISPLAY.charts.finEffort.toBase64Image();
@@ -268,9 +276,9 @@ function drawFinEffortChart(calculatedData){
 function drawAlterToCarChart(calculatedData) {
 
     var i;    
-    var c = pfto(calculatedData.monthly_costs);     //Monthly costs object of calculated data, parsed to fixed(1)
-    var p = pfto(calculatedData.public_transports);
-    var u = pfto(calculatedData.uber);
+    var c = calculatedData.monthly_costs;     //Monthly costs object of calculated data, parsed to fixed(1)
+    var p = calculatedData.public_transports;
+    var u = calculatedData.uber;
 
     var totCostsPerMonth = parseFloat(calculatedData.total_costs_month.toFixed(1));
     
@@ -411,7 +419,6 @@ function drawAlterToCarChart(calculatedData) {
     
     }    
 
-
     var options = {
         maintainAspectRatio: false,
         scales: {
@@ -435,7 +442,15 @@ function drawAlterToCarChart(calculatedData) {
         },
         legend: {
             display: false
-        },        
+        },
+        tooltips: {
+            enabled: true,
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + WORDS.curr_symbol + tooltipItem.yLabel.toFixed(1);
+                }
+            }
+        }, 
         animation : {
             onComplete : function(){    
                 DISPLAY.charts.URIs.alterToCar = DISPLAY.charts.alterToCar.toBase64Image();                
@@ -454,22 +469,6 @@ function drawAlterToCarChart(calculatedData) {
 
     DISPLAY.charts.alterToCar = new Chart("equivalentTransportChart", content);
     DISPLAY.charts.isAlterToCarChart = true;
-}
-
-//for chart display numeric purposes (value)
-function pft(num){
-    return parseFloat(num.toFixed(1));
-}
-
-//for chart display numeric purposes (entire object)
-function pfto(obj){
-    //rounds every element in object
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key) && typeof obj[key] === 'number') {
-            obj[key] = parseFloat(obj[key].toFixed(1));
-        }
-    }
-    return obj;
 }
 
 /* takes a string phrase and breaks it into separate phrases
