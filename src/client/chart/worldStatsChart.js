@@ -10,7 +10,11 @@ var WORDS           = JSON.parse(decodeURI(globalVariables.dataset.words));
 //get statistical data
 var statsDataEl = document.getElementById('chart');
 var statsData   = JSON.parse(decodeURI(statsDataEl.dataset.stats_data));
-var statsLabels = JSON.parse(decodeURI(statsDataEl.dataset.stats_labels));
+var statsLabels = JSON.parse(decodeURI(statsDataEl.dataset.stats_labels)); //the analyzed countries (2 letter Country Codes)
+
+//gives 50px of height for every  horizontal bar
+var nmbrOfCountries = statsLabels.length;
+$("#overallStatsChartDiv").height(50*nmbrOfCountries);
 
 var costsColors = {        
     depreciation:   '#2ba3d6',
@@ -85,33 +89,40 @@ var options = {
         position: 'bottom', // place legend on the right side of chart
         display: true, //do not display
         labels : {
-            fontSize: 9,
+            fontSize: 12,
             fontColor: 'black'
         }
     },
     scales: {
         xAxes: [{
             stacked: true, // this should be set to make the bars stacked
-            beginAtZero: true
-        }],
-        yAxes: [{
-            stacked: true, // this also..
-            beginAtZero: true,
             ticks: {
                 beginAtZero: true,
-                fontSize: 9,
+                fontSize: 12,
                 // Include a currency sign in the ticks
                 callback: function(value, index, values) {
                     return EURcurr + value;
                 }
             } 
-        }]
+        }],
+        yAxes: [{
+            stacked: true, // this also..  
+            ticks: {
+                fontSize: 12
+            }
+        }]            
     },
     tooltips: {
         enabled: true,
         callbacks: {
             label: function(tooltipItem, data) {
-                return EURcurr + tooltipItem.yLabel.toFixed(0);
+                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                    if (label) {
+                        label += ': ';
+                    }
+                    label += EURcurr + tooltipItem.xLabel.toFixed(0);
+                    return label;
             }
         }
     }, 
@@ -122,7 +133,7 @@ var options = {
 };
 
 var chartContent = {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
         labels: statsLabels,
         datasets: dataset
