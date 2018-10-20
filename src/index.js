@@ -5,20 +5,21 @@
 **                                             **
 ************************************************/
 
+const fs          = require('fs');
+const path        = require("path");
+
 //this should be here on the beginning to set global environments
-const commons     = require('../commons');
+const commons     = require(path.join(__dirname, '..', 'commons'));
 const events      = require('events');
 var eventEmitter  = new events.EventEmitter();
 commons.init(eventEmitter);
 
-const fs          = require('fs');
-const path        = require("path");
 const express     = require('express');
 const exphbs      = require('express-handlebars');
 const bodyParser  = require('body-parser');
 const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
-const colors      = require('colors/safe'); //does not alter string prototype
+const colors      = require(path.join('colors', 'safe')); //does not alter string prototype
 const util        = require('util');
 const debug       = require('debug')('app:index');
 
