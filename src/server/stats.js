@@ -2,28 +2,30 @@ const path  = require('path');
 const url   = require(path.join(__dirname, 'url'));
 const mysql = require('mysql'); //module to get info from DB
 const async = require('async'); //module to allow to execute the queries in series
-const debug = require('debug')('app:stats');
+const debug = require('debug')('app:stats'); //run "DEBUG=app:stats node index.js"
 const fs    = require('fs');
 
 const MIN_VALID_USERS = 20; //minimum number of valid users to show the country on world chart
 
+var statsData;              //chartjs content of World statistics
+var statsLabels;            //Labels used for stats chart
+var chartTable;             //HTML table data relating to the chart
+var dateOfCalculation;      //date when the chart data was calculated
 var averageNormalizedCosts;
-var chartContent; //chartjs content of World statistics
-var chartTable;   //HTML table data relating to the chart
-var dateOfCalculation; //date when the chart data was calculated
 
 module.exports = {
     
     req: function(req, res, serverData, wordsOfUK) {
 
         var data = {};
-        data.wordsOfUK = wordsOfUK;
+        data.words = wordsOfUK;
         data.serverData = serverData;        
         delete data.serverData.availableCountries.XX;   
         
-        data.chartContent = chartContent;
-        data.chartTable   = chartTable;
-        data.dateOfCalculation = dateOfCalculation;
+        data.statsData              = statsData;
+        data.statsLabels            = statsLabels;
+        data.chartTable             = chartTable;
+        data.dateOfCalculation      = dateOfCalculation;
         data.averageNormalizedCosts = averageNormalizedCosts;
 
         //information depending on this request from the client    
@@ -44,6 +46,7 @@ module.exports = {
         res.render(fileToRender, data);
     },
     
+    //this method is executed right after the server starts, such that the statisitcal data may be pre-calculated and ready for the client
     prepareStats : function(serverData, WORDS, eventEmitter){
         
         //get statsFunctions.js Object Constructors/Templates
@@ -166,108 +169,16 @@ module.exports = {
                         }
                         chartTable = table;
                         //debug(table);
-                    
+                                        
                         averageNormalizedCosts = results;
                         debug(averageNormalizedCosts);
                     
-                        callback();
+                        statsData = costs;
+                        statsLabels = labels;
+                    
+                        console.log("World statistical data calculated"); 
                     }
                 );
-            },
-            
-            function(callback){
-                
-                var countryList = serverData.availableCountries;
-                var wordsOfUK = WORDS.UK;
-
-                var dataset = [
-                    {
-                        label: wordsOfUK.depreciation_st,
-                        data: costs.depreciation,
-                        backgroundColor: 'navy'
-                    }, {
-                        label: wordsOfUK.insurance_short,
-                        data: costs.insurance,
-                        backgroundColor: 'blue'
-                    }, {
-                        label: wordsOfUK.credit,
-                        data: costs.credit,
-                        backgroundColor: 'aqua'
-                    }, {
-                        label: wordsOfUK.inspection_short,
-                        data: costs.inspection,
-                        backgroundColor: 'teal'
-                    }, {
-                        label: wordsOfUK.road_taxes_short,
-                        data: costs.car_tax,
-                        backgroundColor: 'olive'
-                    }, {
-                        label: wordsOfUK.maintenance,
-                        data: costs.maintenance,
-                        backgroundColor: 'green'
-                    }, {
-                        label: wordsOfUK.rep_improv,
-                        data: costs.repairs_improv,
-                        backgroundColor: 'lime'
-                    }, {
-                        label: wordsOfUK.fuel,
-                        data: costs.fuel,
-                        backgroundColor: 'maroon'
-                    }, {
-                        label: wordsOfUK.parking,
-                        data: costs.parking,
-                        backgroundColor: 'yellow'
-                    }, {
-                        label: wordsOfUK.tolls,
-                        data: costs.tolls,
-                        backgroundColor: 'orange'
-                    }, {
-                        label: wordsOfUK.fines,
-                        data: costs.fines,
-                        backgroundColor: 'red'
-                    }, {
-                        label: wordsOfUK.washing,
-                        data: costs.washing,
-                        backgroundColor: 'purple'
-                    }
-                ];                
-
-                var options = {
-                    maintainAspectRatio: false,
-                    legend: {
-                        position: 'bottom', // place legend on the right side of chart
-                        display: true, //do not display
-                        labels : {
-                            fontSize: 9,
-                            fontColor: 'black'
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            stacked: true, // this should be set to make the bars stacked
-                            beginAtZero: true
-                        }],
-                        yAxes: [{
-                            stacked: true, // this also..
-                            beginAtZero: true
-                        }]
-                    },
-                    animation: {
-                        duration : 1000,
-                        easing : 'linear'
-                    }
-                };
-
-                chartContent = {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: dataset
-                    },
-                    options: options
-                };        
-
-                console.log("Chart of world statistics calculated");                                
             }
         ]);//async.series        
         
