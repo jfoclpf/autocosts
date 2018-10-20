@@ -30,48 +30,59 @@
             <tr>                
                 <th class="right2px">Country</th>
                 
-                <th class="navy">
-                    <span class="white">{{{wordsOfUK.depreciation_st}}}</span>
+                <th class="depreciation_color">
+                    <span class="white">{{{words.depreciation_st}}}</span>
                 </th>
-                <th class="blue">
-                    <span class="white">{{{wordsOfUK.insurance_short}}}</span>
+                <th class="vehicle-insurance_color">
+                    <span class="white">{{{words.insurance_short}}}</span>
                 </th>
-                <th class="aqua">
-                    <span class="white">{{{wordsOfUK.credit}}}</span>
+                <th class="car-finance_color">
+                    <span class="white">{{{words.credit}}}</span>
                 </th>
-                <th class="teal">
-                    <span class="white">{{{wordsOfUK.inspection_short}}}</span>
+                <th class="vehicle-inspection_color">
+                    <span class="white">{{{words.inspection_short}}}</span>
                 </th>
-                <th class="olive">
-                    <span class="white">{{{wordsOfUK.road_taxes_short}}}</span>
+                <th class="vehicle-excise_color">
+                    <span class="white">{{{words.road_taxes_short}}}</span>
                 </th>
-                <th class="green">
-                    <span class="white">{{{wordsOfUK.maintenance}}}</span>
+                <th class="maintenance_color">
+                    <span class="white">{{{words.maintenance}}}</span>
                 </th>
-                <th class="lime">
-                    <span class="white">{{{wordsOfUK.rep_improv}}}</span>
+                <th class="repair_color">
+                    <span class="white">{{{words.rep_improv}}}</span>
                 </th>
-                <th class="maroon">
-                    <span class="white">{{{wordsOfUK.fuel}}}</span>
+                <th class="fuel_color">
+                    <span class="white">{{{words.fuel}}}</span>
                 </th>
-                <th class="yellow">
-                    <span class="white">{{{wordsOfUK.parking}}}</span>
+                <th class="parking_color">
+                    <span class="white">{{{words.parking}}}</span>
                 </th>
-                <th class="orange">
-                    <span class="white">{{{wordsOfUK.tolls}}}</span>
+                <th class="tolls_color">
+                    <span class="white">{{{words.tolls}}}</span>
                 </th>
-                <th class="red">
-                    <span class="white">{{{wordsOfUK.fines}}}</span>
+                <th class="traffic_color">
+                    <span class="white">{{{words.fines}}}</span>
                 </th>
-                <th class="purple right2px">
-                    <span class="white">{{{wordsOfUK.washing}}}</span>
+                <th class="washing_color right2px">
+                    <span class="white">{{{words.washing}}}</span>
                 </th>
                 
-                <th>Running costs per distance</th>
-                <th class="right2px">Total costs per distance</th>
-                <th>{{{wordsOfUK.kinetic_speed}}}</th>
-                <th class="right2px">{{{wordsOfUK.virtual_speed}}}</th>
-                <th>Total costs per year</th>
+                <th>
+                    Running costs per distance
+                </th>
+                <th class="right2px">
+                    Total costs per distance
+                </th>
+                <th>
+                    {{{words.kinetic_speed}}}
+                </th>
+                <th class="right2px">
+                    {{{words.virtual_speed}}}
+                </th>
+                <th>
+                    Total costs per year
+                </th>
+                
             </tr>
             {{#each averageNormalizedCosts as |value key|}}
                 <tr>
@@ -106,7 +117,7 @@
                     </td>
                     <td class="tdRight">
                         <a href="{{{../serverData.directories.client.tables}}}/{{value.country}}.jpg" target="_blank">
-                            {{toFixed value.total_costs_year 0}}
+                            &euro;{{toFixed value.total_costs_year 0}}
                         </a>
                     </td>
                 </tr>
@@ -168,7 +179,8 @@
         <data
             id =    "chart" 
             value = "chart" 
-            data-chart_content = "{{{ jsonObj chartContent }}}">
+            data-stats_data = "{{{ jsonObj statsData }}}"
+            data-stats_labels = "{{{ jsonObj statsLabels }}}">
         </data>
     </div>
     <br>
