@@ -77,6 +77,9 @@ var BIN_DIR     = directories.server.bin;
 var SRC_DIR     = directories.server.src;
 var BUILD_DIR   = directories.server.build;
 
+//from require('colors');
+colors.setTheme(commons.getConsoleColors());
+
 //makes sure the build.js script is called from this own directory
 //(problems regarding the PhantomJS script which messes with relative paths)
 var runDir = process.cwd(); //directory from where the script is called
@@ -175,9 +178,9 @@ async.series([
 //copy files from src/ to bin/
 function copy(){
     
-    console.log("\n" + ("# --"+optionDefinitions[0].name).yellow.bold ); 
+    console.log("\n" + ("# --"+optionDefinitions[0].name).mainOption ); 
     
-    console.log("\n" + ("## Making a clean copy from src/ to bin/").blue.bold + " \n");
+    console.log("\n" + ("## Making a clean copy from src/ to bin/").mainOptionStep + " \n");
     
     //deletes fully the directory and creates empty one
     fse.removeSync(BIN_DIR); // equivalent in Unix to "rm -rf"  
@@ -187,7 +190,7 @@ function copy(){
     
     console.log("Files from src/ to bin/ copied");
     
-    console.log("\n" + ("## Copying npm packages' files to bin/").blue.bold + " \n");   
+    console.log("\n" + ("## Copying npm packages' files to bin/").mainOptionStep + " \n");   
     
     //copies one file, from an npm package, to the bin directory
     var copyFile = function(npmPackage,        //oficial name of the npm package from which the file is to be copied from
@@ -201,7 +204,7 @@ function copy(){
         fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(BIN_DIR, destFilePath)); 
         
         let packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath); 
-        let consoleMsg = npmPackage.magenta + ": " + path.join(packageDirRelativepath, fileRelativePath) + " -> " +
+        let consoleMsg = npmPackage.verbose + ": " + path.join(packageDirRelativepath, fileRelativePath) + " -> " +
             path.join(path.relative(path.dirname(BIN_DIR), BIN_DIR), destFilePath);
         
         console.log(consoleMsg);
@@ -231,7 +234,7 @@ function copy(){
 //concatenate some CSS files
 function concatCSSFiles(mainCallback){  
     
-    console.log("\n" + ("## Concatenating CSS files").blue.bold + " \n");
+    console.log("\n" + ("## Concatenating CSS files").mainOptionStep + " \n");
     
     //CSS files to be concatenated, 
     //the ones which are needed for initial main page loading
@@ -304,7 +307,10 @@ function concatCSSFiles(mainCallback){
 }
 
 function checkJS(callback){
-    console.log("\n" + ("## Checking for JS syntax errors in src/").blue.bold + " \n");    
+    
+    console.log("\n" + ("# --"+optionDefinitions[1].name).mainOption ); 
+    
+    console.log("\n" + ("## Checking for JS syntax errors in src/").mainOptionStep + " \n");    
             
     JShintOpt = {
         "-W041": true,
@@ -337,7 +343,7 @@ function checkJS(callback){
                 console.log((filename.replace(ROOT_DIR, '')).green);
             }
             else{
-                console.log((filename.replace(ROOT_DIR, '')).red.bold);
+                console.log((filename.replace(ROOT_DIR, '')).error);
                 console.log(prettyjson.render(jshint.errors));
             }            
         }
@@ -354,13 +360,15 @@ function checkJS(callback){
 
 //-i compress [i]mages, jpg and png files in bin/ | with ImageMagick 
 function compressImgs(){
-    console.log("\n" + ("## Compress images, jpg and png files").blue.bold + " \n");
+    console.log("\n" + ("# --"+optionDefinitions[2].name).mainOption ); 
+    console.log("\nCompress images, jpg and png files\n".verbose);
     execSync("node " + filenames.build.compressImages + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify 
 function minify(){
-    console.log("\n" + ("## Minify and concatenate js, html/hbs, css and json files").blue.bold + " \n");
+    console.log("\n" + ("# --"+optionDefinitions[3].name).mainOption ); 
+    console.log("\nMinify and concatenate js, html/hbs, css and json files\n".verbose);
     execSync("node " + filenames.build.minifyFiles + " -r " + RELEASE, {stdio:'inherit'});
 }
 
@@ -368,19 +376,19 @@ function minify(){
 
 //-s  creates a Database with countries' [s]pecifcations  connection to a Database
 function specDB(){
-    console.log("\n" + ("## Creates DB with countries' specifcations").blue.bold + " \n");
+    console.log("\n" + ("## Creates DB with countries' specifcations").mainOptionStep + " \n");
     execSync("node " + filenames.build.setCountrySpecsDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database 
 function refreshDB(){
-    console.log("\n" + ("## Refreshes statistical costs DB").blue.bold + " \n");
+    console.log("\n" + ("## Refreshes statistical costs DB").mainOptionStep + " \n");
     execSync("node " + filenames.build.getAvgFromDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database 
 function genTables(){    
-    console.log("\n" + ("## Generating statistical tables").blue.bold + " \n");
+    console.log("\n" + ("## Generating statistical tables").mainOptionStep + " \n");
     console.log("\n    Extracts stat info from prod and create html tables \n");
     execSync("node " + filenames.build.generateTables + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }

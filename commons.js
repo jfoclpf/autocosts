@@ -73,6 +73,10 @@ module.exports = {
     
     getDataBaseErrMsg: function(scriptName, serviceObj){
         return _getDataBaseErrMsg(scriptName, serviceObj);
+    },
+    
+    getConsoleColors: function(){
+        return _getConsoleColors();
     }
 };
 
@@ -607,6 +611,26 @@ function _getDataBaseErrMsg(scriptName, serviceObj){
                 "- do not run this particular building script file while building.\n";
     
     return messg;
+}
+
+function _getConsoleColors(){
+
+    var colorsTheme = {
+        mainOption: ['cyan', 'bold'],
+        mainOptionStep: ['blue', 'bold'],
+        silly: 'rainbow',
+        input: 'grey',
+        verbose: 'cyan',
+        prompt: 'grey',
+        info: 'green',
+        data: 'grey',
+        help: 'cyan',
+        warn: 'yellow',
+        debug: 'blue',
+        error: ['red', 'bold']
+    };
+
+    return colorsTheme;
 }
 
 //returns an object with several different information about the domains

@@ -8,6 +8,7 @@ const path    = require('path');
 const fs      = require('fs');
 const commons = require(path.join(__dirname, '..', 'commons'));
 const walk    = require('walk');
+const colors  = require('colors');
 
 //Main directories got from commons
 var directories = commons.getDirectories();
@@ -15,6 +16,9 @@ var directories = commons.getDirectories();
 var ROOT_DIR = directories.server.root;
 var BIN_DIR  = directories.server.bin;
 console.log("BIN_DIR: ", BIN_DIR);
+
+//from require('colors');
+colors.setTheme(commons.getConsoleColors());
 
 compressImages();
 
@@ -28,6 +32,8 @@ async function compressImages(){
 }
 
 function compressJPG(){
+    
+    console.log(('\n## Compressing JPG files \n').mainOptionStep);
     
     return new Promise(function(resolve){
     
@@ -69,7 +75,7 @@ function compressJPG(){
         });
 
         walker.on("end", function () {
-            console.log("\nAll JPG files compressed\n");
+            console.log(("\nAll JPG files compressed\n").verbose);
             resolve();
         });
     });
@@ -77,6 +83,8 @@ function compressJPG(){
 
 
 function compressPNG(){
+    
+    console.log(('\n## Compressing PNG files \n').mainOptionStep);
 
     //gets all png files in builddir 
     
@@ -113,7 +121,7 @@ function compressPNG(){
     });
 
     walker.on("end", function () {
-        console.log("\nAll PNG files compressed\n");
+        console.log(("\nAll PNG files compressed\n").verbose);
     });      
 }
 
