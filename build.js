@@ -229,7 +229,7 @@ function concatCSSFiles(mainCallback){
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
     var files2Arr = [
-        'results.css', 'smart-app-banner.css'
+        'colors.css', 'results.css', 'smart-app-banner.css'
     ]; 
     //name given to the merged file
     var files2MergedName = 'merged_deferred.css';    
