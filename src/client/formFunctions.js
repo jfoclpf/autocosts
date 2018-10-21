@@ -62,7 +62,7 @@ function buttonNextHandler($thisButton, callback){
                     }
 
                     //scrols the page to the corresponding div, considering the header
-                    scrollsPageTo($i);
+                    scrollsPageTo($i, (function(){return;}));
                     
                     updatesFieldsAndIcons($i);
                     
@@ -420,7 +420,7 @@ function numberInputStatus($this){
 function setIcon($this, status){
 
     //getFieldNum returns string "field1", "field2", "field3", etc. of field_container
-    var fieldN = getFieldNum($this); //the field number will be taken from class name
+    var fieldN = getFieldNum($this, false); //the field number will be taken from class name
         
     $(".steps").find(".icon").each(function(index, item){
         if ($(this).hasClass(fieldN)){
@@ -458,7 +458,7 @@ function setIcon($this, status){
 
 //when numBool is false returns string "field1", "field2", "field3", etc. of field_container
 //when numBool is true returns integer 1, 2, 3, etc. of field_container with class field1, field2, etc. 
-function getFieldNum($this, numBool=false){
+function getFieldNum($this, numBool){
     
     var $fieldHead = $this.closest(".field_container");
     var fieldN; //the field number will be taken from class name
@@ -555,7 +555,7 @@ $("#acquisitionYear").on("input", function(){
 
 
 //scrols the page to the corresponding div, considering the header
-function scrollsPageTo($this, callback=(function(){return;})){
+function scrollsPageTo($this, callback){
     
     //returns integer 1, 2, 3, etc. for "field1", "field2", "field3", etc. of field_container
     var fieldN = getFieldNum($this, true);
