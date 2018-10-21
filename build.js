@@ -182,41 +182,53 @@ function copy(){
     
     fse.copySync(SRC_DIR, BIN_DIR);
     
-    console.log("Copy node npm modules to bin/");            
+    console.log("Files from src/ to bin/ copied");
     
-    //copy jquery file from NPM package
-    var jqueryDir = path.dirname(require.resolve('jquery'));
-    fse.copySync(path.join(jqueryDir, 'jquery.min.js'), 
-                 path.join(BIN_DIR, 'client', 'jquery', 'jquery.min.js'));
+    console.log("\n" + ("## Copying npm packages' files to bin/").blue.bold + " \n");   
     
-    //copy pdfmake files from NPM package
-    //returns main directory from npm package on directory node_modules/
-    var pdfmakeBuildDir = path.resolve(path.dirname(require.resolve('pdfmake')), '..', 'build');    
+    //copies one file, from an npm package, to the bin directory
+    var copyFile = function(npmPackage,        //oficial name of the npm package from which the file is to be copied from
+                            fileRelativePath,  //file path with respect to the main directory of the npm package (node_modules/<package>/)
+                            destFilePath){     //file's path to where it is copied, relative to the project bin/ directory
+        
+        //trick to get the npm module main directory
+        //https://stackoverflow.com/a/49455609/1243247
+        let packageDirFullpath = path.dirname(require.resolve(path.join(npmPackage, 'package.json')));        
+        
+        fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(BIN_DIR, destFilePath)); 
+        
+        let packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath); 
+        let consoleMsg = npmPackage.magenta + ": " + path.join(packageDirRelativepath, fileRelativePath) + " -> " +
+            path.join(path.relative(path.dirname(BIN_DIR), BIN_DIR), destFilePath);
+        
+        console.log(consoleMsg);
+    };    
     
-    fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js'),
-                 path.join(BIN_DIR, 'client', 'pdf', 'pdfmake.min.js'));
-    fse.copySync(path.join(pdfmakeBuildDir, 'vfs_fonts.js'),
-                 path.join(BIN_DIR, 'client', 'pdf', 'vfs_fonts.js'));    
-    fse.copySync(path.join(pdfmakeBuildDir, 'pdfmake.min.js.map'), 
-                 path.join(BIN_DIR, 'public', 'pdfmake.min.js.map'));
+    //jquery
+    //https://www.npmjs.com/package/jquery    
+    copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('client', 'jquery', 'jquery.min.js'));        
+
+    //pdfmake
+    //https://www.npmjs.com/package/pdfmake
+    copyFile('pdfmake', path.join('build','pdfmake.min.js'),     path.join('client', 'pdf', 'pdfmake.min.js'));
+    copyFile('pdfmake', path.join('build','vfs_fonts.js'),       path.join('client', 'pdf', 'vfs_fonts.js'));
+    copyFile('pdfmake', path.join('build','pdfmake.min.js.map'), path.join('client', 'pdf', 'pdfmake.min.js.map'));
     
-    //copy chartjs file from NPM package
-    //returns main directory from npm package on directory node_modules/
-    var chartjsDistDir = path.resolve(path.dirname(require.resolve('chart.js')), '..', 'dist');            
-    fse.copySync(path.join(chartjsDistDir, 'Chart.min.js'), 
-                 path.join(BIN_DIR, 'client', 'chart', 'chartjs.min.js'));        
+    //chart.js
+    //https://www.npmjs.com/package/chart.js
+    copyFile('chart.js', path.join('dist','Chart.min.js'), path.join('client', 'chart', 'chartjs.min.js'));
     
-    //copy smart-app-banner file from NPM package
-    //returns main directory from npm package on directory node_modules/
-    var smartAppBannerDistDir = path.resolve(path.dirname(require.resolve('smart-app-banner')), 'dist');            
-    fse.copySync(path.join(smartAppBannerDistDir, 'smart-app-banner.js'), 
-                 path.join(BIN_DIR, 'client', 'smart-app-banner.js')); 
-    fse.copySync(path.join(smartAppBannerDistDir, 'smart-app-banner.css'), 
-                 path.join(BIN_DIR, 'css', 'smart-app-banner.css')); 
+    //smart-app-banner
+    //https://www.npmjs.com/package/smart-app-banner    
+    copyFile('smart-app-banner', path.join('dist','smart-app-banner.js'), path.join('client', 'smart-app-banner.js'));
+    copyFile('smart-app-banner', path.join('dist','smart-app-banner.css'), path.join('css', 'smart-app-banner.css'));
+    
 }
 
 //concatenate some CSS files
 function concatCSSFiles(mainCallback){  
+    
+    console.log("\n" + ("## Concatenating CSS files").blue.bold + " \n");
     
     //CSS files to be concatenated, 
     //the ones which are needed for initial main page loading
