@@ -73,18 +73,3 @@ th:hover::after {
     background-color: white;
     padding: 1px;
 }
-
-/* References colors */
-.depreciation_color {background-color: #2ba3d6;}
-.vehicle-insurance_color {background-color: #10c6e6;}
-.car-finance_color {background-color: #5ae0e2;}
-.vehicle-inspection_color {background-color: #99e6bc;}
-.vehicle-excise_color {background-color: #ffda70;}
-.fuel_color {background-color: #ff9e84;}
-.maintenance_color {background-color: #ff7192;}
-.repair_color {background-color: #e562aa;}
-.parking_color {background-color: #ea90cd;}
-.tolls_color {background-color: #eabcef;}
-.traffic_color {background-color: #9f97ef;}
-.washing_color {background-color: #867ae3;}
-
