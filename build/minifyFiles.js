@@ -10,6 +10,7 @@ const fs       = require('fs');
 const path     = require("path");
 const commons  = require(path.join(__dirname, '..', 'commons'));
 const walk     = require('walk');        
+const colors   = require('colors');
 
 //minification tools
 const UglifyJS   = require("uglify-js");
@@ -24,7 +25,10 @@ var BIN_DIR  = directories.server.bin;
 
 var settings = commons.getSettings();
 
-console.log('\n## Minifying and concatenating files'); 
+//from require('colors');
+colors.setTheme(commons.getConsoleColors());
+
+console.log('Minifying and concatenating files'.verbose); 
 
 processFiles();
 
@@ -44,7 +48,7 @@ function processFiles(){
 
 function processJSfiles(){
 
-    console.log('\n   Minifying JS files in ' + path.join('build', 'client'));
+    console.log(('\n## Minifying JS files in ' + path.join('build', 'client')).mainOptionStep );
 
     var walker = walk.walk(path.join(BIN_DIR, directories.client.client));
     
@@ -91,7 +95,7 @@ function processJSfiles(){
     });
 
     walker.on("end", function () {
-        console.log("\nAll JS files compressed\n");
+        console.log(("\nAll JS files minified\n").verbose);
         processCSSfiles();
     });    
     
@@ -105,7 +109,7 @@ function processCSSfiles(){
 
 function minifyCSSFiles(){
 
-    console.log('\n   Minifying CSS files in build/css/\n');
+    console.log(('\n## Minifying CSS files in build/css/\n').mainOptionStep);
         
     var walker = walk.walk(directories.bin.css);//dir to walk into    
    
@@ -138,7 +142,7 @@ function minifyCSSFiles(){
     });
 
     walker.on("end", function () {
-        console.log("\nAll CSS files compressed\n");
+        console.log(("\nAll CSS files minified\n").verbose);
         processHTMLfiles();  
     });     
 
@@ -150,7 +154,7 @@ function minifyCSSFiles(){
 //and then sent from the server to the client/browser
 function processHTMLfiles(){
     
-    console.log('\n   Minifying HTML .hbs files in build/views/\n');
+    console.log(('\n## Minifying HTML .hbs files in build/views/\n').mainOptionStep);
     
     var walker = walk.walk(directories.server.bin);//dir to walk into
     walker.on("file", function (root, fileStats, next) {
@@ -195,7 +199,7 @@ function processHTMLfiles(){
     });
 
     walker.on("end", function () {
-        console.log("\nAll html/hbs files compressed\n");
+        console.log(("\nAll html/hbs files minified\n").verbose);
         processJSONfiles();
     });     
 }
@@ -203,7 +207,7 @@ function processHTMLfiles(){
 //minifies all json files on the client side, namely on the build/countries/ directory,
 function processJSONfiles(){
     
-    console.log('\n   Minifying JSON files in build/countries/\n');
+    console.log(('\n## Minifying JSON files in build/countries/\n').mainOptionStep);
     
     var walker = walk.walk(directories.bin.countries);//dir to walk into
     
@@ -219,7 +223,7 @@ function processJSONfiles(){
             var result = jsonminify(code);
 
             if (!result){
-                console.log('ERROR minifying JSON file ', filename, '\n');       
+                console.log(('ERROR minifying JSON file ', filename, '\n').error);       
             }
             else{    
                 fs.writeFileSync(filename, result, 'utf8');
@@ -231,12 +235,12 @@ function processJSONfiles(){
     });
     
     walker.on("errors", function (root, nodeStatsArray, next) {
-        console.log("There was an error with" + nodeStatsArray.name);
+        console.log(("There was an error with" + nodeStatsArray.name).error);
         next();
     });
 
     walker.on("end", function () {
-        console.log("\nAll JSON files compressed\n");
+        console.log("\nAll JSON files minified\n".verbose);
     });     
 }
 
