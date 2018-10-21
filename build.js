@@ -2,7 +2,7 @@
 
 const commandLineArgs = require('command-line-args');
 const {execSync}      = require('child_process');
-const colors          = require('colors/safe'); //does not alter string prototype
+const colors          = require('colors');
 const fs              = require('fs');
 const fse             = require('fs-extra');
 const path            = require('path');
@@ -16,6 +16,7 @@ const commons   = require(path.join(__dirname, 'commons'));
 
 //basic command line settings
 //the order is important, since when several options are present, the order is mantained
+//Therefore keep this order
 optionDefinitions = [
     /*With these options it may run just locally*/
     { name: 'copy',         alias: 'c', type: Boolean },
@@ -32,8 +33,7 @@ optionDefinitions = [
     /*###*/
     { name: 'help',         alias: 'h', type: Boolean },
     { name: 'All',          alias: 'A', type: Boolean },
-    { name: 'run',                      type: Boolean }
-    
+    { name: 'run',                      type: Boolean }    
 ];
 
 //get set options from command line arguments
@@ -83,7 +83,7 @@ var runDir = process.cwd(); //directory from where the script is called
 var diffDir = path.relative(runDir, ROOT_DIR);
 if(diffDir !== '' && diffDir !== '.'){
     console.log("You must call this builiding script from within the directory where this file is located: " + ROOT_DIR);
-    console.log("Do first " + colors.blue("cd " + path.relative(runDir, ROOT_DIR) ) + " and then call this script again.");
+    console.log("Do first " + ("cd " + path.relative(runDir, ROOT_DIR) ).blue + " and then call this script again.");
     process.exit();
 }
 
@@ -174,7 +174,10 @@ async.series([
     
 //copy files from src/ to bin/
 function copy(){
-    console.log("\n" + colors.blue.bold("## Making a clean copy from src/ to bin/") + " \n");
+    
+    console.log("\n" + ("# --"+optionDefinitions[0].name).yellow.bold ); 
+    
+    console.log("\n" + ("## Making a clean copy from src/ to bin/").blue.bold + " \n");
     
     //deletes fully the directory and creates empty one
     fse.removeSync(BIN_DIR); // equivalent in Unix to "rm -rf"  
@@ -268,9 +271,9 @@ function concatCSSFiles(mainCallback){
                     if (err) {throw err};
                     
                     //builds console.log msg
-                    let consoleMsg = 'Concatenation done on ' + files1MergedName + ' from: ';
+                    let consoleMsg = 'Concatenation done on ' + files1MergedName.magenta.bold + ' from ';
                     for(let i=0; i<files1Arr.length; i++){
-                        consoleMsg += files1Arr[i] + ', ';
+                        consoleMsg += files1Arr[i].magenta.bold + (i==files1Arr.length-1 ? '.' : (i==files1Arr.length-2 ? ' and ' : ', '));
                     }                 
                     console.log(consoleMsg);
                 
@@ -284,9 +287,9 @@ function concatCSSFiles(mainCallback){
                     if (err) {throw err};
                 
                     //builds console.log msg
-                    let consoleMsg = 'Concatenation done on ' + files2MergedName + ' from: ';
+                    let consoleMsg = 'Concatenation done on ' + files2MergedName.magenta.bold + ' from ';
                     for(let i=0; i<files2Arr.length; i++){
-                        consoleMsg += files2Arr[i] + ', ';
+                        consoleMsg += files2Arr[i].magenta.bold + (i==files1Arr.length-1 ? '.' : (i==files1Arr.length-2 ? ' and ' : ', '));
                     }                 
                     console.log(consoleMsg);                    
                 
@@ -301,7 +304,7 @@ function concatCSSFiles(mainCallback){
 }
 
 function checkJS(callback){
-    console.log("\n" + colors.blue.bold("## Checking for JS syntax errors in src/") + " \n");    
+    console.log("\n" + ("## Checking for JS syntax errors in src/").blue.bold + " \n");    
             
     JShintOpt = {
         "-W041": true,
@@ -331,10 +334,10 @@ function checkJS(callback){
             jshint(code, JShintOpt, {});
 
             if (jshint.errors.length == 0){ //no warnings
-                console.log(colors.green(filename.replace(ROOT_DIR, '')));
+                console.log((filename.replace(ROOT_DIR, '')).green);
             }
             else{
-                console.log(colors.red.bold(filename.replace(ROOT_DIR, '')));
+                console.log((filename.replace(ROOT_DIR, '')).red.bold);
                 console.log(prettyjson.render(jshint.errors));
             }            
         }
@@ -351,13 +354,13 @@ function checkJS(callback){
 
 //-i compress [i]mages, jpg and png files in bin/ | with ImageMagick 
 function compressImgs(){
-    console.log("\n" + colors.blue.bold("## Compress images, jpg and png files") + " \n");
+    console.log("\n" + ("## Compress images, jpg and png files").blue.bold + " \n");
     execSync("node " + filenames.build.compressImages + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify 
 function minify(){
-    console.log("\n" + colors.blue.bold("## Minify and concatenate js, html/hbs, css and json files") + " \n");
+    console.log("\n" + ("## Minify and concatenate js, html/hbs, css and json files").blue.bold + " \n");
     execSync("node " + filenames.build.minifyFiles + " -r " + RELEASE, {stdio:'inherit'});
 }
 
@@ -365,19 +368,19 @@ function minify(){
 
 //-s  creates a Database with countries' [s]pecifcations  connection to a Database
 function specDB(){
-    console.log("\n" + colors.blue.bold("## Creates DB with countries' specifcations") + " \n");
+    console.log("\n" + ("## Creates DB with countries' specifcations").blue.bold + " \n");
     execSync("node " + filenames.build.setCountrySpecsDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database 
 function refreshDB(){
-    console.log("\n" + colors.blue.bold("## Refreshes statistical costs DB") + " \n");
+    console.log("\n" + ("## Refreshes statistical costs DB").blue.bold + " \n");
     execSync("node " + filenames.build.getAvgFromDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database 
 function genTables(){    
-    console.log("\n" + colors.blue.bold("## Generating statistical tables") + " \n");
+    console.log("\n" + ("## Generating statistical tables").blue.bold + " \n");
     console.log("\n    Extracts stat info from prod and create html tables \n");
     execSync("node " + filenames.build.generateTables + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
@@ -416,8 +419,8 @@ function getFinalRunMsg(){
     //built filename
     var filename = path.join(process.cwd(), 'bin', "index.js");
     
-    var messg = "\nRun " + colors.green.bold("node " + filename) + " to start application with default options\n" + 
-                "or " + colors.green.bold("node " + filename + " -h") + " for more information\n";          
+    var messg = "\nRun " + ("node " + filename).green.bold + " to start application with default options\n" + 
+                "or " + ("node " + filename + " -h").green.bold + " for more information\n";          
 
     return messg;
 }
@@ -427,11 +430,11 @@ function runApp(){
     //built filename
     var filename = path.join(process.cwd(), 'bin', "index.js");
     
-    console.log("Building complete with " + colors.bold("--run") + " option enabled, therefore");
+    console.log("Building complete with " + ("--run").bold + " option enabled, therefore");
     console.log("starting application with default options using command: "); 
-    console.log(colors.green.bold("node " + filename) + "\n");
+    console.log(("node " + filename).green.bold + "\n");
     console.log("For other options stop server and run:");
-    console.log(colors.green.bold("node " + filename + " -h\n"));
+    console.log(("node " + filename + " -h\n").green.bold);
     
     execSync("node " + filename + " -r " + RELEASE, {stdio:'inherit'});
 }
