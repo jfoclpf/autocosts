@@ -46,12 +46,12 @@
     <div class="stats-references">
         <div class="standing-costs">
             <h5>{{{fixed_costs}}}</h5>
-            <ul>
+            <ul>                                
                 <li class="depreciation_color">{{{depreciation}}}</li>
-                <li class="vehicle-insurance_color">{{{insurance}}}</li>
-                <li class="car-finance_color">{{{credit}}}</li>
-                <li class="vehicle-inspection_color">{{{inspection}}}</li>
-                <li class="vehicle-excise_color">{{{road_taxes}}}</li>
+                <li class="insurance_color">{{{insurance}}}</li>
+                <li class="credit_color">{{{credit}}}</li>
+                <li class="inspection_color">{{{inspection}}}</li>
+                <li class="car_tax_color">{{{road_taxes}}}</li>
             </ul>
         </div>
         <div class="running-costs">
@@ -59,10 +59,10 @@
             <ul>
                 <li class="fuel_color">{{{fuel}}}</li>
                 <li class="maintenance_color">{{{maintenance}}}</li>
-                <li class="repair_color">{{{rep_improv}}}</li>
+                <li class="repairs_improv_color">{{{rep_improv}}}</li>
                 <li class="parking_color">{{{parking}}}</li>
                 <li class="tolls_color">{{{tolls}}}</li>
-                <li class="traffic_color">{{{fines}}}</li>
+                <li class="fines_color">{{{fines}}}</li>
                 <li class="washing_color">{{{washing}}}</li>
             </ul>
         </div>
@@ -74,8 +74,8 @@
             <div class="title">
                 <h3>{{{fixed_costs}}}</h3>
                 <span class="average_costs_per_type"></span>
-            </div>
-
+            </div>                            
+            
             <button class="accordion">
                 <span class="expandable-item depreciation_color">{{{depreciation}}}</span>
                 <span class="periodic_costs_depreciation"></span>
@@ -84,28 +84,28 @@
             </div>
 
             <button class="accordion">
-                <span class="expandable-item vehicle-insurance_color">{{{insurance_short}}}</span>
+                <span class="expandable-item insurance_color">{{{insurance_short}}}</span>
                 <span class="periodic_costs_insurance"></span>
             </button>
             <div class="panel insurance_details">
             </div>
 
             <button class="accordion">
-                <span class="expandable-item car-finance_color">{{{credit}}}</span>
+                <span class="expandable-item credit_color">{{{credit}}}</span>
                 <span class="periodic_costs_credit"></span>
             </button>
             <div class="panel credit_details">
             </div>
 
             <button class="accordion">
-                <span class="expandable-item vehicle-inspection_color">{{{inspection}}}</span>
+                <span class="expandable-item inspection_color">{{{inspection}}}</span>
                 <span class="periodic_costs_inspection"></span>
             </button>
             <div class="panel inspection_details">
             </div>
 
             <button class="accordion">
-                <span class="expandable-item vehicle-excise_color">{{{road_taxes_short}}}</span>
+                <span class="expandable-item car_tax_color">{{{road_taxes_short}}}</span>
                 <span class="periodic_costs_car_tax"></span>
             </button>
             <div class="panel car_tax_details">
@@ -122,8 +122,7 @@
                 <h4>{{{total_fixed}}}</h4>
                 <span class="periodic_costs_total_standing_costs"></span>
             </div>
-        </div>
-
+        </div>        
 
         <div class="running-costs box">
             <div class="title">
@@ -146,7 +145,7 @@
             </div>
 
             <button class="accordion">
-                <span class="expandable-item repair_color">{{{rep_improv}}}</span>
+                <span class="expandable-item repairs_improv_color">{{{rep_improv}}}</span>
                 <span class="periodic_costs_repairs_improv"></span>
             </button>
             <div class="panel repairs_improv_details">
@@ -167,7 +166,7 @@
             </div>
 
             <button class="accordion">
-                <span class="expandable-item traffic_color">{{{fines}}}</span>
+                <span class="expandable-item fines_color">{{{fines}}}</span>
                 <span class="periodic_costs_fines"></span>
             </button>
             <div class="panel fines_details">

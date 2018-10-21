@@ -1,16 +1,18 @@
 /* References colors */
+/*Periodic costs*/
 .depreciation_color:before {background-color: #2ba3d6;}
-.vehicle-insurance_color:before {background-color: #10c6e6;}
-.car-finance_color:before {background-color: #5ae0e2;}
-.vehicle-inspection_color:before {background-color: #99e6bc;}
-.vehicle-excise_color:before {background-color: #ffda70;}
+.insurance_color:before {background-color: #10c6e6;}
+.credit_color:before {background-color: #5ae0e2;}
+.inspection_color:before {background-color: #99e6bc;}
+.car_tax_color:before {background-color: #ffda70;}
 .fuel_color:before {background-color: #ff9e84;}
 .maintenance_color:before {background-color: #ff7192;}
-.repair_color:before {background-color: #e562aa;}
+.repairs_improv_color:before {background-color: #e562aa;}
 .parking_color:before {background-color: #ea90cd;}
 .tolls_color:before {background-color: #eabcef;}
-.traffic_color:before {background-color: #9f97ef;}
+.fines_color:before {background-color: #9f97ef;}
 .washing_color:before {background-color: #867ae3;}
+
 .net-income_color:before {background-color: #2ba3d6;}
 .total-costs_color:before {background-color: #10c6e6;}
 .car-cost_color:before {background-color: #5ae0e2;}
@@ -19,3 +21,4 @@
 .other-trans_color:before {background-color: #ff9e84;}
 .uber_color:before {background-color: #ff7192;}
 .other-trans-2_color:before {background-color: #e562aa;}
+
