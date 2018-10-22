@@ -80,7 +80,7 @@ function loadExtraFiles() {
                     pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
                 }
                 getScriptOnce(pdf_fonts_path, function() {
-                    $('#button-pdf, #button-print').removeClass('disabled');
+                    $('#results .button-pdf, #results .button-print').removeClass('disabled');
                 });
             });
         });
