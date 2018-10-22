@@ -299,26 +299,26 @@ function loadResultsSettingsAndHandlers(){
     });    
     
     if(SWITCHES.pdf){
-        $("#results #button-pdf").show().addClass("disabled");                
+        $("#results .button-pdf").show().addClass("disabled");                
         //download pdf button handler
-        $("#results #button-pdf").on( "click", function(){
+        $("#results .button-pdf").on( "click", function(){
             console.log("Download pdf clicked");
             generatePDF(CALCULATED_DATA, "download");
         });   
     }
     else{
-        $("#results #button-pdf").hide();
+        $("#results .button-pdf").hide();
     }   
     
     if(SWITCHES.print){
-        $("#results #button-print").show().addClass("disabled");
-        $("#button-print").on( "click", function(){
+        $("#results .button-print").show().addClass("disabled");
+        $("#results .button-print").on( "click", function(){
             console.log("Print button clicked");
             generatePDF(CALCULATED_DATA, "print");
         });
     }
     else{
-        $("#results #button-print").hide();
+        $("#results .button-print").hide();
     }  
             
     //edit form on results

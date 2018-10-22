@@ -98,7 +98,7 @@
     #results .bottom-actions-bar .center-actions-mobile a,
     #results .bottom-actions-bar .right-actions-mobile a.menu-toggle,
     #results .bottom-actions-bar .right-actions-mobile a.menu-close {padding: 5px 10px!important}
-    #results .bottom-actions-bar .center-actions-mobile #button-pdf {margin-right: 5px}
+    #results .bottom-actions-bar .center-actions-mobile .button-pdf {margin-right: 5px}
     #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; padding: 0px 2px 0px 5px; vertical-align: middle;}
 
     #results .bottom-actions-bar .right-actions {display: none;}
