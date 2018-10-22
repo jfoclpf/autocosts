@@ -204,8 +204,8 @@ function copy(){
         fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(BIN_DIR, destFilePath)); 
         
         let packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath); 
-        let consoleMsg = npmPackage.verbose + ": " + path.join(packageDirRelativepath, fileRelativePath) + " -> " +
-            path.join(path.relative(path.dirname(BIN_DIR), BIN_DIR), destFilePath);
+        let consoleMsg = npmPackage + ": " + (path.join(packageDirRelativepath, fileRelativePath)).verbose + " -> " +
+            (path.join(path.relative(path.dirname(BIN_DIR), BIN_DIR), destFilePath)).verbose;
         
         console.log(consoleMsg);
     };    
