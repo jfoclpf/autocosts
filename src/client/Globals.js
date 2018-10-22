@@ -99,7 +99,7 @@ var Run1, Print, TimeCounter;
         jQuery :              JSfiles.jquery.uri,
         jQueryLocal :         JSfiles.jquery.local,
         jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.min.js",
-        jQueryColor :         rootClientURL + "jquery/jquery.color.js",
+        jQueryColor :         rootClientURL + "jquery/jquery.color.min.js",
         jTimer :              rootClientURL + "jquery/js_timer.js",
 
         PDF : {
