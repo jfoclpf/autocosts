@@ -327,14 +327,16 @@ function loadResultsSettingsAndHandlers(){
         $("#results").hide();
     }); 
     
-    if (SWITCHES.social /*&& !IsThisAtest()*/){
-        $("#socialmedia_buttons").show();
-        $("#socialmedia_buttons .facebook a").attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL);
-        $("#socialmedia_buttons .twitter a").attr("href", "https://twitter.com/share?url=" + FULL_URL);
-        $("#socialmedia_buttons .linkedin a").attr("href", "https://www.linkedin.com/shareArticle?url=" + FULL_URL);        
+    if (SWITCHES.social /*&& !IsThisAtest()*/){        
+        $(".right-actions .facebook a, .right-actions-mobile .facebook a").
+            attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL).attr("target", "_blank");
+        $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
+            attr("href", "https://twitter.com/share?url=" + FULL_URL).attr("target", "_blank");
+        $(".right-actions .linkedin a, .right-actions-mobile .linkedin a").
+            attr("href", "https://www.linkedin.com/shareArticle?url=" + FULL_URL).attr("target", "_blank");
     }
     else{
-        $("#socialmedia_buttons").hide();
+        $(".right-actions, .right-actions-mobile").hide();
     }    
 }
 

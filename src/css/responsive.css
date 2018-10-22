@@ -104,13 +104,10 @@
     #results .bottom-actions-bar .right-actions {display: none;}
     #results .bottom-actions-bar .right-actions-mobile {display: inline-block; float: right;}
 
-    .bottom-actions-bar .right-actions-mobile .main-menu ul li a,
-    .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
+    #results .bottom-actions-bar .right-actions-mobile .main-menu ul li a,
+    #results .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
 
     #results .panel ul li {padding-left:  9px}
-
-
-
 
 }
 
