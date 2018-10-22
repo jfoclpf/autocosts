@@ -340,7 +340,7 @@ function checkJS(callback){
             jshint(code, JShintOpt, {});
 
             if (jshint.errors.length == 0){ //no warnings
-                console.log((filename.replace(ROOT_DIR, '')).green);
+                console.log((filename.replace(ROOT_DIR, '')).verbose);
             }
             else{
                 console.log((filename.replace(ROOT_DIR, '')).error);
@@ -361,14 +361,14 @@ function checkJS(callback){
 //-i compress [i]mages, jpg and png files in bin/ | with ImageMagick 
 function compressImgs(){
     console.log("\n" + ("# --"+optionDefinitions[2].name).mainOption ); 
-    console.log("\nCompress images, jpg and png files\n".verbose);
+    console.log("\nCompress images, jpg and png files\n");
     execSync("node " + filenames.build.compressImages + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify 
 function minify(){
     console.log("\n" + ("# --"+optionDefinitions[3].name).mainOption ); 
-    console.log("\nMinify and concatenate js, html/hbs, css and json files\n".verbose);
+    console.log("\nMinify and concatenate js, html/hbs, css and json files\n");
     execSync("node " + filenames.build.minifyFiles + " -r " + RELEASE, {stdio:'inherit'});
 }
 

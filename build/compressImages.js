@@ -48,7 +48,7 @@ function compressJPG(){
 
             if(filename.includes(".jpg")){
 
-                console.log(filename.replace(ROOT_DIR, ""));
+                console.log((filename.replace(ROOT_DIR, "")).verbose);
 
                 var params = [ filename,
                                '-sampling-factor', '4:2:0',
@@ -70,12 +70,12 @@ function compressJPG(){
         });
 
         walker.on("errors", function (root, nodeStatsArray, next) {
-            console.log("There was an error with" + nodeStatsArray.name);        
+            console.log(("There was an error with" + nodeStatsArray.name).error); 
             next();
         });
 
         walker.on("end", function () {
-            console.log(("\nAll JPG files compressed\n").verbose);
+            console.log("\nAll JPG files compressed\n");
             resolve();
         });
     });
@@ -97,7 +97,7 @@ function compressPNG(){
         
         if(filename.includes(".png")){
 
-            console.log(filename.replace(ROOT_DIR, ""));
+            console.log((filename.replace(ROOT_DIR, "")).verbose);
 
             var params = [ filename,
                            '-strip',
@@ -116,12 +116,12 @@ function compressPNG(){
     });
     
     walker.on("errors", function (root, nodeStatsArray, next) {
-        console.log("There was an error with" + nodeStatsArray.name);        
+        console.log(("There was an error with" + nodeStatsArray.name).error); 
         next();
     });
 
     walker.on("end", function () {
-        console.log(("\nAll PNG files compressed\n").verbose);
+        console.log("\nAll PNG files compressed\n");
     });      
 }
 

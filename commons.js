@@ -616,7 +616,7 @@ function _getDataBaseErrMsg(scriptName, serviceObj){
 function _getConsoleColors(){
 
     var colorsTheme = {
-        mainOption: ['cyan', 'bold'],
+        mainOption: ['yellow', 'bold'],
         mainOptionStep: ['blue', 'bold'],
         silly: 'rainbow',
         input: 'grey',

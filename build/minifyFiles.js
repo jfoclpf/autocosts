@@ -28,7 +28,7 @@ var settings = commons.getSettings();
 //from require('colors');
 colors.setTheme(commons.getConsoleColors());
 
-console.log('Minifying and concatenating files'.verbose); 
+console.log('Minifying and concatenating files'); 
 
 processFiles();
 
@@ -61,7 +61,7 @@ function processJSfiles(){
            !filename.includes("vfs_fonts.js") && 
            !filename.includes(".min.js")){
             
-            console.log(filename.replace(ROOT_DIR, '')); //removes base directory from file name
+            console.log((filename.replace(ROOT_DIR, '')).verbose); //removes base directory from file name
             var code = fs.readFileSync(filename, 'utf-8');            
             
             //file 'Globals.js.hbs' because is a JS file rendered by handlebars
@@ -90,12 +90,12 @@ function processJSfiles(){
     });
     
     walker.on("errors", function (root, nodeStatsArray, next) {
-        console.log("There was an error with" + nodeStatsArray.name);        
+        console.log(("There was an error with" + nodeStatsArray.name).error); 
         next();
     });
 
     walker.on("end", function () {
-        console.log(("\nAll JS files minified\n").verbose);
+        console.log("\nAll JS files minified\n");
         processCSSfiles();
     });    
     
@@ -119,13 +119,13 @@ function minifyCSSFiles(){
         
         if(filename.includes(".css")){        
 
-            console.log(filename.replace(ROOT_DIR, ''));
+            console.log((filename.replace(ROOT_DIR, '')).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
             var result = uglifycss.processString(code);
 
             if (!result){
-                console.log('ERROR minifying CSS file ', filename, '\n');       
+                console.log(('ERROR minifying CSS file ', filename, '\n').error); 
             }
             else{    
                 fs.writeFileSync(filename, result, 'utf8');
@@ -137,12 +137,12 @@ function minifyCSSFiles(){
     });
     
     walker.on("errors", function (root, nodeStatsArray, next) {
-        console.log("There was an error with" + nodeStatsArray.name);
+        console.log(("There was an error with" + nodeStatsArray.name).error);
         next();
     });
 
     walker.on("end", function () {
-        console.log(("\nAll CSS files minified\n").verbose);
+        console.log("\nAll CSS files minified\n");
         processHTMLfiles();  
     });     
 
@@ -166,7 +166,7 @@ function processHTMLfiles(){
               !filename.includes(".js.hbs") &&  //excludes js files generated bu handlebars
               !filename.includes(".css.hbs")){  //excludes css files generated bu handlebars
 
-            console.log(filename.replace(ROOT_DIR, ''));
+            console.log((filename.replace(ROOT_DIR, '')).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
 
@@ -194,12 +194,12 @@ function processHTMLfiles(){
     });
     
     walker.on("errors", function (root, nodeStatsArray, next) {
-        console.log("There was an error with" + nodeStatsArray.name);
+        console.log(("There was an error with" + nodeStatsArray.name).error);
         next();
     });
 
     walker.on("end", function () {
-        console.log(("\nAll html/hbs files minified\n").verbose);
+        console.log("\nAll html/hbs files minified\n");
         processJSONfiles();
     });     
 }
@@ -217,7 +217,7 @@ function processJSONfiles(){
         
         if(filename.includes(".json")){  
 
-            console.log(filename.replace(ROOT_DIR, ''));
+            console.log((filename.replace(ROOT_DIR, '')).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
             var result = jsonminify(code);
@@ -240,7 +240,7 @@ function processJSONfiles(){
     });
 
     walker.on("end", function () {
-        console.log("\nAll JSON files minified\n".verbose);
+        console.log("\nAll JSON files minified\n");
     });     
 }
 
