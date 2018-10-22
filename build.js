@@ -212,7 +212,11 @@ function copy(){
     
     //jquery
     //https://www.npmjs.com/package/jquery    
-    copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('client', 'jquery', 'jquery.min.js'));        
+    copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('client', 'jquery', 'jquery.min.js'));  
+    
+    //jquery-sidebar
+    //https://www.npmjs.com/package/jquery-sidebar   
+    copyFile('jquery-sidebar', path.join('src', 'jquery.sidebar.min.js'), path.join('client', 'jquery', 'jquery.sidebar.min.js'));      
 
     //pdfmake
     //https://www.npmjs.com/package/pdfmake
