@@ -4,7 +4,8 @@
         <div class="info-box box-1">
             <h3>{{{your_car_costs_you}}}</h3>
             <h2>
-                <sup>{{{curr_symbol}}}</sup><span class="total_costs_per_period"></span>
+                <!-- this field is filled in by printResults.js -->
+                <sup>{{{curr_symbol}}}</sup><span class="total_costs_per_period">#</span>
             </h2>
 
             <span class="per">{{{word_per}}}</span> 
@@ -39,7 +40,8 @@
 
 <!-- ************************** AVERAGE PERIODIC COST ************************** -->
 <section id="avg-periodic-cost">
-    <h2 class="costs_per_type"></h2>
+    <!-- default costs period is month -->
+    <h2 class="costs_per_type">{{{costs}}} {{{per}}} {{{month}}}</h2>
     <div class="stats">
         <canvas id="costsChart"></canvas>
     </div>
