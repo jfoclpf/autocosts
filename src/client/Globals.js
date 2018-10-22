@@ -103,17 +103,17 @@ var Run1, Print, TimeCounter;
         jTimer :              rootClientURL + "jquery/js_timer.js",
 
         PDF : {
-            pdfmake :         JSfiles.pdfmake.uri,
+            pdfmake :         rootClientURL + "pdf/pdfmake.min.js",
             generatePDF :     rootClientURL + "pdf/generatePDF.js",
-            vfs_fonts :       JSfiles.vfs_fonts.uri,
+            vfs_fonts :       rootClientURL + "pdf/vfs_fonts.js",
             vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
             vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
             vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
         },
 
         drawCostsCharts :     rootClientURL + "chart/drawCostsCharts.js",
-        chartjs :             JSfiles.chartjs.uri,
-        smartAppBanner:       JSfiles.smartappbanner.uri
+        chartjs :             rootClientURL + "chart/chartjs.min.js",
+        smartAppBanner:       rootClientURL + "smart-app-banner.js"
     };
 
     UBER_API = {};

@@ -442,27 +442,7 @@ function setFILENAMES(){
                 "local" : path.join(DIRECTORIES.client.client, 'jquery', 'jquery.min.js'),
                 "cdn"   : "https://code.jquery.com/jquery-latest.min.js",
                 "uri"   : "" //it will be one of the above
-            },
-            "pdfmake" : {
-                "local" : path.join(DIRECTORIES.client.client, 'pdf', 'pdfmake.min.js'),
-                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js",
-                "uri"   : "" //it will be one of the above
-            },
-            "vfs_fonts" : {
-                "local" : path.join(DIRECTORIES.client.client, 'pdf', 'vfs_fonts.js'),
-                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js",
-                "uri"   : "" //it will be one of the above
-            },
-            "chartjs" : {
-                "local" :  path.join(DIRECTORIES.client.client, 'chart', 'chartjs.min.js'),
-                "cdn"   : "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js",
-                "uri"   : "" //it will be one of the above
-            },
-            "smartappbanner" : {
-                "local" :  path.join(DIRECTORIES.client.client, 'smart-app-banner.js'),
-                "cdn"   : "https://cdn.jsdelivr.net/npm/smart-app-banner@1.5.1/dist/smart-app-banner.js",
-                "uri"   : "" //it will be one of the above
-            },                                    
+            },                         
             "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
             "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
         }
