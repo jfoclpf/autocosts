@@ -214,6 +214,10 @@ function copy(){
     //https://www.npmjs.com/package/jquery    
     copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('client', 'jquery', 'jquery.min.js'));  
     
+    //jquery-color
+    //https://www.npmjs.com/package/jquery-color/v/3.0.0-alpha.1 
+    copyFile('jquery-color', path.join('dist', 'jquery.color.min.js'), path.join('client', 'jquery', 'jquery.color.min.js'));     
+    
     //jquery-sidebar
     //https://www.npmjs.com/package/jquery-sidebar   
     copyFile('jquery-sidebar', path.join('src', 'jquery.sidebar.min.js'), path.join('client', 'jquery', 'jquery.sidebar.min.js'));      
