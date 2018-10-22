@@ -43,8 +43,6 @@ function Run2(callback){
     //see for more info: https://github.com/hughsk/flat
     var flattenedData = flatten(calculatedData, {delimiter:"_"}); 
     
-    //it needs to show also 1/2 of Maintenance Costs
-    flattenedData.monthly_costs_halfOfMaintenance = flattenedData.monthly_costs_maintenance / 2;
     //console.log(flattenedData);       
 
     printResults(f1, f2, f3, calculatedData, flattenedData, countryObj);
@@ -101,6 +99,9 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     }     
     
     $("#results").show(function(){
+        
+        //it needs to show also 1/2 of Maintenance Costs
+        flattenedData.monthly_costs_halfOfMaintenance = flattenedData.monthly_costs_maintenance / 2;
         
         setCalculatedDataToHTML(flattenedData);
                 
