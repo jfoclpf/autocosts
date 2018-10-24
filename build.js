@@ -384,18 +384,21 @@ function minify(){
 
 //-s  creates a Database with countries' [s]pecifcations  connection to a Database
 function specDB(){
+    console.log("\n" + ("# --"+optionDefinitions[5].name).mainOption ); 
     console.log("\n" + ("## Creates DB with countries' specifcations").mainOptionStep + " \n");
     execSync("node " + filenames.build.setCountrySpecsDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database 
 function refreshDB(){
+    console.log("\n" + ("# --"+optionDefinitions[6].name).mainOption ); 
     console.log("\n" + ("## Refreshes statistical costs DB").mainOptionStep + " \n");
     execSync("node " + filenames.build.getAvgFromDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
 }
 
 //-t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database 
-function genTables(){    
+function genTables(){
+    console.log("\n" + ("# --"+optionDefinitions[7].name).mainOption ); 
     console.log("\n" + ("## Generating statistical tables").mainOptionStep + " \n");
     console.log("\n    Extracts stat info from prod and create html tables \n");
     execSync("node " + filenames.build.generateTables + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
