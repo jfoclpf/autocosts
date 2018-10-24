@@ -28,7 +28,8 @@
 /*******------ Average Monthly Cost ------*******/
 #avg-periodic-cost {margin: 100px 0 80px}
 #avg-periodic-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-periodic-cost .stats {width: 100%; height: 350px; margin-bottom: 20px}
+#avg-periodic-cost .stats { width: 60%; height: 350px; margin: 0 5% 20px 0; display: inline-block; float: left;}
+#avg-periodic-cost .doughnut-stats {width: 35%; display: inline-block; height: 350px;}
 #avg-periodic-cost .stats-references {display: inline-block; width: 100%;}
 
 #avg-periodic-cost .three-boxes {display: inline-block; margin-top: 50px }
@@ -48,6 +49,7 @@
 .stats-references .running-costs {float: left; text-align: left;}
 .stats-references .standing-costs {width: 40%; margin-left: 3%;}
 .stats-references .running-costs {width: 55%;}
+
 
 /*******------ Financial efforts  |  Equivalent transport costs ------*******/
 .results-section {display: block; float: left; width: 100%; margin-bottom: 80px }
