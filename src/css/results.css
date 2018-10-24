@@ -1,127 +1,182 @@
+/*************** RESULTS, TABLES and CHARTS ***************/
+.hr {
+    display: none;
+}
 
-/* ------------------------------********* RESULTS *********------------------------------ */
+.result_div {
+    margin: 15px;
+}
 
-.results {margin: 0 auto}
-.results header {position: relative; margin-bottom: 50px}
+.charts_container {
+    width: 50%; 
+    margin: 5px auto;
+}
 
-/*******------ 3 or 2 boxes at the top ------*******/
-#info-boxes .container {display: block; margin: 0 auto; padding: 0; max-width: 880px; height: 175px;}
+.chart {
+    position: relative;
+    margin: auto;
+}
 
-#info-boxes .container .info-box {float: left; color: white; border-radius: 5px; height: 115px; background-color: #2c49b9; padding: 30px 0; margin: 0 1.5%;}
-#info-boxes .container .info-box.three-boxes { width: 30.333333%;}
-#info-boxes .container .info-box.two-boxes { width: 46%;}
+#pieChartDiv{
+    min-height: 400px;
+}
+#barChartDiv{
+    min-height: 350px;
+}
+#finEffChartDiv{
+    min-height: 150px;
+}
+#alterToCarCostsChartDiv{
+    min-height: 500px;
+}
 
-#info-boxes .container .info-box h2 {font-size: 55px; line-height: 45px; margin: 0 30px;}
-#info-boxes .container .info-box h2 sup {font-size: 25px; font-weight: 300; margin-top: 4px }
-#info-boxes .container .info-box h3 {font-size: 18px; margin: 0 30px;}
-#info-boxes .container .info-box span {font-weight: 300}
-#info-boxes .container .info-box .per {font-size: 22px; margin-left: 20px; font-weight: 300}
-#info-boxes .container .info-box select {background: url('../img/dd_arrow-white.jpg') no-repeat right bottom; color: white; border-color: white; font-size: 22px; text-transform: lowercase;}
-#info-boxes .container .info-box select option {color: #2c49b9;}
+.result_div td {
+    padding: 8px 3%;
+    border-top: 1px solid #a5a5a5;
+    vertical-align: middle;
+}
+.result_div td:nth-child(2n) {
+    border-left: solid 1px #b6b6b6;
+}
 
-#info-boxes .container .box-2 h2 {font-size: 45px; line-height: 35px; margin: 23px 30px 5px;}
+.result_section_title {
+    text-align: center;
+    font-size: 17px;
+    margin: 20px 10% 15px 10%;
+}
 
-#info-boxes .container .box-3 .cake-income {float: left; margin: 14px 10px 0 30px; width: 80px; height: 80px;}
-#info-boxes .container .box-3 .text {text-align: left;}
-#info-boxes .container .box-3 .text h2 {font-size: 50px; margin: 29px 0 0}
+.chart_div {
+    margin: 0 auto;
+}
 
-/*******------ Average Monthly Cost ------*******/
-#avg-periodic-cost {margin: 100px 0 80px}
-#avg-periodic-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-periodic-cost .stats { width: 60%; height: 350px; margin: 0 5% 20px 0; display: inline-block; float: left;}
-#avg-periodic-cost .doughnut-stats {width: 35%; display: inline-block; height: 350px;}
-#avg-periodic-cost .stats-references {display: inline-block; width: 100%;}
+.result_table td{
+    text-align:left;
+    overflow: hidden;
+}
+.result_table td:only-child{
+    text-align:center;
+}
 
-#avg-periodic-cost .three-boxes {display: inline-block; margin-top: 50px }
-#avg-periodic-cost .three-boxes .box {padding-bottom: 20px; border-radius: 5px; width: 31%; min-height: 280px; margin: 0 1%; float: left; display: inline-block; background-color: white; -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.05);}
-#avg-periodic-cost .three-boxes .box .title {border-left: 10px solid #2c49b9; margin: 10px 0; text-align: left;width: 94%; padding: 3px 0;}
-#avg-periodic-cost .three-boxes .box .title h3 {display: inline-block; margin-left: 10px}
-#avg-periodic-cost .three-boxes .box .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-top: 8px}
-#avg-periodic-cost .three-boxes .total .title {border-color: #efa00b}
-
-
-/******----- References -----******/
-.stats-references ul {margin-top: 10px; color: #868790; font-size: 12px}
-.stats-references ul li {list-style: none; padding: 0 10px 0 15px; display: inline-block; line-height: 23px;}
-.stats-references ul li:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 5px 0 0 -15px;}
-
-.stats-references .standing-costs,
-.stats-references .running-costs {float: left; text-align: left;}
-.stats-references .standing-costs {width: 40%; margin-left: 3%;}
-.stats-references .running-costs {width: 55%;}
-
-
-/*******------ Financial efforts  |  Equivalent transport costs ------*******/
-.results-section {display: block; float: left; width: 100%; margin-bottom: 80px }
-.results-section h2 span{text-align: center; font-weight: 400; color: #868790; font-size: 16px}
-.results-section .graph {display: inline-block; float: left; width: 50%; text-align: left;}
-.results-section .graph h5 {margin: 0 0 20px}
-.results-section .graph .stats {width: 100%; height: 400px; margin-bottom: 20px}
-
-.results-section .values {float: right; display: inline-block; width: 35%; }
-.results-section .values .title span {display: inline-block; color: #797b82; font-size: 14px; text-align: right; float: right; margin-bottom: 10px;}
-.results-section .values {margin-bottom: 50px  }
-.results-section .values h5, .results-section .values span {font-size: 18px}
-.results-section .values .accordion {padding: 5px 0}
-
-.results-section .values .accordion span.expandable-item:before { margin: 6px 0 0 -18px}
-
-.results-section .values .total-ammount {width: 100%}
-.results-section .values .total-ammount h4 {margin-left: 0}
-
-#equivalent-transport-costs {margin-bottom: 160px}
-
-
-/*******------ Accordions ------*******/
-.accordion, .total-item {background: none; color: #2c49b9; cursor: pointer; padding: 3px 20px; width: 100%; border: none; text-align: left; outline: none; transition: 0.4s; font-family: 'Nunito', Arial, sans-serif;}
-.active, .accordion:hover {}
-.accordion .expandable-item, .accordion h5 {color: #2c49b9; float: left; max-width: 70%; padding-left: 15px; display: inline-block; font-weight: 700;}
-.accordion span,
-.total-item span {font-size: 14px; color: black; display: inline-block; float: right;}
-.accordion span.expandable-item:before {content: ""; border-radius: 50%; width: 12px; height: 12px; display: inline-block; position: absolute; margin: 3px 0 0 -15px;}
-.accordion span.expandable-item:after {display: inline-block; position: relative; content: ""; top: -2px; right: 0; margin-left: 4px; width: 7px; height: 7px; transform: rotate(45deg); border-right: 1px solid #2c49b9; border-bottom: 1px solid #2c49b9;}
-
-.active span.expandable-item:after {transform: rotate(-135deg); top: 2px;}
-
-.panel {padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out;}
-.panel ul {width: 78%}
-.panel ul li {list-style: none; text-align: left; font-size: 14px; color: #797b82; padding: 3px 0 3px 17px}
-
-.total-ammount {text-align: left;width: 94%; padding: 3px 0;}
-.total-ammount h4,
-.total-ammount span {display: inline-block; font-weight: 700; font-size: 18px}
-.total-ammount h4 {margin-left: 20px}
-.total-ammount span {text-align: right; float: right; }
-
-.total-item {display: inline-block; font-weight: 400; color: black; width: 88%; padding: 3px 6%}
-.total-item h5 {display: inline-block; cursor: auto;}
+.red_bold_text {
+    line-height: 100%;
+    border-radius:12px;
+    border-width:5px;
+    margin: 10px;
+    display: inline-block;
+    padding:2%;
+    font-size:350%;
+    width:auto;
+    font-family:Impact;
+    color:red;
+    border-style:solid;
+}
 
 
-/*******------ Bottom Action Bar ------*******/
-.bottom-actions-bar {background-color: white; -webkit-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); -moz-box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); box-shadow: 0px -4px 8px 0px rgba(0,0,0,0.03); display: block; position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px 0;}
-.bottom-actions-bar .left-actions {float: left; margin-left: 2%}
-.bottom-actions-bar .left-actions span {display: inline-block; margin-top: 8px; color: #2c49b9; font-weight: 700}
+#result_table0 td {
+    text-align: center;
+    padding: 9px;
+}
 
-.bottom-actions-bar .center-actions {margin: 0 auto; display: inline-flex;}
-.bottom-actions-bar .center-actions-mobile {display: none;}
+.result_table {
+    border: 2px solid #b4b4b4;
+    border-radius: 10px;
+    border-collapse: separate;
+}
 
-.bottom-actions-bar .center-actions span + span {margin-left: 5px;}
-.bottom-actions-bar .center-actions a svg {margin-right: 5px; vertical-align: middle;}
+.result_table tr:first-child td {
+    border-radius: 10px 10px 0 0;
+    border-collapse: separate;
+    border: 0;
+    text-align: center;
+    vertical-align: middle;
+}
 
-.bottom-actions-bar .right-actions {float: right; margin-right: 2%}
-.bottom-actions-bar .right-actions-mobile {display: none;}
-.bottom-actions-bar .right-actions ul {display: flex;}
-.bottom-actions-bar .right-actions ul li,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li{display: inline-block; margin-left: 10px}
-.bottom-actions-bar .right-actions ul li a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li a {width: 25px; height: 25px; border: 1px solid #b0b2be; border-radius: 50%; padding: 5px;}
+.uber_table tr:first-child td,
+.uber_table tr:first-child td + td,
+.costs_table tr:last-child td + td,
+.total_costs_table td + td,
+.total_costs_table tr:nth-child(2) td,
+.total_costs_table tr:nth-child(3) td {
+    text-align: left !important;
+}
 
-.bottom-actions-bar .right-actions ul li.facebook a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li.facebook a {color: #3c5a9a; fill: #3c5a9a}
-.bottom-actions-bar .right-actions ul li.twitter a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li.twitter a {color: #5da8dc; fill: #5da8dc}
-.bottom-actions-bar .right-actions ul li.linkedin a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li.linkedin a {color: #0077b5; fill: #0077b5}
-.bottom-actions-bar .right-actions ul li.pinterest a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li.pinterest a {color: #bd081c; fill: #bd081c}
+.costs_table tr:last-child td,
+#result_table2 tr:last-child td,
+#result_table3 tr:last-child td,
+.uber_table tr:last-child td {
+    border-radius: 0 0 0 10px;
+    border-collapse: separate;
+}
+.costs_table tr:last-child td + td,
+#result_table2 tr:last-child td + td,
+#result_table3 tr:last-child td + td,
+.uber_table tr:last-child td + td {
+    border-radius: 0 0 10px 0;
+    border-collapse: separate;
+}
+#result_table0 tr:last-child td,
+#result_table4 tr:last-child td{
+    border-radius: 0 0 10px 10px;
+}
 
+#result_table0 tr:nth-child(2) td + td,
+#result_table0 tr:nth-child(3) td + td {
+    border-left: solid 1px #b6b6b6;
+}
+#result_table4 tr:nth-last-child(2) td:first-child{
+    text-align: right;
+}
+
+.costs_table tr:last-child td,
+#result_table2 tr:last-child td {
+    text-align: right;
+}
+.costs_table tr:last-child td + td,
+#result_table2 tr:last-child td + td {
+    text-align: left;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+.costs_table tr:nth-child(9) td+td {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.uber_table tr:first-child td,
+#result_table2 tr:first-child td,
+#result_table4 tr:first-child td {
+    border-radius: 10px 0 0 0 ;
+}
+.uber_table tr:first-child td + td,
+#result_table2 tr:first-child td + td,
+#result_table4 tr:first-child td + td {
+    border-left: solid 1px #b6b6b6;
+    border-radius: 0 10px 0 0;
+}
+
+.costs_table tr:nth-child(2) td {
+    text-align: center;
+}
+
+#result_table0 tr:nth-child(3) td,
+#result_table0 tr:nth-child(4) td,
+.costs_table tr:nth-child(2) td,
+.costs_table tr:last-child td,
+#result_table2 tr:nth-child(2) td,
+#result_table2 tr:last-child td,
+.uber_table tr:last-child td,
+.uber_table tr:nth-last-child(2) td,
+.uber_table2 tr:nth-child(2) td {
+    border-top: 2px solid #b4b4b4;
+}
+
+.border_bottom_2px{
+    border-bottom: 2px;
+}
+
+#text_div {
+    padding: 0px 15px;
+}
+#result_buttons_div {
+    text-align: center;
+}
