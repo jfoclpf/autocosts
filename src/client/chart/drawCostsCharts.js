@@ -189,7 +189,7 @@ function drawCostsBarsChart(calculatedData, period) {
         options: options
     };
 
-    DISPLAY.charts.costsBars.ref = new Chart("costsChart", content);
+    DISPLAY.charts.costsBars.ref = new Chart("costsBarsChart", content);
     DISPLAY.charts.costsBars.isVisible = true;
 }
 

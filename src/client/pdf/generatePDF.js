@@ -33,7 +33,7 @@ function generatePDF(calculatedData, action){
                 {
                     image: DISPLAY.charts.costsBars.URI,
                     width: 500,
-                    height: Math.round(500 * $("#costsChart").height() / $("#costsChart").width()),
+                    height: Math.round(500 * $("#costsBarsChart").height() / $("#costsBarsChart").width()),
                     style: 'img_style'
                 } : {},
             {
