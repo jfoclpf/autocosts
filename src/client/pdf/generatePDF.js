@@ -31,7 +31,7 @@ function generatePDF(calculatedData, action){
             },
             isCharts ? 
                 {
-                    image: DISPLAY.charts.URIs.costs,
+                    image: DISPLAY.charts.costsBars.URI,
                     width: 500,
                     height: Math.round(500 * $("#costsChart").height() / $("#costsChart").width()),
                     style: 'img_style'
@@ -107,10 +107,10 @@ function generatePDF(calculatedData, action){
         );
 
         //chart
-        if(DISPLAY.charts.isFinEffortChart && isCharts){
+        if(DISPLAY.charts.finEffort.isVisible && isCharts){
             docDefinition.content.push(                
                 {
-                    image: DISPLAY.charts.URIs.finEffort,
+                    image: DISPLAY.charts.finEffort.URI,
                     width: 350,
                     height: Math.round(350 * $("#finEffortChart").height() / $("#finEffortChart").width()),
                     style: 'img_style'
@@ -152,10 +152,10 @@ function generatePDF(calculatedData, action){
         );
 
         //chart
-        if(DISPLAY.charts.isAlterToCarChart && isCharts){
+        if(DISPLAY.charts.alterToCar.isVisible && isCharts){
             docDefinition.content.push(
                 {
-                    image: DISPLAY.charts.URIs.alterToCar,
+                    image: DISPLAY.charts.alterToCar.URI,
                     width: 400,
                     height: Math.round(400 * $("#equivalentTransportChart").height() / $("#equivalentTransportChart").width()),
                     style: 'img_style'

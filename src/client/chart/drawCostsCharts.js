@@ -8,7 +8,7 @@
 /*File with Javascript Charts Functions */
 
 
-function drawDoughnutChart(calculatedData){
+function drawDoughnutFinEffortChart(calculatedData){
     
     var finEffortPerc = calculatedData.fin_effort.percentage_of_income;
     
@@ -35,7 +35,7 @@ function drawDoughnutChart(calculatedData){
         },        
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.doughnutChart = DISPLAY.charts.doughnutChart.toBase64Image();
+                DISPLAY.charts.finEffortDoughnut.URI = DISPLAY.charts.finEffortDoughnut.ref.toBase64Image();
             }
         }
     };    
@@ -49,12 +49,12 @@ function drawDoughnutChart(calculatedData){
         options: options
     };
 
-    DISPLAY.charts.doughnutChart = new Chart("doughnutChart", content);
-    DISPLAY.charts.isDoughnutChart = true;
+    DISPLAY.charts.finEffortDoughnut.ref = new Chart("doughnutChart", content);
+    DISPLAY.charts.finEffortDoughnut.isVisible = true;
     
 }
 
-function drawCostsChart(calculatedData, period) {
+function drawCostsBarsChart(calculatedData, period) {
     
     var numMonths;
     
@@ -85,8 +85,8 @@ function drawCostsChart(calculatedData, period) {
     var c = periodicCosts; //Monthly costs object of calculated data, parsed to fixed(1)
     
     //always creates a new chart
-    if (DISPLAY.charts.costs){
-        DISPLAY.charts.costs.destroy();
+    if (DISPLAY.charts.costsBars.ref){
+        DISPLAY.charts.costsBars.ref.destroy();
     }
     
     var labels = [
@@ -175,7 +175,7 @@ function drawCostsChart(calculatedData, period) {
         }, 
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.costs = DISPLAY.charts.costs.toBase64Image();
+                DISPLAY.charts.costsBars.URI = DISPLAY.charts.costsBars.ref.toBase64Image();
             }
         }
     };
@@ -189,8 +189,8 @@ function drawCostsChart(calculatedData, period) {
         options: options
     };
 
-    DISPLAY.charts.costs = new Chart("costsChart", content);
-    DISPLAY.charts.isCostsChart = true;
+    DISPLAY.charts.costsBars.ref = new Chart("costsChart", content);
+    DISPLAY.charts.costsBars.isVisible = true;
 }
 
 //draws horizontal bars chart for Financial Effort
@@ -199,8 +199,8 @@ function drawFinEffortChart(calculatedData){
     var c = calculatedData.fin_effort; //Monthly costs object of calculated data, parsed to fixed(1)
 
     //always creates a new chart
-    if (DISPLAY.charts.finEffort){
-        DISPLAY.charts.finEffort.destroy();
+    if (DISPLAY.charts.finEffort.ref){
+        DISPLAY.charts.finEffort.ref.destroy();
     }
 
     var labels = [ 
@@ -254,7 +254,7 @@ function drawFinEffortChart(calculatedData){
         },        
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.finEffort = DISPLAY.charts.finEffort.toBase64Image();
+                DISPLAY.charts.finEffort.URI = DISPLAY.charts.finEffort.ref.toBase64Image();
             }
         }
     };
@@ -268,8 +268,8 @@ function drawFinEffortChart(calculatedData){
         options: options
     };
 
-    DISPLAY.charts.finEffort = new Chart("finEffortChart", content);   
-    DISPLAY.charts.isFinEffortChart = true;
+    DISPLAY.charts.finEffort.ref = new Chart("finEffortChart", content);   
+    DISPLAY.charts.finEffort.isVisible = true;
 }
 
 //draw bar chart
@@ -283,8 +283,8 @@ function drawAlterToCarChart(calculatedData) {
     var totCostsPerMonth = parseFloat(calculatedData.total_costs_month.toFixed(1));
     
     //always creates a new chart
-    if (DISPLAY.charts.alterToCar){
-        DISPLAY.charts.alterToCar.destroy();
+    if (DISPLAY.charts.alterToCar.ref){
+        DISPLAY.charts.alterToCar.ref.destroy();
     }
 
     //boolean variables
@@ -453,7 +453,7 @@ function drawAlterToCarChart(calculatedData) {
         }, 
         animation : {
             onComplete : function(){    
-                DISPLAY.charts.URIs.alterToCar = DISPLAY.charts.alterToCar.toBase64Image();                
+                DISPLAY.charts.alterToCar.URI = DISPLAY.charts.alterToCar.ref.toBase64Image();                
             }
         }
     };
@@ -467,8 +467,8 @@ function drawAlterToCarChart(calculatedData) {
         options: options
     };
 
-    DISPLAY.charts.alterToCar = new Chart("equivalentTransportChart", content);
-    DISPLAY.charts.isAlterToCarChart = true;
+    DISPLAY.charts.alterToCar.ref = new Chart("equivalentTransportChart", content);
+    DISPLAY.charts.alterToCar.isVisible = true;
 }
 
 /* takes a string phrase and breaks it into separate phrases

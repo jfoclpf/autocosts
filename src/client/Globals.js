@@ -153,23 +153,33 @@ var Run1, Print, TimeCounter;
             ext_costs          : false
         },
         charts: {
-            isDoughnutChart:     false,  /*prints chart bool variable*/
-            isCostsChart:        false,  /*prints chart bool variable*/
-            isFinEffortChart:    false,  /*prints chart bool variable*/
-            isAlterToCarChart:   false,  /*prints chart bool variable*/
-            doughnutChart: 0,
-            costs: 0,
-            finEffort: 0,
-            alterToCar: 0,
-            /*the charts images data URI*/
-            //https://en.wikipedia.org/wiki/Data_URI_scheme#SVG
-            URIs: {
-                doughnutChart: 0,
-                costs: 0,
-                finEffort: 0,
-                alterToCar: 0
+            finEffortDoughnut : {
+                isVisible: false,  //boolean variable that says whether the chart is visible
+                ref: 0,            //reference obtained from chart.js when doing "new Chart()"
+                URI: 0             //the charts images data URI, see https://en.wikipedia.org/wiki/Data_URI_scheme#SVG
+            },
+            costsBars : {
+                isVisible: false,
+                ref: 0,
+                URI: 0
+            },
+            costsDoughnut : {
+                isVisible: false,
+                ref: 0,
+                URI: 0
+            },
+            finEffort : {
+                isVisible: false,
+                ref: 0,
+                URI: 0
+            },
+            alterToCar : {
+                isVisible: false,
+                ref: 0,
+                URI: 0
             }
         },
+        
         costsColors: {        
             depreciation:   '#2ba3d6',
             insurance:      '#10c6e6',

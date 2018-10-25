@@ -69,7 +69,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     //in financial effort was not calculated, does not show doughnut chart
     //and adapt the three boxes css
     if(calculatedData.fin_effort_calculated){            
-        drawDoughnutChart(calculatedData);
+        drawDoughnutFinEffortChart(calculatedData);
         //shows third box where the financial effort doughnut chart appears
         $("#results #info-boxes .info-box.box-3").show();
         $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");
@@ -106,7 +106,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
         setCalculatedDataToHTML(flattenedData);
                 
         setPeriodicCosts(calculatedData, "month");
-        drawCostsChart(calculatedData, "month");
+        drawCostsBarsChart(calculatedData, "month");
         
         setPeriodicCostsDetails(f1, f2, f3, calculatedData);                                
         
