@@ -290,8 +290,8 @@ function drawCostsDoughnutChart(calculatedData, period) {
         tooltips: {
             enabled: true,
             callbacks: {
-                title: function(tooltipItem, data){                    
-                    return formatLabel(data.labels[tooltipItem[0].index], 16);
+                title: function(tooltipItems, data){                    
+                    return formatLabel(data.labels[tooltipItems[0].index], 16);
                 },
                 label: function(tooltipItem, data) {                    
                     var i = tooltipItem.index;
@@ -428,7 +428,7 @@ function drawAlterToCarChart(calculatedData) {
         //1st column
         //standing costs
         {
-            label: WORDS.your_car_costs_you,
+            label: formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25),
             data: [totCostsPerMonth],
             backgroundColor: '#5ae0e2'
         }   
@@ -573,8 +573,17 @@ function drawAlterToCarChart(calculatedData) {
         tooltips: {
             enabled: true,
             callbacks: {
+                title: function(tooltipItems, data) {
+                    var txt = data.datasets[tooltipItems[0].datasetIndex].label;                    
+                    if ($.isArray(txt)){
+                        return formatLabel(txt[0], 25);
+                    }
+                    else{
+                        return formatLabel(txt, 25);
+                    }
+                },
                 label: function(tooltipItem, data) {
-                    return data.datasets[tooltipItem.datasetIndex].label + ": " + WORDS.curr_symbol + tooltipItem.yLabel.toFixed(1);
+                    return WORDS.curr_symbol + tooltipItem.yLabel.toFixed(1);
                 }
             }
         }, 
