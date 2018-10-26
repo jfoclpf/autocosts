@@ -28,8 +28,8 @@
 /*******------ Average Monthly Cost ------*******/
 #avg-periodic-cost {margin: 100px 0 80px}
 #avg-periodic-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-periodic-cost .stats { width: 60%; height: 350px; margin: 0 5% 20px 0; display: inline-block; float: left;}
-#avg-periodic-cost .doughnut-stats {width: 35%; display: inline-block; height: 350px;}
+#avg-periodic-cost .costs-bars-chart-stats {width: 60%; height: 350px; display: inline-block; margin: 0 5% 20px 0;}
+#avg-periodic-cost .costs-doughnut-chart   {width: 35%; height: 350px; display: inline-block; float: left;}
 #avg-periodic-cost .stats-references {display: inline-block; width: 100%;}
 
 #avg-periodic-cost .three-boxes {display: inline-block; margin-top: 50px }
