@@ -53,7 +53,7 @@
 
 
     /* ------------------ RESULTS ------------------*/
-    section#results {width: 94%; margin: 0 auto}
+    #results {width: 94%; margin: 0 auto}
 
     #results .results-section {margin-bottom: 20px }
     #results #equivalent-transport-costs {margin-bottom: 160px }
