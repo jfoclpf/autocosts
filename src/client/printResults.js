@@ -107,6 +107,7 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
                 
         setPeriodicCosts(calculatedData, "month");
         drawCostsBarsChart(calculatedData, "month");
+        drawCostsDoughnutChart(calculatedData, "month");
         
         setPeriodicCostsDetails(f1, f2, f3, calculatedData);                                
         

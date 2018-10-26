@@ -12,7 +12,7 @@ function drawDoughnutFinEffortChart(calculatedData){
     
     var finEffortPerc = calculatedData.fin_effort.percentage_of_income;
     
-    var datasets = [{
+    var dataset = [{
         data: [finEffortPerc, 100 - finEffortPerc],
         backgroundColor: ["white", "#4c6ef2"],
         borderWidth: [0, 0]
@@ -44,7 +44,7 @@ function drawDoughnutFinEffortChart(calculatedData){
         type: 'doughnut',
         data: {
             labels: labels,
-            datasets: datasets
+            datasets: dataset
         },
         options: options
     };
@@ -193,7 +193,135 @@ function drawCostsBarsChart(calculatedData, period) {
     DISPLAY.charts.costsBars.isVisible = true;
 }
 
-//draws horizontal bars chart for Financial Effort
+//Dounghnut chart with every cost item 
+function drawCostsDoughnutChart(calculatedData, period) {
+
+    var numMonths;
+    
+    switch(period){
+        case "month" :
+            numMonths = 1;
+            break;
+        case "trimester" :
+            numMonths = 3;
+            break;
+        case "semester" :
+            numMonths = 6;
+            break;
+        case "year" :
+            numMonths = 12;
+            break;
+        default:
+            console.error("Period not valid " + period);
+    } 
+        
+    var percentageCosts = {};  //cost item percentage with respect to overall costs    
+    var n = 0; var periodicCosts = [];    //periodic costs according; used for showing in tooltips of chart
+    for (var key in calculatedData.monthly_costs){
+        if(calculatedData.monthly_costs.hasOwnProperty(key)){            
+            percentageCosts[key] = calculatedData.monthly_costs[key] / calculatedData.total_costs_month * 100;             
+            periodicCosts[n] = calculatedData.monthly_costs[key]*numMonths; 
+            n++;
+        }
+    }
+
+    var p = percentageCosts; //Monthly costs object of calculated data, parsed to fixed(1)
+    
+    //always creates a new chart
+    if (DISPLAY.charts.costsDoughnut.ref){
+        DISPLAY.charts.costsDoughnut.ref.destroy();
+    }
+    
+    var labels = [
+        WORDS.depreciation_st,
+        WORDS.insurance_short,
+        WORDS.credit,
+        WORDS.inspection_short,
+        WORDS.road_taxes_short,
+        WORDS.fuel,
+        WORDS.maintenance,        
+        WORDS.rep_improv,
+        WORDS.parking,
+        WORDS.tolls,
+        WORDS.fines,
+        WORDS.washing
+    ];
+    
+    var cc = DISPLAY.costsColors;
+        
+    var dataset = [{
+        data: [
+            p.depreciation,
+            p.insurance,
+            p.credit,
+            p.inspection,
+            p.car_tax,
+            p.fuel,
+            p.maintenance,            
+            p.repairs_improv,
+            p.parking,
+            p.tolls,
+            p.fines,
+            p.washing
+        ],
+        backgroundColor: [
+            cc.depreciation,
+            cc.insurance,
+            cc.credit,
+            cc.inspection,
+            cc.car_tax,
+            cc.fuel,
+            cc.maintenance,            
+            cc.repairs_improv,
+            cc.parking,
+            cc.tolls,
+            cc.fines,
+            cc.washing
+        ],
+        borderWidth: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+    }];
+    
+    var options = {
+        maintainAspectRatio: false,
+        legend: {
+            display: false,            
+        },
+        cutoutPercentage: 57,
+        tooltips: {
+            enabled: true,
+            callbacks: {
+                title: function(tooltipItem, data){                    
+                    return formatLabel(data.labels[tooltipItem[0].index], 16);
+                },
+                label: function(tooltipItem, data) {                    
+                    var i = tooltipItem.index;
+                    return WORDS.curr_symbol + periodicCosts[i].toFixed(1) + "   " + 
+                        data.datasets[0].data[i].toFixed(1) + "%";
+                }
+            } 
+        },       
+        animation : {
+            onComplete : function(){    
+                DISPLAY.charts.costsDoughnut.URI = DISPLAY.charts.costsDoughnut.ref.toBase64Image();
+            }
+        }
+    };    
+    
+    var content = {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: dataset
+        },
+        options: options
+    };
+
+    DISPLAY.charts.costsDoughnut.ref = new Chart("costsDoughnutChart", content);
+    DISPLAY.charts.costsDoughnut.isVisible = true;
+    
+}
+
+//draws vertical bars chart for Financial Effort
 function drawFinEffortChart(calculatedData){
 
     var c = calculatedData.fin_effort; //Monthly costs object of calculated data, parsed to fixed(1)
@@ -358,7 +486,6 @@ function drawAlterToCarChart(calculatedData) {
         }
         
         dataset = dataset.concat(p_dataset);        
-        //labels.push(formatLabel(WORDS.publ_tra_equiv, 25)); 
         labels.push(""); 
     }
     
