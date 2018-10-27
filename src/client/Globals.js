@@ -58,6 +58,8 @@ var Run1, Print, TimeCounter;
         "print": JSON.parse(switches.dataset.print),                 /*Print option*/
         "pdf": JSON.parse(switches.dataset.pdf)                      /*Download PDF report option*/
     };
+    //freezes SWITCHES on client such that its properties cannot be changed
+    Object.freeze(SWITCHES);    
         
     var globalVariables = document.getElementById('global_variables');
     COUNTRY         = globalVariables.dataset.country;
