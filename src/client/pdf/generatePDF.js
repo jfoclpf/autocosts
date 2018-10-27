@@ -37,7 +37,8 @@ function generatePDF(calculatedData, action){
 
     var content = [
         {
-            style: 'tableMarging',
+            margin: [0, 0, 0, 20], //[left, top, right, bottom]
+            color: '#1C1C1C',
             table:{
                 headerRows: 0,
                 widths: [ '*', '*', '*', '*' ],
@@ -50,8 +51,8 @@ function generatePDF(calculatedData, action){
         content.push(
             {
                 image: DISPLAY.charts.costsDoughnut.URI,
-                width: 300,
-                height: Math.round(300 * $("#costsDoughnutChart").height() / $("#costsDoughnutChart").width()),
+                width: 250,
+                height: Math.round(250 * $("#costsDoughnutChart").height() / $("#costsDoughnutChart").width()),
                 margin: [0, 10, 0, 15], //[left, top, right, bottom]
                 alignment: 'center'
             },
