@@ -1,8 +1,5 @@
 function generatePDF(calculatedData, action){
 
-    //are there charts available to be rendered to pdf?
-    var isCharts = SWITCHES.charts;
-
     var header = {
         text: WORDS.main_title,
         style: 'title'
@@ -47,7 +44,7 @@ function generatePDF(calculatedData, action){
         }
     ];
     
-    if (isCharts){    
+    if (SWITCHES.charts){    
         content.push(
             {
                 image: DISPLAY.charts.costsDoughnut.URI,
@@ -122,7 +119,7 @@ function generatePDF(calculatedData, action){
         );
 
         //chart
-        if(DISPLAY.charts.finEffort.isVisible && isCharts){
+        if(DISPLAY.charts.finEffort.isVisible && SWITCHES.charts){
             content.push(
                 {
                     image: DISPLAY.charts.finEffort.URI,
@@ -167,7 +164,7 @@ function generatePDF(calculatedData, action){
         );
 
         //chart
-        if(DISPLAY.charts.alterToCar.isVisible && isCharts){
+        if(DISPLAY.charts.alterToCar.isVisible && SWITCHES.charts){
             content.push(
                 {
                     image: DISPLAY.charts.alterToCar.URI,
