@@ -6,11 +6,13 @@ This calculator allows users to find the true cost of owning a car. It will norm
 This calculator is and shall always be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information. Since it uses NodeJS and NPM it works and it is tested for either Ubuntu related OS or Windows related OS.
 
 ## Website
-https://autocosts.info<br>
-Playground: https://autocosts.info/XX 
+https://autocosts.info
+
+### Playground
+https://autocosts.info/XX 
 
 ### The list of available countries
-https://autocustos.info/list
+https://autocosts.info/list
 
 The translations are in corresponding `json` files, namely in the folder `src/countries/`.<br>
 The list of available countries is from the file `src/countries/list.json`
