@@ -66,66 +66,84 @@ function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     
     $("#form").hide(); 
     
-    //in financial effort was not calculated, does not show doughnut chart
-    //and adapt the three boxes css
-    if(calculatedData.fin_effort_calculated){            
+    //The first three boxes on the top
+    //if financial effort was not calculated, does not show doughnut chart
+    //on the third box, and adapt the three boxes css classes
+    if(calculatedData.fin_effort_calculated && SWITCHES.charts){ 
         drawDoughnutFinEffortChart(calculatedData);
         //shows third box where the financial effort doughnut chart appears
         $("#results #info-boxes .info-box.box-3").show();
-        $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");
-        
-        //shows financial effort section 
-        $("#results #financial-effort").show();
-        DISPLAY.result.fin_effort = true; //global variable
+        $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");        
     }
     else{
         //hides third box where the financial effort doughnut chart appears
         $("#results #info-boxes .info-box.box-3").hide();
-        $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");
-        
-        //hides financial effort section
-        $("#results #financial-effort").hide();
-        DISPLAY.result.fin_effort = false;        
-    }    
+        $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");       
+    } 
+                     
+    //it needs to show also 1/2 of Maintenance Costs
+    flattenedData.monthly_costs_halfOfMaintenance = flattenedData.monthly_costs_maintenance / 2;
+
+    setCalculatedDataToHTML(flattenedData);                
     
-    //equivalent transport costs results: public transports and uber
-    if(calculatedData.alternative_to_car_costs_calculated){            
-        $("#results #equivalent-transport-costs").show();
-        DISPLAY.result.public_transports = DISPLAY.result.uber = true;
-    }
-    else{
-        $("#results #equivalent-transport-costs").hide();
-        DISPLAY.result.public_transports = DISPLAY.result.uber = false;
-    }     
+    setPeriodicCosts(calculatedData, "month");
+    setPeriodicCostsDetails(f1, f2, f3, calculatedData); //the details on the dropdown boxes                         
     
-    $("#results").show(function(){
-        
-        //it needs to show also 1/2 of Maintenance Costs
-        flattenedData.monthly_costs_halfOfMaintenance = flattenedData.monthly_costs_maintenance / 2;
-        
-        setCalculatedDataToHTML(flattenedData);
-                
-        setPeriodicCosts(calculatedData, "month");
+    //SWITCHES are frozen/const object in Globals.js, so no need to show elements when SWITCHES.charts is true
+    //since these elements are set tp be shown in css by default, just need to hide in case is false
+    if(SWITCHES.charts){            
         drawCostsBarsChart(calculatedData, "month");
         drawCostsDoughnutChart(calculatedData, "month");
-        
-        setPeriodicCostsDetails(f1, f2, f3, calculatedData);                                
-        
-        //financial effort result 
-        if(calculatedData.fin_effort_calculated){            
-            setFinancialEffortDetails(f1, f2, f3, calculatedData);
-            drawFinEffortChart(calculatedData);            
-        }
+    }
+    else {
+        $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
+    }
 
-        //equivalent transport costs results: public transports and uber
-        if(calculatedData.alternative_to_car_costs_calculated){            
-            setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
+    //Financial Effort 
+    if(calculatedData.fin_effort_calculated){            
+        setFinancialEffortDetails(f1, f2, f3, calculatedData);
+        
+        //shows financial effort section 
+        $("#results #financial-effort").show();
+        DISPLAY.result.fin_effort = true; //global variable 
+        
+        if(SWITCHES.charts){                
+            drawFinEffortChart(calculatedData);
+        }
+        else{
+            $("#financial-effort .graph").hide();
+            $("#financial-effort .values.box").css("width", "40%").css("float", "none");
+        }
+    }
+    else {
+        //hides financial effort section
+        $("#results #financial-effort").hide();
+        DISPLAY.result.fin_effort = false;     
+    } 
+
+    //Equivalent transport costs
+    if(calculatedData.alternative_to_car_costs_calculated){            
+        setEquivTransportCostsDetails(f1, f2, f3, calculatedData);
+        
+        $("#results #equivalent-transport-costs").show();
+        DISPLAY.result.public_transports = DISPLAY.result.uber = true;
+        
+        if(SWITCHES.charts){
             drawAlterToCarChart(calculatedData);
         }
-                
-        setClassAccordionHandler();
+        else{
+            $("#equivalent-transport-costs .graph").hide();
+            $("#equivalent-transport-costs .values.box").css("margin", "auto 2%").css("float", "none");            
+        }
+    }
+    else {
+        $("#results #equivalent-transport-costs").hide();
+        DISPLAY.result.public_transports = DISPLAY.result.uber = false;
+    } 
+
+    setClassAccordionHandler();
         
-    });
+    $("#results").show();
     
 }
 
