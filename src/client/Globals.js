@@ -42,7 +42,7 @@ var SWITCHES,               //GLOBAL switches Object
     NONCE;                  //Number used only once for CSP rules in scrips
 
 //Global Function variables for function expressions
-var Run1, TimeCounter;
+var TimeCounter;
 
 (function(){
 
@@ -132,7 +132,7 @@ var Run1, TimeCounter;
     STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
     STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
 
-    Run1 = TimeCounter = function(){
+    TimeCounter = function(){
         console.error("Function " + arguments.callee.name + " called and not yet loaded");
     };
 
