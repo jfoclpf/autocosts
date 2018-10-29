@@ -59,6 +59,7 @@ var TimeCounter;
         "pdf": JSON.parse(switches.dataset.pdf)                      /*Download PDF report option*/
     };
     //freezes SWITCHES on client such that its properties cannot be changed
+    //since these switches are only defined by the server
     Object.freeze(SWITCHES);    
         
     var globalVariables = document.getElementById('global_variables');

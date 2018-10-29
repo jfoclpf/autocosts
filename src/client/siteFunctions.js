@@ -6,12 +6,12 @@
 
 /*function that loads extra files and features, that are not loaded immediately after the page is opened
 because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-function loadExtraFiles() {    
+function loadExtraFiles() {
 
-    if (SWITCHES.charts){        
+    if (SWITCHES.charts){
         getScriptOnce(JS_FILES.chartjs);
-        
-        getScriptOnce(JS_FILES.drawCostsCharts, function() {           
+
+        getScriptOnce(JS_FILES.drawCostsCharts, function() {
             getScriptOnce(JS_FILES.printResults);
         });
     }
@@ -23,18 +23,17 @@ function loadExtraFiles() {
         getScriptOnce(JS_FILES.dbFunctions);
     }
 
-    //file JS_FILES.g_recaptcha is from this project and must always be loaded
-   /* getScriptOnce(JS_FILES.g_recaptcha, function(){
+    //file JS_FILES.g_recaptcha is from this project, stored in src/client, and must always be loaded
+    getScriptOnce(JS_FILES.g_recaptcha, function(){
         //Google Captcha API doesn't work nor applies on localhost
         if (SWITCHES.g_captcha && NOT_LOCALHOST){
-            getScriptOnce(JS_FILES.Google.recaptchaAPI, function(){
-                    SERVICE_AVAILABILITY.g_captcha = true;                    
-                });
+            getScriptOnce(JS_FILES.Google.recaptchaAPI);
+            //when loaded successfuly set SERVICE_AVAILABILITY.g_captcha=true in function grecaptcha_callback in g-recaptcha.js
         }
         else{
             SERVICE_AVAILABILITY.g_captcha = false;
-        }                 
-     });*/
+        }
+    });
 
     //uber
     if (SWITCHES.uber){
@@ -89,13 +88,13 @@ function loadExtraFiles() {
 
 
 //Load statistics table on sidebars.hbs
-function updateStatsTable (cc){                
+function updateStatsTable (cc){
     for (var key in STATS[cc]){
         var elementClass = "stats_table-"+key; //see sidebars.hbs
         if($("." + elementClass).length){//element exists
             var $el = $("." + elementClass);
             var value = STATS[cc][key];
-            var currSymb = STATS[cc].curr_symbol; 
+            var currSymb = STATS[cc].curr_symbol;
             if(key == "running_costs_dist" || key == "total_costs_dist"){
                 $el.text(currSymb + round(value, 2) + "/" + getDistanceOptStrShort());
             }
@@ -105,8 +104,8 @@ function updateStatsTable (cc){
             else{
                 $el.text(currSymb + " " + round(value, 0));
             }
-        }   
-    }    
+        }
+    }
 }
 
 function isInteger(n) {
@@ -140,7 +139,7 @@ function resizeSelectToContent(jqueryId){
     var width = $test.width();
     $test.remove();
     // set select width
-    $this.width(width + arrowWidth);    
+    $this.width(width + arrowWidth);
 }
 
 //rounds a number
@@ -235,7 +234,7 @@ function IsThisAtest() {
     var hostNameArray = hostName.split(".");
     var posOfTld = hostNameArray.length - 1;
     var tld = hostNameArray[posOfTld];
-    
+
     if(tld == "work"){
         return true;
     }
@@ -246,7 +245,7 @@ function IsThisAtest() {
 /*Timer function*/
 /* jshint ignore:start */
 getScriptOnce(JS_FILES.jTimer, function(){
-    
+
     //TimeCounter is defined as global variable in Globals.js
     TimeCounter = new function () {
         var incrementTime = 500;
@@ -264,7 +263,7 @@ getScriptOnce(JS_FILES.jTimer, function(){
             return currentTime / 1000;
         };
     };
-    TimeCounter.resetStopwatch();    
+    TimeCounter.resetStopwatch();
 });
 /* jshint ignore:end */
 
@@ -292,18 +291,18 @@ function loadStyleSheets(styleSheets) {
 function getFuelEfficiencyOptStr(){
     switch(WORDS.fuel_efficiency_std_option){
         case 1:
-            return "l/100km";            
+            return "l/100km";
         case 2:
-            return "km/l";            
+            return "km/l";
         case 3:
             return "mpg(imp)";
         case 4:
-            return "mpg(US)";           
+            return "mpg(US)";
         case 5:
             return "l/mil";
         case 6:
             return "km/gal(US)";
-        default: 
+        default:
             return "error";
     }
 }
@@ -311,12 +310,12 @@ function getFuelEfficiencyOptStr(){
 function getDistanceOptStr(){
     switch(WORDS.distance_std_option){
         case 1:
-            return "kilometres";            
+            return "kilometres";
         case 2:
-            return "miles";            
+            return "miles";
         case 3:
             return "mil";
-        default: 
+        default:
             return "error";
     }
 }
@@ -324,12 +323,12 @@ function getDistanceOptStr(){
 function getDistanceOptStrShort(){
     switch(WORDS.distance_std_option){
         case 1:
-            return "km";            
+            return "km";
         case 2:
-            return "mi";            
+            return "mi";
         case 3:
             return "Mil";
-        default: 
+        default:
             return "error";
     }
 }
@@ -337,12 +336,12 @@ function getDistanceOptStrShort(){
 function getFuelPriceVolumeOptStr(){
     switch(WORDS.fuel_price_volume_std){
         case 1:
-            return "litres";            
+            return "litres";
         case 2:
-            return "imperial gallons";            
+            return "imperial gallons";
         case 3:
             return "US gallons";
-        default: 
+        default:
             return "error";
     }
 }
@@ -350,7 +349,7 @@ function getFuelPriceVolumeOptStr(){
 //puts the currency symbol after the money value, for certain countries
 function currencyShow(value){
 
-    if (typeof WORDS.invert_currency !== 'undefined' && 
+    if (typeof WORDS.invert_currency !== 'undefined' &&
             (WORDS.invert_currency == "true" || WORDS.invert_currency === true || WORDS.invert_currency=="1"))
     {
         return (value + " " + WORDS.curr_symbol);
@@ -418,10 +417,10 @@ function loadsStandardValues(){
     });
 }
 
-//Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App 
+//Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
 //Based on this npm package: https://www.npmjs.com/package/smart-app-banner
-function loadSmartBanner(){    
-    
+function loadSmartBanner(){
+
     new SmartBanner({
         daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
         daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
@@ -430,7 +429,7 @@ function loadSmartBanner(){
         author: 'Autocosts Org',
         button: 'APP',
         store: {
-            android: 'Google Play'                    
+            android: 'Google Play'
         },
         price: {
             android: 'FREE'
@@ -439,8 +438,8 @@ function loadSmartBanner(){
         icon: "/img/logo/logo_sm.png",
         theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
         //force: 'android' // Uncomment for platform emulation
-    }); 
-    
+    });
 }
+
 
 

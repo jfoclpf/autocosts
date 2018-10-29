@@ -231,14 +231,14 @@ function loadFormHandlers(){
         //tries to call Run1(); if not yet defined, retries every 500ms
         //see https://stackoverflow.com/a/53032624/1243247
         try{
-            Run1(); 
+            Run1("normal");  //not using reCaptcha from Google
         }
         catch(e){
             (function retry(){
                 setTimeout(function(){
                     try{
                         console.log("Function Run() not yet defined");
-                        Run1();
+                        Run1("normal");
                     }
                     catch(e){
                         retry(); //calls recursively
@@ -246,7 +246,7 @@ function loadFormHandlers(){
                 }, 500); //tries every 500ms
             }());
         }     
-    });  
+    });
     
     //button "next"; function buttonNextHandler is on formFunctions.js
     $(".button.btn-orange").on( "click", function(){
