@@ -8,7 +8,7 @@
                 <sup>{{{curr_symbol}}}</sup><span class="total_costs_per_period">#</span>
             </h2>
 
-            <span class="per">{{{word_per}}}</span> 
+            <span class="per">{{{word_per}}}</span>
             <select id="totalCostsPeriod">
                 <option value="month">{{{month}}}</option>
                 <option value="trimester">{{{trimester}}}</option>
@@ -22,7 +22,7 @@
             <h2>
                 <sup>{{{curr_symbol}}}</sup><span class="total_costs_ever toFixed0"></span>
             </h2>
-            <span class="">in <b><span class="age_months toFixed0"></span></b> months of possession</span> 
+            <span class="">in <b><span class="age_months toFixed0"></span></b> months of possession</span>
         </div>
 
         <!--  BOX 3 -->
@@ -33,11 +33,11 @@
             </div>
             <div class="text">
                 <!-- this field is filled in by printResults.js -->
-                <h2><span class="fin_effort_percentage_of_income percentage toFixed0">#</span></h2>                    
+                <h2><span class="fin_effort_percentage_of_income percentage toFixed0">#</span></h2>
                 <span class="">of your income</span>
             </div>
         </div>
-    </div>    
+    </div>
 </section>
 
 <!-- ************************** AVERAGE PERIODIC COST ************************** -->
@@ -47,14 +47,14 @@
     <div class="costs-doughnut-chart">
         <!--  the dounghnut chart with all the costs items -->
         <canvas id="costsDoughnutChart"></canvas>
-    </div>    
+    </div>
     <div class="costs-bars-chart-stats">
         <canvas id="costsBarsChart"></canvas>
     </div>
     <div class="stats-references">
         <div class="standing-costs">
             <h5>{{{fixed_costs}}}</h5>
-            <ul>                                
+            <ul>
                 <li class="depreciation_color">{{{depreciation}}}</li>
                 <li class="insurance_color">{{{insurance}}}</li>
                 <li class="credit_color">{{{credit}}}</li>
@@ -82,8 +82,8 @@
             <div class="title">
                 <h3>{{{fixed_costs}}}</h3>
                 <span class="average_costs_per_type"></span>
-            </div>                            
-            
+            </div>
+
             <button class="accordion">
                 <span class="expandable-item depreciation_color">{{{depreciation}}}</span>
                 <span class="periodic_costs_depreciation"></span>
@@ -130,7 +130,7 @@
                 <h4>{{{total_fixed}}}</h4>
                 <span class="periodic_costs_total_standing_costs"></span>
             </div>
-        </div>        
+        </div>
 
         <div class="running-costs box">
             <div class="title">
@@ -238,7 +238,7 @@
     <div class="graph">
         <h5>{{{net_income_per}}} {{{year}}} vs {{{total_costs_per_year}}}</h5>
         <div class="stats">
-            <canvas id="finEffortChart"></canvas>       
+            <canvas id="finEffortChart"></canvas>
         </div>
         <div class="stats-references">
             <ul>
@@ -261,7 +261,7 @@
         <div class="panel income_details">
         </div>
 
-        <button class="accordion">                    
+        <button class="accordion">
             <span class="expandable-item">{{{extra_data_working_time}}}</span>
             <span class="fin_effort_work_hours_per_y hours toFixed0"></span>
         </button>
@@ -301,7 +301,7 @@
     <div class="graph">
         <h5>{{{your_car_costs_you}}} vs {{{pub_trans_text}}} vs Uber</h5>
         <div class="stats">
-            <canvas id="equivalentTransportChart"></canvas>               
+            <canvas id="equivalentTransportChart"></canvas>
         </div>
         <div class="stats-references">
             <ul>
@@ -337,7 +337,7 @@
 
         <button class="accordion">
             <span class="expandable-item other-trans_color">{{{other_pub_trans}}}</span>
-            <span class="public_transports_other_pt currency toFixed1"></span>             
+            <span class="public_transports_other_pt currency toFixed1"></span>
         </button>
         <div class="panel other_pub_trans_details">
         </div>
@@ -375,4 +375,4 @@
     </div>
 
 </section>
-  
+

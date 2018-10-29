@@ -8,7 +8,7 @@
 /*#############################################################################*/
 /*THESE ARE GLOBAL VARIABLES TO BE DEALT EXCLUSIVELY BY THE CODE, DO NOT CHANGE*/
 
-/*File with Javascript Global variables rendered by server side (handlebars) inserted in HTML data attributes 
+/*File with Javascript Global variables rendered by server side (handlebars) inserted in HTML data attributes
 and collected here. See: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes */
 
 //Global Variables
@@ -17,8 +17,8 @@ var SWITCHES,               //GLOBAL switches Object
     LANGUAGE,               //Current Language Code according to ISO_639-1 codes
     COUNTRY_LIST,           //List of countries in a Javascript Object
     DOMAIN_LIST,            //List of domains in a Javascript Object
-    DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'  
-    FULL_URL,               //full URL of the page, example 'http://autocosts.info/XX'     
+    DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'
+    FULL_URL,               //full URL of the page, example 'http://autocosts.info/XX'
     CDN_URL,                //it's defined in the node server side index.js
     HTTP_Protocol,          //it's defined in node server side index.js*/
     clientDir,              //client directory seen by the browser
@@ -27,16 +27,16 @@ var SWITCHES,               //GLOBAL switches Object
     INITIAL_TEX,            //Informative text about the calculator
     GA_TRACKING_ID,         //Google analytics Tracking ID
     NOT_LOCALHOST,          //true when this session does not come from localhost
-    JS_FILES,               //Object with locations of Javascript Files     
-    PAGE_URL,               //current page URL, example 'http://autocosts.info/UK'     
+    JS_FILES,               //Object with locations of Javascript Files
+    PAGE_URL,               //current page URL, example 'http://autocosts.info/UK'
     LANG_JSON_DIR,          //Directory of JSON Translation files
     STATS_HTML_TABLES_DIR,  //Directory of statistical html tables
     STATS_JPG_TABLES_DIR,   //Directory of statistical jpg tables
     IS_HUMAN_CONFIRMED,     //for Google reCaptcha
     UBER_API,               //UBER API object with city specific costs (cost per km, per minute, etc.)
-    UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX 
+    UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX
     CALCULATED_DATA,        //calculated meta-data after user clicks "Run"
-    DISPLAY,                //Object regarding the display of information               
+    DISPLAY,                //Object regarding the display of information
     SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available,
     UUID,                   //Unique User Identifier
     NONCE;                  //Number used only once for CSP rules in scrips
@@ -48,7 +48,7 @@ var TimeCounter;
 
     var switches = document.getElementById('global_switches');
     SWITCHES = {
-        "https": JSON.parse(switches.dataset.https),                 /*true for https, false for http*/    
+        "https": JSON.parse(switches.dataset.https),                 /*true for https, false for http*/
         "uber": JSON.parse(switches.dataset.uber),                   /*Uber*/
         "social": JSON.parse(switches.dataset.social),               /*Social media pulgins*/
         "charts": JSON.parse(switches.dataset.charts),               /*Charts*/
@@ -60,15 +60,15 @@ var TimeCounter;
     };
     //freezes SWITCHES on client such that its properties cannot be changed
     //since these switches are only defined by the server
-    Object.freeze(SWITCHES);    
-        
+    Object.freeze(SWITCHES);
+
     var globalVariables = document.getElementById('global_variables');
     COUNTRY         = globalVariables.dataset.country;
     LANGUAGE        = globalVariables.dataset.language;
     COUNTRY_LIST    = JSON.parse(decodeURI(globalVariables.dataset.country_list));
     DOMAIN_LIST     = JSON.parse(decodeURI(globalVariables.dataset.domain_list));
-    CDN_URL         = globalVariables.dataset.cdn_url; 
-    HTTP_Protocol   = globalVariables.dataset.http_protocol; 
+    CDN_URL         = globalVariables.dataset.cdn_url;
+    HTTP_Protocol   = globalVariables.dataset.http_protocol;
     clientDir       = globalVariables.dataset.client_dir;
     WORDS           = JSON.parse(decodeURI(globalVariables.dataset.words));
     STATS           = JSON.parse(decodeURI(globalVariables.dataset.stats));
@@ -76,11 +76,11 @@ var TimeCounter;
     GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
     NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);
     NONCE           = globalVariables.dataset.nonce;
-    TEST_SERVER     = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test 
-    
+    TEST_SERVER     = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test
+
     //Location of Javascript Files (define in /commons.js)
     var JSfiles = JSON.parse(decodeURI(globalVariables.dataset.js_files));
-    
+
     var rootClientURL = CDN_URL + clientDir + "/";
     JS_FILES = {
         Google : {
@@ -91,7 +91,7 @@ var TimeCounter;
         initialize :          rootClientURL + "initialize.js",
         siteFunctions :       rootClientURL + "siteFunctions.js",
         formFunctions :       rootClientURL + "formFunctions.js",
-        validateForm :        rootClientURL + "validateForm.js",    
+        validateForm :        rootClientURL + "validateForm.js",
         g_recaptcha :         rootClientURL + "g-recaptcha.js",
         conversionFunctions : rootClientURL + "conversionFunctions.js",
         coreFunctions :       rootClientURL + "core/coreFunctions.js",
@@ -121,14 +121,14 @@ var TimeCounter;
 
     UBER_API = {};
     UBER_API_LOCAL_URL = "getUBER/" + COUNTRY;
-    
+
     /*forms present page full url, example 'http://autocosts.info' */
-    DOMAIN_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY]; 
+    DOMAIN_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY];
     FULL_URL = window.location.href;
-    
+
     /*forms present page full url, example 'http://autocosts.info/UK' */
     PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
-    
+
     LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
     STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
     STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
@@ -138,7 +138,7 @@ var TimeCounter;
     };
 
     /*global variable for Google reCaptcha*/
-    IS_HUMAN_CONFIRMED = false;        
+    IS_HUMAN_CONFIRMED = false;
 
     /*calculated information after user clicks "Run", calculated from coreFunctions.js*/
     CALCULATED_DATA;  /*calculated data (costs, financial effort, uber, etc.)*/
@@ -181,9 +181,8 @@ var TimeCounter;
                 ref: 0,
                 URI: 0
             }
-        },
-        
-        costsColors: {        
+        },        
+        costsColors: {
             depreciation:   '#2ba3d6',
             insurance:      '#10c6e6',
             credit:         '#5ae0e2',
@@ -195,7 +194,7 @@ var TimeCounter;
             parking:        '#ea90cd',
             tolls:          '#eabcef',
             fines:          '#9f97ef',
-            washing:        '#867ae3'        
+            washing:        '#867ae3'
         }
     };
 
@@ -204,8 +203,8 @@ var TimeCounter;
     SERVICE_AVAILABILITY = {
         g_captcha     : false,   /*variable that says whether Google Captcha JS files are available*/
         g_analytics   : false    /*variable that says whether Google Analytics JS files are available*/
-    };    
-   
+    };
+
 })();
 
 /*function that loads the scripts async only once */
@@ -217,16 +216,16 @@ var getScriptOnce = function() {
 
     //function to defer loading of script
     return function (url, callback){
-        
+
         //the array doesn't have such url
-        if (scriptArray.indexOf(url) === -1){            
+        if (scriptArray.indexOf(url) === -1){
             var script=document.createElement('script');
             script.src=url;
-            
+
             if(NONCE){
                 script.setAttribute('nonce', NONCE);
             }
-            
+
             var head=document.getElementsByTagName('head')[0],
                 done=false;
 
@@ -249,7 +248,7 @@ var getScriptOnce = function() {
 }(); //here it executes the function immediately to get the returned function
 
 getScriptOnce(JS_FILES.jQuery, function(){
-    getScriptOnce(JS_FILES.jQueryColor);    
+    getScriptOnce(JS_FILES.jQueryColor);
     getScriptOnce(JS_FILES.jQuerySidebar, function(){
         getScriptOnce(JS_FILES.initialize, function(){});
     });

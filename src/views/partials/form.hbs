@@ -1,7 +1,7 @@
 <div class="container">
     <div class="steps">
         <ul>
-          <li class="list active number one"> <span>{{{fixed_costs}}}</span> 
+          <li class="list active number one"> <span>{{{fixed_costs}}}</span>
             <ul>
                 <li class="icon field1"><span>{{{depreciation}}}</span></li>
                 <li class="icon field2"><span>{{{insurance}}}</span></li>
@@ -30,29 +30,29 @@
                 <li class="icon field17"><span>{{{extra_data_time_spent_in_driving}}}</span></li>
             </ul>
           </li>
-          
+
         </ul>
     </div>
 
-            
+
     <!--  Start form -->
     <div class="form_part">
-        
+
         <!--************************************************************************-->
         <!--************************************************************************-->
         <!--            Start Form Part 1  -   Standing Costs                       -->
         <!--************************************************************************-->
-        
+
         <div class="form_part_head_title">
-            <h2 class="lang-fixed_costs_header_1"> 
+            <h2 class="lang-fixed_costs_header_1">
                1. {{{fixed_costs}}}
             </h2>
             <p class="lang-fixed_costs_header_2">
                 {{{fixed_costs_header_2}}}
              </p>
         </div>
-        
-        
+
+
         <!--************************** DEPRECIATION **************************-->
         <div class="field_container field1">
             <div id="depreciation_input">
@@ -62,9 +62,9 @@
                 <input type="number" data-placeholder="MM" required aria-required="true" step="1"
                        id="acquisitionMonth" name="acquisitionMonth" class="input_40 input_month input_integer"
                        min="1" max="12"/>
-                
-                <input type="number" data-placeholder="AAAA" required aria-required="true" step="1" 
-                       id="acquisitionYear" name="acquisitionYear" class="input_80 input_year input_integer" 
+
+                <input type="number" data-placeholder="AAAA" required aria-required="true" step="1"
+                       id="acquisitionYear" name="acquisitionYear" class="input_80 input_year input_integer"
                        min="1910" max="3000"/>
             </div>
 
@@ -98,7 +98,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -138,21 +138,21 @@
                 </div>
 
                 <div class="input_value">
-                    <input type="number" min="0" step="Any" 
+                    <input type="number" min="0" step="Any"
                            id="insuranceValue" class="currencyInput unit_left" name="insuranceValue" />
                     <span class="unit">
                         {{{curr_symbol}}}
                     </span>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
-        
+
         <!--************************** CREDIT **************************-->
         <div class="field_container field3">
             <div>
@@ -191,7 +191,7 @@
                         {{{credit_period}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="number" min="1" step="1" name="numberInstallments" 
+                         <input type="number" min="1" step="1" name="numberInstallments"
                                 id="numberInstallments" class="no_padding_left input_200 input_integer" />
                     </div>
 
@@ -218,11 +218,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -238,7 +238,7 @@
                         <label>
                             {{{inspection_nbmr_times}}}
                         </label>
-                        <input type="number" min="0" step="1" name="numberInspections" 
+                        <input type="number" min="0" step="1" name="numberInspections"
                                id="numberInspections" class="no_padding_left input_70 input_integer" />
                     </div>
 
@@ -258,7 +258,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -283,7 +283,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
         <!--  end form Step 1  -->
@@ -294,7 +294,7 @@
         <!--               Start Form Part 2 - Running Costs                        -->
         <!--************************************************************************-->
         <div class="form_part_head_title">
-            <h2 class="lang-fixed_costs_header_1"> 
+            <h2 class="lang-fixed_costs_header_1">
                 2. {{{running_costs}}}
             </h2>
             <p class="lang-fixed_costs_header_2">
@@ -329,7 +329,7 @@
                     </div>
                 </div>
 
-                <!-- /////// Option selected = Kms /////// 
+                <!-- /////// Option selected = Kms ///////
                 Here start >>> CONSIDERING YOU DRIVE TO WORK? YES/NO-->
                 <div id="distance_div_form2" class="input_value small_input no_margin_bottom">
                     <label>
@@ -337,7 +337,7 @@
                     </label>
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
-                            <input type="radio" name="car_job_form2" class="no_left_margin" 
+                            <input type="radio" name="car_job_form2" class="no_left_margin"
                                    id="car_job_form2_yes" value="true" />
                             <label>
                                 {{{yes}}}
@@ -345,7 +345,7 @@
                          </div>
 
                         <div class="radio_tab_container">
-                            <input type="radio" name="car_job_form2" class="no_left_margin" 
+                            <input type="radio" name="car_job_form2" class="no_left_margin"
                                    id="car_job_form2_no" value="false" />
                             <label>
                                 {{{no}}}
@@ -363,7 +363,7 @@
                         <label>
                             {{{fuel_days}}}
                         </label>
-                        <input type="number" min="1" max="7" step="1" class="no_padding_left input_integer" 
+                        <input type="number" min="1" max="7" step="1" class="no_padding_left input_integer"
                                id="car_to_work_number_days_week" name="dias_por_semana"/>
                          <span class="unit_days-per-week">
                             {{{days_per_week_short}}}
@@ -385,7 +385,7 @@
                         <label>
                             {{{fuel_dist_no_job}}}
                         </label>
-                        <input type="number" min="0" step="Any" name="km_fds" 
+                        <input type="number" min="0" step="Any" name="km_fds"
                                id="car_to_work_distance_weekend" class="no_padding_left" />
                         <span class="unit_kms" style="margin-top: 17px">
                             {{{std_dist}}}
@@ -399,7 +399,7 @@
                         <label>
                             {{{fuel_dist}}}
                         </label>
-                        <input type="number" min="0" step="Any" name="km_por_mes" 
+                        <input type="number" min="0" step="Any" name="km_por_mes"
                                id="no_car_to_work_distance" class="no_padding_left" />
                          <span class="unit_kms">
                             {{{std_dist}}}
@@ -416,7 +416,7 @@
                         <label>
                             {{{fuel_car_eff}}}
                         </label>
-                        <input type="number" min="0" step="Any" class="no_padding_left" 
+                        <input type="number" min="0" step="Any" class="no_padding_left"
                                id="fuel_efficiency" name="consumo_auto" />
                         <span class="unit_litre_100kms">
                             {{{std_fuel_calc}}}
@@ -447,13 +447,13 @@
                     </span>
                     <select class="time_period" id="combustiveis_periodo_euro"></select>
                 </div>
-                
+
             </div>
 
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -467,18 +467,18 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="number" min="0" step="Any" name="revisoes" 
+                    <input type="number" min="0" step="Any" name="revisoes"
                            id="maintenance" class="currencyInput unit_n_year_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
                     </span>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -492,18 +492,18 @@
                     </span>
                 </label>
                 <div class="input_value">
-                    <input type="number" min="0" step="Any" name="reparacoes" 
+                    <input type="number" min="0" step="Any" name="reparacoes"
                            id="repairs" class="currencyInput unit_n_year_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
                     </span>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -524,11 +524,11 @@
                     </span>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -602,13 +602,13 @@
                     </span>
 
                 </div>
-                
+
             </div>
 
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -635,11 +635,11 @@
 
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -670,7 +670,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
         <!--  end form Step 2  -->
 
@@ -680,7 +680,7 @@
         <!--            Start Form Part 3 - Additional Data                         -->
         <!--************************************************************************-->
         <div class="form_part_head_title">
-            <h2 class="lang-fixed_costs_header_1"> 
+            <h2 class="lang-fixed_costs_header_1">
                 3. {{{extra_data_public_transp}}} &amp; {{{financial_effort}}}
             </h2>
         </div>
@@ -718,7 +718,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -817,11 +817,11 @@
                     </span>
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -833,7 +833,7 @@
                 </label>
                 <div class="radio_tabs small_tabs">
                     <div class="radio_tab_container">
-                        <input type="radio" name="radio_work_time" 
+                        <input type="radio" name="radio_work_time"
                                id="working_time_yes_form3" value="true"/>
                         <label>
                             {{{yes}}}
@@ -841,7 +841,7 @@
                      </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="radio_work_time" 
+                        <input type="radio" name="radio_work_time"
                                id="working_time_no_form3" value="false"/>
                         <label>
                             {{{no}}}
@@ -868,7 +868,7 @@
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>            
+            </div>
         </div>
 
 
@@ -886,7 +886,7 @@
                     </label>
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
-                            <input type="radio" name="drive_to_work" class="no_left_margin" 
+                            <input type="radio" name="drive_to_work" class="no_left_margin"
                                    id="drive_to_work_yes_form3" value="true"/>
                             <label>
                                 {{{yes}}}
@@ -894,7 +894,7 @@
                          </div>
 
                         <div class="radio_tab_container">
-                            <input type="radio" name="drive_to_work" class="no_left_margin" 
+                            <input type="radio" name="drive_to_work" class="no_left_margin"
                                    id="drive_to_work_no_form3" value="false"/>
                             <label>
                                 {{{no}}}
@@ -913,7 +913,7 @@
                             {{{fuel_days}}}
                         </label>
                         <input type="number" min="1" max="7" step="1" class="no_padding_left input_integer"
-                               id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />  
+                               id="drive_to_work_days_per_week" name="drive_to_work_days_per_week" />
                          <span class="unit_days-per-week">
                             {{{days_per_week_short}}}
                         </span>
@@ -934,7 +934,7 @@
                         <label>
                             {{{fuel_dist_no_job}}}
                         </label>
-                        <input type="number" min="0" step="Any" name="journey_weekend" 
+                        <input type="number" min="0" step="Any" name="journey_weekend"
                                id="journey_weekend" class="no_padding_left small_input_kms" />
                         <span class="unit_kms">
                             {{{std_dist}}}
@@ -948,7 +948,7 @@
                         <label>
                             {{{fuel_dist}}}
                         </label>
-                        <input type="number" min="0" step="Any" 
+                        <input type="number" min="0" step="Any"
                                id="dist_per_month" class="no_padding_left" name="km_per_month" />
                         <span class="unit_kms">
                             {{{std_dist}}}
@@ -1001,11 +1001,11 @@
                     {{{extra_data_time_question3}}}
                 </label>
                 <div class="input_value">
-                    <input type="number" min="0" step="Any" 
+                    <input type="number" min="0" step="Any"
                            id="min_drive_per_day" class="input_70" name="min_drive_per_day" />
                     <span class="minutes_day">
                         {{{minutes}}} {{{word_per}}} {{{day}}}, {{{during}}}
-                    </span>                    
+                    </span>
                     <input type="number" min="0" max="31" step="1" class="input_integer input_40"
                            id="days_drive_per_month" name="days_drive_per_month" />
                     <span class="days_per_month">
@@ -1014,17 +1014,17 @@
 
                 </div>
             </div>
-            
+
             <div class="next">
                 <span class="button btn-orange">Next &#10230;</span>
                 <span>press <b>Enter</b> or <b>Tab</b> </span>
-            </div>  
+            </div>
         </div>
 
         <div class="bottom_spacer"></div>
 
-    </div><!--  end all forms  -->    
-    
+    </div><!--  end all forms  -->
+
     <div class="calculate_bottom_bar">
         <input type="button" id="calculate_costs_btn" class="button big btn-blue cursor_pointer" value="Calculate car cost" />
         <input type="button" id="calculate_costs_btn_g_captcha" class="button big btn-blue cursor_pointer" value="Calculate car cost" />

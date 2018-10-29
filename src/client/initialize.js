@@ -1,45 +1,45 @@
 $(document).ready(function () {
-    
+
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
 
     getScriptOnce(JS_FILES.siteFunctions, function(){
-        
+
         //detects old versions of Internet Explorer
         oldIE();
-        
+
         getScriptOnce(JS_FILES.formFunctions, function(){
             setLanguageVars();
-            loadPageSettings();    
+            loadPageSettings();
             loadFormSettings();
             loadFormHandlers();
             loadResultsSettingsAndHandlers();
             loadsStandardValues();
         });
-        
+
         /*Google Analytics*/
-        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {        
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
             getScriptOnce(JS_FILES.Google.analytics, function(){
-                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();                                
+                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
                 ga('create', GA_TRACKING_ID, 'auto');
                 ga('set', 'displayFeaturesTask', null);
-                ga('send', 'pageview');        
+                ga('send', 'pageview');
 
                 //detects whether Google Analytics has loaded
                 //tries every second
                 check_ga(1000);
-            });                
-        }        
+            });
+        }
     });
 
     //Google recaptcha
-    IS_HUMAN_CONFIRMED = false;    
-    
+    IS_HUMAN_CONFIRMED = false;
+
 });
 
 //function that sets the JS language variables to the correspondent HTML divs
 function setLanguageVars(){
-    
+
     //language HTML select dropdowns
     var SelectList = {
         "1" : WORDS.month,
@@ -54,13 +54,13 @@ function setLanguageVars(){
             $dropdown.append($("<option/>").val(key).text(value));
         });
     });
-    
+
 }
 
 
 //settings and handlers of the elements on the landing page
-function loadPageSettings(){     
-    
+function loadPageSettings(){
+
     // All sides
     var sides = ["left", "right"];
     // Initialize sidebars
@@ -68,25 +68,25 @@ function loadPageSettings(){
         var cSide = sides[i];
         $(".sidebar." + cSide).sidebar({side: cSide});
     }
-    
+
     //hides the calculator form on the landing page
     $("#form, #results").hide();
     $(".sidebar").show();
-    
+
     //button shown on the landing page
     $("#calculateButton").on("click", calculateButtonOnclick);
-    
+
     $("#country_select").on('change', function() {
         window.location.href = this.value;
     });
-    
+
     //Sidebars click handlers
     $(".btn[data-action]").on("click", function () {
         var $this = $(this);
         var action = $this.attr("data-action");
         var side = $this.attr("data-side");
-        
-        if (action === "open"){            
+
+        if (action === "open"){
             $(".sidebar." + side).trigger("sidebar:" + action);
             $(".sidebar." + side).animate({backgroundColor: "rgb(0, 0, 0, 0.4)" });
         }
@@ -97,8 +97,8 @@ function loadPageSettings(){
         }
         else{
             console.error("Error in sidebar click hanlders");
-        }        
-        
+        }
+
         return false;
     });
 
@@ -113,17 +113,17 @@ function loadPageSettings(){
             });
         }
     });
-    
+
     //adjusts the size of select according to content
-    resizeSelectToContent("#country_select");   
-    
-    //load statistics table on sidebars.hbs    
+    resizeSelectToContent("#country_select");
+
+    //load statistics table on sidebars.hbs
     updateStatsTable(COUNTRY);
-    
+
     $("#country_select_stats").on('change', function() {
         updateStatsTable(this.value);
-    });    
-    
+    });
+
 }
 
 //When clicked the Calculate Button shown on the landing page
@@ -140,15 +140,15 @@ function calculateButtonOnclick(){
     getScriptOnce(JS_FILES.coreFunctions, function(){
         getScriptOnce(JS_FILES.validateForm);
         getScriptOnce(JS_FILES.conversionFunctions);
-        
+
         getScriptOnce(JS_FILES.smartAppBanner, loadSmartBanner);
-        
+
         getScriptOnce(JS_FILES.getData, function(){
             loadExtraFiles();
         });
 
     });
-    
+
     //loadStyleSheets(['css/merged_deferred.css']);
     loadStyleSheets(['css/results.css', 'css/smart-app-banner.css']); //temporary line
 }
@@ -156,15 +156,15 @@ function calculateButtonOnclick(){
 //initial settings regarding the calculator form itself
 //that is, after the user has pressed "calculate" button on the landing page
 function loadFormSettings(){
-    
+
     //shows numeric keypad on iOS mobile devices
     if(getMobileOperatingSystem() === "iOS"){
         $('.form_part input[type="number"]').attr("pattern", "\\d*");
     }
-    
+
     //hides all buttons "next"
-    $(".next").hide();    
-    
+    $(".next").hide();
+
     //hides form part head titles, except first
     //that is, it only shows Head Title "1. Standing costs"
     $(".form_part_head_title").each(function(index){
@@ -174,8 +174,8 @@ function loadFormSettings(){
         else{
             $(this).hide();
         }
-    });   
-    
+    });
+
     //hides all fields except the first
     $(".field_container").each(function( index ) {
         if(index==0){
@@ -184,10 +184,10 @@ function loadFormSettings(){
         else{
             $( this ).hide();
         }
-    });    
-    
+    });
+
     $(".calculate_bottom_bar").hide();
-    
+
     $("#main_form select").val('1'); //set all the selects to "month"
 
     //PART 1
@@ -195,8 +195,8 @@ function loadFormSettings(){
     $("#acquisitionYear").attr("max", (new Date()).getFullYear());
     //credit
     $('#sim_credDiv').hide();
-    
-    //inspection    
+
+    //inspection
     $("#numberInspections").val(0);
     $("#InspectionCost_tr").hide();
     $("#numberInspections").on("input", nbrInspectOnChanged);
@@ -204,28 +204,28 @@ function loadFormSettings(){
     //PART 2
     //fuel
     $('#currency_div_form2').show();
-    $('#distance_div_form2').hide();        
+    $('#distance_div_form2').hide();
     fuelCalculationMethodChange('currency'); //sets radio button in Form Part 2, section Fuel calculations, to Currency
 
     //tolls
     tolls_daily(false);
     //fines
     $("#tickets_period_select").val('5'); //set fines period to year
-    //washing    
+    //washing
     $("#washing_period_select").val('3'); //set washing period to trimester
-    
+
     //PART 3
     //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
-    driveToJob(false);             
+    driveToJob(false);
     //Income in Form Part 3 - set to year
-    income_toggle("year");      
-    
+    income_toggle("year");
+
 }
-    
+
 //handlers regarding the calculator form itself
 //that is, after the user has pressed "calculate" button on the landing page
 function loadFormHandlers(){
-    
+
     //run button
     $("#calculate_costs_btn").on( "click", function(){
         //tries to call Run1(); if not yet defined, retries every 500ms
@@ -245,39 +245,39 @@ function loadFormHandlers(){
                     }
                 }, 500); //tries every 500ms
             }());
-        }     
+        }
     });
-    
+
     //button "next"; function buttonNextHandler is on formFunctions.js
     $(".button.btn-orange").on( "click", function(){
         buttonNextHandler($(this));
         //this is necessary to avoid default behaviour
         //avoid from scrolling to the top of page
-        return false;    
+        return false;
     });
-    
-    //On 'input' would fire every time the input changes, so when one pastes something 
-    //(even with right click), deletes and types anything. If one uses the 'change' handler, 
+
+    //On 'input' would fire every time the input changes, so when one pastes something
+    //(even with right click), deletes and types anything. If one uses the 'change' handler,
     //this will only fire after the user deselects the input box, which is not what we want.
     //inputHandler is defined in formFunctions.js
     $('input[type="number"]').on("input", function(){inputHandler($(this))});
-    
+
     //it calls the same functions inputHandler after the radio button is changed
     //this onchange event is trigered after the onclick events down here
-    $('input[type="radio"]').on("change", function(){inputHandler($(this))});      
-    
+    $('input[type="radio"]').on("change", function(){inputHandler($(this))});
+
     //keys handlers; function keyDownHandler is in formFunctions.js
     $(document).keydown(function(e){keyDownHandler($(this), e)});
     $('input[type="number"]').keydown(function(e){keyDownHandler($(this), e)});
-      
+
     //PART 1
     //insurance
-    setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly            
+    setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly
 
     //credit
     $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
     $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
-    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"                
+    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"
 
     //PART 2
     //fuel
@@ -285,14 +285,14 @@ function loadFormHandlers(){
     $("#radio_fuel_euros").on( "click", function(){fuelCalculationMethodChange('currency')});
     $("#car_job_form2_yes").on( "click", function(){carToJob(true)});
     $("#car_job_form2_no").on( "click", function(){carToJob(false)});
-    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"   
-    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no) 
-    
-    //tolls    
+    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"
+    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no)
+
+    //tolls
     $("#tolls_daily_true").on( "click", function(){tolls_daily(true)});
     $("#tolls_daily_false").on( "click", function(){tolls_daily(false)});
     $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
-    
+
     //PART 3
     $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
     $("#drive_to_work_no_form3").on( "change", function(){driveToJob(false)});
@@ -303,33 +303,33 @@ function loadFormHandlers(){
     $("#radio_income_month").on( "change", function(){income_toggle("month")});
     $("#radio_income_week").on( "change", function(){income_toggle("week")});
     $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
-    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)    
-    
-    //Final buttons on results    
+    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
+
+    //Final buttons on results
     $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
-              
+
 }
 
 function loadResultsSettingsAndHandlers(){
-    
+
     $("#results #totalCostsPeriod").on("change", function(){
         setPeriodicCosts(CALCULATED_DATA, $(this).val());
         drawCostsBarsChart(CALCULATED_DATA, $(this).val());
         drawCostsDoughnutChart(CALCULATED_DATA, $(this).val());
-    });    
-    
+    });
+
     if(SWITCHES.pdf){
-        $("#results .button-pdf").show().addClass("disabled");                
+        $("#results .button-pdf").show().addClass("disabled");
         //download pdf button handler
         $("#results .button-pdf").on( "click", function(){
             console.log("Download pdf clicked");
             generatePDF(CALCULATED_DATA, "download");
-        });   
+        });
     }
     else{
         $("#results .button-pdf").hide();
-    }   
-    
+    }
+
     if(SWITCHES.print){
         $("#results .button-print").show().addClass("disabled");
         $("#results .button-print").on( "click", function(){
@@ -339,15 +339,15 @@ function loadResultsSettingsAndHandlers(){
     }
     else{
         $("#results .button-print").hide();
-    }  
-            
+    }
+
     //edit form on results
     $("#results #edit_form_btn").on( "click", function(){
-        $("#form").show();               
+        $("#form").show();
         $("#results").hide();
-    }); 
-    
-    if (SWITCHES.social /*&& !IsThisAtest()*/){        
+    });
+
+    if (SWITCHES.social /*&& !IsThisAtest()*/){
         $(".right-actions .facebook a, .right-actions-mobile .facebook a").
             attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL).attr("target", "_blank");
         $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
@@ -357,6 +357,6 @@ function loadResultsSettingsAndHandlers(){
     }
     else{
         $(".right-actions, .right-actions-mobile").hide();
-    }    
+    }
 }
 
