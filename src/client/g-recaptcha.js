@@ -1,5 +1,5 @@
 //Returns boolean whether to use or not Google Captcha
-function useGreCapctha(){
+function useGreCapctha(){    
     return !IS_HUMAN_CONFIRMED &&          //Do not use if human is already confirmed
         COUNTRY!='XX' &&                   //Do not use if is test version
         SERVICE_AVAILABILITY.g_captcha &&  //Do not use when service is not availble, i.e., when files were not loaded
