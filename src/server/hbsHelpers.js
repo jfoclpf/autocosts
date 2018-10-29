@@ -77,6 +77,15 @@ module.exports = {
         return keywords_string;
     },    
     
+    //This string, field "subTitle", from language files comes in the form of:
+    //"The average total costs in [country] is [yearly_costs] per year, representing [financial_effort] months of average salary. Find the true cost of owning a car in your country."
+    //Divides in mini strings and returns the correspondent chunk of string
+    getSubTitleArr: function(position){
+        var subTitle = this.words.sub_title;
+        var strtemp = subTitle.replace("[country]", "###").replace("[yearly_costs]", "###").replace("[nbrMonths]", "###");
+        return strtemp.split("###")[position-1];
+    },
+    
     json: function(context) {
         return JSON.stringify(context);
     },

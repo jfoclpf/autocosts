@@ -57,7 +57,7 @@
 
                 <h2>
                     {{#if serverData.settings.switches.dataBase}}
-                        The average total costs in
+                        {{getSubTitleArr 1}}
                     {{/if}} 
                     <select name="country_select" id="country_select">
                         {{~#each serverData.availableCountries~}}
@@ -67,10 +67,9 @@
                         {{/each}}
                     </select>
                     {{#if serverData.settings.switches.dataBase}}
-                        is <b>{{{words.curr_symbol}}}{{{ getStatsData "total_costs_year"}}}</b> 
-                        per year, representing <b>{{{getStatsData "month_per_year_to_afford_car" 1}}} months</b> 
-                        of average salary.<br />
-                        Find the true cost of owning a car in your country.
+                        {{getSubTitleArr 2}} <b>{{{words.curr_symbol}}}{{{ getStatsData "total_costs_year"}}}</b> 
+                        {{getSubTitleArr 3}} <b>{{{getStatsData "month_per_year_to_afford_car" 1}}}</b> 
+                        {{getSubTitleArr 4}}
                     {{/if}}
                 </h2>
 
