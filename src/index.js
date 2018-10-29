@@ -71,6 +71,15 @@ for (var CC in serverData.availableCountries){
     }
 }
 
+//in case a certain word or string is not available in a certain language, use the correspondent English version
+for (var CC in serverData.availableCountries){
+    for (var word in WORDS.UK){
+        if(!WORDS[CC][word]){
+            WORDS[CC][word] = WORDS.UK[word];
+        } 
+    }
+}
+
 //event handler to deal when the settings are changed
 //particularly the event is triggered when 
 //it is detected that there is no Internet connection and settings are thus changed
