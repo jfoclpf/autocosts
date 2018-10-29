@@ -32,7 +32,7 @@
     "sub_title" : "The average total costs in [country] is [yearly_costs] per year, representing [nbrMonths] months of average salary. Find the true cost of owning a car in your country.",
     "press_enter_or_tab": "press <b>Enter</b> or <b>Tab</b>",
     "calculate_car_costs": "Calculate car costs",
-    "in_months_possession": "in [nbrMonths] of possession",
+    "in_months_of_possession": "in [nbrMonths] months of possession",
     "of_your_income": "of your income",
     "next": "Next",
     "visitors" : "Visitors",

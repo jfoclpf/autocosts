@@ -86,6 +86,12 @@ module.exports = {
         return strtemp.split("###")[position-1];
     },
     
+    //splits string  WORDS.in_months_possession, which in English is "in [nbrMonths] of possession"
+    get_in_months_of_possession: function(position){
+        var str = this.in_months_of_possession;        
+        return str.split("[nbrMonths]")[position-1]; 
+    },
+        
     json: function(context) {
         return JSON.stringify(context);
     },
