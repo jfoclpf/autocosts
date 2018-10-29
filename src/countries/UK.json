@@ -29,7 +29,7 @@
     "help_project" : "This is a free service with no advertisements!",
     "ac_mobile" : "AUTOCOSTS<br>for mobile devices",
     "ac_sub_header" : "AUTOMOBILE COSTS CALCULATOR",    
-    "sub_title" : "The average total costs in [country] is [yearly_costs] per year, representing [financial_effort] months of average salary. Find the true cost of owning a car in your country.",    
+    "sub_title" : "The average total costs in [country] is [yearly_costs] per year, representing [nbrMonths] months of average salary. Find the true cost of owning a car in your country.",    
     "press_enter_or_tab": "Press <b>Enter</b> or <b>Tab</b>", 
     "calculate_car_costs": "Calculate car costs", 
     "in_months_possession": "in [nbrMonths] of possession",
