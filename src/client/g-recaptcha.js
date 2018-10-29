@@ -5,7 +5,6 @@ function useGreCapctha(){
         SERVICE_AVAILABILITY.g_captcha &&  //Do not use when service is not availble, i.e., when files were not loaded
         SWITCHES.g_captcha &&              //Do not use when flag from server is not triggered
         NOT_LOCALHOST;                     //Do not use when run for localhost
-    return true;
 }
 
 //The call of this function is defined in an URL declared in JS_FILES.Google.recaptchaAPI (see Globals.js)
@@ -98,7 +97,7 @@ function Run1(source){
     }
 }
 
-//Class relating to Run Button, alternating between Normal button and Google Recaptcha
+//Class relating to Run Button, alternating between Normal button and Google Recaptcha button
 //see buttons html elements on file form.hbs, last lines
 var runButton = {
     
@@ -120,11 +119,11 @@ var runButton = {
                     this.btnCaptcha.hide();
                 }
                 else{
-                    console.error('Run Button set to "loading-g-recaptcha" but g-recaptcha is not active');
+                    throw 'Run Button set to "loading-g-recaptcha" but g-recaptcha is not active';
                 }
                 break;
             default:
-                console.error("Bad paramter flag on runButton.set(flag)");
+                throw "Bad paramter flag on runButton.set(flag)";
         }
     },
     

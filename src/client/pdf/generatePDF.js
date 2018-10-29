@@ -48,8 +48,8 @@ function generatePDF(calculatedData, action){
         content.push(
             {
                 image: DISPLAY.charts.costsDoughnut.URI,
-                width: 250,
-                height: Math.round(250 * $("#costsDoughnutChart").height() / $("#costsDoughnutChart").width()),
+                width: 220,
+                height: Math.round(220 * $("#costsDoughnutChart").height() / $("#costsDoughnutChart").width()),
                 margin: [0, 10, 0, 15], //[left, top, right, bottom]
                 alignment: 'center'
             },
