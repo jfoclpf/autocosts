@@ -89,7 +89,11 @@ Example for USA<br>
 <tr><td>during</td><td> during </td><td>spent in tolls 3€ per day during 22 days per month</td></tr>
 <tr><td>word_people</td><td> people </td><td>plural, 3 people</td></tr>
 <tr><td>yes</td><td> yes </td><td></td></tr>
-<tr><td>no</td><td> no </td><td></td></tr>
+<tr><td>next</td><td> Next </td><td></td></tr>
+<tr><td>edit_form</td><td> Edit form </td><td></td></tr>
+<tr><td>share</td><td> Share </td><td></td></tr>
+<tr><td>close</td><td> Close </td><td></td></tr>
+<tr><td>calculate_car_costs</td><td> Calculate car costs </td><td></td></tr>
 <tr><td>button_run</td><td> Run </td><td>run calculator button</td></tr>
 <tr><td>button_rerun</td><td> Rerun </td><td>run calculator button</td></tr>
 </table>
@@ -100,6 +104,7 @@ Example for USA<br>
 <tr><th>key name</th><th>value</th><th>description</th></tr>
 <tr><td>web_page_title</td><td> Automobile costs calculator </td><td></td></tr>
 <tr><td>main_title</td><td> AUTOMOBILE COSTS CALCULATOR </td><td></td></tr>
+<tr><td>sub_title</td><td> The average total costs in [country] is [yearly_costs] per year, representing [nbrMonths] months of average salary. Find the true cost of owning a car in your country. </td><td></td></tr>
 <tr><td>initial_text</td><td>This calculator will allow you to find <b>the true cost</b> of owning a car in the <b>United States</b>. It will normally give you a good estimate of what you really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on your car. Be realistic on the values you input. For unexpected expenses, such as accident repairs or fines, think about how much you have spent on such items over the last few years. By default, these values are calculated on a monthly basis. Use the the dot symbol for decimal notation, for example 8.7 miles between home and the workplace.</td><td></td></tr>
 <tr><td>disclaimer</td><td>This calculator is <b>completely anonymous</b>, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.</td><td></td></tr>
 </table>
@@ -195,7 +200,10 @@ Example for USA<br>
 <tr><td>publ_tra_equiv</td><td>Equivalent transport costs, considering you don't own a car</td><td></td></tr>
 <tr><td>word_total_cap</td><td> TOTAL </td><td>capital word for total</td></tr>
 <tr><td>word_print</td><td> Print </td><td></td></tr>
-<tr><td>word_download_pdf</td><td> Download PDF report </td><td></td></tr>
+<tr><td>press_enter_or_tab</td><td> press <b>Enter</b> or <b>Tab</b> </td><td></td></tr>
+<tr><td>calculate_car_costs</td><td> Calculate car costs </td><td></td></tr>
+<tr><td>in_months_of_possession</td><td> in [nbrMonths] months of possession </td><td></td></tr>
+<tr><td>of_your_income</td><td> of your income </td><td></td></tr>
 </table>
 
 ## depreciation 
