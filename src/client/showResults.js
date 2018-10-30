@@ -45,7 +45,7 @@ function Run2(callback){
     
     //console.log(flattenedData);       
 
-    printResults(f1, f2, f3, calculatedData, flattenedData, countryObj);
+    showResults(f1, f2, f3, calculatedData, flattenedData, countryObj);
         
     $("*").promise().done(function(){    
         
@@ -61,7 +61,7 @@ function Run2(callback){
     return true;
 }
 
-function printResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
+function showResults(f1, f2, f3, calculatedData, flattenedData, countryObj){
     //console.log(JSON.stringify(calculatedData, null, 4));
     
     $("#form").hide(); 

@@ -12,11 +12,11 @@ function loadExtraFiles() {
         getScriptOnce(JS_FILES.chartjs);
 
         getScriptOnce(JS_FILES.drawCostsCharts, function() {
-            getScriptOnce(JS_FILES.printResults);
+            getScriptOnce(JS_FILES.showResults);
         });
     }
     else{
-        getScriptOnce(JS_FILES.printResults);
+        getScriptOnce(JS_FILES.showResults);
     }
 
     if (SWITCHES.data_base){

@@ -96,7 +96,7 @@ var TimeCounter;
         conversionFunctions : rootClientURL + "conversionFunctions.js",
         coreFunctions :       rootClientURL + "core/coreFunctions.js",
         getData :             rootClientURL + "getData.js",
-        printResults :        rootClientURL + "printResults.js",
+        showResults :         rootClientURL + "showResults.js",
         dbFunctions :         rootClientURL + "dbFunctions.js",
 
         jQuery :              JSfiles.jquery.uri,
