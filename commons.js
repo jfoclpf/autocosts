@@ -439,10 +439,15 @@ function setFILENAMES(){
         //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
         "client" : {
             "jquery" : {
-                "local" : path.join(DIRECTORIES.client.client, 'jquery', 'jquery.min.js'),
+                "local" : DIRECTORIES.client.client + '/jquery/jquery.min.js',
                 "cdn"   : "https://code.jquery.com/jquery-latest.min.js",
                 "uri"   : "" //it will be one of the above
-            },                         
+            },  
+            "chartjs" : {
+                "local" : DIRECTORIES.client.client + '/chart/chartjs.min.js',
+                "cdn"   : 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js',
+                "uri"   : "" //it will be one of the above
+            },            
             "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
             "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
         }
