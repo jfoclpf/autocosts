@@ -208,6 +208,9 @@ function setPeriodicCosts(calculatedData, period){
             console.error("Period not valid " + period);
     }
 
+    //sets the dropdown meny
+    $('#results #totalCostsPeriod').val(period);
+    
     //main info box total costs    
     $("#results #info-boxes .total_costs_per_period").html((calculatedData.total_costs_month*numMonths).toFixed(0));
     
