@@ -53,7 +53,7 @@
 
 
     /* ------------------ RESULTS ------------------*/
-    #results {width: 94%; margin: 0 auto}
+    section#results {width: 94%; margin: 0 auto}
 
     #results .results-section {margin-bottom: 20px }
     #results #equivalent-transport-costs {margin-bottom: 160px }
@@ -62,16 +62,13 @@
 
     #results #info-boxes .container {height: auto}
     #results #info-boxes .container .info-box {float: none; margin: 10px auto; width: 90%; max-width: 280px}
-    #info-boxes .container .info-box select {width: auto!important}    
-    
+    #info-boxes .container .info-box select {width: auto!important}
+
     #results .results-section .values .accordion {padding: 5px 0% 0 3%}
     #results #financial-effort .values .accordion {padding: 5px 0 0}
 
     #results #avg-monthly-cost {display: inline-block; width: 94%; margin-bottom: 30px}
 
-    #results #avg-periodic-cost .costs-bars-chart-stats {float: none; width: 98%; margin:0px;}
-    #results #avg-periodic-cost .costs-doughnut-chart   {float: none; width: 300px; margin-bottom: 30px;}
-    
     #results .stats-references .standing-costs {width: 47%}
     #results .stats-references .running-costs {width: 50%}
     #results .stats-references ul li {display: block;}
@@ -101,16 +98,19 @@
     #results .bottom-actions-bar .center-actions-mobile a,
     #results .bottom-actions-bar .right-actions-mobile a.menu-toggle,
     #results .bottom-actions-bar .right-actions-mobile a.menu-close {padding: 5px 10px!important}
-    #results .bottom-actions-bar .center-actions-mobile .button-pdf {margin-right: 5px}
+    #results .bottom-actions-bar .center-actions-mobile #button-pdf {margin-right: 5px}
     #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; padding: 0px 2px 0px 5px; vertical-align: middle;}
 
     #results .bottom-actions-bar .right-actions {display: none;}
     #results .bottom-actions-bar .right-actions-mobile {display: inline-block; float: right;}
 
-    #results .bottom-actions-bar .right-actions-mobile .main-menu ul li a,
-    #results .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
+    .bottom-actions-bar .right-actions-mobile .main-menu ul li a,
+    .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
 
     #results .panel ul li {padding-left:  9px}
+
+
+
 
 }
 
@@ -167,7 +167,7 @@
 
     /* ------------------ FORM ELEMENTS ------------------*/
     main {margin-top: 90px}
-    main #form, #results {width: 100%;}
+    /*main #form, #results {width: 100%;}*/
     main #form .container {margin-top: 0px}
 
     .container .form_part {width: 90%; margin: 0 5%;}
