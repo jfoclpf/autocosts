@@ -36,7 +36,7 @@ p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 
 /* ---------- Hero ---------- */
 #hero {display: block; padding: 60px 0;}
-#hero .container {max-width: 90%; margin: 0 auto; text-align: center; }
+#hero .container {width: 980px; max-width: 90%; margin: 0 auto; text-align: center; }
 #hero .container h2{color: #42444a; font-weight: 400; margin: 20px 0 30px; line-height: 45px;}
 #hero .container a {margin: 0 auto}
 
@@ -230,7 +230,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* ------------------------------********* RESULTS CONTENT *********---------------------------- */
 
-#results {display: none;}
+section#results {display: none;}
 
 /* ------------------------------********* SIDEBARS *********----------------------------------- */
 .sidebar {display: none}
