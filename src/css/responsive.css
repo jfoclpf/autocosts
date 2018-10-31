@@ -53,12 +53,13 @@
 
 
     /* ------------------ RESULTS ------------------*/
-    section#results {width: 94%; margin: 0 auto}
+    #results {width: 94%; margin: 0 auto}
+    main #form {max-width: 100%;}
 
     #results .results-section {margin-bottom: 20px }
     #results #equivalent-transport-costs {margin-bottom: 160px }
 
-    #results #avg-periodic-cost {display: inline-block; margin: 36px 0 60px} 
+    #results #avg-periodic-cost {width: 100%; display: inline-block; margin: 36px 0 60px} 
 
     #results #info-boxes .container {height: auto}
     #results #info-boxes .container .info-box {float: none; margin: 10px auto; width: 90%; max-width: 280px}
@@ -98,7 +99,7 @@
     #results .bottom-actions-bar .center-actions-mobile a,
     #results .bottom-actions-bar .right-actions-mobile a.menu-toggle,
     #results .bottom-actions-bar .right-actions-mobile a.menu-close {padding: 5px 10px!important}
-    #results .bottom-actions-bar .center-actions-mobile #button-pdf {margin-right: 5px}
+    #results .bottom-actions-bar .center-actions-mobile .button-pdf {margin-right: 5px}
     #results .bottom-actions-bar .center-actions-mobile a svg {margin-right: 0px; padding: 0px 2px 0px 5px; vertical-align: middle;}
 
     #results .bottom-actions-bar .right-actions {display: none;}
@@ -140,7 +141,7 @@
     .btn-left-sidebar:hover {background-position: -30px 0}
     .btn-right-sidebar:hover {background-position: -91px 0}
 
-    header h1.logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
+    header .logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
 
 
     /* ------ Hero ------*/
@@ -167,7 +168,8 @@
 
     /* ------------------ FORM ELEMENTS ------------------*/
     main {margin-top: 90px}
-    /*main #form, #results {width: 100%;}*/
+    main #form {max-width: 100%;}
+    main #results {max-width: 90%;}
     main #form .container {margin-top: 0px}
 
     .container .form_part {width: 90%; margin: 0 5%;}
@@ -231,7 +233,7 @@
     .container .steps {min-width: auto; height: 32px; }
     .container .steps ul {margin: 5px auto 0; max-width: 300px; float: none;}
 
-    .container .steps ul .number:before { padding: 5px 0 0 10px; width: 19px; height: 23px; font-size: 14px;}
+    .container .steps ul .number:before { padding: 4px 0 0 11px; width: 19px; height: 25px; font-size: 14px;}
 
     .container .steps ul li.one:first-child,
     .container .steps ul li.two,
