@@ -28,8 +28,8 @@
 /*******------ Average Monthly Cost ------*******/
 #avg-periodic-cost {margin: 100px 0 80px}
 #avg-periodic-cost h2, .results-section h2 {font-size: 25px; margin: 0 0 30px}
-#avg-periodic-cost .stats { width: 60%; height: 350px; margin: 0 5% 20px 0; display: inline-block; float: left;}
-#avg-periodic-cost .doughnut-stats {width: 35%; display: inline-block; height: 350px;}
+#avg-periodic-cost .costs-bars-chart-stats {width: 60%; height: 350px; display: inline-block; margin-bottom: 20px;}
+#avg-periodic-cost .costs-doughnut-chart   {width: 35%; height: 350px; display: inline-block; margin-bottom: 20px; float: left;}
 #avg-periodic-cost .stats-references {display: inline-block; width: 100%;}
 
 #avg-periodic-cost .three-boxes {display: inline-block; margin-top: 50px }
@@ -122,8 +122,7 @@
 .bottom-actions-bar .right-actions-mobile .main-menu ul li.twitter a {color: #5da8dc; fill: #5da8dc}
 .bottom-actions-bar .right-actions ul li.linkedin a,
 .bottom-actions-bar .right-actions-mobile .main-menu ul li.linkedin a {color: #0077b5; fill: #0077b5}
-.bottom-actions-bar .right-actions ul li.pinterest a,
-.bottom-actions-bar .right-actions-mobile .main-menu ul li.pinterest a {color: #bd081c; fill: #bd081c}
 .bottom-actions-bar .right-actions ul li.whatsapp a,
 .bottom-actions-bar .right-actions-mobile .main-menu ul li.whatsapp a {color: #455a64; fill: #455a64;}
+
 
