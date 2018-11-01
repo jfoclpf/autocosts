@@ -230,7 +230,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* ------------------------------********* RESULTS CONTENT *********---------------------------- */
 
-section#results {display: none;}
+#results {display: none;}
 
 /* ------------------------------********* SIDEBARS *********----------------------------------- */
 .sidebar {display: none}
