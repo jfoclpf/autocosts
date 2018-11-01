@@ -1,5 +1,10 @@
 function generatePDF(calculatedData, action){
 
+    //costs Doughnut Chart width/height proportion
+    var costsDoughnutChartWHProp = 1.171;
+    //costs Bars Chart width/height proportion
+    var costsBarsChartWHProp = 2.005;
+    
     var header = {
         text: WORDS.main_title,
         style: 'title'
@@ -49,14 +54,14 @@ function generatePDF(calculatedData, action){
             {
                 image: DISPLAY.charts.costsDoughnut.URI,
                 width: 220,
-                height: Math.round(220 * $("#costsDoughnutChart").height() / $("#costsDoughnutChart").width()),
+                height: Math.round(220 / costsDoughnutChartWHProp),
                 margin: [0, 10, 0, 15], //[left, top, right, bottom]
                 alignment: 'center'
             },
             {
                 image: DISPLAY.charts.costsBars.URI,
                 width: 500,
-                height: Math.round(500 * $("#costsBarsChart").height() / $("#costsBarsChart").width()),
+                height: Math.round(500 / costsBarsChartWHProp),
                 margin: [0, 10, 0, 10], //[left, top, right, bottom]
                 alignment: 'center'
             },
