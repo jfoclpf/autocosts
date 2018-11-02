@@ -349,14 +349,17 @@ function loadResultsSettingsAndHandlers(){
 
     if (SWITCHES.social /*&& !IsThisAtest()*/){
         $(".right-actions .facebook a, .right-actions-mobile .facebook a").
-            attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + FULL_URL).attr("target", "_blank");
+            attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(FULL_URL)).attr("target", "_blank");
         $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
-            attr("href", "https://twitter.com/share?url=" + FULL_URL).attr("target", "_blank");
+            attr("href", "https://twitter.com/share?url=" + encodeURI(FULL_URL)).attr("target", "_blank");
         $(".right-actions .linkedin a, .right-actions-mobile .linkedin a").
-            attr("href", "https://www.linkedin.com/shareArticle?url=" + FULL_URL).attr("target", "_blank");
+            attr("href", "https://www.linkedin.com/shareArticle?url=" + encodeURI(FULL_URL)).attr("target", "_blank");
+        $(".right-actions .whatsapp a, .right-actions-mobile .whatsapp a").
+            attr("href", "https://wa.me/?text=" + encodeURI(FULL_URL)).attr("target", "_blank");        
     }
     else{
         $(".right-actions, .right-actions-mobile").hide();
     }
 }
+
 
