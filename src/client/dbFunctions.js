@@ -26,9 +26,9 @@ function createObjToDB(){
     objectToDb.acquisition_year = $("#acquisitionYear").val();
     objectToDb.commercial_value_at_acquisition = $('#commercialValueAtAcquisition').val();
     objectToDb.commercial_value_at_now = $('#commercialValueAtNow').val();
-    objectToDb.insure_type = $('input[name="insurancePaymentPeriod"]:checked', '#main_form').val();
+    objectToDb.insure_type = $('input[name="insurancePaymentPeriod"]:checked', '#form').val();
     objectToDb.insurance_value = $('#insuranceValue').val();
-    objectToDb.credit = $('input[name="AutoCreditRadioBtn"]:checked', '#main_form').val();
+    objectToDb.credit = $('input[name="AutoCreditRadioBtn"]:checked', '#form').val();
     objectToDb.credit_borrowed_amount = $('#borrowedAmount').val();
     objectToDb.credit_number_installments = $('#numberInstallments').val();
     objectToDb.credit_amount_installment = $('#amountInstallment').val();
@@ -38,10 +38,10 @@ function createObjToDB(){
     objectToDb.vehicle_excise_tax = $('#roadTaxes').val();
 
     //form part 2
-    objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#main_form').val();
+    objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#form').val();
     objectToDb.fuel_currency_based_currency_value = $('#fuel_currency_value').val();
     objectToDb.fuel_currency_based_periodicity = $('#combustiveis_periodo_euro').val();
-    objectToDb.fuel_distance_based_car_to_work = $('input[name="car_job_form2"]:checked', '#main_form').val();
+    objectToDb.fuel_distance_based_car_to_work = $('input[name="car_job_form2"]:checked', '#form').val();
     objectToDb.fuel_distance_based_car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
     objectToDb.fuel_distance_based_car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
     objectToDb.fuel_distance_based_car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
@@ -52,7 +52,7 @@ function createObjToDB(){
     objectToDb.maintenance = $('#maintenance').val();
     objectToDb.repairs = $('#repairs').val();
     objectToDb.parking = $('#parking').val();
-    objectToDb.tolls_daily = $('input[name="tolls_daily_radioBtn"]:checked', '#main_form').val();
+    objectToDb.tolls_daily = $('input[name="tolls_daily_radioBtn"]:checked', '#form').val();
     objectToDb.tolls_no_daily_value = $('#no_daily_tolls_value').val();
     objectToDb.tolls_no_daily_period = $('#tolls_period_select').val();
     objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
@@ -62,12 +62,10 @@ function createObjToDB(){
     objectToDb.washing_value = $('#washing_value').val();
     objectToDb.washing_periodicity = $('#washing_period_select').val();
 
-    //form part 3
-    objectToDb.form_part3_slide1 = $('#slider1').prop('checked');
-    objectToDb.form_part3_slide2 = $('#slider2').prop('checked');
+    //form part 3    
     objectToDb.household_number_people = $('#household_number_people').val();
     objectToDb.public_transportation_month_expense = $('#public_transportation_month_expense').val();
-    objectToDb.income_type = $('input[name="radio_income"]:checked', '#main_form').val();
+    objectToDb.income_type = $('input[name="radio_income"]:checked', '#form').val();
     objectToDb.income_per_year = $('#income_per_year').val();
     objectToDb.income_per_month = $('#income_per_month').val();
     objectToDb.income_months_per_year = $('#income_months_per_year').val();
@@ -76,10 +74,10 @@ function createObjToDB(){
     objectToDb.income_per_hour = $('#income_per_hour').val();
     objectToDb.income_hours_per_week = $('#income_hours_per_week').val();
     objectToDb.income_hour_weeks_per_year = $('#income_hour_weeks_per_year').val();
-    objectToDb.work_time = $('input[name="radio_work_time"]:checked', '#main_form').val();
+    objectToDb.work_time = $('input[name="radio_work_time"]:checked', '#form').val();
     objectToDb.work_time_month_per_year = $('#time_month_per_year').val();
     objectToDb.work_time_hours_per_week = $('#time_hours_per_week').val();
-    objectToDb.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#main_form').val();
+    objectToDb.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#form').val();
     objectToDb.distance_days_per_week = $('#drive_to_work_days_per_week').val();
     objectToDb.distance_home_job = $('#dist_home_job').val();
     objectToDb.distance_journey_weekend = $('#journey_weekend').val();
@@ -156,7 +154,7 @@ function sanityChecks(objectToDb) {
     return objectToDb;
 }
 
-//with a certain form data in a readObj, submits such data to the form inputs
+//with a certain form data in a readObj as input, submits such data to the form inputs
 //i.e. pre-fill the form with the values of readObj
 function submitDataToForm(readObj){
 
@@ -215,10 +213,6 @@ function submitDataToForm(readObj){
     $('#washing_period_select').val(readObj.washing_periodicity);
 
     //form part 3
-    //sliders
-    $('#slider1').prop('checked', readObj.form_part3_slide1);
-    $('#slider2').prop('checked', readObj.form_part3_slide2);
-    slider_toggles_form3(); //updates the form according to the slider on/off status
     //public transport pass
     $('#household_number_people').val(readObj.household_number_people);
     $('#public_transportation_month_expense').val(readObj.public_transportation_month_expense);

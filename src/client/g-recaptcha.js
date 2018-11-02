@@ -67,7 +67,7 @@ function Run1(source){
                     }
                     //submits data to database if no XX version
                     if(SWITCHES.data_base){
-                        submit_data(COUNTRY);
+                        submit_data();
                     }
                 }
             }
@@ -87,7 +87,7 @@ function Run1(source){
         }        
         
         //here normally a human is already confirmed, for example when the same user runs the calculator twice
-        if(Run2() && COUNTRY != "XX" && SWITCHES.data_base && NOT_LOCALHOST){
+        if(Run2() && IS_HUMAN_CONFIRMED && COUNTRY != "XX" && SWITCHES.data_base && NOT_LOCALHOST){
             submit_data(); //submits data to database if no test version nor localhost
         }
         runButton.set("show-normal");
