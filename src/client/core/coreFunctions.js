@@ -42,247 +42,273 @@ function date_diff(date1, date2) {//return the difference in months between two 
     return (y2 - y1 - 1) * 12 + (m2 + 12 - m1);
 }
 
-function calculateMonthlyDepreciation(initialCost, finalCost, months) {
-       return (initialCost - finalCost) / months;
+function calculateMonthlyDepreciation(depreciation, ageInMonths) {             
+    return (parseFloat(depreciation.acquisitionCost) - parseFloat(depreciation.presentValue)) / ageInMonths;
 }
 
-function calculateInsuranceMonthlyValue(insuranceType, insuranceInputValue) {
-    var insuranceValue;
-    switch(insuranceType)
-    {
+function calculateInsuranceMonthlyValue(insurance) {
+    
+    switch(insurance.period) {
         case "mensal":
-            insuranceValue = Number(insuranceInputValue);
+            insuranceValue = parseFloat(insurance.amountPerPeriod);
             break;
         case "trimestral":
-            insuranceValue = insuranceInputValue / 3;
+            insuranceValue = parseFloat(insurance.amountPerPeriod) / 3;
             break;
         case "semestral":
-            insuranceValue = insuranceInputValue / 6;
+            insuranceValue = parseFloat(insurance.amountPerPeriod) / 6;
             break;
         case "anual":
-            insuranceValue = insuranceInputValue / 12;
+            insuranceValue = parseFloat(insurance.amountPerPeriod) / 12;
             break;
+        default:
+            throw "Error calculating Insurance";
     }
+    
     return insuranceValue;
 }
 
-function calculateInterestsMonthlyValue(cred_auto_bool, credit_amount, credit_period, credit_value_p_month, credit_residual_value, age_months) {
-
+function calculateInterestsMonthlyValue(credit, ageInMonths) {
+    
     var output = {
-        total_interests: 0,
+        totalInterests: 0,
         period: 0,
-        monthly_costs: 0
+        monthlyCosts: 0
     };
 
-    if(cred_auto_bool == "true") { //if there was credit
+    if(credit.creditBool == "true") { //if there was credit
 
-        var credit_period_float = parseFloat(credit_period);
-        output.period = credit_period_float;
+        var numberInstallmentsFloat = parseFloat(credit.yesCredit.numberInstallments);
+        output.period = numberInstallmentsFloat;
 
-        var total_interests = ((credit_period_float * parseFloat(credit_value_p_month)) + parseFloat(credit_residual_value)) - parseFloat(credit_amount);
-        output.total_interests = total_interests;
+        var totalInterests = ( (numberInstallmentsFloat * parseFloat(credit.yesCredit.amountInstallment)) + parseFloat(credit.yesCredit.residualValue) ) -
+            parseFloat(credit.yesCredit.borrowedAmount);
+        
+        output.totalInterests = totalInterests;
 
-        if(total_interests < 0){
-            total_interests = 0;
+        if(totalInterests < 0){
+            totalInterests = 0;
         }
 
-        if(age_months >= credit_period_float){
-            output.monthly_costs = total_interests / age_months;
+        if(ageInMonths >= numberInstallmentsFloat){
+            output.monthlyCosts = parseFloat(totalInterests / ageInMonths);
         }
         else{
-            output.monthly_costs = parseFloat(total_interests / credit_period_float);
+            output.monthlyCosts = parseFloat(totalInterests / numberInstallmentsFloat);
         }
     }
-    else{
-        output.total_interests = 0;
+    else if(credit.creditBool == "false") {
+        output.totalInterests = 0;
         output.period = 0;
-        output.monthly_costs = 0;
+        output.monthlyCosts = 0;
     }
+    else{
+        throw "Error calculating credit";
+    }
+    
     return output;
 }
 
-function calculateMonthlyInspection(nmr_times_inspec, inspec_price, age_months) {
-
-    if(nmr_times_inspec > 0){
-        return (nmr_times_inspec * inspec_price) / age_months;
+function calculateMonthlyInspection(inspection, ageInMonths) {    
+    
+    if(parseFloat(inspection.numberOfInspections) > 0){
+        return (parseFloat(inspection.numberOfInspections) * parseFloat(inspection.averageInspectionCost)) / ageInMonths;
     }
     else{
         return 0;
     }
 }
 
-function calculateMonthlyTaxes(yearly_car_tax) {
-
-    return  parseFloat(yearly_car_tax)/12;
+function calculateMonthlyTaxes(car_tax) {    
+    return  parseFloat(car_tax.amountPerYear)/12;
 }
 
-function calculateMonthlyFuel(type_calc_fuel,        //calculation based on money or distance (bool)
-                              fuel_eff,              //fuel efficiency in standard format
-                              fuel_price,            //fuel price in standard format
-                              take_car_to_job,       //considering user takes car from home to job (bool)
-                              fuel_period_distance,  //time period for travelled distance
-                              distance,              //travelled distance
-                              distance_home2job,     //distance from home to job in standard measurement
-                              distance_weekend,      //distance travelled during weekends
-                              days_p_week,           //days per week the car is driven from home to job
-                              fuel_period_money,     //in case money is selected, input time period
-                              fuel_money,            //in case money is selected, fuel money value
-                              country) {             //country object
-
+function calculateMonthlyFuel(fuel, country){
+    
     var output = {
-        monthly_cost: 0,        //monthly fuel costs in standard currency
-        distance_per_month: 0   //distance per month in standard unit
+        monthlyCost: 0,      //monthly fuel costs in standard currency
+        distancePerMonth: 0  //distance per month in standard unit
     };
+    
+    var errMsg = "Error calculating fuel";
 
-    switch(type_calc_fuel){
+    switch(fuel.typeOfCalculation){
+        
         case "km": //fuel costs calculation based on distance
 
-            var distance_per_month;
-            var fuel_eff_l100km = convert_to_fuel_eff_l100km(fuel_eff, country.fuel_efficiency_std);
-            var fuel_price_CURRpLitre = convert_to_fuel_price_CURRpLitre(fuel_price, country.fuel_price_volume_std);
+            var distancePerMonth;
+            var fuelEffL100km = convert_to_fuel_eff_l100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
+            var fuelPriceOnCurrPerLitre = convert_to_fuel_price_CURRpLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
 
-            if (take_car_to_job == "false"){
-                switch(fuel_period_distance){
+            if (fuel.distanceBased.considerCarToJob == "false"){
+                
+                switch(fuel.distanceBased.noCarToJob.period){
                     case "1":
-                        distance_per_month = parseInt(distance);
+                        distancePerMonth = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod);
                         break;
                     case "2":
-                        distance_per_month = parseInt(distance) / 2;
+                        distancePerMonth = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod) / 2;
                         break;
                     case "3":
-                        distance_per_month = parseInt(distance) / 3;
+                        distancePerMonth = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod) / 3;
                         break;
                     case "4":
-                        distance_per_month = parseInt(distance) / 6;
+                        distancePerMonth = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod) / 6;
                         break;
                     case "5":
-                        distance_per_month = parseInt(distance) / 12;
+                        distancePerMonth = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod) / 12;
                         break;
+                    default:
+                        throw errMsg;                        
                 }
-                output.distance_per_month = distance_per_month;
+                
+                output.distancePerMonth = distancePerMonth;
                 //converts distance unit to kilometres
-                var distance_per_month_km = convert_std_dist_to_km(distance_per_month, country.distance_std);
-                output.monthly_cost = fuel_eff_l100km * distance_per_month_km * fuel_price_CURRpLitre / 100;
-            }
-            else{   //make calculation considering the user takes his car to work on a daily basis
+                var distancePerMonthInKms = convert_std_dist_to_km(distancePerMonth, country.distance_std);
+                output.monthlyCost = fuelEffL100km * distancePerMonthInKms * fuelPriceOnCurrPerLitre / 100;
+            }            
+            else if (fuel.distanceBased.considerCarToJob == "true"){   //make calculation considering the user takes his car to work on a daily basis
 
                 //if miles were chosen must convert input to kilometres
-                var distance_home2job_km = convert_std_dist_to_km(distance_home2job, country.distance_std);
-                var distance_weekend_km = convert_std_dist_to_km(distance_weekend, country.distance_std);
-                var total_km = ((2 * distance_home2job_km * parseInt(days_p_week, 10)) + distance_weekend_km) * (30.4375 / 7);
-                output.monthly_cost = fuel_eff_l100km * total_km * fuel_price_CURRpLitre / 100;
+                var distanceHomeToJobInKms = convert_std_dist_to_km(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob, country.distance_std);
+                var distanceOnWeekendsInKms = convert_std_dist_to_km(fuel.distanceBased.carToJob.distanceDuringWeekends, country.distance_std);
+                
+                var total_km = ((2 * distanceHomeToJobInKms * parseInt(fuel.distanceBased.carToJob.daysPerWeek, 10)) + distanceOnWeekendsInKms) * (30.4375 / 7);
+                output.monthlyCost = fuelEffL100km * total_km * fuelPriceOnCurrPerLitre / 100;
+                
                 //after computation is made, convert backwards to standard distance
-                output.distance_per_month = convert_km_to_std_dist(total_km, country.distance_std);
+                output.distancePerMonth = convert_km_to_std_dist(total_km, country.distance_std);
             }
+            else{
+                throw errMsg;
+            }
+            
             break;
+            
         case "euros": //fuel costs calculation based on money
-            var monthly_cost;
-            switch(fuel_period_money){
+            
+            var monthlyCost;
+            switch(fuel.currencyBased.period){
                 case "1":
-                    monthly_cost = parseFloat(fuel_money);
+                    monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod);
                     break;
                 case "2":
-                    monthly_cost = parseFloat(fuel_money) / 2;
+                    monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 2;
                     break;
                 case "3":
-                    monthly_cost = parseFloat(fuel_money) / 3;
+                    monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 3;
                     break;
                 case "4":
-                    monthly_cost = parseFloat(fuel_money) / 6;
+                    monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 6;
                     break;
                 case "5":
-                    monthly_cost = parseFloat(fuel_money) / 12;
+                    monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 12;
                     break;
+                default:
+                    throw errMsg;
             }
-            output.monthly_cost = monthly_cost;
-            output.distance_per_month = undefined;
+            
+            output.monthlyCost = monthlyCost;
+            output.distancePerMonth = undefined;
+            
             break;
+            
+        default:
+            throw errMsg;
     }
+    
     return output;
 }
 
-function calculateMonthlyMaintenance(yearly_value) {
-
-    return  parseFloat(yearly_value)/12;
+function calculateMonthlyMaintenance(maintenance) {
+    return parseFloat(maintenance.amountPerYear)/12;
 }
 
-function calculateMonthlyRepairsAndImprovements(yearly_value) {
-
-    return  parseFloat(yearly_value)/12;
+function calculateMonthlyRepairsAndImprovements(repairs_improv) {
+    return parseFloat(repairs_improv.amountPerYear)/12;
 }
 
-function calculateMonthlyParking(monthly_value) {
-
-    return  parseFloat(monthly_value);
+function calculateMonthlyParking(parking) {
+    return parseFloat(parking.amountPerMonth);
 }
 
 
-function calculateMonthlyTolls(type_calc_tolls, tolls_select, tolls_value_per_period, tolls_value_per_day, days_of_tolls_per_month) {
+function calculateMonthlyTolls(tolls) {
 
-    if(type_calc_tolls == "false"){ //calculation not done by day
-        switch(tolls_select){ //period
+    var errMsg = "Error calculating tolls";
+
+    if(tolls.calculationBasedOnDay == "false"){ //calculation not done by day
+        switch(tolls.noBasedOnDay.period){
             case "1":
-                return parseFloat(tolls_value_per_period);
+                return parseFloat(tolls.noBasedOnDay.amountPerPeriod);
             case "2":
-                return parseFloat(tolls_value_per_period) / 2;
+                return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 2;
             case "3":
-                return parseFloat(tolls_value_per_period) / 3;
+                return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 3;
             case "4":
-                return parseFloat(tolls_value_per_period) / 6;
+                return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 6;
             case "5":
-                return parseFloat(tolls_value_per_period) / 12;
+                return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 12;
+            default:
+                throw errMsg;
         }
     }
-    else
-        return tolls_value_per_day * days_of_tolls_per_month;
+    else if(tolls.calculationBasedOnDay == "true"){
+        return parseFloat(tolls.yesBasedOnDay.amountPerDay) * parseFloat(tolls.yesBasedOnDay.daysPerMonth);
+    }
+    else {
+        throw errMsg;
+    }
 }
 
 
-function calculateMonthlyFines(fines_period, fines_value) {
-
-    switch(fines_period) {
+function calculateMonthlyFines(fines) {
+        
+    switch(fines.period) {
         case "1":
-            return parseFloat(fines_value);
+            return parseFloat(fines.amountPerPeriod);
         case "2":
-            return parseFloat(fines_value) / 2;
+            return parseFloat(fines.amountPerPeriod) / 2;
         case "3":
-            return parseFloat(fines_value) / 3;
+            return parseFloat(fines.amountPerPeriod) / 3;
         case "4":
-            return parseFloat(fines_value) / 6;
+            return parseFloat(fines.amountPerPeriod) / 6;
         case "5":
-            return parseFloat(fines_value) / 12;
-    }
-    return -1;
+            return parseFloat(fines.amountPerPeriod) / 12;
+        default:
+            throw "Error calculating fines";
+    }    
 }
 
-function calculateMonthlyWashing(washing_period, washing_value) {
+function calculateMonthlyWashing(washing) {
 
-    switch(washing_period) {
+    switch(washing.period) {
         case "1":
-            return parseFloat(washing_value);
+            return parseFloat(washing.amountPerPeriod);
         case "2":
-            return parseFloat(washing_value) / 2;
+            return parseFloat(washing.amountPerPeriod) / 2;
         case "3":
-            return parseFloat(washing_value) / 3;
+            return parseFloat(washing.amountPerPeriod) / 3;
         case "4":
-            return parseFloat(washing_value) / 6;
+            return parseFloat(washing.amountPerPeriod) / 6;
         case "5":
-            return parseFloat(washing_value) / 12;
+            return parseFloat(washing.amountPerPeriod) / 12;
+        default:
+            throw "Error calculating washing";
     }
-    return -1;
 }
 
 
 //*****************************************************
 //*****************************************************
 
-function calculate_costs(f1, f2, f3, country){
-    //f1, f2 and f3 are input objects (each for each form)
+function calculate_costs(form, country){
+    //form is the user input data
     //country is an input object with country information
     //calculate_costs returns the object "output"
 
     //Monthly Costs object, is a field of object "output"
-    var monthly_costs = {
+    var monthlyCosts = {
         depreciation: 0,                   //depreciation monthly cost
         insurance: 0,                      //insurance monthly cost
         credit: 0,                         //interests of credit monthly cost
@@ -302,87 +328,77 @@ function calculate_costs(f1, f2, f3, country){
 
     //depreciation
     var today = new Date();
-    var date_auto = new Date(f1.acquisitionYear, f1.acquisitionMonth - 1);
-    var age_months = date_diff(date_auto,today);
+    var date_auto = new Date(form.depreciation.acquisitionYear, form.depreciation.acquisitionMonth - 1);
+    var age_months = date_diff(date_auto, today);
 
-    if(age_months != 0)
-        monthly_costs.depreciation = calculateMonthlyDepreciation(f1.auto_initial_cost, f1.auto_final_cost, age_months);
+    if(age_months != 0){
+        monthlyCosts.depreciation = calculateMonthlyDepreciation(form.depreciation, age_months);
+    }
+    else{
+        throw "Age of vehicle, calculated by depreciation section, invalid or equals zero";
+    }
 
     //insurance
-    monthly_costs.insurance = calculateInsuranceMonthlyValue(f1.insurance_type, f1.insurance_value);
+    monthlyCosts.insurance = calculateInsuranceMonthlyValue(form.insurance);
 
     //credit
-    var credit_object = calculateInterestsMonthlyValue(f1.cred_auto_s_n, f1.credit_amount, f1.credit_period,
-                                                       f1.credit_value_p_month, f1.credit_residual_value, age_months);
-    
-    monthly_costs.credit = credit_object.monthly_costs;
+    var creditObject = calculateInterestsMonthlyValue(form.credit, age_months);    
+    monthlyCosts.credit = creditObject.monthlyCosts;
 
     //inspection
-    monthly_costs.inspection = calculateMonthlyInspection(f1.nmr_times_inspec, f1.inspec_price, age_months);
+    monthlyCosts.inspection = calculateMonthlyInspection(form.inspection, age_months);
 
     //taxes
-    monthly_costs.car_tax =  calculateMonthlyTaxes(f1.car_tax);
+    monthlyCosts.car_tax = calculateMonthlyTaxes(form.car_tax);
 
     //fuel
-    var fuel_object = calculateMonthlyFuel(
-                        f2.type_calc_fuel,        //calculation based on money or distance (bool)
-                        f2.fuel_efficiency,       //fuel efficiency in standard format
-                        f2.fuel_price,            //fuel price in standard format
-                        f2.take_car_to_job,       //considering user takes car from home to job (bool)
-                        f2.fuel_period_distance,  //time period for travelled distance
-                        f2.distance,              //travelled distance
-                        f2.distance_home2job,     //distance from home to job in standard measurement
-                        f2.distance_weekend,      //distance travelled during weekends
-                        f2.days_p_week,           //days per week the car is driven from home to job
-                        f2.fuel_period_money,     //in case money is selected, input time period
-                        f2.fuel_money,            //in case money is selected, fuel money value
-                        country);                 //country object
+    var fuel_object = calculateMonthlyFuel(form.fuel, country);                 
 
-    monthly_costs.fuel = fuel_object.monthly_cost;
-    distance_per_month = fuel_object.distance_per_month; //distance per month in the standard unit
+    monthlyCosts.fuel = fuel_object.monthlyCost;
+    distance_per_month = fuel_object.distancePerMonth; //distance per month in the standard unit
 
     //maintenance
-    monthly_costs.maintenance = calculateMonthlyMaintenance(f2.maintenance);
+    monthlyCosts.maintenance = calculateMonthlyMaintenance(form.maintenance);
 
     //repairs
-    monthly_costs.repairs_improv = calculateMonthlyRepairsAndImprovements(f2.repairs);
+    monthlyCosts.repairs_improv = calculateMonthlyRepairsAndImprovements(form.repairs_improv);
 
     //parking
-    monthly_costs.parking = calculateMonthlyParking(f2.parking);
+    monthlyCosts.parking = calculateMonthlyParking(form.parking);
 
     //tolls
-    monthly_costs.tolls = calculateMonthlyTolls(f2.type_calc_tolls, f2.tolls_select, 
-                                                f2.tolls, f2.price_tolls_p_day, f2.tolls_days_p_month);
+    monthlyCosts.tolls = calculateMonthlyTolls(form.tolls);
 
     //fines
-    monthly_costs.fines = calculateMonthlyFines(f2.fines_select, f2.fines);
+    monthlyCosts.fines = calculateMonthlyFines(form.fines);
 
     //washing
-    monthly_costs.washing = calculateMonthlyWashing(f2.washing_select, f2.washing);
+    monthlyCosts.washing = calculateMonthlyWashing(form.washing);
 
     //total standing costs
-    var total_standing_costs_month = monthly_costs.insurance + monthly_costs.depreciation + monthly_costs.credit +
-                                     monthly_costs.inspection + 0.5 * monthly_costs.maintenance + monthly_costs.car_tax;
+    var total_standing_costs_month = monthlyCosts.insurance + monthlyCosts.depreciation + monthlyCosts.credit +
+                                     monthlyCosts.inspection + 0.5 * monthlyCosts.maintenance + monthlyCosts.car_tax;
 
     //total running costs
-    var total_running_costs_month = monthly_costs.fuel + 0.5 * monthly_costs.maintenance + 
-                                    monthly_costs.repairs_improv + monthly_costs.parking +
-                                    monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
+    var total_running_costs_month = monthlyCosts.fuel + 0.5 * monthlyCosts.maintenance + 
+                                    monthlyCosts.repairs_improv + monthlyCosts.parking +
+                                    monthlyCosts.tolls + monthlyCosts.fines + monthlyCosts.washing;
 
     //totals
-    var total_costs_month = monthly_costs.insurance + monthly_costs.fuel + monthly_costs.depreciation +
-                            monthly_costs.credit + monthly_costs.inspection + monthly_costs.maintenance +
-                            monthly_costs.repairs_improv + monthly_costs.car_tax + monthly_costs.parking +
-                            monthly_costs.tolls + monthly_costs.fines + monthly_costs.washing;
+    var total_costs_month = monthlyCosts.insurance + monthlyCosts.fuel + monthlyCosts.depreciation +
+                            monthlyCosts.credit + monthlyCosts.inspection + monthlyCosts.maintenance +
+                            monthlyCosts.repairs_improv + monthlyCosts.car_tax + monthlyCosts.parking +
+                            monthlyCosts.tolls + monthlyCosts.fines + monthlyCosts.washing;
 
     var total_costs_year = total_costs_month * 12;
     
     var total_costs_ever = total_costs_month * age_months;
 
 
+
     //*************** PUBLIC TRANSPORTS ************
     var public_transports;
-    if (f3.IsAlternativeToCarCosts){
+    if (form.publicTransports.isOk){
 
         //Object for public transports as an alternative to car usage
         //i.e., how much of public transports could be used with the same amount
@@ -402,13 +418,9 @@ function calculate_costs(f1, f2, f3, country){
 
             //boolean function that says if public transporst alternatives are shown
             display_pt: function(){
-                if((f3.monthly_pass_cost * f3.n_pess_familia < this.ptcosts_carcosts_ratio_threshold * total_costs_month) &&
-                    f3.monthly_pass_cost != 0){
-                    
-                    return true;
-                }
-                
-                return false;
+                return (form.publicTransports.monthlyPassCost * form.publicTransports.numberOfPeopleInFamily < 
+                    this.ptcosts_carcosts_ratio_threshold * total_costs_month) && 
+                    form.publicTransports.monthlyPassCost != 0;
             },
 
             total_price_pt: 0,         //total costs of public transports for family
@@ -424,7 +436,7 @@ function calculate_costs(f1, f2, f3, country){
         if(public_transports.display_pt()) {
 
             //total price of monthly passes
-            public_transports.total_price_pt = f3.monthly_pass_cost * f3.n_pess_familia;   
+            public_transports.total_price_pt = form.publicTransports.monthlyPassCost * form.publicTransports.numberOfPeopleInFamily;   
             
             public_transports.total_altern = public_transports.total_price_pt;
             public_transports.pt_carcost_ratio= public_transports.total_price_pt / total_costs_month;
@@ -450,11 +462,11 @@ function calculate_costs(f1, f2, f3, country){
                 public_transports.total_altern += public_transports.taxi_cost + public_transports.other_pt;
             }
         }
-    }//EOF PUBLIC TRANSPORTS
-
+    }//EOF PUBLIC TRANSPORTS    
+            
     //*************** FINANCIAL EFFORT ************
     var fin_effort;
-    if (f3.IsFinancialEffort){
+    if (form.financialEffort.isOk){
         //create financial effort object
         fin_effort = {
             //income
@@ -477,35 +489,37 @@ function calculate_costs(f1, f2, f3, country){
         };
 
         //income
-        switch(f3.income_type){
+        switch(form.financialEffort.incomePeriod){
             case 'year':
-                fin_effort.income = f3.income_per_year;
+                fin_effort.income = Number(form.financialEffort.year.amount);
                 fin_effort.income_per_year = fin_effort.income * 1;
                 break;
             case 'month':
-                fin_effort.income = f3.income_per_month;
-                fin_effort.income_per_type = f3.income_months_per_year;
+                fin_effort.income = Number(form.financialEffort.month.amountPerMonth);
+                fin_effort.income_per_type = form.financialEffort.month.monthsPerYear;
                 fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;
                 break;
             case 'week':
-                fin_effort.income = f3.income_per_week;
-                fin_effort.income_per_type = f3.income_weeks_per_year;
+                fin_effort.income = Number(form.financialEffort.week.amountPerWeek);
+                fin_effort.income_per_type = form.financialEffort.week.weeksPerYear;
                 fin_effort.income_per_year = fin_effort.income * fin_effort.income_per_type;
                 break;
             case 'hour':
-                fin_effort.income = f3.income_per_hour;
-                fin_effort.income_hours_per_week = f3.income_hours_per_week;
-                fin_effort.income_per_type = f3.income_hour_weeks_per_year;
+                fin_effort.income = Number(form.financialEffort.hour.amountPerHour);
+                fin_effort.income_hours_per_week = form.financialEffort.hour.hoursPerWeek;
+                fin_effort.income_per_type = form.financialEffort.hour.weeksPerYear;
                 fin_effort.income_per_year = fin_effort.income * fin_effort.income_hours_per_week * fin_effort.income_per_type;
                 break;
+            default:
+                throw "Error calculating Income";
         }
         fin_effort.aver_income_per_month = fin_effort.income_per_year / 12;
 
         //working time
-        if(f3.income_type != 'hour'){
-            if(f3.is_working_time == 'true'){
-                fin_effort.time_hours_per_week = f3.time_hours_per_week;
-                fin_effort.time_month_per_year = f3.time_month_per_year;
+        if(form.financialEffort.incomePeriod != 'hour'){
+            if(form.workingTime.isActivated == 'true'){
+                fin_effort.time_hours_per_week = Number(form.workingTime.hoursPerWeek);
+                fin_effort.time_month_per_year = Number(form.workingTime.monthsPerYear);
             }
 
             fin_effort.aver_work_time_per_m = 365.25 / 7 * fin_effort.time_hours_per_week *
@@ -515,36 +529,35 @@ function calculate_costs(f1, f2, f3, country){
         }
 
         //****find Net Income per Hour ***
-        var typeIncome = f3.income_type;
-        //alert("typeIncome:"+typeIncome);
-        var isJob = f3.is_working_time;
-        //alert("isJob:"+isJob);
         var a = 11; //default months per year of work
         var b = 36; //default hours per week of normal working week
         var T, x, y, n;
         //if has a job, find a=months per year of work, b=hours per week of work
-        if(isJob=='true'){
-            a = parseInt(f3.time_month_per_year);
-            b = parseInt(f3.time_hours_per_week);
+        if(form.workingTime.isActivated == 'true'){
+            a = parseInt(form.workingTime.monthsPerYear);
+            b = parseInt(form.workingTime.hoursPerWeek);
         }
         T = 365.25/7 * a/12 * b; //T=number of working hours per year
-        switch(typeIncome){
+        switch(form.financialEffort.incomePeriod){
             case 'year':
-                x = parseInt(f3.income_per_year);
+                x = parseInt(form.financialEffort.year.amount);
                 n = x/T;
                 break;
             case 'month':
-                x = parseInt(f3.income_per_month);
-                y = parseInt(f3.income_months_per_year);
+                x = parseInt(form.financialEffort.month.amountPerMonth);
+                y = parseInt(form.financialEffort.month.monthsPerYear);
                 n = (x*y)/T;
                 break;
             case 'week':
-                x = parseInt(f3.income_per_week);
-                y = parseInt(f3.income_weeks_per_year);
+                x = parseInt(form.financialEffort.week.amountPerWeek);
+                y = parseInt(form.financialEffort.week.weeksPerYear);
                 n = (x*y)/T;
                 break;
             case 'hour':
-                n = parseInt(f3.income_per_hour);
+                n = parseInt(form.financialEffort.hour.amountPerHour);
+                break;
+            default:
+                throw "Error calculating Income";                
         }
         fin_effort.aver_income_per_hour = n;
 
@@ -560,7 +573,7 @@ function calculate_costs(f1, f2, f3, country){
     //if either Financial effort or Public Transports slider in form part 3 is activated
     //the form demands information from both Driving distance and Time spent in driving
     var driving_distance, time_spent_driving, kinetic_speed, virtual_speed;
-    if (f3.IsFinancialEffort || f3.IsAlternativeToCarCosts){
+    if (form.financialEffort.isOk || form.publicTransports.isOk){
 
         //driving distance
         driving_distance = {
@@ -569,15 +582,17 @@ function calculate_costs(f1, f2, f3, country){
             dist_home_job: 0,                   //distance between home and job (one-way)
             journey_weekend: 0,                 //distance the user drives during weekend
             aver_drive_per_week: 0,             //average distance driven per week
-            fuel_period_km: f3.period_km        //time-period for distance calculation
+            fuel_period_km: form.distance.noCarToJob.period  //time-period for distance calculation
         };
 
         //if fuel calculation with distance was NOT chosen in form part 2, gets from form part 3
-        if(f2.type_calc_fuel == 'euros'){
-            if(f3.drive_to_work == 'true'){
-                driving_distance.drive_to_work_days_per_week = f3.drive_to_work_days_per_week;
-                driving_distance.dist_home_job =  parseInt(f3.dist_home_job);
-                driving_distance.journey_weekend = parseInt(f3.journey_weekend);
+        if(form.fuel.typeOfCalculation == 'euros'){
+            if(form.distance.considerCarToJob == 'true'){
+                
+                driving_distance.drive_to_work_days_per_week = form.distance.carToJob.daysPerWeek;
+                driving_distance.dist_home_job =  parseInt(form.distance.carToJob.distanceBetweenHomeAndJob);
+                driving_distance.journey_weekend = parseInt(form.distance.carToJob.distanceDuringWeekends);
+                
                 driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week *
                     driving_distance.dist_home_job + driving_distance.journey_weekend;
 
@@ -586,37 +601,41 @@ function calculate_costs(f1, f2, f3, country){
 
             }
             else{
-                switch(driving_distance.fuel_period_km)
-                {
+                switch(driving_distance.fuel_period_km){
                     case "1":
-                        distance_per_month = parseInt(f3.dist_per_time_period);
+                        distance_per_month = parseFloat(form.distance.noCarToJob.distancePerPeriod);
                         break;
                     case "2":
-                        distance_per_month = f3.dist_per_time_period / 2;
+                        distance_per_month = parseFloat(form.distance.noCarToJob.distancePerPeriod) / 2;
                         break;
                     case "3":
-                        distance_per_month = f3.dist_per_time_period / 3;
+                        distance_per_month = parseFloat(form.distance.noCarToJob.distancePerPeriod) / 3;
                         break;
                     case "4":
-                        distance_per_month = f3.dist_per_time_period / 6;
+                        distance_per_month = parseFloat(form.distance.noCarToJob.distancePerPeriod) / 6;
                         break;
                     case "5":
-                        distance_per_month = f3.dist_per_time_period / 12;
+                        distance_per_month = parseFloat(form.distance.noCarToJob.distancePerPeriod) / 12;
                         break;
+                    default:
+                        throw "Error calculating Driving distance and Time spent in driving"
                 }
                 driving_distance.drive_per_year = distance_per_month * 12;
             }
         }
-        //f2.type_calc_fuel == 'km', thus get distance information from form part 2
-        else{
-            if(f2.take_car_to_job == 'true'){
-                driving_distance.drive_to_work_days_per_week = f2.days_p_week;
-                driving_distance.dist_home_job = parseInt(f2.distance_home2job);
-                driving_distance.journey_weekend = parseInt(f2.distance_weekend);
+        //form.type_calc_fuel == 'km', thus get distance information from form part 2
+        else if(form.fuel.typeOfCalculation == 'km'){
+            if(form.take_car_to_job == 'true'){
+                driving_distance.drive_to_work_days_per_week = form.days_p_week;
+                driving_distance.dist_home_job = parseInt(form.distance_home2job);
+                driving_distance.journey_weekend = parseInt(form.distance_weekend);
                 driving_distance.aver_drive_per_week = 2 * driving_distance.drive_to_work_days_per_week *
                     driving_distance.dist_home_job + driving_distance.journey_weekend;
             }
             driving_distance.drive_per_year = distance_per_month * 12;
+        }
+        else{
+            throw "Error calculating Driving distance and Time spent in driving";
         }
 
         //Time spent in driving
@@ -630,16 +649,16 @@ function calculate_costs(f1, f2, f3, country){
             hours_drive_per_year: 0    //number of hours driven per year
         };
 
-        if(f2.take_car_to_job == 'true' || f3.drive_to_work == 'true'){
-            time_spent_driving.time_home_job = parseInt(f3.time_home_job);
-            time_spent_driving.time_weekend = parseInt(f3.time_weekend);
+        if(form.take_car_to_job == 'true' || form.distance.considerCarToJob == 'true'){
+            time_spent_driving.time_home_job = parseInt(form.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
+            time_spent_driving.time_weekend = parseInt(form.timeSpentInDriving.option1.minutesDuringWeekend);
             time_spent_driving.min_drive_per_week = 2 * time_spent_driving.time_home_job *
                 driving_distance.drive_to_work_days_per_week + time_spent_driving.time_weekend;
             time_spent_driving.hours_drive_per_month = 365.25 / 7 / 12 * time_spent_driving.min_drive_per_week / 60;
         }
         else{
-            time_spent_driving.min_drive_per_day = parseInt(f3.min_drive_per_day);
-            time_spent_driving.days_drive_per_month = parseInt(f3.days_drive_per_month);
+            time_spent_driving.min_drive_per_day = parseInt(form.timeSpentInDriving.option2.minutesPerDay);
+            time_spent_driving.days_drive_per_month = parseInt(form.timeSpentInDriving.option2.daysPerMonth);
             time_spent_driving.hours_drive_per_month = time_spent_driving.min_drive_per_day *
                 time_spent_driving.days_drive_per_month / 60;
         }
@@ -649,7 +668,7 @@ function calculate_costs(f1, f2, f3, country){
         kinetic_speed = driving_distance.drive_per_year / time_spent_driving.hours_drive_per_year;
 
         //Virtual/Consumer Speed calculated if info of Financial Effort is available
-        if (f3.IsFinancialEffort){
+        if (form.financialEffort.isOk){
             virtual_speed = driving_distance.drive_per_year /
                 (time_spent_driving.hours_drive_per_year + fin_effort.hours_per_year_to_afford_car);
         }
@@ -669,7 +688,7 @@ function calculate_costs(f1, f2, f3, country){
     }
 
     //************* External costs object *************
-    var external_costs = {
+    var externalCosts = {
         handbook_extern_URL: 'http:\/\/ec.europa.eu\/transport\/themes\/sustainable\/doc\/2008_costs_handbook.pdf',
         polution: 0.005,      //pollutants in €/km
         ghg: 0.007,           //greenhouse gases in €/km
@@ -690,7 +709,7 @@ function calculate_costs(f1, f2, f3, country){
     //object to be returned by the function
     var output = {
         //object fields
-        monthly_costs: monthly_costs,                    //object with the calculated monthly costs
+        monthly_costs: monthlyCosts,                     //object with the calculated monthly costs
 
         public_transports: undefined,                    //object with the car-alternative public transports costs
         alternative_to_car_costs_calculated: false,
@@ -704,23 +723,23 @@ function calculate_costs(f1, f2, f3, country){
         time_spent_driving: undefined,                   //object with Time spent in driving variables
         time_spent_driving_calculated: false,
 
-        external_costs: external_costs,                 //object with the external costs
+        external_costs: externalCosts,                   //object with the external costs
 
         //variable fields
         distance_per_month: distance_per_month,          //distance travelled per month (in the standard distance)
         age_months: age_months,                          //car age in months
         //credit
-        month_cred: credit_object.period,                //number of monthly credit instalments
-        total_interests: credit_object.total_interests,  //total interests paid by the credit
+        month_cred: creditObject.period,                //number of monthly credit instalments
+        total_interests: creditObject.totalInterests,  //total interests paid by the credit
         //fuel
-        fuel_period_km: f2.fuel_period_distance,
-        fuel_cost_period: f2.fuel_period_money,
+        fuel_period_km: form.fuel.distanceBased.noCarToJob.period,
+        fuel_cost_period: form.fuel.currencyBased.period,
         //tolls
-        tolls_period: f2.tolls_select,
+        tolls_period: form.tolls.noBasedOnDay.period,
         //fines
-        fines_period: f2.fines_select,
+        fines_period: form.fines.period,
         //washing
-        washing_period: f2.washing_select,
+        washing_period: form.washing.period,
 
         //total costs
         total_standing_costs_month: total_standing_costs_month,
@@ -736,16 +755,18 @@ function calculate_costs(f1, f2, f3, country){
         virtual_speed: undefined            //average consumer/virtual speed
     };
 
-    if (f3.IsAlternativeToCarCosts){
+    if (form.publicTransports.isOk){
         output.alternative_to_car_costs_calculated = true;
         output.public_transports = public_transports;
     }
-    if (f3.IsFinancialEffort){
+    
+    if (form.financialEffort.isOk){
         output.fin_effort_calculated = true;
         output.fin_effort = fin_effort;
         output.virtual_speed = virtual_speed;
     }
-    if (f3.IsAlternativeToCarCosts || f3.IsFinancialEffort){
+    
+    if (form.publicTransports.isOk || form.financialEffort.isOk){
         output.driving_distance = driving_distance;
         output.driving_distance_calculated = true;
         output.time_spent_driving = time_spent_driving;

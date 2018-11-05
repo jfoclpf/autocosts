@@ -20,47 +20,84 @@ function submit_data() {
 function createObjToDB(){
 
     var objectToDb = {};
+    
+    var f1 = getFormPart1();
+    var f2 = getFormPart2();
+    var f3 = getFormPart3();
+   /*     
+    //form part 1     
+    objectToDb.acquisition_month =                  f1.acquisitionMonth;
+    objectToDb.acquisition_year =                   f1.acquisitionYear;
+    objectToDb.commercial_value_at_acquisition =    f1.auto_initial_cost;
+    objectToDb.commercial_value_at_now =            f1.auto_final_cost;
+    objectToDb.insure_type =                        f1.insurance_type;
+    objectToDb.insurance_value =                    f1.insurance_value;
+    objectToDb.credit =                             f1.cred_auto_s_n;
+    objectToDb.credit_borrowed_amount =             f1.credit_amount;
+    objectToDb.credit_number_installments =         f1.credit_period;
+    objectToDb.credit_amount_installment =          f1.credit_value_p_month;
+    objectToDb.credit_residual_value =              f1.credit_residual_value;
+    objectToDb.inspection_number_inspections =      f1.nmr_times_inspec;
+    objectToDb.inspection_average_inspection_cost = f1.inspec_price;
+    objectToDb.vehicle_excise_tax =                 f1.car_tax;
 
-    //form part 1
-    objectToDb.acquisition_month = $("#acquisitionMonth").val();
-    objectToDb.acquisition_year = $("#acquisitionYear").val();
-    objectToDb.commercial_value_at_acquisition = $('#commercialValueAtAcquisition').val();
-    objectToDb.commercial_value_at_now = $('#commercialValueAtNow').val();
-    objectToDb.insure_type = $('input[name="insurancePaymentPeriod"]:checked', '#form').val();
-    objectToDb.insurance_value = $('#insuranceValue').val();
-    objectToDb.credit = $('input[name="AutoCreditRadioBtn"]:checked', '#form').val();
-    objectToDb.credit_borrowed_amount = $('#borrowedAmount').val();
-    objectToDb.credit_number_installments = $('#numberInstallments').val();
-    objectToDb.credit_amount_installment = $('#amountInstallment').val();
-    objectToDb.credit_residual_value = $('#residualValue').val();
-    objectToDb.inspection_number_inspections = $('#numberInspections').val();
-    objectToDb.inspection_average_inspection_cost = $('#averageInspectionCost').val();
-    objectToDb.vehicle_excise_tax = $('#roadTaxes').val();
-
+    
+            //fuel
+        :         getCheckedValue(d.calc_combustiveis),
+        fuel_efficiency:        d.consumo_auto.value,
+        fuel_price:             d.fuel_price.value,
+        take_car_to_job:        getCheckedValue(d.car_job_form2),
+        fuel_period_distance:   d.combustivel_period_km.value,
+        distance:               d.km_por_mes.value,
+        car_consumption:        d.consumo_auto.value,
+        :      d.km_entre_casa_trabalho.value,
+        :       d.km_fds.value,
+        days_p_week:            d.dias_por_semana.value,
+        fuel_period_money:      d.combustiveis_periodo_euro.value,
+        fuel_money:             d.combustiveis_euro.value,
+        //maintenance
+        maintenance:            d.revisoes.value,
+        //repairs
+        repairs:                d.reparacoes.value,
+        //parking
+        parking:                d.parqueamento.value,
+        //tolls
+        type_calc_tolls:        getCheckedValue(d.tolls_daily_radioBtn),
+        tolls_select:           d.tolls_period_select.value,
+        tolls:                  d.no_daily_tolls_value.value,
+        price_tolls_p_day:      d.daily_expense_tolls.value,
+        tolls_days_p_month:     d.number_days_tolls.value,
+        //fines
+        fines:                  d.tickets_value.value,
+        fines_select:           d.tickets_period_select.value,
+        //washing
+        washing:                d.washing_value.value,
+        washing_select:         d.washing_period_select.value
+    
     //form part 2
-    objectToDb.fuel_calculation = $('input[name="calc_combustiveis"]:checked', '#form').val();
-    objectToDb.fuel_currency_based_currency_value = $('#fuel_currency_value').val();
-    objectToDb.fuel_currency_based_periodicity = $('#combustiveis_periodo_euro').val();
-    objectToDb.fuel_distance_based_car_to_work = $('input[name="car_job_form2"]:checked', '#form').val();
-    objectToDb.fuel_distance_based_car_to_work_number_days_week = $('#car_to_work_number_days_week').val();
-    objectToDb.fuel_distance_based_car_to_work_distance_home_work = $('#car_to_work_distance_home_work').val();
-    objectToDb.fuel_distance_based_car_to_work_distance_weekend = $('#car_to_work_distance_weekend').val();
-    objectToDb.fuel_distance_based_no_car_to_work_distance = $('#no_car_to_work_distance').val();
-    objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = $('#combustivel_period_km').val();
-    objectToDb.fuel_distance_based_fuel_efficiency = $('#fuel_efficiency').val();
-    objectToDb.fuel_distance_based_fuel_price = $('#fuel_price').val();
-    objectToDb.maintenance = $('#maintenance').val();
-    objectToDb.repairs = $('#repairs').val();
-    objectToDb.parking = $('#parking').val();
-    objectToDb.tolls_daily = $('input[name="tolls_daily_radioBtn"]:checked', '#form').val();
-    objectToDb.tolls_no_daily_value = $('#no_daily_tolls_value').val();
-    objectToDb.tolls_no_daily_period = $('#tolls_period_select').val();
-    objectToDb.tolls_daily_expense = $('#daily_expense_tolls').val();
-    objectToDb.tolls_daily_number_days = $('#number_days_tolls').val();
-    objectToDb.tickets_value = $('#tickets_value').val();
-    objectToDb.tickets_periodicity = $('#tickets_period_select').val();
-    objectToDb.washing_value = $('#washing_value').val();
-    objectToDb.washing_periodicity = $('#washing_period_select').val();
+    objectToDb.fuel_calculation =                                   f2.type_calc_fuel
+    objectToDb.fuel_currency_based_currency_value =                 f2.
+    objectToDb.fuel_currency_based_periodicity =                    f2.
+    objectToDb.fuel_distance_based_car_to_work =                    f2.
+    objectToDb.fuel_distance_based_car_to_work_number_days_week =   f2.
+    objectToDb.fuel_distance_based_car_to_work_distance_home_work = f2.distance_home2job
+    objectToDb.fuel_distance_based_car_to_work_distance_weekend =   f2.distance_weekend
+    objectToDb.fuel_distance_based_no_car_to_work_distance =        f2.
+    objectToDb.fuel_distance_based_no_car_to_fuel_period_distance = f2.
+    objectToDb.fuel_distance_based_fuel_efficiency =                f2.
+    objectToDb.fuel_distance_based_fuel_price =                     f2.
+    objectToDb.maintenance =                                        f2.
+    objectToDb.repairs =                                            f2.
+    objectToDb.parking =                                            f2.
+    objectToDb.tolls_daily =                                        f2.
+    objectToDb.tolls_no_daily_value =                               f2.
+    objectToDb.tolls_no_daily_period =                              f2.
+    objectToDb.tolls_daily_expense =                                f2.
+    objectToDb.tolls_daily_number_days =                            f2.
+    objectToDb.tickets_value =                                      f2.
+    objectToDb.tickets_periodicity =                                f2.
+    objectToDb.washing_value =                                      f2.
+    objectToDb.washing_periodicity =                                f2.
 
     //form part 3    
     objectToDb.household_number_people = $('#household_number_people').val();
@@ -88,7 +125,7 @@ function createObjToDB(){
     objectToDb.time_spent_min_drive_per_day = $('#min_drive_per_day').val();
     objectToDb.time_spent_days_drive_per_month = $('#days_drive_per_month').val();
 
-    return objectToDb;
+    return objectToDb;*/
 
 }
 

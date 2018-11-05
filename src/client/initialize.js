@@ -229,7 +229,7 @@ function loadFormHandlers(){
     //run button
     $("#calculate_costs_btn").on( "click", function(){
         //tries to call Run1(); if not yet defined, retries every 500ms
-        //see https://stackoverflow.com/a/53032624/1243247
+        //see https://stackoverflow.com/a/53032624/1243247        
         try{
             Run1("normal");  //not using reCaptcha from Google
         }
@@ -237,7 +237,8 @@ function loadFormHandlers(){
             (function retry(){
                 setTimeout(function(){
                     try{
-                        console.log("Function Run() not yet defined");
+                        console.log(e);
+                        console.log("Function Run() invalid or not yet defined");
                         Run1("normal");
                     }
                     catch(e){
