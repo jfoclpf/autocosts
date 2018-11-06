@@ -626,7 +626,7 @@ function isReadyToCalc(){
     
     //double-check with validating functions from file validateForm.js 
     //Standing (part1) and Running (part2) Costs
-    if (!is_userdata_formpart1_ok() || !is_userdata_formpart2_ok()){
+    if (!validateData.isUserDataFormPart1_Ok() || !validateData.isUserDataFormPart2_Ok()){
         return false;
     }    
     
