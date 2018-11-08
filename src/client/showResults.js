@@ -17,6 +17,7 @@ function Run2(callback){
     
     //for each form part gets object with content
     var form = getFormData();
+    FORM_DATA = form;
     
     //country object with country specific variables
     var countryObj = {

@@ -36,6 +36,7 @@ var SWITCHES,               //GLOBAL switches Object
     UBER_API,               //UBER API object with city specific costs (cost per km, per minute, etc.)
     UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX
     CALCULATED_DATA,        //calculated meta-data after user clicks "Run"
+    FORM_DATA,              //Form data filled by the user
     DISPLAY,                //Object regarding the display of information
     SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available,
     UUID,                   //Unique User Identifier
