@@ -416,7 +416,7 @@ function drawAlterToCarChart(calculatedData) {
     }
 
     //boolean variables
-    var p_bool = isObjDef(p) && p.display_pt() && DISPLAY.result.public_transports; //public transports    
+    var p_bool = isObjDef(p) && p.display_pt && DISPLAY.result.public_transports; //public transports    
     var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
     
     var labels = [

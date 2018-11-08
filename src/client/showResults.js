@@ -27,12 +27,12 @@ function Run2(callback){
         taxi_price: WORDS.taxi_price_per_dist
     };
 
-    //calculate costs
-    var calculatedData = calculate_costs(form, countryObj);
+    //calculate costs, "costs" is a global variable/object defined in coreFunctions.js
+    var calculatedData = costs.calculateCosts(form, countryObj); 
         
     //get Uber data if applicable
     if(calculatedData.alternative_to_car_costs_calculated && SWITCHES.uber){
-        calculatedData.uber = get_uber(UBER_API, calculatedData, countryObj); 
+        calculatedData.uber = costs.getUber(UBER_API, calculatedData, countryObj); 
     } 
     
     CALCULATED_DATA = calculatedData; //assigns to global variable
@@ -48,12 +48,7 @@ function Run2(callback){
     $("*").promise().done(function(){    
         
         //global variable indicating the results are being shown
-        DISPLAY.result.isShowing = true;        
-        
-        //calls the callback() if it's a function
-        if (typeof callback === 'function'){
-            callback();
-        }
+        DISPLAY.result.isShowing = true; 
     });
 
     return true;
@@ -613,7 +608,7 @@ function setEquivTransportCostsDetails(form, calculatedData){
     };  
      
     //Public transports more taxi
-    if(calculatedData.public_transports.display_pt()) {
+    if(calculatedData.public_transports.display_pt) {
 
         DISPLAY.result.public_transports = true; //global variable
         
