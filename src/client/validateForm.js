@@ -475,27 +475,40 @@ var validateData = {
         var income_type = getCheckedValue(f.radio_income);
 
         switch(income_type){
-        case 'year':
-            if(!isNumber(f.income_per_year.value)){
+            case 'year':
+                if(!isNumber(f.income_per_year.value)){
+                    return false;
+                }
+                break;
+            case 'month':
+                if(!isNumber(f.income_per_month.value)){
+                    return false;
+                }
+                if(!isNumber(f.income_months_per_year.value)){
+                    return false;
+                }
+                break;
+            case 'week':
+                if(!isNumber(f.income_per_week.value)){
+                    return false;
+                }
+                if(!isNumber(f.income_weeks_per_year.value)){
+                    return false;
+                }
+                break;
+            case 'hour':
+                if(!isNumber(f.income_per_hour.value)){
+                    return false;
+                }
+                if(!isNumber(f.income_hours_per_week.value)){
+                    return false;
+                }   
+                if(!isNumber(f.income_hour_weeks_per_year.value)){
+                    return false;
+                } 
+                break;
+            default:
                 return false;
-            }
-            break;
-        case 'month':
-            if(!isNumber(f.income_per_month.value)){
-                return false;
-            }
-            if(!isNumber(f.income_months_per_year.value)){
-                return false;
-            }
-            break;
-        case 'week':
-            if(!isNumber(f.income_per_week.value)){
-                return false;
-            }
-            if(!isNumber(f.income_weeks_per_year.value)){
-                return false;
-            }
-            break;
         }
 
         return true;
