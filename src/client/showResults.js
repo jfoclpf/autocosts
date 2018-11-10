@@ -497,7 +497,7 @@ function setFinancialEffortDetails(form, calculatedData){
     };
     
     //income
-    switch(form.financialEffort.incomePeriod){
+    switch(form.income.incomePeriod){
         case 'year':
             addLiElm("income", WORDS.net_income_per + " " + WORDS.year, currencyShow(calculatedData.fin_effort.income));
             addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.aver_income_per_month.toFixed(1)));
@@ -528,7 +528,7 @@ function setFinancialEffortDetails(form, calculatedData){
     
     
     //working time
-    if(form.financialEffort.incomePeriod != 'hour'){
+    if(form.income.incomePeriod != 'hour'){
         if(form.workingTime.isActivated == 'true'){
             
             addLiElm("working_time", WORDS.hours_per + " " + WORDS.week, calculatedData.fin_effort.time_hours_per_week + " " + WORDS.hour_abbr);
