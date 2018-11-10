@@ -10,7 +10,7 @@
 
 ```
 depreciation,
-car_tax,
+roadTaxes,
 credit,
 fines,
 fuel,
@@ -18,7 +18,7 @@ inspection,
 insurance,
 maintenance,
 parking,
-repairs_improv,
+repairsImprovements,
 tolls,
 washing
 ```
