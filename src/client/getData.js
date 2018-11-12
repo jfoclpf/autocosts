@@ -3,153 +3,153 @@ function getFormData(){
 
     var f = document.costs_form; //main form document variable
 
-var data = {
-    depreciation: {
-        acquisitionMonth:  f.acquisitionMonth.value,
-        acquisitionYear:   f.acquisitionYear.value,
-        acquisitionCost:   f.commercialValueAtAcquisition.value,
-        presentValue:      f.commercialValueAtNow.value
-    },
-
-    insurance: {
-        amountPerPeriod: f.insuranceValue.value,
-        period:          getCheckedValue(f.insurancePaymentPeriod)
-    },
-
-    credit: {
-        creditBool: getCheckedValue(f.AutoCreditRadioBtn), //binary variable: "true" or "false"
-        yesCredit:{
-            borrowedAmount:     f.borrowedAmount.value,
-            numberInstallments: f.numberInstallments.value,
-            amountInstallment:  f.amountInstallment.value,
-            residualValue:      f.residualValue.value
-        }
-    },
-
-    inspection: {
-        averageInspectionCost: f.averageInspectionCost.value,
-        numberOfInspections:   f.numberInspections.value
-    },
-
-    car_tax: {
-        amountPerYear: f.roadTaxes.value
-    },
-
-    //Form Part 2
-    fuel: {
-        typeOfCalculation: getCheckedValue(f.calc_combustiveis), //binary variable: "currency" or "distance"
-        currencyBased: {
-            amountPerPeriod: f.combustiveis_euro.value,
-            period:          f.combustiveis_periodo_euro.value //month, two months,  trimester, semester, year
+    var data = {
+        depreciation: {
+            acquisitionMonth:  f.acquisitionMonth.value,
+            acquisitionYear:   f.acquisitionYear.value,
+            acquisitionCost:   f.commercialValueAtAcquisition.value,
+            presentValue:      f.commercialValueAtNow.value
         },
-        distanceBased: {
-            considerCarToJob: getCheckedValue(f.car_job_form2),  //binary variable: true or false
+
+        insurance: {
+            amountPerPeriod: f.insuranceValue.value,
+            period:          getCheckedValue(f.insurancePaymentPeriod)
+        },
+
+        credit: {
+            creditBool: getCheckedValue(f.AutoCreditRadioBtn), //binary variable: "true" or "false"
+            yesCredit:{
+                borrowedAmount:     f.borrowedAmount.value,
+                numberInstallments: f.numberInstallments.value,
+                amountInstallment:  f.amountInstallment.value,
+                residualValue:      f.residualValue.value
+            }
+        },
+
+        inspection: {
+            averageInspectionCost: f.averageInspectionCost.value,
+            numberOfInspections:   f.numberInspections.value
+        },
+
+        roadTaxes: {
+            amountPerYear: f.roadTaxes.value
+        },
+
+        //Form Part 2
+        fuel: {
+            typeOfCalculation: getCheckedValue(f.calc_combustiveis), //binary variable: "currency" or "distance"
+            currencyBased: {
+                amountPerPeriod: f.combustiveis_euro.value,
+                period:          f.combustiveis_periodo_euro.value //month, two months,  trimester, semester, year
+            },
+            distanceBased: {
+                considerCarToJob: getCheckedValue(f.car_job_form2),  //binary variable: true or false
+                carToJob: {
+                    daysPerWeek:               f.dias_por_semana.value,
+                    distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
+                    distanceDuringWeekends:    f.km_fds.value
+                },
+                noCarToJob : {
+                    distancePerPeriod: f.km_por_mes.value,
+                    period:            f.combustivel_period_km.value //month, two months,  trimester, semester, year
+                },
+                fuelEfficiency: f.consumo_auto.value, //fuel efficiency of the vehicle
+                fuelPrice:      f.fuel_price.value   //fuel price per unit volume
+            }
+        },
+
+        maintenance:  {
+            amountPerYear: f.revisoes.value
+        },
+
+        repairsImprovements:  {
+            amountPerYear: f.reparacoes.value
+        },
+
+        parking: {
+            amountPerMonth: f.parqueamento.value
+        },
+
+        tolls: {
+            calculationBasedOnDay: getCheckedValue(f.tolls_daily_radioBtn), //binary variable: "true" or "false"
+            yesBasedOnDay: {
+                amountPerDay: f.daily_expense_tolls.value,
+                daysPerMonth: f.number_days_tolls.value
+            },
+            noBasedOnDay: {
+                amountPerPeriod: f.no_daily_tolls_value.value,
+                period:          f.tolls_period_select.value //month, two months,  trimester, semester, year
+            }
+        },
+
+        fines: {
+            amountPerPeriod: f.tickets_value.value,
+            period:          f.tickets_period_select.value //month, two months,  trimester, semester, year
+        },
+
+        washing: {
+            amountPerPeriod: f.washing_value.value,
+            period:          f.washing_period_select.value //month, two months,  trimester, semester, year
+        },
+
+        //Form Part 3
+        publicTransports: {
+            isOk:                    validateData.isPublicTransportsAlternativeOk(), //boolean whether this section was correctly filled in
+            numberOfPeopleInFamily:  f.pessoas_agregado.value,
+            monthlyPassCost:         f.preco_passe.value
+        },
+
+        income: {
+            isOk:         validateData.isFinancialEffortOk(), //boolean whether this section was correctly filled in
+            incomePeriod: getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
+            year: {
+                amount: f.income_per_year.value
+            },
+            month: {
+                amountPerMonth: f.income_per_month.value,
+                monthsPerYear:  f.income_months_per_year.value
+            },
+            week: {
+                amountPerWeek: f.income_per_week.value,
+                weeksPerYear:  f.income_weeks_per_year.value
+            },
+            hour: {
+                amountPerHour: f.income_per_hour.value,
+                hoursPerWeek:  f.income_hours_per_week.value,
+                weeksPerYear:  f.income_hour_weeks_per_year.value
+            }
+        },
+
+        workingTime: {
+            isActivated:   getCheckedValue(f.radio_work_time),
+            monthsPerYear: f.time_month_per_year.value,
+            hoursPerWeek:  f.time_hours_per_week.value
+        },
+
+        distance: {
+            considerCarToJob: getCheckedValue(f.drive_to_work), //binary variable: "true" or "false"
             carToJob: {
-                daysPerWeek:               f.dias_por_semana.value,
-                distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
-                distanceDuringWeekends:    f.km_fds.value
+                daysPerWeek:               f.drive_to_work_days_per_week.value,
+                distanceBetweenHomeAndJob: f.dist_home_job.value,
+                distanceDuringWeekends:    f.journey_weekend.value
             },
-            noCarToJob : {
-                distancePerPeriod: f.km_por_mes.value,
-                period:            f.combustivel_period_km.value //month, two months,  trimester, semester, year
+            noCarToJob: {
+                distancePerPeriod: f.km_per_month.value,
+                period:            f.period_km.value
+            }
+        },
+
+        timeSpentInDriving: {
+            option1: {
+                minutesBetweenHomeAndJob: f.time_home_job.value,
+                minutesDuringWeekend:     f.time_weekend.value
             },
-            fuelEfficiency: f.consumo_auto.value, //fuel efficiency of the vehicle
-            fuelPrice:      f.fuel_price.value   //fuel price per unit volume
+            option2: {
+                minutesPerDay: f.min_drive_per_day.value,
+                daysPerMonth:  f.days_drive_per_month.value
+            }
         }
-    },
-
-    maintenance:  {
-        amountPerYear: f.revisoes.value
-    },
-
-    repairs_improv:  {
-        amountPerYear: f.reparacoes.value
-    },
-
-    parking: {
-        amountPerMonth: f.parqueamento.value
-    },
-
-    tolls: {
-        calculationBasedOnDay: getCheckedValue(f.tolls_daily_radioBtn), //binary variable: "true" or "false"
-        yesBasedOnDay: {
-            amountPerDay: f.daily_expense_tolls.value,
-            daysPerMonth: f.number_days_tolls.value
-        },
-        noBasedOnDay: {
-            amountPerPeriod: f.no_daily_tolls_value.value,
-            period:          f.tolls_period_select.value //month, two months,  trimester, semester, year
-        }
-    },
-
-    fines: {
-        amountPerPeriod: f.tickets_value.value,
-        period:          f.tickets_period_select.value //month, two months,  trimester, semester, year
-    },
-
-    washing: {
-        amountPerPeriod: f.washing_value.value,
-        period:          f.washing_period_select.value //month, two months,  trimester, semester, year
-    },
-
-    //Form Part 3
-    publicTransports: {
-        isOk:                    validateData.isPublicTransportsAlternativeOk(), //boolean whether this section was correctly filled in
-        numberOfPeopleInFamily:  f.pessoas_agregado.value,
-        monthlyPassCost:         f.preco_passe.value
-    },
-
-    income: {
-        isOk:         validateData.isFinancialEffortOk(), //boolean whether this section was correctly filled in
-        incomePeriod: getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
-        year: {
-            amount: f.income_per_year.value
-        },
-        month: {
-            amountPerMonth: f.income_per_month.value,
-            monthsPerYear:  f.income_months_per_year.value
-        },
-        week: {
-            amountPerWeek: f.income_per_week.value,
-            weeksPerYear:  f.income_weeks_per_year.value
-        },
-        hour: {
-            amountPerHour: f.income_per_hour.value,
-            hoursPerWeek:  f.income_hours_per_week.value,
-            weeksPerYear:  f.income_hour_weeks_per_year.value
-        }
-    },
-
-    workingTime: {
-        isActivated:   getCheckedValue(f.radio_work_time),
-        monthsPerYear: f.time_month_per_year.value,
-        hoursPerWeek:  f.time_hours_per_week.value
-    },
-
-    distance: {
-        considerCarToJob: getCheckedValue(f.drive_to_work), //binary variable: "true" or "false"
-        carToJob: {
-            daysPerWeek:               f.drive_to_work_days_per_week.value,
-            distanceBetweenHomeAndJob: f.dist_home_job.value,
-            distanceDuringWeekends:    f.journey_weekend.value
-        },
-        noCarToJob: {
-            distancePerPeriod: f.km_per_month.value,
-            period:            f.period_km.value
-        }
-    },
-
-    timeSpentInDriving: {
-        option1: {
-            minutesBetweenHomeAndJob: f.time_home_job.value,
-            minutesDuringWeekend:     f.time_weekend.value
-        },
-        option2: {
-            minutesPerDay: f.min_drive_per_day.value,
-            daysPerMonth:  f.days_drive_per_month.value
-        }
-    }
-};
+    };
 
     return data;
 }
@@ -177,7 +177,7 @@ function getDatabasePart1(datab){
         nmr_times_inspec:      datab.inspection_number_inspections,
         inspec_price:          datab.inspection_average_inspection_cost,
         //car tax
-        car_tax:               datab.vehicle_excise_tax
+        roadTaxes:             datab.vehicle_excise_tax
     };
 
     return data;

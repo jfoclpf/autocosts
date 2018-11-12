@@ -73,7 +73,7 @@ function MonthlyCostsObj() {
     this.insurance      = 0;
     this.credit         = 0;
     this.inspection     = 0;
-    this.car_tax        = 0;
+    this.roadTaxes      = 0;
     this.fuel           = 0;
     this.maintenance    = 0;
     this.repairs_improv = 0;
@@ -310,7 +310,7 @@ function calculateStatistics(userIds, data, country){
         //standing costs
         output.standCos = avg.monthly_costs.insurance + avg.monthly_costs.depreciation + 
                           avg.monthly_costs.credit + avg.monthly_costs.inspection + 
-                          0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.car_tax;
+                          0.5 * avg.monthly_costs.maintenance + avg.monthly_costs.roadTaxes;
         //running costs
         output.runnCos = avg.monthly_costs.fuel + 0.5 * avg.monthly_costs.maintenance +
                          avg.monthly_costs.repairs_improv + avg.monthly_costs.parking + 

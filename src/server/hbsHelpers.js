@@ -174,7 +174,13 @@ module.exports = {
     
     //convert number to string with n decimal values
     toFixed: function(num, n){
-        return num.toFixed(n);
+        if(num !== undefined){
+            return num.toFixed(n);
+        }
+        else{
+            debug("Error: passed variable not defined");
+            return "";
+        }
     },
     
     createParagraphs: function(text){

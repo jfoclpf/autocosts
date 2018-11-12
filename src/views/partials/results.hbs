@@ -20,7 +20,7 @@
         <!--  BOX 2 -->
         <div class="info-box box-2">
             <h2>
-                <sup>{{{curr_symbol}}}</sup><span class="total_costs_ever toFixed0"></span>
+                <sup>{{{curr_symbol}}}</sup><span class="costs_totalEver toFixed0"></span>
             </h2>
             <span class="">{{{get_in_months_of_possession 1}}} <b><span class="age_months toFixed0"></span></b> {{{get_in_months_of_possession 2}}}</span>
         </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="text">
                 <!-- this field is filled in by showResults.js -->
-                <h2><span class="fin_effort_percentage_of_income percentage toFixed0">#</span></h2>
+                <h2><span class="financialEffort_financialEffortPercentage percentage toFixed0">#</span></h2>
                 <span class="">{{{of_your_income}}}</span>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 <li class="insurance_color">{{{insurance}}}</li>
                 <li class="credit_color">{{{credit}}}</li>
                 <li class="inspection_color">{{{inspection}}}</li>
-                <li class="car_tax_color">{{{road_taxes}}}</li>
+                <li class="roadTaxes_color">{{{road_taxes}}}</li>
             </ul>
         </div>
         <div class="running-costs">
@@ -67,7 +67,7 @@
             <ul>
                 <li class="fuel_color">{{{fuel}}}</li>
                 <li class="maintenance_color">{{{maintenance}}}</li>
-                <li class="repairs_improv_color">{{{rep_improv}}}</li>
+                <li class="repairsImprovements_color">{{{rep_improv}}}</li>
                 <li class="parking_color">{{{parking}}}</li>
                 <li class="tolls_color">{{{tolls}}}</li>
                 <li class="fines_color">{{{fines}}}</li>
@@ -113,10 +113,10 @@
             </div>
 
             <button class="accordion">
-                <span class="expandable-item car_tax_color">{{{road_taxes_short}}}</span>
-                <span class="periodic_costs_car_tax"></span>
+                <span class="expandable-item roadTaxes_color">{{{road_taxes_short}}}</span>
+                <span class="periodic_costs_roadTaxes"></span>
             </button>
-            <div class="panel car_tax_details">
+            <div class="panel roadTaxes_details">
             </div>
 
             <button class="accordion">
@@ -153,10 +153,10 @@
             </div>
 
             <button class="accordion">
-                <span class="expandable-item repairs_improv_color">{{{rep_improv}}}</span>
-                <span class="periodic_costs_repairs_improv"></span>
+                <span class="expandable-item repairsImprovements_color">{{{rep_improv}}}</span>
+                <span class="periodic_costs_repairsImprovements"></span>
             </button>
-            <div class="panel repairs_improv_details">
+            <div class="panel repairsImprovements_details">
             </div>
 
             <button class="accordion">
@@ -201,12 +201,12 @@
             </div>
             <div class="total-item">
                 <h5>{{{run_cp_dist}}}</h5>
-                <span class="running_costs_p_unit_distance currency toFixed2"></span>
+                <span class="costs_perUnitDistance_runningCosts currency toFixed2"></span>
             </div>
 
             <div class="total-item">
                 <h5>{{{total_cp_dist}}}</h5>
-                <span class="total_costs_p_unit_distance currency toFixed2"></span>
+                <span class="costs_perUnitDistance_totalCosts currency toFixed2"></span>
             </div>
 
             <div class="total-item">
@@ -256,35 +256,35 @@
 
         <button class="accordion">
             <span class="expandable-item">{{{extra_data_income}}}</span>
-            <span class="fin_effort_income_per_year currency toFixed0"></span>
+            <span class="financialEffort_income_perYear currency toFixed0"></span>
         </button>
         <div class="panel income_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item">{{{extra_data_working_time}}}</span>
-            <span class="fin_effort_work_hours_per_y hours toFixed0"></span>
+            <span class="financialEffort_workingTime_hoursPerYear hours toFixed0"></span>
         </button>
         <div class="panel working_time_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item">{{{distance}}}</span>
-            <span class="driving_distance_drive_per_year distance toFixed0"></span>
+            <span class="drivingDistance_perYear distance toFixed0"></span>
         </button>
         <div class="panel distance_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item">{{{extra_data_time_spent_in_driving}}}</span>
-            <span class="time_spent_driving_hours_drive_per_year hours toFixed0"></span>
+            <span class="timeSpentInDriving_hoursPerYear hours toFixed0"></span>
         </button>
         <div class="panel time_spent_in_driving_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item">{{{financial_effort}}}</span>
-            <span class="fin_effort_percentage_of_income percentage toFixed0"></span>
+            <span class="financialEffort_financialEffortPercentage percentage toFixed0"></span>
         </button>
         <div class="panel financial_effort_details">
         </div>
@@ -323,28 +323,28 @@
 
         <button class="accordion">
             <span class="expandable-item public-trans_color">{{{pub_trans_text}}}</span>
-            <span class="public_transports_total_price_pt currency toFixed1"></span>
+            <span class="publicTransports_totalCostsOfStandardPublicTransports currency toFixed1"></span>
         </button>
         <div class="panel public_transports_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item taxi-trans_color">{{{taxi_desl}}}</span>
-            <span class="public_transports_taxi_cost currency toFixed1"></span>
+            <span class="publicTransports_taxi_totalCosts currency toFixed1"></span>
         </button>
         <div class="panel taxi_details">
         </div>
 
         <button class="accordion">
             <span class="expandable-item other-trans_color">{{{other_pub_trans}}}</span>
-            <span class="public_transports_other_pt currency toFixed1"></span>
+            <span class="publicTransports_furtherPublicTransports_totalCosts currency toFixed1"></span>
         </button>
         <div class="panel other_pub_trans_details">
         </div>
 
         <div class="total-ammount">
             <h4>{{{word_total_cap}}}</h4>
-            <span class="total_costs_month currency toFixed0"></span>
+            <span class="costs_perMonth_total currency toFixed0"></span>
         </div>
     </div>
 

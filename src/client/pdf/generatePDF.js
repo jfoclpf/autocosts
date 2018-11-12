@@ -284,23 +284,23 @@ function getMainTable(calculatedData){
             {},{},{}
         ],
         [
-            WORDS.word_per + WORDS.month + "\n" + WORDS.curr_symbol + calculatedData.total_costs_month.toFixed(),
-            WORDS.word_per + WORDS.trimester + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*3).toFixed(),
-            WORDS.word_per + WORDS.semester + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*6).toFixed(),
-            WORDS.word_per + WORDS.year + "\n" + WORDS.curr_symbol + (calculatedData.total_costs_month*12).toFixed()
+            WORDS.word_per + WORDS.month + "\n" + WORDS.curr_symbol     + calculatedData.costs.perMonth.total.toFixed(),
+            WORDS.word_per + WORDS.trimester + "\n" + WORDS.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
+            WORDS.word_per + WORDS.semester + "\n" + WORDS.curr_symbol  + (calculatedData.costs.perMonth.total * 6).toFixed(),
+            WORDS.word_per + WORDS.year + "\n" + WORDS.curr_symbol      + (calculatedData.costs.perMonth.total * 12).toFixed()
         ],
         [
-            {text: WORDS.with_this_level_of_costs + " " + calculatedData.age_months + " " +
-                   WORDS.months_poss + " " + WORDS.curr_symbol + calculatedData.total_costs_ever.toFixed(0),
+            {text: WORDS.with_this_level_of_costs + " " + calculatedData.details.ageOfCarInMonths + " " +
+                   WORDS.months_poss + " " + WORDS.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
             colSpan: 4, alignment: 'center'},
             {},{},{}
         ]
     ];
 
-    if (calculatedData.fin_effort_calculated){
+    if (calculatedData.financialEffort.calculated){
         body.push(
             [
-                {text:WORDS.financial_effort + ": " + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%",
+                {text:WORDS.financial_effort + ": " + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + "%",
                 colSpan: 4, alignment: 'center'},
                 {},{},{}
             ]
@@ -321,13 +321,13 @@ function getChartsLegend(){
             { text: WORDS.insurance,    fontSize: fontSize, fillColor: cc.insurance},
             { text: WORDS.fuel,         fontSize: fontSize, fillColor: cc.fuel},
             { text: WORDS.maintenance,  fontSize: fontSize, fillColor: cc.maintenance},
-            { text: WORDS.rep_improv,   fontSize: fontSize, fillColor: cc.repairs_improv},
+            { text: WORDS.rep_improv,   fontSize: fontSize, fillColor: cc.repairsImprovements},
             { text: WORDS.parking,      fontSize: fontSize, fillColor: cc.parking}
         ],
         [
             {text: WORDS.credit,     fontSize: fontSize, fillColor: cc.credit},
             {text: WORDS.inspection, fontSize: fontSize, fillColor: cc.inspection},
-            {text: WORDS.road_taxes, fontSize: fontSize, fillColor: cc.car_tax},
+            {text: WORDS.road_taxes, fontSize: fontSize, fillColor: cc.roadTaxes},
             {text: WORDS.washing,    fontSize: fontSize, fillColor: cc.washing},
             {text: WORDS.fines,      fontSize: fontSize, fillColor: cc.fines},
             {text: WORDS.tolls,      fontSize: fontSize, fillColor: cc.tolls}
@@ -340,7 +340,8 @@ function getChartsLegend(){
 
 function getStandingCostsTable(calculatedData){
 
-    var cc = DISPLAY.costsColors;
+    var cc = DISPLAY.costsColors;    
+    var costItems = calculatedData.costs.perMonth.items;
 
     var body = [
         [
@@ -353,31 +354,31 @@ function getStandingCostsTable(calculatedData){
         ],
         [
             {text: WORDS.depreciation + "\n" + gstr("#avg-periodic-cost .depreciation_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.depreciation.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.depreciation.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.insurance + "\n" + gstr("#avg-periodic-cost .insurance_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.insurance.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.insurance.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.credit + "\n" + gstr("#avg-periodic-cost .credit_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.credit.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.credit.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.inspection + "\n" + gstr("#avg-periodic-cost .inspection_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.inspection.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.inspection.toFixed(1), bold: true}
         ],
         [
-            {text: WORDS.road_taxes + "\n" + gstr("#avg-periodic-cost .car_tax_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.car_tax.toFixed(1), bold: true}
+            {text: WORDS.road_taxes + "\n" + gstr("#avg-periodic-cost .roadTaxes_details")},
+            {text: WORDS.curr_symbol + costItems.roadTaxes.toFixed(1), bold: true}
         ],
         [
             {text: "1/2" + " " + WORDS.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
-            {text: WORDS.curr_symbol + (calculatedData.monthly_costs.maintenance/2).toFixed(1)}
+            {text: WORDS.curr_symbol + (costItems.maintenance/2).toFixed(1)}
         ],
         [
             {text: WORDS.total_fixed, alignment: "right", bold: true, fontSize: 14},
-            {text: WORDS.curr_symbol + (calculatedData.total_standing_costs_month).toFixed(0), bold: true, fontSize: 14}
+            {text: WORDS.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0), bold: true, fontSize: 14}
         ]
     ];
 
@@ -387,6 +388,7 @@ function getStandingCostsTable(calculatedData){
 function getRunningCostsTable(calculatedData){
 
     var cc = DISPLAY.costsColors;
+    var costItems = calculatedData.costs.perMonth.items;    
 
     var body = [
         [
@@ -399,35 +401,35 @@ function getRunningCostsTable(calculatedData){
         ],
         [
             {text: WORDS.fuel + "\n" + gstr("#avg-periodic-cost .fuel_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.fuel.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.fuel.toFixed(1), bold: true}
         ],
         [
             {text: "1/2" + " " + WORDS.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
-            {text: WORDS.curr_symbol + (calculatedData.monthly_costs.maintenance/2).toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + (costItems.maintenance/2).toFixed(1), bold: true}
         ],
         [
-            {text: WORDS.rep_improv + "\n" + gstr("#avg-periodic-cost .repairs_improv_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.repairs_improv.toFixed(1), bold: true}
+            {text: WORDS.rep_improv + "\n" + gstr("#avg-periodic-cost .repairsImprovements_details")},
+            {text: WORDS.curr_symbol + costItems.repairsImprovements.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.parking + "\n" + gstr("#avg-periodic-cost .parking_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.parking.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.parking.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.tolls + "\n" + gstr("#avg-periodic-cost .tolls_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.tolls.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.tolls.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.fines + "\n" + gstr("#avg-periodic-cost .fines_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.fines.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.fines.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.washing + "\n" + gstr("#avg-periodic-cost .washing_details")},
-            {text: WORDS.curr_symbol + calculatedData.monthly_costs.washing.toFixed(1), bold: true}
+            {text: WORDS.curr_symbol + costItems.washing.toFixed(1), bold: true}
         ],
         [
             {text: WORDS.total_variable, alignment: "right", bold: true, fontSize: 14},
-            {text: WORDS.curr_symbol + (calculatedData.total_running_costs_month).toFixed(0), bold: true, fontSize: 14}
+            {text: WORDS.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0), bold: true, fontSize: 14}
         ]
     ];
 
@@ -443,20 +445,20 @@ function getTotalCostsTable(calculatedData){
         ]
     ];
 
-    if(calculatedData.running_costs_p_unit_distance){
+    if(calculatedData.costs.perUnitDistance.runningCosts){
         body.push(
             [
                 {text: WORDS.run_cp_dist},
-                {text: WORDS.curr_symbol + calculatedData.running_costs_p_unit_distance.toFixed(2)}
+                {text: WORDS.curr_symbol + calculatedData.costs.perUnitDistance.runningCosts.toFixed(2)}
             ]
         );
     }
 
-    if(calculatedData.total_costs_p_unit_distance){
+    if(calculatedData.costs.perUnitDistance.totalCosts){
         body.push(
             [
                 {text: WORDS.total_cp_dist},
-                {text: WORDS.curr_symbol + calculatedData.total_costs_p_unit_distance.toFixed(2)}
+                {text: WORDS.curr_symbol + calculatedData.costs.perUnitDistance.totalCosts.toFixed(2)}
             ]
         );
     }
@@ -464,15 +466,15 @@ function getTotalCostsTable(calculatedData){
     body.push(
         [
             {text: WORDS.total_fixed},
-            {text: WORDS.curr_symbol + (calculatedData.total_standing_costs_month).toFixed(0)}
+            {text: WORDS.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0)}
         ],
         [
             {text: WORDS.total_variable},
-            {text: WORDS.curr_symbol + (calculatedData.total_running_costs_month).toFixed(0)}
+            {text: WORDS.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0)}
         ],
         [
             {text: WORDS.word_total_cap, bold: true, fontSize: 14},
-            {text: WORDS.curr_symbol + (calculatedData.total_costs_month).toFixed(0), bold: true, fontSize: 14}
+            {text: WORDS.curr_symbol + (calculatedData.costs.perMonth.total).toFixed(0), bold: true, fontSize: 14}
         ]
     );
 
@@ -480,6 +482,8 @@ function getTotalCostsTable(calculatedData){
 }
 
 function getBodyFinEffort(calculatedData){
+    
+    var fe = calculatedData.financialEffort;
 
     var body = [
         [
@@ -488,23 +492,23 @@ function getBodyFinEffort(calculatedData){
         ],
         [
             {text: WORDS.extra_data_income + "\n" + gstr("#financial-effort .income_details")},
-            {text: WORDS.curr_symbol + calculatedData.fin_effort.income_per_year.toFixed(0)}
+            {text: WORDS.curr_symbol + fe.income.perYear.toFixed(0)}
         ],
         [
             {text: WORDS.extra_data_working_time + "\n" + gstr("#financial-effort .working_time_details")},
-            {text: calculatedData.fin_effort.work_hours_per_y.toFixed(0) + " " + WORDS.hour_abbr}
+            {text: fe.workingHoursPerYearToAffordCar.toFixed(0) + " " + WORDS.hour_abbr}
         ],
         [
             {text: WORDS.distance + "\n" + gstr("#financial-effort .distance_details")},
-            {text: calculatedData.driving_distance.drive_per_year.toFixed(0) + " " + WORDS.std_dist}
+            {text: calculatedData.drivingDistance.perYear.toFixed(0) + " " + WORDS.std_dist}
         ],
         [
             {text: WORDS.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
-            {text: calculatedData.time_spent_driving.hours_drive_per_year.toFixed(0) + " " + WORDS.hour_abbr}
+            {text: calculatedData.timeSpentInDriving.hoursPerYear.toFixed(0) + " " + WORDS.hour_abbr}
         ],
         [
             {text: WORDS.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
-            {text: WORDS.curr_symbol + calculatedData.fin_effort.percentage_of_income.toFixed(0) + "%"}
+            {text: WORDS.curr_symbol + fe.financialEffortPercentage.toFixed(0) + "%"}
         ]
     ];
 
@@ -512,6 +516,8 @@ function getBodyFinEffort(calculatedData){
 }
 
 function getPublicTransportsTable(calculatedData){
+    
+    var pt = calculatedData.publicTransports;
 
     var body = [
         [
@@ -520,19 +526,19 @@ function getPublicTransportsTable(calculatedData){
         ],
         [
             {text: WORDS.pub_trans_text + "\n" + gstr("#equivalent-transport-costs .public_transports_details")},
-            {text: WORDS.curr_symbol + calculatedData.public_transports.total_price_pt.toFixed(0)}
+            {text: WORDS.curr_symbol + pt.totalCostsOfStandardPublicTransports.toFixed(0)}
         ],
         [
             {text: WORDS.taxi_desl + "\n" + gstr("#equivalent-transport-costs .taxi_details")},
-            {text: WORDS.curr_symbol + calculatedData.public_transports.taxi_cost.toFixed(0)}
+            {text: WORDS.curr_symbol + pt.taxi.totalCosts.toFixed(0)}
         ],
         [
             {text: WORDS.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_details")},
-            {text: WORDS.curr_symbol + calculatedData.public_transports.other_pt.toFixed(0)}
+            {text: WORDS.curr_symbol + pt.furtherPublicTransports.totalCosts.toFixed(0)}
         ],
         [
             {text: WORDS.word_total_cap, alignment: "right", bold: true, fontSize: 14},
-            {text: WORDS.curr_symbol + (calculatedData.public_transports.total_altern).toFixed(0), bold: true, fontSize: 14}
+            {text: WORDS.curr_symbol + (pt.totalAlternativeCostsWhenUserHasNoCar).toFixed(0), bold: true, fontSize: 14}
         ]
     ];
 

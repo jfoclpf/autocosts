@@ -184,18 +184,18 @@ var TimeCounter;
             }
         },        
         costsColors: {
-            depreciation:   '#2ba3d6',
-            insurance:      '#10c6e6',
-            credit:         '#5ae0e2',
-            inspection:     '#99e6bc',
-            car_tax:        '#ffda70',
-            fuel:           '#ff9e84',
-            maintenance:    '#ff7192',
-            repairs_improv: '#e562aa',
-            parking:        '#ea90cd',
-            tolls:          '#eabcef',
-            fines:          '#9f97ef',
-            washing:        '#867ae3'
+            depreciation:        '#2ba3d6',
+            insurance:           '#10c6e6',
+            credit:              '#5ae0e2',
+            inspection:          '#99e6bc',
+            roadTaxes:           '#ffda70',
+            fuel:                '#ff9e84',
+            maintenance:         '#ff7192',
+            repairsImprovements: '#e562aa',
+            parking:             '#ea90cd',
+            tolls:               '#eabcef',
+            fines:               '#9f97ef',
+            washing:             '#867ae3'
         }
     };
 
