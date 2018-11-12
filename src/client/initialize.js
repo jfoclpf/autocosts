@@ -230,7 +230,7 @@ function loadFormHandlers(){
     $("#calculate_costs_btn").on( "click", function(){
         //tries to call Run1(); if not yet defined, retries every 500ms
         //see https://stackoverflow.com/a/53032624/1243247        
-        try{
+        /*try{
             Run1("normal");  //not using reCaptcha from Google
         }
         catch(e){
@@ -246,7 +246,8 @@ function loadFormHandlers(){
                     }
                 }, 500); //tries every 500ms
             }());
-        }
+        }*/
+        Run1("normal");
     });
 
     //button "next"; function buttonNextHandler is on formFunctions.js

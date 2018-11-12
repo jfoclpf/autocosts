@@ -39,7 +39,7 @@ function createObjToDB(){
     objectToDb.credit_residual_value =              f1.credit_residual_value;
     objectToDb.inspection_number_inspections =      f1.nmr_times_inspec;
     objectToDb.inspection_average_inspection_cost = f1.inspec_price;
-    objectToDb.vehicle_excise_tax =                 f1.car_tax;
+    objectToDb.vehicle_excise_tax =                 f1.roadTaxes;
 
     
             //fuel

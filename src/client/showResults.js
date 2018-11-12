@@ -21,18 +21,20 @@ function Run2(callback){
     
     //country object with country specific variables
     var countryObj = {
-        currency: WORDS.curr_code,
-        distance_std: WORDS.distance_std_option,
-        fuel_efficiency_std: WORDS.fuel_efficiency_std_option,
-        fuel_price_volume_std: WORDS.fuel_price_volume_std,
-        taxi_price: WORDS.taxi_price_per_dist
+        countryCode:            COUNTRY,
+        currency:               WORDS.curr_code,
+        distance_std:           WORDS.distance_std_option,
+        speed_std:              WORDS.std_dist+"/h",
+        fuel_efficiency_std:    WORDS.fuel_efficiency_std_option,
+        fuel_price_volume_std:  WORDS.fuel_price_volume_std,
+        taxi_price:             WORDS.taxi_price_per_dist
     };
 
     //calculate costs, "costs" is a global variable/object defined in coreFunctions.js
     var calculatedData = costs.calculateCosts(form, countryObj); 
         
     //get Uber data if applicable
-    if(calculatedData.alternative_to_car_costs_calculated && SWITCHES.uber){
+    if(calculatedData.publicTransports.calculated && SWITCHES.uber){
         calculatedData.uber = costs.getUber(UBER_API, calculatedData, countryObj); 
     } 
     
@@ -42,7 +44,7 @@ function Run2(callback){
     //see for more info: https://github.com/hughsk/flat
     var flattenedData = flatten(calculatedData, {delimiter:"_"}); 
     
-    //console.log(flattenedData);       
+    console.log(flattenedData);     
 
     showResults(form, calculatedData, flattenedData, countryObj);
         
@@ -63,7 +65,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     //The first three boxes on the top
     //if financial effort was not calculated, does not show doughnut chart
     //on the third box, and adapt the three boxes css classes
-    if(calculatedData.fin_effort_calculated && SWITCHES.charts){ 
+    if(calculatedData.financialEffort.calculated && SWITCHES.charts){ 
         drawDoughnutFinEffortChart(calculatedData);
         //shows third box where the financial effort doughnut chart appears
         $("#results #info-boxes .info-box.box-3").show();
@@ -76,7 +78,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     } 
                      
     //it needs to show also 1/2 of Maintenance Costs
-    flattenedData.monthly_costs_halfOfMaintenance = flattenedData.monthly_costs_maintenance / 2;
+    flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2;
 
     setCalculatedDataToHTML(flattenedData);                
     
@@ -94,7 +96,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     }
 
     //Financial Effort 
-    if(calculatedData.fin_effort_calculated){            
+    if(calculatedData.financialEffort.calculated){            
         setFinancialEffortDetails(form, calculatedData);
         
         //shows financial effort section 
@@ -116,11 +118,11 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     } 
 
     //Equivalent transport costs
-    if(calculatedData.alternative_to_car_costs_calculated){            
+    if(calculatedData.publicTransports.calculated){            
         setEquivTransportCostsDetails(form, calculatedData);
         
         $("#results #equivalent-transport-costs").show();
-        DISPLAY.result.public_transports = DISPLAY.result.uber = true;
+        DISPLAY.result.public_transports = true;
         
         if(SWITCHES.charts){
             drawAlterToCarChart(calculatedData);
@@ -132,7 +134,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     }
     else {
         $("#results #equivalent-transport-costs").hide();
-        DISPLAY.result.public_transports = DISPLAY.result.uber = false;
+        DISPLAY.result.public_transports = false;
     } 
 
     setClassAccordionHandler();
@@ -206,7 +208,7 @@ function setPeriodicCosts(calculatedData, period){
     $('#results #totalCostsPeriod').val(period);
     
     //main info box total costs    
-    $("#results #info-boxes .total_costs_per_period").html((calculatedData.total_costs_month*numMonths).toFixed(0));
+    $("#results #info-boxes .total_costs_per_period").html((calculatedData.costs.perMonth.total * numMonths).toFixed(0));
     
     //section h2 title
     $("#results #avg-periodic-cost .costs_per_type").html(WORDS.costs + " " + WORDS.word_per + strPeriod);
@@ -226,7 +228,7 @@ function setPeriodicCosts(calculatedData, period){
                 if (classesArr[i].indexOf("periodic_costs") >= 0){
                     className = classesArr[i];
                     costItem = className.replace("periodic_costs_", "");
-                    val = calculatedData.monthly_costs[costItem] * numMonths;
+                    val = calculatedData.costs.perMonth.items[costItem] * numMonths;
                     $(this).html(currSymb + " " + val.toFixed(1));
                 }
             }
@@ -235,11 +237,11 @@ function setPeriodicCosts(calculatedData, period){
     });
     
     //extra items
-    $htmlEl.find(".periodic_costs_halfOfMaintenance").html(currSymb + " " + (calculatedData.monthly_costs.maintenance/2*numMonths).toFixed(1));
+    $htmlEl.find(".periodic_costs_halfOfMaintenance").html(currSymb + " " + (calculatedData.costs.perMonth.items.maintenance/2*numMonths).toFixed(1));
     
-    $htmlEl.find(".periodic_costs_total_standing_costs").html(currSymb + " " + (calculatedData.total_standing_costs_month*numMonths).toFixed(2));
-    $htmlEl.find(".periodic_costs_total_running_costs").html(currSymb + " " + (calculatedData.total_running_costs_month*numMonths).toFixed(2));
-    $htmlEl.find(".periodic_costs_total_costs").html(currSymb + " " + (calculatedData.total_costs_month*numMonths).toFixed(2));
+    $htmlEl.find(".periodic_costs_total_standing_costs").html(currSymb + " " + (calculatedData.costs.perMonth.standingCosts * numMonths).toFixed(2));
+    $htmlEl.find(".periodic_costs_total_running_costs").html(currSymb + " " + (calculatedData.costs.perMonth.runningCosts * numMonths).toFixed(2));
+    $htmlEl.find(".periodic_costs_total_costs").html(currSymb + " " + (calculatedData.costs.perMonth.total * numMonths).toFixed(2));
     
 }
 
@@ -248,12 +250,14 @@ function setPeriodicCostsDetails(form, calculatedData){
     //html element in which the costs details will be added 
     var htmlEl = "#results #avg-periodic-cost .three-boxes";
     
+    var errMsg = "Error setting Periodic Costs details on results";
+    
     //remove existing <ul> if they exist, to add new ones
     $(htmlEl + " ul").remove();
     
     //add Cost <ul> for each cost details, for example add <ul> to div with class "fuel_details"
-    for (var cost in calculatedData.monthly_costs) {
-        if (!calculatedData.monthly_costs.hasOwnProperty(cost)) {
+    for (var cost in calculatedData.costs.perMonth.items) {
+        if (!calculatedData.costs.perMonth.items.hasOwnProperty(cost)) {
             continue;
         }
         
@@ -273,22 +277,21 @@ function setPeriodicCostsDetails(form, calculatedData){
     };
     
     //Depreciation
-    if (calculatedData.age_months === 0) {
+    if (calculatedData.details.ageOfCarInMonths === 0) {
         addLiElm("depreciation", WORDS.error_depreciation_new_car);
     } 
     else {        
         addLiElm("depreciation", WORDS.aq_value, currencyShow(form.depreciation.acquisitionCost));
         addLiElm("depreciation", WORDS.final_value, currencyShow(form.depreciation.presentValue));
-        addLiElm("depreciation", WORDS.period_own, calculatedData.age_months + " " + WORDS.months);
-        addLiElm("depreciation", "(" + currencyShow(form.depreciation.acquisitionCost) + "-" + 
-                                       currencyShow(form.depreciation.presentValue) + ")/" + calculatedData.age_months + " " + WORDS.months);
+        addLiElm("depreciation", WORDS.period_own, calculatedData.details.ageOfCarInMonths + " " + WORDS.months);
+        addLiElm("depreciation", "(" + currencyShow(form.depreciation.acquisitionCost) + "-" + currencyShow(form.depreciation.presentValue) + ")/" +
+                                 calculatedData.details.ageOfCarInMonths + " " + WORDS.months);
     }
 
     //Insurance
     switch(form.insurance.period){
-
         case "mensal":
-            addLiElm("insurance", calculatedData.monthly_costs.insurance + " " + WORDS.curr_name_plural + " " + 
+            addLiElm("insurance", form.insurance.amountPerPeriod + " " + WORDS.curr_name_plural + " " + 
                                   WORDS.word_per + " " + WORDS.month);
             break;
         case "trimestral":
@@ -303,6 +306,8 @@ function setPeriodicCostsDetails(form, calculatedData){
             addLiElm("insurance", form.insurance.amountPerPeriod + " " + WORDS.curr_name_plural + " " + 
                                   WORDS.word_per + " " + WORDS.year);
             break;
+        default:
+            throw errMsg;
     }
 
     //Credit interests
@@ -313,13 +318,13 @@ function setPeriodicCostsDetails(form, calculatedData){
         addLiElm("credit", WORDS.credit_instalment, currencyShow(form.credit.yesCredit.amountInstallment));
         addLiElm("credit", WORDS.credit_residual_value1, currencyShow(form.credit.yesCredit.residualValue));
 
-        addLiElm("credit", WORDS.credit_total_interests, currencyShow(calculatedData.total_interests)); 
-        addLiElm("credit", "(" + calculatedData.month_cred + "*" + form.credit.yesCredit.amountInstallment + ")+" + 
+        addLiElm("credit", WORDS.credit_total_interests, currencyShow(calculatedData.details.credit.totalPaidInInterests)); 
+        addLiElm("credit", "(" + calculatedData.details.credit.numberOfMonthlyInstalments + "*" + form.credit.yesCredit.amountInstallment + ")+" + 
                            form.credit_residual_value + "-" + form.credit.yesCredit.borrowedAmount);
 
-        if(calculatedData.age_months >= calculatedData.month_cred){
+        if(calculatedData.age_months >= calculatedData.details.credit.numberOfMonthlyInstalments){
             addLiElm("credit", WORDS.credit_interests_month + ": " +
-                               currencyShow(calculatedData.monthly_costs.credit.toFixed(2)));
+                               currencyShow(calculatedData.costs.perMonth.items.credit.toFixed(2)));
         }        
     }
 
@@ -327,17 +332,17 @@ function setPeriodicCostsDetails(form, calculatedData){
     if (form.inspection.numberOfInspections !== 0){        
         addLiElm("inspection", form.inspection.numberOfInspections + " " + WORDS.times_costing + " " + form.inspection.averageInspectionCost + 
                                " " + WORDS.curr_name_plural + " " + WORDS.each_one_during + " " + 
-                               calculatedData.age_months + " " + WORDS.months);
+                               calculatedData.details.ageOfCarInMonths + " " + WORDS.months);
     }
     
     //Taxes
-    addLiElm("car_tax", form.car_tax.amountPerYear + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
+    addLiElm("roadTaxes", form.roadTaxes.amountPerYear + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
   
     //Fuel    
     switch(form.fuel.typeOfCalculation){
         case "km":
             if (form.fuel.distanceBased.considerCarToJob == "false"){
-                switch(calculatedData.fuel_period_km)
+                switch(form.fuel.distanceBased.noCarToJob.period)
                 {
                     case "1":
                         addLiElm("fuel", form.fuel.distanceBased.noCarToJob.distancePerPeriod + " " + 
@@ -359,6 +364,8 @@ function setPeriodicCostsDetails(form, calculatedData){
                         addLiElm("fuel", form.fuel.distanceBased.noCarToJob.distancePerPeriod + " " + 
                                  WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.year);
                         break;
+                    default:
+                        throw errMsg;                        
                 }
                 addLiElm("fuel", WORDS.fuel_car_eff, form.fuel.distanceBased.fuelEfficiency + " " + WORDS.std_fuel_calc);
                 addLiElm("fuel", WORDS.fuel_price1, currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + WORDS.std_volume_short);
@@ -367,7 +374,7 @@ function setPeriodicCostsDetails(form, calculatedData){
                 addLiElm("fuel", form.fuel.distanceBased.carToJob.daysPerWeek + " " + WORDS.fuel_job_calc1);
                 addLiElm("fuel", WORDS.you_drive + " " + form.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob + " " + WORDS.fuel_dist_home_job1);
                 addLiElm("fuel", WORDS.you_drive + " " + form.fuel.distanceBased.carToJob.distanceDuringWeekends + " " + WORDS.fuel_dist_no_job1);
-                addLiElm("fuel", WORDS.you_drive_tottaly_avg + " " + calculatedData.distance_per_month.toFixed(1) + " " + 
+                addLiElm("fuel", WORDS.you_drive_tottaly_avg + " " + calculatedData.drivingDistance.perMonth.toFixed(1) + " " + 
                                  WORDS.std_dist + " " + WORDS.word_per + " " + WORDS.month + " (~30.5 " + WORDS.days + ")");
                 addLiElm("fuel", WORDS.fuel_car_eff, form.fuel.distanceBased.fuelEfficiency + " " + WORDS.std_fuel_calc);
                 addLiElm("fuel", WORDS.fuel_price, currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + WORDS.std_volume_short);
@@ -375,7 +382,7 @@ function setPeriodicCostsDetails(form, calculatedData){
             break;
             
         case "euros":
-            switch(calculatedData.fuel_cost_period)
+            switch(form.fuel.currencyBased.period)
             {
                 case "1":
                     addLiElm("fuel", form.fuel.currencyBased.amountPerPeriod + " " + WORDS.curr_name_plural + " " + 
@@ -396,6 +403,8 @@ function setPeriodicCostsDetails(form, calculatedData){
                     addLiElm("fuel", form.fuel.currencyBased.amountPerPeriod + " " + WORDS.curr_name_plural + " " + 
                              WORDS.word_per + " " + WORDS.year);
                     break;
+                default:
+                    throw errMsg;                        
             }
             break;
     }
@@ -404,11 +413,11 @@ function setPeriodicCostsDetails(form, calculatedData){
     addLiElm("maintenance", form.maintenance.amountPerYear + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
 
     //Repairs
-    addLiElm("repairs_improv", form.repairs_improv.amountPerYear + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
+    addLiElm("repairsImprovements", form.repairsImprovements.amountPerYear + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
 
     //Tolls
     if(form.tolls.calculationBasedOnDay == "false") {
-        switch(calculatedData.tolls_period) {
+        switch(form.tolls.noBasedOnDay.period) {
             case "1":
                 addLiElm("tolls", form.tolls.noBasedOnDay.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month);
                 break;
@@ -425,6 +434,8 @@ function setPeriodicCostsDetails(form, calculatedData){
             case "5":
                 addLiElm("tolls", form.tolls.noBasedOnDay.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
                 break;
+            default:
+                throw errMsg;                
         }
     }
     else{
@@ -434,7 +445,7 @@ function setPeriodicCostsDetails(form, calculatedData){
     } 
                     
     //Fines
-    switch(calculatedData.fines_period) {
+    switch(form.fines.period) {
         case "1":
             addLiElm("fines", form.fines.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month);
             break;
@@ -450,10 +461,12 @@ function setPeriodicCostsDetails(form, calculatedData){
         case "5":
             addLiElm("fines", form.fines.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
             break;
+        default:
+            throw errMsg;            
         }
 
     //Washing    
-    switch(calculatedData.washing_period) {
+    switch(form.washing.period) {
         case "1":
             addLiElm("washing", form.washing.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.month);
             break;
@@ -470,6 +483,8 @@ function setPeriodicCostsDetails(form, calculatedData){
         case "5":
             addLiElm("washing", form.washing.amountPerPeriod + " " + WORDS.curr_name_plural + " " + WORDS.word_per + " " + WORDS.year);
             break;
+        default:
+            throw errMsg;            
         }    
 }
 
@@ -477,6 +492,8 @@ function setFinancialEffortDetails(form, calculatedData){
 
     //html element in which the costs details will be added 
     var htmlEl = "#results #financial-effort .values"; 
+    
+    var errMsg = "Error setting Financial Costs details on results";
     
     //remove existing <ul> if they exist, to add new ones
     $(htmlEl + " ul").remove();
@@ -497,92 +514,97 @@ function setFinancialEffortDetails(form, calculatedData){
     };
     
     //income
+    var income = calculatedData.financialEffort.income;    
     switch(form.income.incomePeriod){
         case 'year':
-            addLiElm("income", WORDS.net_income_per + " " + WORDS.year, currencyShow(calculatedData.fin_effort.income));
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.aver_income_per_month.toFixed(1)));
+            addLiElm("income", WORDS.net_income_per + " " + WORDS.year, currencyShow(form.income.year.amount));
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(income.averagePerMonth.toFixed(1)));
             break;
         
         case 'month':
-            addLiElm("income", WORDS.net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.income));
-            addLiElm("income", WORDS.number_of_months, calculatedData.fin_effort.income_per_type);
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.aver_income_per_month.toFixed(1)));
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(calculatedData.fin_effort.income_per_year.toFixed(1)));            
+            addLiElm("income", WORDS.net_income_per + " " + WORDS.month, currencyShow(form.income.month.amountPerMonth));
+            addLiElm("income", WORDS.number_of_months, form.income.month.monthsPerYear);
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(income.averagePerMonth.toFixed(1)));
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(income.perYear.toFixed(1)));            
             break;
         
         case 'week':
-            addLiElm("income", WORDS.net_income_per + " " + WORDS.week, currencyShow(calculatedData.fin_effort.income));
-            addLiElm("income", WORDS.number_of_weeks, calculatedData.fin_effort.income_per_type);
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.aver_income_per_month.toFixed(1)));
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(calculatedData.fin_effort.income_per_year.toFixed(1)));            
+            addLiElm("income", WORDS.net_income_per + " " + WORDS.week, currencyShow(form.income.week.amountPerWeek));
+            addLiElm("income", WORDS.number_of_weeks, form.income.week.weeksPerYear);
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(income.averagePerMonth.toFixed(1)));
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(income.perYear.toFixed(1)));            
             break;
         
         case 'hour':
-            addLiElm("income", WORDS.net_income_per + " " + WORDS.hour, currencyShow(calculatedData.fin_effort.income));
-            addLiElm("income", WORDS.number_of_hours, calculatedData.fin_effort.income_hours_per_week + " " + WORDS.hour_abbr);
-            addLiElm("income", WORDS.number_of_weeks, calculatedData.fin_effort.income_per_type);
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(calculatedData.fin_effort.aver_income_per_month.toFixed(1)));
-            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(calculatedData.fin_effort.income_per_year.toFixed(1)));                     
+            addLiElm("income", WORDS.net_income_per + " " + WORDS.hour, currencyShow(form.income.hour.amountPerHour));
+            addLiElm("income", WORDS.number_of_hours, form.income.hour.hoursPerWeek + " " + WORDS.hour_abbr);
+            addLiElm("income", WORDS.number_of_weeks, form.income.hour.weeksPerYear);
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.month, currencyShow(income.averagePerMonth.toFixed(1)));
+            addLiElm("income", WORDS.average_net_income_per + " " + WORDS.year, currencyShow(income.perYear.toFixed(1)));                     
             break;
+        default:
+            throw errMsg;
     }
     
     
     //working time
+    var wt = calculatedData.financialEffort.workingTime;
     if(form.income.incomePeriod != 'hour'){
         if(form.workingTime.isActivated == 'true'){
             
-            addLiElm("working_time", WORDS.hours_per + " " + WORDS.week, calculatedData.fin_effort.time_hours_per_week + " " + WORDS.hour_abbr);
-            addLiElm("working_time", WORDS.months_per + " " + WORDS.year, calculatedData.fin_effort.time_month_per_year);
-            addLiElm("working_time", WORDS.average_working_hours_per + " " + WORDS.month, 
-                     calculatedData.fin_effort.aver_work_time_per_m.toFixed(1) + " " + WORDS.hour_abbr);
-            addLiElm("working_time", WORDS.working_hours_per + " " + WORDS.year, 
-                     calculatedData.fin_effort.work_hours_per_y.toFixed(1) + " " + WORDS.hour_abbr);            
+            addLiElm("working_time", WORDS.hours_per + " " + WORDS.week, wt.hoursPerWeek + " " + WORDS.hour_abbr);
+            addLiElm("working_time", WORDS.months_per + " " + WORDS.year, wt.monthsPerYear);
+            addLiElm("working_time", WORDS.average_working_hours_per + " " + WORDS.month, wt.hoursPerMonth.toFixed(1) + " " + WORDS.hour_abbr);
+            addLiElm("working_time", WORDS.working_hours_per + " " + WORDS.year, wt.hoursPerYear.toFixed(1) + " " + WORDS.hour_abbr);            
         }
         else{
             addLiElm("working_time",  WORDS.working_time_message);            
         }
     }
-    addLiElm("working_time", WORDS.average_net_income_per + " " + WORDS.hour, currencyShow(calculatedData.fin_effort.aver_income_per_hour.toFixed(1)));    
+    addLiElm("working_time", WORDS.average_net_income_per + " " + WORDS.hour, currencyShow(income.averagePerHour.toFixed(1)));    
     
-    //distance    
+    //distance 
+    var dd = calculatedData.drivingDistance;
     if((form.fuel.typeOfCalculation != 'km' && form.distance.considerCarToJob == 'true') || 
        (form.fuel.typeOfCalculation != 'km' && form.fuel.distanceBased.considerCarToJob == 'true')){
         
         addLiElm("distance", WORDS.dist_home_job, parseInt(form.distance.carToJob.distanceBetweenHomeAndJob).toFixed(1) + " " + WORDS.std_dist);
         addLiElm("distance", WORDS.days_drive_job, form.distance.carToJob.daysPerWeek + " " + WORDS.days);
         addLiElm("distance", WORDS.dist_jorney_weekend, parseInt(form.distance.carToJob.distanceDuringWeekends).toFixed(1) + " " + WORDS.std_dist);
-        addLiElm("distance", WORDS.average_dist_per_week, calculatedData.driving_distance.aver_drive_per_week.toFixed(1) + " " + WORDS.std_dist);                
+        addLiElm("distance", WORDS.average_dist_per_week, dd.perWeek.toFixed(1) + " " + WORDS.std_dist);                
     }
     
-    addLiElm("distance", WORDS.you_drive_per + " " + WORDS.month, calculatedData.distance_per_month.toFixed(1) + " " + WORDS.std_dist);
-    addLiElm("distance", WORDS.you_drive_per + " " + WORDS.year, calculatedData.driving_distance.drive_per_year.toFixed(1) + " " + WORDS.std_dist);             
+    addLiElm("distance", WORDS.you_drive_per + " " + WORDS.month, dd.perMonth.toFixed(1) + " " + WORDS.std_dist);
+    addLiElm("distance", WORDS.you_drive_per + " " + WORDS.year, dd.perYear.toFixed(1) + " " + WORDS.std_dist);             
         
     //time spent in driving
+    var tsd = calculatedData.timeSpentInDriving;
     if(form.distance.considerCarToJob == 'true' || form.fuel.distanceBased.considerCarToJob == 'true'){
         addLiElm("time_spent_in_driving", WORDS.minutes_home_job, form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + " " + WORDS.min);
         addLiElm("time_spent_in_driving", WORDS.days_drive_to_job, form.distance.carToJob.daysPerWeek + " " + WORDS.days);
         addLiElm("time_spent_in_driving", WORDS.time_drive_weekend, form.timeSpentInDriving.option1.minutesDuringWeekend + " " + WORDS.min);
-        addLiElm("time_spent_in_driving", WORDS.minutes_drive_per + " " + WORDS.week, calculatedData.time_spent_driving.min_drive_per_week + " " + WORDS.min);        
+        addLiElm("time_spent_in_driving", WORDS.minutes_drive_per + " " + WORDS.week, tsd.minutesPerWeek + " " + WORDS.min);        
     }
     else{
         addLiElm("time_spent_in_driving", WORDS.minutes_drive_per + " " + WORDS.day,  form.timeSpentInDriving.option2.minutesPerDay + " " + WORDS.min);
         addLiElm("time_spent_in_driving", WORDS.days_drive_per_month, form.timeSpentInDriving.option2.daysPerMonth + " " + WORDS.days);
     }
 
-    addLiElm("time_spent_in_driving", WORDS.hours_drive_per + " " + WORDS.month, 
-             calculatedData.time_spent_driving.hours_drive_per_month.toFixed(1) + " " + WORDS.hour_abbr);
-    addLiElm("time_spent_in_driving", WORDS.hours_drive_per + " " + WORDS.year, 
-             calculatedData.time_spent_driving.hours_drive_per_year.toFixed(1) + " " + WORDS.hour_abbr);   
+    addLiElm("time_spent_in_driving", WORDS.hours_drive_per + " " + WORDS.month, tsd.hoursPerMonth.toFixed(1) + " " + WORDS.hour_abbr);
+    addLiElm("time_spent_in_driving", WORDS.hours_drive_per + " " + WORDS.year,  tsd.hoursPerYear.toFixed(1) + " " + WORDS.hour_abbr);   
     
     
     //financial effort
-    addLiElm("financial_effort", WORDS.total_costs_per_year, currencyShow(calculatedData.fin_effort.total_costs_year.toFixed(1)));
-    addLiElm("financial_effort", WORDS.hours_to_afford_car, calculatedData.fin_effort.hours_per_year_to_afford_car.toFixed(1) + " " + WORDS.hour_abbr);
-    addLiElm("financial_effort", WORDS.months_to_afford_car, calculatedData.fin_effort.month_per_year_to_afford_car.toFixed(2));
-    addLiElm("financial_effort", WORDS.days_car_paid, Math.ceil(calculatedData.fin_effort.days_car_paid) + " " + WORDS.days);
-    addLiElm("financial_effort", WORDS.aver_yearly + " " + WORDS.kinetic_speed, calculatedData.kinetic_speed.toFixed(1) + " " + WORDS.std_dist);
-    addLiElm("financial_effort", WORDS.aver_yearly + WORDS.virtual_speed, calculatedData.virtual_speed.toFixed(1) + " " + WORDS.std_dist);
+    var fe = calculatedData.financialEffort;    
+    addLiElm("financial_effort", WORDS.total_costs_per_year, currencyShow(fe.totalCarCostsPerYear.toFixed(1)));
+    addLiElm("financial_effort", WORDS.hours_to_afford_car,  fe.workingHoursPerYearToAffordCar.toFixed(1) + " " + WORDS.hour_abbr);
+    addLiElm("financial_effort", WORDS.months_to_afford_car, fe.workingMonthsPerYearToAffordCar.toFixed(2));
+    addLiElm("financial_effort", WORDS.days_car_paid,        Math.ceil(fe.daysForCarToBePaid) + " " + WORDS.days);
     
+    //speeds
+    var speeds = calculatedData.speeds; 
+    addLiElm("financial_effort", WORDS.aver_yearly + " " + WORDS.kinetic_speed, speeds.averageKineticSpeed.toFixed(1) + " " + WORDS.std_dist+"/h");
+    addLiElm("financial_effort", WORDS.aver_yearly + WORDS.virtual_speed,       speeds.averageConsumerSpeed.toFixed(1) + " " + WORDS.std_dist+"/h");    
 }
 
 function setEquivTransportCostsDetails(form, calculatedData){        
@@ -609,17 +631,18 @@ function setEquivTransportCostsDetails(form, calculatedData){
     };  
      
     //Public transports more taxi
-    if(calculatedData.public_transports.display_pt) {
+    var pt = calculatedData.publicTransports;
+    if(pt.toBeDisplayed) {
 
         DISPLAY.result.public_transports = true; //global variable
         
         addLiElm("public_transports", WORDS.fam_nbr, form.publicTransports.numberOfPeopleInFamily + " " + WORDS.person_or_people);              
         addLiElm("public_transports", WORDS.pass_month_avg, currencyShow(form.publicTransports.monthlyPassCost));        
 
-        addLiElm("taxi", calculatedData.public_transports.km_by_taxi.toFixed(1) + " " + WORDS.std_dist + " " + WORDS.on_taxi_paying + " " + 
-            currencyShow(calculatedData.public_transports.taxi_price_per_km.toFixed(1)) + "/" + WORDS.std_dist); 
+        addLiElm("taxi", pt.taxi.possibleDistanceDoneByTaxi.toFixed(1) + " " + WORDS.std_dist + " " + WORDS.on_taxi_paying + " " + 
+            currencyShow(pt.taxi.costPerUnitDistance.toFixed(1)) + "/" + WORDS.std_dist); 
         
-        if(calculatedData.public_transports.display_other_pt){
+        if(pt.furtherPublicTransports.display){
             addLiElm("other_pub_trans", WORDS.other_pub_trans_desc); 
         }
     }
@@ -657,7 +680,7 @@ function setEquivTransportCostsDetails(form, calculatedData){
                     currencyShow(calculatedUber.ucd.toFixed(2)) + "/" + WORDS.std_dist);
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.minutes,
                     currencyShow(calculatedUber.ucm.toFixed(2)) + "/" + WORDS.min);
-            addLiElm("uber", WORDS.kinetic_speed_title, calculatedData.kinetic_speed.toFixed(2) + " " + WORDS.std_dist + "/" + WORDS.hour_abbr);
+            addLiElm("uber", WORDS.kinetic_speed_title, calculatedData.speeds.averageKineticSpeed.toFixed(2) + " " + WORDS.std_dist + "/" + WORDS.hour_abbr);
             addLiElm("uber", "UBER - " + WORDS.std_dist_full + " " + WORDS.word_per + " " + WORDS.month, 
                     calculatedUber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full);
             addLiElm("uber", "UBER: " + WORDS.costs + " - " + WORDS.word_total_cap, currencyShow(calculatedUber.delta.toFixed(0))); 

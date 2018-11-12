@@ -10,7 +10,7 @@
 
 function drawDoughnutFinEffortChart(calculatedData){
     
-    var finEffortPerc = calculatedData.fin_effort.percentage_of_income;
+    var finEffortPerc = calculatedData.financialEffort.financialEffortPercentage;
     
     var dataset = [{
         data: [finEffortPerc, 100 - finEffortPerc],
@@ -72,13 +72,14 @@ function drawCostsBarsChart(calculatedData, period) {
             numMonths = 12;
             break;
         default:
-            console.error("Period not valid " + period);
+            throw "Period not valid " + period;
     }    
 
     var periodicCosts = {};
-    for (var key in calculatedData.monthly_costs){
-        if(calculatedData.monthly_costs.hasOwnProperty(key)){
-            periodicCosts[key] = calculatedData.monthly_costs[key]*numMonths;
+    var monthlyCosts = calculatedData.costs.perMonth.items;
+    for (var key in monthlyCosts){
+        if(monthlyCosts.hasOwnProperty(key)){
+            periodicCosts[key] = monthlyCosts[key]*numMonths;
         }
     }
 
@@ -116,10 +117,10 @@ function drawCostsBarsChart(calculatedData, period) {
             c.insurance,
             c.credit,
             c.inspection,
-            c.car_tax,
+            c.roadTaxes,
             c.fuel,
             c.maintenance,            
-            c.repairs_improv,
+            c.repairsImprovements,
             c.parking,
             c.tolls,
             c.fines,
@@ -130,10 +131,10 @@ function drawCostsBarsChart(calculatedData, period) {
             cc.insurance,
             cc.credit,
             cc.inspection,
-            cc.car_tax,
+            cc.roadTaxes,
             cc.fuel,
             cc.maintenance,            
-            cc.repairs_improv,
+            cc.repairsImprovements,
             cc.parking,
             cc.tolls,
             cc.fines,
@@ -212,15 +213,16 @@ function drawCostsDoughnutChart(calculatedData, period) {
             numMonths = 12;
             break;
         default:
-            console.error("Period not valid " + period);
+            throw "Period not valid " + period;
     } 
         
-    var percentageCosts = {};  //cost item percentage with respect to overall costs    
+    var percentageCosts = {};  //cost item percentage with respect to overall costs  
+    var monthlyCosts = calculatedData.costs.perMonth.items;
     var n = 0; var periodicCosts = [];    //periodic costs according; used for showing in tooltips of chart
-    for (var key in calculatedData.monthly_costs){
-        if(calculatedData.monthly_costs.hasOwnProperty(key)){            
-            percentageCosts[key] = calculatedData.monthly_costs[key] / calculatedData.total_costs_month * 100;             
-            periodicCosts[n] = calculatedData.monthly_costs[key]*numMonths; 
+    for (var key in monthlyCosts){
+        if(monthlyCosts.hasOwnProperty(key)){            
+            percentageCosts[key] = monthlyCosts[key] / calculatedData.costs.perMonth.total * 100;             
+            periodicCosts[n] = monthlyCosts[key]*numMonths; 
             n++;
         }
     }
@@ -255,10 +257,10 @@ function drawCostsDoughnutChart(calculatedData, period) {
             p.insurance,
             p.credit,
             p.inspection,
-            p.car_tax,
+            p.roadTaxes,
             p.fuel,
             p.maintenance,            
-            p.repairs_improv,
+            p.repairsImprovements,
             p.parking,
             p.tolls,
             p.fines,
@@ -269,10 +271,10 @@ function drawCostsDoughnutChart(calculatedData, period) {
             cc.insurance,
             cc.credit,
             cc.inspection,
-            cc.car_tax,
+            cc.roadTaxes,
             cc.fuel,
             cc.maintenance,            
-            cc.repairs_improv,
+            cc.repairsImprovements,
             cc.parking,
             cc.tolls,
             cc.fines,
@@ -295,8 +297,7 @@ function drawCostsDoughnutChart(calculatedData, period) {
                 },
                 label: function(tooltipItem, data) {                    
                     var i = tooltipItem.index;
-                    return WORDS.curr_symbol + periodicCosts[i].toFixed(1) + "   " + 
-                        data.datasets[0].data[i].toFixed(1) + "%";
+                    return WORDS.curr_symbol + periodicCosts[i].toFixed(1) + "   " + data.datasets[0].data[i].toFixed(1) + "%";
                 }
             } 
         },       
@@ -324,7 +325,7 @@ function drawCostsDoughnutChart(calculatedData, period) {
 //draws vertical bars chart for Financial Effort
 function drawFinEffortChart(calculatedData){
 
-    var c = calculatedData.fin_effort; //Monthly costs object of calculated data, parsed to fixed(1)
+    var fe = calculatedData.financialEffort; //Monthly costs object of calculated data, parsed to fixed(1)
 
     //always creates a new chart
     if (DISPLAY.charts.finEffort.ref){
@@ -340,8 +341,8 @@ function drawFinEffortChart(calculatedData){
         {
             label: WORDS.costs,
             data: [
-                c.income_per_year,
-                c.total_costs_year
+                fe.income.perYear,
+                fe.totalCarCostsPerYear
             ],
             backgroundColor:[
                 '#2ba3d6',
@@ -404,11 +405,11 @@ function drawFinEffortChart(calculatedData){
 function drawAlterToCarChart(calculatedData) {
 
     var i;    
-    var c = calculatedData.monthly_costs;     //Monthly costs object of calculated data, parsed to fixed(1)
-    var p = calculatedData.public_transports;
+    var c = calculatedData.costs.perMonth.items;     //Monthly costs object of calculated data
+    var p = calculatedData.publicTransports;
     var u = calculatedData.uber;
 
-    var totCostsPerMonth = parseFloat(calculatedData.total_costs_month.toFixed(1));
+    var totCostsPerMonth = calculatedData.costs.perMonth.total.toFixed(1);
     
     //always creates a new chart
     if (DISPLAY.charts.alterToCar.ref){
@@ -416,7 +417,7 @@ function drawAlterToCarChart(calculatedData) {
     }
 
     //boolean variables
-    var p_bool = isObjDef(p) && p.display_pt && DISPLAY.result.public_transports; //public transports    
+    var p_bool = isObjDef(p) && p.toBeDisplayed && DISPLAY.result.public_transports; //public transports    
     var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
     
     var labels = [
@@ -458,15 +459,15 @@ function drawAlterToCarChart(calculatedData) {
             //2nd column
             {
                 label: WORDS.other_pub_trans,
-                data: [0, p.other_pt],
+                data: [0, p.furtherPublicTransports.totalCosts],
                 backgroundColor: '#ff9e84'
             }, {
                 label: WORDS.taxi_desl,
-                data: [0, p.taxi_cost],
+                data: [0, p.taxi.totalCosts],
                 backgroundColor: '#ffda70'
             }, {
                 label: WORDS.pub_trans_text,
-                data: [0, p.total_price_pt],
+                data: [0, p.totalCostsOfStandardPublicTransports],
                 backgroundColor: '#99e6bc'
             }                  
         ];
