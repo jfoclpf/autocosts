@@ -405,9 +405,8 @@ function drawFinEffortChart(calculatedData){
 function drawAlterToCarChart(calculatedData) {
 
     var i;    
-    var c = calculatedData.costs.perMonth.items;     //Monthly costs object of calculated data
-    var p = calculatedData.publicTransports;
-    var u = calculatedData.uber;
+    var publicTransportsObj = calculatedData.publicTransports;
+    var uberObj             = calculatedData.uber;
 
     var totCostsPerMonth = calculatedData.costs.perMonth.total.toFixed(1);
     
@@ -417,8 +416,8 @@ function drawAlterToCarChart(calculatedData) {
     }
 
     //boolean variables
-    var p_bool = isObjDef(p) && p.toBeDisplayed && DISPLAY.result.public_transports; //public transports    
-    var u_bool = SWITCHES.uber && isObjDef(u) && DISPLAY.result.uber; //uber
+    var publicTransportstBool = isObjDef(publicTransportsObj) && publicTransportsObj.toBeDisplayed && DISPLAY.result.public_transports;    
+    var uberBool = SWITCHES.uber && isObjDef(uberObj) && DISPLAY.result.uber; //uber
     
     var labels = [
         formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25)
@@ -439,12 +438,12 @@ function drawAlterToCarChart(calculatedData) {
     //just apply to the first column of chart, thus the remainer columns should be set to zero, i.e.
     //according to chartsJS the "data" for each object should be for example "data: [c.fines, 0]" if it has 2 columns
     //see for more information: https://stackoverflow.com/a/45123023/1243247         
-    if(p_bool){
+    if(publicTransportstBool){
         for(i=0; i<dataset.length; i++){
             dataset[i].data.push(0);
         }        
     }
-    if(u_bool){
+    if(uberBool){
         for(i=0; i<dataset.length; i++){
             dataset[i].data.push(0);
         }        
@@ -452,96 +451,99 @@ function drawAlterToCarChart(calculatedData) {
     
     /*****************************************/
     //if public transports bar is to be shown
-    if(p_bool){
+    if(publicTransportstBool){
             
-        var p_dataset = [
+        var publicTransportsDataset = [
             //Public Transports
             //2nd column
             {
                 label: WORDS.other_pub_trans,
-                data: [0, p.furtherPublicTransports.totalCosts],
+                data: [0, publicTransportsObj.furtherPublicTransports.totalCosts],
                 backgroundColor: '#ff9e84'
             }, {
                 label: WORDS.taxi_desl,
-                data: [0, p.taxi.totalCosts],
+                data: [0, publicTransportsObj.taxi.totalCosts],
                 backgroundColor: '#ffda70'
             }, {
                 label: WORDS.pub_trans_text,
-                data: [0, p.totalCostsOfStandardPublicTransports],
+                data: [0, publicTransportsObj.totalCostsOfStandardPublicTransports],
                 backgroundColor: '#99e6bc'
             }                  
         ];
         
         //removes first item from dataset, 
         //related to first item from Public Transports bar
-        if(!p.display_other_pt){
-            p_dataset.splice(0, 1);
+        if(!publicTransportsObj.furtherPublicTransports.display){
+            publicTransportsDataset.splice(0, 1);
         }
         
         //adds one zero at the end of each 'data' property for the 3rd column (uber)
         //see for more information: https://stackoverflow.com/a/45123023/1243247  
-        if(u_bool){        
-            for(i=0; i<p_dataset.length; i++){
-                p_dataset[i].data.push(0);
+        if(uberBool){        
+            for(i=0; i<publicTransportsDataset.length; i++){
+                publicTransportsDataset[i].data.push(0);
             }             
         }
         
-        dataset = dataset.concat(p_dataset);        
+        dataset = dataset.concat(publicTransportsDataset);        
         labels.push(""); 
     }
     
     
     /*****************************************/
     //if UBER bar is to be shown
-    if(u_bool){                
+    if(uberBool){                
 
         //UBER
         //2nd or 3d column        
-        var u_dataset;
+        var uberDataset;
 
-        if(u.result_type == 1){            
-            u_dataset = [
+        //1st case, in which driver can replace every journey by uber
+        //the remianing amount of money is used to further public transports        
+        if(uberObj.resultType == 1){            
+            uberDataset = [
                 {
                     label: WORDS.other_pub_trans,
-                    data: [0, u.delta],
+                    data: [0, uberObj.publicTransportsCostsCombinedWithUber],
                     backgroundColor: '#e562aa'
 
                 }, {
-                    label: "Uber - " + u.dpm.toFixed(0) + " " + WORDS.fuel_dist + " " + 
+                    label: "Uber - " + calculatedData.drivingDistance.perMonth.toFixed(0) + " " + WORDS.fuel_dist + " " + 
                            WORDS.word_per.replace(/&#32;/g,"") + ' ' + WORDS.month,
-                    data: [0, u.tuc],
+                    data: [0, uberObj.uberCosts.total],
                     backgroundColor: '#ff7192'
                 }               
             ];                        
         }
-        //the case where uber equivalent is more expensive
-        else if(u.result_type == 2){            
-            u_dataset = [
+        //2nd case, where replacing every distance (km, mile, etc.) with uber is more expensive
+        //tries to combine uber with public transports less expensive per unit-distance
+        else if(uberObj.resultType == 2){            
+            uberDataset = [
                 {
                     label: WORDS.other_pub_trans,
-                    data: [0, u.tcpt],
+                    data: [0, uberObj.publicTransportsCostsCombinedWithUber],
                     backgroundColor: '#e562aa' 
                 }, {
-                    label: "Uber - " + u.dist_uber.toFixed(0) + " " + WORDS.std_dist_full + " " + 
+                    label: "Uber - " + uberObj.distanceDoneWithUber.toFixed(0) + " " + WORDS.std_dist_full + " " + 
                            WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month,
-                    data: [0, u.delta],
+                    data: [0, uberObj.uberCosts.total],
                     backgroundColor: '#ff7192'                   
                 } 
             ];            
         }
         else{
-            console.error("Error on uber.result_type value: different from 1 and 2");
+            throw "Error on uber resultType value: different from 1 and 2";
         }
         
         //adds zero on the beginning of 'data'
-        //i.e. from [0, u.delta] to [0, 0, u.delta] since UBER is on the 3rd column
-        if(p_bool){
-            for(i=0; i<u_dataset.length; i++){
-                u_dataset[i].data.splice(0,0,0);
+        //i.e. from [0, uber.x] to [0, 0, uber.x] since UBER is on the 3rd column
+        if(publicTransportstBool){
+            for(i=0; i<uberDataset.length; i++){
+                uberDataset[i].data.splice(0,0,0);
             }          
         }
               
-        dataset = dataset.concat(u_dataset);
+        dataset = dataset.concat(uberDataset);
         //labels.push("UBER");
         labels.push("");
     

@@ -1,7 +1,7 @@
 //Get user input data from form
-function getFormData(){
+function getFormData(form){
 
-    var f = document.costs_form; //main form document variable
+    var f = form; //main form document variable
 
     var data = {
         depreciation: {

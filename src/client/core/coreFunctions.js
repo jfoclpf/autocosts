@@ -8,11 +8,13 @@ var costs = {
     country:            undefined,   //object containing information about the selected country
     calculatedData:     undefined,   //output object
     
-    numberOfDaysInAYear:   365.25,
-    numberOfDaysInAWeek:   7,
-    numberOfMonthsInAYear: 12,
-    numberOfWeeksInAYear:  365.25 / 7,
-    numberOfWeeksInAMonth: 365.25 / 7 / 12,
+    consts: {
+        numberOfDaysInAYear:   365.25,
+        numberOfDaysInAWeek:   7,
+        numberOfMonthsInAYear: 12,
+        numberOfWeeksInAYear:  365.25 / 7,
+        numberOfWeeksInAMonth: 365.25 / 7 / 12
+    },
 
     initializeCalculatedData: function(){
 
@@ -41,6 +43,9 @@ var costs = {
                 calculated: false
             },
             externalCosts: {
+                calculated: false
+            },
+            uber:{
                 calculated: false
             },
             details: {
@@ -212,7 +217,7 @@ var costs = {
                     var distanceOnWeekendsInKms = convert_std_dist_to_km(fuel.distanceBased.carToJob.distanceDuringWeekends, country.distance_std);
                     var daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
 
-                    var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) * this.numberOfWeeksInAMonth;
+                    var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) * this.consts.numberOfWeeksInAMonth;
                     monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100;
 
                     this.calculatedData.drivingDistance.details.daysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
@@ -572,7 +577,7 @@ var costs = {
                 throw errMsg;
         }
         fe.income.averagePerMonth = fe.income.perYear / 12;
-        fe.income.averagePerWeek = fe.income.perYear / this.numberOfWeeksInAYear;
+        fe.income.averagePerWeek = fe.income.perYear / this.consts.numberOfWeeksInAYear;
 
         //working time
         //uses data section "income", as the income was selected per hour
@@ -592,7 +597,7 @@ var costs = {
                 fe.workingTime.monthsPerYear = 11;
             }
             
-            fe.workingTime.hoursPerYear = this.numberOfWeeksInAMonth * fe.workingTime.hoursPerWeek * fe.workingTime.monthsPerYear;
+            fe.workingTime.hoursPerYear = this.consts.numberOfWeeksInAMonth * fe.workingTime.hoursPerWeek * fe.workingTime.monthsPerYear;
             fe.workingTime.hoursPerMonth = fe.workingTime.hoursPerYear / 12;
         }
         else{
@@ -606,7 +611,7 @@ var costs = {
         fe.totalCarCostsPerYear            = this.calculatedData.costs.totalPerYear;
         fe.workingHoursPerYearToAffordCar  = totalCostsPerYear / fe.income.averagePerHour;
         fe.workingMonthsPerYearToAffordCar = totalCostsPerYear / fe.income.perYear * 12;
-        fe.daysForCarToBePaid              = totalCostsPerYear / fe.income.perYear * this.numberOfDaysInAYear;
+        fe.daysForCarToBePaid              = totalCostsPerYear / fe.income.perYear * this.consts.numberOfDaysInAYear;
         fe.financialEffortPercentage       = totalCostsPerYear / fe.income.perYear * 100;
 
         fe.calculated = true;
@@ -624,19 +629,13 @@ var costs = {
             throw this.errMsgDataCountry;
         }
 
-        var drivingDistance = {
-            calculated:         false,             //boolean
-            perWeek:            undefined,         //distance driven per week
-            perMonth:           undefined,         //distance driven per month
-            perYear:            undefined,         //distance driven per year
-            betweenHomeAndJob:  undefined,         //distance between home and job (one-way)
-            duringEachWeekend:  undefined,         //distance the user drives during weekend
-            details: {
-                daysPerWeekUserDrivesToJob: undefined
-            }
-        };
-
-        var dd = drivingDistance;
+            
+        var distancePerWeek,              //distance driven per week
+            distancePerMonth,             //distance driven per month
+            distancePerYear,              //distance driven per year
+            distanceBetweenHomeAndJob,    //distance between home and job (one-way)
+            distanceDuringEachWeekend,    //distance the user drives during weekend
+            daysPerWeekUserDrivesToJob;            
 
         var errMsg = "Error calculating Driving distance";
 
@@ -645,38 +644,38 @@ var costs = {
 
             if(data.distance.considerCarToJob == 'true'){
 
-                dd.details.daysPerWeekUserDrivesToJob = parseInt(data.distance.carToJob.daysPerWeek);
-                dd.betweenHomeAndJob                  = parseFloat(data.distance.carToJob.distanceBetweenHomeAndJob);
-                dd.duringEachWeekend                  = parseFloat(data.distance.carToJob.distanceDuringWeekends);
+                daysPerWeekUserDrivesToJob = parseInt(data.distance.carToJob.daysPerWeek);
+                distanceBetweenHomeAndJob  = parseFloat(data.distance.carToJob.distanceBetweenHomeAndJob);
+                distanceDuringEachWeekend  = parseFloat(data.distance.carToJob.distanceDuringWeekends);
 
-                dd.perWeek = 2 * dd.betweenHomeAndJob * dd.details.daysPerWeekUserDrivesToJob  + dd.duringEachWeekend;
+                distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringEachWeekend;
 
-                dd.perMonth = this.numberOfWeeksInAMonth * dd.perWeek; 
-                dd.perYear  = dd.perMonth * 12;
+                distancePerMonth = this.consts.numberOfWeeksInAMonth * distancePerWeek; 
+                distancePerYear  = distancePerMonth * 12;
             }
             else if(data.distance.considerCarToJob == 'false'){
 
                 switch(data.distance.noCarToJob.period){
                     case "1":
-                        dd.perMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod);
+                        distancePerMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod);
                         break;
                     case "2":
-                        dd.perMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 2;
+                        distancePerMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 2;
                         break;
                     case "3":
-                        dd.perMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 3;
+                        distancePerMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 3;
                         break;
                     case "4":
-                        dd.perMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 6;
+                        distancePerMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 6;
                         break;
                     case "5":
-                        dd.perMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 12;
+                        distancePerMonth = parseFloat(data.distance.noCarToJob.distancePerPeriod) / 12;
                         break;
                     default:
                         throw errMsg;
                 }
-                dd.perYear = dd.perMonth * 12;
-                dd.perWeek = dd.perMonth / this.numberOfWeeksInAMonth;
+                distancePerYear = distancePerMonth * 12;
+                distancePerWeek = distancePerMonth / this.consts.numberOfWeeksInAMonth;
 
             }
             else {
@@ -688,34 +687,45 @@ var costs = {
         else if(data.fuel.typeOfCalculation == 'km'){
 
             this.calculateMonthlyFuel(this.data.fuel, this.country);
-            dd.perMonth = this.calculatedData.drivingDistance.perMonth;
+            distancePerMonth = this.calculatedData.drivingDistance.perMonth;
 
-            if (dd.perMonth === undefined){
+            if (distancePerMonth === undefined){
                 throw errMsg;
             }
 
             if(data.fuel.distanceBased.considerCarToJob == 'true'){
-                dd.details.daysPerWeekUserDrivesToJob = parseInt(data.fuel.distanceBased.carToJob.daysPerWeek);
-                dd.betweenHomeAndJob                  = parseFloat(data.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
-                dd.duringEachWeekend                  = parseFloat(data.fuel.distanceBased.carToJob.distanceDuringWeekends);
+                daysPerWeekUserDrivesToJob = parseInt(data.fuel.distanceBased.carToJob.daysPerWeek);
+                distanceBetweenHomeAndJob  = parseFloat(data.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
+                distanceDuringEachWeekend  = parseFloat(data.fuel.distanceBased.carToJob.distanceDuringWeekends);
 
-                dd.perWeek = 2 * dd.betweenHomeAndJob * dd.details.daysPerWeekUserDrivesToJob + dd.duringEachWeekend;
+                distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringEachWeekend;
             }
             else{
-                dd.perWeek = dd.perMonth / this.numberOfWeeksInAMonth;  
+                distancePerWeek = distancePerMonth / this.consts.numberOfWeeksInAMonth;  
             }
             
-            dd.perYear = dd.perMonth * 12;
+            distancePerYear = distancePerMonth * 12;
             
         }
         else{
             throw errMsg;
         }
 
-        dd.calculated = true;
-        this.calculatedData.drivingDistance = dd;
+        var drivingDistance = {
+            calculated:         true,                       //boolean
+            perWeek:            distancePerWeek,            //distance driven per week
+            perMonth:           distancePerMonth,           //distance driven per month
+            perYear:            distancePerYear,            //distance driven per year
+            betweenHomeAndJob:  distanceBetweenHomeAndJob,  //distance between home and job (one-way)
+            duringEachWeekend:  distanceDuringEachWeekend,  //distance the user drives during weekend
+            details: {
+                daysPerWeekUserDrivesToJob: daysPerWeekUserDrivesToJob
+            }
+        };        
+        
+        this.calculatedData.drivingDistance = drivingDistance;
 
-        return dd;
+        return drivingDistance;
 
     },
 
@@ -728,51 +738,56 @@ var costs = {
             throw this.errMsgDataCountry;
         }
 
-        var errMsg = "Error calculating Time Spent In Driving";        
+        var errMsg = "Error calculating Time Spent In Driving";                
         
-        var timeSpentInDriving = {
-            calculated:               false,      //boolean
-            minutesBetweenHomeAndJob: undefined,  //time (in minutes) driven between home and job
-            minutesInEachWeekend:     undefined,  //time (in minutes) driven during weekends
-            minutesPerWeek:           undefined,  //time (in minutes) driven per week
-            minutesPerDay:            undefined,  //time (in minutes) driven per day
-            daysPerMonth:             undefined,  //number of days driven per month
-            hoursPerMonth:            undefined,  //number of hours driven per month
-            hoursPerYear:             undefined   //number of hours driven per year
-        };
-        
-        var tsd = timeSpentInDriving;
+        var minutesBetweenHomeAndJob,   //time (in minutes) driven between home and job
+            minutesInEachWeekend,       //time (in minutes) driven during weekends
+            minutesPerWeek,             //time (in minutes) driven per week
+            minutesPerDay,              //time (in minutes) driven per day
+            daysPerMonth,               //number of days driven per month
+            hoursPerMonth,              //number of hours driven per month
+            hoursPerYear;               //number of hours driven per year
         
         if(data.fuel.distanceBased.considerCarToJob == 'true' || data.distance.considerCarToJob == 'true'){
-            tsd.minutesBetweenHomeAndJob = parseFloat(data.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
-            tsd.minutesInEachWeekend     = parseFloat(data.timeSpentInDriving.option1.minutesDuringWeekend);
+            minutesBetweenHomeAndJob = parseFloat(data.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
+            minutesInEachWeekend     = parseFloat(data.timeSpentInDriving.option1.minutesDuringWeekend);
                         
             var daysPerWeekUserDrivesToJob = this.calculatedData.drivingDistance.details.daysPerWeekUserDrivesToJob;       
             if(daysPerWeekUserDrivesToJob === undefined){
                 throw errMsg + ": unknown daysPerWeekUserDrivesToJob";
             }       
             
-            tsd.minutesPerWeek = 2 * tsd.minutesBetweenHomeAndJob * daysPerWeekUserDrivesToJob + tsd.minutesInEachWeekend;
-            tsd.hoursPerMonth  = this.numberOfWeeksInAMonth * tsd.minutesPerWeek / 60; 
+            minutesPerWeek = 2 * minutesBetweenHomeAndJob * daysPerWeekUserDrivesToJob + minutesInEachWeekend;
+            hoursPerMonth  = this.consts.numberOfWeeksInAMonth * minutesPerWeek / 60; 
             
-            tsd.minutesPerDay = tsd.minutesPerWeek / 7;
+            minutesPerDay = minutesPerWeek / 7;
             
-            tsd.daysPerMonth  = this.numberOfWeeksInAMonth * ((tsd.minutesInEachWeekend > 0 ? 2 : 0) + daysPerWeekUserDrivesToJob) 
+            daysPerMonth  = this.consts.numberOfWeeksInAMonth * ((minutesInEachWeekend > 0 ? 2 : 0) + daysPerWeekUserDrivesToJob) 
         }
         else{
-            tsd.minutesPerDay = parseFloat(data.timeSpentInDriving.option2.minutesPerDay);
-            tsd.daysPerMonth  = parseFloat(data.timeSpentInDriving.option2.daysPerMonth);
+            minutesPerDay = parseFloat(data.timeSpentInDriving.option2.minutesPerDay);
+            daysPerMonth  = parseFloat(data.timeSpentInDriving.option2.daysPerMonth);
             
-            tsd.hoursPerMonth  = tsd.minutesPerDay * tsd.daysPerMonth / 60;
-            tsd.minutesPerWeek = tsd.hoursPerMonth / this.numberOfWeeksInAMonth * 60; 
+            hoursPerMonth  = minutesPerDay * daysPerMonth / 60;
+            minutesPerWeek = hoursPerMonth / this.consts.numberOfWeeksInAMonth * 60; 
         }
 
-        tsd.hoursPerYear = tsd.hoursPerMonth * 12;
+        hoursPerYear = hoursPerMonth * 12;
 
-        tsd.calculated = true;
-        this.calculatedData.timeSpentInDriving = tsd;
-
-        return tsd;
+        var timeSpentInDriving = {
+            calculated:               true,                     
+            minutesBetweenHomeAndJob: minutesBetweenHomeAndJob, //time (in minutes) driven between home and job
+            minutesInEachWeekend:     minutesInEachWeekend,     //time (in minutes) driven during weekends
+            minutesPerWeek:           minutesPerWeek,           //time (in minutes) driven per week
+            minutesPerDay:            minutesPerDay,            //time (in minutes) driven per day
+            daysPerMonth:             daysPerMonth,             //number of days driven per month
+            hoursPerMonth:            hoursPerMonth,            //number of hours driven per month
+            hoursPerYear:             hoursPerYear              //number of hours driven per year
+        };        
+        
+        this.calculatedData.timeSpentInDriving = timeSpentInDriving;
+        
+        return timeSpentInDriving;
     },
 
     calculateSpeeds: function (){
@@ -787,18 +802,21 @@ var costs = {
             throw this.errMsgDataCountry;
         }
 
-        var speeds = {
-            averageKineticSpeed: undefined,
-            averageConsumerSpeed: undefined //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
-        };
-
-        speeds.averageKineticSpeed = drivingDistance.perYear / timeSpentInDriving.hoursPerYear;
+        var averageKineticSpeed,
+            averageConsumerSpeed; //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+        
+        averageKineticSpeed = drivingDistance.perYear / timeSpentInDriving.hoursPerYear;
 
         //Virtual/Consumer Speed calculated if info of Financial Effort is available
         if (financialEffort.calculated){
-            speeds.averageConsumerSpeed = drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar);
+            averageConsumerSpeed = drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar);
         }
 
+        var speeds = {
+            averageKineticSpeed: averageKineticSpeed,            
+            averageConsumerSpeed: averageConsumerSpeed 
+        };        
+        
         this.calculatedData.speeds = speeds;        
 
         return speeds;
@@ -832,6 +850,138 @@ var costs = {
         return ec;
     },
 
+    //gets uber object to compare uber costs with private car costs
+    calculateUberCosts: function(uberObj){
+        
+        var data = this.data;
+        var country = this.country;
+        var calculatedData = this.calculatedData;
+
+        if(!data || !country){
+            throw this.errMsgDataCountry;
+        }
+        
+        /* uberObj is an object with four properties:
+        cost_per_distance, cost_per_minute, currency_code, distance_unit
+        data is the object output of function calculate_costs  */
+
+        //if public transporst information was not obtained from user
+        //in form part 3, then leaves by returning false
+        if(!(calculatedData.publicTransports.calculated)){
+            return false;
+        }
+
+        //if distance information not available or zero
+        if(!isDef(calculatedData.drivingDistance.perMonth)){
+            return false;
+        }
+
+        //checks if uberObj is an object
+        if (!isObjDef(uberObj)){
+            return false;
+        }
+
+        //checks if the uber currency is the same as the user's
+        if ((uberObj.currency_code).toUpperCase() != (country.currency).toUpperCase()){
+            return false;
+        }
+
+        //checks if the uber distance unit is the same as the user's
+        var uberStandardDistanceUnit = (uberObj.distance_unit).toLowerCase();
+        if (country.distance_std == 1){ //according to countries' standards file, 1 means "km"
+            if (uberStandardDistanceUnit != "km"){
+                return false;
+            }
+        }
+        else if (country.distance_std == 2) { //according to countries' standards file, 1 means "mile"
+            if (uberStandardDistanceUnit != "mile" && 
+                uberStandardDistanceUnit != "miles" && 
+                uberStandardDistanceUnit != "mi" && 
+                uberStandardDistanceUnit != "mi."){
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+        //from here uber strandards (currency and distance) are the same as the user country
+        
+        var totalUberCosts, 
+            publicTransportsCostsCombinedWithUber, 
+            distanceDoneWithUber,
+            resultType; //1 or 2            
+
+        var uberCostPerUnitDistance              = parseFloat(uberObj.cost_per_distance);
+        var uberCostPerMinute                    = parseFloat(uberObj.cost_per_minute); 
+                
+        var drivingDistancePerMonth              = calculatedData.drivingDistance.perMonth;            
+        var minutesDrivenPerMonth                = calculatedData.timeSpentInDriving.hoursPerMonth*60;
+        var totalCarCostsPerMonth                = calculatedData.costs.perMonth.total;
+
+        //total costs of uber for the same distance and time as the ones driven using private car
+        //Total equivalent Uber Costs
+        var uberCostsByFullyReplacingCarWithUber = uberCostPerUnitDistance * drivingDistancePerMonth + uberCostPerMinute * minutesDrivenPerMonth;
+
+        //1st case, in which driver can replace every journey by uber
+        //the remianing amount of money is used to further public transports
+        if ( uberCostsByFullyReplacingCarWithUber < totalCarCostsPerMonth ){
+            resultType = 1;
+            
+            publicTransportsCostsCombinedWithUber = totalCarCostsPerMonth - uberCostsByFullyReplacingCarWithUber;
+            totalUberCosts                        = uberCostsByFullyReplacingCarWithUber;
+            distanceDoneWithUber                  = drivingDistancePerMonth;
+        }
+        //2nd case, where replacing every distance (km, mile, etc.) with uber is more expensive
+        //tries to combine uber with public transports less expensive per unit-distance
+        else {
+            resultType = 2;
+
+            //if public transports (with monthly pass) are not an option
+            if(!calculatedData.publicTransports.toBeDisplayed) {
+                return false;
+            }
+            
+            //in this case, monthly passes for whole family
+            publicTransportsCostsCombinedWithUber = calculatedData.publicTransports.totalCostsOfStandardPublicTransports; 
+
+            //amount that is left to uber after public transports (monthly passes) are paid
+            totalUberCosts = totalCarCostsPerMonth - publicTransportsCostsCombinedWithUber;
+            if(totalUberCosts < 0){
+                return false;
+            }
+
+            //how much distance (km or miles) can be done by uber with totalUberCosts amount of money
+            var averageSpeedInDistancePerMinutes = calculatedData.speeds.averageKineticSpeed / 60; //convert, for ex. km/h to km/minute
+            //the following formula results from solving and finding "distanceDoneWithUber" in the following equation:
+            //totalUberCosts =  uberCostPerUnitDistance * distanceDoneWithUber + uberCostPerMinute * timeInMinutes
+            //where: timeInMinutes = distanceDoneWithUber/ averageSpeedInDistancePerMinutes
+            distanceDoneWithUber = totalUberCosts/ (uberCostPerUnitDistance + uberCostPerMinute/averageSpeedInDistancePerMinutes);
+
+            if (distanceDoneWithUber < 0){                
+                return false;
+            }
+        }
+
+        //object to be returned by this function
+        var uber = { 
+            calculated: true,
+            resultType: resultType,    //result type: 1 or 2            
+            uberCosts: {
+                perUnitDistance:             uberCostPerUnitDistance,
+                perMinute:                   uberCostPerMinute,
+                byFullyReplacingCarWithUber: uberCostsByFullyReplacingCarWithUber,
+                total:                       totalUberCosts            
+            },            
+            publicTransportsCostsCombinedWithUber: publicTransportsCostsCombinedWithUber,            
+            uberStandardDistanceUnit:              uberStandardDistanceUnit,            
+            distanceDoneWithUber:                  distanceDoneWithUber
+        };
+
+        this.calculatedData.uber = uber;
+        
+        return uber;
+    },    
+    
     calculateCosts: function (data, country){
         //data is the raw input data
         //country is an input object with country information
@@ -867,125 +1017,8 @@ var costs = {
         }
         
         return this.calculatedData;
-    },
-
-    //gets uber object to compare uber costs with private car costs
-    getUber: function(uber_obj, data, country){
-        /* uber_obj is an object with four properties:
-       cost_per_distance, cost_per_minute, currency_code, distance_unit
-       data is the object output of function calculate_costs  */
-
-        //if public transporst information was not obtained from user
-        //in form part 3, then leaves by returning false
-        if(!(data.alternative_to_car_costs_calculated)){
-            return false;
-        }
-
-        //if distance information not available or zero
-        if(!isDef(data.distance_per_month)){
-            return false;
-        }
-
-        //checks if uber_obj is an object
-        if (!isObjDef(uber_obj)){
-            return false;
-        }
-
-        //checks if the uber currency is the same as the user's
-        if ((uber_obj.currency_code).toUpperCase() != (country.currency).toUpperCase()){
-            return false;
-        }
-
-        //checks if the uber distance unit is the same as the user's
-        var uber_du = (uber_obj.distance_unit).toLowerCase();
-        if (country.distance_std == 1){ //according to countries' standards file, 1 means "km"
-            if (uber_du != "km"){
-                return false;
-            }
-        }
-        else if (country.distance_std == 2) { //according to countries' standards file, 1 means "mile"
-            if (uber_du!="mile" && uber_du!="miles" && uber_du!="mi" && uber_du!="mi."){
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
-        //from here uber strandards (currency and distance) are the same as the user country
-
-        var total_costs_by_uber, other_public_transports, result_type, dist_uber, delta;
-
-        var ucd = uber_obj.cost_per_distance*1;            //uber cost per unit distance
-        var ucm = uber_obj.cost_per_minute*1;              //uber costs per minute
-        var tcpt = data.public_transports.total_price_pt;  //total costs public transports (monthly passes for family)
-        var dpm = data.distance_per_month;                 //total distance per month
-        var tcpd = data.total_costs_p_unit_distance;       //total costs per unit distance
-        var hdpm = data.time_spent_driving.hours_drive_per_month;     //hours driven per month
-        var mdpm = data.time_spent_driving.hours_drive_per_month*60;  //minutes driven per month
-
-        var tcpm = data.total_costs_month;                 //total costs per month
-
-        //total costs of uber for the same distance and time as the ones driven using private car
-        //Total equivalent Uber Costs
-        var tuc = ucd * dpm + ucm * mdpm;
-
-        //1st case, in which driver can replace every journey by uber
-        if ( tuc < tcpm ){
-            result_type = 1;
-
-            delta = tcpm-tuc;
-
-            total_costs_by_uber = tuc;
-            other_public_transports = delta;
-        }
-
-        //2nd case, where uber equivalent is more expensive
-        //tries to combine uber with other public transports less expensive per unit-distance
-        else {
-            result_type = 2;
-
-            //if public transports (with monthly pass) are not an option
-            if(!data.public_transports.display_pt) {
-                return false;
-            }
-
-            //amount that is left to uber after public transports (monthly passes) are paid
-            delta = tcpm - tcpt;
-            if(delta < 0){
-                return false;
-            }
-
-            //how many distance (km or miles) can be done by uber with delta
-            dist_uber = delta /(ucd-ucm*data.kinetic_speed/60);
-
-            if (dist_uber < 0){
-                return false;
-            }
-
-            total_costs_by_uber = delta;
-            other_public_transports = tcpt;
-        }
-
-        //object to be returned by this function
-        var resUberObj = {
-            total_costs_by_uber: total_costs_by_uber,           //total costs for using uber independently of result type
-            other_public_transports : other_public_transports,  //Amount available to other public independently of result type
-            result_type: result_type,    //result type: 1 or 2
-            ucd: ucd,                    //uber cost per unit distance
-            ucm: ucm,                    //uber costs per minute
-            tuc: tuc,                    //total uber costs for the same distance and time as the ones driven using private car
-            dpm: dpm,                    //total distance per month
-            hdpm: hdpm,                  //hours driven per month
-            mdpm: mdpm,                  //minutes driven per month
-            tcpd: tcpd,                  //total costs per unit distance
-            tcpm: tcpm,                  //total costs per month
-            dist_uber:dist_uber,         //in case result_type is 2, how many distance can be done with uber
-            tcpt: tcpt,                  //total costs public transports (monthly passes for family)
-            delta: delta                 //money that is left. Meaning depends on result_type
-        };
-
-        return resUberObj;
     }
+
 };
 
 //detects if a variable is defined and different from zero

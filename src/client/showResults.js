@@ -16,7 +16,7 @@ function Run2(callback){
     }        
     
     //for each form part gets object with content
-    var form = getFormData();
+    var form = getFormData(document.costs_form);
     FORM_DATA = form;
     
     //country object with country specific variables
@@ -35,7 +35,7 @@ function Run2(callback){
         
     //get Uber data if applicable
     if(calculatedData.publicTransports.calculated && SWITCHES.uber){
-        calculatedData.uber = costs.getUber(UBER_API, calculatedData, countryObj); 
+        calculatedData.uber = costs.calculateUberCosts(UBER_API); 
     } 
     
     CALCULATED_DATA = calculatedData; //assigns to global variable
@@ -660,33 +660,35 @@ function setEquivTransportCostsDetails(form, calculatedData){
 
         //in which driver can replace every km by uber
         //the remaining money is applied to public transport
-        if(calculatedUber.result_type == 1){                         
+        if(calculatedUber.resultType == 1){                         
             
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.std_dist_full, 
-                    currencyShow(calculatedUber.ucd.toFixed(2)) + "/" + WORDS.std_dist);
+                    currencyShow(calculatedUber.uberCosts.perUnitDistance.toFixed(2)) + "/" + WORDS.std_dist);
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " +  WORDS.minutes, 
-                    currencyShow(calculatedUber.ucm.toFixed(2)) + "/" + WORDS.min);
-            addLiElm("uber", WORDS.fuel_dist + " " + WORDS.word_per + " " + WORDS.month, calculatedUber.dpm.toFixed(0) + " " + WORDS.std_dist_full);
-            addLiElm("uber", WORDS.minutes_drive_per + " " + WORDS.month, calculatedUber.mdpm.toFixed(0) + " " + WORDS.minutes);                         
+                    currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + WORDS.min);
+            addLiElm("uber", WORDS.fuel_dist + " " + WORDS.word_per + " " + WORDS.month, 
+                     calculatedUber.distanceDoneWithUber.toFixed(0) + " " + WORDS.std_dist_full);
+            addLiElm("uber", WORDS.minutes_drive_per + " " + WORDS.month, 
+                     (calculatedData.timeSpentInDriving.hoursPerMonth * 60).toFixed(0) + " " + WORDS.minutes);                         
             
             addLiElm("other_pub_trans_for_uber", WORDS.other_pub_trans_desc); 
         }
 
         //the case where uber equivalent is more expensive
         //the driver shall spend the equivalent car money in public transports and the remaining in uber
-        else if(calculatedUber.result_type == 2){
+        else if(calculatedUber.resultType == 2){
                         
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.std_dist_full,
-                    currencyShow(calculatedUber.ucd.toFixed(2)) + "/" + WORDS.std_dist);
+                    currencyShow(calculatedUber.uberCosts.perUnitDistance.toFixed(2)) + "/" + WORDS.std_dist);
             addLiElm("uber", "UBER - " + WORDS.costs + " " + WORDS.word_per + " " + WORDS.minutes,
-                    currencyShow(calculatedUber.ucm.toFixed(2)) + "/" + WORDS.min);
+                    currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + WORDS.min);
             addLiElm("uber", WORDS.kinetic_speed_title, calculatedData.speeds.averageKineticSpeed.toFixed(2) + " " + WORDS.std_dist + "/" + WORDS.hour_abbr);
             addLiElm("uber", "UBER - " + WORDS.std_dist_full + " " + WORDS.word_per + " " + WORDS.month, 
-                    calculatedUber.dist_uber.toFixed(0) + " " + WORDS.std_dist_full);
-            addLiElm("uber", "UBER: " + WORDS.costs + " - " + WORDS.word_total_cap, currencyShow(calculatedUber.delta.toFixed(0))); 
+                    calculatedUber.distanceDoneWithUber.toFixed(0) + " " + WORDS.std_dist_full);
+            addLiElm("uber", "UBER: " + WORDS.costs + " - " + WORDS.word_total_cap, currencyShow(calculatedUber.uberCosts.total.toFixed(0))); 
                         
-            addLiElm("other_pub_trans_for_uber", WORDS.fam_nbr, form.n_pess_familia + " " + WORDS.person_or_people);
-            addLiElm("other_pub_trans_for_uber", WORDS.pass_month_avg, currencyShow(form.monthly_pass_cost)); 
+            addLiElm("other_pub_trans_for_uber", WORDS.fam_nbr, form.publicTransports.numberOfPeopleInFamily + " " + WORDS.person_or_people);
+            addLiElm("other_pub_trans_for_uber", WORDS.pass_month_avg, currencyShow(form.publicTransports.monthlyPassCost)); 
         }
     }
     else{
