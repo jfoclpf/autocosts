@@ -316,8 +316,8 @@ function loadResultsSettingsAndHandlers(){
 
     $("#results #totalCostsPeriod").on("change", function(){
         setPeriodicCosts(CALCULATED_DATA, $(this).val());
-        drawCostsBarsChart(CALCULATED_DATA, $(this).val());
-        drawCostsDoughnutChart(CALCULATED_DATA, $(this).val());
+        drawCharts.costsBars($(this).val());
+        drawCharts.costsDoughnut($(this).val());
     });
 
     if(SWITCHES.pdf){

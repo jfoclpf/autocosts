@@ -44,7 +44,7 @@ function Run2(callback){
     //see for more info: https://github.com/hughsk/flat
     var flattenedData = flatten(calculatedData, {delimiter:"_"}); 
     
-    console.log(flattenedData);     
+    //console.log(flattenedData);     
 
     showResults(form, calculatedData, flattenedData, countryObj);
         
@@ -62,11 +62,13 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     
     $("#form").hide(); 
     
+    drawCharts.setCalculatedData(calculatedData);
+    
     //The first three boxes on the top
     //if financial effort was not calculated, does not show doughnut chart
     //on the third box, and adapt the three boxes css classes
     if(calculatedData.financialEffort.calculated && SWITCHES.charts){ 
-        drawDoughnutFinEffortChart(calculatedData);
+        drawCharts.doughnutFinancialEffort(calculatedData);
         //shows third box where the financial effort doughnut chart appears
         $("#results #info-boxes .info-box.box-3").show();
         $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");        
@@ -88,8 +90,8 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     //SWITCHES are frozen/const object in Globals.js, so no need to show elements when SWITCHES.charts is true
     //since these elements are set tp be shown in css by default, just need to hide in case is false
     if(SWITCHES.charts){            
-        drawCostsBarsChart(calculatedData, "month");
-        drawCostsDoughnutChart(calculatedData, "month");
+        drawCharts.costsBars("month");
+        drawCharts.costsDoughnut("month");
     }
     else {
         $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
@@ -104,7 +106,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
         DISPLAY.result.fin_effort = true; //global variable 
         
         if(SWITCHES.charts){                
-            drawFinEffortChart(calculatedData);
+            drawCharts.financialEffort(calculatedData);
         }
         else{
             $("#financial-effort .graph").hide();
@@ -125,7 +127,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
         DISPLAY.result.public_transports = true;
         
         if(SWITCHES.charts){
-            drawAlterToCarChart(calculatedData);
+            drawCharts.alternativesToCar();
         }
         else{
             $("#equivalent-transport-costs .graph").hide();
