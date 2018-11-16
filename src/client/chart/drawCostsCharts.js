@@ -7,17 +7,20 @@
 
 /*File with Javascript Charts Functions */
 
-var drawCharts = {
-    
-    calculatedData: {},
-    
-    setCalculatedData: function(calculatedData) {
-        this.calculatedData = calculatedData;
-    },    
-        
-    doughnutFinancialEffort: function() { 
+//DRAW CHARTS MODULE
+//see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-        var finEffortPerc = this.calculatedData.financialEffort.financialEffortPercentage;
+var drawCharts = (function(){
+    
+    var calculatedData;
+    
+    function setCalculatedData(calculatedDataIn) {
+        calculatedData = calculatedDataIn;
+    }
+        
+    function doughnutFinancialEffort() { 
+
+        var finEffortPerc = calculatedData.financialEffort.financialEffortPercentage;
 
         var dataset = [{
             data: [finEffortPerc, 100 - finEffortPerc],
@@ -59,11 +62,10 @@ var drawCharts = {
         DISPLAY.charts.finEffortDoughnut.ref = new Chart("doughnutChart", content);
         DISPLAY.charts.finEffortDoughnut.isVisible = true;
 
-    },
+    }
     
-    costsBars: function(period){
+    function costsBars(period){
     
-        var calculatedData = this.calculatedData;
         var numMonths;
 
         switch(period){
@@ -114,7 +116,7 @@ var drawCharts = {
         ];  
 
         for (var i=0; i<labels.length; i++){
-            labels[i] = this.formatLabel(labels[i], 16);
+            labels[i] = formatLabel(labels[i], 16);
         }       
 
         var cc = DISPLAY.costsColors;
@@ -200,12 +202,11 @@ var drawCharts = {
 
         DISPLAY.charts.costsBars.ref = new Chart("costsBarsChart", content);
         DISPLAY.charts.costsBars.isVisible = true;
-    },
+    }
     
     //Dounghnut chart with every cost item 
-    costsDoughnut: function(period) {
+    function costsDoughnut(period) {
     
-        var calculatedData = this.calculatedData;
         var numMonths;
 
         switch(period){
@@ -291,8 +292,6 @@ var drawCharts = {
             ],
             borderWidth: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
         }];
-
-        var formatLabel = this.formatLabel;
         
         var options = {
             maintainAspectRatio: false,
@@ -330,13 +329,12 @@ var drawCharts = {
 
         DISPLAY.charts.costsDoughnut.ref = new Chart("costsDoughnutChart", content);
         DISPLAY.charts.costsDoughnut.isVisible = true;
-
-    },
+    }
 
     //draws vertical bars chart for Financial Effort
-    financialEffort: function() {
+    function financialEffort() {
 
-        var fe = this.calculatedData.financialEffort; //Monthly costs object of calculated data, parsed to fixed(1)
+        var fe = calculatedData.financialEffort; //Monthly costs object of calculated data, parsed to fixed(1)
 
         //always creates a new chart
         if (DISPLAY.charts.finEffort.ref){
@@ -344,8 +342,8 @@ var drawCharts = {
         }
 
         var labels = [ 
-            this.formatLabel(WORDS.net_income_per + " " + WORDS.year, 20), 
-            this.formatLabel(WORDS.total_costs_per_year, 20) 
+            formatLabel(WORDS.net_income_per + " " + WORDS.year, 20), 
+            formatLabel(WORDS.total_costs_per_year, 20) 
         ];
 
         var dataset = [
@@ -410,12 +408,11 @@ var drawCharts = {
 
         DISPLAY.charts.finEffort.ref = new Chart("finEffortChart", content);   
         DISPLAY.charts.finEffort.isVisible = true;
-    },
+    }
         
-    alternativesToCar: function(){
+    function alternativesToCar(){
 
         var i;    
-        var calculatedData      = this.calculatedData;
         var publicTransportsObj = calculatedData.publicTransports;
         var uberObj             = calculatedData.uber;
 
@@ -431,7 +428,7 @@ var drawCharts = {
         var uberBool = SWITCHES.uber && isObjDef(uberObj) && DISPLAY.result.uber; //uber
 
         var labels = [
-            this.formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25)
+            formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25)
         ];
 
         var dataset = [                      
@@ -439,7 +436,7 @@ var drawCharts = {
             //1st column
             //standing costs
             {
-                label: this.formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25),
+                label: formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25),
                 data: [totCostsPerMonth],
                 backgroundColor: '#5ae0e2'
             }   
@@ -560,8 +557,6 @@ var drawCharts = {
 
         }    
         
-        var formatLabel = this.formatLabel;
-
         var options = {
             maintainAspectRatio: false,
             scales: {
@@ -621,12 +616,12 @@ var drawCharts = {
 
         DISPLAY.charts.alterToCar.ref = new Chart("equivalentTransportChart", content);
         DISPLAY.charts.alterToCar.isVisible = true;
-    },
+    }
 
     //takes a string phrase and breaks it into separate phrases
     //no bigger than 'maxwidth' (in the number of characters), breaks are made at complete words
     //used for the charts labels and tooltips
-    formatLabel: function(str, maxwidth) {
+    function formatLabel(str, maxwidth) {
         var sections = [];
         var words = str.split(" ");
         var temp = "";
@@ -670,13 +665,25 @@ var drawCharts = {
 
         return sections;
     }
-};
+    
+    function isObjDef(Obj){
+        if (Obj === null || Obj == "null" || typeof Obj !== 'object' || $.isEmptyObject(Obj)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    } 
+    
+    return{
+        setCalculatedData:       setCalculatedData,
+        doughnutFinancialEffort: doughnutFinancialEffort,
+        costsBars:               costsBars,
+        costsDoughnut:           costsDoughnut,
+        financialEffort:         financialEffort,
+        alternativesToCar:       alternativesToCar
+    };
+    
+})();
 
-function isObjDef(Obj){
-    if (Obj === null || Obj == "null" || typeof Obj !== 'object' || $.isEmptyObject(Obj)){
-        return false;
-    }
-    else{
-        return true;
-    }
-}
+
