@@ -31,11 +31,11 @@ function Run2(callback){
     };
 
     //calculate costs, "costs" is a global variable/object defined in coreFunctions.js
-    var calculatedData = costs.calculateCosts(form, countryObj); 
+    var calculatedData = calculator.calculateCosts(form, countryObj); 
         
     //get Uber data if applicable
     if(calculatedData.publicTransports.calculated && SWITCHES.uber){
-        calculatedData.uber = costs.calculateUberCosts(UBER_API); 
+        calculatedData.uber = calculator.calculateUberCosts(UBER_API); 
     } 
     
     CALCULATED_DATA = calculatedData; //assigns to global variable

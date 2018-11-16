@@ -672,4 +672,11 @@ var drawCharts = {
     }
 };
 
-
+function isObjDef(Obj){
+    if (Obj === null || Obj == "null" || typeof Obj !== 'object' || $.isEmptyObject(Obj)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}

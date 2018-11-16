@@ -204,7 +204,7 @@ var validateData = {
         var today  = new Date();
         var carAcquisitionDate = new Date(acquisitionYear, acquisitionMonth - 1);
 
-        var carNumberOfMonths = costs.dateDiff(carAcquisitionDate, today);
+        var carNumberOfMonths = calculator.differenceBetweenDates(carAcquisitionDate, today);
 
         if(!carNumberOfMonths){
             return false;
