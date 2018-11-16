@@ -10,8 +10,6 @@ $(document).ready(function () {
         getScriptOnce(JS_FILES.formFunctions, function(){
             setLanguageVars();
             loadPageSettings();
-            loadFormSettings();
-            loadFormHandlers();
             loadResultsSettingsAndHandlers();
             loadsStandardValues();
         });
@@ -129,8 +127,7 @@ function loadPageSettings(){
 //When clicked the Calculate Button shown on the landing page
 function calculateButtonOnclick(){
     $("#hero, footer").hide();
-    $("#form").show();
-    setIcon($(".field_container").first(), "active");
+    $("#form").show();    
 
     //on test version shows everything right from the beginning
     if(COUNTRY=="XX"){
@@ -151,165 +148,6 @@ function calculateButtonOnclick(){
 
     //loadStyleSheets(['css/merged_deferred.css']);
     loadStyleSheets(['css/results.css', 'css/smart-app-banner.css']); //temporary line
-}
-
-//initial settings regarding the calculator form itself
-//that is, after the user has pressed "calculate" button on the landing page
-function loadFormSettings(){
-
-    //shows numeric keypad on iOS mobile devices
-    if(getMobileOperatingSystem() === "iOS"){
-        $('.form_part input[type="number"]').attr("pattern", "\\d*");
-    }
-
-    //hides all buttons "next"
-    $(".next").hide();
-
-    //hides form part head titles, except first
-    //that is, it only shows Head Title "1. Standing costs"
-    $(".form_part_head_title").each(function(index){
-        if(index == 0){
-            $(this).show();
-        }
-        else{
-            $(this).hide();
-        }
-    });
-
-    //hides all fields except the first
-    $(".field_container").each(function( index ) {
-        if(index==0){
-            $( this ).show();
-        }
-        else{
-            $( this ).hide();
-        }
-    });
-
-    $(".calculate_bottom_bar").hide();
-
-    $("#main_form select").val('1'); //set all the selects to "month"
-
-    //PART 1
-    //depreciation
-    $("#acquisitionYear").attr("max", (new Date()).getFullYear());
-    //credit
-    $('#sim_credDiv').hide();
-
-    //inspection
-    $("#numberInspections").val(0);
-    $("#InspectionCost_tr").hide();
-    $("#numberInspections").on("input", nbrInspectOnChanged);
-
-    //PART 2
-    //fuel
-    $('#currency_div_form2').show();
-    $('#distance_div_form2').hide();
-    fuelCalculationMethodChange('currency'); //sets radio button in Form Part 2, section Fuel calculations, to Currency
-
-    //tolls
-    tolls_daily(false);
-    //fines
-    $("#tickets_period_select").val('5'); //set fines period to year
-    //washing
-    $("#washing_period_select").val('3'); //set washing period to trimester
-
-    //PART 3
-    //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
-    driveToJob(false);
-    //Income in Form Part 3 - set to year
-    income_toggle("year");
-
-}
-
-//handlers regarding the calculator form itself
-//that is, after the user has pressed "calculate" button on the landing page
-function loadFormHandlers(){
-
-    //run button
-    $("#calculate_costs_btn").on( "click", function(){
-        //tries to call Run1(); if not yet defined, retries every 500ms
-        //see https://stackoverflow.com/a/53032624/1243247        
-        /*try{
-            Run1("normal");  //not using reCaptcha from Google
-        }
-        catch(e){
-            (function retry(){
-                setTimeout(function(){
-                    try{
-                        console.log(e);
-                        console.log("Function Run() invalid or not yet defined");
-                        Run1("normal");
-                    }
-                    catch(e){
-                        retry(); //calls recursively
-                    }
-                }, 500); //tries every 500ms
-            }());
-        }*/
-        Run1("normal");
-    });
-
-    //button "next"; function buttonNextHandler is on formFunctions.js
-    $(".button.btn-orange").on( "click", function(){
-        buttonNextHandler($(this));
-        //this is necessary to avoid default behaviour
-        //avoid from scrolling to the top of page
-        return false;
-    });
-
-    //On 'input' would fire every time the input changes, so when one pastes something
-    //(even with right click), deletes and types anything. If one uses the 'change' handler,
-    //this will only fire after the user deselects the input box, which is not what we want.
-    //inputHandler is defined in formFunctions.js
-    $('input[type="number"]').on("input", function(){inputHandler($(this))});
-
-    //it calls the same functions inputHandler after the radio button is changed
-    //this onchange event is trigered after the onclick events down here
-    $('input[type="radio"]').on("change", function(){inputHandler($(this))});
-
-    //keys handlers; function keyDownHandler is in formFunctions.js
-    $(document).keydown(function(e){keyDownHandler($(this), e)});
-    $('input[type="number"]').keydown(function(e){keyDownHandler($(this), e)});
-
-    //PART 1
-    //insurance
-    setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly
-
-    //credit
-    $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
-    $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
-    $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"
-
-    //PART 2
-    //fuel
-    $("#radio_fuel_km").on( "click", function(){fuelCalculationMethodChange('distance')});
-    $("#radio_fuel_euros").on( "click", function(){fuelCalculationMethodChange('currency')});
-    $("#car_job_form2_yes").on( "click", function(){carToJob(true)});
-    $("#car_job_form2_no").on( "click", function(){carToJob(false)});
-    $("#radio_fuel_euros").prop("checked", true);  //radio button of fuel set to "money"
-    $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no)
-
-    //tolls
-    $("#tolls_daily_true").on( "click", function(){tolls_daily(true)});
-    $("#tolls_daily_false").on( "click", function(){tolls_daily(false)});
-    $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
-
-    //PART 3
-    $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
-    $("#drive_to_work_no_form3").on( "change", function(){driveToJob(false)});
-    $("#working_time_yes_form3").on( "change", function(){working_time_toggle(true)});
-    $("#working_time_no_form3").on( "change", function(){working_time_toggle(false)});
-    //income
-    $("#radio_income_year").on( "change", function(){income_toggle("year")});
-    $("#radio_income_month").on( "change", function(){income_toggle("month")});
-    $("#radio_income_week").on( "change", function(){income_toggle("week")});
-    $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
-    $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
-
-    //Final buttons on results
-    $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
-
 }
 
 function loadResultsSettingsAndHandlers(){

@@ -359,6 +359,40 @@ function currencyShow(value){
     }
 }
 
+//function used to get from forms the selected option in radio buttons
+function getCheckedValue(radioObj) {
+    var i;
+
+    if (!radioObj) {
+        return "";
+    }
+
+    var radioLength = radioObj.length;
+    if (radioLength === undefined) {
+        if (radioObj.checked) {
+            return radioObj.value;
+        }
+        return "";
+    }
+
+    for (i = 0; i < radioLength; i++) {
+        if (radioObj[i].checked) {
+            return radioObj[i].value;
+        }
+    }
+    return "";
+}
+
+/*function that checks if a certain HTML id or class is visible*/
+function isVisible(html_ref) {
+    if($(html_ref).css("display")!="none"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 //the standard values are used if we want the form to be pre-filled
 function loadsStandardValues(){
 

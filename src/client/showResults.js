@@ -11,9 +11,9 @@
 function Run2(callback){
 
     //test if the form user inputs are correct
-    if (!isReadyToCalc()){ 
+    if (!userFormInterface.isReadyToCalc()){ 
         return false;
-    }        
+    } 
     
     //for each form part gets object with content
     var form = getFormData(document.costs_form);
