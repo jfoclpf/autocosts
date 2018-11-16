@@ -7,6 +7,7 @@
 /************************************************************************************************************/
 
 //USER FORM INTERFACE MODULE
+//see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
 var userFormInterface = (function(){
     
@@ -68,7 +69,7 @@ var userFormInterface = (function(){
         $('#distance_div_form2').hide();
 
         //tolls
-        tolls_daily(false);
+        calculateTollsOnDay(false);
 
         //fines
         $("#tickets_period_select").val('5'); //set fines period to year
@@ -79,7 +80,7 @@ var userFormInterface = (function(){
         //sets "Considering you drive to work?",  Distance section in Form Part 3, to No
         driveToJob(false);
         //Income in Form Part 3 - set to year
-        income_toggle("year");
+        setIncomePeriod("year");
 
     }    
 
@@ -138,8 +139,8 @@ var userFormInterface = (function(){
         setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly
 
         //credit
-        $("#cred_auto_true").on( "click", function(){onclick_div_show('#sim_credDiv',true)});
-        $("#cred_auto_false").on( "click", function(){onclick_div_show('#sim_credDiv',false)});
+        $("#cred_auto_true").on( "click", function(){$("#sim_credDiv").show()});
+        $("#cred_auto_false").on( "click", function(){$("#sim_credDiv").hide()});
         $("#cred_auto_false").prop("checked", true);   //radio button of credit set to "no"
 
         //inspection
@@ -158,20 +159,20 @@ var userFormInterface = (function(){
         fuelCalculationMethodChange('currency'); 
 
         //tolls
-        $("#tolls_daily_true").on( "click", function(){tolls_daily(true)});
-        $("#tolls_daily_false").on( "click", function(){tolls_daily(false)});
+        $("#tolls_daily_true").on( "click", function(){calculateTollsOnDay(true)});
+        $("#tolls_daily_false").on( "click", function(){calculateTollsOnDay(false)});
         $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)    
 
         //PART 3
         $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
         $("#drive_to_work_no_form3").on( "change", function(){driveToJob(false)});
-        $("#working_time_yes_form3").on( "change", function(){working_time_toggle(true)});
-        $("#working_time_no_form3").on( "change", function(){working_time_toggle(false)});
+        $("#working_time_yes_form3").on( "change", function(){workingTimeToggle(true)});
+        $("#working_time_no_form3").on( "change", function(){workingTimeToggle(false)});
         //income
-        $("#radio_income_year").on( "change", function(){income_toggle("year")});
-        $("#radio_income_month").on( "change", function(){income_toggle("month")});
-        $("#radio_income_week").on( "change", function(){income_toggle("week")});
-        $("#radio_income_hour").on( "change", function(){income_toggle("hour")});
+        $("#radio_income_year").on( "change", function(){setIncomePeriod("year")});
+        $("#radio_income_month").on( "change", function(){setIncomePeriod("month")});
+        $("#radio_income_week").on( "change", function(){setIncomePeriod("week")});
+        $("#radio_income_hour").on( "change", function(){setIncomePeriod("hour")});
         $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
 
         //Final buttons on results
@@ -871,7 +872,7 @@ var userFormInterface = (function(){
             $("#div_car_job_no_form2, #time_spent_part2_form3").hide();
 
             //working time section in form part 3
-            working_time_toggle(true);
+            workingTimeToggle(true);
             $("#working_time_part1_form3").hide();
             $("#working_time_part2_form3").show();        
         } 
@@ -886,7 +887,7 @@ var userFormInterface = (function(){
 
             //set to "no" the question "Do you have a job or a worthy occupation?"
             //in Working Time section of Form Part 3
-            working_time_toggle(false);
+            workingTimeToggle(false);
             $("#working_time_no_form3").prop("checked", true);
             $("#working_time_part1_form3").show();
             $("#working_time_part2_form3").hide();
@@ -908,7 +909,7 @@ var userFormInterface = (function(){
 
             //set to "no" the question "Do you have a job or a worthy occupation?"
             //in Working Time section - Form Part 3
-            working_time_toggle(true);
+            workingTimeToggle(true);
             $("#working_time_part1_form3").hide();
             $("#working_time_part2_form3").show();
 
@@ -927,7 +928,7 @@ var userFormInterface = (function(){
             $("#car_no_job_distance_form3").show();
 
             //Working Time - Form Part 3
-            working_time_toggle(true);
+            workingTimeToggle(true);
             $("#working_time_part1_form3").show();
             $("#working_time_part2_form3").hide();
 
@@ -937,7 +938,7 @@ var userFormInterface = (function(){
         }
     }
 
-    function tolls_daily(tollsDailyFlag) {
+    function calculateTollsOnDay(tollsDailyFlag) {
         if (tollsDailyFlag) {
             $("#daily_tolls_false_div").hide();
             $("#daily_tolls_true_div").show();
@@ -947,20 +948,11 @@ var userFormInterface = (function(){
         }
     }
 
-    /*function that toggles some div between visible or hidden*/
-    function onclick_div_show(divID, flag) {
-        if(flag) {
-            $(divID).show();
-        } else {
-            $(divID).hide();
-        }
-    }
-
     //INCOME - Form Part 3 
     //Shows the active div and Hides the remainder divs. Ex: if "year" selected, shows #income_per_year_form3 and hides remainder
     //If "hour" selected hides also #working_time_form3. It needs working time to calculate the average yearly *income per hour*
     //With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known 
-    function income_toggle(value){
+    function setIncomePeriod(value){
         //see why is 0: https://github.com/jfoclpf/autocosts/issues/54
         var animSpeed = 0;
 
@@ -993,7 +985,7 @@ var userFormInterface = (function(){
     }
 
     //WORKING TIME - Form Part 3 
-    function working_time_toggle(value){
+    function workingTimeToggle(value){
         if(value){
             //selects actively radio button to which this function is associated
             $("#working_time_yes_form3").prop("checked", true);

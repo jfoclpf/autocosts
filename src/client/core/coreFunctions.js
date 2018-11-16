@@ -7,7 +7,7 @@
 
 var calculator = (function(){
 
-    var inputData;          //input data, for example obtained from user form
+    var inputData;          //input data object, for example obtained from user form
     var country;            //object containing information about the selected country
     var calculatedData;     //output object
     
