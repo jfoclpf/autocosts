@@ -41,7 +41,7 @@ var myGradesCalculate = (function () {
       return accumulator + item;
       }, 0);
       
-    return'Your average grade is ' + total / myGrades.length + '.';
+    return 'Your average grade is ' + total / myGrades.length + '.';
   }
 
   function failing() {
@@ -58,7 +58,7 @@ var myGradesCalculate = (function () {
   return {
     average: average,
     failing: failing
-  }
+  };
 })();
 
 myGradesCalculate.failing(); // 'You failed 2 times.' 
