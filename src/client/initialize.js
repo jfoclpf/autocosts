@@ -18,8 +18,8 @@ $(document).ready(function () {
 mainFrame = (function(){
     
     function initialize(){
-        oldIE();  //detects old versions of Internet Explorer
-        fillPeriodsInSelectBoxes();
+        oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
+        fillPeriodsInSelectBoxes();     //fills periods (month, two months, etc.) in HTML select boxes
         loadMainPageSettings();                    
         loadsStandardValues();   
         initTimer();
