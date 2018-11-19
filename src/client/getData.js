@@ -154,6 +154,30 @@ function getFormData(form){
     return data;
 }
 
+    //function used to get from forms the selected option in radio buttons
+    function getCheckedValue(radioObj) {
+        var i;
+
+        if (!radioObj) {
+            return "";
+        }
+
+        var radioLength = radioObj.length;
+        if (radioLength === undefined) {
+            if (radioObj.checked) {
+                return radioObj.value;
+            }
+            return "";
+        }
+
+        for (i = 0; i < radioLength; i++) {
+            if (radioObj[i].checked) {
+                return radioObj[i].value;
+            }
+        }
+        return "";
+    }
+
 /*
 //get from database
 function getDatabasePart1(datab){

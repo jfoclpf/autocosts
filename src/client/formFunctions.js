@@ -11,15 +11,17 @@
 
 var userFormInterface = (function(){
     
-    setFormSettings();
-    setFormHandlers();
+    function initialize(){    
+        setFormSettings();
+        setFormHandlers();
+    }
 
     //initial settings regarding the calculator form itself
     //that is, after the user has pressed "calculate" button on the landing page
     function setFormSettings(){
 
         //shows numeric keypad on iOS mobile devices
-        if(getMobileOperatingSystem() === "iOS"){
+        if(mainFrame.getMobileOperatingSystem() === "iOS"){
             $('.form_part input[type="number"]').attr("pattern", "\\d*");
         }
 
@@ -1014,7 +1016,14 @@ var userFormInterface = (function(){
         return (parseFloat(n) == parseInt(n, 10));
     }    
     
+    //isNaN stands for "is Not a Number", this function works whether n is a "number" or a "string"
+    //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
+    function isNumber(n) {
+        return !isNaN(n) && isFinite(parseFloat(n));
+    }    
+    
     return{
+        initialize: initialize,
         isReadyToCalc: isReadyToCalc
     };
    

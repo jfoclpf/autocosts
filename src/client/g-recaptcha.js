@@ -60,7 +60,7 @@ function Run1(source){
                 //Google Recaptcha
                 IS_HUMAN_CONFIRMED = true;                
 
-                if(Run2() && COUNTRY != "XX"){
+                if(showResults.calculateCostsAndShowResults() && COUNTRY != "XX"){
                     //if not a test triggers event for Google Analytics
                     if(!IsThisAtest() && SERVICE_AVAILABILITY.g_analytics && SWITCHES.g_analytics){
                         ga('send', 'event', 'form_part', 'run_OK');
@@ -74,7 +74,7 @@ function Run1(source){
 
             //when the Google file was not accessible
             else {                
-                Run2();                
+                showResults.calculateCostsAndShowResults();                
             }
 
             runButton.set("show-normal");
@@ -87,7 +87,7 @@ function Run1(source){
         }        
         
         //here normally a human is already confirmed, for example when the same user runs the calculator twice
-        if(Run2() && IS_HUMAN_CONFIRMED && COUNTRY != "XX" && SWITCHES.data_base && NOT_LOCALHOST){
+        if(showResults.calculateCostsAndShowResults() && IS_HUMAN_CONFIRMED && COUNTRY != "XX" && SWITCHES.data_base && NOT_LOCALHOST){
             submit_data(); //submits data to database if no test version nor localhost
         }
         runButton.set("show-normal");

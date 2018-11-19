@@ -587,10 +587,40 @@ var validateData = (function(){
         return true;
     }
     
+    //function used to get from forms the selected option in radio buttons
+    function getCheckedValue(radioObj) {
+        var i;
+
+        if (!radioObj) {
+            return "";
+        }
+
+        var radioLength = radioObj.length;
+        if (radioLength === undefined) {
+            if (radioObj.checked) {
+                return radioObj.value;
+            }
+            return "";
+        }
+
+        for (i = 0; i < radioLength; i++) {
+            if (radioObj[i].checked) {
+                return radioObj[i].value;
+            }
+        }
+        return "";
+    }
+    
     //check if number or parsed string is integer
     function isInteger(n) {
         return (parseFloat(n) == parseInt(n, 10));
     }    
+    
+    //isNaN stands for "is Not a Number", this function works whether n is a "number" or a "string"
+    //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
+    function isNumber(n) {
+        return !isNaN(n) && isFinite(parseFloat(n));
+    } 
     
     return{
         isPublicTransportsAlternativeOk: isPublicTransportsAlternativeOk,

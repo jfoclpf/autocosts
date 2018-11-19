@@ -90,7 +90,6 @@ var TimeCounter;
         },
 
         initialize :          rootClientURL + "initialize.js",
-        siteFunctions :       rootClientURL + "siteFunctions.js",
         formFunctions :       rootClientURL + "formFunctions.js",
         validateForm :        rootClientURL + "validateForm.js",
         g_recaptcha :         rootClientURL + "g-recaptcha.js",

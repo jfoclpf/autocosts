@@ -281,3 +281,28 @@ function submitDataToForm(readObj){
     $('#days_drive_per_month').val(readObj.time_spent_days_drive_per_month);
 
 }
+
+
+    //function used to get from forms the selected option in radio buttons
+    function getCheckedValue(radioObj) {
+        var i;
+
+        if (!radioObj) {
+            return "";
+        }
+
+        var radioLength = radioObj.length;
+        if (radioLength === undefined) {
+            if (radioObj.checked) {
+                return radioObj.value;
+            }
+            return "";
+        }
+
+        for (i = 0; i < radioLength; i++) {
+            if (radioObj[i].checked) {
+                return radioObj[i].value;
+            }
+        }
+        return "";
+    }

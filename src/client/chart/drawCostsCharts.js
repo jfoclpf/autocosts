@@ -7,10 +7,10 @@
 
 /*File with Javascript Charts Functions */
 
-//DRAW CHARTS MODULE
+//DRAW CHARTS MODULE, IT IS A SUBMODULE OF SHOW RESULTS MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-var drawCharts = (function(){
+showResults.drawCharts = (function(){
     
     var calculatedData;
     
