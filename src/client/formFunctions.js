@@ -9,7 +9,7 @@
 //USER FORM INTERFACE MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-var userFormInterface = (function(){
+mainModule.userFormModule = (function(){
     
     function initialize(){    
         setFormSettings();
@@ -21,7 +21,7 @@ var userFormInterface = (function(){
     function setFormSettings(){
 
         //shows numeric keypad on iOS mobile devices
-        if(mainFrame.getMobileOperatingSystem() === "iOS"){
+        if(mainModule.getMobileOperatingSystem() === "iOS"){
             $('.form_part input[type="number"]').attr("pattern", "\\d*");
         }
 
@@ -796,7 +796,8 @@ var userFormInterface = (function(){
 
         //double-check with validating functions from file validateForm.js 
         //Standing (part1) and Running (part2) Costs
-        if (!validateData.isUserDataFormPart1_Ok() || !validateData.isUserDataFormPart2_Ok()){
+        if (!mainModule.userFormModule.validateFormModule.isUserDataFormPart1_Ok() || 
+            !mainModule.userFormModule.validateFormModule.isUserDataFormPart2_Ok()){
             return false;
         }    
 

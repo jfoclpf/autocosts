@@ -10,7 +10,7 @@
 //DRAW CHARTS MODULE, IT IS A SUBMODULE OF SHOW RESULTS MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-showResults.drawCharts = (function(){
+mainModule.resultsModule.chartsModule = (function(){
     
     var calculatedData;
     
@@ -27,7 +27,7 @@ showResults.drawCharts = (function(){
         return finishedDrawingChartsPromises;
     }
         
-    function doughnutFinancialEffort() { 
+    function drawDoughnutFinancialEffort() { 
 
         var finEffortPerc = calculatedData.financialEffort.financialEffortPercentage;
 
@@ -74,7 +74,7 @@ showResults.drawCharts = (function(){
 
     }
     
-    function costsBars(period){
+    function drawCostsBars(period){
     
         var numMonths;
 
@@ -216,7 +216,7 @@ showResults.drawCharts = (function(){
     }
     
     //Dounghnut chart with every cost item 
-    function costsDoughnut(period) {
+    function drawCostsDoughnut(period) {
     
         var numMonths;
 
@@ -344,7 +344,7 @@ showResults.drawCharts = (function(){
     }
 
     //draws vertical bars chart for Financial Effort
-    function financialEffort() {
+    function drawFinancialEffort() {
 
         var fe = calculatedData.financialEffort; //Monthly costs object of calculated data, parsed to fixed(1)
 
@@ -423,7 +423,7 @@ showResults.drawCharts = (function(){
         DISPLAY.charts.finEffort.isVisible = true;
     }
         
-    function alternativesToCar(){
+    function drawAlternativesToCar(){
 
         var i;    
         var publicTransportsObj = calculatedData.publicTransports;
@@ -690,12 +690,12 @@ showResults.drawCharts = (function(){
     } 
     
     return{
-        initialize:              initialize,
-        doughnutFinancialEffort: doughnutFinancialEffort,
-        costsBars:               costsBars,
-        costsDoughnut:           costsDoughnut,
-        financialEffort:         financialEffort,
-        alternativesToCar:       alternativesToCar
+        initialize: initialize,
+        drawDoughnutFinancialEffort: drawDoughnutFinancialEffort,
+        drawCostsBars: drawCostsBars,
+        drawCostsDoughnut: drawCostsDoughnut,
+        drawFinancialEffort: drawFinancialEffort,
+        drawAlternativesToCar: drawAlternativesToCar
     };
     
 })();

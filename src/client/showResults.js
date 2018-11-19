@@ -10,7 +10,9 @@
 //SHOW CALCULATED RESULTS MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-var showResults = (function(){   
+mainModule.resultsModule = (function(){   
+    
+    var calculatedData;
     
     initialize();
     
@@ -21,9 +23,9 @@ var showResults = (function(){
     function loadResultsSettingsAndHandlers(){
 
         $("#results #totalCostsPeriod").on("change", function(){
-            showResults.setPeriodicCosts(CALCULATED_DATA, $(this).val());
-            showResults.drawCharts.costsBars($(this).val());
-            showResults.drawCharts.costsDoughnut($(this).val());
+            setPeriodicCosts(calculatedData, $(this).val());
+            mainModule.resultsModule.chartsModule.drawCostsBars($(this).val());
+            mainModule.resultsModule.chartsModule.drawCostsDoughnut($(this).val());
         });
 
         if(SWITCHES.pdf){
@@ -31,7 +33,7 @@ var showResults = (function(){
             //download pdf button handler
             $("#results .button-pdf").on( "click", function(){
                 console.log("Download pdf clicked");
-                pdfReport.download();
+                mainModule.pdfModule.download();
             });
         }
         else{
@@ -42,7 +44,7 @@ var showResults = (function(){
             $("#results .button-print").show().addClass("disabled");
             $("#results .button-print").on( "click", function(){
                 console.log("Print button clicked");
-                pdfReport.print();
+                mainModule.pdfModule.print();
             });
         }
         else{
@@ -55,7 +57,7 @@ var showResults = (function(){
             $("#results").hide();
         });
 
-        if (SWITCHES.social /*&& !IsThisAtest()*/){
+        if (SWITCHES.social /*&& !isThisAtest()*/){
             $(".right-actions .facebook a, .right-actions-mobile .facebook a").
                 attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(FULL_URL)).attr("target", "_blank");
             $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
@@ -74,7 +76,7 @@ var showResults = (function(){
     function calculateCostsAndShowResults(){
 
         //test if the form user inputs are correct
-        if (!userFormInterface.isReadyToCalc()){ 
+        if (!mainModule.userFormModule.isReadyToCalc()){ 
             return false;
         } 
         
@@ -96,11 +98,11 @@ var showResults = (function(){
         };
 
         //calculate costs, "costs" is a global variable/object defined in coreFunctions.js
-        var calculatedData = calculator.calculateCosts(form, countryObj); 
+        calculatedData = mainModule.calculatorModule.calculateCosts(form, countryObj); 
 
         //get Uber data if applicable
         if(SWITCHES.uber && calculatedData.publicTransports.calculated){
-            calculatedData.uber = calculator.calculateUberCosts(UBER_API); 
+            calculatedData.uber = mainModule.calculatorModule.calculateUberCosts(UBER_API); 
         } 
 
         CALCULATED_DATA = calculatedData; //assigns to global variable
@@ -114,13 +116,13 @@ var showResults = (function(){
         //console.log(flattenedData); 
         setCalculatedDataToHTML(flattenedData);        
         
-        var finishedDrawingChartsPromises = showResults.drawCharts.initialize(calculatedData);        
+        var finishedDrawingChartsPromises = mainModule.resultsModule.chartsModule.initialize(calculatedData);        
 
         //The first three boxes on the top
         //if financial effort was not calculated, does not show doughnut chart
         //on the third box, and adapt the three boxes css classes
         if(calculatedData.financialEffort.calculated && SWITCHES.charts){ 
-            showResults.drawCharts.doughnutFinancialEffort(calculatedData);
+            mainModule.resultsModule.chartsModule.drawDoughnutFinancialEffort(calculatedData);
             //shows third box where the financial effort doughnut chart appears
             $("#results #info-boxes .info-box.box-3").show();
             $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");        
@@ -137,8 +139,8 @@ var showResults = (function(){
         //SWITCHES are frozen/const object in Globals.js, so no need to show elements when SWITCHES.charts is true
         //since these elements are set tp be shown in css by default, just need to hide in case is false
         if(SWITCHES.charts){            
-            showResults.drawCharts.costsBars("month");
-            showResults.drawCharts.costsDoughnut("month");
+            mainModule.resultsModule.chartsModule.drawCostsBars("month");
+            mainModule.resultsModule.chartsModule.drawCostsDoughnut("month");
         }
         else {
             $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
@@ -153,7 +155,7 @@ var showResults = (function(){
             DISPLAY.result.fin_effort = true; //global variable 
 
             if(SWITCHES.charts){                
-                showResults.drawCharts.financialEffort(calculatedData);
+                mainModule.resultsModule.chartsModule.drawFinancialEffort(calculatedData);
             }
             else{
                 $("#financial-effort .graph").hide();
@@ -174,7 +176,7 @@ var showResults = (function(){
             DISPLAY.result.public_transports = true;
 
             if(SWITCHES.charts){
-                showResults.drawCharts.alternativesToCar();
+                mainModule.resultsModule.chartsModule.drawAlternativesToCar();
             }
             else{
                 $("#equivalent-transport-costs .graph").hide();
@@ -203,7 +205,7 @@ var showResults = (function(){
                     finishedDrawingChartsPromises.financialEffort,
                     finishedDrawingChartsPromises.alternativesToCar).
             done(function () {              
-                pdfReport.generatePDF(calculatedData);             
+                mainModule.pdfModule.generatePDF(calculatedData);             
             }); 
         }); 
         
@@ -231,7 +233,7 @@ var showResults = (function(){
                         numToShow = amount + " " + WORDS.hour_abbr; 
                     }
                     else if($i.hasClass("distance")){
-                        numToShow = amount + " " + mainFrame.getStringFor("distance"); 
+                        numToShow = amount + " " + mainModule.getStringFor("distance"); 
                     }
                     else if($i.hasClass("percentage")){
                         numToShow = amount + "&#37;"; //percentage symbol 
@@ -872,8 +874,7 @@ var showResults = (function(){
 
             wasClassAccordionHandlerSet = true;
         }
-    }
-    
+    }       
     
     return{
         calculateCostsAndShowResults: calculateCostsAndShowResults,

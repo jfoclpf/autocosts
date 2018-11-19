@@ -2,7 +2,7 @@
 //PDF REPORT GENERATION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-var pdfReport = (function(){
+mainModule.pdfModule = (function(){
     
     var calculatedData;
     var pdfReport;

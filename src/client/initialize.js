@@ -1,29 +1,30 @@
-var mainFrame;
+var mainModule;
 
 $(document).ready(function () {
 
     DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
-     
+         
     getScriptOnce(JS_FILES.formFunctions, function(){
-        mainFrame.initialize();  
-        userFormInterface.initialize();
+        getScriptOnce(JS_FILES.validateForm);
+        mainModule.initialize();  
+        mainModule.userFormModule.initialize();
     });
-
-    //Google recaptcha
-    IS_HUMAN_CONFIRMED = false;
 
 });
 
 
-mainFrame = (function(){
+mainModule = (function(){
     
     function initialize(){
         oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
         fillPeriodsInSelectBoxes();     //fills periods (month, two months, etc.) in HTML select boxes
         loadMainPageSettings();                    
-        loadsStandardValues();   
+        loadsPrefilledValues();          //loads pre-filled values, for example for XX/
         initTimer();
         initGoogleAnalytics();
+        getUniqueIdentifier();        
+            
+        IS_HUMAN_CONFIRMED = false;     //Google recaptcha
     }
 
     //function that sets and fills the the time periods (month, trimester, etc.) on the dropdown select boxes
@@ -48,7 +49,72 @@ mainFrame = (function(){
 
     //settings and handlers of the elements on the landing page
     function loadMainPageSettings(){
+        
+        //When clicked the Calculate Button shown on the landing page
+        var calculateButtonOnclick = function(){
+            $("#hero, footer").hide();
+            $("#form").show();    
 
+            //on test version shows everything right from the beginning
+            if(COUNTRY=="XX"){
+                $(".field_container").show();
+            }
+
+            loadExtraJSFiles();        
+
+            //loadCSSFiles(['css/merged_deferred.css']);
+            loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+        };  
+        
+        //Load statistics table on sidebars.hbs
+        var updateStatsTable = function(cc){
+            
+            //rounds a number
+            var round = function(number, precision) {
+                var shift = function (number, precision) {
+                var numArray = ("" + number).split("e");
+                    return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
+                };
+                return shift(Math.round(shift(number, +precision)), -precision);
+            };
+            
+            for (var key in STATS[cc]){
+                var elementClass = "stats_table-"+key; //see sidebars.hbs
+                if($("." + elementClass).length){//element exists
+                    var $el = $("." + elementClass);
+                    var value = STATS[cc][key];
+                    var currSymb = STATS[cc].curr_symbol;
+                    if(key == "running_costs_dist" || key == "total_costs_dist"){
+                        $el.text(currSymb + round(value, 2) + "/" + getStringFor("distanceShort"));
+                    }
+                    else if (key == "kinetic_speed" || key == "virtual_speed"){
+                        $el.text(round(value, 0) + getStringFor("distanceShort") + "/h");
+                    }
+                    else{
+                        $el.text(currSymb + " " + round(value, 0));
+                    }
+                }
+            }
+        };
+        
+        //adjusts the size of select according to content
+        var resizeSelectToContent = function(jqueryId){
+            var $this = $(jqueryId);
+            var arrowWidth = 10;
+            // create test element
+            var text = $this.find("option:selected").text();
+            var $test = $("<span>").html(text).css({
+                "font-size": $this.css("font-size"), // ensures same size text
+                "visibility": "hidden"               // prevents FOUC
+            });
+            // add to parent, get width, and get out
+            $test.appendTo($this.parent());
+            var width = $test.width();
+            $test.remove();
+            // set select width
+            $this.width(width + arrowWidth);
+        };    
+        
         // All sides
         var sides = ["left", "right"];
         // Initialize sidebars
@@ -112,166 +178,140 @@ mainFrame = (function(){
             updateStatsTable(this.value);
         });
     }
+    
+    /*function that loads extra files and features, that are not loaded immediately after the page is opened
+    because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
+    function loadExtraJSFiles() {
 
-    //When clicked the Calculate Button shown on the landing page
-    function calculateButtonOnclick(){
-        $("#hero, footer").hide();
-        $("#form").show();    
-
-        //on test version shows everything right from the beginning
-        if(COUNTRY=="XX"){
-            $(".field_container").show();
-        }
-
-        getScriptOnce(JS_FILES.coreFunctions, function(){
-            getScriptOnce(JS_FILES.validateForm);
+        getScriptOnce(JS_FILES.coreFunctions, function(){            
             getScriptOnce(JS_FILES.conversionFunctions);
 
             getScriptOnce(JS_FILES.smartAppBanner, loadSmartBanner);
 
             getScriptOnce(JS_FILES.getData, function(){
-                loadExtraFiles();
-            });
+                                
+                if (SWITCHES.charts){
+                    getScriptOnce(JS_FILES.chartjs);
 
-        });
-
-        //loadStyleSheets(['css/merged_deferred.css']);
-        loadStyleSheets(['css/results.css', 'css/smart-app-banner.css']); //temporary line
-    }
-
-    /*function that loads extra files and features, that are not loaded immediately after the page is opened
-    because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-    function loadExtraFiles() {
-
-        if (SWITCHES.charts){
-            getScriptOnce(JS_FILES.chartjs);
-
-            getScriptOnce(JS_FILES.showResults, function() {
-                getScriptOnce(JS_FILES.drawCostsCharts);
-            });
-        }
-        else{
-            getScriptOnce(JS_FILES.showResults);
-        }
-
-        if (SWITCHES.data_base){
-            getScriptOnce(JS_FILES.dbFunctions);
-        }
-
-        //file JS_FILES.g_recaptcha is from this project, stored in src/client, and must always be loaded
-        getScriptOnce(JS_FILES.g_recaptcha, function(){
-            //Google Captcha API doesn't work nor applies on localhost
-            if (SWITCHES.g_captcha && NOT_LOCALHOST){
-                getScriptOnce(JS_FILES.Google.recaptchaAPI);
-                //when loaded successfuly set SERVICE_AVAILABILITY.g_captcha=true in function grecaptcha_callback in g-recaptcha.js
-            }
-            else{
-                SERVICE_AVAILABILITY.g_captcha = false;
-            }
-        });
-
-        //uber
-        if (SWITCHES.uber){
-            if(COUNTRY!="XX"){//if not test version
-                //gets asynchronously UBER information
-                $.get(UBER_API_LOCAL_URL, function(data) {
-                    //alert(JSON.stringify(data, null, 4));
-                    if(data && !$.isEmptyObject(data)){
-                        UBER_API =  data; //UBER_API is a global variable
-                        console.log("uber data got from uber API: ", UBER_API);
-                    }
-                    else{
-                        console.error("Error getting uber info");
-                        SWITCHES.uber = false;
-                    }
-                });
-            }
-            else{//test version (London city, in Pounds)
-                UBER_API.cost_per_distance = 1.25;
-                UBER_API.cost_per_minute = 0.15;
-                UBER_API.currency_code = "GBP";
-                UBER_API.distance_unit = "mile";
-            }
-        }
-
-        if(SWITCHES.pdf || SWITCHES.print){
-            //wait until all PDF related files are loaded
-            //to activate the downloadPDF button
-            getScriptOnce(JS_FILES.PDF.generatePDF, function() {
-                getScriptOnce(JS_FILES.PDF.pdfmake, function() {
-                    //path where the fonts for PDF are stored
-                    var pdf_fonts_path;
-                    if (COUNTRY == 'CN'){
-                        pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
-                    }
-                    else if (COUNTRY == 'JP'){
-                        pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
-                    }
-                    else if (COUNTRY == 'IN'){
-                        pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
-                    }
-                    else{
-                        pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
-                    }
-                    getScriptOnce(pdf_fonts_path, function() {
-                        $('#results .button-pdf, #results .button-print').removeClass('disabled');
+                    getScriptOnce(JS_FILES.showResults, function() {
+                        getScriptOnce(JS_FILES.drawCostsCharts);
                     });
-                });
-            });
-        }
-    }
-
-    //Load statistics table on sidebars.hbs
-    function updateStatsTable (cc){
-        for (var key in STATS[cc]){
-            var elementClass = "stats_table-"+key; //see sidebars.hbs
-            if($("." + elementClass).length){//element exists
-                var $el = $("." + elementClass);
-                var value = STATS[cc][key];
-                var currSymb = STATS[cc].curr_symbol;
-                if(key == "running_costs_dist" || key == "total_costs_dist"){
-                    $el.text(currSymb + round(value, 2) + "/" + getStringFor("distanceShort"));
-                }
-                else if (key == "kinetic_speed" || key == "virtual_speed"){
-                    $el.text(round(value, 0) + getStringFor("distanceShort") + "/h");
                 }
                 else{
-                    $el.text(currSymb + " " + round(value, 0));
+                    getScriptOnce(JS_FILES.showResults);
                 }
-            }
+
+                if (SWITCHES.data_base){
+                    getScriptOnce(JS_FILES.dbFunctions);
+                }
+
+                //file JS_FILES.g_recaptcha is from this project, stored in src/client, and must always be loaded
+                getScriptOnce(JS_FILES.g_recaptcha, function(){
+                    //Google Captcha API doesn't work nor applies on localhost
+                    if (SWITCHES.g_captcha && NOT_LOCALHOST){
+                        getScriptOnce(JS_FILES.Google.recaptchaAPI);
+                        //when loaded successfuly set SERVICE_AVAILABILITY.g_captcha=true in function grecaptcha_callback in g-recaptcha.js
+                    }
+                    else{
+                        SERVICE_AVAILABILITY.g_captcha = false;
+                    }
+                });
+
+                //uber
+                if (SWITCHES.uber){
+                    if(COUNTRY!="XX"){//if not test version
+                        //gets asynchronously UBER information
+                        $.get(UBER_API_LOCAL_URL, function(data) {
+                            //alert(JSON.stringify(data, null, 4));
+                            if(data && !$.isEmptyObject(data)){
+                                UBER_API =  data; //UBER_API is a global variable
+                                console.log("uber data got from uber API: ", UBER_API);
+                            }
+                            else{
+                                console.error("Error getting uber info");
+                                SWITCHES.uber = false;
+                            }
+                        });
+                    }
+                    else{//test version (London city, in Pounds)
+                        UBER_API.cost_per_distance = 1.25;
+                        UBER_API.cost_per_minute = 0.15;
+                        UBER_API.currency_code = "GBP";
+                        UBER_API.distance_unit = "mile";
+                    }
+                }
+
+                if(SWITCHES.pdf || SWITCHES.print){
+                    //wait until all PDF related files are loaded
+                    //to activate the downloadPDF button
+                    getScriptOnce(JS_FILES.PDF.generatePDF, function() {
+                        getScriptOnce(JS_FILES.PDF.pdfmake, function() {
+                            //path where the fonts for PDF are stored
+                            var pdf_fonts_path;
+                            if (COUNTRY == 'CN'){
+                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
+                            }
+                            else if (COUNTRY == 'JP'){
+                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
+                            }
+                            else if (COUNTRY == 'IN'){
+                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
+                            }
+                            else{
+                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
+                            }
+                            getScriptOnce(pdf_fonts_path, function() {
+                                $('#results .button-pdf, #results .button-print').removeClass('disabled');
+                            });
+                        });
+                    });
+                }                                
+                
+            });
+
+        }); 
+    }
+
+    /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
+    (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
+    function loadCSSFiles(styleSheets) {
+        var head = document.getElementsByTagName('head')[0];
+
+        for (var i = 0; i < styleSheets.length; i++) {
+            var link = document.createElement('link');
+            var rel = document.createAttribute('rel');
+            var href = document.createAttribute('href');
+
+            rel.value = 'stylesheet';
+            href.value = styleSheets[i];
+
+            link.setAttributeNode(rel);
+            link.setAttributeNode(href);
+
+            head.appendChild(link);
         }
-    }
-
-    //adjusts the size of select according to content
-    function resizeSelectToContent(jqueryId){
-        var $this = $(jqueryId);
-        var arrowWidth = 10;
-        // create test element
-        var text = $this.find("option:selected").text();
-        var $test = $("<span>").html(text).css({
-            "font-size": $this.css("font-size"), // ensures same size text
-            "visibility": "hidden"               // prevents FOUC
-        });
-        // add to parent, get width, and get out
-        $test.appendTo($this.parent());
-        var width = $test.width();
-        $test.remove();
-        // set select width
-        $this.width(width + arrowWidth);
-    }
-
-    //rounds a number
-    function round(number, precision) {
-        var shift = function (number, precision) {
-        var numArray = ("" + number).split("e");
-            return +(numArray[0] + "e" + (numArray[1] ? (+numArray[1] + precision) : precision));
-        };
-        return shift(Math.round(shift(number, +precision)), -precision);
-    }
-
+    }    
+    
     function initGoogleAnalytics(){
+        
+        //detects whether Google Analytics has loaded
+        var checkGoogleAnalytics = function(t) {
+
+            if(isThisAtest()){
+                SERVICE_AVAILABILITY.g_analytics = false;
+                return;
+            }
+
+            if (typeof ga === 'function') {
+                SERVICE_AVAILABILITY.g_analytics = true;
+            } else {
+                SERVICE_AVAILABILITY.g_analytics = false;
+                setTimeout(checkGoogleAnalytics, t);
+            }
+        };
+        
         /*Google Analytics*/
-        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !IsThisAtest() && SWITCHES.g_analytics) {
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && SWITCHES.g_analytics) {
             getScriptOnce(JS_FILES.Google.analytics, function(){
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
@@ -286,30 +326,16 @@ mainFrame = (function(){
         }
     }
     
-    //detects whether Google Analytics has loaded
-    function checkGoogleAnalytics(t) {
-
-        if(IsThisAtest()){
-            SERVICE_AVAILABILITY.g_analytics = false;
-            return;
-        }
-
-        if (typeof ga === 'function') {
-            SERVICE_AVAILABILITY.g_analytics = true;
-        } else {
-            SERVICE_AVAILABILITY.g_analytics = false;
-            setTimeout(checkGoogleAnalytics, t);
-        }
-    }
-
     /*User Unique Identifier functions*/
-    function S4() {
-        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    function getUniqueIdentifier(){
+        function S4() {
+            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        }
+        function guid() {
+            return (S4()+"-"+S4()+"-"+S4());
+        }
+        UUID = guid();
     }
-    function guid() {
-        return (S4()+"-"+S4()+"-"+S4());
-    }
-    UUID = guid();
 
     //gets default protocol defined by Global Variable
     //it returns either "http://" or "https://", i.e., it returns including the "://"
@@ -335,7 +361,7 @@ mainFrame = (function(){
     }
 
     /*function which returns whether this session is a (test/develop version) or a prod version */
-    function IsThisAtest() {
+    function isThisAtest() {
 
         if(TEST_SERVER || COUNTRY=="XX"){
             return true;
@@ -380,28 +406,9 @@ mainFrame = (function(){
     }
     /* jshint ignore:end */
 
-    /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
-    (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
-    function loadStyleSheets(styleSheets) {
-        var head = document.getElementsByTagName('head')[0];
-
-        for (var i = 0; i < styleSheets.length; i++) {
-            var link = document.createElement('link');
-            var rel = document.createAttribute('rel');
-            var href = document.createAttribute('href');
-
-            rel.value = 'stylesheet';
-            href.value = styleSheets[i];
-
-            link.setAttributeNode(rel);
-            link.setAttributeNode(href);
-
-            head.appendChild(link);
-        }
-    }
-
     //the standard values are used if we want the form to be pre-filled
-    function loadsStandardValues(){
+    //because file XX has standard values filed, it shows pre-filled values for /XX    
+    function loadsPrefilledValues(){
 
         //the key the name of the variable in WORDS
         //the value is the name of the id in the form

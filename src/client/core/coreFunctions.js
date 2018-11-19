@@ -5,7 +5,7 @@
 //CALCULATOR MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-var calculator = (function(){
+mainModule.calculatorModule = (function(){
 
     var inputData;          //input data object, for example obtained from user form
     var country;            //object containing information about the selected country

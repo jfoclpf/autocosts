@@ -94,13 +94,13 @@ function getFormData(form){
 
         //Form Part 3
         publicTransports: {
-            isOk:                    validateData.isPublicTransportsAlternativeOk(), //boolean whether this section was correctly filled in
+            isOk:                    mainModule.userFormModule.validateFormModule.isPublicTransportsAlternativeOk(), //boolean 
             numberOfPeopleInFamily:  f.pessoas_agregado.value,
             monthlyPassCost:         f.preco_passe.value
         },
 
         income: {
-            isOk:         validateData.isFinancialEffortOk(), //boolean whether this section was correctly filled in
+            isOk:         mainModule.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean whether this section was correctly filled in
             incomePeriod: getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
             year: {
                 amount: f.income_per_year.value
