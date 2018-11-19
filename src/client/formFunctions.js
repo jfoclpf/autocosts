@@ -1009,6 +1009,11 @@ var userFormInterface = (function(){
        $('input[name="' + name + '"][value="'+option+'"]').prop('checked', true);
     }
     
+    //check if number or parsed string is integer
+    function isInteger(n) {
+        return (parseFloat(n) == parseInt(n, 10));
+    }    
+    
     return{
         isReadyToCalc: isReadyToCalc
     };

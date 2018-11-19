@@ -108,10 +108,6 @@ function updateStatsTable (cc){
     }
 }
 
-function isInteger(n) {
-    return (parseFloat(n) == parseInt(n, 10));
-}
-
 //isNaN stands for "is Not a Number", this function works whether n is a "number" or a "string"
 //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
 function isNumber(n) {
