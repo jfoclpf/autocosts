@@ -163,18 +163,18 @@ function loadResultsSettingsAndHandlers(){
         //download pdf button handler
         $("#results .button-pdf").on( "click", function(){
             console.log("Download pdf clicked");
-            generatePDF(CALCULATED_DATA, "download");
+            pdfReport.download();
         });
     }
     else{
         $("#results .button-pdf").hide();
     }
 
-    if(SWITCHES.print){
+    if(SWITCHES.pdf && SWITCHES.print){
         $("#results .button-print").show().addClass("disabled");
         $("#results .button-print").on( "click", function(){
             console.log("Print button clicked");
-            generatePDF(CALCULATED_DATA, "print");
+            pdfReport.print();
         });
     }
     else{

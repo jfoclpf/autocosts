@@ -720,7 +720,8 @@ var calculator = (function(){
             throw errMsgDataCountry;
         }
 
-        var errMsg = "Error calculating Time Spent In Driving";                
+        var errMsg = "Error calculating Time Spent In Driving";
+        var bCalculated;
         
         var minutesBetweenHomeAndJob,   //time (in minutes) driven between home and job
             minutesInEachWeekend,       //time (in minutes) driven during weekends
@@ -730,34 +731,46 @@ var calculator = (function(){
             hoursPerMonth,              //number of hours driven per month
             hoursPerYear;               //number of hours driven per year
         
-        if(inputData.fuel.distanceBased.considerCarToJob == 'true' || inputData.distance.considerCarToJob == 'true'){
+        if( (inputData.fuel.typeOfCalculation == 'km' && inputData.fuel.distanceBased.considerCarToJob == 'true') || 
+            inputData.distance.considerCarToJob == 'true'){
+            
             minutesBetweenHomeAndJob = parseFloat(inputData.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
             minutesInEachWeekend     = parseFloat(inputData.timeSpentInDriving.option1.minutesDuringWeekend);
                         
             var daysPerWeekUserDrivesToJob = calculatedData.drivingDistance.details.daysPerWeekUserDrivesToJob;       
-            if(daysPerWeekUserDrivesToJob === undefined){
-                throw errMsg + ": unknown daysPerWeekUserDrivesToJob";
+            
+            if(isNaN(daysPerWeekUserDrivesToJob)){
+                console.error(errMsg + ": unknown daysPerWeekUserDrivesToJob");
+                bCalculated = false;
             }       
-            
-            minutesPerWeek = 2 * minutesBetweenHomeAndJob * daysPerWeekUserDrivesToJob + minutesInEachWeekend;
-            hoursPerMonth  = consts.numberOfWeeksInAMonth * minutesPerWeek / 60; 
-            
-            minutesPerDay = minutesPerWeek / 7;
-            
-            daysPerMonth  = consts.numberOfWeeksInAMonth * ((minutesInEachWeekend > 0 ? 2 : 0) + daysPerWeekUserDrivesToJob) 
+            else{
+                minutesPerWeek = 2 * minutesBetweenHomeAndJob * daysPerWeekUserDrivesToJob + minutesInEachWeekend;
+                hoursPerMonth  = consts.numberOfWeeksInAMonth * minutesPerWeek / 60; 
+
+                minutesPerDay = minutesPerWeek / 7;
+
+                daysPerMonth  = consts.numberOfWeeksInAMonth * ((minutesInEachWeekend > 0 ? 2 : 0) + daysPerWeekUserDrivesToJob);                
+                bCalculated = true;
+            }
         }
         else{
             minutesPerDay = parseFloat(inputData.timeSpentInDriving.option2.minutesPerDay);
             daysPerMonth  = parseFloat(inputData.timeSpentInDriving.option2.daysPerMonth);
-            
-            hoursPerMonth  = minutesPerDay * daysPerMonth / 60;
-            minutesPerWeek = hoursPerMonth / consts.numberOfWeeksInAMonth * 60; 
+            if(isNaN(minutesPerDay) || isNaN(minutesPerDay)){
+                console.error(errMsg + ": unknown minutesPerDay or minutesPerDay");
+                bCalculated = false;            
+            }
+            else{            
+                hoursPerMonth  = minutesPerDay * daysPerMonth / 60;
+                minutesPerWeek = hoursPerMonth / consts.numberOfWeeksInAMonth * 60; 
+                bCalculated = true;
+            }
         }
 
         hoursPerYear = hoursPerMonth * 12;
 
         var timeSpentInDriving = {
-            calculated:               true,                     
+            calculated:               bCalculated,                     
             minutesBetweenHomeAndJob: minutesBetweenHomeAndJob, //time (in minutes) driven between home and job
             minutesInEachWeekend:     minutesInEachWeekend,     //time (in minutes) driven during weekends
             minutesPerWeek:           minutesPerWeek,           //time (in minutes) driven per week

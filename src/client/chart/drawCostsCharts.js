@@ -14,8 +14,17 @@ var drawCharts = (function(){
     
     var calculatedData;
     
-    function setCalculatedData(calculatedDataIn) {
+    var finishedDrawingChartsPromises = {
+        doughnutFinancialEffort: $.Deferred(),
+        costsBars:               $.Deferred(),
+        costsDoughnut:           $.Deferred(),
+        financialEffort:         $.Deferred(),
+        alternativesToCar:       $.Deferred()
+    };
+    
+    function initialize(calculatedDataIn) {
         calculatedData = calculatedDataIn;
+        return finishedDrawingChartsPromises;
     }
         
     function doughnutFinancialEffort() { 
@@ -44,8 +53,9 @@ var drawCharts = (function(){
                 mode: null
             },        
             animation : {
-                onComplete : function(){    
+                onComplete : function(){                     
                     DISPLAY.charts.finEffortDoughnut.URI = DISPLAY.charts.finEffortDoughnut.ref.toBase64Image();
+                    finishedDrawingChartsPromises.doughnutFinancialEffort.resolve();
                 }
             }
         };    
@@ -187,6 +197,7 @@ var drawCharts = (function(){
             animation : {
                 onComplete : function(){    
                     DISPLAY.charts.costsBars.URI = DISPLAY.charts.costsBars.ref.toBase64Image();
+                    finishedDrawingChartsPromises.costsBars.resolve();                 
                 }
             }
         };
@@ -314,6 +325,7 @@ var drawCharts = (function(){
             animation : {
                 onComplete : function(){    
                     DISPLAY.charts.costsDoughnut.URI = DISPLAY.charts.costsDoughnut.ref.toBase64Image();
+                    finishedDrawingChartsPromises.costsDoughnut.resolve();                     
                 }
             }
         };    
@@ -393,6 +405,7 @@ var drawCharts = (function(){
             animation : {
                 onComplete : function(){    
                     DISPLAY.charts.finEffort.URI = DISPLAY.charts.finEffort.ref.toBase64Image();
+                    finishedDrawingChartsPromises.financialEffort.resolve();                  
                 }
             }
         };
@@ -600,7 +613,8 @@ var drawCharts = (function(){
             }, 
             animation : {
                 onComplete : function(){    
-                    DISPLAY.charts.alterToCar.URI = DISPLAY.charts.alterToCar.ref.toBase64Image();                
+                    DISPLAY.charts.alterToCar.URI = DISPLAY.charts.alterToCar.ref.toBase64Image(); 
+                    finishedDrawingChartsPromises.alternativesToCar.resolve(); 
                 }
             }
         };
@@ -676,7 +690,7 @@ var drawCharts = (function(){
     } 
     
     return{
-        setCalculatedData:       setCalculatedData,
+        initialize:              initialize,
         doughnutFinancialEffort: doughnutFinancialEffort,
         costsBars:               costsBars,
         costsDoughnut:           costsDoughnut,

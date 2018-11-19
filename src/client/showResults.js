@@ -45,13 +45,25 @@ function Run2(callback){
     var flattenedData = flatten(calculatedData, {delimiter:"_"}); 
     
     //console.log(flattenedData);     
-
-    showResults(form, calculatedData, flattenedData, countryObj);
+    var finishedDrawingChartsPromises = drawCharts.initialize(calculatedData);    
+    
+    showResults(form, calculatedData, flattenedData, countryObj);  
         
     $("*").promise().done(function(){    
         
         //global variable indicating the results are being shown
         DISPLAY.result.isShowing = true; 
+         
+        //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
+        //such that, the pdf generation can extract the charts to base64 images
+        $.when( finishedDrawingChartsPromises.doughnutFinancialEffort, 
+                finishedDrawingChartsPromises.costsBars, 
+                finishedDrawingChartsPromises.costsDoughnut,
+                finishedDrawingChartsPromises.financialEffort,
+                finishedDrawingChartsPromises.alternativesToCar).
+        done(function () {              
+            pdfReport.generatePDF(calculatedData);             
+        }); 
     });
 
     return true;
@@ -61,8 +73,6 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     //console.log(JSON.stringify(calculatedData, null, 4));
     
     $("#form").hide(); 
-    
-    drawCharts.setCalculatedData(calculatedData);
     
     //The first three boxes on the top
     //if financial effort was not calculated, does not show doughnut chart
@@ -121,7 +131,7 @@ function showResults(form, calculatedData, flattenedData, countryObj){
 
     //Equivalent transport costs
     if(calculatedData.publicTransports.calculated){            
-        setEquivTransportCostsDetails(form, calculatedData);
+        setEquivTransportCostsDetails(form, calculatedData);                
         
         $("#results #equivalent-transport-costs").show();
         DISPLAY.result.public_transports = true;
@@ -145,36 +155,41 @@ function showResults(form, calculatedData, flattenedData, countryObj){
     
 }
 
-//scans all calculatedData flattened to flattenedData and assigns each result value to respective HTML element  
+//scans all flattened calculatedDat and assigns each result value to respective HTML class element  
 function setCalculatedDataToHTML(flattenedData){
     
     for (var key in flattenedData){
         var $i = $("#results ." + key);  
         //check that the element with that class exists in the html page
         //and that the element is valid in the array of calculated data
-        if(flattenedData.hasOwnProperty(key) && $i.length &&  flattenedData[key]){
+        if(flattenedData.hasOwnProperty(key) && $i.length){
+            
+            if(flattenedData[key] !== undefined && !isNaN(flattenedData[key])){
+                //organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
+                toFixedN = getToFixedNumFromClasses($i); 
+                amount = flattenedData[key].toFixed(toFixedN);
 
-            //organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
-            toFixedN = getToFixedNumFromClasses($i); 
-            amount = flattenedData[key].toFixed(toFixedN);
+                if($i.hasClass("currency")){
+                    numToShow = currencyShow(amount);
+                }
+                else if($i.hasClass("hours")){
+                    numToShow = amount + " " + WORDS.hour_abbr; 
+                }
+                else if($i.hasClass("distance")){
+                    numToShow = amount + " " + getDistanceOptStrShort(); 
+                }
+                else if($i.hasClass("percentage")){
+                    numToShow = amount + "&#37;"; //percentage symbol 
+                }                
+                else{
+                    numToShow = amount;
+                }
 
-            if($i.hasClass("currency")){
-                numToShow = currencyShow(amount);
-            }
-            else if($i.hasClass("hours")){
-                numToShow = amount + " " + WORDS.hour_abbr; 
-            }
-            else if($i.hasClass("distance")){
-                numToShow = amount + " " + getDistanceOptStrShort(); 
-            }
-            else if($i.hasClass("percentage")){
-                numToShow = amount + "&#37;"; //percentage symbol 
-            }                
+                $i.html(numToShow);
+                }
             else{
-                numToShow = amount;
+                $i.hide();
             }
-
-            $i.html(numToShow);
         }
     }
 }
