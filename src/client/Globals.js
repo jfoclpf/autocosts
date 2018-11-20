@@ -93,7 +93,7 @@ var TimeCounter;
         formFunctions :       rootClientURL + "formFunctions.js",
         validateForm :        rootClientURL + "validateForm.js",
         g_recaptcha :         rootClientURL + "g-recaptcha.js",
-        conversionFunctions : rootClientURL + "conversionFunctions.js",
+        conversionFunctions : rootClientURL + "core/conversionFunctions.js",
         coreFunctions :       rootClientURL + "core/coreFunctions.js",
         getData :             rootClientURL + "getData.js",
         showResults :         rootClientURL + "showResults.js",
