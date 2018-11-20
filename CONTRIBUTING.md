@@ -26,9 +26,13 @@ washing
 ### Country codes
 For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code must be used.
 
-### Modules
+## Modules
 
-<a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>, particulary using the following exemple. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). In the following example we also ensure all methods and variables are kept private until explicitly exposed:
+<a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). 
+
+### Pattern
+
+By the following pattern we also ensure all methods and variables are kept private until explicitly exposed.
 
 ```js
 var myGradesCalculate = (function () {
@@ -63,6 +67,43 @@ var myGradesCalculate = (function () {
 
 myGradesCalculate.failing(); // 'You failed 2 times.' 
 myGradesCalculate.average(); // 'Your average grade is 70.33333333333333.'
+```
+
+### Submodules
+
+```js
+var Module = (function() {
+
+    function B() {
+        console.log("Module: B");
+        Module.Utils.C(); /* Accessing submodule public methods */
+    };
+
+    return {
+        B: B
+    };
+
+})();
+
+Module.Utils = (function() {
+
+    function C() {
+        console.log("Module.Utils: C");
+    };
+
+    return {
+        C: C
+    }
+
+})();
+
+Module.B();
+```
+
+Output:
+```js
+Module: B
+Module.Utils: C
 ```
 
 ## Wiki page
