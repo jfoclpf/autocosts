@@ -181,23 +181,23 @@ mainModule = (function(){
     because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
     function loadExtraJSFiles() {
 
-        getScriptOnce(JS_FILES.coreFunctions, function(){            
-            getScriptOnce(JS_FILES.conversionFunctions);
+        getScriptOnce(JS_FILES.calculatorModule, function(){            
+            getScriptOnce(JS_FILES.conversionsModule);
 
             getScriptOnce(JS_FILES.smartAppBanner, loadSmartBanner);
 
-            getScriptOnce(JS_FILES.getData, function(){
+            getScriptOnce(JS_FILES.transferDataModule, function(){
                                 
                 if (SWITCHES.charts){
                     getScriptOnce(JS_FILES.chartjs);
 
-                    getScriptOnce(JS_FILES.showResults, function() {
+                    getScriptOnce(JS_FILES.resultsModule, function() {
                         getScriptOnce(JS_FILES.drawCostsCharts);
                         getPdfJsFiles();
                     });
                 }
                 else{
-                    getScriptOnce(JS_FILES.showResults, function(){
+                    getScriptOnce(JS_FILES.resultsModule, function(){
                         getPdfJsFiles();
                     });
                 }
@@ -250,7 +250,7 @@ mainModule = (function(){
             if(SWITCHES.pdf || SWITCHES.print){
                 //wait until all PDF related files are loaded
                 //to activate the downloadPDF button
-                getScriptOnce(JS_FILES.PDF.generatePDF, function() {
+                getScriptOnce(JS_FILES.PDF.pdfModule, function() {
                     getScriptOnce(JS_FILES.PDF.pdfmake, function() {
                         //path where the fonts for PDF are stored
                         var pdf_fonts_path;

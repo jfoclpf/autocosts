@@ -97,7 +97,7 @@ mainModule.resultsModule = (function(){
             taxi_price:             WORDS.taxi_price_per_dist
         };
 
-        //calculate costs, "costs" is a global variable/object defined in coreFunctions.js
+        //calculate costs, "costs" is a global variable/object defined in calculatorModule.js
         calculatedData = mainModule.calculatorModule.calculateCosts(form, countryObj); 
 
         //get Uber data if applicable

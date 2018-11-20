@@ -93,10 +93,10 @@ var TimeCounter;
         formFunctions :       rootClientURL + "formFunctions.js",
         validateForm :        rootClientURL + "validateForm.js",
         g_recaptcha :         rootClientURL + "g-recaptcha.js",
-        conversionFunctions : rootClientURL + "core/conversionFunctions.js",
-        coreFunctions :       rootClientURL + "core/coreFunctions.js",
-        getData :             rootClientURL + "getData.js",
-        showResults :         rootClientURL + "showResults.js",
+        conversionsModule :   rootClientURL + "core/conversionsModule.js",
+        calculatorModule :    rootClientURL + "core/calculatorModule.js",
+        transferDataModule :  rootClientURL + "transferDataModule.js",
+        resultsModule :       rootClientURL + "resultsModule.js",
         dbFunctions :         rootClientURL + "dbFunctions.js",
 
         jQuery :              JSfiles.jquery.uri,
@@ -107,7 +107,7 @@ var TimeCounter;
 
         PDF : {
             pdfmake :         rootClientURL + "pdf/pdfmake.min.js",
-            generatePDF :     rootClientURL + "pdf/generatePDF.js",
+            pdfModule :       rootClientURL + "pdf/pdfModule.js",
             vfs_fonts :       rootClientURL + "pdf/vfs_fonts.js",
             vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
             vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
@@ -140,7 +140,7 @@ var TimeCounter;
     /*global variable for Google reCaptcha*/
     IS_HUMAN_CONFIRMED = false;
 
-    /*calculated information after user clicks "Run", calculated from coreFunctions.js*/
+    /*calculated information after user clicks "Run", calculated from calculatorModule.js*/
     CALCULATED_DATA;  /*calculated data (costs, financial effort, uber, etc.)*/
 
     /*Global Object regarding the display of information*/
