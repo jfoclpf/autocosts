@@ -146,42 +146,7 @@ var TimeCounter;
     /*Global Object regarding the display of information*/
     DISPLAY = {
         centralFrameWidth :  0,  /*width of central frame #div2*/
-        descriptionHTML :   "",
-        /*result information got after user click "run"*/
-        result: {
-            isShowing          : false,  /*tells whether the result with result tables is being shown*/
-            fin_effort         : false,
-            public_transports  : false,
-            uber               : false,
-            ext_costs          : false
-        },
-        charts: {
-            finEffortDoughnut : {
-                isVisible: false,  //boolean variable that says whether the chart is visible
-                ref: 0,            //reference obtained from chart.js when doing "new Chart()"
-                URI: 0             //the charts images data URI, see https://en.wikipedia.org/wiki/Data_URI_scheme#SVG
-            },
-            costsBars : {
-                isVisible: false,
-                ref: 0,
-                URI: 0
-            },
-            costsDoughnut : {
-                isVisible: false,
-                ref: 0,
-                URI: 0
-            },
-            finEffort : {
-                isVisible: false,
-                ref: 0,
-                URI: 0
-            },
-            alterToCar : {
-                isVisible: false,
-                ref: 0,
-                URI: 0
-            }
-        },        
+        descriptionHTML :   "",        
         costsColors: {
             depreciation:        '#2ba3d6',
             insurance:           '#10c6e6',

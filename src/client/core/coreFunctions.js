@@ -1,4 +1,4 @@
-/*************** CORE JS FUNCTIONS *************************/
+/*************** CALCULATOR JS FUNCTIONS *************************/
 //===========================================================
 //see also: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function
 
@@ -174,13 +174,16 @@ mainModule.calculatorModule = (function(){
         var distancePerMonth;  //distance per month in standard unit
 
         var errMsg = "Error calculating fuel";
+        
+        //submodule
+        var conversionsModule = mainModule.calculatorModule.conversionsModule;
 
         switch(fuel.typeOfCalculation){
 
             case "km": //fuel costs calculation based on distance
 
-                var fuelEffL100km = convert_to_fuel_eff_l100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
-                var fuelPriceOnCurrPerLitre = convert_to_fuel_price_CURRpLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
+                var fuelEffL100km = conversionsModule.convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
+                var fuelPriceOnCurrPerLitre = conversionsModule.convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
 
                 if (fuel.distanceBased.considerCarToJob == "false"){
 
@@ -205,21 +208,24 @@ mainModule.calculatorModule = (function(){
                     }
 
                     //converts distance unit to kilometres
-                    var distancePerMonthInKms = convert_std_dist_to_km(distancePerMonth, country.distance_std);
+                    var distancePerMonthInKms = conversionsModule.convertDistanceToKm(distancePerMonth, country.distance_std);
                     monthlyCost = fuelEffL100km * distancePerMonthInKms * fuelPriceOnCurrPerLitre / 100;
                 }
                 else if (fuel.distanceBased.considerCarToJob == "true"){   //make calculation considering the user takes his car to work on a daily basis
 
                     //if miles were chosen must convert input to kilometres
-                    var distanceHomeToJobInKms = convert_std_dist_to_km(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob, country.distance_std);
-                    var distanceOnWeekendsInKms = convert_std_dist_to_km(fuel.distanceBased.carToJob.distanceDuringWeekends, country.distance_std);
+                    var distanceHomeToJobInKms = conversionsModule.convertDistanceToKm(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob,
+                                                                                       country.distance_std);
+                    var distanceOnWeekendsInKms = conversionsModule.convertDistanceToKm(fuel.distanceBased.carToJob.distanceDuringWeekends, 
+                                                                                        country.distance_std);
+                    
                     var daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
 
                     var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) * consts.numberOfWeeksInAMonth;
                     monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100;                    
                     
                     //after computation is made, convert backwards to standard distance
-                    distancePerMonth = convert_km_to_std_dist(totalKmPerMonth, country.distance_std);
+                    distancePerMonth = conversionsModule.convertDistanceFromKm(totalKmPerMonth, country.distance_std);
                 }
                 else{
                     throw errMsg;
@@ -497,9 +503,10 @@ mainModule.calculatorModule = (function(){
 
             pt.taxi.totalCosts = taxiTotalCostsPerMonth;
             pt.taxi.possibleDistanceDoneByTaxi = taxiTotalCostsPerMonth / pt.taxi.costPerUnitDistance;
+            
+            pt.calculated = true;
         }
-
-        pt.calculated = true;
+        
         calculatedData.publicTransports = pt;
 
         return pt;
@@ -833,7 +840,8 @@ mainModule.calculatorModule = (function(){
         var ec = externalCosts;
         
         //converts distance unit to kilometres
-        var distancePerMonthInKms = convert_std_dist_to_km(calculatedData.drivingDistance.perMonth, country.distance_std);
+        var distancePerMonthInKms = mainModule.calculatorModule.conversionsModule.
+            convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
 
         ec.totalPerMonth = (ec.polution + ec.greenhouseGases + ec.noise + ec.fatalities + ec.congestion + ec.infrastr) * distancePerMonthInKms;
 
@@ -845,41 +853,41 @@ mainModule.calculatorModule = (function(){
 
     //gets uber object to compare uber costs with private car costs
     function calculateUberCosts(uberObj){        
-
+        /* uberObj is an object with four properties:
+        cost_per_distance, cost_per_minute, currency_code, distance_unit
+        inputData is the object output of function calculate_costs  */
+        
         if(!inputData || !country){
             throw errMsgDataCountry;
         }
         
-        /* uberObj is an object with four properties:
-        cost_per_distance, cost_per_minute, currency_code, distance_unit
-        inputData is the object output of function calculate_costs  */
+        var uberNotCalculated = {calculated: false};
 
         //if public transporst information was not obtained from user
-        //in form part 3, then leaves by returning false
         if(!(calculatedData.publicTransports.calculated)){
-            return false;
+            return uberNotCalculated;
         }
 
         //if distance information not available or zero
         if(!isDef(calculatedData.drivingDistance.perMonth)){
-            return false;
+            return uberNotCalculated;
         }
 
         //checks if uberObj is an object
         if (!isObjDef(uberObj)){
-            return false;
+            return uberNotCalculated;
         }
 
         //checks if the uber currency is the same as the user's
         if ((uberObj.currency_code).toUpperCase() != (country.currency).toUpperCase()){
-            return false;
+            return uberNotCalculated;
         }
 
         //checks if the uber distance unit is the same as the user's
         var uberStandardDistanceUnit = (uberObj.distance_unit).toLowerCase();
         if (country.distance_std == 1){ //according to countries' standards file, 1 means "km"
             if (uberStandardDistanceUnit != "km"){
-                return false;
+                return uberNotCalculated;
             }
         }
         else if (country.distance_std == 2) { //according to countries' standards file, 1 means "mile"
@@ -887,11 +895,11 @@ mainModule.calculatorModule = (function(){
                 uberStandardDistanceUnit != "miles" && 
                 uberStandardDistanceUnit != "mi" && 
                 uberStandardDistanceUnit != "mi."){
-                return false;
+                return uberNotCalculated;
             }
         }
         else{
-            return false;
+            return uberNotCalculated;
         }
         //from here uber strandards (currency and distance) are the same as the user country
         
@@ -927,7 +935,7 @@ mainModule.calculatorModule = (function(){
 
             //if public transports (with monthly pass) are not an option
             if(!calculatedData.publicTransports.toBeDisplayed) {
-                return false;
+                return uberNotCalculated;
             }
             
             //in this case, monthly passes for whole family
@@ -936,7 +944,7 @@ mainModule.calculatorModule = (function(){
             //amount that is left to uber after public transports (monthly passes) are paid
             totalUberCosts = totalCarCostsPerMonth - publicTransportsCostsCombinedWithUber;
             if(totalUberCosts < 0){
-                return false;
+                return uberNotCalculated;
             }
 
             //how much distance (km or miles) can be done by uber with totalUberCosts amount of money
@@ -947,7 +955,7 @@ mainModule.calculatorModule = (function(){
             distanceDoneWithUber = totalUberCosts/ (uberCostPerUnitDistance + uberCostPerMinute/averageSpeedInDistancePerMinutes);
 
             if (distanceDoneWithUber < 0){                
-                return false;
+                return uberNotCalculated;
             }
         }
 
@@ -994,15 +1002,15 @@ mainModule.calculatorModule = (function(){
         }
 
         calculateSpeeds();
-        calculateExternalCosts();
+        //calculateExternalCosts();
 
         if(calculatedData.drivingDistance.perMonth){
             //running costs per unit dist.
             calculatedData.costs.perUnitDistance.runningCosts = calculatedData.costs.perMonth.runningCosts /
-                                                                     calculatedData.drivingDistance.perMonth;
+                                                                calculatedData.drivingDistance.perMonth;
             //total costs per unit dist.
             calculatedData.costs.perUnitDistance.totalCosts = calculatedData.costs.perMonth.total / 
-                                                                   calculatedData.drivingDistance.perMonth;
+                                                              calculatedData.drivingDistance.perMonth;
         }
         
         return calculatedData;

@@ -12,25 +12,52 @@
 
 mainModule.resultsModule.chartsModule = (function(){
     
-    var calculatedData;
+    var calculatedData;    
+    var chartsDrawnPromisesObj = {};
     
-    var finishedDrawingChartsPromises = {
-        doughnutFinancialEffort: $.Deferred(),
-        costsBars:               $.Deferred(),
-        costsDoughnut:           $.Deferred(),
-        financialEffort:         $.Deferred(),
-        alternativesToCar:       $.Deferred()
-    };
+    var chartsInfo = {
+        doughnutFinancialEffort : {
+            isVisible: false,  //boolean variable that says whether the chart is visible
+            ref: 0,            //reference obtained from chart.js when doing "new Chart()"
+            base64Image: 0     //the charts images on base64
+        },
+        costsBars : {
+            isVisible: false, 
+            ref: 0,
+            base64Image: 0
+        },
+        costsDoughnut : {
+            isVisible: false,
+            ref: 0,
+            base64Image: 0
+        },
+        financialEffort : {
+            isVisible: false,
+            ref: 0,
+            base64Image: 0
+        },
+        alternativesToCar : {
+            isVisible: false,
+            ref: 0,
+            base64Image: 0
+        }
+    };    
+    
+    function getChartsInfo(){
+        return chartsInfo;
+    }
     
     function initialize(calculatedDataIn) {
         calculatedData = calculatedDataIn;
-        return finishedDrawingChartsPromises;
+        return chartsDrawnPromisesObj;
     }
         
     function drawDoughnutFinancialEffort() { 
 
-        var finEffortPerc = calculatedData.financialEffort.financialEffortPercentage;
-
+        chartsDrawnPromisesObj.doughnutFinancialEffort = $.Deferred();
+        
+        var finEffortPerc = calculatedData.financialEffort.financialEffortPercentage;        
+        
         var dataset = [{
             data: [finEffortPerc, 100 - finEffortPerc],
             backgroundColor: ["white", "#4c6ef2"],
@@ -54,8 +81,8 @@ mainModule.resultsModule.chartsModule = (function(){
             },        
             animation : {
                 onComplete : function(){                     
-                    DISPLAY.charts.finEffortDoughnut.URI = DISPLAY.charts.finEffortDoughnut.ref.toBase64Image();
-                    finishedDrawingChartsPromises.doughnutFinancialEffort.resolve();
+                    chartsInfo.doughnutFinancialEffort.base64Image = chartsInfo.doughnutFinancialEffort.ref.toBase64Image();
+                    chartsDrawnPromisesObj.doughnutFinancialEffort.resolve();
                 }
             }
         };    
@@ -69,8 +96,8 @@ mainModule.resultsModule.chartsModule = (function(){
             options: options
         };
 
-        DISPLAY.charts.finEffortDoughnut.ref = new Chart("doughnutChart", content);
-        DISPLAY.charts.finEffortDoughnut.isVisible = true;
+        chartsInfo.doughnutFinancialEffort.ref = new Chart("doughnutChart", content);
+        chartsInfo.doughnutFinancialEffort.isVisible = true;
 
     }
     
@@ -78,6 +105,8 @@ mainModule.resultsModule.chartsModule = (function(){
     
         var numMonths;
 
+        chartsDrawnPromisesObj.costsBars = $.Deferred();
+        
         switch(period){
             case "month" :
                 numMonths = 1;
@@ -106,8 +135,8 @@ mainModule.resultsModule.chartsModule = (function(){
         var c = periodicCosts; //Monthly costs object of calculated data, parsed to fixed(1)
 
         //always creates a new chart
-        if (DISPLAY.charts.costsBars.ref){
-            DISPLAY.charts.costsBars.ref.destroy();
+        if (chartsInfo.costsBars.ref){
+            chartsInfo.costsBars.ref.destroy();
         }
 
         var labels = [
@@ -196,8 +225,8 @@ mainModule.resultsModule.chartsModule = (function(){
             }, 
             animation : {
                 onComplete : function(){    
-                    DISPLAY.charts.costsBars.URI = DISPLAY.charts.costsBars.ref.toBase64Image();
-                    finishedDrawingChartsPromises.costsBars.resolve();                 
+                    chartsInfo.costsBars.base64Image = chartsInfo.costsBars.ref.toBase64Image();
+                    chartsDrawnPromisesObj.costsBars.resolve();                 
                 }
             }
         };
@@ -211,8 +240,8 @@ mainModule.resultsModule.chartsModule = (function(){
             options: options
         };
 
-        DISPLAY.charts.costsBars.ref = new Chart("costsBarsChart", content);
-        DISPLAY.charts.costsBars.isVisible = true;
+        chartsInfo.costsBars.ref = new Chart("costsBarsChart", content);
+        chartsInfo.costsBars.isVisible = true;
     }
     
     //Dounghnut chart with every cost item 
@@ -220,6 +249,8 @@ mainModule.resultsModule.chartsModule = (function(){
     
         var numMonths;
 
+        chartsDrawnPromisesObj.costsDoughnut = $.Deferred();
+        
         switch(period){
             case "month" :
                 numMonths = 1;
@@ -251,8 +282,8 @@ mainModule.resultsModule.chartsModule = (function(){
         var p = percentageCosts; //Monthly costs object of calculated data, parsed to fixed(1)
 
         //always creates a new chart
-        if (DISPLAY.charts.costsDoughnut.ref){
-            DISPLAY.charts.costsDoughnut.ref.destroy();
+        if (chartsInfo.costsDoughnut.ref){
+            chartsInfo.costsDoughnut.ref.destroy();
         }
 
         var labels = [
@@ -324,8 +355,8 @@ mainModule.resultsModule.chartsModule = (function(){
             },       
             animation : {
                 onComplete : function(){    
-                    DISPLAY.charts.costsDoughnut.URI = DISPLAY.charts.costsDoughnut.ref.toBase64Image();
-                    finishedDrawingChartsPromises.costsDoughnut.resolve();                     
+                    chartsInfo.costsDoughnut.base64Image = chartsInfo.costsDoughnut.ref.toBase64Image();
+                    chartsDrawnPromisesObj.costsDoughnut.resolve();                     
                 }
             }
         };    
@@ -339,18 +370,20 @@ mainModule.resultsModule.chartsModule = (function(){
             options: options
         };
 
-        DISPLAY.charts.costsDoughnut.ref = new Chart("costsDoughnutChart", content);
-        DISPLAY.charts.costsDoughnut.isVisible = true;
+        chartsInfo.costsDoughnut.ref = new Chart("costsDoughnutChart", content);
+        chartsInfo.costsDoughnut.isVisible = true;
     }
 
     //draws vertical bars chart for Financial Effort
     function drawFinancialEffort() {
 
+        chartsDrawnPromisesObj.financialEffort = $.Deferred();
+        
         var fe = calculatedData.financialEffort; //Monthly costs object of calculated data, parsed to fixed(1)
 
         //always creates a new chart
-        if (DISPLAY.charts.finEffort.ref){
-            DISPLAY.charts.finEffort.ref.destroy();
+        if (chartsInfo.financialEffort.ref){
+            chartsInfo.financialEffort.ref.destroy();
         }
 
         var labels = [ 
@@ -404,8 +437,8 @@ mainModule.resultsModule.chartsModule = (function(){
             },        
             animation : {
                 onComplete : function(){    
-                    DISPLAY.charts.finEffort.URI = DISPLAY.charts.finEffort.ref.toBase64Image();
-                    finishedDrawingChartsPromises.financialEffort.resolve();                  
+                    chartsInfo.financialEffort.base64Image = chartsInfo.financialEffort.ref.toBase64Image();
+                    chartsDrawnPromisesObj.financialEffort.resolve();                  
                 }
             }
         };
@@ -419,8 +452,8 @@ mainModule.resultsModule.chartsModule = (function(){
             options: options
         };
 
-        DISPLAY.charts.finEffort.ref = new Chart("finEffortChart", content);   
-        DISPLAY.charts.finEffort.isVisible = true;
+        chartsInfo.financialEffort.ref = new Chart("finEffortChart", content);   
+        chartsInfo.financialEffort.isVisible = true;
     }
         
     function drawAlternativesToCar(){
@@ -429,16 +462,18 @@ mainModule.resultsModule.chartsModule = (function(){
         var publicTransportsObj = calculatedData.publicTransports;
         var uberObj             = calculatedData.uber;
 
+        chartsDrawnPromisesObj.alternativesToCar = $.Deferred();
+        
         var totCostsPerMonth = calculatedData.costs.perMonth.total.toFixed(1);
 
         //always creates a new chart
-        if (DISPLAY.charts.alterToCar.ref){
-            DISPLAY.charts.alterToCar.ref.destroy();
+        if (chartsInfo.alternativesToCar.ref){
+            chartsInfo.alternativesToCar.ref.destroy();
         }
 
         //boolean variables
-        var publicTransportstBool = isObjDef(publicTransportsObj) && publicTransportsObj.toBeDisplayed && DISPLAY.result.public_transports;    
-        var uberBool = SWITCHES.uber && isObjDef(uberObj) && DISPLAY.result.uber; //uber
+        var publicTransportstBool = isObjDef(publicTransportsObj) && publicTransportsObj.toBeDisplayed && publicTransportsObj.calculated;    
+        var uberBool = SWITCHES.uber && isObjDef(uberObj) && uberObj.calculated; //uber
 
         var labels = [
             formatLabel(WORDS.your_car_costs_you + " " + WORDS.word_per.replace(/&#32;/g,"") + " " + WORDS.month, 25)
@@ -613,8 +648,8 @@ mainModule.resultsModule.chartsModule = (function(){
             }, 
             animation : {
                 onComplete : function(){    
-                    DISPLAY.charts.alterToCar.URI = DISPLAY.charts.alterToCar.ref.toBase64Image(); 
-                    finishedDrawingChartsPromises.alternativesToCar.resolve(); 
+                    chartsInfo.alternativesToCar.base64Image = chartsInfo.alternativesToCar.ref.toBase64Image(); 
+                    chartsDrawnPromisesObj.alternativesToCar.resolve(); 
                 }
             }
         };
@@ -628,8 +663,8 @@ mainModule.resultsModule.chartsModule = (function(){
             options: options
         };
 
-        DISPLAY.charts.alterToCar.ref = new Chart("equivalentTransportChart", content);
-        DISPLAY.charts.alterToCar.isVisible = true;
+        chartsInfo.alternativesToCar.ref = new Chart("equivalentTransportChart", content);
+        chartsInfo.alternativesToCar.isVisible = true;
     }
 
     //takes a string phrase and breaks it into separate phrases
@@ -691,6 +726,7 @@ mainModule.resultsModule.chartsModule = (function(){
     
     return{
         initialize: initialize,
+        getChartsInfo: getChartsInfo,
         drawDoughnutFinancialEffort: drawDoughnutFinancialEffort,
         drawCostsBars: drawCostsBars,
         drawCostsDoughnut: drawCostsDoughnut,

@@ -1,8 +1,6 @@
 var mainModule;
 
 $(document).ready(function () {
-
-    DISPLAY.result.isShowing = false; //global variable indicating whether the results are being shown
          
     getScriptOnce(JS_FILES.formFunctions, function(){
         getScriptOnce(JS_FILES.validateForm);
@@ -195,10 +193,13 @@ mainModule = (function(){
 
                     getScriptOnce(JS_FILES.showResults, function() {
                         getScriptOnce(JS_FILES.drawCostsCharts);
+                        getPdfJsFiles();
                     });
                 }
                 else{
-                    getScriptOnce(JS_FILES.showResults);
+                    getScriptOnce(JS_FILES.showResults, function(){
+                        getPdfJsFiles();
+                    });
                 }
 
                 if (SWITCHES.data_base){
@@ -239,37 +240,39 @@ mainModule = (function(){
                         UBER_API.currency_code = "GBP";
                         UBER_API.distance_unit = "mile";
                     }
-                }
-
-                if(SWITCHES.pdf || SWITCHES.print){
-                    //wait until all PDF related files are loaded
-                    //to activate the downloadPDF button
-                    getScriptOnce(JS_FILES.PDF.generatePDF, function() {
-                        getScriptOnce(JS_FILES.PDF.pdfmake, function() {
-                            //path where the fonts for PDF are stored
-                            var pdf_fonts_path;
-                            if (COUNTRY == 'CN'){
-                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
-                            }
-                            else if (COUNTRY == 'JP'){
-                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
-                            }
-                            else if (COUNTRY == 'IN'){
-                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
-                            }
-                            else{
-                                pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
-                            }
-                            getScriptOnce(pdf_fonts_path, function() {
-                                $('#results .button-pdf, #results .button-print').removeClass('disabled');
-                            });
-                        });
-                    });
                 }                                
                 
             });
 
         }); 
+        
+        function getPdfJsFiles(){        
+            if(SWITCHES.pdf || SWITCHES.print){
+                //wait until all PDF related files are loaded
+                //to activate the downloadPDF button
+                getScriptOnce(JS_FILES.PDF.generatePDF, function() {
+                    getScriptOnce(JS_FILES.PDF.pdfmake, function() {
+                        //path where the fonts for PDF are stored
+                        var pdf_fonts_path;
+                        if (COUNTRY == 'CN'){
+                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
+                        }
+                        else if (COUNTRY == 'JP'){
+                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
+                        }
+                        else if (COUNTRY == 'IN'){
+                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
+                        }
+                        else{
+                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
+                        }
+                        getScriptOnce(pdf_fonts_path, function() {
+                            $('#results .button-pdf, #results .button-print').removeClass('disabled');
+                        });
+                    });
+                });
+            }
+        }
     }
 
     /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.

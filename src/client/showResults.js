@@ -33,7 +33,7 @@ mainModule.resultsModule = (function(){
             //download pdf button handler
             $("#results .button-pdf").on( "click", function(){
                 console.log("Download pdf clicked");
-                mainModule.pdfModule.download();
+                mainModule.resultsModule.pdfModule.download();
             });
         }
         else{
@@ -44,7 +44,7 @@ mainModule.resultsModule = (function(){
             $("#results .button-print").show().addClass("disabled");
             $("#results .button-print").on( "click", function(){
                 console.log("Print button clicked");
-                mainModule.pdfModule.print();
+                mainModule.resultsModule.pdfModule.print();
             });
         }
         else{
@@ -83,7 +83,7 @@ mainModule.resultsModule = (function(){
         $("#form").hide(); 
 
         //for each form part gets object with content
-        var form = getFormData(document.costs_form);
+        var form = mainModule.transferDataModule.fromUserFormToCalculator(document.costs_form);
         FORM_DATA = form;
 
         //country object with country specific variables
@@ -116,7 +116,7 @@ mainModule.resultsModule = (function(){
         //console.log(flattenedData); 
         setCalculatedDataToHTML(flattenedData);        
         
-        var finishedDrawingChartsPromises = mainModule.resultsModule.chartsModule.initialize(calculatedData);        
+        var chartsDrawnPromisesObj = mainModule.resultsModule.chartsModule.initialize(calculatedData);        
 
         //The first three boxes on the top
         //if financial effort was not calculated, does not show doughnut chart
@@ -152,7 +152,6 @@ mainModule.resultsModule = (function(){
 
             //shows financial effort section 
             $("#results #financial-effort").show();
-            DISPLAY.result.fin_effort = true; //global variable 
 
             if(SWITCHES.charts){                
                 mainModule.resultsModule.chartsModule.drawFinancialEffort(calculatedData);
@@ -165,7 +164,6 @@ mainModule.resultsModule = (function(){
         else {
             //hides financial effort section
             $("#results #financial-effort").hide();
-            DISPLAY.result.fin_effort = false;     
         } 
 
         //Equivalent transport costs
@@ -173,7 +171,6 @@ mainModule.resultsModule = (function(){
             setEquivTransportCostsDetails(form, calculatedData);                
 
             $("#results #equivalent-transport-costs").show();
-            DISPLAY.result.public_transports = true;
 
             if(SWITCHES.charts){
                 mainModule.resultsModule.chartsModule.drawAlternativesToCar();
@@ -185,7 +182,6 @@ mainModule.resultsModule = (function(){
         }
         else {
             $("#results #equivalent-transport-costs").hide();
-            DISPLAY.result.public_transports = false;
         } 
 
         setClassAccordionHandler();
@@ -194,18 +190,13 @@ mainModule.resultsModule = (function(){
 
         $("*").promise().done(function(){    
 
-            //global variable indicating the results are being shown
-            DISPLAY.result.isShowing = true; 
-
             //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
             //such that, the pdf generation can extract the charts to base64 images
-            $.when( finishedDrawingChartsPromises.doughnutFinancialEffort, 
-                    finishedDrawingChartsPromises.costsBars, 
-                    finishedDrawingChartsPromises.costsDoughnut,
-                    finishedDrawingChartsPromises.financialEffort,
-                    finishedDrawingChartsPromises.alternativesToCar).
-            done(function () {              
-                mainModule.pdfModule.generatePDF(calculatedData);             
+            var promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
+                return chartsDrawnPromisesObj[key];
+            });           
+            $.when.apply($, promisesArray).done(function () {              
+                mainModule.resultsModule.pdfModule.generatePDF(calculatedData);             
             }); 
         }); 
         
@@ -221,9 +212,10 @@ mainModule.resultsModule = (function(){
             //and that the element is valid in the array of calculated data
             if(flattenedData.hasOwnProperty(key) && $i.length){
 
-                if(flattenedData[key] !== undefined && !isNaN(flattenedData[key])){
+                if(typeof flattenedData[key] === "number" && !isNaN(flattenedData[key])){
                     //organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
                     toFixedN = getToFixedNumFromClasses($i); 
+                    
                     amount = flattenedData[key].toFixed(toFixedN);
 
                     if($i.hasClass("currency")){
@@ -708,8 +700,6 @@ mainModule.resultsModule = (function(){
         var pt = calculatedData.publicTransports;
         if(pt.toBeDisplayed) {
 
-            DISPLAY.result.public_transports = true; //global variable
-
             addLiElm("public_transports", WORDS.fam_nbr, form.publicTransports.numberOfPeopleInFamily + " " + WORDS.person_or_people);              
             addLiElm("public_transports", WORDS.pass_month_avg, currencyShow(form.publicTransports.monthlyPassCost));        
 
@@ -720,17 +710,13 @@ mainModule.resultsModule = (function(){
                 addLiElm("other_pub_trans", WORDS.other_pub_trans_desc); 
             }
         }
-        else{
-            DISPLAY.result.public_transports = false; //global variable
-        }
 
         //UBER
         var calculatedUber = calculatedData.uber;
 
-        if(SWITCHES.uber && calculatedUber && !$.isEmptyObject(calculatedUber)){
+        if(SWITCHES.uber && calculatedUber && calculatedUber.calculated){
 
             $("#equivalent-transport-costs .uber").show();
-            DISPLAY.result.uber = true; //says uber table is to be printed; global variable                
 
             //in which driver can replace every km by uber
             //the remaining money is applied to public transport
@@ -767,7 +753,6 @@ mainModule.resultsModule = (function(){
         }
         else{
             $("#equivalent-transport-costs .uber").hide();
-            DISPLAY.result.uber = false; //says uber table is not to be printed; global variable
         }
 
     }

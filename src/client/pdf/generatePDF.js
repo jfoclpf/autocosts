@@ -2,14 +2,17 @@
 //PDF REPORT GENERATION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-mainModule.pdfModule = (function(){
+mainModule.resultsModule.pdfModule = (function(){
     
     var calculatedData;
     var pdfReport;
 
     function generatePDF(calculatedDataIn){
         
-        calculatedData = calculatedDataIn;                
+        calculatedData = calculatedDataIn;
+        
+        //see modules tree at https://github.com/jfoclpf/autocosts/wiki/Modules-tree
+        var chartsInfo = mainModule.resultsModule.chartsModule.getChartsInfo();
 
         //costs Doughnut Chart width/height proportion
         var costsDoughnutChartWHProp = 1.171;
@@ -63,14 +66,14 @@ mainModule.pdfModule = (function(){
         if (SWITCHES.charts){    
             content.push(
                 {
-                    image: DISPLAY.charts.costsDoughnut.URI,
+                    image: chartsInfo.costsDoughnut.base64Image,
                     width: 220,
                     height: Math.round(220 / costsDoughnutChartWHProp),
                     margin: [0, 10, 0, 15], //[left, top, right, bottom]
                     alignment: 'center'
                 },
                 {
-                    image: DISPLAY.charts.costsBars.URI,
+                    image: chartsInfo.costsBars.base64Image,
                     width: 500,
                     height: Math.round(500 / costsBarsChartWHProp),
                     margin: [0, 10, 0, 10], //[left, top, right, bottom]
@@ -116,7 +119,7 @@ mainModule.pdfModule = (function(){
         );
 
         //financial effort title and table
-        if(DISPLAY.result.fin_effort){
+        if(calculatedData.financialEffort.calculated){
             //header
             content.push(
                 {
@@ -135,10 +138,10 @@ mainModule.pdfModule = (function(){
             );
 
             //chart
-            if(DISPLAY.charts.finEffort.isVisible && SWITCHES.charts){
+            if(chartsInfo.financialEffort.isVisible && SWITCHES.charts){
                 content.push(
                     {
-                        image: DISPLAY.charts.finEffort.URI,
+                        image: chartsInfo.financialEffort.base64Image,
                         width: 350,
                         height: Math.round(350 * $("#finEffortChart").height() / $("#finEffortChart").width()),
                         style: 'img_style'
@@ -161,7 +164,7 @@ mainModule.pdfModule = (function(){
         }
 
         //Equivalent transport costs / uber / public transports
-        if (DISPLAY.result.public_transports || DISPLAY.result.uber){
+        if (calculatedData.publicTransports.calculated || calculatedData.uber.calculated){
             //header
             content.push(
                 {
@@ -180,10 +183,10 @@ mainModule.pdfModule = (function(){
             );
 
             //chart
-            if(DISPLAY.charts.alterToCar.isVisible && SWITCHES.charts){
+            if(chartsInfo.alternativesToCar.isVisible && SWITCHES.charts){
                 content.push(
                     {
-                        image: DISPLAY.charts.alterToCar.URI,
+                        image: chartsInfo.alternativesToCar.base64Image,
                         width: 400,
                         height: Math.round(400 * $("#equivalentTransportChart").height() / $("#equivalentTransportChart").width()),
                         style: 'img_style'
@@ -191,7 +194,7 @@ mainModule.pdfModule = (function(){
                 );
             }
 
-            if(DISPLAY.result.public_transports){
+            if(calculatedData.publicTransports.calculated){
                 content.push(
                     {
                         style: 'tableMarging',
@@ -205,7 +208,7 @@ mainModule.pdfModule = (function(){
             }
 
             //uber
-            if(DISPLAY.result.uber){
+            if(calculatedData.uber.calculated){
                 content.push(
                     {
                         style:'tableMarging',

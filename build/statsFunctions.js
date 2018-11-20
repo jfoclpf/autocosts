@@ -492,9 +492,9 @@ function is_DBentry_ok(data, country) {
             }
 
             //remove outliers for fuel price
-            converted_value = convert_fuel_price_to_EURpLitre(data.fuel_distance_based_fuel_price, 
-                                                              country.currency, 
-                                                              country.fuel_price_volume_std, EURcurrConverterStats);
+            converted_value = convertFuelPriceToEURperLitre(data.fuel_distance_based_fuel_price, 
+                                                            country.currency, 
+                                                            country.fuel_price_volume_std, EURcurrConverterStats);
             
             if (converted_value!=-1 && converted_value>statsConstants.MAX_EUR_PER_LITRE_FUEL){
                 return false;
