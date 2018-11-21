@@ -1,5 +1,5 @@
-## Contributions are very welcomed
-### Coding rules
+## Coding rules
+### Some coding rules
  - Use four spaces for indentations
  - Comment the code in English
  - The local variables names, object properties, functions names and directories names shall obey [CamelCase](https://en.wikipedia.org/wiki/Camel_case)
@@ -29,6 +29,27 @@ For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_
 ## Modules
 
 <a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). 
+
+### Tree
+
+```
+autocosts
+   |
+   |--- calculatorModule
+   |        |
+   |        |--- conversionsModule
+   |
+   |--- transferDataModule
+   |
+   |--- userFormModule
+   |        |
+   |        |--- validateFormModule
+   |
+   |--- resultsModule
+            |
+            |--- chartsModule
+            |--- pdfModule
+```
 
 ### Pattern
 
