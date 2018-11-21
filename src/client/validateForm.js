@@ -9,7 +9,7 @@
 //VALIDATE DATA MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-mainModule.userFormModule.validateFormModule = (function(){
+autocosts.userFormModule.validateFormModule = (function(){
 
     var form = document.costs_form; //global variable referring to the form
     
@@ -206,7 +206,7 @@ mainModule.userFormModule.validateFormModule = (function(){
         var today  = new Date();
         var carAcquisitionDate = new Date(acquisitionYear, acquisitionMonth - 1);
 
-        var carNumberOfMonths = mainModule.calculatorModule.differenceBetweenDates(carAcquisitionDate, today);
+        var carNumberOfMonths = autocosts.calculatorModule.differenceBetweenDates(carAcquisitionDate, today);
 
         if(!carNumberOfMonths){
             return false;

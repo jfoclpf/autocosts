@@ -5,7 +5,7 @@
 //UNITS CONVERSION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-mainModule.calculatorModule.conversionsModule = (function(){
+autocosts.calculatorModule.conversionsModule = (function(){
 
     var conversionConstants = {
         KM_TO_MILES: 1.609344,

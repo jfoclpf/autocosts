@@ -1,17 +1,8 @@
-var mainModule;
 
-$(document).ready(function () {
-         
-    getScriptOnce(JS_FILES.formFunctions, function(){
-        getScriptOnce(JS_FILES.validateForm);
-        mainModule.initialize();  
-        mainModule.userFormModule.initialize();
-    });
+/* MAIN MODULE'S INITIALIZATION MODULE */
+/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-});
-
-
-mainModule = (function(){
+autocosts.initialize = (function(){    
     
     function initialize(){
         oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
@@ -20,21 +11,30 @@ mainModule = (function(){
         loadsPrefilledValues();          //loads pre-filled values, for example for XX/
         initTimer();
         initGoogleAnalytics();
-        getUniqueIdentifier();        
-            
-        IS_HUMAN_CONFIRMED = false;     //Google recaptcha
+        getUniqueIdentifier();                    
     }
+    
+    //detects old versions of Internet Explorer and warns the user to update the browser
+    function oldIE(){
+        var div = document.createElement("div");
+        div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
+        var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
+        if (isIeLessThan9) {
+            document.getElementById("main_div").innerHTML = "Please update your browser!";
+            alert("Please update your browser!");
+        }
+    }    
 
     //function that sets and fills the the time periods (month, trimester, etc.) on the dropdown select boxes
     function fillPeriodsInSelectBoxes(){
 
         //language HTML select dropdowns
         var SelectList = {
-            "1" : WORDS.month,
-            "2" : WORDS.two_months,
-            "3" : WORDS.trimester,
-            "4" : WORDS.semester,
-            "5" : WORDS.year
+            "1" : autocosts.WORDS.month,
+            "2" : autocosts.WORDS.two_months,
+            "3" : autocosts.WORDS.trimester,
+            "4" : autocosts.WORDS.semester,
+            "5" : autocosts.WORDS.year
         };
 
         $("select.time_period").each(function(){
@@ -54,14 +54,14 @@ mainModule = (function(){
             $("#form").show();    
 
             //on test version shows everything right from the beginning
-            if(COUNTRY=="XX"){
+            if(autocosts.COUNTRY=="XX"){
                 $(".field_container").show();
             }
 
-            loadExtraJSFiles();        
+            autocosts.getFiles.getExtraJSFiles();        
 
             //loadCSSFiles(['css/merged_deferred.css']);
-            loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+            autocosts.getFiles.loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
         };  
         
         //Load statistics table on sidebars.hbs
@@ -76,12 +76,12 @@ mainModule = (function(){
                 return shift(Math.round(shift(number, +precision)), -precision);
             };
             
-            for (var key in STATS[cc]){
+            for (var key in autocosts.STATS[cc]){
                 var elementClass = "stats_table-"+key; //see sidebars.hbs
                 if($("." + elementClass).length){//element exists
                     var $el = $("." + elementClass);
-                    var value = STATS[cc][key];
-                    var currSymb = STATS[cc].curr_symbol;
+                    var value = autocosts.STATS[cc][key];
+                    var currSymb = autocosts.STATS[cc].curr_symbol;
                     if(key == "running_costs_dist" || key == "total_costs_dist"){
                         $el.text(currSymb + round(value, 2) + "/" + getStringFor("distanceShort"));
                     }
@@ -170,130 +170,12 @@ mainModule = (function(){
         resizeSelectToContent("#country_select");
 
         //load statistics table on sidebars.hbs
-        updateStatsTable(COUNTRY);
+        updateStatsTable(autocosts.COUNTRY);
 
         $("#country_select_stats").on('change', function() {
             updateStatsTable(this.value);
         });
-    }
-    
-    /*function that loads extra files and features, that are not loaded immediately after the page is opened
-    because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-    function loadExtraJSFiles() {
-
-        getScriptOnce(JS_FILES.calculatorModule, function(){            
-            getScriptOnce(JS_FILES.conversionsModule);
-
-            getScriptOnce(JS_FILES.smartAppBanner, loadSmartBanner);
-
-            getScriptOnce(JS_FILES.transferDataModule, function(){
-                                
-                if (SWITCHES.charts){
-                    getScriptOnce(JS_FILES.chartjs);
-
-                    getScriptOnce(JS_FILES.resultsModule, function() {
-                        getScriptOnce(JS_FILES.drawCostsCharts);
-                        getPdfJsFiles();
-                    });
-                }
-                else{
-                    getScriptOnce(JS_FILES.resultsModule, function(){
-                        getPdfJsFiles();
-                    });
-                }
-
-                if (SWITCHES.data_base){
-                    getScriptOnce(JS_FILES.dbFunctions);
-                }
-
-                //file JS_FILES.g_recaptcha is from this project, stored in src/client, and must always be loaded
-                getScriptOnce(JS_FILES.g_recaptcha, function(){
-                    //Google Captcha API doesn't work nor applies on localhost
-                    if (SWITCHES.g_captcha && NOT_LOCALHOST){
-                        getScriptOnce(JS_FILES.Google.recaptchaAPI);
-                        //when loaded successfuly set SERVICE_AVAILABILITY.g_captcha=true in function grecaptcha_callback in g-recaptcha.js
-                    }
-                    else{
-                        SERVICE_AVAILABILITY.g_captcha = false;
-                    }
-                });
-
-                //uber
-                if (SWITCHES.uber){
-                    if(COUNTRY!="XX"){//if not test version
-                        //gets asynchronously UBER information
-                        $.get(UBER_API_LOCAL_URL, function(data) {
-                            //alert(JSON.stringify(data, null, 4));
-                            if(data && !$.isEmptyObject(data)){
-                                UBER_API =  data; //UBER_API is a global variable
-                                console.log("uber data got from uber API: ", UBER_API);
-                            }
-                            else{
-                                console.error("Error getting uber info");
-                                SWITCHES.uber = false;
-                            }
-                        });
-                    }
-                    else{//test version (London city, in Pounds)
-                        UBER_API.cost_per_distance = 1.25;
-                        UBER_API.cost_per_minute = 0.15;
-                        UBER_API.currency_code = "GBP";
-                        UBER_API.distance_unit = "mile";
-                    }
-                }                                
-                
-            });
-
-        }); 
-        
-        function getPdfJsFiles(){        
-            if(SWITCHES.pdf || SWITCHES.print){
-                //wait until all PDF related files are loaded
-                //to activate the downloadPDF button
-                getScriptOnce(JS_FILES.PDF.pdfModule, function() {
-                    getScriptOnce(JS_FILES.PDF.pdfmake, function() {
-                        //path where the fonts for PDF are stored
-                        var pdf_fonts_path;
-                        if (COUNTRY == 'CN'){
-                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_CN;
-                        }
-                        else if (COUNTRY == 'JP'){
-                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_JP;
-                        }
-                        else if (COUNTRY == 'IN'){
-                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts_IN;
-                        }
-                        else{
-                            pdf_fonts_path = JS_FILES.PDF.vfs_fonts;
-                        }
-                        getScriptOnce(pdf_fonts_path, function() {
-                            $('#results .button-pdf, #results .button-print').removeClass('disabled');
-                        });
-                    });
-                });
-            }
-        }
-    }
-
-    /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
-    (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
-    function loadCSSFiles(styleSheets) {
-        var head = document.getElementsByTagName('head')[0];
-
-        for (var i = 0; i < styleSheets.length; i++) {
-            var link = document.createElement('link');
-            var rel = document.createAttribute('rel');
-            var href = document.createAttribute('href');
-
-            rel.value = 'stylesheet';
-            href.value = styleSheets[i];
-
-            link.setAttributeNode(rel);
-            link.setAttributeNode(href);
-
-            head.appendChild(link);
-        }
-    }    
+    }   
     
     function initGoogleAnalytics(){
         
@@ -301,24 +183,24 @@ mainModule = (function(){
         var checkGoogleAnalytics = function(t) {
 
             if(isThisAtest()){
-                SERVICE_AVAILABILITY.g_analytics = false;
+                autocosts.SERVICE_AVAILABILITY.googleAnalytics = false;
                 return;
             }
 
             if (typeof ga === 'function') {
-                SERVICE_AVAILABILITY.g_analytics = true;
+                autocosts.SERVICE_AVAILABILITY.googleAnalytics = true;
             } else {
-                SERVICE_AVAILABILITY.g_analytics = false;
+                autocosts.SERVICE_AVAILABILITY.googleAnalytics = false;
                 setTimeout(checkGoogleAnalytics, t);
             }
         };
         
         /*Google Analytics*/
-        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && SWITCHES.g_analytics) {
-            getScriptOnce(JS_FILES.Google.analytics, function(){
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && autocosts.SWITCHES.googleAnalytics) {
+            $.getScript(autocosts.JS_FILES.Google.analytics, function(){
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
-                ga('create', GA_TRACKING_ID, 'auto');
+                ga('create', autocosts.GA_TRACKING_ID, 'auto');
                 ga('set', 'displayFeaturesTask', null);
                 ga('send', 'pageview');
 
@@ -337,14 +219,14 @@ mainModule = (function(){
         function guid() {
             return (S4()+"-"+S4()+"-"+S4());
         }
-        UUID = guid();
+        autocosts.UUID = guid();
     }
 
     //gets default protocol defined by Global Variable
     //it returns either "http://" or "https://", i.e., it returns including the "://"
     function getProtocol(){
 
-        if (SWITCHES.https){
+        if (autocosts.SWITCHES.https){
             return location.protocol + "//";
         }
         else{
@@ -352,21 +234,10 @@ mainModule = (function(){
         }
     }
 
-    //detects old versions of Internet Explorer
-    function oldIE(){
-        var div = document.createElement("div");
-        div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
-        var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
-        if (isIeLessThan9) {
-            document.getElementById("main_div").innerHTML = "Please update your browser!";
-            alert("Please update your browser!");
-        }
-    }
-
     /*function which returns whether this session is a (test/develop version) or a prod version */
     function isThisAtest() {
 
-        if(TEST_SERVER || COUNTRY=="XX"){
+        if(autocosts.TEST_SERVER || autocosts.COUNTRY=="XX"){
             return true;
         }
 
@@ -386,13 +257,13 @@ mainModule = (function(){
     /*Timer function*/
     /* jshint ignore:start */
     function initTimer(){
-        getScriptOnce(JS_FILES.jTimer, function(){
-            //TimeCounter is defined as global variable in Globals.js
-            TimeCounter = new function () {
+        $.getScript(autocosts.JS_FILES.jTimer, function(){
+            //TimeCounter is defined as global variable in main.js
+            autocosts.TimeCounter = new function () {
                 var incrementTime = 500;
                 var currentTime = 0;
                 $(function () {
-                    TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
+                    autocosts.TimeCounter.Timer = $.timer(updateTimer, incrementTime, true);
                 });
                 function updateTimer() {
                     currentTime += incrementTime;
@@ -404,7 +275,7 @@ mainModule = (function(){
                     return currentTime / 1000;
                 };
             };
-            TimeCounter.resetStopwatch();
+            autocosts.TimeCounter.resetStopwatch();
         });
     }
     /* jshint ignore:end */
@@ -413,7 +284,7 @@ mainModule = (function(){
     //because file XX has standard values filed, it shows pre-filled values for /XX    
     function loadsPrefilledValues(){
 
-        //the key the name of the variable in WORDS
+        //the key the name of the variable in autocosts.WORDS
         //the value is the name of the id in the form
         var mappingIDs = {
             "std_acq_month" : "acquisitionMonth",
@@ -462,33 +333,9 @@ mainModule = (function(){
         };
 
         $.each(mappingIDs, function(key, value){
-            if($("#"+value).length && WORDS[key] !== undefined){
-                $("#"+value).val(WORDS[key]);
+            if($("#"+value).length && autocosts.WORDS[key] !== undefined){
+                $("#"+value).val(autocosts.WORDS[key]);
             }
-        });
-    }
-
-    //Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
-    //Based on this npm package: https://www.npmjs.com/package/smart-app-banner
-    function loadSmartBanner(){
-
-        new SmartBanner({
-            daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
-            daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
-            appStoreLanguage: LANGUAGE, // language code for the App Store (defaults to user's browser language)
-            title: WORDS.ac_mobile,
-            author: 'Autocosts Org',
-            button: 'APP',
-            store: {
-                android: 'Google Play'
-            },
-            price: {
-                android: 'FREE'
-            },
-            // Add an icon (in this example the icon of Our Code Editor)
-            icon: "/img/logo/logo_sm.png",
-            theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
-            //force: 'android' // Uncomment for platform emulation
         });
     }
     
@@ -525,7 +372,7 @@ mainModule = (function(){
         switch(setting){
                 
             case "fuelEfficiency":                
-                switch(WORDS.fuel_efficiency_std_option){
+                switch(autocosts.WORDS.fuel_efficiency_std_option){
                     case 1:
                         return "l/100km";
                     case 2:
@@ -545,7 +392,7 @@ mainModule = (function(){
                 break;
                 
             case "distance":                
-                switch(WORDS.distance_std_option){
+                switch(autocosts.WORDS.distance_std_option){
                     case 1:
                         return "kilometres";
                     case 2:
@@ -559,7 +406,7 @@ mainModule = (function(){
                 break;
                 
             case "distanceShort":                
-                switch(WORDS.distance_std_option){
+                switch(autocosts.WORDS.distance_std_option){
                     case 1:
                         return "km";
                     case 2:
@@ -573,7 +420,7 @@ mainModule = (function(){
                 break;
                 
             case "fuelPriceVolume":                
-                switch(WORDS.fuel_price_volume_std){
+                switch(autocosts.WORDS.fuel_price_volume_std){
                     case 1:
                         return "litres";
                     case 2:

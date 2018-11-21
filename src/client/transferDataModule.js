@@ -9,7 +9,7 @@
 //from user form or database to calculator
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-mainModule.transferDataModule = (function(){ 
+autocosts.transferDataModule = (function(){ 
     
     function fromUserFormToCalculator(userForm){ //getFormData
 
@@ -106,13 +106,13 @@ mainModule.transferDataModule = (function(){
 
             //Form Part 3
             publicTransports: {
-                isOk:                    mainModule.userFormModule.validateFormModule.isPublicTransportsAlternativeOk(), //boolean 
+                isOk:                    autocosts.userFormModule.validateFormModule.isPublicTransportsAlternativeOk(), //boolean 
                 numberOfPeopleInFamily:  f.pessoas_agregado.value,
                 monthlyPassCost:         f.preco_passe.value
             },
 
             income: {
-                isOk:         mainModule.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean whether this section was correctly filled in
+                isOk:         autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean whether this section was correctly filled in
                 incomePeriod: getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
                 year: {
                     amount: f.income_per_year.value

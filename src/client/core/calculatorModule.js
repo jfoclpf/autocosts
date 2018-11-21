@@ -5,7 +5,7 @@
 //CALCULATOR MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-mainModule.calculatorModule = (function(){
+autocosts.calculatorModule = (function(){
 
     var inputData;          //input data object, for example obtained from user form
     var country;            //object containing information about the selected country
@@ -176,7 +176,7 @@ mainModule.calculatorModule = (function(){
         var errMsg = "Error calculating fuel";
         
         //submodule
-        var conversionsModule = mainModule.calculatorModule.conversionsModule;
+        var conversionsModule = autocosts.calculatorModule.conversionsModule;
 
         switch(fuel.typeOfCalculation){
 
@@ -840,7 +840,7 @@ mainModule.calculatorModule = (function(){
         var ec = externalCosts;
         
         //converts distance unit to kilometres
-        var distancePerMonthInKms = mainModule.calculatorModule.conversionsModule.
+        var distancePerMonthInKms = autocosts.calculatorModule.conversionsModule.
             convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
 
         ec.totalPerMonth = (ec.polution + ec.greenhouseGases + ec.noise + ec.fatalities + ec.congestion + ec.infrastr) * distancePerMonthInKms;

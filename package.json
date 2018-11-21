@@ -23,7 +23,7 @@
   "homepage": "https://autocosts.info",
   "files": [
     "bin/",
-    "commons.js" 
+    "commons.js"
   ],
   "dependencies": {
     "async": "^2.6.1",

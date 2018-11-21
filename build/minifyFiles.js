@@ -66,15 +66,8 @@ function processJSfiles(){
             
             //file 'Globals.js.hbs' because is a JS file rendered by handlebars
             //needs a special treatment upon minification
-            var result;
-            if (!filename.includes('Globals.js.hbs')){
-                var options = { compress: { drop_console: (settings.release === "prod") ? true : false }};
-                result = UglifyJS.minify(code, options);
-            }
-            else{        
-                var options = { output: {  beautify: false, quote_style: 1}};        
-                result = UglifyJS.minify(code, options);
-            }    
+            var options = { output: {  beautify: false, quote_style: 1}};        
+            var result = UglifyJS.minify(code, options);            
 
             if (result.error){
                 console.log('\nERROR minifying JS file ', filename, result.error, '\n');
