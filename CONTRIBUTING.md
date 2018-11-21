@@ -35,6 +35,10 @@ For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_
 ```
 autocosts
    |
+   |--- getFiles
+   |
+   |--- initialize
+   |
    |--- calculatorModule
    |        |
    |        |--- conversionsModule
