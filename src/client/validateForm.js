@@ -300,7 +300,7 @@ mainModule.userFormModule.validateFormModule = (function(){
 
             case "km": /*fuel calculations made considering distance travelled by month*/
 
-                if(!isNumber(form.consumo_auto.value)){
+                if(!isNumber(form.fuel_efficiency.value)){
                     return false;
                 }
                 if(!isNumber(form.fuel_price.value)){

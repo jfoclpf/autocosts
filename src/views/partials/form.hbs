@@ -416,8 +416,9 @@
                         <label>
                             {{{fuel_car_eff}}}
                         </label>
-                        <input type="number" min="0" step="Any" class="no_padding_left"
-                               id="fuel_efficiency" name="consumo_auto" />
+                        <!-- fuel efficiency either in l/100km or mpg cannot be zero -->
+                        <input type="number" min="0.000001" step="Any" class="no_padding_left"
+                               id="fuel_efficiency" name="fuel_efficiency" />
                         <span class="unit_litre_100kms">
                             {{{std_fuel_calc}}}
                         </span>

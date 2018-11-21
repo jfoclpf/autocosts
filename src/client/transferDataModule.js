@@ -65,8 +65,8 @@ mainModule.transferDataModule = (function(){
                         distancePerPeriod: f.km_por_mes.value,
                         period:            f.combustivel_period_km.value //month, two months,  trimester, semester, year
                     },
-                    fuelEfficiency: f.consumo_auto.value, //fuel efficiency of the vehicle
-                    fuelPrice:      f.fuel_price.value   //fuel price per unit volume
+                    fuelEfficiency: f.fuel_efficiency.value, //fuel efficiency of the vehicle
+                    fuelPrice:      f.fuel_price.value       //fuel price per unit volume
                 }
             },
 
