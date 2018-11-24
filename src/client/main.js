@@ -10,102 +10,130 @@
 
 var autocosts = (function(){
 
-    //Main Module's Global Variables
-    var SWITCHES,               //GLOBAL switches Object, got from server configuration
-        COUNTRY,                //Current Country Code
-        LANGUAGE,               //Current Language Code according to ISO_639-1 codes
-        COUNTRY_LIST,           //List of countries in a Javascript Object
-        DOMAIN_LIST,            //List of domains in a Javascript Object
-        DOMAIN_URL,             //current domain URL, example 'http://autocosts.info'
-        FULL_URL,               //full URL of the page, example 'http://autocosts.info/XX'
-        CDN_URL,                //it's defined in the node server side index.js
-        HTTP_Protocol,          //it's defined in node server side index.js*/
-        clientDir,              //client directory seen by the browser
-        WORDS,                  //Object with country's language text strings
-        STATS,                  //Object with countrys' users costs statistics
-        GA_TRACKING_ID,         //Google analytics Tracking ID
-        NOT_LOCALHOST,          //true when this session does not come from localhost
-        JS_FILES,               //Object with locations of Javascript Files
-        PAGE_URL,               //current page URL, example 'http://autocosts.info/UK'
-        LANG_JSON_DIR,          //Directory of JSON Translation files
-        STATS_HTML_TABLES_DIR,  //Directory of statistical html tables
-        STATS_JPG_TABLES_DIR,   //Directory of statistical jpg tables
-        IS_HUMAN_CONFIRMED,     //for Google reCaptcha
-        UBER_API,               //UBER API object with city specific costs (cost per km, per minute, etc.)
-        UBER_API_LOCAL_URL,     //UBER URL to get UBER API information through AJAX
-        CALCULATED_DATA,        //calculated meta-data after user clicks "Run"
-        FORM_DATA,              //Form data filled by the user
-        DISPLAY,                //Object regarding the display of information
-        SERVICE_AVAILABILITY,   //To be used by the code to check whether services are available,
-        UUID,                   //Unique User Identifier
-        NONCE,                  //Number used only once for CSP rules in scrips
-        TEST_SERVER,            //server refers that this session is a test
-        TimeCounter;            //Function variables for function expressions
+    var mainVariables = {
+        main:{
+            calculatedData: undefined,              //calculated meta-data after user clicks "Run"
+            formData: undefined,                    //Form data filled by the user
+            uberApiObj: undefined,                  //UBER API object with city specific costs (cost per km, per minute, etc.) 
+        },
+        paths:{              
+            jsFiles: undefined,                     //Object with locations of Javascript Files
+            url: {
+                domainUrl: undefined,               //current domain URL, example 'http://autocosts.info'
+                fullUrl: undefined,                 //full URL of the page, example 'http://autocosts.info/XX'
+                pageUrl: undefined,                 //current page URL, example 'http://autocosts.info/UK'
+                cdnUrl: undefined,                  //it's defined in the node server side index.js
+                uberApi: undefined                  //uber url to get UBER API information through AJAX    
+            },
+            dirs:{
+                clientDir: undefined,               //client directory seen by the browser                
+                languagesJsonDir: undefined         //Directory of JSON Translation files                
+            }
+        },
+        statistics:{
+            statisticsObj: undefined,               //Object with countrys' users costs statistics
+            statisticsHtmlTablesDir: undefined,     //Directory of statistical html tables
+            statisticsJpgTablesDir: undefined       //Directory of statistical jpg tables                 
+        },
+        serverInfo:{
+            switches: undefined,                    //GLOBAL switches Object, got from server configuration   
+            selectedCountry: undefined,             //Current Country Code
+            countryListObj: undefined,              //List of countries in a Javascript Object      
+            domainListObj: undefined,               //List of domains in a Javascript Object            
+            language: undefined,                    //Current Language Code according to ISO_639-1 codes   
+            translationWords: undefined,            //Object with country's language text strings            
+            nonce: undefined,                       //Number used only once for CSP rules in scrips
+            httpProtocol: undefined,                //it's defined in node server side index.js*/
+            googleAnalyticsTrackingId: undefined,   //Google analytics Tracking ID
+            booleans:{
+                isATest: undefined,                 //server refers that this session is a test
+                notLocalhost: undefined             //true when this session does not come from localhost                
+            }
+        },
+        servicesAvailabilityObj: {         
+            googleCaptcha: false,                   //variable that says whether Google Captcha JS files are available
+            googleAnalytics: false,                 //variable that says whether Google Analytics JS files are available
+            uber: false
+        },
+        displayObj: undefined,                      //Object regarding the display of information
+        user: {
+            uniqueUserId: undefined,                //Unique User Identifier
+            isHumanConfirmed: false,                //for Google reCaptcha  
+            timeCounter: undefined                  //function used for assessing the time user takes to fill the form
+        }
+    }; 
 
+    
     //gets switches from server side configuration
     (function(){
-        var switches = document.getElementById('global_switches');
-        SWITCHES = {
-            "https": JSON.parse(switches.dataset.https),                 /*true for https, false for http*/
-            "uber": JSON.parse(switches.dataset.uber),                   /*Uber*/
-            "social": JSON.parse(switches.dataset.social),               /*Social media pulgins*/
-            "charts": JSON.parse(switches.dataset.charts),               /*Charts*/
-            "googleCaptcha": JSON.parse(switches.dataset.g_captcha),     /*Google Captcha*/
-            "googleAnalytics": JSON.parse(switches.dataset.g_analytics), /*Google Analytics*/
-            "data_base": JSON.parse(switches.dataset.data_base),         /*Inserts user input data into DataBase*/
-            "print": JSON.parse(switches.dataset.print),                 /*Print option*/
-            "pdf": JSON.parse(switches.dataset.pdf)                      /*Download PDF report option*/
+        var globalSwitches = document.getElementById('global_switches');
+        mainVariables.serverInfo.switches = {
+            https: JSON.parse(globalSwitches.dataset.https),                 /*true for https, false for http*/
+            uber: JSON.parse(globalSwitches.dataset.uber),                   /*Uber*/
+            social: JSON.parse(globalSwitches.dataset.social),               /*Social media pulgins*/
+            charts: JSON.parse(globalSwitches.dataset.charts),               /*Charts*/
+            googleCaptcha: JSON.parse(globalSwitches.dataset.g_captcha),     /*Google Captcha*/
+            googleAnalytics: JSON.parse(globalSwitches.dataset.g_analytics), /*Google Analytics*/
+            data_base: JSON.parse(globalSwitches.dataset.data_base),         /*Inserts user input data into DataBase*/
+            print: JSON.parse(globalSwitches.dataset.print),                 /*Print option*/
+            pdf: JSON.parse(globalSwitches.dataset.pdf)                      /*Download PDF report option*/
         };
-        //freezes SWITCHES on client such that its properties cannot be changed
+        //freezes switches on client such that its properties cannot be changed
         //since these switches are only defined by the server
-        Object.freeze(SWITCHES);
+        Object.freeze(mainVariables.serverInfo.switches);
     })();
-
+  
     //gets main module's global variables from server side configuration
     (function(){
         var globalVariables = document.getElementById('global_variables');
-        COUNTRY         = globalVariables.dataset.country;
-        LANGUAGE        = globalVariables.dataset.language;
-        COUNTRY_LIST    = JSON.parse(decodeURI(globalVariables.dataset.country_list));
-        DOMAIN_LIST     = JSON.parse(decodeURI(globalVariables.dataset.domain_list));
-        CDN_URL         = globalVariables.dataset.cdn_url;
-        HTTP_Protocol   = globalVariables.dataset.http_protocol;
-        clientDir       = globalVariables.dataset.client_dir;
-        WORDS           = JSON.parse(decodeURI(globalVariables.dataset.words));
-        STATS           = JSON.parse(decodeURI(globalVariables.dataset.stats));
-        GA_TRACKING_ID  = globalVariables.dataset.ga_tracking_id;
-        NOT_LOCALHOST   = JSON.parse(globalVariables.dataset.not_localhost);
-        NONCE           = globalVariables.dataset.nonce;
-        TEST_SERVER     = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test
+        
+        //information obtained from the server
+        mainVariables.serverInfo.selectedCountry = globalVariables.dataset.country;
+        mainVariables.serverInfo.countryListObj = JSON.parse(decodeURI(globalVariables.dataset.country_list));
+        mainVariables.serverInfo.domainListObj = JSON.parse(decodeURI(globalVariables.dataset.domain_list));
+        mainVariables.serverInfo.language = globalVariables.dataset.language;
+        mainVariables.serverInfo.translationWords = JSON.parse(decodeURI(globalVariables.dataset.words));
+        mainVariables.serverInfo.nonce = globalVariables.dataset.nonce;    
+        mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol;        
+        mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id;        
+        
+        //booleans
+        mainVariables.serverInfo.booleans.isATest = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test
+        mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost);
+
+        //paths
+        mainVariables.paths.url.cdnUrl = globalVariables.dataset.cdn_url;        
+        mainVariables.paths.dirs.clientDir = globalVariables.dataset.client_dir;
+        
+        mainVariables.statistics.statisticsObj = JSON.parse(decodeURI(globalVariables.dataset.stats));
+        
     })();
 
     //defines some main module global variables
     (function(){
-        UBER_API = {};
-        UBER_API_LOCAL_URL = "getUBER/" + COUNTRY;
+        
+        var selectedCountry = mainVariables.serverInfo.selectedCountry;
+        
+        mainVariables.main.uberApiObj = {};
+        mainVariables.paths.url.uberApi = "getUBER/" + selectedCountry;
 
         /*forms present page full url, example 'http://autocosts.info' */
-        DOMAIN_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY];
-        FULL_URL = window.location.href;
+        mainVariables.paths.url.domainUrl = mainVariables.serverInfo.httpProtocol + "://" + mainVariables.serverInfo.domainListObj[selectedCountry];
+        mainVariables.paths.url.fullUrl = window.location.href;
 
         /*forms present page full url, example 'http://autocosts.info/UK' */
-        PAGE_URL = HTTP_Protocol + "://" + DOMAIN_LIST[COUNTRY] + "/" + COUNTRY;
+        mainVariables.paths.url.pageUrl = mainVariables.serverInfo.httpProtocol + "://" + 
+                                          mainVariables.serverInfo.domainListObj[selectedCountry] + "/" + 
+                                          selectedCountry;
 
-        LANG_JSON_DIR         = CDN_URL + "countries" + "/"; /* Directory of JSON Translation files  */
-        STATS_HTML_TABLES_DIR = CDN_URL + "tables" + "/";    /* Directory of statistical html tables */
-        STATS_JPG_TABLES_DIR  = CDN_URL + "tables" + "/";    /* Directory of statistical jpg tables  */
-
-        TimeCounter = function(){
-            console.error("Function " + arguments.callee.name + " called and not yet loaded");
-        };
-
-        /*global variable for Google reCaptcha*/
-        IS_HUMAN_CONFIRMED = false;
+        var cdnUrl = mainVariables.paths.url.cdnUrl;
+        mainVariables.paths.dirs.translationsDir = cdnUrl + "countries" + "/";       // Directory of JSON Translation files 
+        mainVariables.statistics.statisticsHtmlTablesDir = cdnUrl + "tables" + "/";  // Directory of statistical html tables
+        mainVariables.statistics.statisticsJpgTablesDir = cdnUrl + "tables" + "/";   // Directory of statistical jpg tables 
 
         /*Global Object regarding the display of information*/
-        DISPLAY = {
-            centralFrameWidth :  0,  /*width of central frame #div2*/
-            descriptionHTML :   "",
+        //THIS SHOULD GO TO MODULE SHOW RESULTS
+        mainVariables.displayObj = {
             costsColors: {
                 depreciation:        '#2ba3d6',
                 insurance:           '#10c6e6',
@@ -122,24 +150,18 @@ var autocosts = (function(){
             }
         };
 
-        /*Service availability. Later on in the code, the variables might be set to TRUE*/
-        /*if the services are available. Therefore do not change these values here*/
-        SERVICE_AVAILABILITY = {
-            googleCaptcha : false,   /*variable that says whether Google Captcha JS files are available*/
-            g_analytics   : false,   /*variable that says whether Google Analytics JS files are available*/
-            uber          : false
-        };
     })();
 
     //Sets location of Javascript Files (some defined in /commons.js)
     (function(){
         var globalVariables = document.getElementById('global_variables');
-        var JSfiles = JSON.parse(decodeURI(globalVariables.dataset.js_files));
-        var rootClientURL = CDN_URL + clientDir + "/";
-        JS_FILES = {
-            Google : {
-                recaptchaAPI : JSfiles.GrecaptchaAPI + "?onload=grecaptcha_callback&render=explicit&hl=" + LANGUAGE,
-                analytics    : JSfiles.Ganalytics
+        var jsfilesDefinedByServer = JSON.parse(decodeURI(globalVariables.dataset.js_files));
+        var rootClientURL = mainVariables.paths.url.cdnUrl + mainVariables.paths.dirs.clientDir + "/";
+        
+        mainVariables.paths.jsFiles = {
+            google : {
+                recaptchaAPI : jsfilesDefinedByServer.GrecaptchaAPI + "?onload=grecaptcha_callback&render=explicit&hl=" + mainVariables.serverInfo.language,
+                analytics    : jsfilesDefinedByServer.Ganalytics
             },
 
             initialize :          rootClientURL + "initialize.js",
@@ -170,41 +192,10 @@ var autocosts = (function(){
             smartAppBanner:       rootClientURL + "smart-app-banner.js"
         };
 
-        Object.freeze(JS_FILES);
+        Object.freeze(mainVariables.paths.jsFiles);
     })();
 
-    return{
-        SWITCHES: SWITCHES,                             //GLOBAL switches Object, got from server configuration
-        COUNTRY: COUNTRY,                               //Current Country Code
-        LANGUAGE: LANGUAGE,                             //Current Language Code according to ISO_639-1 codes
-        COUNTRY_LIST: COUNTRY_LIST,                     //List of countries in a Javascript Object
-        DOMAIN_LIST: DOMAIN_LIST,                       //List of domains in a Javascript Object
-        DOMAIN_URL: DOMAIN_URL,                         //current domain URL, example 'http://autocosts.info'
-        FULL_URL: FULL_URL,                             //full URL of the page, example 'http://autocosts.info/XX'
-        CDN_URL: CDN_URL,                               //it's defined in the node server side index.js
-        HTTP_Protocol: HTTP_Protocol,                   //it's defined in node server side index.js*/
-        clientDir: clientDir,                           //client directory seen by the browser
-        WORDS: WORDS,                                   //Object with country's language text strings
-        STATS: STATS,                                   //Object with countrys' users costs statistics
-        GA_TRACKING_ID: GA_TRACKING_ID,                 //Google analytics Tracking ID
-        NOT_LOCALHOST: NOT_LOCALHOST,                   //true when this session does not come from localhost
-        JS_FILES: JS_FILES,                             //Object with locations of Javascript Files
-        PAGE_URL: PAGE_URL,                             //current page URL, example 'http://autocosts.info/UK'
-        LANG_JSON_DIR: LANG_JSON_DIR,                   //Directory of JSON Translation files
-        STATS_HTML_TABLES_DIR: STATS_HTML_TABLES_DIR,   //Directory of statistical html tables
-        STATS_JPG_TABLES_DIR: STATS_JPG_TABLES_DIR,     //Directory of statistical jpg tables
-        IS_HUMAN_CONFIRMED: IS_HUMAN_CONFIRMED,         //for Google reCaptcha
-        UBER_API: UBER_API,                             //UBER API object with city specific costs (cost per km, per minute, etc.)
-        UBER_API_LOCAL_URL: UBER_API_LOCAL_URL,         //UBER URL to get UBER API information through AJAX
-        CALCULATED_DATA: CALCULATED_DATA,               //calculated meta-data after user clicks "Run"
-        FORM_DATA: FORM_DATA,                           //Form data filled by the user
-        DISPLAY: DISPLAY,                               //Object regarding the display of information
-        SERVICE_AVAILABILITY: SERVICE_AVAILABILITY,     //To be used by the code to check whether services are available,
-        UUID: UUID,                                     //Unique User Identifier
-        NONCE: NONCE,                                   //Number used only once for CSP rules in scrips
-        TEST_SERVER: TEST_SERVER,                       //server refers that this session is a test
-        TimeCounter: TimeCounter                        //Function variables for function expressions
-    };
+    return mainVariables;
 
 })();
 
@@ -216,7 +207,7 @@ var autocosts = (function(){
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 //module for getting JS, CSS or other files
-autocosts.getFiles = (function(jsFiles, switches, country, uberApi, notLocalhost, language, words){
+autocosts.getFiles = (function(jsFiles, switches, country, notLocalhost, language, translationWords, uberApiUrl){
 
     $(document).ready(function () {
         $.getScript(jsFiles.jQueryColor);
@@ -235,27 +226,27 @@ autocosts.getFiles = (function(jsFiles, switches, country, uberApi, notLocalhost
         if (switches.uber){
             if(country != "XX"){//if not test version
                 //gets asynchronously UBER information
-                $.get(UBER_API_LOCAL_URL, function(data) {
+                $.get(uberApiUrl, function(data) {
                     //alert(JSON.stringify(data, null, 4));
                     if(data && !$.isEmptyObject(data)){
-                        uberApi =  data; //uberApi is a global variable
-                        console.log("uber data got from uber API: ", uberApi);
-                        autocosts.SERVICE_AVAILABILITY.uber = true;
+                        autocosts.main.uberApiObj =  data; //uberApi is a global variable
+                        console.log("uber data got from uber API: ", data);
+                        autocosts.servicesAvailabilityObj.uber = true;
                     }
                     else{
                         console.error("Error getting uber info");
-                        autocosts.SERVICE_AVAILABILITY.uber = false;
-                    }
-                    autocosts.uberApi = uberApi;
+                        autocosts.servicesAvailabilityObj.uber = false;
+                    }                    
                 });
             }
             else{//test version (London city, in Pounds)
+                let uberApi = {};
                 uberApi.cost_per_distance = 1.25;
                 uberApi.cost_per_minute = 0.15;
                 uberApi.currency_code = "GBP";
                 uberApi.distance_unit = "mile";
-                autocosts.uberApi = uberApi;
-                autocosts.SERVICE_AVAILABILITY.uber = true;
+                autocosts.main.uberApiObj = uberApi;
+                autocosts.servicesAvailabilityObj.uber = true;
             }
         }
     }
@@ -296,7 +287,7 @@ autocosts.getFiles = (function(jsFiles, switches, country, uberApi, notLocalhost
             daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
             daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
             appStoreLanguage: language, // language code for the App Store (defaults to user's browser language)
-            title: words.ac_mobile,
+            title: translationWords.ac_mobile,
             author: 'Autocosts Org',
             button: 'APP',
             store: {
@@ -349,10 +340,10 @@ autocosts.getFiles = (function(jsFiles, switches, country, uberApi, notLocalhost
                     //Google Captcha API doesn't work nor applies on localhost
                     if (switches.googleCaptcha && notLocalhost){
                         $.getScript(jsFiles.Google.recaptchaAPI);
-                        //when loaded successfuly set SERVICE_AVAILABILITY.googleCaptcha=true in function grecaptcha_callback in g-recaptcha.js
+                        //when loaded successfuly set servicesAvailabilityObj.googleCaptcha=true in function grecaptcha_callback in g-recaptcha.js
                     }
                     else{
-                        autocosts.SERVICE_AVAILABILITY.googleCaptcha = false;
+                        autocosts.servicesAvailabilityObj.googleCaptcha = false;
                     }
                 });
 
@@ -387,11 +378,11 @@ autocosts.getFiles = (function(jsFiles, switches, country, uberApi, notLocalhost
         loadCSSFiles: loadCSSFiles
     };
 
-})(autocosts.JS_FILES,
-   autocosts.SWITCHES,
-   autocosts.COUNTRY,
-   autocosts.UBER_API,
-   autocosts.NOT_LOCALHOST,
-   autocosts.LANGUAGE,
-   autocosts.WORDS);
+})(autocosts.paths.jsFiles,
+   autocosts.serverInfo.switches,
+   autocosts.serverInfo.selectedCountry,
+   autocosts.serverInfo.booleans.notLocalhost,
+   autocosts.serverInfo.language,
+   autocosts.serverInfo.translationWords,
+   autocosts.paths.url.uberApi);
 

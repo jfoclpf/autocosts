@@ -1,16 +1,16 @@
 //Returns boolean whether to use or not Google Captcha
 function useGreCapctha(){    
-    return !autocosts.IS_HUMAN_CONFIRMED &&                        //Do not use if human is already confirmed
-        autocosts.COUNTRY!='XX' &&                       //Do not use if is test version
-        autocosts.SERVICE_AVAILABILITY.googleCaptcha &&  //Do not use when service is not availble, i.e., when files were not loaded
-        autocosts.SWITCHES.googleCaptcha &&              //Do not use when flag from server is not triggered
-        autocosts.NOT_LOCALHOST;                         //Do not use when run for localhost
+    return !autocosts.user.isHumanConfirmed &&                        //Do not use if human is already confirmed
+        autocosts.serverInfo.selectedCountry!='XX' &&                       //Do not use if is test version
+        autocosts.servicesAvailabilityObj.googleCaptcha &&  //Do not use when service is not availble, i.e., when files were not loaded
+        autocosts.serverInfo.switches.googleCaptcha &&              //Do not use when flag from server is not triggered
+        autocosts.serverInfo.booleans.notLocalhost;                         //Do not use when run for localhost
 }
 
 //The call of this function is defined in an URL declared in autocosts.JS_FILES.Google.recaptchaAPI (see main.js)
 //this function is called when the Google Captcha JS file is loaded and ready to be used
 function grecaptcha_callback() {
-    autocosts.SERVICE_AVAILABILITY.googleCaptcha = true;
+    autocosts.servicesAvailabilityObj.googleCaptcha = true;
     console.log("grecaptcha is ready!");
 
     if (useGreCapctha()){
@@ -58,15 +58,16 @@ function Run1(source){
 
             if(result == "ok"){
                 //Google Recaptcha
-                autocosts.IS_HUMAN_CONFIRMED = true;                
+                autocosts.user.isHumanConfirmed = true;                
 
-                if(autocosts.resultsModule.calculateCostsAndShowResults() && autocosts.COUNTRY != "XX"){
+                if(autocosts.resultsModule.calculateCostsAndShowResults() && 
+                   autocosts.serverInfo.selectedCountry != "XX"){
                     //if not a test triggers event for Google Analytics
-                    if(!autocosts.isThisAtest() && autocosts.SERVICE_AVAILABILITY.googleAnalytics && autocosts.SWITCHES.googleAnalytics){
+                    if(!autocosts.isThisAtest() && autocosts.servicesAvailabilityObj.googleAnalytics && autocosts.serverInfo.switches.googleAnalytics){
                         ga('send', 'event', 'form_part', 'run_OK');
                     }
                     //submits data to database if no XX version
-                    if(autocosts.SWITCHES.data_base){
+                    if(autocosts.serverInfo.switches.data_base){
                         submit_data();
                     }
                 }
@@ -88,9 +89,9 @@ function Run1(source){
         
         //here normally a human is already confirmed, for example when the same user runs the calculator twice
         if(autocosts.resultsModule.calculateCostsAndShowResults() && 
-           autocosts.IS_HUMAN_CONFIRMED && 
-           autocosts.COUNTRY != "XX" && 
-           autocosts.SWITCHES.data_base && 
+           autocosts.user.isHumanConfirmed && 
+           autocosts.serverInfo.selectedCountry != "XX" && 
+           autocosts.serverInfo.switches.data_base && 
            autocosts.NOT_LOCALHOST){
             submit_data(); //submits data to database if no test version nor localhost
         }

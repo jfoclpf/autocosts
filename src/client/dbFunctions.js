@@ -6,12 +6,12 @@ function submit_data() {
     objectToDb = sanityChecks(objectToDb);
     
     //get current time to know how much time the user took to fill the form
-    objectToDb.time_to_fill_form = autocosts.TimeCounter.getCurrentTimeInSeconds();
+    objectToDb.time_to_fill_form = autocosts.user.timeCounter.getCurrentTimeInSeconds();
     
     //get a user unique generated ID
-    objectToDb.client_uuid = autocosts.UUID;
+    objectToDb.client_uuid = autocosts.user.uniqueUserId;
 
-    objectToDb.country = autocosts.COUNTRY; //Country is a global variable
+    objectToDb.country = autocosts.serverInfo.selectedCountry; //Country is a global variable
 
     submitDataToDB(objectToDb);
 
