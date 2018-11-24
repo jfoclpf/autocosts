@@ -2,7 +2,7 @@
 /* MAIN MODULE'S INITIALIZATION MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-autocosts.initialize = (function(){    
+autocosts.initializeModule = (function(){    
     
     var translationWords = autocosts.serverInfo.translationWords;
     
@@ -60,10 +60,10 @@ autocosts.initialize = (function(){
                 $(".field_container").show();
             }
 
-            autocosts.getFiles.getExtraJSFiles();        
+            autocosts.getFilesModule.getExtraJSFiles();        
 
             //loadCSSFiles(['css/merged_deferred.css']);
-            autocosts.getFiles.loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+            autocosts.getFilesModule.loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
         };  
         
         //Load statistics table on sidebars.hbs

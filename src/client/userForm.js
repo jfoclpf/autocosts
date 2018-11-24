@@ -21,7 +21,7 @@ autocosts.userFormModule = (function(){
     function setFormSettings(){
 
         //shows numeric keypad on iOS mobile devices
-        if(autocosts.initialize.getMobileOperatingSystem() === "iOS"){
+        if(autocosts.initializeModule.getMobileOperatingSystem() === "iOS"){
             $('.form_part input[type="number"]').attr("pattern", "\\d*");
         }
 

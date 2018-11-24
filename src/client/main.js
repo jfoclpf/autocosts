@@ -164,14 +164,16 @@ var autocosts = (function(){
                 analytics    : jsfilesDefinedByServer.Ganalytics
             },
 
+            //core functions
+            calculator :          rootClientURL + "core/calculator.js",            
+            conversions :         rootClientURL + "core/conversions.js",
+            
             initialize :          rootClientURL + "initialize.js",
-            formFunctions :       rootClientURL + "formFunctions.js",
+            userForm :            rootClientURL + "userForm.js",
             validateForm :        rootClientURL + "validateForm.js",
             g_recaptcha :         rootClientURL + "g-recaptcha.js",
-            conversionsModule :   rootClientURL + "core/conversionsModule.js",
-            calculatorModule :    rootClientURL + "core/calculatorModule.js",
-            transferDataModule :  rootClientURL + "transferDataModule.js",
-            resultsModule :       rootClientURL + "resultsModule.js",
+            transferData :        rootClientURL + "transferData.js",
+            results :             rootClientURL + "results.js",
             dbFunctions :         rootClientURL + "dbFunctions.js",
 
             jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.min.js",
@@ -187,7 +189,7 @@ var autocosts = (function(){
                 vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
             },
 
-            drawCostsCharts :     rootClientURL + "chart/drawCostsCharts.js",
+            charts :              rootClientURL + "chart/charts.js",
             chartjs :             rootClientURL + "chart/chartjs.min.js",
             smartAppBanner:       rootClientURL + "smart-app-banner.js"
         };
@@ -207,15 +209,15 @@ var autocosts = (function(){
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 //module for getting JS, CSS or other files
-autocosts.getFiles = (function(jsFiles, switches, country, notLocalhost, language, translationWords, uberApiUrl){
+autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, language, translationWords, uberApiUrl){
 
     $(document).ready(function () {
         $.getScript(jsFiles.jQueryColor);
         $.getScript(jsFiles.jQuerySidebar, function(){
             $.getScript(jsFiles.initialize, function(){
-                $.getScript(jsFiles.formFunctions, function(){
+                $.getScript(jsFiles.userForm, function(){
                     $.getScript(jsFiles.validateForm);
-                    autocosts.initialize.initialize();
+                    autocosts.initializeModule.initialize();
                     autocosts.userFormModule.initialize();
                 });
             });
@@ -240,7 +242,7 @@ autocosts.getFiles = (function(jsFiles, switches, country, notLocalhost, languag
                 });
             }
             else{//test version (London city, in Pounds)
-                let uberApi = {};
+                var uberApi = {};
                 uberApi.cost_per_distance = 1.25;
                 uberApi.cost_per_minute = 0.15;
                 uberApi.currency_code = "GBP";
@@ -310,23 +312,25 @@ autocosts.getFiles = (function(jsFiles, switches, country, notLocalhost, languag
     because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
     function getExtraJSFiles(){
 
-        $.getScript(jsFiles.calculatorModule, function(){
-            $.getScript(jsFiles.conversionsModule);
+        $.getScript(jsFiles.calculator, function(){
+            $.getScript(jsFiles.conversions);
 
             $.getScript(jsFiles.smartAppBanner, loadSmartBanner);
 
-            $.getScript(jsFiles.transferDataModule, function(){
+            $.getScript(jsFiles.transferData, function(){
 
                 if (switches.charts){
                     $.getScript(jsFiles.chartjs);
 
-                    $.getScript(jsFiles.resultsModule, function() {
-                        $.getScript(jsFiles.drawCostsCharts);
+                    $.getScript(jsFiles.results, function() {
+                        autocosts.resultsModule.initialize();
+                        $.getScript(jsFiles.charts);
                         getPdfJsFiles();
                     });
                 }
                 else{
-                    $.getScript(jsFiles.resultsModule, function(){
+                    $.getScript(jsFiles.results, function(){
+                        autocosts.resultsModule.initialize();
                         getPdfJsFiles();
                     });
                 }

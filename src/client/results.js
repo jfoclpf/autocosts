@@ -12,9 +12,7 @@
 autocosts.resultsModule = (function(){   
     
     var calculatedData;
-    var translationWords = autocosts.serverInfo.translationWords;
-        
-    initialize();
+    var translationWords = autocosts.serverInfo.translationWords;        
     
     function initialize(){
         loadResultsSettingsAndHandlers();
@@ -227,7 +225,7 @@ autocosts.resultsModule = (function(){
                         numToShow = amount + " " + translationWords.hour_abbr; 
                     }
                     else if($i.hasClass("distance")){
-                        numToShow = amount + " " + autocosts.initialize.getStringFor("distance"); 
+                        numToShow = amount + " " + autocosts.initializeModule.getStringFor("distance"); 
                     }
                     else if($i.hasClass("percentage")){
                         numToShow = amount + "&#37;"; //percentage symbol 
@@ -867,6 +865,7 @@ autocosts.resultsModule = (function(){
     }       
     
     return{
+        initialize: initialize,
         calculateCostsAndShowResults: calculateCostsAndShowResults,
         setPeriodicCosts: setPeriodicCosts
     };
