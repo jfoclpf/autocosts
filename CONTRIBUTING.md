@@ -3,7 +3,6 @@
  - Use four spaces for indentations
  - Comment the code in English
  - The local variables names, object properties, functions names and directories names shall obey [CamelCase](https://en.wikipedia.org/wiki/Camel_case)
- - The directories structure tries to respect the directory structure for [JavaScript/Node Projects](https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md).
  
  ### Costs items
  The car cost items' terminology should be, for programmatic and variable naming purposes:
@@ -26,18 +25,26 @@ washing
 ### Country codes
 For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code must be used.
 
+## Filenames
+
+ - If a certain javascript file has only one module, the filename shall be that module's name without the ending `Module`. For example, if a file has only the module `autocosts.abcModule`, the file name shall be `abc.js`.
+
+ - The directories structure tries to respect the directory structure for [JavaScript/Node Projects](https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md).
+
 ## Modules
 
 <a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). 
+
+The name of a module, except the main module `autocosts`, should always end the wording `Module`.
 
 ### Tree
 
 ```
 autocosts
    |
-   |--- getFiles
+   |--- getFilesModule
    |
-   |--- initialize
+   |--- initializeModule
    |
    |--- calculatorModule
    |        |
@@ -126,6 +133,7 @@ Module.B();
 ```
 
 Output:
+
 ```js
 Module: B
 Module.Utils: C
