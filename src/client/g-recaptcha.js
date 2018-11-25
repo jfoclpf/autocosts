@@ -1,6 +1,6 @@
 //Returns boolean whether to use or not Google Captcha
 function useGreCapctha(){    
-    return !autocosts.user.isHumanConfirmed &&                        //Do not use if human is already confirmed
+    return !autocosts.userInfo.isHumanConfirmed &&                        //Do not use if human is already confirmed
         autocosts.serverInfo.selectedCountry!='XX' &&                       //Do not use if is test version
         autocosts.servicesAvailabilityObj.googleCaptcha &&  //Do not use when service is not availble, i.e., when files were not loaded
         autocosts.serverInfo.switches.googleCaptcha &&              //Do not use when flag from server is not triggered
@@ -58,7 +58,7 @@ function Run1(source){
 
             if(result == "ok"){
                 //Google Recaptcha
-                autocosts.user.isHumanConfirmed = true;                
+                autocosts.userInfo.isHumanConfirmed = true;                
 
                 if(autocosts.resultsModule.calculateCostsAndShowResults() && 
                    autocosts.serverInfo.selectedCountry != "XX"){
@@ -89,7 +89,7 @@ function Run1(source){
         
         //here normally a human is already confirmed, for example when the same user runs the calculator twice
         if(autocosts.resultsModule.calculateCostsAndShowResults() && 
-           autocosts.user.isHumanConfirmed && 
+           autocosts.userInfo.isHumanConfirmed && 
            autocosts.serverInfo.selectedCountry != "XX" && 
            autocosts.serverInfo.switches.data_base && 
            autocosts.NOT_LOCALHOST){

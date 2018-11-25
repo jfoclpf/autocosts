@@ -2,11 +2,12 @@
 /* MAIN MODULE'S INITIALIZATION MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-autocosts.initializeModule = (function(){    
+autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths){            
     
-    var translationWords = autocosts.serverInfo.translationWords;
+    var getFilesModule;
     
     function initialize(){
+        loadModuleDependencies();
         oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
         fillPeriodsInSelectBoxes();     //fills periods (month, two months, etc.) in HTML select boxes
         loadMainPageSettings();                    
@@ -15,6 +16,10 @@ autocosts.initializeModule = (function(){
         initGoogleAnalytics();
         getUniqueIdentifier();                    
     }
+    
+    function loadModuleDependencies(){
+        getFilesModule = autocosts.getFilesModule;
+    }    
     
     //detects old versions of Internet Explorer and warns the user to update the browser
     function oldIE(){
@@ -32,11 +37,11 @@ autocosts.initializeModule = (function(){
 
         //language HTML select dropdowns
         var SelectList = {
-            "1" : translationWords.month,
-            "2" : translationWords.two_months,
-            "3" : translationWords.trimester,
-            "4" : translationWords.semester,
-            "5" : translationWords.year
+            "1" : translatedStrings.month,
+            "2" : translatedStrings.two_months,
+            "3" : translatedStrings.trimester,
+            "4" : translatedStrings.semester,
+            "5" : translatedStrings.year
         };
 
         $("select.time_period").each(function(){
@@ -56,14 +61,11 @@ autocosts.initializeModule = (function(){
             $("#form").show();    
 
             //on test version shows everything right from the beginning
-            if(autocosts.serverInfo.selectedCountry == "XX"){
+            if(serverInfo.selectedCountry == "XX"){
                 $(".field_container").show();
             }
 
-            autocosts.getFilesModule.getExtraJSFiles();        
-
-            //loadCSSFiles(['css/merged_deferred.css']);
-            autocosts.getFilesModule.loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+            getFilesModule.loadDeferredFiles(); 
         };  
         
         //Load statistics table on sidebars.hbs
@@ -78,12 +80,12 @@ autocosts.initializeModule = (function(){
                 return shift(Math.round(shift(number, +precision)), -precision);
             };
             
-            for (var key in autocosts.statistics.statisticsObj[cc]){
+            for (var key in statistics.statisticsObj[cc]){
                 var elementClass = "stats_table-"+key; //see sidebars.hbs
                 if($("." + elementClass).length){//element exists
                     var $el = $("." + elementClass);
-                    var value = autocosts.statistics.statisticsObj[cc][key];
-                    var currSymb = autocosts.statistics.statisticsObj[cc].curr_symbol;
+                    var value = statistics.statisticsObj[cc][key];
+                    var currSymb = statistics.statisticsObj[cc].curr_symbol;
                     if(key == "running_costs_dist" || key == "total_costs_dist"){
                         $el.text(currSymb + round(value, 2) + "/" + getStringFor("distanceShort"));
                     }
@@ -172,7 +174,7 @@ autocosts.initializeModule = (function(){
         resizeSelectToContent("#country_select");
 
         //load statistics table on sidebars.hbs
-        updateStatsTable(autocosts.serverInfo.selectedCountry);
+        updateStatsTable(serverInfo.selectedCountry);
 
         $("#country_select_stats").on('change', function() {
             updateStatsTable(this.value);
@@ -185,24 +187,24 @@ autocosts.initializeModule = (function(){
         var checkGoogleAnalytics = function(t) {
 
             if(isThisAtest()){
-                autocosts.servicesAvailabilityObj.googleAnalytics = false;
+                servicesAvailabilityObj.googleAnalytics = false;
                 return;
             }
 
             if (typeof ga === 'function') {
-                autocosts.servicesAvailabilityObj.googleAnalytics = true;
+                servicesAvailabilityObj.googleAnalytics = true;
             } else {
-                autocosts.servicesAvailabilityObj.googleAnalytics = false;
+                servicesAvailabilityObj.googleAnalytics = false;
                 setTimeout(checkGoogleAnalytics, t);
             }
         };
         
         /*Google Analytics*/
-        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && autocosts.serverInfo.switches.googleAnalytics) {
-            $.getScript(autocosts.paths.jsFiles.Google.analytics, function(){
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && serverInfo.switches.googleAnalytics) {
+            $.getScript(paths.jsFiles.Google.analytics, function(){
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
-                ga('create', autocosts.serverInfo.googleAnalyticsTrackingId, 'auto');
+                ga('create', serverInfo.googleAnalyticsTrackingId, 'auto');
                 ga('set', 'displayFeaturesTask', null);
                 ga('send', 'pageview');
 
@@ -221,14 +223,14 @@ autocosts.initializeModule = (function(){
         function guid() {
             return (S4()+"-"+S4()+"-"+S4());
         }
-        autocosts.user.uniqueUserId = guid();
+        userInfo.uniqueUserId = guid();
     }
 
     //gets default protocol defined by Global Variable
     //it returns either "http://" or "https://", i.e., it returns including the "://"
     function getProtocol(){
 
-        if (autocosts.serverInfo.switches.https){
+        if (serverInfo.switches.https){
             return location.protocol + "//";
         }
         else{
@@ -239,7 +241,7 @@ autocosts.initializeModule = (function(){
     /*function which returns whether this session is a (test/develop version) or a prod version */
     function isThisAtest() {
 
-        if(autocosts.serverInfo.booleans.isATest || autocosts.serverInfo.selectedCountry == "XX"){
+        if(serverInfo.booleans.isATest || serverInfo.selectedCountry == "XX"){
             return true;
         }
 
@@ -259,13 +261,13 @@ autocosts.initializeModule = (function(){
     /*Timer function*/
     /* jshint ignore:start */
     function initTimer(){
-        $.getScript(autocosts.paths.jsFiles.jTimer, function(){
+        $.getScript(paths.jsFiles.jTimer, function(){
             //timeCounter is defined as global variable in main.js
-            autocosts.user.timeCounter = new function () {
+            userInfo.timeCounter = new function () {
                 var incrementTime = 500;
                 var currentTime = 0;
                 $(function () {
-                    autocosts.user.timeCounter.Timer = $.timer(updateTimer, incrementTime, true);
+                    userInfo.timeCounter.Timer = $.timer(updateTimer, incrementTime, true);
                 });
                 function updateTimer() {
                     currentTime += incrementTime;
@@ -277,7 +279,7 @@ autocosts.initializeModule = (function(){
                     return currentTime / 1000;
                 };
             };
-            autocosts.user.timeCounter.resetStopwatch();
+            userInfo.timeCounter.resetStopwatch();
         });
     }
     /* jshint ignore:end */
@@ -286,7 +288,7 @@ autocosts.initializeModule = (function(){
     //because file XX has standard values filed, it shows pre-filled values for /XX    
     function loadsPrefilledValues(){
 
-        //the key the name of the variable in translationWords
+        //the key the name of the variable in translatedStrings
         //the value is the name of the id in the form
         var mappingIDs = {
             "std_acq_month" : "acquisitionMonth",
@@ -335,8 +337,8 @@ autocosts.initializeModule = (function(){
         };
 
         $.each(mappingIDs, function(key, value){
-            if($("#"+value).length && translationWords[key] !== undefined){
-                $("#"+value).val(translationWords[key]);
+            if($("#"+value).length && translatedStrings[key] !== undefined){
+                $("#"+value).val(translatedStrings[key]);
             }
         });
     }
@@ -374,7 +376,7 @@ autocosts.initializeModule = (function(){
         switch(setting){
                 
             case "fuelEfficiency":                
-                switch(translationWords.fuel_efficiency_std_option){
+                switch(translatedStrings.fuel_efficiency_std_option){
                     case 1:
                         return "l/100km";
                     case 2:
@@ -394,7 +396,7 @@ autocosts.initializeModule = (function(){
                 break;
                 
             case "distance":                
-                switch(translationWords.distance_std_option){
+                switch(translatedStrings.distance_std_option){
                     case 1:
                         return "kilometres";
                     case 2:
@@ -408,7 +410,7 @@ autocosts.initializeModule = (function(){
                 break;
                 
             case "distanceShort":                
-                switch(translationWords.distance_std_option){
+                switch(translatedStrings.distance_std_option){
                     case 1:
                         return "km";
                     case 2:
@@ -422,7 +424,7 @@ autocosts.initializeModule = (function(){
                 break;
                 
             case "fuelPriceVolume":                
-                switch(translationWords.fuel_price_volume_std){
+                switch(translatedStrings.fuel_price_volume_std){
                     case 1:
                         return "litres";
                     case 2:
@@ -441,9 +443,15 @@ autocosts.initializeModule = (function(){
     } 
     
     return{
-        initialize: initialize,
-        getMobileOperatingSystem: getMobileOperatingSystem,
-        getStringFor: getStringFor
+        initialize,
+        getMobileOperatingSystem,
+        getStringFor
     };
 
-})();
+})(autocosts.serverInfo,
+   autocosts.serverInfo.translatedStrings,
+   autocosts.userInfo,
+   autocosts.statistics,
+   autocosts.servicesAvailabilityObj,
+   autocosts.paths);
+

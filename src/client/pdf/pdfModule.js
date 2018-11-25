@@ -2,18 +2,29 @@
 //PDF REPORT GENERATION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-autocosts.resultsModule.pdfModule = (function(){
+autocosts.resultsModule = autocosts.resultsModule || {};
+autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selectedCountry){
+    
+    var resultsModule;
     
     var calculatedData;
     var pdfReport;
-    var translationWords = autocosts.serverInfo.translationWords;
+    
+    function initialize(){
+        loadModuleDependencies();
+        $('#results .button-pdf, #results .button-print').removeClass('disabled'); 
+    }
+    
+    function loadModuleDependencies(){
+        resultsModule = autocosts.resultsModule;
+    }    
 
     function generatePDF(calculatedDataIn){
         
         calculatedData = calculatedDataIn;
         
         //see modules tree at https://github.com/jfoclpf/autocosts/wiki/Modules-tree
-        var chartsInfo = autocosts.resultsModule.chartsModule.getChartsInfo();
+        var chartsInfo = resultsModule.chartsModule.getChartsInfo();
 
         //costs Doughnut Chart width/height proportion
         var costsDoughnutChartWHProp = 1.171;
@@ -21,7 +32,7 @@ autocosts.resultsModule.pdfModule = (function(){
         var costsBarsChartWHProp = 2.005;
 
         var header = {
-            text: translationWords.main_title,
+            text: translatedStrings.main_title,
             style: 'title'
         };
 
@@ -64,7 +75,7 @@ autocosts.resultsModule.pdfModule = (function(){
             }
         ];
 
-        if (autocosts.serverInfo.switches.charts){    
+        if (switches.charts){    
             content.push(
                 {
                     image: chartsInfo.costsDoughnut.base64Image,
@@ -130,7 +141,7 @@ autocosts.resultsModule.pdfModule = (function(){
                         widths: ['*'],
                         body: [
                             [
-                                {text: translationWords.financial_effort, style: "header"}
+                                {text: translatedStrings.financial_effort, style: "header"}
                             ]
                         ]
                     },
@@ -139,7 +150,7 @@ autocosts.resultsModule.pdfModule = (function(){
             );
 
             //chart
-            if(chartsInfo.financialEffort.isVisible && autocosts.serverInfo.switches.charts){
+            if(chartsInfo.financialEffort.isVisible && switches.charts){
                 content.push(
                     {
                         image: chartsInfo.financialEffort.base64Image,
@@ -175,7 +186,7 @@ autocosts.resultsModule.pdfModule = (function(){
                         widths: ['*'],
                         body: [
                             [
-                                {text: translationWords.publ_tra_equiv, style: "header"}
+                                {text: translatedStrings.publ_tra_equiv, style: "header"}
                             ]
                         ]
                     },
@@ -184,7 +195,7 @@ autocosts.resultsModule.pdfModule = (function(){
             );
 
             //chart
-            if(chartsInfo.alternativesToCar.isVisible && autocosts.serverInfo.switches.charts){
+            if(chartsInfo.alternativesToCar.isVisible && switches.charts){
                 content.push(
                     {
                         image: chartsInfo.alternativesToCar.base64Image,
@@ -238,7 +249,7 @@ autocosts.resultsModule.pdfModule = (function(){
     }
     
     function download(){
-        pdfReport.download(translationWords.web_page_title + '.pdf');
+        pdfReport.download(translatedStrings.web_page_title + '.pdf');
     }
 
     function print(){
@@ -250,7 +261,7 @@ autocosts.resultsModule.pdfModule = (function(){
     //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
     function setFonts(docDefinition){
 
-        if (autocosts.serverInfo.selectedCountry=='CN'){
+        if (selectedCountry == 'CN'){
             pdfMake.fonts = {
                 Chinese: {
                     normal: 'Chinese.ttf',
@@ -261,7 +272,7 @@ autocosts.resultsModule.pdfModule = (function(){
             };
             docDefinition.defaultStyle.font = "Chinese";
         }
-        if (autocosts.serverInfo.selectedCountry=='JP'){
+        if (selectedCountry == 'JP'){
             pdfMake.fonts = {
                 Japanese: {
                     normal: 'Japanese.ttf',
@@ -272,7 +283,7 @@ autocosts.resultsModule.pdfModule = (function(){
             };
             docDefinition.defaultStyle.font = "Japanese";
         }
-        if (autocosts.serverInfo.selectedCountry=='IN'){
+        if (selectedCountry == 'IN'){
             pdfMake.fonts = {
                 Hindi: {
                     normal: 'Hindi.ttf',
@@ -293,18 +304,25 @@ autocosts.resultsModule.pdfModule = (function(){
 
         var body = [
             [
-                {text:translationWords.your_car_costs_you, colSpan: 4, alignment: 'center'},
+                {text:translatedStrings.your_car_costs_you, colSpan: 4, alignment: 'center'},
                 {},{},{}
             ],
             [
-                translationWords.word_per + translationWords.month + "\n" + translationWords.curr_symbol     + calculatedData.costs.perMonth.total.toFixed(),
-                translationWords.word_per + translationWords.trimester + "\n" + translationWords.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
-                translationWords.word_per + translationWords.semester + "\n" + translationWords.curr_symbol  + (calculatedData.costs.perMonth.total * 6).toFixed(),
-                translationWords.word_per + translationWords.year + "\n" + translationWords.curr_symbol      + (calculatedData.costs.perMonth.total * 12).toFixed()
+                translatedStrings.word_per + translatedStrings.month + "\n" + 
+                translatedStrings.curr_symbol     + calculatedData.costs.perMonth.total.toFixed(),
+                
+                translatedStrings.word_per + translatedStrings.trimester + "\n" + 
+                translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
+                
+                translatedStrings.word_per + translatedStrings.semester + "\n" + 
+                translatedStrings.curr_symbol  + (calculatedData.costs.perMonth.total * 6).toFixed(),
+                
+                translatedStrings.word_per + translatedStrings.year + "\n" + 
+                translatedStrings.curr_symbol      + (calculatedData.costs.perMonth.total * 12).toFixed()
             ],
             [
-                {text: translationWords.with_this_level_of_costs + " " + calculatedData.details.ageOfCarInMonths + " " +
-                       translationWords.months_poss + " " + translationWords.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
+                {text: translatedStrings.with_this_level_of_costs + " " + calculatedData.details.ageOfCarInMonths + " " +
+                       translatedStrings.months_poss + " " + translatedStrings.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
                 colSpan: 4, alignment: 'center'},
                 {},{},{}
             ]
@@ -313,7 +331,7 @@ autocosts.resultsModule.pdfModule = (function(){
         if (calculatedData.financialEffort.calculated){
             body.push(
                 [
-                    {text:translationWords.financial_effort + ": " + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + "%",
+                    {text:translatedStrings.financial_effort + ": " + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + "%",
                     colSpan: 4, alignment: 'center'},
                     {},{},{}
                 ]
@@ -325,25 +343,25 @@ autocosts.resultsModule.pdfModule = (function(){
 
     function getChartsLegend(){
 
-        var cc = autocosts.displayObj.costsColors;    
+        var cc = resultsModule.getCostsColors();
         var fontSize = 8.5;
 
         var body = [
             [
-                { text: translationWords.depreciation, fontSize: fontSize, fillColor: cc.depreciation},
-                { text: translationWords.insurance,    fontSize: fontSize, fillColor: cc.insurance},
-                { text: translationWords.fuel,         fontSize: fontSize, fillColor: cc.fuel},
-                { text: translationWords.maintenance,  fontSize: fontSize, fillColor: cc.maintenance},
-                { text: translationWords.rep_improv,   fontSize: fontSize, fillColor: cc.repairsImprovements},
-                { text: translationWords.parking,      fontSize: fontSize, fillColor: cc.parking}
+                { text: translatedStrings.depreciation, fontSize: fontSize, fillColor: cc.depreciation},
+                { text: translatedStrings.insurance,    fontSize: fontSize, fillColor: cc.insurance},
+                { text: translatedStrings.fuel,         fontSize: fontSize, fillColor: cc.fuel},
+                { text: translatedStrings.maintenance,  fontSize: fontSize, fillColor: cc.maintenance},
+                { text: translatedStrings.rep_improv,   fontSize: fontSize, fillColor: cc.repairsImprovements},
+                { text: translatedStrings.parking,      fontSize: fontSize, fillColor: cc.parking}
             ],
             [
-                {text: translationWords.credit,     fontSize: fontSize, fillColor: cc.credit},
-                {text: translationWords.inspection, fontSize: fontSize, fillColor: cc.inspection},
-                {text: translationWords.road_taxes, fontSize: fontSize, fillColor: cc.roadTaxes},
-                {text: translationWords.washing,    fontSize: fontSize, fillColor: cc.washing},
-                {text: translationWords.fines,      fontSize: fontSize, fillColor: cc.fines},
-                {text: translationWords.tolls,      fontSize: fontSize, fillColor: cc.tolls}
+                {text: translatedStrings.credit,     fontSize: fontSize, fillColor: cc.credit},
+                {text: translatedStrings.inspection, fontSize: fontSize, fillColor: cc.inspection},
+                {text: translatedStrings.road_taxes, fontSize: fontSize, fillColor: cc.roadTaxes},
+                {text: translatedStrings.washing,    fontSize: fontSize, fillColor: cc.washing},
+                {text: translatedStrings.fines,      fontSize: fontSize, fillColor: cc.fines},
+                {text: translatedStrings.tolls,      fontSize: fontSize, fillColor: cc.tolls}
             ]
         ];
 
@@ -353,45 +371,45 @@ autocosts.resultsModule.pdfModule = (function(){
 
     function getStandingCostsTable(){
 
-        var cc = autocosts.displayObj.costsColors;    
+        var cc = resultsModule.getCostsColors();  
         var costItems = calculatedData.costs.perMonth.items;
 
         var body = [
             [
-                {text: translationWords.fixed_costs + "\n" + translationWords.total_fixed_descr, colSpan: 2, style: "header"},
+                {text: translatedStrings.fixed_costs + "\n" + translatedStrings.total_fixed_descr, colSpan: 2, style: "header"},
                 {}
             ],
             [
-                {text: translationWords.costs, alignment: 'center'},
-                {text: translationWords.monthly_amount, alignment: 'center'},
+                {text: translatedStrings.costs, alignment: 'center'},
+                {text: translatedStrings.monthly_amount, alignment: 'center'},
             ],
             [
-                {text: translationWords.depreciation + "\n" + gstr("#avg-periodic-cost .depreciation_details")},
-                {text: translationWords.curr_symbol + costItems.depreciation.toFixed(1), bold: true}
+                {text: translatedStrings.depreciation + "\n" + gstr("#avg-periodic-cost .depreciation_details")},
+                {text: translatedStrings.curr_symbol + costItems.depreciation.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.insurance + "\n" + gstr("#avg-periodic-cost .insurance_details")},
-                {text: translationWords.curr_symbol + costItems.insurance.toFixed(1), bold: true}
+                {text: translatedStrings.insurance + "\n" + gstr("#avg-periodic-cost .insurance_details")},
+                {text: translatedStrings.curr_symbol + costItems.insurance.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.credit + "\n" + gstr("#avg-periodic-cost .credit_details")},
-                {text: translationWords.curr_symbol + costItems.credit.toFixed(1), bold: true}
+                {text: translatedStrings.credit + "\n" + gstr("#avg-periodic-cost .credit_details")},
+                {text: translatedStrings.curr_symbol + costItems.credit.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.inspection + "\n" + gstr("#avg-periodic-cost .inspection_details")},
-                {text: translationWords.curr_symbol + costItems.inspection.toFixed(1), bold: true}
+                {text: translatedStrings.inspection + "\n" + gstr("#avg-periodic-cost .inspection_details")},
+                {text: translatedStrings.curr_symbol + costItems.inspection.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.road_taxes + "\n" + gstr("#avg-periodic-cost .roadTaxes_details")},
-                {text: translationWords.curr_symbol + costItems.roadTaxes.toFixed(1), bold: true}
+                {text: translatedStrings.road_taxes + "\n" + gstr("#avg-periodic-cost .roadTaxes_details")},
+                {text: translatedStrings.curr_symbol + costItems.roadTaxes.toFixed(1), bold: true}
             ],
             [
-                {text: "1/2" + " " + translationWords.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
-                {text: translationWords.curr_symbol + (costItems.maintenance/2).toFixed(1)}
+                {text: "1/2" + " " + translatedStrings.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
+                {text: translatedStrings.curr_symbol + (costItems.maintenance/2).toFixed(1)}
             ],
             [
-                {text: translationWords.total_fixed, alignment: "right", bold: true, fontSize: 14},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0), bold: true, fontSize: 14}
+                {text: translatedStrings.total_fixed, alignment: "right", bold: true, fontSize: 14},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0), bold: true, fontSize: 14}
             ]
         ];
 
@@ -400,49 +418,49 @@ autocosts.resultsModule.pdfModule = (function(){
 
     function getRunningCostsTable(){
 
-        var cc = autocosts.displayObj.costsColors;
+        var cc = resultsModule.getCostsColors();
         var costItems = calculatedData.costs.perMonth.items;    
 
         var body = [
             [
-                {text: translationWords.running_costs + "\n" + translationWords.running_costs_header_2, colSpan: 2, style: "header"},
+                {text: translatedStrings.running_costs + "\n" + translatedStrings.running_costs_header_2, colSpan: 2, style: "header"},
                 {}
             ],
             [
-                {text: translationWords.costs, alignment: 'center'},
-                {text: translationWords.monthly_amount, alignment: 'center'},
+                {text: translatedStrings.costs, alignment: 'center'},
+                {text: translatedStrings.monthly_amount, alignment: 'center'},
             ],
             [
-                {text: translationWords.fuel + "\n" + gstr("#avg-periodic-cost .fuel_details")},
-                {text: translationWords.curr_symbol + costItems.fuel.toFixed(1), bold: true}
+                {text: translatedStrings.fuel + "\n" + gstr("#avg-periodic-cost .fuel_details")},
+                {text: translatedStrings.curr_symbol + costItems.fuel.toFixed(1), bold: true}
             ],
             [
-                {text: "1/2" + " " + translationWords.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
-                {text: translationWords.curr_symbol + (costItems.maintenance/2).toFixed(1), bold: true}
+                {text: "1/2" + " " + translatedStrings.maintenance + "\n" + gstr("#avg-periodic-cost .maintenance_details")},
+                {text: translatedStrings.curr_symbol + (costItems.maintenance/2).toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.rep_improv + "\n" + gstr("#avg-periodic-cost .repairsImprovements_details")},
-                {text: translationWords.curr_symbol + costItems.repairsImprovements.toFixed(1), bold: true}
+                {text: translatedStrings.rep_improv + "\n" + gstr("#avg-periodic-cost .repairsImprovements_details")},
+                {text: translatedStrings.curr_symbol + costItems.repairsImprovements.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.parking + "\n" + gstr("#avg-periodic-cost .parking_details")},
-                {text: translationWords.curr_symbol + costItems.parking.toFixed(1), bold: true}
+                {text: translatedStrings.parking + "\n" + gstr("#avg-periodic-cost .parking_details")},
+                {text: translatedStrings.curr_symbol + costItems.parking.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.tolls + "\n" + gstr("#avg-periodic-cost .tolls_details")},
-                {text: translationWords.curr_symbol + costItems.tolls.toFixed(1), bold: true}
+                {text: translatedStrings.tolls + "\n" + gstr("#avg-periodic-cost .tolls_details")},
+                {text: translatedStrings.curr_symbol + costItems.tolls.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.fines + "\n" + gstr("#avg-periodic-cost .fines_details")},
-                {text: translationWords.curr_symbol + costItems.fines.toFixed(1), bold: true}
+                {text: translatedStrings.fines + "\n" + gstr("#avg-periodic-cost .fines_details")},
+                {text: translatedStrings.curr_symbol + costItems.fines.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.washing + "\n" + gstr("#avg-periodic-cost .washing_details")},
-                {text: translationWords.curr_symbol + costItems.washing.toFixed(1), bold: true}
+                {text: translatedStrings.washing + "\n" + gstr("#avg-periodic-cost .washing_details")},
+                {text: translatedStrings.curr_symbol + costItems.washing.toFixed(1), bold: true}
             ],
             [
-                {text: translationWords.total_variable, alignment: "right", bold: true, fontSize: 14},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0), bold: true, fontSize: 14}
+                {text: translatedStrings.total_variable, alignment: "right", bold: true, fontSize: 14},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0), bold: true, fontSize: 14}
             ]
         ];
 
@@ -453,7 +471,7 @@ autocosts.resultsModule.pdfModule = (function(){
 
         var body = [
             [
-                {text: translationWords.word_total_cap, colSpan: 2, style: "header"},
+                {text: translatedStrings.word_total_cap, colSpan: 2, style: "header"},
                 {}
             ]
         ];
@@ -461,8 +479,8 @@ autocosts.resultsModule.pdfModule = (function(){
         if(calculatedData.costs.perUnitDistance.runningCosts){
             body.push(
                 [
-                    {text: translationWords.run_cp_dist},
-                    {text: translationWords.curr_symbol + calculatedData.costs.perUnitDistance.runningCosts.toFixed(2)}
+                    {text: translatedStrings.run_cp_dist},
+                    {text: translatedStrings.curr_symbol + calculatedData.costs.perUnitDistance.runningCosts.toFixed(2)}
                 ]
             );
         }
@@ -470,24 +488,24 @@ autocosts.resultsModule.pdfModule = (function(){
         if(calculatedData.costs.perUnitDistance.totalCosts){
             body.push(
                 [
-                    {text: translationWords.total_cp_dist},
-                    {text: translationWords.curr_symbol + calculatedData.costs.perUnitDistance.totalCosts.toFixed(2)}
+                    {text: translatedStrings.total_cp_dist},
+                    {text: translatedStrings.curr_symbol + calculatedData.costs.perUnitDistance.totalCosts.toFixed(2)}
                 ]
             );
         }
 
         body.push(
             [
-                {text: translationWords.total_fixed},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0)}
+                {text: translatedStrings.total_fixed},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.standingCosts).toFixed(0)}
             ],
             [
-                {text: translationWords.total_variable},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0)}
+                {text: translatedStrings.total_variable},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.runningCosts).toFixed(0)}
             ],
             [
-                {text: translationWords.word_total_cap, bold: true, fontSize: 14},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.total).toFixed(0), bold: true, fontSize: 14}
+                {text: translatedStrings.word_total_cap, bold: true, fontSize: 14},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total).toFixed(0), bold: true, fontSize: 14}
             ]
         );
 
@@ -500,28 +518,28 @@ autocosts.resultsModule.pdfModule = (function(){
 
         var body = [
             [
-                {text: translationWords.financial_effort, colSpan: 2, style: "header"},
+                {text: translatedStrings.financial_effort, colSpan: 2, style: "header"},
                 {}
             ],
             [
-                {text: translationWords.extra_data_income + "\n" + gstr("#financial-effort .income_details")},
-                {text: translationWords.curr_symbol + fe.income.perYear.toFixed(0)}
+                {text: translatedStrings.extra_data_income + "\n" + gstr("#financial-effort .income_details")},
+                {text: translatedStrings.curr_symbol + fe.income.perYear.toFixed(0)}
             ],
             [
-                {text: translationWords.extra_data_working_time + "\n" + gstr("#financial-effort .working_time_details")},
-                {text: fe.workingHoursPerYearToAffordCar.toFixed(0) + " " + translationWords.hour_abbr}
+                {text: translatedStrings.extra_data_working_time + "\n" + gstr("#financial-effort .working_time_details")},
+                {text: fe.workingHoursPerYearToAffordCar.toFixed(0) + " " + translatedStrings.hour_abbr}
             ],
             [
-                {text: translationWords.distance + "\n" + gstr("#financial-effort .distance_details")},
-                {text: calculatedData.drivingDistance.perYear.toFixed(0) + " " + translationWords.std_dist}
+                {text: translatedStrings.distance + "\n" + gstr("#financial-effort .distance_details")},
+                {text: calculatedData.drivingDistance.perYear.toFixed(0) + " " + translatedStrings.std_dist}
             ],
             [
-                {text: translationWords.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
-                {text: calculatedData.timeSpentInDriving.hoursPerYear.toFixed(0) + " " + translationWords.hour_abbr}
+                {text: translatedStrings.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
+                {text: calculatedData.timeSpentInDriving.hoursPerYear.toFixed(0) + " " + translatedStrings.hour_abbr}
             ],
             [
-                {text: translationWords.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
-                {text: translationWords.curr_symbol + fe.financialEffortPercentage.toFixed(0) + "%"}
+                {text: translatedStrings.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
+                {text: translatedStrings.curr_symbol + fe.financialEffortPercentage.toFixed(0) + "%"}
             ]
         ];
 
@@ -534,32 +552,32 @@ autocosts.resultsModule.pdfModule = (function(){
 
         var body = [
             [
-                {text: translationWords.extra_data_public_transp, colSpan: 2, style: "header"},
+                {text: translatedStrings.extra_data_public_transp, colSpan: 2, style: "header"},
                 {}
             ],
             [
-                {text: translationWords.pub_trans_text + "\n" + gstr("#equivalent-transport-costs .public_transports_details")},
-                {text: translationWords.curr_symbol + pt.totalCostsOfStandardPublicTransports.toFixed(0)}
+                {text: translatedStrings.pub_trans_text + "\n" + gstr("#equivalent-transport-costs .public_transports_details")},
+                {text: translatedStrings.curr_symbol + pt.totalCostsOfStandardPublicTransports.toFixed(0)}
             ],
             [
-                {text: translationWords.taxi_desl + "\n" + gstr("#equivalent-transport-costs .taxi_details")},
-                {text: translationWords.curr_symbol + pt.taxi.totalCosts.toFixed(0)}
+                {text: translatedStrings.taxi_desl + "\n" + gstr("#equivalent-transport-costs .taxi_details")},
+                {text: translatedStrings.curr_symbol + pt.taxi.totalCosts.toFixed(0)}
             ]
         ];
         
         if(pt.furtherPublicTransports.display){
             body.push(
                 [
-                    {text: translationWords.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_details")},
-                    {text: translationWords.curr_symbol + pt.furtherPublicTransports.totalCosts.toFixed(0)}
+                    {text: translatedStrings.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_details")},
+                    {text: translatedStrings.curr_symbol + pt.furtherPublicTransports.totalCosts.toFixed(0)}
                 ]            
             );
         }
 
         body.push(
             [
-                {text: translationWords.word_total_cap, alignment: "right", bold: true, fontSize: 14},
-                {text: translationWords.curr_symbol + (pt.totalAlternativeCostsWhenUserHasNoCar).toFixed(0), bold: true, fontSize: 14}
+                {text: translatedStrings.word_total_cap, alignment: "right", bold: true, fontSize: 14},
+                {text: translatedStrings.curr_symbol + (pt.totalAlternativeCostsWhenUserHasNoCar).toFixed(0), bold: true, fontSize: 14}
             ]
         );
 
@@ -575,15 +593,15 @@ autocosts.resultsModule.pdfModule = (function(){
             ],
             [
                 {text: "Uber" + "\n" + gstr("#equivalent-transport-costs .uber_details")},
-                {text: translationWords.curr_symbol + calculatedData.uber.uberCosts.total.toFixed(0)}
+                {text: translatedStrings.curr_symbol + calculatedData.uber.uberCosts.total.toFixed(0)}
             ],
             [
-                {text: translationWords.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_for_uber_details")},
-                {text: translationWords.curr_symbol + calculatedData.uber.publicTransportsCostsCombinedWithUber.toFixed(0)}
+                {text: translatedStrings.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_for_uber_details")},
+                {text: translatedStrings.curr_symbol + calculatedData.uber.publicTransportsCostsCombinedWithUber.toFixed(0)}
             ],
             [
-                {text: translationWords.word_total_cap, alignment: "right", bold: true, fontSize: 14},
-                {text: translationWords.curr_symbol + (calculatedData.costs.perMonth.total).toFixed(0), bold: true, fontSize: 14}
+                {text: translatedStrings.word_total_cap, alignment: "right", bold: true, fontSize: 14},
+                {text: translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total).toFixed(0), bold: true, fontSize: 14}
             ]
         ];
 
@@ -603,9 +621,12 @@ autocosts.resultsModule.pdfModule = (function(){
     }
     
     return {
-        generatePDF: generatePDF,
-        download:    download,
-        print:       print        
+        initialize,
+        generatePDF,
+        download,
+        print        
     };
 
-})();
+})(autocosts.serverInfo.translatedStrings,
+   autocosts.serverInfo.switches,
+   autocosts.serverInfo.selectedCountry);

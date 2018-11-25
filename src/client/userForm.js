@@ -8,8 +8,9 @@
 
 //USER FORM INTERFACE MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
-
-autocosts.userFormModule = (function(){
+autocosts.userFormModule = (function(thisModule){
+    
+    var initializeModule = autocosts.initializeModule;    
     
     function initialize(){    
         setFormSettings();
@@ -21,7 +22,7 @@ autocosts.userFormModule = (function(){
     function setFormSettings(){
 
         //shows numeric keypad on iOS mobile devices
-        if(autocosts.initializeModule.getMobileOperatingSystem() === "iOS"){
+        if(initializeModule.getMobileOperatingSystem() === "iOS"){
             $('.form_part input[type="number"]').attr("pattern", "\\d*");
         }
 
@@ -771,6 +772,8 @@ autocosts.userFormModule = (function(){
     //The form is ready to be calculated when Standing Costs (form part 1) and Running Costs (form part 2) are filled
     //The Extra data (form part 3) is optional
     function isReadyToCalc(){
+        
+        var validateFormModule = autocosts.userFormModule.validateFormModule;
 
         var status, fieldN, isOk = true;
 
@@ -789,15 +792,14 @@ autocosts.userFormModule = (function(){
                 }
             }        
         });
-
+         
         if(!isOk){
             return false;
         }
 
         //double-check with validating functions from file validateForm.js 
         //Standing (part1) and Running (part2) Costs
-        if (!autocosts.userFormModule.validateFormModule.isUserDataFormPart1_Ok() || 
-            !autocosts.userFormModule.validateFormModule.isUserDataFormPart2_Ok()){
+        if (!validateFormModule.isUserDataFormPart1_Ok() || !validateFormModule.isUserDataFormPart2_Ok()){
             return false;
         }    
 
@@ -1006,7 +1008,6 @@ autocosts.userFormModule = (function(){
         $(".currencyInput").val("");
     }
 
-
     //sets in a radio button with a specific option
     function setRadioButton(name, option){
        $('input[name="' + name + '"][value="'+option+'"]').prop('checked', true);
@@ -1021,12 +1022,15 @@ autocosts.userFormModule = (function(){
     //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
     function isNumber(n) {
         return !isNaN(n) && isFinite(parseFloat(n));
-    }    
+    }
+        
+    /* === Public methods to be returned ===*/
+        
+    //own module, since it may have been defined erlier by children modules
+    thisModule.initialize = initialize;
+    thisModule.isReadyToCalc = isReadyToCalc;
     
-    return{
-        initialize: initialize,
-        isReadyToCalc: isReadyToCalc
-    };
+    return thisModule;
    
-})();
+})(autocosts.userFormModule || {});
 

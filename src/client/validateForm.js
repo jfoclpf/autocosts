@@ -9,9 +9,18 @@
 //VALIDATE DATA MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-autocosts.userFormModule.validateFormModule = (function(){
-
-    var form = document.costs_form; //global variable referring to the form
+autocosts.userFormModule = autocosts.userFormModule || {};
+autocosts.userFormModule.validateFormModule = (function(form){
+    
+    var calculatorModule;
+    
+    function initialize(){
+        loadModuleDependencies();
+    }
+    
+    function loadModuleDependencies(){
+        calculatorModule = autocosts.calculatorModule;
+    }
     
     function isUserDataFormOk(){
 
@@ -206,7 +215,7 @@ autocosts.userFormModule.validateFormModule = (function(){
         var today  = new Date();
         var carAcquisitionDate = new Date(acquisitionYear, acquisitionMonth - 1);
 
-        var carNumberOfMonths = autocosts.calculatorModule.differenceBetweenDates(carAcquisitionDate, today);
+        var carNumberOfMonths = calculatorModule.differenceBetweenDates(carAcquisitionDate, today);
 
         if(!carNumberOfMonths){
             return false;
@@ -623,11 +632,12 @@ autocosts.userFormModule.validateFormModule = (function(){
     } 
     
     return{
-        isPublicTransportsAlternativeOk: isPublicTransportsAlternativeOk,
-        isFinancialEffortOk:             isFinancialEffortOk,
-        isUserDataFormPart1_Ok:          isUserDataFormPart1_Ok,
-        isUserDataFormPart2_Ok:          isUserDataFormPart2_Ok,
-        isUserDataFormPart3_Ok:          isUserDataFormPart3_Ok    
+        initialize,
+        isPublicTransportsAlternativeOk,
+        isFinancialEffortOk,
+        isUserDataFormPart1_Ok,
+        isUserDataFormPart2_Ok,
+        isUserDataFormPart3_Ok    
     };
 
-})();
+})(document.costs_form);

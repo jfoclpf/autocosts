@@ -41,7 +41,7 @@ var autocosts = (function(){
             countryListObj: undefined,              //List of countries in a Javascript Object      
             domainListObj: undefined,               //List of domains in a Javascript Object            
             language: undefined,                    //Current Language Code according to ISO_639-1 codes   
-            translationWords: undefined,            //Object with country's language text strings            
+            translatedStrings: undefined,           //Object with country's language text strings           
             nonce: undefined,                       //Number used only once for CSP rules in scrips
             httpProtocol: undefined,                //it's defined in node server side index.js*/
             googleAnalyticsTrackingId: undefined,   //Google analytics Tracking ID
@@ -55,8 +55,7 @@ var autocosts = (function(){
             googleAnalytics: false,                 //variable that says whether Google Analytics JS files are available
             uber: false
         },
-        displayObj: undefined,                      //Object regarding the display of information
-        user: {
+        userInfo: {
             uniqueUserId: undefined,                //Unique User Identifier
             isHumanConfirmed: false,                //for Google reCaptcha  
             timeCounter: undefined                  //function used for assessing the time user takes to fill the form
@@ -92,13 +91,13 @@ var autocosts = (function(){
         mainVariables.serverInfo.countryListObj = JSON.parse(decodeURI(globalVariables.dataset.country_list));
         mainVariables.serverInfo.domainListObj = JSON.parse(decodeURI(globalVariables.dataset.domain_list));
         mainVariables.serverInfo.language = globalVariables.dataset.language;
-        mainVariables.serverInfo.translationWords = JSON.parse(decodeURI(globalVariables.dataset.words));
+        mainVariables.serverInfo.translatedStrings = JSON.parse(decodeURI(globalVariables.dataset.words));
         mainVariables.serverInfo.nonce = globalVariables.dataset.nonce;    
         mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol;        
         mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id;        
         
         //booleans
-        mainVariables.serverInfo.booleans.isATest = globalVariables.dataset.is_this_a_test;  //server refers that this session is a test
+        mainVariables.serverInfo.booleans.isATest = JSON.parse(globalVariables.dataset.is_this_a_test);  //server refers that this session is a test
         mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost);
 
         //paths
@@ -130,25 +129,6 @@ var autocosts = (function(){
         mainVariables.paths.dirs.translationsDir = cdnUrl + "countries" + "/";       // Directory of JSON Translation files 
         mainVariables.statistics.statisticsHtmlTablesDir = cdnUrl + "tables" + "/";  // Directory of statistical html tables
         mainVariables.statistics.statisticsJpgTablesDir = cdnUrl + "tables" + "/";   // Directory of statistical jpg tables 
-
-        /*Global Object regarding the display of information*/
-        //THIS SHOULD GO TO MODULE SHOW RESULTS
-        mainVariables.displayObj = {
-            costsColors: {
-                depreciation:        '#2ba3d6',
-                insurance:           '#10c6e6',
-                credit:              '#5ae0e2',
-                inspection:          '#99e6bc',
-                roadTaxes:           '#ffda70',
-                fuel:                '#ff9e84',
-                maintenance:         '#ff7192',
-                repairsImprovements: '#e562aa',
-                parking:             '#ea90cd',
-                tolls:               '#eabcef',
-                fines:               '#9f97ef',
-                washing:             '#867ae3'
-            }
-        };
 
     })();
 
@@ -209,76 +189,75 @@ var autocosts = (function(){
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 //module for getting JS, CSS or other files
-autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, language, translationWords, uberApiUrl){
-
-    $(document).ready(function () {
-        $.getScript(jsFiles.jQueryColor);
-        $.getScript(jsFiles.jQuerySidebar, function(){
-            $.getScript(jsFiles.initialize, function(){
-                $.getScript(jsFiles.userForm, function(){
-                    $.getScript(jsFiles.validateForm);
-                    autocosts.initializeModule.initialize();
-                    autocosts.userFormModule.initialize();
-                });
-            });
-        });
-    }); 
+autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, language, translatedStrings, uberApiUrl){    
     
     function getUber(){
-        if (switches.uber){
-            if(country != "XX"){//if not test version
-                //gets asynchronously UBER information
-                $.get(uberApiUrl, function(data) {
-                    //alert(JSON.stringify(data, null, 4));
-                    if(data && !$.isEmptyObject(data)){
-                        autocosts.main.uberApiObj =  data; //uberApi is a global variable
-                        console.log("uber data got from uber API: ", data);
-                        autocosts.servicesAvailabilityObj.uber = true;
-                    }
-                    else{
-                        console.error("Error getting uber info");
-                        autocosts.servicesAvailabilityObj.uber = false;
-                    }                    
-                });
-            }
-            else{//test version (London city, in Pounds)
-                var uberApi = {};
-                uberApi.cost_per_distance = 1.25;
-                uberApi.cost_per_minute = 0.15;
-                uberApi.currency_code = "GBP";
-                uberApi.distance_unit = "mile";
-                autocosts.main.uberApiObj = uberApi;
-                autocosts.servicesAvailabilityObj.uber = true;
-            }
+        
+        var deferredEvent = $.Deferred();
+        
+        if(country != "XX"){//if not test version
+            //gets asynchronously UBER information
+            $.get(uberApiUrl, function(data) {
+                //alert(JSON.stringify(data, null, 4));
+                if(data && !$.isEmptyObject(data)){
+                    autocosts.main.uberApiObj =  data; //uberApi is a global variable
+                    console.log("uber data got from uber API: ", data);
+                    autocosts.servicesAvailabilityObj.uber = true;
+                    deferredEvent.resolve();
+                }
+                else{
+                    console.error("Error getting uber info");
+                    autocosts.servicesAvailabilityObj.uber = false;
+                    deferredEvent.resolve("error");
+                }                    
+            });
         }
+        else{//test version (London city, in Pounds)
+            var uberApi = {};
+            uberApi.cost_per_distance = 1.25;
+            uberApi.cost_per_minute = 0.15;
+            uberApi.currency_code = "GBP";
+            uberApi.distance_unit = "mile";
+
+            autocosts.main.uberApiObj = uberApi;
+            autocosts.servicesAvailabilityObj.uber = true;
+
+            deferredEvent.resolve();
+        }
+         
+        return deferredEvent.promise();
     }
 
     function getPdfJsFiles(){
-        if(switches.pdf || switches.print){
-            //wait until all PDF related files are loaded
-            //to activate the downloadPDF button
-            $.getScript(jsFiles.PDF.pdfModule, function() {
-                $.getScript(jsFiles.PDF.pdfmake, function() {
-                    //path where the fonts for PDF are stored
-                    var pdf_fonts_path;
-                    if (country == 'CN'){
-                        pdf_fonts_path = jsFiles.PDF.vfs_fonts_CN;
-                    }
-                    else if (country == 'JP'){
-                        pdf_fonts_path = jsFiles.PDF.vfs_fonts_JP;
-                    }
-                    else if (country == 'IN'){
-                        pdf_fonts_path = jsFiles.PDF.vfs_fonts_IN;
-                    }
-                    else{
-                        pdf_fonts_path = jsFiles.PDF.vfs_fonts;
-                    }
-                    $.getScript(pdf_fonts_path, function() {
-                        $('#results .button-pdf, #results .button-print').removeClass('disabled');
-                    });
+        
+        var deferredEvent = $.Deferred();
+        
+        //wait until all PDF related files are loaded
+        //to activate the downloadPDF button
+        $.getScript(jsFiles.PDF.pdfModule, function() {
+            $.getScript(jsFiles.PDF.pdfmake, function() {
+                //path where the fonts for PDF are stored
+                var pdf_fonts_path;
+                if (country == 'CN'){
+                    pdf_fonts_path = jsFiles.PDF.vfs_fonts_CN;
+                }
+                else if (country == 'JP'){
+                    pdf_fonts_path = jsFiles.PDF.vfs_fonts_JP;
+                }
+                else if (country == 'IN'){
+                    pdf_fonts_path = jsFiles.PDF.vfs_fonts_IN;
+                }
+                else{
+                    pdf_fonts_path = jsFiles.PDF.vfs_fonts;
+                }
+                $.getScript(pdf_fonts_path).done( function() {                                    
+                    console.log("All pdf related files loaded");
+                    deferredEvent.resolve();
                 });
             });
-        }
+        });
+        
+        return deferredEvent.promise();
     }
 
     //Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
@@ -289,7 +268,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
             daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
             daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
             appStoreLanguage: language, // language code for the App Store (defaults to user's browser language)
-            title: translationWords.ac_mobile,
+            title: translatedStrings.ac_mobile,
             author: 'Autocosts Org',
             button: 'APP',
             store: {
@@ -303,58 +282,39 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
             theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
             //force: 'android' // Uncomment for platform emulation
         });
-    }
-    
-    
-    /* ====== Public Methods ====== */
+    }            
     
     /*function that loads extra files and features, that are not loaded immediately after the page is opened
     because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-    function getExtraJSFiles(){
-
-        $.getScript(jsFiles.calculator, function(){
-            $.getScript(jsFiles.conversions);
-
-            $.getScript(jsFiles.smartAppBanner, loadSmartBanner);
-
-            $.getScript(jsFiles.transferData, function(){
-
-                if (switches.charts){
-                    $.getScript(jsFiles.chartjs);
-
-                    $.getScript(jsFiles.results, function() {
-                        autocosts.resultsModule.initialize();
-                        $.getScript(jsFiles.charts);
-                        getPdfJsFiles();
-                    });
-                }
-                else{
-                    $.getScript(jsFiles.results, function(){
-                        autocosts.resultsModule.initialize();
-                        getPdfJsFiles();
-                    });
-                }
-
-                if (switches.data_base){
-                    $.getScript(jsFiles.dbFunctions);
-                }
-
-                //file jsFiles.g_recaptcha is from this project, stored in src/client, and must always be loaded
-                $.getScript(jsFiles.g_recaptcha, function(){
-                    //Google Captcha API doesn't work nor applies on localhost
-                    if (switches.googleCaptcha && notLocalhost){
-                        $.getScript(jsFiles.Google.recaptchaAPI);
-                        //when loaded successfuly set servicesAvailabilityObj.googleCaptcha=true in function grecaptcha_callback in g-recaptcha.js
-                    }
-                    else{
-                        autocosts.servicesAvailabilityObj.googleCaptcha = false;
-                    }
-                });
-
-                getUber();
-            });
+    function loadDeferredJSFiles(callback){                
+                       
+        var promisesArray = [$.getScript(jsFiles.calculator), 
+                             $.getScript(jsFiles.conversions), 
+                             $.getScript(jsFiles.smartAppBanner, loadSmartBanner), 
+                             $.getScript(jsFiles.transferData), 
+                             $.getScript(jsFiles.results),
+                             $.getScript(jsFiles.g_recaptcha)];
+        
+        if (switches.charts){
+            promisesArray.push($.getScript(jsFiles.chartjs));
+            promisesArray.push($.getScript(jsFiles.charts));
+        }
+        if (switches.data_base){
+            promisesArray.push($.getScript(jsFiles.dbFunctions));
+        }        
+        if(switches.pdf || switches.print){
+            promisesArray.push(getPdfJsFiles());
+        }        
+        if(switches.uber){
+            promisesArray.push(getUber());
+        }         
+        if (switches.googleCaptcha && notLocalhost){
+            promisesArray.push($.getScript(jsFiles.Google.recaptchaAPI));            
+        }
+        
+        $.when.apply($, promisesArray).done(function(){              
+            callback();
         });
-
     }
 
     /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
@@ -377,9 +337,40 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
         }
     }    
 
+    /*=== Public methods ===*/
+    
+    function loadInitialFiles(callback){                
+        
+        $.when(
+            $.getScript(jsFiles.jQueryColor),
+            $.getScript(jsFiles.jQuerySidebar),
+            $.getScript(jsFiles.initialize),
+            $.getScript(jsFiles.userForm),
+            $.getScript(jsFiles.validateForm)
+        ).done(function(){
+            callback();
+        });
+    }    
+    
+    function loadDeferredFiles(){                
+        //loadCSSFiles(['css/merged_deferred.css']);
+        loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+        
+        loadDeferredJSFiles(function(){
+            console.log("All deferred JS files loaded");
+            
+            autocosts.resultsModule.initialize();
+            autocosts.userFormModule.validateFormModule.initialize();
+            
+            if(switches.pdf || switches.print){
+                autocosts.resultsModule.pdfModule.initialize();
+            }                        
+        });
+    }
+    
     return{
-        getExtraJSFiles: getExtraJSFiles,
-        loadCSSFiles: loadCSSFiles
+        loadInitialFiles,
+        loadDeferredFiles
     };
 
 })(autocosts.paths.jsFiles,
@@ -387,6 +378,17 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
    autocosts.serverInfo.selectedCountry,
    autocosts.serverInfo.booleans.notLocalhost,
    autocosts.serverInfo.language,
-   autocosts.serverInfo.translationWords,
+   autocosts.serverInfo.translatedStrings,
    autocosts.paths.url.uberApi);
 
+
+//the whole program indeed starts here
+$(document).ready(function () {
+    autocosts.getFilesModule.loadInitialFiles(function(){
+        console.log("All initial JS files loaded");
+        
+        autocosts.initializeModule.initialize();
+        autocosts.userFormModule.initialize();         
+    });
+});
+    

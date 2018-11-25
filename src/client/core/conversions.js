@@ -5,6 +5,7 @@
 //UNITS CONVERSION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
+autocosts.calculatorModule = autocosts.calculatorModule || {};
 autocosts.calculatorModule.conversionsModule = (function(){
 
     var conversionConstants = {
@@ -207,12 +208,12 @@ autocosts.calculatorModule.conversionsModule = (function(){
     }
     
     return{
-        convertFromEURtoCurrency: convertFromEURtoCurrency,
-        convertFuelEfficiencyToL100km: convertFuelEfficiencyToL100km,
-        convertFuelPriceToLitre: convertFuelPriceToLitre,
-        convertDistanceToKm: convertDistanceToKm,
-        convertDistanceFromKm: convertDistanceFromKm,
-        convertFuelPriceToEURperLitre: convertFuelPriceToEURperLitre
+        convertFromEURtoCurrency,
+        convertFuelEfficiencyToL100km,
+        convertFuelPriceToLitre,
+        convertDistanceToKm,
+        convertDistanceFromKm,
+        convertFuelPriceToEURperLitre
     };
     
 })();

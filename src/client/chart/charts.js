@@ -10,11 +10,13 @@
 //DRAW CHARTS MODULE, IT IS A SUBMODULE OF SHOW RESULTS MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-autocosts.resultsModule.chartsModule = (function(){
+autocosts.resultsModule = autocosts.resultsModule || {};
+autocosts.resultsModule.chartsModule = (function(translatedStrings, switches){
+    
+    var resultsModule;
     
     var calculatedData;    
     var chartsDrawnPromisesObj = {};
-    var translationWords = autocosts.serverInfo.translationWords;
     
     var chartsInfo = {
         doughnutFinancialEffort : {
@@ -46,13 +48,18 @@ autocosts.resultsModule.chartsModule = (function(){
     
     function getChartsInfo(){
         return chartsInfo;
-    }
+    }   
     
     function initialize(calculatedDataIn) {
         calculatedData = calculatedDataIn;
+        loadModuleDependencies();
         return chartsDrawnPromisesObj;
     }
-        
+     
+    function loadModuleDependencies(){
+        resultsModule = autocosts.resultsModule;
+    }
+    
     function drawDoughnutFinancialEffort() { 
 
         chartsDrawnPromisesObj.doughnutFinancialEffort = $.Deferred();
@@ -66,7 +73,7 @@ autocosts.resultsModule.chartsModule = (function(){
         }];
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        var labels = [translationWords.financial_effort, ""];
+        var labels = [translatedStrings.financial_effort, ""];
 
         var options = {
             maintainAspectRatio: false,
@@ -141,25 +148,25 @@ autocosts.resultsModule.chartsModule = (function(){
         }
 
         var labels = [
-            translationWords.depreciation_st,
-            translationWords.insurance_short,
-            translationWords.credit,
-            translationWords.inspection_short,
-            translationWords.road_taxes_short,
-            translationWords.fuel,
-            translationWords.maintenance,        
-            translationWords.rep_improv,
-            translationWords.parking,
-            translationWords.tolls,
-            translationWords.fines,
-            translationWords.washing
+            translatedStrings.depreciation_st,
+            translatedStrings.insurance_short,
+            translatedStrings.credit,
+            translatedStrings.inspection_short,
+            translatedStrings.road_taxes_short,
+            translatedStrings.fuel,
+            translatedStrings.maintenance,        
+            translatedStrings.rep_improv,
+            translatedStrings.parking,
+            translatedStrings.tolls,
+            translatedStrings.fines,
+            translatedStrings.washing
         ];  
 
         for (var i=0; i<labels.length; i++){
             labels[i] = formatLabel(labels[i], 16);
         }       
 
-        var cc = autocosts.displayObj.costsColors;
+        var cc = resultsModule.getCostsColors();
 
         var dataset = [{
             data: [
@@ -211,7 +218,7 @@ autocosts.resultsModule.chartsModule = (function(){
                         beginAtZero: true,
                         // Include a currency sign in the ticks
                         callback: function(value, index, values) {
-                            return translationWords.curr_symbol + value;
+                            return translatedStrings.curr_symbol + value;
                         },                    
                     }                
                 }]
@@ -220,7 +227,7 @@ autocosts.resultsModule.chartsModule = (function(){
                 enabled: true,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        return translationWords.curr_symbol + tooltipItem.yLabel.toFixed(1);
+                        return translatedStrings.curr_symbol + tooltipItem.yLabel.toFixed(1);
                     }
                 }
             }, 
@@ -288,21 +295,21 @@ autocosts.resultsModule.chartsModule = (function(){
         }
 
         var labels = [
-            translationWords.depreciation_st,
-            translationWords.insurance_short,
-            translationWords.credit,
-            translationWords.inspection_short,
-            translationWords.road_taxes_short,
-            translationWords.fuel,
-            translationWords.maintenance,        
-            translationWords.rep_improv,
-            translationWords.parking,
-            translationWords.tolls,
-            translationWords.fines,
-            translationWords.washing
+            translatedStrings.depreciation_st,
+            translatedStrings.insurance_short,
+            translatedStrings.credit,
+            translatedStrings.inspection_short,
+            translatedStrings.road_taxes_short,
+            translatedStrings.fuel,
+            translatedStrings.maintenance,        
+            translatedStrings.rep_improv,
+            translatedStrings.parking,
+            translatedStrings.tolls,
+            translatedStrings.fines,
+            translatedStrings.washing
         ];
 
-        var cc = autocosts.displayObj.costsColors;
+        var cc = resultsModule.getCostsColors();
 
         var dataset = [{
             data: [
@@ -350,7 +357,7 @@ autocosts.resultsModule.chartsModule = (function(){
                     },
                     label: function(tooltipItem, data) {                    
                         var i = tooltipItem.index;
-                        return translationWords.curr_symbol + periodicCosts[i].toFixed(1) + "   " + data.datasets[0].data[i].toFixed(1) + "%";
+                        return translatedStrings.curr_symbol + periodicCosts[i].toFixed(1) + "   " + data.datasets[0].data[i].toFixed(1) + "%";
                     }
                 } 
             },       
@@ -388,13 +395,13 @@ autocosts.resultsModule.chartsModule = (function(){
         }
 
         var labels = [ 
-            formatLabel(translationWords.net_income_per + " " + translationWords.year, 20), 
-            formatLabel(translationWords.total_costs_per_year, 20) 
+            formatLabel(translatedStrings.net_income_per + " " + translatedStrings.year, 20), 
+            formatLabel(translatedStrings.total_costs_per_year, 20) 
         ];
 
         var dataset = [
             {
-                label: translationWords.costs,
+                label: translatedStrings.costs,
                 data: [
                     fe.income.perYear,
                     fe.totalCarCostsPerYear
@@ -423,7 +430,7 @@ autocosts.resultsModule.chartsModule = (function(){
                         fontSize: 9,
                         // Include a currency sign in the ticks
                         callback: function(value, index, values) {
-                            return translationWords.curr_symbol + value;
+                            return translatedStrings.curr_symbol + value;
                         }
                     }
                 }]
@@ -432,7 +439,7 @@ autocosts.resultsModule.chartsModule = (function(){
                 enabled: true,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        return translationWords.curr_symbol + tooltipItem.yLabel.toFixed(0);
+                        return translatedStrings.curr_symbol + tooltipItem.yLabel.toFixed(0);
                     }
                 }
             },        
@@ -474,10 +481,10 @@ autocosts.resultsModule.chartsModule = (function(){
 
         //boolean variables
         var publicTransportstBool = isObjDef(publicTransportsObj) && publicTransportsObj.toBeDisplayed && publicTransportsObj.calculated;    
-        var uberBool = autocosts.serverInfo.switches.uber && isObjDef(uberObj) && uberObj.calculated; //uber
+        var uberBool = switches.uber && isObjDef(uberObj) && uberObj.calculated; //uber
 
         var labels = [
-            formatLabel(translationWords.your_car_costs_you + " " + translationWords.word_per.replace(/&#32;/g,"") + " " + translationWords.month, 25)
+            formatLabel(translatedStrings.your_car_costs_you + " " + translatedStrings.word_per.replace(/&#32;/g,"") + " " + translatedStrings.month, 25)
         ];
 
         var dataset = [                      
@@ -485,7 +492,8 @@ autocosts.resultsModule.chartsModule = (function(){
             //1st column
             //standing costs
             {
-                label: formatLabel(translationWords.your_car_costs_you + " " + translationWords.word_per.replace(/&#32;/g,"") + " " + translationWords.month, 25),
+                label: formatLabel(translatedStrings.your_car_costs_you + " " + 
+                                   translatedStrings.word_per.replace(/&#32;/g,"") + " " + translatedStrings.month, 25),
                 data: [totCostsPerMonth],
                 backgroundColor: '#5ae0e2'
             }   
@@ -514,15 +522,15 @@ autocosts.resultsModule.chartsModule = (function(){
                 //Public Transports
                 //2nd column
                 {
-                    label: translationWords.other_pub_trans,
+                    label: translatedStrings.other_pub_trans,
                     data: [0, publicTransportsObj.furtherPublicTransports.totalCosts],
                     backgroundColor: '#ff9e84'
                 }, {
-                    label: translationWords.taxi_desl,
+                    label: translatedStrings.taxi_desl,
                     data: [0, publicTransportsObj.taxi.totalCosts],
                     backgroundColor: '#ffda70'
                 }, {
-                    label: translationWords.pub_trans_text,
+                    label: translatedStrings.pub_trans_text,
                     data: [0, publicTransportsObj.totalCostsOfStandardPublicTransports],
                     backgroundColor: '#99e6bc'
                 }                  
@@ -560,13 +568,13 @@ autocosts.resultsModule.chartsModule = (function(){
             if(uberObj.resultType == 1){            
                 uberDataset = [
                     {
-                        label: translationWords.other_pub_trans,
+                        label: translatedStrings.other_pub_trans,
                         data: [0, uberObj.publicTransportsCostsCombinedWithUber],
                         backgroundColor: '#e562aa'
 
                     }, {
-                        label: "Uber - " + calculatedData.drivingDistance.perMonth.toFixed(0) + " " + translationWords.fuel_dist + " " + 
-                               translationWords.word_per.replace(/&#32;/g,"") + ' ' + translationWords.month,
+                        label: "Uber - " + calculatedData.drivingDistance.perMonth.toFixed(0) + " " + translatedStrings.fuel_dist + " " + 
+                               translatedStrings.word_per.replace(/&#32;/g,"") + ' ' + translatedStrings.month,
                         data: [0, uberObj.uberCosts.total],
                         backgroundColor: '#ff7192'
                     }               
@@ -577,12 +585,12 @@ autocosts.resultsModule.chartsModule = (function(){
             else if(uberObj.resultType == 2){            
                 uberDataset = [
                     {
-                        label: translationWords.other_pub_trans,
+                        label: translatedStrings.other_pub_trans,
                         data: [0, uberObj.publicTransportsCostsCombinedWithUber],
                         backgroundColor: '#e562aa' 
                     }, {
-                        label: "Uber - " + uberObj.distanceDoneWithUber.toFixed(0) + " " + translationWords.std_dist_full + " " + 
-                               translationWords.word_per.replace(/&#32;/g,"") + " " + translationWords.month,
+                        label: "Uber - " + uberObj.distanceDoneWithUber.toFixed(0) + " " + translatedStrings.std_dist_full + " " + 
+                               translatedStrings.word_per.replace(/&#32;/g,"") + " " + translatedStrings.month,
                         data: [0, uberObj.uberCosts.total],
                         backgroundColor: '#ff7192'                   
                     } 
@@ -622,7 +630,7 @@ autocosts.resultsModule.chartsModule = (function(){
                         beginAtZero: true,
                         // Include a currency sign in the ticks
                         callback: function(value, index, values) {
-                            return translationWords.curr_symbol + value;
+                            return translatedStrings.curr_symbol + value;
                         }                    
                     }
                 }]
@@ -643,7 +651,7 @@ autocosts.resultsModule.chartsModule = (function(){
                         }
                     },
                     label: function(tooltipItem, data) {
-                        return translationWords.curr_symbol + tooltipItem.yLabel.toFixed(1);
+                        return translatedStrings.curr_symbol + tooltipItem.yLabel.toFixed(1);
                     }
                 }
             }, 
@@ -735,6 +743,7 @@ autocosts.resultsModule.chartsModule = (function(){
         drawAlternativesToCar: drawAlternativesToCar
     };
     
-})();
+})(autocosts.serverInfo.translatedStrings,
+   autocosts.serverInfo.switches);
 
 

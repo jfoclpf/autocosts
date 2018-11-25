@@ -5,8 +5,10 @@
 //CALCULATOR MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-autocosts.calculatorModule = (function(){
+autocosts.calculatorModule = (function(thisModule){
 
+    var conversionsModule;
+    
     var inputData;          //input data object, for example obtained from user form
     var country;            //object containing information about the selected country
     var calculatedData;     //output object
@@ -21,6 +23,15 @@ autocosts.calculatorModule = (function(){
 
     var errMsgDataCountry = "Input data or input country not defined. Class not initialized with function calculateCosts";
     
+    function initialize() {
+        loadModuleDependencies();        
+    }    
+    
+    function loadModuleDependencies(){
+        conversionsModule = autocosts.calculatorModule.conversionsModule;
+    }    
+    
+    //private method
     function initializeCalculatedData(){
 
         if(!inputData || !country){
@@ -173,10 +184,7 @@ autocosts.calculatorModule = (function(){
         var monthlyCost;       //monthly fuel costs in standard currency
         var distancePerMonth;  //distance per month in standard unit
 
-        var errMsg = "Error calculating fuel";
-        
-        //submodule
-        var conversionsModule = autocosts.calculatorModule.conversionsModule;
+        var errMsg = "Error calculating fuel";        
 
         switch(fuel.typeOfCalculation){
 
@@ -840,8 +848,7 @@ autocosts.calculatorModule = (function(){
         var ec = externalCosts;
         
         //converts distance unit to kilometres
-        var distancePerMonthInKms = autocosts.calculatorModule.conversionsModule.
-            convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
+        var distancePerMonthInKms = conversionsModule.convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
 
         ec.totalPerMonth = (ec.polution + ec.greenhouseGases + ec.noise + ec.fatalities + ec.congestion + ec.infrastr) * distancePerMonthInKms;
 
@@ -1036,10 +1043,13 @@ autocosts.calculatorModule = (function(){
         }
     }
     
-    return{
-        differenceBetweenDates: differenceBetweenDates,
-        calculateCosts: calculateCosts,
-        calculateUberCosts: calculateUberCosts
-    };
+    /* === Public methods to be returned ===*/
+        
+    //thisModule, since this is a parent module and it may have been defined erlier by a children module
+    thisModule.differenceBetweenDates = differenceBetweenDates;
+    thisModule.calculateCosts = calculateCosts;
+    thisModule.calculateUberCosts = calculateUberCosts;
+    
+    return thisModule;    
 
-})();
+})(autocosts.calculatorModule || {});
