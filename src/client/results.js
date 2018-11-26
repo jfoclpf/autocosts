@@ -100,7 +100,9 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
     }        
     
     //function that is run when user clicks "run/calculate"
-    function calculateCostsAndShowResults(){                
+    function calculateCostsAndShowResults(){        
+        
+        var form, countryObj, flattenedData, chartsDrawnPromisesObj, promisesArray;
 
         //test if the form user inputs are correct
         if (!userFormModule.isReadyToCalc()){ 
@@ -110,11 +112,11 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
         $("#form").hide(); 
 
         //for each form part gets object with content
-        var form = transferDataModule.fromUserFormToCalculator(document.costs_form);
+        form = transferDataModule.fromUserFormToCalculator(document.costs_form);
         autocosts.main.formData = form;
 
         //country object with country specific variables
-        var countryObj = {
+        countryObj = {
             countryCode:            serverInfo.selectedCountry,
             currency:               translatedStrings.curr_code,
             distance_std:           translatedStrings.distance_std_option,
@@ -137,13 +139,13 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
 
         //from complex object with hierarchies, flattens to simple object
         //see for more info: https://github.com/hughsk/flat
-        var flattenedData = flatten(calculatedData, {delimiter:"_"});         
+        flattenedData = flatten(calculatedData, {delimiter:"_"});         
         //it needs to show also 1/2 of Maintenance Costs
         flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2;
         //console.log(flattenedData); 
         setCalculatedDataToHTML(flattenedData);        
         
-        var chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
+        chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
 
         //The first three boxes on the top
         //if financial effort was not calculated, does not show doughnut chart
@@ -215,13 +217,13 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
 
         $("#results").show();
 
-        $("*").promise().done(function(){    
-
+        $("*").promise().done(function(){ 
             //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
             //such that, the pdf generation can extract the charts to base64 images
-            var promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
+            promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
                 return chartsDrawnPromisesObj[key];
-            });           
+            });
+             promisesArray.push($("*").promise());
             $.when.apply($, promisesArray).done(function () {              
                 pdfModule.generatePDF(calculatedData);             
             }); 

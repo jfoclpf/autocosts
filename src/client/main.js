@@ -193,7 +193,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
     
     function getUber(){
         
-        var deferredEvent = $.Deferred();
+        var $deferredEvent = $.Deferred();
         
         if(country != "XX"){//if not test version
             //gets asynchronously UBER information
@@ -203,12 +203,12 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
                     autocosts.main.uberApiObj =  data; //uberApi is a global variable
                     console.log("uber data got from uber API: ", data);
                     autocosts.servicesAvailabilityObj.uber = true;
-                    deferredEvent.resolve();
+                    $deferredEvent.resolve();
                 }
                 else{
                     console.error("Error getting uber info");
                     autocosts.servicesAvailabilityObj.uber = false;
-                    deferredEvent.resolve("error");
+                    $deferredEvent.resolve("error");
                 }                    
             });
         }
@@ -222,15 +222,15 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
             autocosts.main.uberApiObj = uberApi;
             autocosts.servicesAvailabilityObj.uber = true;
 
-            deferredEvent.resolve();
+            $deferredEvent.resolve();
         }
          
-        return deferredEvent.promise();
+        return $deferredEvent;
     }
 
     function getPdfJsFiles(){
         
-        var deferredEvent = $.Deferred();
+        var $deferredEvent = $.Deferred();
         
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
@@ -252,12 +252,12 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
                 }
                 $.getScript(pdf_fonts_path).done( function() {                                    
                     console.log("All pdf related files loaded");
-                    deferredEvent.resolve();
+                    $deferredEvent.resolve();
                 });
             });
         });
         
-        return deferredEvent.promise();
+        return $deferredEvent;
     }
 
     //Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
@@ -283,6 +283,26 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
             //force: 'android' // Uncomment for platform emulation
         });
     }            
+    
+    /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
+    (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
+    function loadCSSFiles(styleSheets) {
+        var head = document.getElementsByTagName('head')[0];
+
+        for (var i = 0; i < styleSheets.length; i++) {
+            var link = document.createElement('link');
+            var rel = document.createAttribute('rel');
+            var href = document.createAttribute('href');
+
+            rel.value = 'stylesheet';
+            href.value = styleSheets[i];
+
+            link.setAttributeNode(rel);
+            link.setAttributeNode(href);
+
+            head.appendChild(link);
+        }
+    }    
     
     /*function that loads extra files and features, that are not loaded immediately after the page is opened
     because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
@@ -316,26 +336,6 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
             callback();
         });
     }
-
-    /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
-    (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
-    function loadCSSFiles(styleSheets) {
-        var head = document.getElementsByTagName('head')[0];
-
-        for (var i = 0; i < styleSheets.length; i++) {
-            var link = document.createElement('link');
-            var rel = document.createAttribute('rel');
-            var href = document.createAttribute('href');
-
-            rel.value = 'stylesheet';
-            href.value = styleSheets[i];
-
-            link.setAttributeNode(rel);
-            link.setAttributeNode(href);
-
-            head.appendChild(link);
-        }
-    }    
 
     /*=== Public methods ===*/
     

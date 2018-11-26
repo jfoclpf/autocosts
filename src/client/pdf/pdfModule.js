@@ -7,8 +7,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     
     var resultsModule;
     
-    var calculatedData;
-    var pdfReport;
+    var calculatedData, pdfReport, chartsInfo;
     
     function initialize(){
         loadModuleDependencies();
@@ -17,235 +16,266 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     
     function loadModuleDependencies(){
         resultsModule = autocosts.resultsModule;
-    }    
-
+    }       
+    
     function generatePDF(calculatedDataIn){
         
         calculatedData = calculatedDataIn;
         
         //see modules tree at https://github.com/jfoclpf/autocosts/wiki/Modules-tree
-        var chartsInfo = resultsModule.chartsModule.getChartsInfo();
-
-        //costs Doughnut Chart width/height proportion
-        var costsDoughnutChartWHProp = 1.171;
-        //costs Bars Chart width/height proportion
-        var costsBarsChartWHProp = 2.005;
+        chartsInfo = resultsModule.chartsModule.getChartsInfo();
 
         var header = {
             text: translatedStrings.main_title,
             style: 'title'
         };
-
-        var styles = {
-            title:{
-                fontSize: 14,
-                alignment: 'center',
-                margin: [0, 10, 0, 10], //[left, top, right, bottom]
-                bold: true
-            },
-            header: {
-                fontSize: 14,
-                bold: true,
-                alignment: 'center',
-                color: '#000'
-            },
-            tableMarging: {
-                margin: [0, 20, 0, 20], //[left, top, right, bottom]
-                color: '#1C1C1C'
-            },
-            img_style: {
-                alignment: 'center',
-                margin: [0, 10, 0, 10] //[left, top, right, bottom]
-            }
-        };
-
-        var defaultStyle = {
-            font: 'Roboto'
-        };
-
-        var content = [
-            {
-                margin: [0, 0, 0, 20], //[left, top, right, bottom]
-                color: '#1C1C1C',
-                table:{
-                    headerRows: 0,
-                    widths: [ '*', '*', '*', '*' ],
-                    body: getMainTable()
+        
+        var isFinancialEffortChart = calculatedData.financialEffort.calculated && chartsInfo.financialEffort.isVisible;
+        var isAlternativesToCarChart = (calculatedData.publicTransports.calculated || calculatedData.uber.calculated) && chartsInfo.alternativesToCar.isVisible;
+        
+        $.when(switches.charts ? getChartSize("costsDoughnut") : {}, 
+               switches.charts ? getChartSize("costsBars") : {},
+               switches.charts && isFinancialEffortChart ? getChartSize("financialEffort") : {},
+               switches.charts && isAlternativesToCarChart ? getChartSize("alternativesToCar") : {}).
+        done(function(costsDoughnutSize, costsBarsSize, financialEffortSize, alternativesToCarSize){
+            
+            var costsDoughnutChartWHProp, costsDoughnutChartWidth,
+                costsBarsChartWHProp, costsBarsChartWidth,
+                financialEffortChartWHProp, financialEffortChartWidth,
+                alternativesToCarChartWHProp, alternativesToCarChartWidth;
+            
+            if (switches.charts){
+                //costs Doughnut Chart width/height proportion
+                costsDoughnutChartWHProp = costsDoughnutSize.width/costsDoughnutSize.height;
+                costsDoughnutChartWidth = 200; //pixels
+                
+                //costs Bars Chart width/height proportion
+                costsBarsChartWHProp = costsBarsSize.width/costsBarsSize.height;
+                costsBarsChartWidth = 450; //pixels
+                
+                if(isFinancialEffortChart){
+                    financialEffortChartWHProp = financialEffortSize.width/financialEffortSize.height;
+                    financialEffortChartWidth = 320; //pixels                
+                }
+                
+                if(isAlternativesToCarChart){
+                    alternativesToCarChartWHProp = alternativesToCarSize.width/alternativesToCarSize.height;
+                    alternativesToCarChartWidth = 350; //pixels                
                 }
             }
-        ];
-
-        if (switches.charts){    
-            content.push(
-                {
-                    image: chartsInfo.costsDoughnut.base64Image,
-                    width: 220,
-                    height: Math.round(220 / costsDoughnutChartWHProp),
-                    margin: [0, 10, 0, 15], //[left, top, right, bottom]
-                    alignment: 'center'
-                },
-                {
-                    image: chartsInfo.costsBars.base64Image,
-                    width: 500,
-                    height: Math.round(500 / costsBarsChartWHProp),
+                
+            var styles = {
+                title:{
+                    fontSize: 14,
+                    alignment: 'center',
                     margin: [0, 10, 0, 10], //[left, top, right, bottom]
-                    alignment: 'center'
+                    bold: true
+                },
+                header: {
+                    fontSize: 14,
+                    bold: true,
+                    alignment: 'center',
+                    color: '#000'
+                },
+                tableMarging: {
+                    margin: [0, 20, 0, 20], //[left, top, right, bottom]
+                    color: '#1C1C1C'
+                },
+                img_style: {
+                    alignment: 'center',
+                    margin: [0, 10, 0, 10] //[left, top, right, bottom]
+                }
+            };
+
+            var defaultStyle = {
+                font: 'Roboto'
+            };
+
+            var content = [
+                {
+                    margin: [0, 0, 0, 20], //[left, top, right, bottom]
+                    color: '#1C1C1C',
+                    table:{
+                        headerRows: 0,
+                        widths: [ '*', '*', '*', '*' ],
+                        body: getMainTable()
+                    }
+                }
+            ];
+
+            if (switches.charts){    
+                content.push(
+                    {
+                        image: chartsInfo.costsDoughnut.base64Image,
+                        width: costsDoughnutChartWidth,
+                        height: Math.round(costsDoughnutChartWidth / costsDoughnutChartWHProp),
+                        margin: [0, 10, 0, 15], //[left, top, right, bottom]
+                        alignment: 'center'
+                    },
+                    {
+                        image: chartsInfo.costsBars.base64Image,
+                        width: costsBarsChartWidth,
+                        height: Math.round(costsBarsChartWidth / costsBarsChartWHProp),
+                        margin: [0, 10, 0, 10], //[left, top, right, bottom]
+                        alignment: 'center'
+                    },
+                    {
+                        margin: [0, 0, 0, 0], //[left, top, right, bottom]
+                        table:{
+                            headerRows: 0,
+                            widths: [ '*', '*', '*', '*', '*', '*' ],
+                            body: getChartsLegend()
+                        },
+                        pageBreak: 'after'
+                    }                       
+                );
+            }
+
+            //adds tables of monthly car costs
+            content.push(             
+                {
+                    style: 'tableMarging',
+                    table:{                
+                        widths: [ 390, '*' ],
+                        body: getStandingCostsTable()
+                    }
                 },
                 {
-                    margin: [0, 0, 0, 0], //[left, top, right, bottom]
-                    table:{
-                        headerRows: 0,
-                        widths: [ '*', '*', '*', '*', '*', '*' ],
-                        body: getChartsLegend()
-                    },
-                    pageBreak: 'after'
-                }                       
-            );
-        }
-
-        //adds tables of monthly car costs
-        content.push(             
-            {
-                style: 'tableMarging',
-                table:{                
-                    widths: [ 390, '*' ],
-                    body: getStandingCostsTable()
-                }
-            },
-            {
-                style: 'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: [ 390, '*' ],
-                    body: getRunningCostsTable()
-                }
-            },
-            {
-                style: 'tableMarging',
-                table:{
-                    headerRows: 0,
-                    widths: [ 390, '*' ],
-                    body: getTotalCostsTable()
-                }
-            }
-        );
-
-        //financial effort title and table
-        if(calculatedData.financialEffort.calculated){
-            //header
-            content.push(
-                {
                     style: 'tableMarging',
                     table:{
                         headerRows: 0,
-                        widths: ['*'],
-                        body: [
-                            [
-                                {text: translatedStrings.financial_effort, style: "header"}
-                            ]
-                        ]
-                    },
-                    pageBreak: 'before'
-                }
-            );
-
-            //chart
-            if(chartsInfo.financialEffort.isVisible && switches.charts){
-                content.push(
-                    {
-                        image: chartsInfo.financialEffort.base64Image,
-                        width: 350,
-                        height: Math.round(350 * $("#finEffortChart").height() / $("#finEffortChart").width()),
-                        style: 'img_style'
-                    }
-                );
-            }
-
-            //table
-            content.push(
-                {
-                    style:'tableMarging',
-                    table:{
-                        headerRows: 1,
                         widths: [ 390, '*' ],
-                        body: getBodyFinEffort()
+                        body: getRunningCostsTable()
                     }
-                }
-            );
-
-        }
-
-        //Equivalent transport costs / uber / public transports
-        if (calculatedData.publicTransports.calculated || calculatedData.uber.calculated){
-            //header
-            content.push(
+                },
                 {
                     style: 'tableMarging',
-                    table: {
+                    table:{
                         headerRows: 0,
-                        widths: ['*'],
-                        body: [
-                            [
-                                {text: translatedStrings.publ_tra_equiv, style: "header"}
-                            ]
-                        ]
-                    },
-                    pageBreak: 'before'
+                        widths: [ 390, '*' ],
+                        body: getTotalCostsTable()
+                    }
                 }
             );
 
-            //chart
-            if(chartsInfo.alternativesToCar.isVisible && switches.charts){
-                content.push(
-                    {
-                        image: chartsInfo.alternativesToCar.base64Image,
-                        width: 400,
-                        height: Math.round(400 * $("#equivalentTransportChart").height() / $("#equivalentTransportChart").width()),
-                        style: 'img_style'
-                    }
-                );
-            }
-
-            if(calculatedData.publicTransports.calculated){
+            //financial effort title and table
+            if(calculatedData.financialEffort.calculated){ 
+                //header
                 content.push(
                     {
                         style: 'tableMarging',
-                        table: {
+                        table:{
                             headerRows: 0,
-                            widths: [ 390, '*' ],
-                            body: getPublicTransportsTable()
-                        }
+                            widths: ['*'],
+                            body: [
+                                [
+                                    {text: translatedStrings.financial_effort, style: "header"}
+                                ]
+                            ]
+                        },
+                        pageBreak: 'before'
                     }
                 );
-            }
 
-            //uber
-            if(calculatedData.uber.calculated){
+                //chart
+                if(chartsInfo.financialEffort.isVisible && switches.charts){
+                    content.push(
+                        {
+                            image: chartsInfo.financialEffort.base64Image,
+                            width: financialEffortChartWidth,
+                            height: Math.round(financialEffortChartWidth / financialEffortChartWHProp),
+                            style: 'img_style'
+                        }
+                    );
+                }
+
+                //table
                 content.push(
                     {
                         style:'tableMarging',
                         table:{
-                            headerRows: 0,
+                            headerRows: 1,
                             widths: [ 390, '*' ],
-                            body: getUberTable()
+                            body: getBodyFinEffort()
                         }
                     }
                 );
+
             }
-        }
 
-        var docDefinition = {
-            header: header,
-            content: content,
-            styles: styles,
-            defaultStyle: {
-                font: 'Roboto'
+            //Equivalent transport costs / uber / public transports
+            if (calculatedData.publicTransports.calculated || calculatedData.uber.calculated){   
+                //header
+                content.push( 
+                    {
+                        style: 'tableMarging',
+                        table: {
+                            headerRows: 0,
+                            widths: ['*'],
+                            body: [
+                                [
+                                    {text: translatedStrings.publ_tra_equiv, style: "header"}
+                                ]
+                            ]
+                        },
+                        pageBreak: 'before'
+                    }
+                );
+
+                //chart
+                if(chartsInfo.alternativesToCar.isVisible && switches.charts){
+                    content.push(
+                        {
+                            image: chartsInfo.alternativesToCar.base64Image,
+                            width: alternativesToCarChartWidth,
+                            height: Math.round(alternativesToCarChartWidth / alternativesToCarChartWHProp),
+                            style: 'img_style'
+                        }
+                    );
+                }
+
+                if(calculatedData.publicTransports.calculated){
+                    content.push(
+                        {
+                            style: 'tableMarging',
+                            table: {
+                                headerRows: 0,
+                                widths: [ 390, '*' ],
+                                body: getPublicTransportsTable()
+                            }
+                        }
+                    );
+                }
+
+                //uber
+                if(calculatedData.uber.calculated){
+                    content.push(
+                        {
+                            style:'tableMarging',
+                            table:{
+                                headerRows: 0,
+                                widths: [ 390, '*' ],
+                                body: getUberTable()
+                            }
+                        }
+                    );
+                }
             }
-        };
 
-        setFonts(docDefinition);
+            var docDefinition = {
+                header: header,
+                content: content,
+                styles: styles,
+                defaultStyle: {
+                    font: 'Roboto'
+                }
+            };
 
-        pdfReport = pdfMake.createPdf(docDefinition);
+            setFonts(docDefinition);
+
+            pdfReport = pdfMake.createPdf(docDefinition);
+            
+        });
     }
     
     function download(){
@@ -255,6 +285,35 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     function print(){
         pdfReport.print();
     }
+    
+    function getChartSize(chart){
+        
+        var $deferredEvent = $.Deferred(); 
+        
+        var img = new Image(); 
+        img.onload = function(){            
+            $deferredEvent.resolve({ width: img.width, height: img.height});
+        };        
+        
+        switch(chart){
+            case "costsDoughnut":
+                img.src = chartsInfo.costsDoughnut.base64Image;                 
+                break;
+            case "costsBars":
+                img.src = chartsInfo.costsBars.base64Image;
+                break;
+            case "financialEffort":
+                img.src = chartsInfo.financialEffort.base64Image;
+                break;
+            case "alternativesToCar":
+                img.src = chartsInfo.alternativesToCar.base64Image;
+                break;
+            default:
+                throw "Error on getChartSize, unknown chart: " + chart;
+        }
+        
+        return $deferredEvent;
+    }   
     
     //Languages/alphabets that need special fonts, load such fonts from different files
     //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
