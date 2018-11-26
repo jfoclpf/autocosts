@@ -113,7 +113,7 @@ var Module = (function() {
     };
 
     return {
-        B: B
+        B
     };
 
 })();
@@ -125,7 +125,7 @@ Module.Utils = (function() {
     };
 
     return {
-        C: C
+        C
     }
 
 })();
