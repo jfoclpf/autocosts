@@ -98,8 +98,6 @@ var myGradesCalculate = (function () {
   };
 })();
 
-myGradesCalculate.failing(); // 'You failed 2 times.' 
-myGradesCalculate.average(); // 'Your average grade is 70.33333333333333.'
 ```
 
 ### Submodules
