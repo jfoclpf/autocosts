@@ -9,14 +9,20 @@
 //USER FORM INTERFACE MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 autocosts.userFormModule = (function(thisModule){
-    
-    var initializeModule = autocosts.initializeModule;    
-    
-    function initialize(){    
+
+    var validateFormModule, initializeModule;
+
+    function initialize(){
+        loadModuleDependencies();
         setFormSettings();
         setFormHandlers();
     }
 
+    function loadModuleDependencies(){
+        validateFormModule = autocosts.userFormModule.validateFormModule;
+        initializeModule = autocosts.initializeModule;
+    }
+    
     //initial settings regarding the calculator form itself
     //that is, after the user has pressed "calculate" button on the landing page
     function setFormSettings(){
@@ -59,12 +65,13 @@ autocosts.userFormModule = (function(thisModule){
         //PART 1
         //depreciation
         $("#acquisitionYear").attr("max", (new Date()).getFullYear());
+        
         //credit
         $('#sim_credDiv').hide();
 
         //inspection
         $("#numberInspections").val(0);
-        $("#InspectionCost_tr").hide();    
+        $("#InspectionCost_tr").hide();
 
         //PART 2
         //fuel
@@ -85,7 +92,7 @@ autocosts.userFormModule = (function(thisModule){
         //Income in Form Part 3 - set to year
         setIncomePeriod("year");
 
-    }    
+    }
 
     //handlers regarding the calculator form itself
     //that is, after the user has pressed "calculate" button on the landing page
@@ -94,7 +101,7 @@ autocosts.userFormModule = (function(thisModule){
         //run button
         $("#calculate_costs_btn").on( "click", function(){
             //tries to call Run1(); if not yet defined, retries every 500ms
-            //see https://stackoverflow.com/a/53032624/1243247        
+            //see https://stackoverflow.com/a/53032624/1243247
             /*try{
                 Run1("normal");  //not using reCaptcha from Google
             }
@@ -115,14 +122,6 @@ autocosts.userFormModule = (function(thisModule){
             Run1("normal");
         });
 
-        //button "next"; function buttonNextHandler is on formFunctions.js
-        $(".button.btn-orange").on( "click", function(){
-            buttonNextHandler($(this));
-            //this is necessary to avoid default behaviour
-            //avoid from scrolling to the top of page
-            return false;
-        });
-
         //On 'input' would fire every time the input changes, so when one pastes something
         //(even with right click), deletes and types anything. If one uses the 'change' handler,
         //this will only fire after the user deselects the input box, which is not what we want.
@@ -138,6 +137,25 @@ autocosts.userFormModule = (function(thisModule){
         $('input[type="number"]').keydown(function(e){keyDownHandler($(this), e)});
 
         //PART 1
+        //depreciation
+        //changes the max allowed month, according to selected year
+        $("#acquisitionYear").on("input", function(){
+
+            // Return today's date and time
+            var currentTime = new Date();
+            var year = currentTime.getFullYear();
+
+            if($(this).val() == year){
+                var month = currentTime.getMonth() + 1;
+                $("#acquisitionMonth").attr("max", month);
+            }
+            else{
+                $("#acquisitionMonth").attr("max", 12);
+            }
+
+            inputHandler($("#acquisitionMonth"));
+        });        
+        
         //insurance
         setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly
 
@@ -159,12 +177,12 @@ autocosts.userFormModule = (function(thisModule){
         $("#car_job_form2_no").prop("checked", true);  //radio button (considering you drive to work? => no)
 
         //sets radio button in Form Part 2, section Fuel calculations, to Currency
-        fuelCalculationMethodChange('currency'); 
+        fuelCalculationMethodChange('currency');
 
         //tolls
         $("#tolls_daily_true").on( "click", function(){calculateTollsOnDay(true)});
         $("#tolls_daily_false").on( "click", function(){calculateTollsOnDay(false)});
-        $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)    
+        $("#tolls_daily_false").prop("checked", true); //radio button (toll calculations based on day? => no)
 
         //PART 3
         $("#drive_to_work_yes_form3").on( "change", function(){driveToJob(true)});
@@ -181,11 +199,38 @@ autocosts.userFormModule = (function(thisModule){
         //Final buttons on results
         $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
 
+        //further handlers
+
+        //button "next"; function buttonNextHandler is on formFunctions.js
+        $(".button.btn-orange").on( "click", function(){
+            buttonNextHandler($(this));
+            //this is necessary to avoid default behaviour
+            //avoid from scrolling to the top of page
+            return false;
+        });
+
+        //mouse on click event on field containers
+        $(".field_container").on("click", function(){
+            //console.log('$(".field_container").on("click", function()');
+
+            var $this = $(this);
+
+            //only if is already visible, but faded out, that is, with opacitiy lower than 1
+            if($this.is(":visible")){
+                //clears the animation queue
+                $this.stop(true, true);
+
+                $this.fadeTo("fast", 1, function(){
+                    inputHandler($this);
+                    updatesFieldsAndIcons($this);
+                });
+            }
+        });
     }
 
     //When button "Next" is clicked, this function is called; var $thisButton makes reference to the "Next" button itself
     //It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
-    //It scrolls down the page till a field_container is: NOT valid OR NOT visible  
+    //It scrolls down the page till a field_container is: NOT valid OR NOT visible
     //Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "fully_hidden"
     //since all items are hidden initially when the form is loaded (except the 1st item), and as such the loop breaks herein.
     //But since "Credit" cost item by default has radio button set at NO, this "Credit" field_container doesn't show any
@@ -194,7 +239,7 @@ autocosts.userFormModule = (function(thisModule){
     function buttonNextHandler($thisButton, callback){
         //console.log("function buttonNextHandler($thisButton)");
 
-        //closest get top parent finding element with class "field_container", 
+        //closest get top parent finding element with class "field_container",
         var $fieldHead = $thisButton.closest(".field_container");
 
         if(fieldStatus($fieldHead) !== "fully_valid" && fieldStatus($fieldHead) !== "no_inputs"){
@@ -207,7 +252,7 @@ autocosts.userFormModule = (function(thisModule){
         //fades own field
         $fieldHead.stop(true).fadeTo("slow", 0.1);
 
-        //scrolls down till a field_container is: not valid OR not visible  
+        //scrolls down till a field_container is: not valid OR not visible
         $fieldHead.nextAll(".field_container, .form_part_head_title").each(function(index, value){
 
             var $i = $(this); //the $(this) from the loop .each
@@ -217,23 +262,23 @@ autocosts.userFormModule = (function(thisModule){
                 $i.stop(true).show();
             }
             //these are the field containers, that is, divs with cost items: depreciation, insurance, etc.
-            else if ($i.hasClass("field_container")){            
+            else if ($i.hasClass("field_container")){
 
-                //It scrolls down the page till it finds a field_container 
+                //It scrolls down the page till it finds a field_container
                 //which does have some inputs and, in this condition, it is not fully_valid
-                if(fieldStatus($i) !== "no_inputs" && fieldStatus($i) !== "fully_valid"){                
+                if(fieldStatus($i) !== "no_inputs" && fieldStatus($i) !== "fully_valid"){
 
                     //we make sure the cost_item/field_container main div is now visible
                     $i.stop(true).show();
 
-                    //now we're sure that, even after showing the field, the content is not hidden, 
+                    //now we're sure that, even after showing the field, the content is not hidden,
                     //since a field may have the content hidden, due to user form settings
                     if(fieldStatus($i) !== "hidden"){
 
                         //by ensuring now the field_container is visible, if it has no inputs show next button
                         //for example "Credit" field container
                         if(fieldStatus($i) === "no_inputs"){
-                            $i.find(".next").stop(true).show(); //shows "next" button                    
+                            $i.find(".next").stop(true).show(); //shows "next" button
                         }
 
                         //scrols the page to the corresponding div, considering the header
@@ -244,7 +289,7 @@ autocosts.userFormModule = (function(thisModule){
                         //returns to the callback the target .field_container, that is, $i
                         if(typeof callback === 'function'){
                             callback($i);
-                        } 
+                        }
 
                         //breaks the .each loop
                         return false;
@@ -258,22 +303,22 @@ autocosts.userFormModule = (function(thisModule){
             else{
                 console.error("Error in buttonNextHandler");
             }
-        });        
+        });
     }
 
 
-    //This function fires every time the 
+    //This function fires every time the
     //$(document).keydown OR $('input[type="number"]').keydown
     //check initialize.js in function loadsButtonsHandlers
     function keyDownHandler($this, event){
         //console.log("keyDownHandler");
 
         //key Enter (13) ot TAB (9)
-        if(event.keyCode == 13 || event.keyCode == 9) { 
+        if(event.keyCode == 13 || event.keyCode == 9) {
 
             var $buttonNext;
 
-            if($this.is('input[type="number"]')){            
+            if($this.is('input[type="number"]')){
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
@@ -284,34 +329,34 @@ autocosts.userFormModule = (function(thisModule){
                     $buttonNext = $(".next:visible").first();
                 }
             }
-            else{            
+            else{
                 $buttonNext = $(".next:visible").first();
-            }                
+            }
 
             //if there exists a "next" button
             if ($buttonNext.length){
                 //clicks the "next" button and focus the respective available input
                 buttonNextHandler($buttonNext.last(), function($fieldHead){
-                    $fieldHead.find("*").promise().done(function(){ 
+                    $fieldHead.find("*").promise().done(function(){
                         $fieldHead.find('input[type="number"]:visible').first().focus();
                     });
-                });                      
+                });
             }
             //it does not exist a "next" button; just go to the next input
             else if($this.is('input[type="number"]')){
                 var $inputs = $('input[type="number"]:visible');
                 var thisInputIndex = $inputs.index($this)
                 var $nextInput = $inputs.eq(thisInputIndex + 1);
-                $nextInput.focus();                  
-            }        
+                $nextInput.focus();
+            }
 
-            return false;        
+            return false;
         }
     }
 
 
     //This function fires every time on("input") in
-    //input[type="number"] OR input input[type="radio"] 
+    //input[type="number"] OR input input[type="radio"]
     //that is when the numbers inputs are changed or when the radio buttons are clicked
     //check initialize.js in function loadsButtonsHandlers
     function inputHandler($this){
@@ -339,22 +384,22 @@ autocosts.userFormModule = (function(thisModule){
 
         //shows active field
         $fieldHead.show().stop(true).fadeTo("fast", 1);
-        //fades previous fields    
+        //fades previous fields
 
         //just runs after all descedents (.find) have completed
-        $fieldHead.find("*").promise().done(function(){      
+        $fieldHead.find("*").promise().done(function(){
 
             //console.log("Check whether show/hide Next Button on " + $fieldHead.attr('class'));
 
             //shows or hides button "next" accordingly
             //Example: "Credit" field container starts with radio button to NO by default, and thus has no visible inputs
-            if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){                                    
+            if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){
 
                 //if the current field is valid, show "next" button
-                $buttonNext.stop(true).show();            
+                $buttonNext.stop(true).show();
             }
             else{
-                $buttonNext.stop(true).hide();            
+                $buttonNext.stop(true).hide();
             }
 
             if(isReadyToCalc()){
@@ -367,39 +412,21 @@ autocosts.userFormModule = (function(thisModule){
         });
 
         //add red underline in case input is wrong
-        if($this.is('input[type="number"]')){        
+        if($this.is('input[type="number"]')){
             if(numberInputStatus($this) === "valid"){
                 $this.css('border-bottom','1px #b0b2be solid');
                 inputErrorMsg($this, "hide");
 
             }
-            else{            
+            else{
                 $this.css('border-bottom','2px solid #ef474c');
                 inputErrorMsg($this, "show");
             }
         }
     }
 
-    //mouse on click event on field containers
-    $(".field_container").on("click", function(){
-        //console.log('$(".field_container").on("click", function()');
 
-        var $this = $(this);    
-
-        //only if is already visible, but faded out, that is, with opacitiy lower than 1
-        if($this.is(":visible")){        
-            //clears the animation queue
-            $this.stop(true, true);     
-
-            $this.fadeTo("fast", 1, function(){                        
-                inputHandler($this);
-                updatesFieldsAndIcons($this);
-            });
-        }    
-    });
-
-
-    //fades out or fades in all visible fields, except itself, according to validity 
+    //fades out or fades in all visible fields, except itself, according to validity
     //also updates icon list on the left panel
     function updatesFieldsAndIcons($this){
         //console.log("updatesFieldsAndIcons($this)");
@@ -432,7 +459,7 @@ autocosts.userFormModule = (function(thisModule){
             }
             else if (status === "wrong"){
                 $(this).stop(true).fadeTo("fast", 1);
-                setIcon($(this), "wrong");                
+                setIcon($(this), "wrong");
             }
             else if (status === "fully_valid" || status === "no_inputs"){
                 $(this).stop(true).fadeTo("slow", 0.1);
@@ -446,14 +473,14 @@ autocosts.userFormModule = (function(thisModule){
                 }
             }
 
-        });    
+        });
     }
 
 
-    //For a certain element inside the div with class ".field_container", 
+    //For a certain element inside the div with class ".field_container",
     //checks on every visible and active number input element, if all these elements are valid
     //Field refers to insurance, credit, tolls, etc., that is, cost items
-    //Output may be: 
+    //Output may be:
     //"fully_valid"  => visible/enabled inputs (>=1); all inputs are filled and with valid numbers
     //"valid"        => visible/enabled inputs (>=1); some inputs are valid, others are empty
     //"empty"        => visible/enabled inputs (>=1); all inputs are empty
@@ -461,11 +488,11 @@ autocosts.userFormModule = (function(thisModule){
     //"no_inputs"    => the field_container main div is visible; but no visible/enabled inputs in the field_container
     //"hidden"       => the field container inner divs are all hidden
     //"fully_hidden" => the field_container main div with class "field_container" is hidden
-    function fieldStatus($this){    
+    function fieldStatus($this){
         //console.log("fieldStatus($this)");
 
         //goes to top ascendents till it finds the class "field_container"
-        //.closest: for each element in the set, get the first element that matches the selector by testing 
+        //.closest: for each element in the set, get the first element that matches the selector by testing
         //the element itself and traversing up through its ancestors in the DOM tree.
         var $fieldHead = $this.closest(".field_container");
 
@@ -491,9 +518,9 @@ autocosts.userFormModule = (function(thisModule){
                 numberStatus = numberInputStatus($(this));
                 if(numberStatus === "wrong" ){
                     wrongCount++;
-                    //since this input is wrong, the whole field is wrong and hence breaks the loop  
+                    //since this input is wrong, the whole field is wrong and hence breaks the loop
                     return false;
-                }    
+                }
                 else if (numberStatus === "valid"){
                     validCount++;
                 }
@@ -502,7 +529,7 @@ autocosts.userFormModule = (function(thisModule){
                 }
                 else{
                     console.error("Error in function fieldStatus")
-                    return false;            
+                    return false;
                 }
             }
 
@@ -536,7 +563,7 @@ autocosts.userFormModule = (function(thisModule){
     //$this refers to input[type="number"]; output may be:
     //"valid" => It has input numbers/data, the input is valid
     //"empty" => Input has not numbers, that is, it is empty
-    //"wrong" => It has input numbers/data, but it is invalid/wrong 
+    //"wrong" => It has input numbers/data, but it is invalid/wrong
     function numberInputStatus($this){
         //console.log("numberInputStatus($this)");
 
@@ -546,7 +573,7 @@ autocosts.userFormModule = (function(thisModule){
 
         var val, min, max;
 
-        //A text input's value attribute will always return a string. 
+        //A text input's value attribute will always return a string.
         //One needs to parseFloat to convert string to float
         val = parseFloat($this.val());
         //console.log(index + ": " + val);
@@ -559,10 +586,10 @@ autocosts.userFormModule = (function(thisModule){
             if(!isInteger(val)){
                 return "wrong";
             }
-        }    
+        }
 
-        min = parseFloat($this.attr('min')); 
-        max = parseFloat($this.attr('max'));            
+        min = parseFloat($this.attr('min'));
+        max = parseFloat($this.attr('max'));
         //console.log(min, max);
 
         if (isNumber(min) && isNumber(max)){
@@ -573,17 +600,17 @@ autocosts.userFormModule = (function(thisModule){
         else if (isNumber(min)){
             if(val < min){
                 return "wrong";
-            }                            
+            }
         }
         else if (isNumber(max)){
             if(val > max ){
                 return "wrong";
-            }                            
+            }
         }
         else{
             console.error("Error in function numberInputStatus");
             return false;
-        }       
+        }
 
         return "valid";
     }
@@ -632,13 +659,13 @@ autocosts.userFormModule = (function(thisModule){
     }
 
     //when numBool is false returns string "field1", "field2", "field3", etc. of field_container
-    //when numBool is true returns integer 1, 2, 3, etc. of field_container with class field1, field2, etc. 
+    //when numBool is true returns integer 1, 2, 3, etc. of field_container with class field1, field2, etc.
     function getFieldNum($this, numBool){
 
         var $fieldHead = $this.closest(".field_container");
         var fieldN; //the field number will be taken from class name
 
-        //gets all classes from $fieldHead 
+        //gets all classes from $fieldHead
         var classList = $fieldHead.attr('class').split(/\s+/);
         $.each(classList, function(index, item) {
             //if there is a class which contains the string "field"?
@@ -655,7 +682,7 @@ autocosts.userFormModule = (function(thisModule){
             return parseInt(fieldN.replace("field", ""), 10);
         }
         else {
-            return fieldN; 
+            return fieldN;
         }
     }
 
@@ -684,50 +711,30 @@ autocosts.userFormModule = (function(thisModule){
                 strEnterAValue = "Enter value";
             }
 
-            $this.after(function(){                        
+            $this.after(function(){
 
                 if(min && max){
-                    return '<div class="error_msg" id="'+errId+'">' + 
-                           strEnterAValue + " " + "between " + min + " and " + max + 
+                    return '<div class="error_msg" id="'+errId+'">' +
+                           strEnterAValue + " " + "between " + min + " and " + max +
                            "</div>";
                 }
                 else if(min){
-                    return '<div class="error_msg" id="'+errId+'">' + 
-                           strEnterAValue + " " + "greater or equal to " + min + 
+                    return '<div class="error_msg" id="'+errId+'">' +
+                           strEnterAValue + " " + "greater or equal to " + min +
                            "</div>";
                 }
                 else if(max){
-                    return '<div class="error_msg" id="'+errId+'">' + 
-                           strEnterAValue + " " + "smaller or equal to " + max + 
+                    return '<div class="error_msg" id="'+errId+'">' +
+                           strEnterAValue + " " + "smaller or equal to " + max +
                            "</div>";
                 }
-            });    
+            });
         }
         else if(status==="hide"){
-            $("#"+errId).remove();   
+            $("#"+errId).remove();
         }
 
     }
-
-    //FORM PART 1, DEPRECIATION
-    //changes the max allowed month, according to selected year
-    $("#acquisitionYear").on("input", function(){
-
-        // Return today's date and time
-        var currentTime = new Date();
-        var year = currentTime.getFullYear();  
-
-        if($(this).val() == year){
-            var month = currentTime.getMonth() + 1;
-            $("#acquisitionMonth").attr("max", month);
-        }
-        else{
-            $("#acquisitionMonth").attr("max", 12);
-        }
-
-        inputHandler($("#acquisitionMonth"));
-    });
-
 
     //scrols the page to the corresponding div, considering the header
     function scrollsPageTo($this, callback){
@@ -739,7 +746,7 @@ autocosts.userFormModule = (function(thisModule){
             //gets relative postion with respect to parent element
             var fixedTopPos = $this.offset().top-$(".form_part").scrollTop()-$("header").outerHeight()-200;
 
-            $("html").animate({scrollTop: fixedTopPos}, 600, "linear", function(){                              
+            $("html").animate({scrollTop: fixedTopPos}, 600, "linear", function(){
 
                 if($(".bottom_spacer").css("padding-top") !== "450px"){
                     $(".bottom_spacer").animate({"padding-top": "450px"}, 600, "linear", callback);
@@ -749,7 +756,7 @@ autocosts.userFormModule = (function(thisModule){
                 }
             });
         }
-        else if(fieldN <= 17){                
+        else if(fieldN <= 17){
             //scrolls to end of page and change bottom spacer
             if($(".bottom_spacer").css("padding-top") !== "150px"){
                 $(".bottom_spacer").animate({"padding-top": "150px"}, 600, "linear", function(){
@@ -771,37 +778,35 @@ autocosts.userFormModule = (function(thisModule){
     //When the form is filled and the calculator is already ready to calculate car costs
     //The form is ready to be calculated when Standing Costs (form part 1) and Running Costs (form part 2) are filled
     //The Extra data (form part 3) is optional
-    function isReadyToCalc(){
-        
-        var validateFormModule = autocosts.userFormModule.validateFormModule;
+    function isReadyToCalc(){        
 
         var status, fieldN, isOk = true;
 
         $(".form_part").find(".field_container").each(function(index, item){
 
-            fieldN = getFieldNum($(this), true);        
+            fieldN = getFieldNum($(this), true);
 
             //fields 1 to 12 refer to Standing and Running Costs
             if (fieldN >=0 && fieldN <=12){
-                status = fieldStatus($(this));         
+                status = fieldStatus($(this));
                 if (status !== "hidden" && status !== "no_inputs"){
                     if(status !== "fully_valid"){
                         isOk = false;
                         return false;
                     }
                 }
-            }        
+            }
         });
-         
+
         if(!isOk){
             return false;
         }
 
-        //double-check with validating functions from file validateForm.js 
+        //double-check with validating functions from file validateForm.js
         //Standing (part1) and Running (part2) Costs
         if (!validateFormModule.isUserDataFormPart1_Ok() || !validateFormModule.isUserDataFormPart2_Ok()){
             return false;
-        }    
+        }
 
         return true;
     }
@@ -831,7 +836,7 @@ autocosts.userFormModule = (function(thisModule){
 
         if (fuelCalculationMethod === "distance") {
             //selects actively radio button to which this function is associated
-            $("#radio_fuel_km").prop("checked", true);        
+            $("#radio_fuel_km").prop("checked", true);
 
             $("#currency_div_form2").hide();  //hide
             $("#distance_div_form2, .fuel_efficiency").show(); //show
@@ -839,7 +844,7 @@ autocosts.userFormModule = (function(thisModule){
             carToJob(false);
 
             //DISTANCE - Form Part 3
-            //If user sets distance here, the calculator does not needs to further question about the distance        
+            //If user sets distance here, the calculator does not needs to further question about the distance
             $("#distance_form3").hide();
             driveToJob(false);
         }
@@ -852,14 +857,14 @@ autocosts.userFormModule = (function(thisModule){
             $("#distance_div_form2, .fuel_efficiency, #div_car_job_no_form2, #div_car_job_yes_form2").hide(); //hide
 
             //DISTANCE - Form Part 3
-            //If user sets currency here, the calculator needs anyway to know what the distance traveled, 
+            //If user sets currency here, the calculator needs anyway to know what the distance traveled,
             //and thus it will ask the distance travelled by the user on Form Part 3
             $("#distance_form3").show();
 
             $("#time_spent_part1_form3").hide();
             $("#time_spent_part2_form3").show();
-            $("#drive_to_work_no_form3").prop("checked", true);        
-        } 
+            $("#drive_to_work_no_form3").prop("checked", true);
+        }
         else {
             console.error("Either is distance or currency");
         }
@@ -879,8 +884,8 @@ autocosts.userFormModule = (function(thisModule){
             //working time section in form part 3
             workingTimeToggle(true);
             $("#working_time_part1_form3").hide();
-            $("#working_time_part2_form3").show();        
-        } 
+            $("#working_time_part2_form3").show();
+        }
 
         //"Considering you drive to work?" NO
         else {
@@ -953,10 +958,10 @@ autocosts.userFormModule = (function(thisModule){
         }
     }
 
-    //INCOME - Form Part 3 
+    //INCOME - Form Part 3
     //Shows the active div and Hides the remainder divs. Ex: if "year" selected, shows #income_per_year_form3 and hides remainder
     //If "hour" selected hides also #working_time_form3. It needs working time to calculate the average yearly *income per hour*
-    //With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known 
+    //With *income per hour* it can calculate consumer speed. But if "hour" is selected income per hour is already known
     function setIncomePeriod(value){
         //see why is 0: https://github.com/jfoclpf/autocosts/issues/54
         var animSpeed = 0;
@@ -966,30 +971,30 @@ autocosts.userFormModule = (function(thisModule){
                 $("#income_per_month_form3, #income_per_week_form3, #income_per_hour_form3").
                     fadeOut(animSpeed).promise().done(function(){
                         $("#income_per_year_form3, #working_time_form3").fadeIn(animSpeed);
-                    });            
+                    });
                 break;
             case "month":
                 $("#income_per_year_form3, #income_per_week_form3, #income_per_hour_form3").
                     fadeOut(animSpeed).promise().done(function(){
                         $("#income_per_month_form3, #working_time_form3").fadeIn(animSpeed);
-                });            
+                });
                 break;
             case "week":
                 $("#income_per_year_form3, #income_per_month_form3, #income_per_hour_form3").
                     fadeOut(animSpeed).promise().done(function(){
                         $("#income_per_week_form3, #working_time_form3").fadeIn(animSpeed);
-                });            
+                });
                 break;
             case "hour":
                 $("#income_per_year_form3, #income_per_week_form3, #income_per_month_form3, #working_time_form3").
                     fadeOut(animSpeed).promise().done(function(){
                         $("#income_per_hour_form3").fadeIn(animSpeed);
-                });            
+                });
                 break;
         }
     }
 
-    //WORKING TIME - Form Part 3 
+    //WORKING TIME - Form Part 3
     function workingTimeToggle(value){
         if(value){
             //selects actively radio button to which this function is associated
@@ -1012,25 +1017,25 @@ autocosts.userFormModule = (function(thisModule){
     function setRadioButton(name, option){
        $('input[name="' + name + '"][value="'+option+'"]').prop('checked', true);
     }
-    
+
     //check if number or parsed string is integer
     function isInteger(n) {
         return (parseFloat(n) == parseInt(n, 10));
-    }    
-    
+    }
+
     //isNaN stands for "is Not a Number", this function works whether n is a "number" or a "string"
     //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
     function isNumber(n) {
         return !isNaN(n) && isFinite(parseFloat(n));
     }
-        
+
     /* === Public methods to be returned ===*/
-        
+
     //own module, since it may have been defined erlier by children modules
     thisModule.initialize = initialize;
     thisModule.isReadyToCalc = isReadyToCalc;
-    
+
     return thisModule;
-   
+
 })(autocosts.userFormModule || {});
 
