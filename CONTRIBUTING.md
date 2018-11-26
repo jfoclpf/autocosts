@@ -93,8 +93,8 @@ var myGradesCalculate = (function () {
   // that we want to reveal publicly
 
   return {
-    average: average,
-    failing: failing
+    average,
+    failing
   };
 })();
 
