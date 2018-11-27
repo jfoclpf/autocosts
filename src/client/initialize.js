@@ -14,7 +14,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
         loadsPrefilledValues();          //loads pre-filled values, for example for XX/
         initTimer();
         initGoogleAnalytics();
-        getUniqueIdentifier();                    
+        getUniqueIdentifier();    
     }
     
     function loadModuleDependencies(){
@@ -201,7 +201,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
         
         /*Google Analytics*/
         if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && serverInfo.switches.googleAnalytics) {
-            $.getScript(paths.jsFiles.Google.analytics, function(){
+            $.getScript(paths.jsFiles.google.analytics, function(){
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
                 ga('create', serverInfo.googleAnalyticsTrackingId, 'auto');
@@ -236,26 +236,6 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
         else{
             return "http://";
         }
-    }
-
-    /*function which returns whether this session is a (test/develop version) or a prod version */
-    function isThisAtest() {
-
-        if(serverInfo.booleans.isATest || serverInfo.selectedCountry == "XX"){
-            return true;
-        }
-
-        //verifies top level domain
-        var hostName = window.location.hostname;
-        var hostNameArray = hostName.split(".");
-        var posOfTld = hostNameArray.length - 1;
-        var tld = hostNameArray[posOfTld];
-
-        if(tld == "work"){
-            return true;
-        }
-
-        return false;
     }
 
     /*Timer function*/
@@ -341,9 +321,29 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                 $("#"+value).val(translatedStrings[key]);
             }
         });
-    }
+    }      
     
     /*========= Public methods ======== */
+    
+    /*function which returns whether this session is a (test/develop version) or a prod version */
+    function isThisAtest() {
+
+        if(serverInfo.booleans.isATest || serverInfo.selectedCountry == "XX"){
+            return true;
+        }
+
+        //verifies top level domain
+        var hostName = window.location.hostname;
+        var hostNameArray = hostName.split(".");
+        var posOfTld = hostNameArray.length - 1;
+        var tld = hostNameArray[posOfTld];
+
+        if(tld == "work"){
+            return true;
+        }
+
+        return false;
+    }    
     
     /* Determine the mobile operating system.
      * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
@@ -444,12 +444,13 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
     
     return{
         initialize,
+        isThisAtest,
         getMobileOperatingSystem,
         getStringFor
     };
 
 })(autocosts.serverInfo,
-   autocosts.serverInfo.translatedStrings,
+   autocosts.serverInfo.translatedStrings,   
    autocosts.userInfo,
    autocosts.statistics,
    autocosts.servicesAvailabilityObj,

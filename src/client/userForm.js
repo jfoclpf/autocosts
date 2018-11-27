@@ -98,30 +98,6 @@ autocosts.userFormModule = (function(thisModule){
     //that is, after the user has pressed "calculate" button on the landing page
     function setFormHandlers(){
 
-        //run button
-        $("#calculate_costs_btn").on( "click", function(){
-            //tries to call Run1(); if not yet defined, retries every 500ms
-            //see https://stackoverflow.com/a/53032624/1243247
-            /*try{
-                Run1("normal");  //not using reCaptcha from Google
-            }
-            catch(e){
-                (function retry(){
-                    setTimeout(function(){
-                        try{
-                            console.log(e);
-                            console.log("Function Run() invalid or not yet defined");
-                            Run1("normal");
-                        }
-                        catch(e){
-                            retry(); //calls recursively
-                        }
-                    }, 500); //tries every 500ms
-                }());
-            }*/
-            Run1("normal");
-        });
-
         //On 'input' would fire every time the input changes, so when one pastes something
         //(even with right click), deletes and types anything. If one uses the 'change' handler,
         //this will only fire after the user deselects the input box, which is not what we want.
@@ -195,9 +171,6 @@ autocosts.userFormModule = (function(thisModule){
         $("#radio_income_week").on( "change", function(){setIncomePeriod("week")});
         $("#radio_income_hour").on( "change", function(){setIncomePeriod("hour")});
         $("#radio_income_year").prop("checked", true); //radio button (what is your net income => per year)
-
-        //Final buttons on results
-        $("#run_button, #run_button_noCapctha").on( "click", function(){Run1();});
 
         //further handlers
 

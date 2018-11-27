@@ -9,25 +9,27 @@
 /* Module with functions that are used to print the final result */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, uberApiObj, fullUrl){           
+autocosts.resultsModule = (function(thisModule, translatedStrings, switches, language, uberApiObj, fullUrl){           
         
     //modules dependencies
-    var chartsModule, pdfModule, calculatorModule, userFormModule, transferDataModule, initializeModule; 
+    var chartsModule, pdfModule, initializeModule; 
     
     var calculatedData;
     
     function initialize(){    
         loadModuleDependencies();
         loadResultsSettingsAndHandlers();
+        loadSmartBanner();
     }
     
     function loadModuleDependencies(){
-        calculatorModule = autocosts.calculatorModule;
-        userFormModule = autocosts.userFormModule;
-        transferDataModule = autocosts.transferDataModule;
         initializeModule = autocosts.initializeModule; 
-        chartsModule = serverInfo.switches.charts ? autocosts.resultsModule.chartsModule : {};
-        pdfModule = serverInfo.switches.pdf ? autocosts.resultsModule.pdfModule : {};        
+        chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {};
+        pdfModule = switches.pdf ? autocosts.resultsModule.pdfModule : {};        
+    }
+    
+    function setCalculatedData(data){
+        calculatedData = data;
     }
     
     function getCostsColors(){
@@ -55,7 +57,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             chartsModule.drawCostsDoughnut($(this).val());
         });
 
-        if(serverInfo.switches.pdf){
+        if(switches.pdf){
             $("#results .button-pdf").show().addClass("disabled");
             //download pdf button handler
             $("#results .button-pdf").on( "click", function(){
@@ -67,7 +69,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             $("#results .button-pdf").hide();
         }
 
-        if(serverInfo.switches.pdf && serverInfo.switches.print){
+        if(switches.pdf && switches.print){
             $("#results .button-print").show().addClass("disabled");
             $("#results .button-print").on( "click", function(){
                 console.log("Print button clicked");
@@ -84,7 +86,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             $("#results").hide();
         });
 
-        if (serverInfo.switches.social /*&& !isThisAtest()*/){
+        if (switches.social /*&& !initializeModule.isThisAtest()*/){
             $(".right-actions .facebook a, .right-actions-mobile .facebook a").
                 attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(fullUrl)).attr("target", "_blank");
             $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
@@ -99,139 +101,6 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
         }
     }        
     
-    //function that is run when user clicks "run/calculate"
-    function calculateCostsAndShowResults(){        
-        
-        var form, countryObj, flattenedData, chartsDrawnPromisesObj, promisesArray;
-
-        //test if the form user inputs are correct
-        if (!userFormModule.isReadyToCalc()){ 
-            return false;
-        } 
-        
-        $("#form").hide(); 
-
-        //for each form part gets object with content
-        form = transferDataModule.fromUserFormToCalculator(document.costs_form);
-        autocosts.main.formData = form;
-
-        //country object with country specific variables
-        countryObj = {
-            countryCode:            serverInfo.selectedCountry,
-            currency:               translatedStrings.curr_code,
-            distance_std:           translatedStrings.distance_std_option,
-            speed_std:              translatedStrings.std_dist + "/h",
-            fuel_efficiency_std:    translatedStrings.fuel_efficiency_std_option,
-            fuel_price_volume_std:  translatedStrings.fuel_price_volume_std,
-            taxi_price:             translatedStrings.taxi_price_per_dist
-        };
-
-        //calculate costs, "costs" is a global variable/object defined in calculatorModule.js
-        calculatedData = calculatorModule.calculateCosts(form, countryObj); 
-
-        //get Uber data if applicable
-        if(serverInfo.switches.uber && calculatedData.publicTransports.calculated){
-            calculatedData.uber = calculatorModule.calculateUberCosts(uberApiObj); 
-        } 
-
-        autocosts.main.calculatedData = calculatedData; //assigns to global variable
-        //console.log(JSON.stringify(calculatedData, null, 4));          
-
-        //from complex object with hierarchies, flattens to simple object
-        //see for more info: https://github.com/hughsk/flat
-        flattenedData = flatten(calculatedData, {delimiter:"_"});         
-        //it needs to show also 1/2 of Maintenance Costs
-        flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2;
-        //console.log(flattenedData); 
-        setCalculatedDataToHTML(flattenedData);        
-        
-        chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
-
-        //The first three boxes on the top
-        //if financial effort was not calculated, does not show doughnut chart
-        //on the third box, and adapt the three boxes css classes
-        if(calculatedData.financialEffort.calculated && serverInfo.switches.charts){ 
-            chartsModule.drawDoughnutFinancialEffort(calculatedData);
-            //shows third box where the financial effort doughnut chart appears
-            $("#results #info-boxes .info-box.box-3").show();
-            $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");        
-        }
-        else{
-            //hides third box where the financial effort doughnut chart appears
-            $("#results #info-boxes .info-box.box-3").hide();
-            $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");       
-        }                
-
-        setPeriodicCosts(calculatedData, "month");
-        setPeriodicCostsDetails(form, calculatedData); //the details on the dropdown boxes                         
-
-        //serverInfo.switches are frozen/const object in main.js, so no need to show elements when serverInfo.switches.charts is true
-        //since these elements are set tp be shown in css by default, just need to hide in case is false
-        if(serverInfo.switches.charts){            
-            chartsModule.drawCostsBars("month");
-            chartsModule.drawCostsDoughnut("month");
-        }
-        else {
-            $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
-        }
-
-        //Financial Effort 
-        if(calculatedData.financialEffort.calculated){            
-            setFinancialEffortDetails(form, calculatedData);
-
-            //shows financial effort section 
-            $("#results #financial-effort").show();
-
-            if(serverInfo.switches.charts){                
-                chartsModule.drawFinancialEffort(calculatedData);
-            }
-            else{
-                $("#financial-effort .graph").hide();
-                $("#financial-effort .values.box").css("width", "40%").css("float", "none");
-            }
-        }
-        else {
-            //hides financial effort section
-            $("#results #financial-effort").hide();
-        } 
-
-        //Equivalent transport costs
-        if(calculatedData.publicTransports.calculated){            
-            setEquivTransportCostsDetails(form, calculatedData);                
-
-            $("#results #equivalent-transport-costs").show();
-
-            if(serverInfo.switches.charts){
-                chartsModule.drawAlternativesToCar();
-            }
-            else{
-                $("#equivalent-transport-costs .graph").hide();
-                $("#equivalent-transport-costs .values.box").css("margin", "auto 2%").css("float", "none");            
-            }
-        }
-        else {
-            $("#results #equivalent-transport-costs").hide();
-        } 
-
-        setClassAccordionHandler();
-
-        $("#results").show();
-
-        $("*").promise().done(function(){ 
-            //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
-            //such that, the pdf generation can extract the charts to base64 images
-            promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
-                return chartsDrawnPromisesObj[key];
-            });
-             promisesArray.push($("*").promise());
-            $.when.apply($, promisesArray).done(function () {              
-                pdfModule.generatePDF(calculatedData);             
-            }); 
-        }); 
-        
-        return true;
-    }
-
     //scans all flattened calculatedDat and assigns each result value to respective HTML class element  
     function setCalculatedDataToHTML(flattenedData){
 
@@ -376,30 +245,38 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             addLiElm("depreciation", translatedStrings.error_depreciation_new_car);
         } 
         else {        
-            addLiElm("depreciation", translatedStrings.aq_value, currencyShow(form.depreciation.acquisitionCost));
-            addLiElm("depreciation", translatedStrings.final_value, currencyShow(form.depreciation.presentValue));
-            addLiElm("depreciation", translatedStrings.period_own, calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
-            addLiElm("depreciation", "(" + currencyShow(form.depreciation.acquisitionCost) + "-" + currencyShow(form.depreciation.presentValue) + ")/" +
-                                     calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
+            addLiElm("depreciation", 
+                     translatedStrings.aq_value, currencyShow(form.depreciation.acquisitionCost));
+            addLiElm("depreciation", 
+                     translatedStrings.final_value, currencyShow(form.depreciation.presentValue));
+            addLiElm("depreciation", 
+                     translatedStrings.period_own, calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
+            addLiElm("depreciation", 
+                     "(" + currencyShow(form.depreciation.acquisitionCost) + "-" + currencyShow(form.depreciation.presentValue) + ")/" +
+                     calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
         }
 
         //Insurance
         switch(form.insurance.period){
             case "mensal":
-                addLiElm("insurance", form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
-                                      translatedStrings.word_per + " " + translatedStrings.month);
+                addLiElm("insurance", 
+                         form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " +
+                         translatedStrings.word_per + " " + translatedStrings.month);
                 break;
             case "trimestral":
-                addLiElm("insurance", form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
-                                      translatedStrings.word_per + " " + translatedStrings.trimester);
+                addLiElm("insurance", 
+                         form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
+                         translatedStrings.word_per + " " + translatedStrings.trimester);
                 break;
             case "semestral":
-                addLiElm("insurance", form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
-                                      translatedStrings.word_per + " " + translatedStrings.semester);
+                addLiElm("insurance",
+                         form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
+                         translatedStrings.word_per + " " + translatedStrings.semester);
                 break;
             case "anual":
-                addLiElm("insurance", form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
-                                      translatedStrings.word_per + " " + translatedStrings.year);
+                addLiElm("insurance", 
+                         form.insurance.amountPerPeriod + " " + translatedStrings.curr_name_plural + " " + 
+                         translatedStrings.word_per + " " + translatedStrings.year);
                 break;
             default:
                 throw errMsg;
@@ -425,9 +302,10 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
 
         //Inspection
         if (form.inspection.numberOfInspections !== 0){        
-            addLiElm("inspection", form.inspection.numberOfInspections + " " + translatedStrings.times_costing + " " + form.inspection.averageInspectionCost + 
-                                   " " + translatedStrings.curr_name_plural + " " + translatedStrings.each_one_during + " " + 
-                                   calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
+            addLiElm("inspection", 
+                     form.inspection.numberOfInspections + " " + translatedStrings.times_costing + " " + form.inspection.averageInspectionCost + 
+                     " " + translatedStrings.curr_name_plural + " " + translatedStrings.each_one_during + " " + 
+                     calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
         }
 
         //Taxes
@@ -684,18 +562,36 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
                 break;
 
             case 'week':
-                addLiElm("income", translatedStrings.net_income_per + " " + translatedStrings.week, currencyShow(form.income.week.amountPerWeek));
-                addLiElm("income", translatedStrings.number_of_weeks, form.income.week.weeksPerYear);
-                addLiElm("income", translatedStrings.average_net_income_per + " " + translatedStrings.month, currencyShow(income.averagePerMonth.toFixed(1)));
-                addLiElm("income", translatedStrings.average_net_income_per + " " + translatedStrings.year, currencyShow(income.perYear.toFixed(1)));            
+                addLiElm("income", 
+                         translatedStrings.net_income_per + " " + translatedStrings.week, 
+                         currencyShow(form.income.week.amountPerWeek));
+                addLiElm("income", 
+                         translatedStrings.number_of_weeks, 
+                         form.income.week.weeksPerYear);
+                addLiElm("income", 
+                         translatedStrings.average_net_income_per + " " + translatedStrings.month, 
+                         currencyShow(income.averagePerMonth.toFixed(1)));
+                addLiElm("income", 
+                         translatedStrings.average_net_income_per + " " + translatedStrings.year, 
+                         currencyShow(income.perYear.toFixed(1)));            
                 break;
 
             case 'hour':
-                addLiElm("income", translatedStrings.net_income_per + " " + translatedStrings.hour, currencyShow(form.income.hour.amountPerHour));
-                addLiElm("income", translatedStrings.number_of_hours, form.income.hour.hoursPerWeek + " " + translatedStrings.hour_abbr);
-                addLiElm("income", translatedStrings.number_of_weeks, form.income.hour.weeksPerYear);
-                addLiElm("income", translatedStrings.average_net_income_per + " " + translatedStrings.month, currencyShow(income.averagePerMonth.toFixed(1)));
-                addLiElm("income", translatedStrings.average_net_income_per + " " + translatedStrings.year, currencyShow(income.perYear.toFixed(1)));                     
+                addLiElm("income", 
+                         translatedStrings.net_income_per + " " + translatedStrings.hour, 
+                         currencyShow(form.income.hour.amountPerHour));
+                addLiElm("income", 
+                         translatedStrings.number_of_hours, 
+                         form.income.hour.hoursPerWeek + " " + translatedStrings.hour_abbr);
+                addLiElm("income", 
+                         translatedStrings.number_of_weeks, 
+                         form.income.hour.weeksPerYear);
+                addLiElm("income", 
+                         translatedStrings.average_net_income_per + " " + translatedStrings.month, 
+                         currencyShow(income.averagePerMonth.toFixed(1)));
+                addLiElm("income", 
+                         translatedStrings.average_net_income_per + " " + translatedStrings.year, 
+                         currencyShow(income.perYear.toFixed(1)));                     
                 break;
             default:
                 throw errMsg;
@@ -731,29 +627,41 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
            (form.fuel.typeOfCalculation != 'km' && form.fuel.distanceBased.considerCarToJob == 'true')){
 
             addLiElm("distance", 
-                     translatedStrings.dist_home_job, parseInt(form.distance.carToJob.distanceBetweenHomeAndJob).toFixed(1) + " " + translatedStrings.std_dist);
+                     translatedStrings.dist_home_job, 
+                     parseInt(form.distance.carToJob.distanceBetweenHomeAndJob).toFixed(1) + " " + translatedStrings.std_dist);
             addLiElm("distance", 
-                     translatedStrings.days_drive_job, form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
+                     translatedStrings.days_drive_job, 
+                     form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
             addLiElm("distance", 
-                     translatedStrings.dist_jorney_weekend, parseInt(form.distance.carToJob.distanceDuringWeekends).toFixed(1) + " " + translatedStrings.std_dist);
+                     translatedStrings.dist_jorney_weekend, 
+                     parseInt(form.distance.carToJob.distanceDuringWeekends).toFixed(1) + " " + translatedStrings.std_dist);
             addLiElm("distance", 
-                     translatedStrings.average_dist_per_week, dd.perWeek.toFixed(1) + " " + translatedStrings.std_dist);                
+                     translatedStrings.average_dist_per_week, 
+                     dd.perWeek.toFixed(1) + " " + translatedStrings.std_dist);                
         }
 
-        addLiElm("distance", translatedStrings.you_drive_per + " " + translatedStrings.month, dd.perMonth.toFixed(1) + " " + translatedStrings.std_dist);
-        addLiElm("distance", translatedStrings.you_drive_per + " " + translatedStrings.year, dd.perYear.toFixed(1) + " " + translatedStrings.std_dist);             
+        addLiElm("distance", 
+                 translatedStrings.you_drive_per + " " + translatedStrings.month, 
+                 dd.perMonth.toFixed(1) + " " + translatedStrings.std_dist);
+        addLiElm("distance", 
+                 translatedStrings.you_drive_per + " " + translatedStrings.year, 
+                 dd.perYear.toFixed(1) + " " + translatedStrings.std_dist);             
 
         //time spent in driving
         var tsd = calculatedData.timeSpentInDriving;
         if(form.distance.considerCarToJob == 'true' || form.fuel.distanceBased.considerCarToJob == 'true'){
             addLiElm("time_spent_in_driving", 
-                     translatedStrings.minutes_home_job, form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + " " + translatedStrings.min);
+                     translatedStrings.minutes_home_job, 
+                     form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + " " + translatedStrings.min);
             addLiElm("time_spent_in_driving", 
-                     translatedStrings.days_drive_to_job, form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
+                     translatedStrings.days_drive_to_job, 
+                     form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
             addLiElm("time_spent_in_driving", 
-                     translatedStrings.time_drive_weekend, form.timeSpentInDriving.option1.minutesDuringWeekend + " " + translatedStrings.min);
+                     translatedStrings.time_drive_weekend, 
+                     form.timeSpentInDriving.option1.minutesDuringWeekend + " " + translatedStrings.min);
             addLiElm("time_spent_in_driving", 
-                     translatedStrings.minutes_drive_per + " " + translatedStrings.week, tsd.minutesPerWeek + " " + translatedStrings.min);        
+                     translatedStrings.minutes_drive_per + " " + translatedStrings.week, 
+                     tsd.minutesPerWeek + " " + translatedStrings.min);        
         }
         else{
             addLiElm("time_spent_in_driving", 
@@ -774,10 +682,18 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
 
         //financial effort
         var fe = calculatedData.financialEffort;    
-        addLiElm("financial_effort", translatedStrings.total_costs_per_year, currencyShow(fe.totalCarCostsPerYear.toFixed(1)));
-        addLiElm("financial_effort", translatedStrings.hours_to_afford_car,  fe.workingHoursPerYearToAffordCar.toFixed(1) + " " + translatedStrings.hour_abbr);
-        addLiElm("financial_effort", translatedStrings.months_to_afford_car, fe.workingMonthsPerYearToAffordCar.toFixed(2));
-        addLiElm("financial_effort", translatedStrings.days_car_paid,        Math.ceil(fe.daysForCarToBePaid) + " " + translatedStrings.days);
+        addLiElm("financial_effort", 
+                 translatedStrings.total_costs_per_year, 
+                 currencyShow(fe.totalCarCostsPerYear.toFixed(1)));
+        addLiElm("financial_effort", 
+                 translatedStrings.hours_to_afford_car,  
+                 fe.workingHoursPerYearToAffordCar.toFixed(1) + " " + translatedStrings.hour_abbr);
+        addLiElm("financial_effort", 
+                 translatedStrings.months_to_afford_car, 
+                 fe.workingMonthsPerYearToAffordCar.toFixed(2));
+        addLiElm("financial_effort", 
+                 translatedStrings.days_car_paid,
+                 Math.ceil(fe.daysForCarToBePaid) + " " + translatedStrings.days);
 
         //speeds
         var speeds = calculatedData.speeds; 
@@ -825,7 +741,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
                      currencyShow(form.publicTransports.monthlyPassCost));        
 
             addLiElm("taxi", 
-                     publicTransports.taxi.possibleDistanceDoneByTaxi.toFixed(1) + " " + translatedStrings.std_dist + " " + translatedStrings.on_taxi_paying + 
+                     publicTransports.taxi.possibleDistanceDoneByTaxi.toFixed(1) + " " + 
+                     translatedStrings.std_dist + " " + translatedStrings.on_taxi_paying + 
                      " " + currencyShow(publicTransports.taxi.costPerUnitDistance.toFixed(1)) + "/" + translatedStrings.std_dist); 
 
             if(publicTransports.furtherPublicTransports.display){
@@ -836,7 +753,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
         //UBER
         var calculatedUber = calculatedData.uber;
 
-        if(serverInfo.switches.uber && calculatedUber && calculatedUber.calculated){
+        if(switches.uber && calculatedUber && calculatedUber.calculated){
 
             $("#equivalent-transport-costs .uber").show();
 
@@ -845,9 +762,9 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             if(calculatedUber.resultType == 1){                         
 
                 addLiElm("uber", "UBER - " + translatedStrings.costs + " " + translatedStrings.word_per + " " +  translatedStrings.std_dist_full, 
-                        currencyShow(calculatedUber.uberCosts.perUnitDistance.toFixed(2)) + "/" + translatedStrings.std_dist);
+                         currencyShow(calculatedUber.uberCosts.perUnitDistance.toFixed(2)) + "/" + translatedStrings.std_dist);
                 addLiElm("uber", "UBER - " + translatedStrings.costs + " " + translatedStrings.word_per + " " +  translatedStrings.minutes, 
-                        currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + translatedStrings.min);
+                         currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + translatedStrings.min);
                 addLiElm("uber", translatedStrings.fuel_dist + " " + translatedStrings.word_per + " " + translatedStrings.month, 
                          calculatedUber.distanceDoneWithUber.toFixed(0) + " " + translatedStrings.std_dist_full);
                 addLiElm("uber", translatedStrings.minutes_drive_per + " " + translatedStrings.month, 
@@ -885,47 +802,6 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
             $("#equivalent-transport-costs .uber").hide();
         }
 
-    }
-
-    //flatten object, that is, from an Object composed by elements in a Object's tree, returns simple list Object
-    //i.e., from complex object with hierarchies, flattens to simple list Object
-    function flatten(target, opts) {
-        opts = opts || {};
-
-        var delimiter = opts.delimiter || '.';
-        var maxDepth = opts.maxDepth;
-        var output = {};
-
-        function step (object, prev, currentDepth) {
-            currentDepth = currentDepth || 1;
-            Object.keys(object).forEach(function (key) {
-                var value = object[key];
-                var isarray = opts.safe && Array.isArray(value);
-                var type = Object.prototype.toString.call(value);
-                var isbuffer = isBuffer(value);
-                var isobject = (type === '[object Object]' || type === '[object Array]');
-
-                var newKey = prev ? prev + delimiter + key : key;
-
-                if (!isarray && !isbuffer && isobject && Object.keys(value).length &&
-                    (!opts.maxDepth || currentDepth < maxDepth)) {
-
-                    return step(value, newKey, currentDepth + 1);
-                }
-
-                output[newKey] = value;
-            });
-        }
-
-        function isBuffer (obj) {
-            return obj != null && obj.constructor != null &&
-                   typeof obj.constructor.isBuffer === 'function' && 
-                   obj.constructor.isBuffer(obj);
-        }    
-
-        step(target);
-
-        return output;
     }
 
     //get from element with class in the set of toFixed0, toFixed1, toFixed2, etc.
@@ -991,19 +867,50 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, serverInfo, u
         }
     }       
     
+    //Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
+    //Based on this npm package: https://www.npmjs.com/package/smart-app-banner
+    function loadSmartBanner(){
+
+        new SmartBanner({
+            daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
+            daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
+            appStoreLanguage: language, // language code for the App Store (defaults to user's browser language)
+            title: translatedStrings.ac_mobile,
+            author: 'Autocosts Org',
+            button: 'APP',
+            store: {
+                android: 'Google Play'
+            },
+            price: {
+                android: 'FREE'
+            },
+            // Add an icon (in this example the icon of Our Code Editor)
+            icon: "/img/logo/logo_sm.png",
+            theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
+            //force: 'android' // Uncomment for platform emulation
+        });
+    }     
+    
     /* === Public methods to be returned ===*/
         
     //thisModule, since this is a parent module and it may have been defined erlier by a children module
     thisModule.initialize = initialize;
     thisModule.getCostsColors = getCostsColors;
-    thisModule.calculateCostsAndShowResults = calculateCostsAndShowResults;
-    thisModule.setPeriodicCosts = setPeriodicCosts;
     
-    return thisModule;    
+    thisModule.setPeriodicCosts = setPeriodicCosts;
+    thisModule.setCalculatedDataToHTML = setCalculatedDataToHTML; 
+    thisModule.setPeriodicCostsDetails = setPeriodicCostsDetails; 
+    thisModule.setFinancialEffortDetails = setFinancialEffortDetails; 
+    thisModule.setEquivTransportCostsDetails = setEquivTransportCostsDetails;
+    thisModule.setClassAccordionHandler = setClassAccordionHandler; 
+    thisModule.setCalculatedData = setCalculatedData;
+    
+    return thisModule; 
     
 })(autocosts.resultsModule || {},
    autocosts.serverInfo.translatedStrings,
-   autocosts.serverInfo,
+   autocosts.serverInfo.switches,
+   autocosts.serverInfo.language,
    autocosts.main.uberApiObj,
    autocosts.paths.url.fullUrl);
 

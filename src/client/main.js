@@ -14,55 +14,55 @@ var autocosts = (function(){
         main:{
             calculatedData: undefined,              //calculated meta-data after user clicks "Run"
             formData: undefined,                    //Form data filled by the user
-            uberApiObj: undefined,                  //UBER API object with city specific costs (cost per km, per minute, etc.) 
+            uberApiObj: undefined,                  //UBER API object with city specific costs (cost per km, per minute, etc.)
         },
-        paths:{              
+        paths:{
             jsFiles: undefined,                     //Object with locations of Javascript Files
             url: {
                 domainUrl: undefined,               //current domain URL, example 'http://autocosts.info'
                 fullUrl: undefined,                 //full URL of the page, example 'http://autocosts.info/XX'
                 pageUrl: undefined,                 //current page URL, example 'http://autocosts.info/UK'
                 cdnUrl: undefined,                  //it's defined in the node server side index.js
-                uberApi: undefined                  //uber url to get UBER API information through AJAX    
+                uberApi: undefined                  //uber url to get UBER API information through AJAX
             },
             dirs:{
-                clientDir: undefined,               //client directory seen by the browser                
-                languagesJsonDir: undefined         //Directory of JSON Translation files                
+                clientDir: undefined,               //client directory seen by the browser
+                languagesJsonDir: undefined         //Directory of JSON Translation files
             }
         },
         statistics:{
             statisticsObj: undefined,               //Object with countrys' users costs statistics
             statisticsHtmlTablesDir: undefined,     //Directory of statistical html tables
-            statisticsJpgTablesDir: undefined       //Directory of statistical jpg tables                 
+            statisticsJpgTablesDir: undefined       //Directory of statistical jpg tables
         },
         serverInfo:{
-            switches: undefined,                    //GLOBAL switches Object, got from server configuration   
+            switches: undefined,                    //GLOBAL switches Object, got from server configuration
             selectedCountry: undefined,             //Current Country Code
-            countryListObj: undefined,              //List of countries in a Javascript Object      
-            domainListObj: undefined,               //List of domains in a Javascript Object            
-            language: undefined,                    //Current Language Code according to ISO_639-1 codes   
-            translatedStrings: undefined,           //Object with country's language text strings           
+            countryListObj: undefined,              //List of countries in a Javascript Object
+            domainListObj: undefined,               //List of domains in a Javascript Object
+            language: undefined,                    //Current Language Code according to ISO_639-1 codes
+            translatedStrings: undefined,           //Object with country's language text strings
             nonce: undefined,                       //Number used only once for CSP rules in scrips
             httpProtocol: undefined,                //it's defined in node server side index.js*/
             googleAnalyticsTrackingId: undefined,   //Google analytics Tracking ID
             booleans:{
                 isATest: undefined,                 //server refers that this session is a test
-                notLocalhost: undefined             //true when this session does not come from localhost                
+                notLocalhost: undefined             //true when this session does not come from localhost
             }
         },
-        servicesAvailabilityObj: {         
+        servicesAvailabilityObj: {
             googleCaptcha: false,                   //variable that says whether Google Captcha JS files are available
             googleAnalytics: false,                 //variable that says whether Google Analytics JS files are available
             uber: false
         },
         userInfo: {
             uniqueUserId: undefined,                //Unique User Identifier
-            isHumanConfirmed: false,                //for Google reCaptcha  
+            isHumanConfirmed: false,                //for Google reCaptcha
             timeCounter: undefined                  //function used for assessing the time user takes to fill the form
         }
-    }; 
+    };
 
-    
+
     //gets switches from server side configuration
     (function(){
         var globalSwitches = document.getElementById('global_switches');
@@ -81,38 +81,38 @@ var autocosts = (function(){
         //since these switches are only defined by the server
         Object.freeze(mainVariables.serverInfo.switches);
     })();
-  
+
     //gets main module's global variables from server side configuration
     (function(){
         var globalVariables = document.getElementById('global_variables');
-        
+
         //information obtained from the server
         mainVariables.serverInfo.selectedCountry = globalVariables.dataset.country;
         mainVariables.serverInfo.countryListObj = JSON.parse(decodeURI(globalVariables.dataset.country_list));
         mainVariables.serverInfo.domainListObj = JSON.parse(decodeURI(globalVariables.dataset.domain_list));
         mainVariables.serverInfo.language = globalVariables.dataset.language;
         mainVariables.serverInfo.translatedStrings = JSON.parse(decodeURI(globalVariables.dataset.words));
-        mainVariables.serverInfo.nonce = globalVariables.dataset.nonce;    
-        mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol;        
-        mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id;        
-        
+        mainVariables.serverInfo.nonce = globalVariables.dataset.nonce;
+        mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol;
+        mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id;
+
         //booleans
         mainVariables.serverInfo.booleans.isATest = JSON.parse(globalVariables.dataset.is_this_a_test);  //server refers that this session is a test
         mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost);
 
         //paths
-        mainVariables.paths.url.cdnUrl = globalVariables.dataset.cdn_url;        
+        mainVariables.paths.url.cdnUrl = globalVariables.dataset.cdn_url;
         mainVariables.paths.dirs.clientDir = globalVariables.dataset.client_dir;
-        
+
         mainVariables.statistics.statisticsObj = JSON.parse(decodeURI(globalVariables.dataset.stats));
-        
+
     })();
 
     //defines some main module global variables
     (function(){
-        
+
         var selectedCountry = mainVariables.serverInfo.selectedCountry;
-        
+
         mainVariables.main.uberApiObj = {};
         mainVariables.paths.url.uberApi = "getUBER/" + selectedCountry;
 
@@ -121,14 +121,14 @@ var autocosts = (function(){
         mainVariables.paths.url.fullUrl = window.location.href;
 
         /*forms present page full url, example 'http://autocosts.info/UK' */
-        mainVariables.paths.url.pageUrl = mainVariables.serverInfo.httpProtocol + "://" + 
-                                          mainVariables.serverInfo.domainListObj[selectedCountry] + "/" + 
+        mainVariables.paths.url.pageUrl = mainVariables.serverInfo.httpProtocol + "://" +
+                                          mainVariables.serverInfo.domainListObj[selectedCountry] + "/" +
                                           selectedCountry;
 
         var cdnUrl = mainVariables.paths.url.cdnUrl;
-        mainVariables.paths.dirs.translationsDir = cdnUrl + "countries" + "/";       // Directory of JSON Translation files 
+        mainVariables.paths.dirs.translationsDir = cdnUrl + "countries" + "/";       // Directory of JSON Translation files
         mainVariables.statistics.statisticsHtmlTablesDir = cdnUrl + "tables" + "/";  // Directory of statistical html tables
-        mainVariables.statistics.statisticsJpgTablesDir = cdnUrl + "tables" + "/";   // Directory of statistical jpg tables 
+        mainVariables.statistics.statisticsJpgTablesDir = cdnUrl + "tables" + "/";   // Directory of statistical jpg tables
 
     })();
 
@@ -137,21 +137,25 @@ var autocosts = (function(){
         var globalVariables = document.getElementById('global_variables');
         var jsfilesDefinedByServer = JSON.parse(decodeURI(globalVariables.dataset.js_files));
         var rootClientURL = mainVariables.paths.url.cdnUrl + mainVariables.paths.dirs.clientDir + "/";
-        
+
+        /*var recaptchaFunction = "autocosts.resultsModule.runResultsModule.recaptchaCallback";*/
+
         mainVariables.paths.jsFiles = {
             google : {
-                recaptchaAPI : jsfilesDefinedByServer.GrecaptchaAPI + "?onload=grecaptcha_callback&render=explicit&hl=" + mainVariables.serverInfo.language,
+                recaptchaAPI : jsfilesDefinedByServer.GrecaptchaAPI +
+                    /*"?onload=" + recaptchaFunction + */
+                    "?render=explicit&hl=" + mainVariables.serverInfo.language,
                 analytics    : jsfilesDefinedByServer.Ganalytics
             },
 
             //core functions
-            calculator :          rootClientURL + "core/calculator.js",            
+            calculator :          rootClientURL + "core/calculator.js",
             conversions :         rootClientURL + "core/conversions.js",
-            
+
             initialize :          rootClientURL + "initialize.js",
             userForm :            rootClientURL + "userForm.js",
             validateForm :        rootClientURL + "validateForm.js",
-            g_recaptcha :         rootClientURL + "g-recaptcha.js",
+            runResults :          rootClientURL + "runResults.js",
             transferData :        rootClientURL + "transferData.js",
             results :             rootClientURL + "results.js",
             dbFunctions :         rootClientURL + "dbFunctions.js",
@@ -189,27 +193,33 @@ var autocosts = (function(){
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 //module for getting JS, CSS or other files
-autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, language, translatedStrings, uberApiUrl){    
-    
-    function getUber(){
-        
+autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, translatedStrings, uberApiUrl){
+
+    function getUberInfo(){
+
         var $deferredEvent = $.Deferred();
-        
+
         if(country != "XX"){//if not test version
             //gets asynchronously UBER information
-            $.get(uberApiUrl, function(data) {
+            $.get(uberApiUrl).
+            done(function(data) {
                 //alert(JSON.stringify(data, null, 4));
                 if(data && !$.isEmptyObject(data)){
                     autocosts.main.uberApiObj =  data; //uberApi is a global variable
                     console.log("uber data got from uber API: ", data);
                     autocosts.servicesAvailabilityObj.uber = true;
-                    $deferredEvent.resolve();
+                    console.log("Uber info loaded with success");
                 }
-                else{
-                    console.error("Error getting uber info");
+                else{                    
                     autocosts.servicesAvailabilityObj.uber = false;
-                    $deferredEvent.resolve("error");
-                }                    
+                    console.warn("No uber info");
+                }
+                $deferredEvent.resolve();
+            }).
+            fail(function(){
+                autocosts.servicesAvailabilityObj.uber = false;
+                console.warn("No uber info");  
+                $deferredEvent.resolve();
             });
         }
         else{//test version (London city, in Pounds)
@@ -224,14 +234,14 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
 
             $deferredEvent.resolve();
         }
-         
+
         return $deferredEvent;
     }
 
     function getPdfJsFiles(){
-        
+
         var $deferredEvent = $.Deferred();
-        
+
         //wait until all PDF related files are loaded
         //to activate the downloadPDF button
         $.getScript(jsFiles.PDF.pdfModule, function() {
@@ -250,40 +260,16 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
                 else{
                     pdf_fonts_path = jsFiles.PDF.vfs_fonts;
                 }
-                $.getScript(pdf_fonts_path).done( function() {                                    
+                $.getScript(pdf_fonts_path).done( function() {
                     console.log("All pdf related files loaded");
                     $deferredEvent.resolve();
                 });
             });
         });
-        
+
         return $deferredEvent;
     }
 
-    //Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
-    //Based on this npm package: https://www.npmjs.com/package/smart-app-banner
-    function loadSmartBanner(){
-
-        new SmartBanner({
-            daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
-            daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
-            appStoreLanguage: language, // language code for the App Store (defaults to user's browser language)
-            title: translatedStrings.ac_mobile,
-            author: 'Autocosts Org',
-            button: 'APP',
-            store: {
-                android: 'Google Play'
-            },
-            price: {
-                android: 'FREE'
-            },
-            // Add an icon (in this example the icon of Our Code Editor)
-            icon: "/img/logo/logo_sm.png",
-            theme: 'android' // put platform type ('ios', 'android', etc.) here to force single theme on all device
-            //force: 'android' // Uncomment for platform emulation
-        });
-    }            
-    
     /*The function below will create and add to the document all the stylesheets that you wish to load asynchronously.
     (But, thanks to the Event Listener, it will only do so after all the window's other resources have loaded.)*/
     function loadCSSFiles(styleSheets) {
@@ -302,45 +288,45 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
 
             head.appendChild(link);
         }
-    }    
-    
+    }
+
     /*function that loads extra files and features, that are not loaded immediately after the page is opened
     because such files and features are not needed on the initial page load, so that initial loading time can be reduced*/
-    function loadDeferredJSFiles(callback){                
-                       
-        var promisesArray = [$.getScript(jsFiles.calculator), 
-                             $.getScript(jsFiles.conversions), 
-                             $.getScript(jsFiles.smartAppBanner, loadSmartBanner), 
-                             $.getScript(jsFiles.transferData), 
+    function loadDeferredJSFiles(callback){
+
+        var promisesArray = [$.getScript(jsFiles.calculator),
+                             $.getScript(jsFiles.conversions),
+                             $.getScript(jsFiles.smartAppBanner),
+                             $.getScript(jsFiles.transferData),
                              $.getScript(jsFiles.results),
-                             $.getScript(jsFiles.g_recaptcha)];
-        
+                             $.getScript(jsFiles.runResults)];
+
         if (switches.charts){
             promisesArray.push($.getScript(jsFiles.chartjs));
             promisesArray.push($.getScript(jsFiles.charts));
         }
         if (switches.data_base){
             promisesArray.push($.getScript(jsFiles.dbFunctions));
-        }        
+        }
         if(switches.pdf || switches.print){
             promisesArray.push(getPdfJsFiles());
-        }        
-        if(switches.uber){
-            promisesArray.push(getUber());
-        }         
-        if (switches.googleCaptcha && notLocalhost){
-            promisesArray.push($.getScript(jsFiles.Google.recaptchaAPI));            
         }
-        
-        $.when.apply($, promisesArray).done(function(){              
+        if(switches.uber){
+            promisesArray.push(getUberInfo());
+        }
+        if (switches.googleCaptcha && notLocalhost){
+            promisesArray.push($.getScript(jsFiles.google.recaptchaAPI));
+        }
+
+        $.when.apply($, promisesArray).done(function(){
             callback();
         });
     }
 
     /*=== Public methods ===*/
-    
-    function loadInitialFiles(callback){                
-        
+
+    function loadInitialFiles(callback){
+
         $.when(
             $.getScript(jsFiles.jQueryColor),
             $.getScript(jsFiles.jQuerySidebar),
@@ -350,24 +336,25 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
         ).done(function(){
             callback();
         });
-    }    
-    
-    function loadDeferredFiles(){                
+    }
+
+    function loadDeferredFiles(){
         //loadCSSFiles(['css/merged_deferred.css']);
         loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
-        
+
         loadDeferredJSFiles(function(){
             console.log("All deferred JS files loaded");
-            
+
             autocosts.resultsModule.initialize();
+            autocosts.resultsModule.runResultsModule.initialize();
             autocosts.userFormModule.validateFormModule.initialize();
-            
+
             if(switches.pdf || switches.print){
                 autocosts.resultsModule.pdfModule.initialize();
-            }                        
+            }
         });
     }
-    
+
     return{
         loadInitialFiles,
         loadDeferredFiles
@@ -377,7 +364,6 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
    autocosts.serverInfo.switches,
    autocosts.serverInfo.selectedCountry,
    autocosts.serverInfo.booleans.notLocalhost,
-   autocosts.serverInfo.language,
    autocosts.serverInfo.translatedStrings,
    autocosts.paths.url.uberApi);
 
@@ -386,9 +372,9 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, l
 $(document).ready(function () {
     autocosts.getFilesModule.loadInitialFiles(function(){
         console.log("All initial JS files loaded");
-        
+
         autocosts.initializeModule.initialize();
-        autocosts.userFormModule.initialize();         
+        autocosts.userFormModule.initialize();
     });
 });
-    
+

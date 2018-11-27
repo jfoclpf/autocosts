@@ -21,9 +21,9 @@ function createObjToDB(){
 
     var objectToDb = {};
     
-    var f1 = getFormPart1();
+    /*var f1 = getFormPart1();
     var f2 = getFormPart2();
-    var f3 = getFormPart3();
+    var f3 = getFormPart3();*/
    /*     
     //form part 1     
     objectToDb.acquisition_month =                  f1.acquisitionMonth;
