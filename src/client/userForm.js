@@ -11,8 +11,13 @@
 autocosts.userFormModule = (function(thisModule){
 
     var validateFormModule, initializeModule;
+    
+    //promise referring to the event when all the deferred JS files are fully loaded
+    //we don't check if the form is correctly filled, before this event triggers
+    var $whenDeferredFilesAreLoaded;
 
-    function initialize(){
+    function initialize($whenDeferredFilesAreLoadedIn){
+        $whenDeferredFilesAreLoaded = $whenDeferredFilesAreLoadedIn;
         loadModuleDependencies();
         setFormSettings();
         setFormHandlers();
@@ -367,7 +372,6 @@ autocosts.userFormModule = (function(thisModule){
             //shows or hides button "next" accordingly
             //Example: "Credit" field container starts with radio button to NO by default, and thus has no visible inputs
             if(fieldStatus($this) === "fully_valid" || fieldStatus($this) === "no_inputs"){
-
                 //if the current field is valid, show "next" button
                 $buttonNext.stop(true).show();
             }
@@ -375,12 +379,16 @@ autocosts.userFormModule = (function(thisModule){
                 $buttonNext.stop(true).hide();
             }
 
-            if(isReadyToCalc()){
-                $(".calculate_bottom_bar").fadeIn("slow");
-            }
-            else{
-                $(".calculate_bottom_bar").fadeOut("slow");
-            }
+            $.when($whenDeferredFilesAreLoaded).then(function(){                
+                if(isReadyToCalc()){
+                    $(".calculate_bottom_bar").fadeIn("slow");
+                }
+                else{
+                    $(".calculate_bottom_bar").fadeOut("slow");
+                }
+            }, function(){
+                console.error("Event $whenDeferredFilesLoaded returns an error");
+            });
 
         });
 
@@ -752,7 +760,7 @@ autocosts.userFormModule = (function(thisModule){
     //The form is ready to be calculated when Standing Costs (form part 1) and Running Costs (form part 2) are filled
     //The Extra data (form part 3) is optional
     function isReadyToCalc(){        
-
+        
         var status, fieldN, isOk = true;
 
         $(".form_part").find(".field_container").each(function(index, item){

@@ -337,6 +337,6 @@ autocosts.databaseModule = (function(thisModule, serverInfo, userInfo){
     
     return thisModule; 
     
-})(autocosts.resultsModule || {},
+})(autocosts.databaseModule || {},
    autocosts.serverInfo,
    autocosts.userInfo);

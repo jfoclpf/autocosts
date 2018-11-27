@@ -195,6 +195,10 @@ var autocosts = (function(){
 //module for getting JS, CSS or other files
 autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, translatedStrings, uberApiUrl){
 
+    //promise referring to the event when all the deferred JS/CSS files are fully loaded
+    //we don't check if the form is correctly filled, before this event triggers    
+    var $whenDeferredFilesAreLoaded = $.Deferred();
+    
     function getUberInfo(){
 
         var $deferredEvent = $.Deferred();
@@ -327,7 +331,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
     /*=== Public methods ===*/
 
-    function loadInitialFiles(callback){
+    function loadInitialFiles(){
 
         $.when(
             $.getScript(jsFiles.jQueryColor), 
@@ -335,8 +339,12 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             $.getScript(jsFiles.initialize),
             $.getScript(jsFiles.userForm),
             $.getScript(jsFiles.validateForm)
-        ).then(function(){
-            callback();
+        ).then(function(){            
+            console.log("All initial JS files loaded OK");
+            
+            autocosts.initializeModule.initialize();
+            autocosts.userFormModule.initialize($whenDeferredFilesAreLoaded);
+            
         }, function(){
             console.error("Some of the files in loadInitialFiles() were not loaded");   
         });
@@ -356,6 +364,8 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             if(switches.pdf || switches.print){
                 autocosts.resultsModule.pdfModule.initialize();
             }
+            
+            $whenDeferredFilesAreLoaded.resolve();
         });
     }
 
@@ -374,11 +384,6 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
 //the whole program indeed starts here
 $(document).ready(function () {
-    autocosts.getFilesModule.loadInitialFiles(function(){
-        console.log("All initial JS files loaded OK");
-
-        autocosts.initializeModule.initialize();
-        autocosts.userFormModule.initialize();
-    });
+    autocosts.getFilesModule.loadInitialFiles();
 });
 

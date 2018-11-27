@@ -16,13 +16,13 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
     
     var calculatedData;
     
-    function initialize(){    
+    function initialize(){        
         loadModuleDependencies();
         loadResultsSettingsAndHandlers();
         loadSmartBanner();
     }
     
-    function loadModuleDependencies(){
+    function loadModuleDependencies(){        
         initializeModule = autocosts.initializeModule; 
         chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {};
         pdfModule = switches.pdf ? autocosts.resultsModule.pdfModule : {};        
@@ -102,8 +102,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
     }        
     
     //scans all flattened calculatedDat and assigns each result value to respective HTML class element  
-    function setCalculatedDataToHTML(flattenedData){
-
+    function setCalculatedDataToHTML(flattenedData){        
+        
         for (var key in flattenedData){
             var $i = $("#results ." + key);  
             //check that the element with that class exists in the html page

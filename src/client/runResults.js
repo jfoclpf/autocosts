@@ -64,141 +64,7 @@ autocosts.resultsModule.runResultsModule =
             }*/
             Run("normal");
         });        
-    }
-        
-    //function that is run when user clicks "run/calculate"
-    function calculateCostsAndShowResults(){        
-        
-        var form, countryObj, flattenedData, chartsDrawnPromisesObj, promisesArray;
-
-        //test if the form user inputs are correct
-        if (!userFormModule.isReadyToCalc()){ 
-            return false;
-        } 
-        
-        $("#form").hide(); 
-
-        //for each form part gets object with content
-        form = transferDataModule.fromUserFormToCalculator(DOMForm);
-        mainObjs.formData = form;
-
-        //country object with country specific variables
-        countryObj = {
-            countryCode:            selectedCountry,
-            currency:               translatedStrings.curr_code,
-            distance_std:           translatedStrings.distance_std_option,
-            speed_std:              translatedStrings.std_dist + "/h",
-            fuel_efficiency_std:    translatedStrings.fuel_efficiency_std_option,
-            fuel_price_volume_std:  translatedStrings.fuel_price_volume_std,
-            taxi_price:             translatedStrings.taxi_price_per_dist
-        };
-
-        //calculate costs, "costs" is a global variable/object defined in calculatorModule.js
-        calculatedData = calculatorModule.calculateCosts(form, countryObj); 
-
-        //get Uber data if applicable
-        if(switches.uber && calculatedData.publicTransports.calculated){
-            calculatedData.uber = calculatorModule.calculateUberCosts(mainObjs.uberApiObj); 
-        } 
-
-        resultsModule.setCalculatedData(calculatedData);
-        mainObjs.calculatedData = calculatedData; //assigns to global variable
-        //console.log(JSON.stringify(calculatedData, null, 4));          
-
-        //from complex object with hierarchies, flattens to simple object
-        //see for more info: https://github.com/hughsk/flat
-        flattenedData = flatten(calculatedData, {delimiter:"_"});         
-        //it needs to show also 1/2 of Maintenance Costs
-        flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2;
-        //console.log(flattenedData); 
-        resultsModule.setCalculatedDataToHTML(flattenedData);        
-        
-        chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
-
-        //The first three boxes on the top
-        //if financial effort was not calculated, does not show doughnut chart
-        //on the third box, and adapt the three boxes css classes
-        if(calculatedData.financialEffort.calculated && switches.charts){ 
-            chartsModule.drawDoughnutFinancialEffort(calculatedData);
-            //shows third box where the financial effort doughnut chart appears
-            $("#results #info-boxes .info-box.box-3").show();
-            $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");
-        }
-        else{
-            //hides third box where the financial effort doughnut chart appears
-            $("#results #info-boxes .info-box.box-3").hide();
-            $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");       
-        }                
-
-        resultsModule.setPeriodicCosts(calculatedData, "month");
-        resultsModule.setPeriodicCostsDetails(form, calculatedData); //the details on the dropdown boxes                         
-
-        //switches are frozen/const object in main.js, so no need to show elements when switches.charts is true
-        //since these elements are set tp be shown in css by default, just need to hide in case is false
-        if(switches.charts){            
-            chartsModule.drawCostsBars("month");
-            chartsModule.drawCostsDoughnut("month");
-        }
-        else {
-            $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
-        }
-
-        //Financial Effort 
-        if(calculatedData.financialEffort.calculated){            
-            resultsModule.setFinancialEffortDetails(form, calculatedData);
-
-            //shows financial effort section 
-            $("#results #financial-effort").show();
-
-            if(switches.charts){                
-                chartsModule.drawFinancialEffort(calculatedData);
-            }
-            else{
-                $("#financial-effort .graph").hide();
-                $("#financial-effort .values.box").css("width", "40%").css("float", "none");
-            }
-        }
-        else {
-            //hides financial effort section
-            $("#results #financial-effort").hide();
-        } 
-
-        //Equivalent transport costs
-        if(calculatedData.publicTransports.calculated){            
-            resultsModule.setEquivTransportCostsDetails(form, calculatedData);                
-
-            $("#results #equivalent-transport-costs").show();
-
-            if(switches.charts){
-                chartsModule.drawAlternativesToCar();
-            }
-            else{
-                $("#equivalent-transport-costs .graph").hide();
-                $("#equivalent-transport-costs .values.box").css("margin", "auto 2%").css("float", "none");            
-            }
-        }
-        else {
-            $("#results #equivalent-transport-costs").hide();
-        } 
-
-        resultsModule.setClassAccordionHandler();
-
-        $("#results").show();
-
-        $("*").promise().done(function(){ 
-            //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
-            //such that, the pdf generation can extract the charts to base64 images
-            promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
-                return chartsDrawnPromisesObj[key];
-            });
-             promisesArray.push($("*").promise());
-            $.when.apply($, promisesArray).done(function () {              
-                pdfModule.generatePDF(calculatedData);             
-            }); 
-        }); 
-        
-        return true;
-    }
+    }       
         
     //Returns boolean whether to use or not Google Captcha
     function useGreCapctha(){            
@@ -213,7 +79,7 @@ autocosts.resultsModule.runResultsModule =
     //this function is called when the Google Captcha JS file is loaded and ready to be used
     function recaptchaCallback() {
         servicesAvailabilityObj.googleCaptcha = true;
-        console.log("recaptcha is ready!");
+        console.log("use Google ReCapctha!");
 
         if (useGreCapctha()){          
             runButton.set("show-g-recaptcha");
@@ -377,6 +243,141 @@ autocosts.resultsModule.runResultsModule =
         };
         
     })();     
+    
+    
+    //function that is run when user clicks "run/calculate"
+    function calculateCostsAndShowResults(){        
+        
+        var form, countryObj, flattenedData, chartsDrawnPromisesObj, promisesArray;
+
+        //test if the form user inputs are correct
+        if (!userFormModule.isReadyToCalc()){ 
+            return false;
+        } 
+        
+        $("#form").hide(); 
+
+        //for each form part gets object with content
+        form = transferDataModule.fromUserFormToCalculator(DOMForm);
+        mainObjs.formData = form;
+
+        //country object with country specific variables
+        countryObj = {
+            countryCode:            selectedCountry,
+            currency:               translatedStrings.curr_code,
+            distance_std:           translatedStrings.distance_std_option,
+            speed_std:              translatedStrings.std_dist + "/h",
+            fuel_efficiency_std:    translatedStrings.fuel_efficiency_std_option,
+            fuel_price_volume_std:  translatedStrings.fuel_price_volume_std,
+            taxi_price:             translatedStrings.taxi_price_per_dist
+        };
+
+        //calculate costs, "costs" is a global variable/object defined in calculatorModule.js
+        calculatedData = calculatorModule.calculateCosts(form, countryObj); 
+
+        //get Uber data if applicable
+        if(switches.uber && calculatedData.publicTransports.calculated){
+            calculatedData.uber = calculatorModule.calculateUberCosts(mainObjs.uberApiObj); 
+        } 
+
+        resultsModule.setCalculatedData(calculatedData);
+        mainObjs.calculatedData = calculatedData; //assigns to global variable
+        //console.log(JSON.stringify(calculatedData, null, 4));          
+
+        //from complex object with hierarchies, flattens to simple object
+        //see for more info: https://github.com/hughsk/flat
+        flattenedData = flatten(calculatedData, {delimiter:"_"});         
+        //it needs to show also 1/2 of Maintenance Costs
+        flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2;
+        //console.log(flattenedData); 
+        resultsModule.setCalculatedDataToHTML(flattenedData);        
+        
+        chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
+
+        //The first three boxes on the top
+        //if financial effort was not calculated, does not show doughnut chart
+        //on the third box, and adapt the three boxes css classes
+        if(calculatedData.financialEffort.calculated && switches.charts){ 
+            chartsModule.drawDoughnutFinancialEffort(calculatedData);
+            //shows third box where the financial effort doughnut chart appears
+            $("#results #info-boxes .info-box.box-3").show();
+            $("#results #info-boxes .info-box").removeClass("two-boxes").addClass("three-boxes");
+        }
+        else{
+            //hides third box where the financial effort doughnut chart appears
+            $("#results #info-boxes .info-box.box-3").hide();
+            $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");       
+        }                
+
+        resultsModule.setPeriodicCosts(calculatedData, "month");
+        resultsModule.setPeriodicCostsDetails(form, calculatedData); //the details on the dropdown boxes                         
+
+        //switches are frozen/const object in main.js, so no need to show elements when switches.charts is true
+        //since these elements are set tp be shown in css by default, just need to hide in case is false
+        if(switches.charts){            
+            chartsModule.drawCostsBars("month");
+            chartsModule.drawCostsDoughnut("month");
+        }
+        else {
+            $("#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references").hide();             
+        }
+
+        //Financial Effort 
+        if(calculatedData.financialEffort.calculated){            
+            resultsModule.setFinancialEffortDetails(form, calculatedData);
+
+            //shows financial effort section 
+            $("#results #financial-effort").show();
+
+            if(switches.charts){                
+                chartsModule.drawFinancialEffort(calculatedData);
+            }
+            else{
+                $("#financial-effort .graph").hide();
+                $("#financial-effort .values.box").css("width", "40%").css("float", "none");
+            }
+        }
+        else {
+            //hides financial effort section
+            $("#results #financial-effort").hide();
+        } 
+
+        //Equivalent transport costs
+        if(calculatedData.publicTransports.calculated){            
+            resultsModule.setEquivTransportCostsDetails(form, calculatedData);                
+
+            $("#results #equivalent-transport-costs").show();
+
+            if(switches.charts){
+                chartsModule.drawAlternativesToCar();
+            }
+            else{
+                $("#equivalent-transport-costs .graph").hide();
+                $("#equivalent-transport-costs .values.box").css("margin", "auto 2%").css("float", "none");            
+            }
+        }
+        else {
+            $("#results #equivalent-transport-costs").hide();
+        } 
+
+        resultsModule.setClassAccordionHandler();
+
+        $("#results").show();
+
+        $("*").promise().done(function(){ 
+            //it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
+            //such that, the pdf generation can extract the charts to base64 images
+            promisesArray = Object.keys(chartsDrawnPromisesObj).map(function(key) {
+                return chartsDrawnPromisesObj[key];
+            });
+             promisesArray.push($("*").promise());
+            $.when.apply($, promisesArray).done(function () {              
+                pdfModule.generatePDF(calculatedData);             
+            }); 
+        }); 
+        
+        return true;
+    }    
     
     //flatten object, that is, from an Object composed by elements in a Object's tree, returns simple list Object
     //i.e., from complex object with hierarchies, flattens to simple list Object
