@@ -49,7 +49,7 @@ autocosts.transferDataModule = (function(){
 
             //Form Part 2
             fuel: {
-                typeOfCalculation: getCheckedValue(f.calc_combustiveis), //binary variable: "currency" or "distance"
+                typeOfCalculation: getCheckedValue(f.calc_combustiveis), //binary variable: "currency/euros" or "distance/km"
                 currencyBased: {
                     amountPerPeriod: f.combustiveis_euro.value,
                     period:          f.combustiveis_periodo_euro.value //month, two months,  trimester, semester, year
