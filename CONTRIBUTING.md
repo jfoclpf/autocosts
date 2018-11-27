@@ -62,7 +62,7 @@ autocosts
    |        |--- chartsModule
    |        |--- pdfModule
    |
-   |--- dataBaseModule
+   |--- databaseModule
 ```
 
 ### Pattern
