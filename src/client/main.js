@@ -158,7 +158,7 @@ var autocosts = (function(){
             runResults :          rootClientURL + "runResults.js",
             transferData :        rootClientURL + "transferData.js",
             results :             rootClientURL + "results.js",
-            dbFunctions :         rootClientURL + "dbFunctions.js",
+            database :         rootClientURL + "database.js",
 
             jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.min.js",
             jQueryColor :         rootClientURL + "jquery/jquery.color.min.js",
@@ -206,9 +206,9 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
                 //alert(JSON.stringify(data, null, 4));
                 if(data && !$.isEmptyObject(data)){
                     autocosts.main.uberApiObj =  data; //uberApi is a global variable
-                    console.log("uber data got from uber API: ", data);
+                    //console.log("uber data got from uber API: ", data);
                     autocosts.servicesAvailabilityObj.uber = true;
-                    console.log("Uber info loaded with success");
+                    console.log("Uber info loaded OK");
                 }
                 else{                    
                     autocosts.servicesAvailabilityObj.uber = false;
@@ -261,7 +261,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
                     pdf_fonts_path = jsFiles.PDF.vfs_fonts;
                 }
                 $.getScript(pdf_fonts_path).done( function() {
-                    console.log("All pdf related files loaded");
+                    console.log("All pdf related files loaded OK");
                     $deferredEvent.resolve();
                 });
             });
@@ -306,7 +306,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             promisesArray.push($.getScript(jsFiles.charts));
         }
         if (switches.data_base){
-            promisesArray.push($.getScript(jsFiles.dbFunctions));
+            promisesArray.push($.getScript(jsFiles.database));
         }
         if(switches.pdf || switches.print){
             promisesArray.push(getPdfJsFiles());
@@ -318,8 +318,10 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             promisesArray.push($.getScript(jsFiles.google.recaptchaAPI));
         }
 
-        $.when.apply($, promisesArray).done(function(){
+        $.when.apply($, promisesArray).then(function(){
             callback();
+        }, function(){
+            console.error("Some of the files in loadDeferredJSFiles() were not loaded");
         });
     }
 
@@ -328,13 +330,15 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
     function loadInitialFiles(callback){
 
         $.when(
-            $.getScript(jsFiles.jQueryColor),
+            $.getScript(jsFiles.jQueryColor), 
             $.getScript(jsFiles.jQuerySidebar),
             $.getScript(jsFiles.initialize),
             $.getScript(jsFiles.userForm),
             $.getScript(jsFiles.validateForm)
-        ).done(function(){
+        ).then(function(){
             callback();
+        }, function(){
+            console.error("Some of the files in loadInitialFiles() were not loaded");   
         });
     }
 
@@ -343,7 +347,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
         loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
 
         loadDeferredJSFiles(function(){
-            console.log("All deferred JS files loaded");
+            console.log("All deferred JS files loaded OK");
 
             autocosts.resultsModule.initialize();
             autocosts.resultsModule.runResultsModule.initialize();
@@ -371,7 +375,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 //the whole program indeed starts here
 $(document).ready(function () {
     autocosts.getFilesModule.loadInitialFiles(function(){
-        console.log("All initial JS files loaded");
+        console.log("All initial JS files loaded OK");
 
         autocosts.initializeModule.initialize();
         autocosts.userFormModule.initialize();
