@@ -47,11 +47,11 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             if (switches.charts){
                 //costs Doughnut Chart width/height proportion
                 costsDoughnutChartWHProp = costsDoughnutSize.width/costsDoughnutSize.height;
-                costsDoughnutChartWidth = 200; //pixels
+                costsDoughnutChartWidth = 180; //pixels
                 
                 //costs Bars Chart width/height proportion
                 costsBarsChartWHProp = costsBarsSize.width/costsBarsSize.height;
-                costsBarsChartWidth = 450; //pixels
+                costsBarsChartWidth = 420; //pixels
                 
                 if(isFinancialEffortChart){
                     financialEffortChartWHProp = financialEffortSize.width/financialEffortSize.height;
