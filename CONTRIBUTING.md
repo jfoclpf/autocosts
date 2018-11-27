@@ -57,9 +57,12 @@ autocosts
    |        |--- validateFormModule
    |
    |--- resultsModule
-            |
-            |--- chartsModule
-            |--- pdfModule
+   |        |
+   |        |--- runResultsModule
+   |        |--- chartsModule
+   |        |--- pdfModule
+   |
+   |--- dataBaseModule
 ```
 
 ### Pattern
@@ -92,13 +95,11 @@ var myGradesCalculate = (function () {
   // that we want to reveal publicly
 
   return {
-    average: average,
-    failing: failing
+    average,
+    failing
   };
 })();
 
-myGradesCalculate.failing(); // 'You failed 2 times.' 
-myGradesCalculate.average(); // 'Your average grade is 70.33333333333333.'
 ```
 
 ### Submodules
@@ -112,7 +113,7 @@ var Module = (function() {
     };
 
     return {
-        B: B
+        B
     };
 
 })();
@@ -124,7 +125,7 @@ Module.Utils = (function() {
     };
 
     return {
-        C: C
+        C
     }
 
 })();
