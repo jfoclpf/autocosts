@@ -57,10 +57,12 @@ autocosts
    |        |--- validateFormModule
    |
    |--- resultsModule
-            |
-            |--- runResultsModule
-            |--- chartsModule
-            |--- pdfModule
+   |        |
+   |        |--- runResultsModule
+   |        |--- chartsModule
+   |        |--- pdfModule
+   |
+   |--- dataBaseModule
 ```
 
 ### Pattern
