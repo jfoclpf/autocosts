@@ -131,6 +131,7 @@ root.myModuleA.mySubmoduleA1 = (function() {
     }
 
     function E(){
+        myModuleB.P();
         ...
     }
     
@@ -139,8 +140,8 @@ root.myModuleA.mySubmoduleA1 = (function() {
     }
     
     return {
-        initialize,
-        F
+        initialize: initialize,
+        F: F
     };
 
 })();
@@ -153,6 +154,9 @@ With this structure it is possible to load all files on a fully asynchronous way
 $.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(){
     root.myModuleA.initialize();
     root.myModuleA.mySubmoduleA1.initialize();
+    //now all the methods are available
+    root.myModuleA.mySubmoduleA1.F();
+    root.myModuleA.C();
 });
 ```
 
