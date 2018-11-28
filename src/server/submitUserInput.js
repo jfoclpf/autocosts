@@ -8,12 +8,12 @@ module.exports = function (req, res, serverData){
     var DBInfo = serverData.settings.dataBase.credentials;    
     
     //object got from POST
-    var objectToDb = req.body.objectToDb;    
-              
-    debug(objectToDb);
+    var databaseObj = req.body.databaseObj;    
+    
+    debug(databaseObj);
     debug('\nInserting user data into ' +
-                'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions);
-
+                'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions);    
+    
     var queryInsert = "INSERT INTO " + DBInfo.db_tables.users_insertions + " ( \
         time_to_fill_form, \
         uuid_client, \
@@ -82,71 +82,71 @@ module.exports = function (req, res, serverData){
         time_spent_days_drive_per_month \
     ) \
     VALUES ( " +
-        "'" + objectToDb.time_to_fill_form + "', " +
-        "'" + objectToDb.client_uuid + "', " +
-        "'" + objectToDb.country + "', " +
+        "'" + databaseObj.time_to_fill_form + "', " +
+        "'" + databaseObj.client_uuid + "', " +
+        "'" + databaseObj.country + "', " +
         " NOW() , " +
-        "'" + objectToDb.acquisition_month + "', " +
-        "'" + objectToDb.acquisition_year + "', " +
-        "'" + objectToDb.commercial_value_at_acquisition + "', " +
-        "'" + objectToDb.commercial_value_at_now + "', " +
-        "'" + objectToDb.insure_type + "', " +
-        "'" + objectToDb.insurance_value + "', " +
-        "'" + objectToDb.credit + "', " +
-        "'" + objectToDb.credit_borrowed_amount + "', " +
-        "'" + objectToDb.credit_number_installments + "', " +
-        "'" + objectToDb.credit_amount_installment + "', " +
-        "'" + objectToDb.credit_residual_value + "', " +
-        "'" + objectToDb.inspection_number_inspections + "', " +
-        "'" + objectToDb.inspection_average_inspection_cost + "', " +
-        "'" + objectToDb.vehicle_excise_tax + "', " +
-        "'" + objectToDb.fuel_calculation + "', " +
-        "'" + objectToDb.fuel_currency_based_currency_value + "', " +
-        "'" + objectToDb.fuel_currency_based_periodicity + "', " +
-        "'" + objectToDb.fuel_distance_based_car_to_work + "', " +
-        "'" + objectToDb.fuel_distance_based_car_to_work_number_days_week + "', " +
-        "'" + objectToDb.fuel_distance_based_car_to_work_distance_home_work + "', " +
-        "'" + objectToDb.fuel_distance_based_car_to_work_distance_weekend + "', " +
-        "'" + objectToDb.fuel_distance_based_no_car_to_work_distance + "', " +
-        "'" + objectToDb.fuel_distance_based_no_car_to_fuel_period_distance + "', " +
-        "'" + objectToDb.fuel_distance_based_fuel_efficiency + "', " +
-        "'" + objectToDb.fuel_distance_based_fuel_price + "', " +
-        "'" + objectToDb.maintenance + "', " +
-        "'" + objectToDb.repairs + "', " +
-        "'" + objectToDb.parking + "', " +
-        "'" + objectToDb.tolls_daily + "', " +
-        "'" + objectToDb.tolls_no_daily_value + "', " +
-        "'" + objectToDb.tolls_no_daily_period + "', " +
-        "'" + objectToDb.tolls_daily_expense + "', " +
-        "'" + objectToDb.tolls_daily_number_days + "', " +
-        "'" + objectToDb.tickets_value + "', " +
-        "'" + objectToDb.tickets_periodicity + "', " +
-        "'" + objectToDb.washing_value + "', " +
-        "'" + objectToDb.washing_periodicity + "', " +
-        "'" + objectToDb.household_number_people + "', " +
-        "'" + objectToDb.public_transportation_month_expense + "', " +
-        "'" + objectToDb.income_type + "', " +
-        "'" + objectToDb.income_per_year + "', " +
-        "'" + objectToDb.income_per_month + "', " +
-        "'" + objectToDb.income_months_per_year + "', " +
-        "'" + objectToDb.income_per_week + "', " +
-        "'" + objectToDb.income_weeks_per_year + "', " +
-        "'" + objectToDb.income_per_hour + "', " +
-        "'" + objectToDb.income_hours_per_week + "', " +
-        "'" + objectToDb.income_hour_weeks_per_year + "', " +
-        "'" + objectToDb.work_time + "', " +
-        "'" + objectToDb.work_time_month_per_year + "', " +
-        "'" + objectToDb.work_time_hours_per_week + "', " +
-        "'" + objectToDb.distance_drive_to_work + "', " +
-        "'" + objectToDb.distance_days_per_week + "', " +
-        "'" + objectToDb.distance_home_job + "', " +
-        "'" + objectToDb.distance_journey_weekend + "', " +
-        "'" + objectToDb.distance_per_month + "', " +
-        "'" + objectToDb.distance_period + "', " +
-        "'" + objectToDb.time_spent_home_job + "', " +
-        "'" + objectToDb.time_spent_weekend + "', " +
-        "'" + objectToDb.time_spent_min_drive_per_day + "', " +
-        "'" + objectToDb.time_spent_days_drive_per_month + "'" +
+        "'" + databaseObj.acquisition_month + "', " +
+        "'" + databaseObj.acquisition_year + "', " +
+        "'" + databaseObj.commercial_value_at_acquisition + "', " +
+        "'" + databaseObj.commercial_value_at_now + "', " +
+        "'" + databaseObj.insure_type + "', " +
+        "'" + databaseObj.insurance_value + "', " +
+        "'" + databaseObj.credit + "', " +
+        "'" + databaseObj.credit_borrowed_amount + "', " +
+        "'" + databaseObj.credit_number_installments + "', " +
+        "'" + databaseObj.credit_amount_installment + "', " +
+        "'" + databaseObj.credit_residual_value + "', " +
+        "'" + databaseObj.inspection_number_inspections + "', " +
+        "'" + databaseObj.inspection_average_inspection_cost + "', " +
+        "'" + databaseObj.vehicle_excise_tax + "', " +
+        "'" + databaseObj.fuel_calculation + "', " +
+        "'" + databaseObj.fuel_currency_based_currency_value + "', " +
+        "'" + databaseObj.fuel_currency_based_periodicity + "', " +
+        "'" + databaseObj.fuel_distance_based_car_to_work + "', " +
+        "'" + databaseObj.fuel_distance_based_car_to_work_number_days_week + "', " +
+        "'" + databaseObj.fuel_distance_based_car_to_work_distance_home_work + "', " +
+        "'" + databaseObj.fuel_distance_based_car_to_work_distance_weekend + "', " +
+        "'" + databaseObj.fuel_distance_based_no_car_to_work_distance + "', " +
+        "'" + databaseObj.fuel_distance_based_no_car_to_fuel_period_distance + "', " +
+        "'" + databaseObj.fuel_distance_based_fuel_efficiency + "', " +
+        "'" + databaseObj.fuel_distance_based_fuel_price + "', " +
+        "'" + databaseObj.maintenance + "', " +
+        "'" + databaseObj.repairs + "', " +
+        "'" + databaseObj.parking + "', " +
+        "'" + databaseObj.tolls_daily + "', " +
+        "'" + databaseObj.tolls_no_daily_value + "', " +
+        "'" + databaseObj.tolls_no_daily_period + "', " +
+        "'" + databaseObj.tolls_daily_expense + "', " +
+        "'" + databaseObj.tolls_daily_number_days + "', " +
+        "'" + databaseObj.tickets_value + "', " +
+        "'" + databaseObj.tickets_periodicity + "', " +
+        "'" + databaseObj.washing_value + "', " +
+        "'" + databaseObj.washing_periodicity + "', " +
+        "'" + databaseObj.household_number_people + "', " +
+        "'" + databaseObj.public_transportation_month_expense + "', " +
+        "'" + databaseObj.income_type + "', " +
+        "'" + databaseObj.income_per_year + "', " +
+        "'" + databaseObj.income_per_month + "', " +
+        "'" + databaseObj.income_months_per_year + "', " +
+        "'" + databaseObj.income_per_week + "', " +
+        "'" + databaseObj.income_weeks_per_year + "', " +
+        "'" + databaseObj.income_per_hour + "', " +
+        "'" + databaseObj.income_hours_per_week + "', " +
+        "'" + databaseObj.income_hour_weeks_per_year + "', " +
+        "'" + databaseObj.work_time + "', " +
+        "'" + databaseObj.work_time_month_per_year + "', " +
+        "'" + databaseObj.work_time_hours_per_week + "', " +
+        "'" + databaseObj.distance_drive_to_work + "', " +
+        "'" + databaseObj.distance_days_per_week + "', " +
+        "'" + databaseObj.distance_home_job + "', " +
+        "'" + databaseObj.distance_journey_weekend + "', " +
+        "'" + databaseObj.distance_per_month + "', " +
+        "'" + databaseObj.distance_period + "', " +
+        "'" + databaseObj.time_spent_home_job + "', " +
+        "'" + databaseObj.time_spent_weekend + "', " +
+        "'" + databaseObj.time_spent_min_drive_per_day + "', " +
+        "'" + databaseObj.time_spent_days_drive_per_month + "'" +
     ")";
 
     var db = mysql.createConnection(DBInfo);
@@ -177,3 +177,4 @@ module.exports = function (req, res, serverData){
     
     db.end();
 }
+

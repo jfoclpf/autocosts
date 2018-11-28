@@ -37,7 +37,7 @@ autocosts.resultsModule.runResultsModule =
         transferDataModule = autocosts.transferDataModule;
         chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {};
         pdfModule = (switches.pdf || switches.print) ? autocosts.resultsModule.pdfModule : {};
-        databaseModule = switches.data_base ? autocosts.databaseModule : {};
+        databaseModule = switches.database ? autocosts.databaseModule : {};
     }
     
     function loadRunButtonHandler(){
@@ -132,7 +132,7 @@ autocosts.resultsModule.runResultsModule =
                             ga('send', 'event', 'form_part', 'run_OK');
                         }
                         //submits data to database if no XX version
-                        if(switches.data_base){
+                        if(switches.database){
                             databaseModule.submitResultsToDatabase();
                         }
                     }
@@ -156,7 +156,7 @@ autocosts.resultsModule.runResultsModule =
             if(calculateCostsAndShowResults() && 
                userInfo.isHumanConfirmed && 
                selectedCountry != "XX" && 
-               switches.data_base && 
+               switches.database && 
                booleans.notLocalhost){
                 
                 databaseModule.submitResultsToDatabase(); //submits data to database if no test version nor localhost

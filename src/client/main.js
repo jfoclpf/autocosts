@@ -15,6 +15,7 @@ var autocosts = (function(){
             calculatedData: undefined,              //calculated meta-data after user clicks "Run"
             formData: undefined,                    //Form data filled by the user
             uberApiObj: undefined,                  //UBER API object with city specific costs (cost per km, per minute, etc.)
+            databaseObj: undefined                  //Object from user form, that is stored in database
         },
         paths:{
             jsFiles: undefined,                     //Object with locations of Javascript Files
@@ -73,7 +74,7 @@ var autocosts = (function(){
             charts: JSON.parse(globalSwitches.dataset.charts),               /*Charts*/
             googleCaptcha: JSON.parse(globalSwitches.dataset.g_captcha),     /*Google Captcha*/
             googleAnalytics: JSON.parse(globalSwitches.dataset.g_analytics), /*Google Analytics*/
-            data_base: JSON.parse(globalSwitches.dataset.data_base),         /*Inserts user input data into DataBase*/
+            database: JSON.parse(globalSwitches.dataset.data_base),         /*Inserts user input data into DataBase*/
             print: JSON.parse(globalSwitches.dataset.print),                 /*Print option*/
             pdf: JSON.parse(globalSwitches.dataset.pdf)                      /*Download PDF report option*/
         };
@@ -159,7 +160,7 @@ var autocosts = (function(){
             runResults :          rootClientURL + "runResults.js",
             transferData :        rootClientURL + "transferData.js",
             results :             rootClientURL + "results.js",
-            database :         rootClientURL + "database.js",
+            database :            rootClientURL + "database.js",
 
             jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.min.js",
             jQueryColor :         rootClientURL + "jquery/jquery.color.min.js",
@@ -308,7 +309,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             promisesArray.push($.getScript(jsFiles.chartjs));
             promisesArray.push($.getScript(jsFiles.charts));
         }
-        if (switches.data_base){
+        if (switches.database){
             promisesArray.push($.getScript(jsFiles.database));
         }
         if(switches.pdf || switches.print){
@@ -364,6 +365,10 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
             if(switches.pdf || switches.print){
                 autocosts.resultsModule.pdfModule.initialize();
+            }
+            
+            if(switches.database){
+                autocosts.databaseModule.initialize();
             }
             
             callback();            
