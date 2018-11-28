@@ -12,7 +12,7 @@
 autocosts.userFormModule = autocosts.userFormModule || {};
 autocosts.userFormModule.validateFormModule = (function(form){
     
-    var calculatorModule;
+    var calculatorModule, commonsModule;
     
     function initialize(){
         loadModuleDependencies();
@@ -20,6 +20,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     
     function loadModuleDependencies(){
         calculatorModule = autocosts.calculatorModule;
+        commonsModule = autocosts.commonsModule;
     }
     
     function isUserDataFormOk(){
@@ -227,7 +228,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isInsuranceOk(){
 
         /*insurance*/
-        var insurancePaymentPeriod = getCheckedValue(form.insurancePaymentPeriod);
+        var insurancePaymentPeriod = commonsModule.getCheckedValue(form.insurancePaymentPeriod);
 
         if(insurancePaymentPeriod == ""){
             return false;
@@ -243,7 +244,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isCarFinanceOk(){
 
         /*car finance*/
-        var AutoCreditRadioBtn = getCheckedValue(form.AutoCreditRadioBtn);
+        var AutoCreditRadioBtn = commonsModule.getCheckedValue(form.AutoCreditRadioBtn);
 
         if(AutoCreditRadioBtn == ""){
             return false;
@@ -299,7 +300,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isFuelOk(){
 
         /*fuel*/
-        var fuelCalculationType = getCheckedValue(form.calc_combustiveis);
+        var fuelCalculationType = commonsModule.getCheckedValue(form.calc_combustiveis);
 
         if(fuelCalculationType == ""){
             return false;
@@ -316,7 +317,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
                     return false;
                 }
 
-                var carToJob = getCheckedValue(form.car_job_form2);
+                var carToJob = commonsModule.getCheckedValue(form.car_job_form2);
 
                 if (carToJob == ""){
                     return false;
@@ -394,7 +395,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isTollsOk(){
 
         /* **** tolls ***** */
-        var tollsCalculationMethod = getCheckedValue(form.tolls_daily_radioBtn);
+        var tollsCalculationMethod = commonsModule.getCheckedValue(form.tolls_daily_radioBtn);
 
         /*if tolls costs are calculated on a daily basis*/
         if(tollsCalculationMethod == "false") {/*no daily basis*/
@@ -458,7 +459,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isIncomeOk(){
 
         /*income*/
-        var income_type = getCheckedValue(form.radio_income);
+        var income_type = commonsModule.getCheckedValue(form.radio_income);
 
         switch(income_type){
             case 'year':
@@ -503,8 +504,8 @@ autocosts.userFormModule.validateFormModule = (function(form){
     function isWorkingTimeOk(){
 
         /*working time*/
-        var isWorkingTime = getCheckedValue(form.radio_work_time);
-        var incomeType = getCheckedValue(form.radio_income);
+        var isWorkingTime = commonsModule.getCheckedValue(form.radio_work_time);
+        var incomeType = commonsModule.getCheckedValue(form.radio_income);
 
         if(isWorkingTime == 'true' && incomeType != 'hour'){
 
@@ -528,13 +529,13 @@ autocosts.userFormModule.validateFormModule = (function(form){
 
     function isDistanceOk(){
 
-        var fuelCalcMethodOnFormPart2 = getCheckedValue(form.calc_combustiveis);
+        var fuelCalcMethodOnFormPart2 = commonsModule.getCheckedValue(form.calc_combustiveis);
 
         //If user sets "currency" on Fuel section on Form Part 2, the calculator needs anyway to know the distance traveled, 
         //and thus it will ask the distance travelled by the user here on Form Part 3
         if(fuelCalcMethodOnFormPart2 === "euros"){
 
-            var drive_to_work = getCheckedValue(form.drive_to_work);
+            var drive_to_work = commonsModule.getCheckedValue(form.drive_to_work);
 
             if(drive_to_work == 'true'){
                 if(!isNumber(form.drive_to_work_days_per_week.value) || parseFloat(form.drive_to_work_days_per_week.value) > 7){
@@ -561,14 +562,14 @@ autocosts.userFormModule.validateFormModule = (function(form){
 
         var distanceBasedOnDrivingToJob;    
 
-        var fuelCalcMethodOnFormPart2 = getCheckedValue(form.calc_combustiveis);        
+        var fuelCalcMethodOnFormPart2 = commonsModule.getCheckedValue(form.calc_combustiveis);        
         if (fuelCalcMethodOnFormPart2 === "km"){
             //check now Distance Section in Form Part 2 
-            distanceBasedOnDrivingToJob = (getCheckedValue(form.car_job_form2) == "true");
+            distanceBasedOnDrivingToJob = (commonsModule.getCheckedValue(form.car_job_form2) == "true");
         }    
         else if (fuelCalcMethodOnFormPart2 === "euros"){
             //check now Distance Section in Form Part 3 
-            distanceBasedOnDrivingToJob = (getCheckedValue(form.drive_to_work) == "true");
+            distanceBasedOnDrivingToJob = (commonsModule.getCheckedValue(form.drive_to_work) == "true");
         }    
         else{
             return false;
@@ -594,30 +595,6 @@ autocosts.userFormModule.validateFormModule = (function(form){
         }
 
         return true;
-    }
-    
-    //function used to get from forms the selected option in radio buttons
-    function getCheckedValue(radioObj) {
-        var i;
-
-        if (!radioObj) {
-            return "";
-        }
-
-        var radioLength = radioObj.length;
-        if (radioLength === undefined) {
-            if (radioObj.checked) {
-                return radioObj.value;
-            }
-            return "";
-        }
-
-        for (i = 0; i < radioLength; i++) {
-            if (radioObj[i].checked) {
-                return radioObj[i].value;
-            }
-        }
-        return "";
     }
     
     //check if number or parsed string is integer

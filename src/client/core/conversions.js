@@ -126,7 +126,7 @@ autocosts.calculatorModule.conversionsModule = (function(){
             case "litre":
             case "Litre":
             case "liter":
-            case "Litre":
+            case "Liter":
             case "ltr":
             case "l":             
                 return fuelPrice; // CURRENCY_unit/litre to CURRENCY_unit/litre

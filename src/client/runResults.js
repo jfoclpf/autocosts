@@ -15,7 +15,7 @@ autocosts.resultsModule.runResultsModule =
     (function(DOMForm, translatedStrings, switches, selectedCountry, booleans, mainObjs, servicesAvailabilityObj, userInfo){
     
     //modules dependencies
-    var resultsModule, initializeModule, calculatorModule, userFormModule, transferDataModule, chartsModule, pdfModule, databaseModule;
+    var resultsModule, commonsModule, calculatorModule, userFormModule, transferDataModule, chartsModule, pdfModule, databaseModule;
     
     var calculatedData, runButton;   
     
@@ -31,7 +31,7 @@ autocosts.resultsModule.runResultsModule =
      
     function loadModuleDependencies(){
         resultsModule = autocosts.resultsModule;
-        initializeModule = autocosts.initializeModule;
+        commonsModule = autocosts.commonsModule;
         calculatorModule = autocosts.calculatorModule;
         userFormModule = autocosts.userFormModule;       
         transferDataModule = autocosts.transferDataModule;
@@ -128,7 +128,7 @@ autocosts.resultsModule.runResultsModule =
 
                     if(calculateCostsAndShowResults() && selectedCountry != "XX"){
                         //if not a test triggers event for Google Analytics
-                        if(!initializeModule.isThisAtest() && servicesAvailabilityObj.googleAnalytics && switches.googleAnalytics){
+                        if(!commonsModule.isThisAtest() && servicesAvailabilityObj.googleAnalytics && switches.googleAnalytics){
                             ga('send', 'event', 'form_part', 'run_OK');
                         }
                         //submits data to database if no XX version
@@ -258,7 +258,7 @@ autocosts.resultsModule.runResultsModule =
         $("#form").hide(); 
 
         //for each form part gets object with content
-        form = transferDataModule.fromUserFormToCalculator(DOMForm);
+        form = transferDataModule.createUserFormObject(DOMForm);
         mainObjs.formData = form;
 
         //country object with country specific variables
@@ -388,7 +388,7 @@ autocosts.resultsModule.runResultsModule =
         var maxDepth = opts.maxDepth;
         var output = {};
 
-        function step (object, prev, currentDepth) {
+        function step(object, prev, currentDepth) {
             currentDepth = currentDepth || 1;
             Object.keys(object).forEach(function (key) {
                 var value = object[key];

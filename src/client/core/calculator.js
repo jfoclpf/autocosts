@@ -1046,6 +1046,8 @@ autocosts.calculatorModule = (function(thisModule){
     /* === Public methods to be returned ===*/
         
     //thisModule, since this is a parent module and it may have been defined erlier by a children module
+    thisModule.initialize = initialize;
+    
     thisModule.differenceBetweenDates = differenceBetweenDates;
     thisModule.calculateCosts = calculateCosts;
     thisModule.calculateUberCosts = calculateUberCosts;

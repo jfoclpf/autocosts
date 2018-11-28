@@ -9,9 +9,19 @@
 //from user form or database to calculator
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-autocosts.transferDataModule = (function(){ 
+autocosts.transferDataModule = (function(thisModule){ 
     
-    function fromUserFormToCalculator(userForm){ //getFormData
+    var commonsModule;
+    
+    function initialize(){
+        loadModuleDependencies();
+    }
+    
+    function loadModuleDependencies(){
+        commonsModule = autocosts.commonsModule;
+    }
+    
+    function createUserFormObject(userForm){
 
         var f = userForm; //main user form document variable
 
@@ -25,11 +35,11 @@ autocosts.transferDataModule = (function(){
 
             insurance: {
                 amountPerPeriod: f.insuranceValue.value,
-                period:          getCheckedValue(f.insurancePaymentPeriod)
+                period:          commonsModule.getCheckedValue(f.insurancePaymentPeriod)
             },
 
             credit: {
-                creditBool: getCheckedValue(f.AutoCreditRadioBtn), //binary variable: "true" or "false"
+                creditBool: commonsModule.getCheckedValue(f.AutoCreditRadioBtn), //binary variable: "true" or "false"
                 yesCredit:{
                     borrowedAmount:     f.borrowedAmount.value,
                     numberInstallments: f.numberInstallments.value,
@@ -49,13 +59,13 @@ autocosts.transferDataModule = (function(){
 
             //Form Part 2
             fuel: {
-                typeOfCalculation: getCheckedValue(f.calc_combustiveis), //binary variable: "currency/euros" or "distance/km"
+                typeOfCalculation: commonsModule.getCheckedValue(f.calc_combustiveis), //binary variable: "currency/euros" or "distance/km"
                 currencyBased: {
                     amountPerPeriod: f.combustiveis_euro.value,
                     period:          f.combustiveis_periodo_euro.value //month, two months,  trimester, semester, year
                 },
                 distanceBased: {
-                    considerCarToJob: getCheckedValue(f.car_job_form2),  //binary variable: true or false
+                    considerCarToJob: commonsModule.getCheckedValue(f.car_job_form2),  //binary variable: true or false
                     carToJob: {
                         daysPerWeek:               f.dias_por_semana.value,
                         distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
@@ -83,7 +93,7 @@ autocosts.transferDataModule = (function(){
             },
 
             tolls: {
-                calculationBasedOnDay: getCheckedValue(f.tolls_daily_radioBtn), //binary variable: "true" or "false"
+                calculationBasedOnDay: commonsModule.getCheckedValue(f.tolls_daily_radioBtn), //binary variable: "true" or "false"
                 yesBasedOnDay: {
                     amountPerDay: f.daily_expense_tolls.value,
                     daysPerMonth: f.number_days_tolls.value
@@ -113,7 +123,7 @@ autocosts.transferDataModule = (function(){
 
             income: {
                 isOk:         autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean whether this section was correctly filled in
-                incomePeriod: getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
+                incomePeriod: commonsModule.getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
                 year: {
                     amount: f.income_per_year.value
                 },
@@ -133,13 +143,13 @@ autocosts.transferDataModule = (function(){
             },
 
             workingTime: {
-                isActivated:   getCheckedValue(f.radio_work_time),
+                isActivated:   commonsModule.getCheckedValue(f.radio_work_time),
                 monthsPerYear: f.time_month_per_year.value,
                 hoursPerWeek:  f.time_hours_per_week.value
             },
 
             distance: {
-                considerCarToJob: getCheckedValue(f.drive_to_work), //binary variable: "true" or "false"
+                considerCarToJob: commonsModule.getCheckedValue(f.drive_to_work), //binary variable: "true" or "false"
                 carToJob: {
                     daysPerWeek:               f.drive_to_work_days_per_week.value,
                     distanceBetweenHomeAndJob: f.dist_home_job.value,
@@ -302,34 +312,14 @@ autocosts.transferDataModule = (function(){
 
         console.error("income_type is wrong: " + f3.income_type);
         return false;
-    }
+    }     
     
-    //function used to get from forms the selected option in radio buttons
-    function getCheckedValue(radioObj) {
-        var i;
+    /* === Public methods to be returned ===*/
 
-        if (!radioObj) {
-            return "";
-        }
+    //own module, since it may have been defined erlier by children modules
+    thisModule.initialize = initialize;
+    thisModule.createUserFormObject = createUserFormObject;
 
-        var radioLength = radioObj.length;
-        if (radioLength === undefined) {
-            if (radioObj.checked) {
-                return radioObj.value;
-            }
-            return "";
-        }
-
-        for (i = 0; i < radioLength; i++) {
-            if (radioObj[i].checked) {
-                return radioObj[i].value;
-            }
-        }
-        return "";
-    }
+    return thisModule;    
     
-    return{
-        fromUserFormToCalculator: fromUserFormToCalculator
-    };
-    
-})();
+})(autocosts.transferDataModule || {});

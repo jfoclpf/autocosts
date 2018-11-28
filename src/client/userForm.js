@@ -10,7 +10,7 @@
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 autocosts.userFormModule = (function(thisModule){
 
-    var validateFormModule, initializeModule;
+    var validateFormModule, commonsModule;
     
     //promise referring to the event when all the deferred JS files are fully loaded
     //we don't check if the form is correctly filled, before this event triggers
@@ -25,7 +25,7 @@ autocosts.userFormModule = (function(thisModule){
 
     function loadModuleDependencies(){
         validateFormModule = autocosts.userFormModule.validateFormModule;
-        initializeModule = autocosts.initializeModule;
+        commonsModule = autocosts.commonsModule;
     }
     
     //initial settings regarding the calculator form itself
@@ -33,7 +33,7 @@ autocosts.userFormModule = (function(thisModule){
     function setFormSettings(){
 
         //shows numeric keypad on iOS mobile devices
-        if(initializeModule.getMobileOperatingSystem() === "iOS"){
+        if(commonsModule.getMobileOperatingSystem() === "iOS"){
             $('.form_part input[type="number"]').attr("pattern", "\\d*");
         }
 

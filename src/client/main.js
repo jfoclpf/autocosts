@@ -153,6 +153,7 @@ var autocosts = (function(){
             conversions :         rootClientURL + "core/conversions.js",
 
             initialize :          rootClientURL + "initialize.js",
+            commons :             rootClientURL + "commons.js",
             userForm :            rootClientURL + "userForm.js",
             validateForm :        rootClientURL + "validateForm.js",
             runResults :          rootClientURL + "runResults.js",
@@ -197,7 +198,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
     //promise referring to the event when all the deferred JS/CSS files are fully loaded
     //we don't check if the form is correctly filled, before this event triggers    
-    var $whenDeferredFilesAreLoaded = $.Deferred();
+    var $whenDeferredFilesAreLoaded;
     
     function getUberInfo(){
 
@@ -331,19 +332,22 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
     /*=== Public methods ===*/
 
-    function loadInitialFiles(){
+    function loadInitialFiles(){   
+        
+        $whenDeferredFilesAreLoaded = $.Deferred();
 
         $.when(
             $.getScript(jsFiles.jQueryColor), 
             $.getScript(jsFiles.jQuerySidebar),
             $.getScript(jsFiles.initialize),
+            $.getScript(jsFiles.commons),
             $.getScript(jsFiles.userForm),
             $.getScript(jsFiles.validateForm)
         ).then(function(){            
             console.log("All initial JS files loaded OK");
             
-            autocosts.initializeModule.initialize();
-            autocosts.userFormModule.initialize($whenDeferredFilesAreLoaded);
+            autocosts.initializeModule.initialize();            
+            autocosts.userFormModule.initialize($whenDeferredFilesAreLoaded);            
             
         }, function(){
             console.error("Some of the files in loadInitialFiles() were not loaded");   
@@ -357,9 +361,11 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
         loadDeferredJSFiles(function(){
             console.log("All deferred JS files loaded OK");
 
-            autocosts.resultsModule.initialize();
-            autocosts.resultsModule.runResultsModule.initialize();
             autocosts.userFormModule.validateFormModule.initialize();
+            autocosts.calculatorModule.initialize();
+            autocosts.resultsModule.initialize();
+            autocosts.transferDataModule.initialize();
+            autocosts.resultsModule.runResultsModule.initialize();            
 
             if(switches.pdf || switches.print){
                 autocosts.resultsModule.pdfModule.initialize();

@@ -5,8 +5,8 @@
 **                                             **
 ************************************************/
 
-/* SHOW CALCULATED RESULTS MODULE */
-/* Module with functions that are used to print the final result */
+/* DATABASE MODULE */
+/* Module with functions that are used to insert form user data into a database */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 autocosts.databaseModule = (function(thisModule, DOMform, serverInfo, userInfo){   
@@ -44,7 +44,7 @@ autocosts.databaseModule = (function(thisModule, DOMform, serverInfo, userInfo){
 
         var databaseObj = {};
         
-        var form = transferDataModule.fromUserFormToCalculator(DOMform);
+        var form = transferDataModule.createUserFormObject(DOMform);
        
         //depreciation  
         databaseObj.acquisition_month =               form.depreciation.acquisitionMonth;
@@ -107,36 +107,89 @@ autocosts.databaseModule = (function(thisModule, DOMform, serverInfo, userInfo){
         databaseObj.washing_value =       form.washing.amountPerPeriod;
         databaseObj.washing_periodicity = form.washing.period;
 
-        //form part 3    
-        databaseObj.household_number_people = $('#household_number_people').val();
-        databaseObj.public_transportation_month_expense = $('#public_transportation_month_expense').val();
-        databaseObj.income_type = $('input[name="radio_income"]:checked', '#form').val();
-        databaseObj.income_per_year = $('#income_per_year').val();
-        databaseObj.income_per_month = $('#income_per_month').val();
-        databaseObj.income_months_per_year = $('#income_months_per_year').val();
-        databaseObj.income_per_week = $('#income_per_week').val();
-        databaseObj.income_weeks_per_year = $('#income_weeks_per_year').val();
-        databaseObj.income_per_hour = $('#income_per_hour').val();
-        databaseObj.income_hours_per_week = $('#income_hours_per_week').val();
-        databaseObj.income_hour_weeks_per_year = $('#income_hour_weeks_per_year').val();
-        databaseObj.work_time = $('input[name="radio_work_time"]:checked', '#form').val();
-        databaseObj.work_time_month_per_year = $('#time_month_per_year').val();
-        databaseObj.work_time_hours_per_week = $('#time_hours_per_week').val();
-        databaseObj.distance_drive_to_work = $('input[name="drive_to_work"]:checked', '#form').val();
-        databaseObj.distance_days_per_week = $('#drive_to_work_days_per_week').val();
-        databaseObj.distance_home_job = $('#dist_home_job').val();
-        databaseObj.distance_journey_weekend = $('#journey_weekend').val();
-        databaseObj.distance_per_month = $('#dist_per_month').val();
-        databaseObj.distance_period = $('#period_km').val();
-        databaseObj.time_spent_home_job = $('#time_home_job').val();
-        databaseObj.time_spent_weekend = $('#time_weekend').val();
-        databaseObj.time_spent_min_drive_per_day = $('#min_drive_per_day').val();
-        databaseObj.time_spent_days_drive_per_month = $('#days_drive_per_month').val();*/
+        //public transports 
+        databaseObj.household_number_people =             form.publicTransports.numberOfPeopleInFamily;
+        databaseObj.public_transportation_month_expense = form.publicTransports.monthlyPassCost;
+        
+        //income
+        databaseObj.income_type =                form.income.incomePeriod;
+        databaseObj.income_per_year =            form.income.year.amount;
+        databaseObj.income_per_month =           form.income.month.amountPerMonth;
+        databaseObj.income_months_per_year =     form.income.month.monthsPerYear;
+        databaseObj.income_per_week =            form.income.week.amountPerWeek;
+        databaseObj.income_weeks_per_year =      form.income.week.weeksPerYear;
+        databaseObj.income_per_hour =            form.income.hour.amountPerHour
+        databaseObj.income_hours_per_week =      form.income.hour.hoursPerWeek;
+        databaseObj.income_hour_weeks_per_year = form.income.hour.weeksPerYear;
+        
+        //working time
+        databaseObj.work_time =                form.workingTime.isActivated;
+        databaseObj.work_time_month_per_year = form.workingTime.monthsPerYear;
+        databaseObj.work_time_hours_per_week = form.workingTime.hoursPerWeek;
+        
+        //distance
+        databaseObj.distance_drive_to_work =   form.distance.considerCarToJob;
+        databaseObj.distance_days_per_week =   form.distance.carToJob.daysPerWeek;
+        databaseObj.distance_home_job =        form.distance.carToJob.distanceBetweenHomeAndJob;
+        databaseObj.distance_journey_weekend = form.distance.carToJob.distanceDuringWeekends;
+        databaseObj.distance_per_month =       form.distance.noCarToJob.distancePerPeriod;
+        databaseObj.distance_period =          form.distance.noCarToJob.period;
+        
+        //time spent in driving
+        databaseObj.time_spent_home_job =             form.timeSpentInDriving.option1.minutesBetweenHomeAndJob;
+        databaseObj.time_spent_weekend =              form.timeSpentInDriving.option1.minutesDuringWeekend;
+        databaseObj.time_spent_min_drive_per_day =    form.timeSpentInDriving.option2.minutesPerDay;
+        databaseObj.time_spent_days_drive_per_month = form.timeSpentInDriving.option2.daysPerMonth;
 
         return databaseObj;
-
     }
 
+    //function that is run by the previous submit_data function
+    function sanityChecks(databaseObj) {
+
+        if (databaseObj.credit === 'false' || !databaseObj.credit) {
+            databaseObj.credit_borrowed_amount = null;
+            databaseObj.credit_number_installments = null;
+            databaseObj.credit_amount_installment = null;
+            databaseObj.credit_residual_value = null;
+        }
+
+        if (databaseObj.fuel_calculation === 'currency' || databaseObj.fuel_calculation === 'euros') {
+            databaseObj.fuel_distance_based_fuel_efficiency = null;
+            databaseObj.fuel_distance_based_fuel_price = null;
+            databaseObj.fuel_distance_based_car_to_work = null;
+            databaseObj.fuel_distance_based_car_to_work_number_days_week = null;
+            databaseObj.fuel_distance_based_car_to_work_distance_home_work = null;
+            databaseObj.fuel_distance_based_car_to_work_distance_weekend = null;
+            databaseObj.fuel_distance_based_no_car_to_work_distance = null;
+            databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null;
+        } 
+        else {
+            databaseObj.fuel_currency_based_currency_value = null;
+            databaseObj.fuel_currency_based_periodicity = null;
+            if (databaseObj.fuel_distance_based_car_to_work === 'true') {
+                databaseObj.fuel_distance_based_no_car_to_work_distance = null;
+                databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null;
+            } 
+            else {
+                databaseObj.fuel_distance_based_car_to_work_number_days_week = null;
+                databaseObj.fuel_distance_based_car_to_work_distance_home_work = null;
+                databaseObj.fuel_distance_based_car_to_work_distance_weekend = null;
+            }
+        }
+
+        if (databaseObj.tolls_daily === 'true') {
+            databaseObj.tolls_no_daily_value = null;
+            databaseObj.tolls_no_daily_period = null;
+        } 
+        else {
+            databaseObj.tolls_daily_expense = null;
+            databaseObj.tolls_daily_number_days = null;
+        }
+
+        return databaseObj;
+    }
+    
     function submitDataToDB(databaseObj){
 
         $.ajax({
@@ -149,78 +202,11 @@ autocosts.databaseModule = (function(thisModule, DOMform, serverInfo, userInfo){
                 console.log("Values inserted into DB for statistical analysis. Returned: ", data);
                 console.log("User took" + " " + databaseObj.time_to_fill_form + " " + "seconds to fill the form");
             },
-            error: function () {
-                console.error("There was an error submitting the values for statistical analysis");
+            error: function (err) {
+                console.error("There was an error submitting the values for statistical analysis: " + err);
             }
         });
 
-    }
-
-    //function that is run by the previous submit_data function
-    function sanityChecks(databaseObj) {
-
-        if (databaseObj.credit === 'false') {
-            databaseObj.credit_borrowed_amount = null;
-            databaseObj.credit_number_installments = null;
-            databaseObj.credit_amount_installment = null;
-            databaseObj.credit_residual_value = null;
-        }
-
-        if (databaseObj.fuel_calculation === 'euros') {
-            databaseObj.fuel_distance_based_fuel_efficiency = null;
-            databaseObj.fuel_distance_based_fuel_price = null;
-            databaseObj.fuel_distance_based_car_to_work = null;
-            databaseObj.fuel_distance_based_car_to_work_number_days_week = null;
-            databaseObj.fuel_distance_based_car_to_work_distance_home_work = null;
-            databaseObj.fuel_distance_based_car_to_work_distance_weekend = null;
-            databaseObj.fuel_distance_based_no_car_to_work_distance = null;
-            databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null;
-        } else {
-            databaseObj.fuel_currency_based_currency_value = null;
-            databaseObj.fuel_currency_based_periodicity = null;
-            if (databaseObj.fuel_distance_based_car_to_work === 'true') {
-                databaseObj.fuel_distance_based_no_car_to_work_distance = null;
-                databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null;
-            } else {
-                databaseObj.fuel_distance_based_car_to_work_number_days_week = null;
-                databaseObj.fuel_distance_based_car_to_work_distance_home_work = null;
-                databaseObj.fuel_distance_based_car_to_work_distance_weekend = null;
-            }
-        }
-
-        if (databaseObj.tolls_daily === 'true') {
-            databaseObj.tolls_no_daily_value = null;
-            databaseObj.tolls_no_daily_period = null;
-        } else {
-            databaseObj.tolls_daily_expense = null;
-            databaseObj.tolls_daily_number_days = null;
-        }
-
-        return databaseObj;
-    }
-
-    //function used to get from forms the selected option in radio buttons
-    function getCheckedValue(radioObj) {
-        var i;
-
-        if (!radioObj) {
-            return "";
-        }
-
-        var radioLength = radioObj.length;
-        if (radioLength === undefined) {
-            if (radioObj.checked) {
-                return radioObj.value;
-            }
-            return "";
-        }
-
-        for (i = 0; i < radioLength; i++) {
-            if (radioObj[i].checked) {
-                return radioObj[i].value;
-            }
-        }
-        return "";
     }
     
     /* === Public methods to be returned ===*/

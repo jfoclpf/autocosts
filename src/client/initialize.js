@@ -2,25 +2,27 @@
 /* MAIN MODULE'S INITIALIZATION MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths){            
-    
-    var getFilesModule;
-    
+autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths){
+
+    var getFilesModule, commonsModule;
+
     function initialize(){
         loadModuleDependencies();
+        
         oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
         fillPeriodsInSelectBoxes();     //fills periods (month, two months, etc.) in HTML select boxes
-        loadMainPageSettings();                    
+        loadMainPageSettings();
         loadsPrefilledValues();          //loads pre-filled values, for example for XX/
         initTimer();
         initGoogleAnalytics();
-        getUniqueIdentifier();    
+        getUniqueIdentifier();
     }
-    
+
     function loadModuleDependencies(){
+        commonsModule = autocosts.commonsModule;
         getFilesModule = autocosts.getFilesModule;
-    }    
-    
+    }
+
     //detects old versions of Internet Explorer and warns the user to update the browser
     function oldIE(){
         var div = document.createElement("div");
@@ -30,7 +32,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
             document.getElementById("main_div").innerHTML = "Please update your browser!";
             alert("Please update your browser!");
         }
-    }    
+    }
 
     //function that sets and fills the the time periods (month, trimester, etc.) on the dropdown select boxes
     function fillPeriodsInSelectBoxes(){
@@ -54,23 +56,23 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
 
     //settings and handlers of the elements on the landing page
     function loadMainPageSettings(){
-        
+
         //When clicked the Calculate Button shown on the landing page
         var calculateButtonOnclick = function(){
             $("#hero, footer").hide();
-            $("#form").show();    
+            $("#form").show();
 
             //on test version shows everything right from the beginning
             if(serverInfo.selectedCountry == "XX"){
                 $(".field_container").show();
             }
 
-            getFilesModule.loadDeferredFiles(); 
-        };  
-        
+            getFilesModule.loadDeferredFiles();
+        };
+
         //Load statistics table on sidebars.hbs
         var updateStatsTable = function(cc){
-            
+
             //rounds a number
             var round = function(number, precision) {
                 var shift = function (number, precision) {
@@ -79,7 +81,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                 };
                 return shift(Math.round(shift(number, +precision)), -precision);
             };
-            
+
             for (var key in statistics.statisticsObj[cc]){
                 var elementClass = "stats_table-"+key; //see sidebars.hbs
                 if($("." + elementClass).length){//element exists
@@ -87,10 +89,10 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                     var value = statistics.statisticsObj[cc][key];
                     var currSymb = statistics.statisticsObj[cc].curr_symbol;
                     if(key == "running_costs_dist" || key == "total_costs_dist"){
-                        $el.text(currSymb + round(value, 2) + "/" + getStringFor("distanceShort"));
+                        $el.text(currSymb + round(value, 2) + "/" + commonsModule.getStringFor("distanceShort"));
                     }
                     else if (key == "kinetic_speed" || key == "virtual_speed"){
-                        $el.text(round(value, 0) + getStringFor("distanceShort") + "/h");
+                        $el.text(round(value, 0) + commonsModule.getStringFor("distanceShort") + "/h");
                     }
                     else{
                         $el.text(currSymb + " " + round(value, 0));
@@ -98,7 +100,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                 }
             }
         };
-        
+
         //adjusts the size of select according to content
         var resizeSelectToContent = function(jqueryId){
             var $this = $(jqueryId);
@@ -115,8 +117,8 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
             $test.remove();
             // set select width
             $this.width(width + arrowWidth);
-        };    
-        
+        };
+
         // All sides
         var sides = ["left", "right"];
         // Initialize sidebars
@@ -179,14 +181,14 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
         $("#country_select_stats").on('change', function() {
             updateStatsTable(this.value);
         });
-    }   
-    
+    }
+
     function initGoogleAnalytics(){
-        
+
         //detects whether Google Analytics has loaded
         var checkGoogleAnalytics = function(t) {
 
-            if(isThisAtest()){
+            if(commonsModule.isThisAtest()){
                 servicesAvailabilityObj.googleAnalytics = false;
                 return;
             }
@@ -198,9 +200,9 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                 setTimeout(checkGoogleAnalytics, t);
             }
         };
-        
+
         /*Google Analytics*/
-        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !isThisAtest() && serverInfo.switches.googleAnalytics) {
+        if(navigator.userAgent.indexOf("Speed Insights") == -1 && !commonsModule.isThisAtest() && serverInfo.switches.googleAnalytics) {
             $.getScript(paths.jsFiles.google.analytics, function(){
                 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date();
                 //change according to your site
@@ -214,7 +216,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
             });
         }
     }
-    
+
     /*User Unique Identifier functions*/
     function getUniqueIdentifier(){
         function S4() {
@@ -265,7 +267,7 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
     /* jshint ignore:end */
 
     //the standard values are used if we want the form to be pre-filled
-    //because file XX has standard values filed, it shows pre-filled values for /XX    
+    //because file XX has standard values filed, it shows pre-filled values for /XX
     function loadsPrefilledValues(){
 
         //the key the name of the variable in translatedStrings
@@ -321,136 +323,19 @@ autocosts.initializeModule = (function(serverInfo, translatedStrings, userInfo, 
                 $("#"+value).val(translatedStrings[key]);
             }
         });
-    }      
-    
-    /*========= Public methods ======== */
-    
-    /*function which returns whether this session is a (test/develop version) or a prod version */
-    function isThisAtest() {
+    }
 
-        if(serverInfo.booleans.isATest || serverInfo.selectedCountry == "XX"){
-            return true;
-        }
 
-        //verifies top level domain
-        var hostName = window.location.hostname;
-        var hostNameArray = hostName.split(".");
-        var posOfTld = hostNameArray.length - 1;
-        var tld = hostNameArray[posOfTld];
+    /* === Public methods to be returned ===*/
 
-        if(tld == "work"){
-            return true;
-        }
+    //own module, since it may have been defined erlier by children modules
+    thisModule.initialize = initialize;
 
-        return false;
-    }    
-    
-    /* Determine the mobile operating system.
-     * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
-     * @returns {String} */
-    function getMobileOperatingSystem() {
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return thisModule;
 
-          // Windows Phone must come first because its UA also contains "Android"
-        if (/windows phone/i.test(userAgent)) {
-            return "Windows Phone";
-        }
-
-        if (/android/i.test(userAgent)) {
-            return "Android";
-        }
-
-        // iOS detection from: http://stackoverflow.com/a/9039885/177710
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            return "iOS";
-        }
-
-        return "unknown";
-    }    
-    
-    //Get the applicable standard values
-    function getStringFor(setting){
-        
-        var errMsg = "Error on getSettingsStringFor";
-        
-        switch(setting){
-                
-            case "fuelEfficiency":                
-                switch(translatedStrings.fuel_efficiency_std_option){
-                    case 1:
-                        return "l/100km";
-                    case 2:
-                        return "km/l";
-                    case 3:
-                        return "mpg(imp)";
-                    case 4:
-                        return "mpg(US)";
-                    case 5:
-                        return "l/mil";
-                    case 6:
-                        return "km/gal(US)";
-                    default:
-                        console.error(errMsg + ": fuelEfficiency");
-                        return "error";
-                }   
-                break;
-                
-            case "distance":                
-                switch(translatedStrings.distance_std_option){
-                    case 1:
-                        return "kilometres";
-                    case 2:
-                        return "miles";
-                    case 3:
-                        return "mil";
-                    default:
-                        console.error(errMsg + ": distance");
-                        return "error";
-                } 
-                break;
-                
-            case "distanceShort":                
-                switch(translatedStrings.distance_std_option){
-                    case 1:
-                        return "km";
-                    case 2:
-                        return "mi";
-                    case 3:
-                        return "Mil";
-                    default:
-                        console.error(errMsg + ": distanceShort");
-                        return "error";
-                }
-                break;
-                
-            case "fuelPriceVolume":                
-                switch(translatedStrings.fuel_price_volume_std){
-                    case 1:
-                        return "litres";
-                    case 2:
-                        return "imperial gallons";
-                    case 3:
-                        return "US gallons";
-                    default:
-                        console.error(errMsg + ": fuelPriceVolume");
-                        return "error";
-                }     
-                break;
-                
-            default:
-                throw errMsg;
-        }
-    } 
-    
-    return{
-        initialize,
-        isThisAtest,
-        getMobileOperatingSystem,
-        getStringFor
-    };
-
-})(autocosts.serverInfo,
-   autocosts.serverInfo.translatedStrings,   
+})(autocosts.initializeModule || {},
+   autocosts.serverInfo,
+   autocosts.serverInfo.translatedStrings,
    autocosts.userInfo,
    autocosts.statistics,
    autocosts.servicesAvailabilityObj,

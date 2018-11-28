@@ -12,7 +12,7 @@
 autocosts.resultsModule = (function(thisModule, translatedStrings, switches, language, uberApiObj, fullUrl){           
         
     //modules dependencies
-    var chartsModule, pdfModule, initializeModule; 
+    var chartsModule, pdfModule, commonsModule; 
     
     var calculatedData;
     
@@ -23,7 +23,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
     }
     
     function loadModuleDependencies(){        
-        initializeModule = autocosts.initializeModule; 
+        commonsModule = autocosts.commonsModule; 
         chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {};
         pdfModule = switches.pdf ? autocosts.resultsModule.pdfModule : {};        
     }
@@ -86,7 +86,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
             $("#results").hide();
         });
 
-        if (switches.social /*&& !initializeModule.isThisAtest()*/){
+        if (switches.social /*&& !commonsModule.isThisAtest()*/){
             $(".right-actions .facebook a, .right-actions-mobile .facebook a").
                 attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(fullUrl)).attr("target", "_blank");
             $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
@@ -123,7 +123,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                         numToShow = amount + " " + translatedStrings.hour_abbr; 
                     }
                     else if($i.hasClass("distance")){
-                        numToShow = amount + " " + initializeModule.getStringFor("distance"); 
+                        numToShow = amount + " " + commonsModule.getStringFor("distance"); 
                     }
                     else if($i.hasClass("percentage")){
                         numToShow = amount + "&#37;"; //percentage symbol 
