@@ -59,15 +59,18 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
 
         //When clicked the Calculate Button shown on the landing page
         var calculateButtonOnclick = function(){
-            $("#hero, footer").hide();
-            $("#form").show();
+            $("#hero, footer").fadeOut("slow");
 
-            //on test version shows everything right from the beginning
-            if(serverInfo.selectedCountry == "XX"){
-                $(".field_container").show();
-            }
-
-            getFilesModule.loadDeferredFiles();
+            getFilesModule.loadDeferredFiles(function(){
+                $("#hero, footer").hide();
+                
+                //on test version shows everything right from the beginning
+                if(serverInfo.selectedCountry == "XX"){
+                    $(".field_container").show();
+                }     
+                
+                $("#form").show();
+            });
         };
 
         //Load statistics table on sidebars.hbs

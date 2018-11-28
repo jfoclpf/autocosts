@@ -195,10 +195,6 @@ var autocosts = (function(){
 
 //module for getting JS, CSS or other files
 autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, translatedStrings, uberApiUrl){
-
-    //promise referring to the event when all the deferred JS/CSS files are fully loaded
-    //we don't check if the form is correctly filled, before this event triggers    
-    var $whenDeferredFilesAreLoaded;
     
     function getUberInfo(){
 
@@ -244,7 +240,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
     }
 
     function getPdfJsFiles(){
-
+        
         var $deferredEvent = $.Deferred();
 
         //wait until all PDF related files are loaded
@@ -304,7 +300,9 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
                              $.getScript(jsFiles.smartAppBanner),
                              $.getScript(jsFiles.transferData),
                              $.getScript(jsFiles.results),
-                             $.getScript(jsFiles.runResults)];
+                             $.getScript(jsFiles.runResults),
+                             $.getScript(jsFiles.userForm),
+                             $.getScript(jsFiles.validateForm)];
 
         if (switches.charts){
             promisesArray.push($.getScript(jsFiles.chartjs));
@@ -334,44 +332,41 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
 
     function loadInitialFiles(){   
         
-        $whenDeferredFilesAreLoaded = $.Deferred();
-
         $.when(
             $.getScript(jsFiles.jQueryColor), 
             $.getScript(jsFiles.jQuerySidebar),
             $.getScript(jsFiles.initialize),
-            $.getScript(jsFiles.commons),
-            $.getScript(jsFiles.userForm),
-            $.getScript(jsFiles.validateForm)
-        ).then(function(){            
-            console.log("All initial JS files loaded OK");
-            
-            autocosts.initializeModule.initialize();            
-            autocosts.userFormModule.initialize($whenDeferredFilesAreLoaded);            
+            $.getScript(jsFiles.commons)).
+        then(function(){            
+            console.log("All initial JS files loaded OK");                       
+            autocosts.initializeModule.initialize(); 
+            autocosts.commonsModule.initialize(); 
             
         }, function(){
             console.error("Some of the files in loadInitialFiles() were not loaded");   
         });
     }
 
-    function loadDeferredFiles(){
+    function loadDeferredFiles(callback){
         //loadCSSFiles(['css/merged_deferred.css']);
         loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
 
         loadDeferredJSFiles(function(){
             console.log("All deferred JS files loaded OK");
-
-            autocosts.userFormModule.validateFormModule.initialize();
+            
             autocosts.calculatorModule.initialize();
             autocosts.resultsModule.initialize();
             autocosts.transferDataModule.initialize();
-            autocosts.resultsModule.runResultsModule.initialize();            
+            autocosts.resultsModule.runResultsModule.initialize();   
+                               
+            autocosts.userFormModule.initialize(); 
+            autocosts.userFormModule.validateFormModule.initialize();
 
             if(switches.pdf || switches.print){
                 autocosts.resultsModule.pdfModule.initialize();
             }
             
-            $whenDeferredFilesAreLoaded.resolve();
+            callback();            
         });
     }
 

@@ -10,14 +10,9 @@
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 autocosts.userFormModule = (function(thisModule){
 
-    var validateFormModule, commonsModule;
-    
-    //promise referring to the event when all the deferred JS files are fully loaded
-    //we don't check if the form is correctly filled, before this event triggers
-    var $whenDeferredFilesAreLoaded;
+    var validateFormModule, commonsModule;    
 
-    function initialize($whenDeferredFilesAreLoadedIn){
-        $whenDeferredFilesAreLoaded = $whenDeferredFilesAreLoadedIn;
+    function initialize(){
         loadModuleDependencies();
         setFormSettings();
         setFormHandlers();
@@ -379,16 +374,14 @@ autocosts.userFormModule = (function(thisModule){
                 $buttonNext.stop(true).hide();
             }
 
-            $.when($whenDeferredFilesAreLoaded).then(function(){                
-                if(isReadyToCalc()){
-                    $(".calculate_bottom_bar").fadeIn("slow");
-                }
-                else{
-                    $(".calculate_bottom_bar").fadeOut("slow");
-                }
-            }, function(){
-                console.error("Event $whenDeferredFilesLoaded returns an error");
-            });
+              
+            if(isReadyToCalc()){
+                $(".calculate_bottom_bar").fadeIn("slow");
+            }
+            else{
+                $(".calculate_bottom_bar").fadeOut("slow");
+            }
+
 
         });
 
