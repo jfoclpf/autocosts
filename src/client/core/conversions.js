@@ -208,12 +208,12 @@ autocosts.calculatorModule.conversionsModule = (function(){
     }
     
     return{
-        convertFromEURtoCurrency,
-        convertFuelEfficiencyToL100km,
-        convertFuelPriceToLitre,
-        convertDistanceToKm,
-        convertDistanceFromKm,
-        convertFuelPriceToEURperLitre
+        convertFromEURtoCurrency: convertFromEURtoCurrency,
+        convertFuelEfficiencyToL100km: convertFuelEfficiencyToL100km,
+        convertFuelPriceToLitre: convertFuelPriceToLitre,
+        convertDistanceToKm: convertDistanceToKm,
+        convertDistanceFromKm: convertDistanceFromKm,
+        convertFuelPriceToEURperLitre: convertFuelPriceToEURperLitre
     };
-    
+
 })();

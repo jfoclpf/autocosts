@@ -680,10 +680,10 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     }
     
     return {
-        initialize,
-        generatePDF,
-        download,
-        print        
+        initialize: initialize,
+        generatePDF: generatePDF,
+        download: download,
+        print: print        
     };
 
 })(autocosts.serverInfo.translatedStrings,

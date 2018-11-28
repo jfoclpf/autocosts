@@ -11,7 +11,6 @@
 
 autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){ 
 
-
     function initialize() {
         loadModuleDependencies();
     }

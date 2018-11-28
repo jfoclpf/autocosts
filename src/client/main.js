@@ -376,8 +376,8 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
     }
 
     return{
-        loadInitialFiles,
-        loadDeferredFiles
+        loadInitialFiles: loadInitialFiles,
+        loadDeferredFiles: loadDeferredFiles
     };
 
 })(autocosts.paths.jsFiles,

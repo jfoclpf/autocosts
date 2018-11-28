@@ -609,12 +609,12 @@ autocosts.userFormModule.validateFormModule = (function(form){
     } 
     
     return{
-        initialize,
-        isPublicTransportsAlternativeOk,
-        isFinancialEffortOk,
-        isUserDataFormPart1_Ok,
-        isUserDataFormPart2_Ok,
-        isUserDataFormPart3_Ok    
+        initialize: initialize,
+        isPublicTransportsAlternativeOk: isPublicTransportsAlternativeOk,
+        isFinancialEffortOk: isFinancialEffortOk,
+        isUserDataFormPart1_Ok: isUserDataFormPart1_Ok,
+        isUserDataFormPart2_Ok: isUserDataFormPart2_Ok,
+        isUserDataFormPart3_Ok: isUserDataFormPart3_Ok    
     };
 
 })(document.costs_form);

@@ -236,10 +236,10 @@ autocosts.resultsModule.runResultsModule =
         }
         
         return{
-            set,
-            getButton,
-            isNormal,
-            isCaptcha
+            set: set,
+            getButton: getButton,
+            isNormal: isNormal,
+            isCaptcha: isCaptcha
         };
         
     })();     
@@ -421,7 +421,7 @@ autocosts.resultsModule.runResultsModule =
     }    
     
     return{
-        initialize
+        initialize: initialize
     };
     
 })(document.costs_form,
