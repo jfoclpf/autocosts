@@ -151,12 +151,6 @@ The credentials for the above services are in the JSON file `workCredentials.jso
 
 The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
 
-## Contributions
-* Use four spaces for indentations
-* Comment the code in English
-* The local variables names, object properties, functions names and directories names shall obey CamelCase
-* The directories structure tries to respect the <a href="https://github.com/jfoclpf/autocosts/blob/master/docs/nodeJS-directory-structure.md">directory structure for JavaScript/Node Projects</a>.
-
 ## License<br>
 GNU GPLv3<br>
 http://www.gnu.org/licenses/gpl-3.0.en.html <br>

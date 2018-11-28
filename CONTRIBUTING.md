@@ -42,6 +42,8 @@ The name of a module, except the main module `autocosts`, should always end the 
 ```
 autocosts
    |
+   |--- commons
+   |
    |--- getFilesModule
    |
    |--- initializeModule
@@ -69,75 +71,89 @@ autocosts
 
 By the following pattern we also ensure all methods and variables are kept private until explicitly exposed.
 
+File: `myModuleA.js`:
+
 ```js
-var myGradesCalculate = (function () {
+root.myModuleA = (function (thisModule) {
     
-  // Keep this variable private inside this closure scope
-  var myGrades = [93, 95, 88, 0, 55, 91];
+    //dependency
+    var myModuleB;
+    
+    function initialize() {
+        loadModuleDependencies();
+    }
+     
+    function loadModuleDependencies(){
+        myModuleB = root.myModuleB;
+    }
+
+    function A(){
+        ...
+    }
+
+    function B(){
+        ...
+    }
   
-  function average() {
-    var total = myGrades.reduce(function(accumulator, item) {
-      return accumulator + item;
-      }, 0);
-      
-    return 'Your average grade is ' + total / myGrades.length + '.';
-  }
+    function C(){
+        ...
+    }  
 
-  function failing() {
-    var failingGrades = myGrades.filter(function(item) {
-        return item < 70;
-      });
+    /* === Public methods to be returned ===*/
 
-    return 'You failed ' + failingGrades.length + ' times.';
-  }
-
-  // Explicitly reveal public pointers to the private functions 
-  // that we want to reveal publicly
-
-  return {
-    average,
-    failing
-  };
-})();
+    //own module, since it may have been defined erlier by children modules    
+    thisModule.initialize = initialize;
+    thisModule.C = C;
+    
+    return thisModule;
+    
+})(root.myModuleA || {});
 
 ```
 
 ### Submodules
 
+File: `myModuleA1.js`:
+
 ```js
-var Module = (function() {
+root.myModuleA = root.myModuleA || {};
+root.myModuleA.mySubmoduleA1 = (function() {
 
-    function B() {
-        console.log("Module: B");
-        Module.Utils.C(); /* Accessing submodule public methods */
-    };
-
-    return {
-        B
-    };
-
-})();
-
-Module.Utils = (function() {
-
-    function C() {
-        console.log("Module.Utils: C");
-    };
-
-    return {
-        C
+    //dependency
+    var myModuleB;
+    
+    function initialize() {
+        loadModuleDependencies();
+    }
+     
+    function loadModuleDependencies(){
+        myModuleB = root.myModuleB;
     }
 
-})();
+    function E(){
+        ...
+    }
+    
+    function F(){
+        ...
+    }
+    
+    return {
+        initialize,
+        F
+    };
 
-Module.B();
+})();
 ```
 
-Output:
+With this structure it is possible to load all files on a fully asynchronous way, without concern on dependencies nor order of loading, that is:
 
 ```js
-Module: B
-Module.Utils: C
+
+$.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(){
+    root.myModuleA.initialize();
+    root.myModuleA.mySubmoduleA1.initialize();
+});
 ```
 
 ## Wiki page
