@@ -45,7 +45,8 @@ module.exports = {
     //get first sentence of string, with HTML tags stripped out
     getMetaDescription: function(){
         var string = this.words.initial_text;
-        return (string.split('.')[0]).replace(/<(?:.|\n)*?>/gm, '');
+        return string.split('.').splice(0, 3).join("."). //gets the first 3 sentences
+            replace(/<(?:.|\n)*?>/gm, '');               //removes html tags such as <b></b>
     },
     
     //function that gets a string of main/key words from title

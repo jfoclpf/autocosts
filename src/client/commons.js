@@ -62,6 +62,11 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
         return "unknown";
     }      
     
+    //is the client a mobile device?
+    function isMobile(){                
+        return getMobileOperatingSystem() !== "unknown" || window.matchMedia("only screen and (max-width: 760px)").matches;
+    }
+    
     //Get the applicable standard values
     function getStringFor(setting){
         
@@ -166,6 +171,7 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
     thisModule.initialize = initialize;
     thisModule.isThisAtest = isThisAtest;
     thisModule.getMobileOperatingSystem = getMobileOperatingSystem;
+    thisModule.isMobile = isMobile;
     thisModule.getStringFor = getStringFor;
     thisModule.getCheckedValue = getCheckedValue;
 
