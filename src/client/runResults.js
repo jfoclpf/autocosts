@@ -195,18 +195,15 @@ autocosts.resultsModule.runResultsModule =
         }
 
         function isNormal(){
-            return checkSanity() && $btnNormal.is(":enabled");
+            return checkSanity() && $btnNormal.is(":visible");
         }
 
         function isCaptcha(){
-            return checkSanity() && $btnCaptcha.is(":enabled");
+            return checkSanity() && $btnCaptcha.is(":visible");
         }
 
         function checkSanity(){
             var errMsg = "runButton sanity between $btnNormal and $btnCaptcha"; 
-            if($btnNormal.is(":enabled") && $btnCaptcha.is(":enabled")){
-                throw errMsg;
-            }
             if($btnNormal.is(":disabled") && $btnCaptcha.is(":disabled")){
                 throw errMsg;
             }
