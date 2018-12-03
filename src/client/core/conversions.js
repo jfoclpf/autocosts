@@ -4,6 +4,10 @@
 
 //UNITS CONVERSION MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+//This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
+
+//check for node
+if(!autocosts && typeof window === 'undefined'){var autocosts = {};}
 
 autocosts.calculatorModule = autocosts.calculatorModule || {};
 autocosts.calculatorModule.conversionsModule = (function(){
@@ -217,3 +221,9 @@ autocosts.calculatorModule.conversionsModule = (function(){
     };
 
 })();
+
+
+//check for node
+if(typeof window === 'undefined'){
+    module.exports = autocosts.calculatorModule.conversionsModule;
+}

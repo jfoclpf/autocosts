@@ -356,8 +356,9 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             console.log("All deferred JS files loaded OK");
             
             autocosts.calculatorModule.initialize();
-            autocosts.resultsModule.initialize();
             autocosts.transferDataModule.initialize();
+            
+            autocosts.resultsModule.initialize();            
             autocosts.resultsModule.runResultsModule.initialize();   
                                
             autocosts.userFormModule.initialize(); 

@@ -4,6 +4,10 @@
 
 //CALCULATOR MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+//This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
+
+//check for node
+if(!autocosts && typeof window === 'undefined'){var autocosts = {};}
 
 autocosts.calculatorModule = (function(thisModule){
 
@@ -27,8 +31,13 @@ autocosts.calculatorModule = (function(thisModule){
         loadModuleDependencies();        
     }    
     
-    function loadModuleDependencies(){
-        conversionsModule = autocosts.calculatorModule.conversionsModule;
+    function loadModuleDependencies(){        
+        if(typeof window === 'undefined'){//node
+            conversionsModule = require("./conversions");
+        } 
+        else{//browser
+            conversionsModule = autocosts.calculatorModule.conversionsModule;
+        }
     }    
     
     //private method
@@ -188,7 +197,8 @@ autocosts.calculatorModule = (function(thisModule){
 
         switch(fuel.typeOfCalculation){
 
-            case "km": //fuel costs calculation based on distance
+            case "distance":
+            case "km":/*old version support*/
 
                 var fuelEffL100km = conversionsModule.convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
                 var fuelPriceOnCurrPerLitre = conversionsModule.convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
@@ -241,7 +251,8 @@ autocosts.calculatorModule = (function(thisModule){
 
                 break;
 
-            case "euros": //fuel costs calculation based on money
+            case "money":
+            case "euros": /*old version support*/
 
                 switch(fuel.currencyBased.period){
                     case "1":
@@ -638,7 +649,8 @@ autocosts.calculatorModule = (function(thisModule){
         var errMsg = "Error calculating Driving distance";
 
         //if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
-        if(inputData.fuel.typeOfCalculation == 'euros'){
+        if(inputData.fuel.typeOfCalculation == 'money' || 
+           inputData.fuel.typeOfCalculation == 'euros'/*old versions support*/){
 
             if(inputData.distance.considerCarToJob == 'true'){
 
@@ -682,7 +694,8 @@ autocosts.calculatorModule = (function(thisModule){
 
         }
         //gets distance information from form part 2, in fuel section
-        else if(inputData.fuel.typeOfCalculation == 'km'){
+        else if(inputData.fuel.typeOfCalculation == 'distance' ||
+                inputData.fuel.typeOfCalculation == 'km'/*old versions support*/){
 
             distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).distancePerMonth;            
 
@@ -746,8 +759,8 @@ autocosts.calculatorModule = (function(thisModule){
             hoursPerMonth,              //number of hours driven per month
             hoursPerYear;               //number of hours driven per year
         
-        if( (inputData.fuel.typeOfCalculation == 'km' && inputData.fuel.distanceBased.considerCarToJob == 'true') || 
-            inputData.distance.considerCarToJob == 'true'){
+        if( ( ( inputData.fuel.typeOfCalculation == 'distance' || inputData.fuel.typeOfCalculation == 'km'/*support old versions*/) && 
+              inputData.fuel.distanceBased.considerCarToJob == 'true') || inputData.distance.considerCarToJob == 'true'){
             
             minutesBetweenHomeAndJob = parseFloat(inputData.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
             minutesInEachWeekend     = parseFloat(inputData.timeSpentInDriving.option1.minutesDuringWeekend);
@@ -1026,12 +1039,7 @@ autocosts.calculatorModule = (function(thisModule){
 
     //detects if a variable is defined and different from zero
     function isDef(variable){
-        if ((typeof variable !== 'undefined') && variable!=0) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return typeof variable !== 'undefined' && variable !== 0;
     }
 
     function isObjDef(Obj){
@@ -1055,3 +1063,8 @@ autocosts.calculatorModule = (function(thisModule){
     return thisModule;    
 
 })(autocosts.calculatorModule || {});
+
+//check for node
+if(typeof window === 'undefined'){
+    module.exports = autocosts.calculatorModule;
+}

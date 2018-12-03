@@ -274,6 +274,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             setFonts(docDefinition);
 
             pdfReport = pdfMake.createPdf(docDefinition);
+            console.log("pdfReport created");
             
         });
     }
@@ -283,7 +284,8 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     }
 
     function print(){
-        pdfReport.print();
+        var win = window.open('', '_blank');
+        pdfReport.print({}, win);
     }
     
     function getChartSize(chart){
