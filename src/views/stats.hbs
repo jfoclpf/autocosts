@@ -7,192 +7,588 @@
         
         <link rel="stylesheet" type="text/css" href="{{{serverData.directories.client.css}}}/colors.css">
         <link rel="stylesheet" type="text/css" href="{{{serverData.directories.client.css}}}/worldStats/main.css">
+        <!--temporary-->
+	    <link href="{{{serverData.directories.client.css}}}/style.css" rel="stylesheet" media="screen" />
+	    <link href="{{{serverData.directories.client.css}}}/responsive.css" rel="stylesheet" media="screen" />
+	    <link href="{{{serverData.directories.client.css}}}/fonts.css" rel="stylesheet" media="screen" />
+	    <link href="{{{serverData.directories.client.css}}}/colors.css" rel="stylesheet" media="screen" />
+	    <link href="{{{serverData.directories.client.css}}}/results.css" rel="stylesheet" media="screen" />
+	    <!--end of temporary-->
+
+	    <link href="favicon.png" rel="shortcut icon" type="image/png" />
     </head>
 
 <body id="statspage_body">
 
-    <h1 style="text-align:center">
-        World statistics of Car Costs
-    </h1>
+    <main>
+        <div class="sidebars">
+            {{> sidebars }}
+        </div>
 
-    <h3>
-        Yearly average costs per country (all values in Euros)    
-    </h3>
+        <header>
+            <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
+            {{#if serverData.settings.switches.dataBase}}
+                <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
+            {{/if}}
+            <div class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></div>
+        </header>
 
-    <div class="chart" id="overallStatsChartDiv">
-        <canvas id="overallStatsChart"></canvas>
-    </div>    
-    <br>
-    
-    <h3>
-        Yearly average costs per country (all values in Euros)    
-    </h3>   
-    <br>
-    
-    <div class="center">
-        <table class="hoverTable">
-            <tr>                
-                <th class="right2px">Country</th>
-                
-                <th class="depreciation_color">
-                    <span class="white">{{{words.depreciation_st}}}</span>
-                </th>
-                <th class="insurance_color">
-                    <span class="white">{{{words.insurance_short}}}</span>
-                </th>
-                <th class="credit_color">
-                    <span class="white">{{{words.credit}}}</span>
-                </th>
-                <th class="inspection_color">
-                    <span class="white">{{{words.inspection_short}}}</span>
-                </th>
-                <th class="roadTaxes_color">
-                    <span class="white">{{{words.road_taxes_short}}}</span>
-                </th>
-                <th class="maintenance_color">
-                    <span class="white">{{{words.maintenance}}}</span>
-                </th>
-                <th class="repairsImprovements_color">
-                    <span class="white">{{{words.rep_improv}}}</span>
-                </th>
-                <th class="fuel_color">
-                    <span class="white">{{{words.fuel}}}</span>
-                </th>
-                <th class="parking_color">
-                    <span class="white">{{{words.parking}}}</span>
-                </th>
-                <th class="tolls_color">
-                    <span class="white">{{{words.tolls}}}</span>
-                </th>
-                <th class="fines_color">
-                    <span class="white">{{{words.fines}}}</span>
-                </th>
-                <th class="washing_color right2px">
-                    <span class="white">{{{words.washing}}}</span>
-                </th>
-                
-                <th>
-                    Running costs per distance
-                </th>
-                <th class="right2px">
-                    Total costs per distance
-                </th>
-                <th>
-                    {{{words.kinetic_speed}}}
-                </th>
-                <th class="right2px">
-                    {{{words.virtual_speed}}}
-                </th>
-                <th>
-                    Total costs per year
-                </th>
-                
-            </tr>
-            {{#each averageNormalizedCosts as |value key|}}
-                <tr>
-                    <td class="center country right2px">
-                        <a href="/{{value.country}}" target="_blank">
-                            {{value.countryName}} ({{value.country}})
-                        </a>
-                    </td>
-                    <td class="tdRight">{{toFixed value.depreciation 0}}</td>
-                    <td class="tdRight">{{toFixed value.insurance 0}}</td>
-                    <td class="tdRight">{{toFixed value.credit 0}}</td>
-                    <td class="tdRight">{{toFixed value.inspection 0}}</td>
-                    <td class="tdRight">{{toFixed value.car_tax 0}}</td>
-                    <td class="tdRight">{{toFixed value.maintenance 0}}</td>
-                    <td class="tdRight">{{toFixed value.repairs_improv 0}}</td>
-                    <td class="tdRight">{{toFixed value.fuel 0}}</td>
-                    <td class="tdRight">{{toFixed value.parking 0}}</td>
-                    <td class="tdRight">{{toFixed value.tolls 0}}</td>
-                    <td class="tdRight">{{toFixed value.fines 0}}</td>
-                    <td class="tdRight right2px">{{toFixed value.washing 0}}</td>
-                    <td class="tdRight">
-                        {{toFixed value.running_costs_dist 2}}/{{{getDistanceOptStrShort}}}
-                    </td>
-                    <td class="tdRight right2px">
-                        {{toFixed value.total_costs_dist 2}}/{{{getDistanceOptStrShort}}}
-                    </td>
-                    <td class="tdRight">
-                        {{toFixed value.kinetic_speed 0}}{{{getDistanceOptStrShort}}}/h
-                    </td>
-                    <td class="tdRight right2px">
-                        {{toFixed value.virtual_speed 0}}{{{getDistanceOptStrShort}}}/h
-                    </td>
-                    <td class="tdRight">
-                        <a href="{{{../serverData.directories.client.tables}}}/{{value.country}}.jpg" target="_blank">
-                            &euro;{{toFixed value.total_costs_year 0}}
-                        </a>
-                    </td>
-                </tr>
-            {{/each}}
-        </table>
-    </div>    
-        
-    <br>
-    <br>
-    
-    <hr>
-    
-    <br>
-    <div>
-    <b>Notes and sources of these averages:</b> 
-        <li>
-        These averages are based on a statistical roboust and restrictive analysis on the inputs from the users who run the automobile costs calculator at autocosts.info;
-        </li>
-        <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both <i>a priori</i> and <i>a posteiori</i> analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive;</li>
-        <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the database from where these values are obtained and calculated;</li>
-        <li> Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org;
-        </li>
-        <li>
-            The dates of the users insertions vary from 22-02-2014 till {{{dateOfCalculation}}}. These averages were calculated on {{{dateOfCalculation}}};
-        </li>
-        <li>
-            The calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information, since the outlier removal technique uses already mathematical statistical filters and <i>a priori</i> filtering considerations;
-        </li>
-        <li> The user insertion statistical information is based therefore on the following user survey data:
-        </li>
-    </div>
-    <br>    
-    <div class="center">
-        <table>
-            <tr>
-                <th>Country Code</th>
-                <th>Country Name</th>
-                <th>Currency Rate<br>(1 EUR)</th>
-                <th>Surveyed users</th>
-                <th>Valid users</th>
-                <th>% of valid users</th>
-            </tr>
-            {{#each chartTable as |value key|}}
-                <tr>
-                    <td class="center">{{key}}</td>
-                    <td class="tdRight">{{value.country_name}}</td>
-                    <td class="tdRight">{{toFixed value.CurrToEUR 2}} {{value.Currency}}</td>                      
-                    <td class="tdRight">{{value.total_users}}</td>
-                    <td class="tdRight">{{value.valid_users}}</td>
-                    <td class="tdRight">{{toFixed value.percentage_valid 1}}</td>                    
-                </tr>
-            {{/each}}
-        </table>
-    </div>
+        <!-- World stats car cost -->
+        <section class="worldStats-car-costs">
+        	<div class="section-wrapper">
+			    <h1 class="">World statistics of car costs</h1>
+			    <p>Yearly average costs per country (all values in Euros)</p>
 
-    <div>
-        <!-- Data that is being sent -->
-        {{> globalData }}        
-        <data
-            id =    "chart" 
-            value = "chart" 
-            data-stats_data = "{{{ jsonObj statsData }}}"
-            data-stats_labels = "{{{ jsonObj statsLabels }}}">
-        </data>
-    </div>
-    <br>
-    <br>
+			    <div class="worldStats-car-costs-chart">
+			        <!--  the world stats chart  -->
+			        
+			    </div>
+
+			    <!-- stats reference -->
+			    <div class="stats-references">
+			        <div class="standing-costs">
+			            <h5>{{{fixed_costs}}}</h5>
+			            <ul>
+			                <li class="depreciation_color">Depreciation of the vehicl</li>
+			                <li class="insurance_color">Vehicle insurance and Breakdown cover</li>
+			                <li class="credit_color">Car finance</li>
+			                <li class="inspection_color">Vehicle inspection (MOT test)</li>
+			                <li class="roadTaxes_color">Vehicle Excise Duty (Car tax)</li>
+			            </ul>
+			        </div>
+			        <div class="running-costs">
+			            <h5>{{{running_costs}}}</h5>
+			            <ul>
+			                <li class="fuel_color">Fuel</li>
+			                <li class="maintenance_color">Maintenance</li>
+			                <li class="repairsImprovements_color">Repairs and improvements</li>
+			                <li class="parking_color">Parking</li>
+			                <li class="tolls_color">Tolls</li>
+			                <li class="fines_color">Traffic tickets</li>
+			                <li class="washing_color">Washing and cleaning</li>
+			            </ul>
+			        </div>
+
+			    </div><!-- end stats reference -->
+
+			    <!--stats data table-->
+			    <table class="stats-table">
+		            <tr>
+		                <th>Country</th>
+		                <th class="depreciation_color">Depreciation</th>
+		                <th class="insurance_color">Insurance and Breakdown cover</th>
+		                <th class="credit_color">Car finance</th>
+		                <th class="inspection_color">Inspection</th>
+		                <th class="roadTaxes_color">Car tax</th>
+		                <th class="fuel_color">Fuel</th>
+		                <th class="maintenance_color">Maintenance</th>
+		                <th class="repairsImprovements_color">Repairs and Improvs</th>
+		                <th class="parking_color">Parking</th>
+		                <th class="tolls_color">Tolls</th>
+		                <th class="fines_color">Traffic fines</th>
+		                <th class="washing_color">Washing and cleaning</th>
+		                <th>Running costs per distance</th>
+		                <th>Total costs per distance</th>
+		                <th>Kinetic speed</th>
+		                <th>Consumer speed</th>
+		                <th>Total costs per year</th>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/NO">(NO) <br />Norge</a></td>
+		                <td>1042</td>
+		                <td>882</td>
+		                <td>171</td>
+		                <td>226</td>
+		                <td>36</td>
+		                <td>428</td>
+		                <td>316</td>
+		                <td>1845</td>
+		                <td>138</td>
+		                <td>411</td>
+		                <td>17</td>
+		                <td>160</td>
+		                <td>1.56/Mil</td>
+		                <td>3.25/Mil</td>
+		                <td>9Mil/h</td>
+		                <td>5Mil/h</td>
+		                <td class="bold">€6430</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/US">(US) <br />USA</a></td>
+		                <td>1054</td>
+		                <td>922</td>
+		                <td>88</td>
+		                <td>56</td>
+		                <td>17</td>
+		                <td>375</td>
+		                <td>200</td>
+		                <td>1642</td>
+		                <td>223</td>
+		                <td>170</td>
+		                <td>38</td>
+		                <td>96</td>
+		                <td>0.27/mi</td>
+		                <td>0.53/mi</td>
+		                <td>31mi/h</td>
+		                <td>21mi/h</td>
+		                <td class="bold">€5189</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.infok/DK">(DK) <br />Danmark</a></td>
+		                <td>1160</td>
+		                <td>642</td>
+		                <td>69</td>
+		                <td>73</td>
+		                <td>33</td>
+		                <td>417</td>
+		                <td>263</td>
+		                <td>1852</td>
+		                <td>66</td>
+		                <td>34</td>
+		                <td>44</td>
+		                <td>67</td>
+		                <td>0.18/km</td>
+		                <td>0.37/km</td>
+		                <td>49km/h</td>
+		                <td>26km/h</td>
+		                <td class="bold">€5155</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/SE">(SE) <br />Sverige</a></td>
+		                <td>1339</td>
+		                <td>578</td>
+		                <td>80</td>
+		                <td>13</td>
+		                <td>23</td>
+		                <td>349</td>
+		                <td>311</td>
+		                <td>1703</td>
+		                <td>154</td>
+		                <td>55</td>
+		                <td>12</td>
+		                <td>142</td>
+		                <td>1.44/Mil</td>
+		                <td>2.83/Mil</td>
+		                <td>8Mil/h</td>
+		                <td>3Mil/h</td>
+		                <td class="bold">€5009</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/IT">(IT) <br />Italia</a></td>
+		                <td>1121</td>
+		                <td>725</td>
+		                <td>72</td>
+		                <td>50</td>
+		                <td>19</td>
+		                <td>368</td>
+		                <td>171</td>
+		                <td>1679</td>
+		                <td>130</td>
+		                <td>251</td>
+		                <td>47</td>
+		                <td>73</td>
+		                <td>0.15/km</td>
+		                <td>0.30/km</td>
+		                <td>47km/h</td>
+		                <td>25km/h</td>
+		                <td class="bold">€4979</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/DE">(DE) <br />Deutschland</a></td>
+		                <td>1083</td>
+		                <td>758</td>
+		                <td>26</td>
+		                <td>141</td>
+		                <td>17</td>
+		                <td>286</td>
+		                <td>201</td>
+		                <td>1714</td>
+		                <td>159</td>
+		                <td>36</td>
+		                <td>19</td>
+		                <td>97</td>
+		                <td>0.13/km</td>
+		                <td>0.25/km</td>
+		                <td>59km/h</td>
+		                <td>43km/h</td>
+		                <td class="bold">€4921</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/FI">(FI) <br />Suomessa</a></td>
+		                <td>865</td>
+		                <td>776</td>
+		                <td>111</td>
+		                <td>30</td>
+		                <td>28</td>
+		                <td>464</td>
+		                <td>214</td>
+		                <td>1720</td>
+		                <td>175</td>
+		                <td>26</td>
+		                <td>26</td>
+		                <td>105</td>
+		                <td>0.17/km</td>
+		                <td>0.33/km</td>
+		                <td>54km/h</td>
+		                <td>29km/h</td>
+		                <td class="bold">€4914</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/ES">(ES) <br />España</a></td>
+		                <td>1063</td>
+		                <td>564</td>
+		                <td>69</td>
+		                <td>27</td>
+		                <td>12</td>
+		                <td>360</td>
+		                <td>204</td>
+		                <td>1644</td>
+		                <td>248</td>
+		                <td>124</td>
+		                <td>41</td>
+		                <td>65</td>
+		                <td>0.14/km</td>
+		                <td>0.25/km</td>
+		                <td>54km/h</td>
+		                <td>30km/h</td>
+		                <td class="bold">€4530</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/UK">(UK) <br />United Kingdom</a></td>
+		                <td>654</td>
+		                <td>592</td>
+		                <td>133</td>
+		                <td>35</td>
+		                <td>17</td>
+		                <td>319</td>
+		                <td>181</td>
+		                <td>1603</td>
+		                <td>222</td>
+		                <td>85</td>
+		                <td>33</td>
+		                <td>64</td>
+		                <td>0.24/mi</td>
+		                <td>0.43/mi</td>
+		                <td>32mi/h</td>
+		                <td>20mi/h</td>
+		                <td class="bold">€4166</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/GR">(GR) <br />Ελλάδα</a></td>
+		                <td>773</td>
+		                <td>399</td>
+		                <td>43</td>
+		                <td>25</td>
+		                <td>23</td>
+		                <td>275</td>
+		                <td>150</td>
+		                <td>1662</td>
+		                <td>111</td>
+		                <td>165</td>
+		                <td>18</td>
+		                <td>78</td>
+		                <td>0.22/km</td>
+		                <td>0.38/km</td>
+		                <td>32km/h</td>
+		                <td>17km/h</td>
+		                <td class="bold">€3993</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/PT">(PT) <br />Portugal</a></td>
+		                <td>908</td>
+		                <td>357</td>
+		                <td>86</td>
+		                <td>17</td>
+		                <td>10</td>
+		                <td>279</td>
+		                <td>156</td>
+		                <td>1357</td>
+		                <td>126</td>
+		                <td>240</td>
+		                <td>22</td>
+		                <td>49</td>
+		                <td>0.17/km</td>
+		                <td>0.30/km</td>
+		                <td>44km/h</td>
+		                <td>22km/h</td>
+		                <td class="bold">€3676</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/BR">(BR) <br />Brasil</a></td>
+		                <td>422</td>
+		                <td>512</td>
+		                <td>61</td>
+		                <td>55</td>
+		                <td>26</td>
+		                <td>226</td>
+		                <td>102</td>
+		                <td>1147</td>
+		                <td>202</td>
+		                <td>110</td>
+		                <td>47</td>
+		                <td>85</td>
+		                <td>0.17/km</td>
+		                <td>0.30/km</td>
+		                <td>28km/h</td>
+		                <td>22km/h</td>
+		                <td class="bold">€3321</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/RO">(RO) <br />România</a></td>
+		                <td>793</td>
+		                <td>326</td>
+		                <td>6</td>
+		                <td>20</td>
+		                <td>6</td>
+		                <td>275</td>
+		                <td>304</td>
+		                <td>1339</td>
+		                <td>78</td>
+		                <td>48</td>
+		                <td>55</td>
+		                <td>99</td>
+		                <td>0.14/km</td>
+		                <td>0.22/km</td>
+		                <td>25km/h</td>
+		                <td>25km/h</td>
+		                <td class="bold">€3139</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/HU">(HU) <br />Magyarország</a></td>
+		                <td>615</td>
+		                <td>207</td>
+		                <td>135</td>
+		                <td>39</td>
+		                <td>11</td>
+		                <td>295</td>
+		                <td>144</td>
+		                <td>1347</td>
+		                <td>95</td>
+		                <td>89</td>
+		                <td>24</td>
+		                <td>72</td>
+		                <td>0.15/km</td>
+		                <td>0.24/km</td>
+		                <td>42km/h</td>
+		                <td>42km/h</td>
+		                <td class="bold">€3058</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/RU">(RU) <br />Россия</a></td>
+		                <td>481</td>
+		                <td>452</td>
+		                <td>73</td>
+		                <td>27</td>
+		                <td>9</td>
+		                <td>268</td>
+		                <td>169</td>
+		                <td>1028</td>
+		                <td>151</td>
+		                <td>17</td>
+		                <td>40</td>
+		                <td>90</td>
+		                <td>0.10/km</td>
+		                <td>0.17/km</td>
+		                <td>27km/h</td>
+		                <td>20km/h</td>
+		                <td class="bold">€2926</td>
+		            </tr>
+		            <tr>
+		                <td><a href="https://autocosts.info/TR">(TR) <br />Türkiye</a></td>
+		                <td>198</td>
+		                <td>225</td>
+		                <td>62</td>
+		                <td>18</td>
+		                <td>10</td>
+		                <td>122</td>
+		                <td>66</td>
+		                <td>647</td>
+		                <td>114</td>
+		                <td>39</td>
+		                <td>33</td>
+		                <td>48</td>
+		                <td>0.10/km</td>
+		                <td>0.16/km</td>
+		                <td>30km/h</td>
+		                <td>24km/h</td>
+		                <td class="bold">€1675</td>
+		            </tr>
+		              
+		        </table><!--end stats data table-->
+		    </div><!--end section wrapper-->
+		</section><!-- end World stats car cost -->
+
+		<!-- Notes and sources of these averages -->
+		<section class="notes-sources">
+			<div class="section-wrapper">
+				<h2>Notes and sources of these averages</h2>
+
+				<ul>
+					<li>These averages are based on a statistical roboust and restrictive analysis on the inputs from the users who run the automobile costs calculator at <b>autocosts.info</b></li>
+					<li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both a priori and a posteiori analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive.</li>
+					<li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the database from where these values are obtained and calculated.</li>
+					<li>Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from <a href="https://openexchangerates.org/">openexchangerates.org</a></li>
+					<li>The dates of the users insertions vary from 22/02/2014 till 2/10/2018. <b>These averages were calculated on 2/10/2018.</b></li>
+					<li>The calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information, since the outlier removal technique uses already mathematical statistical filters and a priori filtering considerations.</li>
+					<li>The user insertion statistical information is based therefore on the following user survey data:</li>
+				</ul>
+
+				<!--User survey table-->
+			    <table class="stats-table">
+		            <tr>
+		                <th>Country code</th>
+		                <th>Country name</th>
+		                <th>Currency Rate (1 EUR)</th>
+		                <th>Surveyed users</th>
+		                <th>Valid users</th>
+		                <th>% of valid users</th>
+		        	</tr>
+		        	<tr>
+		                <td>NO</td>
+		                <td>Norge</td>
+		                <td>9.49 NOK</td>
+		                <td>276</td>
+		                <td>37</td>
+		                <td>13.4</td>
+		        	</tr>
+		        	<tr>
+		                <td>US</td>
+		                <td>USA</td>
+		                <td>1.14 USD</td>
+		                <td>279</td>
+		                <td>72</td>
+		                <td>25.8</td>
+		        	</tr>
+		        	<tr>
+		                <td>DK</td>
+		                <td>Danmark</td>
+		                <td>7.46 DKK</td>
+		                <td>400</td>
+		                <td>37</td>
+		                <td>9.3</td>
+		        	</tr>
+		        	<tr>
+		                <td>SE</td>
+		                <td>Sverige</td>
+		                <td>10.36 SEK</td>
+		                <td>102</td>
+		                <td>20</td>
+		                <td>19.6</td>
+		        	</tr>
+		        	<tr>
+		                <td>IT</td>
+		                <td>Italia</td>
+		                <td>1.00 EUR</td>
+		                <td>7166</td>
+		                <td>2226</td>
+		                <td>31.1</td>
+		        	</tr>
+		        	<tr>
+		                <td>DE</td>
+		                <td>Deutschland</td>
+		                <td>1.00 EUR</td>
+		                <td>709</td>
+		                <td>145</td>
+		                <td>20.5</td>
+		        	</tr>
+		        	<tr>
+		                <td>FI</td>
+		                <td>Suomessa</td>
+		                <td>1.00 EUR</td>
+		                <td>4813</td>
+		                <td>1238</td>
+		                <td>25.7</td>
+		        	</tr>
+		        	<tr>
+		                <td>ES</td>
+		                <td>España</td>
+		                <td>1.00 EUR</td>
+		                <td>4836</td>
+		                <td>1865</td>
+		                <td>38.6</td>
+		        	</tr>
+		        	<tr>
+		                <td>UK</td>
+		                <td>United Kingdom</td>
+		                <td>0.89 GBP</td>
+		                <td>105</td>
+		                <td>27</td>
+		                <td>25.7</td>
+		        	</tr>
+		        	<tr>
+		                <td>GR</td>
+		                <td>Ελλάδα</td>
+		                <td>1.00 EUR</td>
+		                <td>1478</td>
+		                <td>504</td>
+		                <td>34.1</td>
+		        	</tr>
+		        	<tr>
+		                <td>PT</td>
+		                <td>Portugal</td>
+		                <td>1.00 EUR</td>
+		                <td>7117</td>
+		                <td>2362</td>
+		                <td>33.2</td>
+		        	</tr>
+		        	<tr>
+		                <td>BR</td>
+		                <td>Brasil</td>
+		                <td>4.22 BRL</td>
+		                <td>6543</td>
+		                <td>768</td>
+		                <td>11.7</td>
+		        	</tr>
+		        	<tr>
+		                <td>RO</td>
+		                <td>România</td>
+		                <td>4.66 RON</td>
+		                <td>286</td>
+		                <td>20</td>
+		                <td>7.0</td>
+		        	</tr>
+		        	<tr>
+		                <td>HU</td>
+		                <td>Magyarország</td>
+		                <td>324.10 HUF</td>
+		                <td>876</td>
+		                <td>88</td>
+		                <td>10.0</td>
+		        	</tr>
+		        	<tr>
+		                <td>RU</td>
+		                <td>Россия</td>
+		                <td>74.54 RUB</td>
+		                <td>2342</td>
+		                <td>125</td>
+		                <td>5.3</td>
+		        	</tr>
+		        	<tr>
+		                <td>TR</td>
+		                <td>Türkiye </td>
+		                <td>6.41 TRY</td>
+		                <td>2615</td>
+		                <td>324</td>
+		                <td>12.4</td>
+		        	</tr>
+
+		        </table><!--Ends user survey table-->
+			</div><!--Ends section wrapper-->
+		</section><!--Ends notes and sources-->
+
+    </main>
+    
+    
 
     <script src="{{{serverData.fileNames.client.jquery.uri}}}"></script>
     <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
     <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/chart/worldStatsChart.js"></script>
+
+    <!-- Data sent to JS code on browser -->
+    {{> globalData }}
+
+    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/jquery/jquery.min.js"></script>
+    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/main.js"></script>
 
 </body>
 </html>            
