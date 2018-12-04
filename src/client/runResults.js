@@ -43,25 +43,6 @@ autocosts.resultsModule.runResultsModule =
     function loadRunButtonHandler(){
         //run button
         $("#calculate_costs_btn").on( "click", function(){
-            //tries to call Run(); if not yet defined, retries every 500ms
-            //see https://stackoverflow.com/a/53032624/1243247
-            /*try{
-                Run("normal");  //not using reCaptcha from Google
-            }
-            catch(e){
-                (function retry(){
-                    setTimeout(function(){
-                        try{
-                            console.log(e);
-                            console.log("Function Run() invalid or not yet defined");
-                            Run("normal");
-                        }
-                        catch(e){
-                            retry(); //calls recursively
-                        }
-                    }, 500); //tries every 500ms
-                }());
-            }*/
             Run("normal");
         });        
     }       
@@ -214,18 +195,15 @@ autocosts.resultsModule.runResultsModule =
         }
 
         function isNormal(){
-            return checkSanity() && $btnNormal.is(":enabled");
+            return checkSanity() && $btnNormal.is(":visible");
         }
 
         function isCaptcha(){
-            return checkSanity() && $btnCaptcha.is(":enabled");
+            return checkSanity() && $btnCaptcha.is(":visible");
         }
 
         function checkSanity(){
             var errMsg = "runButton sanity between $btnNormal and $btnCaptcha"; 
-            if($btnNormal.is(":enabled") && $btnCaptcha.is(":enabled")){
-                throw errMsg;
-            }
             if($btnNormal.is(":disabled") && $btnCaptcha.is(":disabled")){
                 throw errMsg;
             }

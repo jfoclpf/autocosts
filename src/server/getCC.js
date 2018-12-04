@@ -1,8 +1,10 @@
 
-const path   = require('path');
-const url    = require(path.join(__dirname, 'url'));
-const crypto = require('crypto');
-const debug  = require('debug')('app:getCC'); 
+const path    = require('path');
+const nodeUrl = require('url');
+
+const url     = require(path.join(__dirname, 'url'));
+const crypto  = require('crypto');
+const debug   = require('debug')('app:getCC'); 
 
 //module global variable strings relating to Content-Security-Policy
 //they are created beforehand for fast delivery
@@ -10,7 +12,7 @@ var CSPstr0, CSPstr1;
 
 module.exports = {
     
-    render: function(req, res, serverData, wordsOfCountry) {                    
+    render: function(req, res, serverData, wordsOfCountry) {                                
         
         var CC = req.params.CC; //ISO 2 letter Country Code        
         debug("Country code: "  + CC);
@@ -29,9 +31,11 @@ module.exports = {
 
         //information depending on this request from the client    
         var clientData = {
+            "fullURL"      : fullUrl(req),                      //full url, ex: "https://autocosts.info/PT"
+            "basicURL"     : basicURL(req),                     //basic url, ex: "https://autocosts.info"
             "languageCode" : serverData.languagesCountries[CC], //ISO language code (ex: pt-PT)
             "isThisATest"  : url.isThisATest(req),              //boolean variable regarding if present request is a test
-            "notLocalhost" : !url.isThisLocalhost(req),     //boolean variable regarding if present request is from localhost
+            "notLocalhost" : !url.isThisLocalhost(req),         //boolean variable regarding if present request is from localhost
             "httpProtocol" : url.getProtocol(req, serverData.settings.switches.https)
         }    
         data.clientData = clientData;
@@ -134,7 +138,20 @@ function getCSPstr(nonce){
     return CSPstr0 + nonceStr + CSPstr1;
 }
 
+//for example: "https://autocosts.info/PT"
+function fullUrl(req){
+    return nodeUrl.format({
+        protocol: req.protocol,
+        host: req.get('host'),
+        pathname: req.originalUrl
+    });
+}
 
-
-
+//for example: "https://autocosts.info"
+function basicURL(req){
+    return nodeUrl.format({
+        protocol: req.protocol,
+        host: req.get('host')        
+    });
+}
 
