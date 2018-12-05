@@ -49,11 +49,11 @@ module.exports = {
     //this method is executed right after the server starts, such that the statisitcal data may be pre-calculated and ready for the client
     prepareStats : function(serverData, WORDS, eventEmitter){
         
-        //get statsFunctions.js Object Constructors/Templates
-        eval(fs.readFileSync(serverData.fileNames.server["statsFunctions.js"])+'');
+        //get statsFunctions.js Object Constructors/Templates        
+        const statsFunctions = require(serverData.fileNames.server["statsFunctions.js"]);
         
         var dbInfo = serverData.settings.dataBase.credentials;
-        debug(dbInfo);
+        debug(" ===== dbInfo ===== \n", dbInfo);
                 
         //get current date in a formated string
         var d = new Date();
@@ -108,11 +108,11 @@ module.exports = {
                                 i--;
                             }
                         }
-                        debug(results);
+                        debug("results:  ", results);
 
                         //fills array costsSrts with the keys of object MonthlyCostsObj; see statsFunctions.js
                         var costsStrs = [];
-                        var monthlyCosts = new MonthlyCostsObj();
+                        var monthlyCosts = new statsFunctions.MonthlyCostsObj();
                         for (let key of Object.keys(monthlyCosts)){
                             costsStrs.push(key);
                         }
@@ -138,7 +138,7 @@ module.exports = {
                                 }
                             }
                         }                                                
-                        //debug(costs);
+                        debug("costs: ", costs);
                     
                         //convert values from monthly to yearly on every cost item
                         for (n=0; n<costsStrs.length; n++){

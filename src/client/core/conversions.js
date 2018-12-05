@@ -19,63 +19,6 @@ autocosts.calculatorModule.conversionsModule = (function(){
         GALLON_US_TO_LITER: 3.78541178
     };
 
-    //currency converters for statistics analysis
-    //not for exact currency conversions, only for outliers removal
-    //just the order of magnitude is needed
-    var EURcurrConverterStats = {
-        "EUR": 1,
-        "USD": 1.1,
-        "GBP": 0.85,
-        "BRL": 3.5,
-        "HUF": 320,
-        "AUD": 1.5,
-        "CAD": 1.4,
-        "CZK": 30,
-        "DKK": 7.4,
-        "NOK": 9,
-        "PLN": 4.2,
-        "RON": 4.5,
-        "RUB": 60,
-        "SEK": 9.4,
-        "TRY": 3,
-        "BOB": 7.7,
-        "CLP": 721,
-        "COP": 3200,
-        "VEF": 11,
-        "ARS": 16.4,
-        "CRC": 616,
-        "DOP": 51.5,
-        "GTQ": 8.3,
-        "MXN": 20,
-        "NIO": 32,
-        "PAB": 1.11,
-        "PEN": 3.7,
-        "PYG": 6137,
-        "SVC": 9.7,
-        "UYU": 32,
-        "UAH": 20
-    };
-
-    //function that converts an input value in EUR to standard currency
-    //value    -> input value in EUR
-    //currency -> output currency
-    //EURcurrConverterStats -> Currency Converter Object
-    //returns value in EUR | -1 if currency not found
-    function convertFromEURtoCurrency(value, currency, EURcurrConverterStats){
-
-        value = parseFloat(value);
-        var conversionRatio = EURcurrConverterStats[currency];
-
-        if (isNaN(value)){
-            throw "Error on convertFromEURtoCurrency, value to convert is not a number: " + value;
-        }
-        if (isNaN(conversionRatio)){
-            throw "Error on convertFromEURtoCurrency, conversionRatio is not a number: " + conversionRatio;
-        }        
-
-        return value * conversionRatio;
-    }
-
     //converts chosen fuel consumption to l/100km
     function convertFuelEfficiencyToL100km(fuelEfficiency, fuelEfficiencyOption) {
     //fuelEfficiencyOption shall be either:
@@ -202,22 +145,12 @@ autocosts.calculatorModule.conversionsModule = (function(){
                 throw "Error on convertDistanceFromKm, distanceUnitOption " + distanceUnitOption + " unknown";                                       
         }
     }
-
-    //convert fuel price to EUR per litre
-    function convertFuelPriceToEURperLitre(value, currency, fuelPriceVolumeUnit, currencyConverter) {
-
-        value = parseFloat(value);
-        value = convertFuelPriceToLitre(value, fuelPriceVolumeUnit);  //converts to currency per litre
-        return convertFromEURtoCurrency(value, currency, currencyConverter); //converts currency to EUR
-    }
     
     return{
-        convertFromEURtoCurrency: convertFromEURtoCurrency,
         convertFuelEfficiencyToL100km: convertFuelEfficiencyToL100km,
         convertFuelPriceToLitre: convertFuelPriceToLitre,
         convertDistanceToKm: convertDistanceToKm,
-        convertDistanceFromKm: convertDistanceFromKm,
-        convertFuelPriceToEURperLitre: convertFuelPriceToEURperLitre
+        convertDistanceFromKm: convertDistanceFromKm
     };
 
 })();

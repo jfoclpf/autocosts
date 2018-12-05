@@ -367,6 +367,7 @@ autocosts.transferDataModule = (function(thisModule){
     //own module, since it may have been defined erlier by children modules
     thisModule.initialize = initialize;
     thisModule.createUserFormObject = createUserFormObject;
+    thisModule.createUserDataObjectFromDB = createUserDataObjectFromDB;
 
     return thisModule;    
     

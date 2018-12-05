@@ -784,8 +784,8 @@ autocosts.calculatorModule = (function(thisModule){
         else{
             minutesPerDay = parseFloat(inputData.timeSpentInDriving.option2.minutesPerDay);
             daysPerMonth  = parseFloat(inputData.timeSpentInDriving.option2.daysPerMonth);
-            if(isNaN(minutesPerDay) || isNaN(minutesPerDay)){
-                console.error(errMsg + ": unknown minutesPerDay or minutesPerDay");
+            if(isNaN(minutesPerDay) || isNaN(daysPerMonth)){
+                //console.error(errMsg + ": unknown minutesPerDay or daysPerMonth");
                 bCalculated = false;            
             }
             else{            
