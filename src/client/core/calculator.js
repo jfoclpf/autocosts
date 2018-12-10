@@ -649,10 +649,10 @@ autocosts.calculatorModule = (function(thisModule){
         var errMsg = "Error calculating Driving distance";
 
         //if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
-        if(inputData.fuel.typeOfCalculation == 'money' || 
-           inputData.fuel.typeOfCalculation == 'euros'/*old versions support*/){
+        if(inputData.fuel.typeOfCalculation === 'money' || 
+           inputData.fuel.typeOfCalculation === 'euros'/*old versions support*/){
 
-            if(inputData.distance.considerCarToJob == 'true'){
+            if(inputData.distance.considerCarToJob === 'true'){
 
                 daysPerWeekUserDrivesToJob = parseInt(inputData.distance.carToJob.daysPerWeek);
                 distanceBetweenHomeAndJob  = parseFloat(inputData.distance.carToJob.distanceBetweenHomeAndJob);
@@ -663,7 +663,7 @@ autocosts.calculatorModule = (function(thisModule){
                 distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek; 
                 distancePerYear  = distancePerMonth * 12;
             }
-            else if(inputData.distance.considerCarToJob == 'false'){
+            else if(inputData.distance.considerCarToJob === 'false'){
 
                 switch(inputData.distance.noCarToJob.period){
                     case "1":
@@ -694,8 +694,8 @@ autocosts.calculatorModule = (function(thisModule){
 
         }
         //gets distance information from form part 2, in fuel section
-        else if(inputData.fuel.typeOfCalculation == 'distance' ||
-                inputData.fuel.typeOfCalculation == 'km'/*old versions support*/){
+        else if(inputData.fuel.typeOfCalculation === 'distance' ||
+                inputData.fuel.typeOfCalculation === 'km'/*old versions support*/){
 
             distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).distancePerMonth;            
 
@@ -703,7 +703,7 @@ autocosts.calculatorModule = (function(thisModule){
                 throw errMsg;
             }
 
-            if(inputData.fuel.distanceBased.considerCarToJob == 'true'){
+            if(inputData.fuel.distanceBased.considerCarToJob === 'true'){
                 daysPerWeekUserDrivesToJob = parseInt(inputData.fuel.distanceBased.carToJob.daysPerWeek);
                 distanceBetweenHomeAndJob  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
                 distanceDuringEachWeekend  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceDuringWeekends);
@@ -734,7 +734,11 @@ autocosts.calculatorModule = (function(thisModule){
             details: {
                 daysPerWeekUserDrivesToJob: daysPerWeekUserDrivesToJob
             }
-        };        
+        };                
+        
+        if(!isFinite(distancePerWeek) || !isFinite(distancePerMonth) || !isFinite(distancePerYear)){
+            drivingDistance.calculated = false;
+        }
         
         calculatedData.drivingDistance = drivingDistance;
 
@@ -760,7 +764,8 @@ autocosts.calculatorModule = (function(thisModule){
             hoursPerYear;               //number of hours driven per year
         
         if( ( ( inputData.fuel.typeOfCalculation == 'distance' || inputData.fuel.typeOfCalculation == 'km'/*support old versions*/) && 
-              inputData.fuel.distanceBased.considerCarToJob == 'true') || inputData.distance.considerCarToJob == 'true'){
+              inputData.fuel.distanceBased.considerCarToJob == 'true') || 
+           inputData.distance.considerCarToJob == 'true'){
             
             minutesBetweenHomeAndJob = parseFloat(inputData.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
             minutesInEachWeekend     = parseFloat(inputData.timeSpentInDriving.option1.minutesDuringWeekend);
@@ -768,7 +773,7 @@ autocosts.calculatorModule = (function(thisModule){
             var daysPerWeekUserDrivesToJob = calculatedData.drivingDistance.details.daysPerWeekUserDrivesToJob;       
             
             if(isNaN(daysPerWeekUserDrivesToJob)){
-                console.error(errMsg + ": unknown daysPerWeekUserDrivesToJob");
+                //console.error(errMsg + ": unknown daysPerWeekUserDrivesToJob");
                 bCalculated = false;
             }       
             else{

@@ -2,15 +2,23 @@
 
 console.log("\nRunning script " + __filename + "\n");
 
+const DEBUG_USE_MONEY_API = false;
+
 //includes
-const fs       = require('fs');
-const path     = require("path");
-const async    = require('async'); //module to allow to execute the queries in series
-const mysql    = require('mysql'); //module to get info from DB
-const isOnline = require('is-online');
-const commons  = require(path.join(__dirname, '..', 'commons'));
-const request  = require('request'); //to make HTTP requests
-var   fx       = require("money"); //currency conversion API; needs to be "var" because it will change
+const fs           = require('fs');
+const path         = require("path");
+const async        = require('async'); //module to allow to execute the queries in series
+const mysql        = require('mysql'); //module to get info from DB
+const isOnline     = require('is-online');
+const commons      = require(path.join(__dirname, '..', 'commons'));
+const request      = require('request'); //to make HTTP requests
+const flatten      = require('flat');
+const sqlFormatter = require("sql-formatter");
+const colors       = require('colors');
+
+if(DEBUG_USE_MONEY_API){
+    var fx = require("money"); //currency conversion API; needs to be "var" because it will change
+}
 
 commons.init();
 //Main directories got from commons
@@ -27,51 +35,39 @@ isOnline().then(function(online) {
     if(!online){
         console.log("There is no Internet Connection");
         process.exit();
-    }
+    }        
+         
+    const statsFunctions = require(fileNames.server["statsFunctions.js"]);    
     
-    eval(fs.readFileSync(fileNames.src["conversionFunctions.js"]).toString());
-    eval(fs.readFileSync(fileNames.src["coreFunctions.js"]).toString());
-    eval(fs.readFileSync(fileNames.src["getData.js"]).toString());
-    eval(fs.readFileSync(fileNames.server["statsFunctions.js"]).toString());
+    var AVG_DB_TEMPLATE; //Database for Average template
     
-    //**************************************************************************************************
-    //                            Database for Average template
-    // Template of the DBs (monthly_costs_statistics and monthly_costs_normalized) that will be created 
-    // and into which the averages from the users will be stored, with a row of said DB for each country                                                          
-    var AVG_DB_TEMPLATE = [        
-        [ "country",               "text" ],
-        [ "Date_of_calculation",   "date" ],
-        [ "Currency",              "text" ],
-        [ "CurrToEUR",            "float" ],
-        /*Monthly costs elems. will come here, see statsFunctions.js*/
-        [ "standing_costs",       "float" ],
-        [ "running_costs",        "float" ],
-        [ "total_costs",          "float" ],
-        /*Financial Effort elms. will come here, see statsFunctions.js*/
-        [ "running_costs_dist",   "float" ],  
-        [ "total_costs_dist",     "float" ],
-        [ "kinetic_speed",        "float" ],
-        [ "virtual_speed",        "float" ],
-        [ "valid_users",        "int(11)" ],
-        [ "total_users",        "int(11)" ],
-        [ "global_total_users", "int(11)" ]
-    ];
+    // Template of the DBs (monthly costs statistics and monthly costs normalized) that will be created 
+    // and into which the averages from the users will be stored, with a row of said DB for each country     
+    (function(){                                                          
+        AVG_DB_TEMPLATE = {
+            'country':                 "text" ,
+            'dateOfCalculation':       "date",
+            'currency':                "text",
+            'currencyConversionToEUR': "float",
+            'totalUsers':              "int(11)",
+            'validUsers':              "int(11)",
+            'globalTotalUsers':        "int(11)"
+        };
 
-    //inserts monthly costs elements into array, after "CurrToEUR"
-    var keys = Object.keys(new MonthlyCostsObj()); //template with Object, see statFunctions.js
-    var monthly_costs_length = keys.length;
-    for (let i = monthly_costs_length-1; i >= 0; i--){        
-        AVG_DB_TEMPLATE.splice(4, 0, [keys[i], "float"]);
-    }
-        
-    //inserts financial effort elements into array, after "total_costs"
-    keys = Object.keys(new FinEffortObj()); //template with Object, see statFunctions.js
-    for (let i = keys.length-1; i>=0; i--){        
-        AVG_DB_TEMPLATE.splice(7 + monthly_costs_length, 0, [keys[i], "float"]);
-    }
-    
-    //console.log(AVG_DB_TEMPLATE);
-    /*********************************************************************************************/
+        let objectWithCalculatedAverages = flatten(statsFunctions.CreateCalculatedDataObj(), {delimiter:"_"});
+        for (let averageItem of Object.keys(objectWithCalculatedAverages)) {
+            if(averageItem.endsWith("_calculated")){
+                objectWithCalculatedAverages[averageItem] = "boolean"; 
+            }
+            else{
+                objectWithCalculatedAverages[averageItem] = "float";
+            }
+        }
+
+        AVG_DB_TEMPLATE = Object.assign(AVG_DB_TEMPLATE, objectWithCalculatedAverages); //concatenates objects
+
+        //console.log(AVG_DB_TEMPLATE); process.exit();
+    }());
     
     var DB_INFO    = settings.dataBase.credentials;
     var MoneyApiId = settings.money.ApiId;
@@ -88,43 +84,49 @@ isOnline().then(function(online) {
     var unique_users = [];    //array of objects having unique_users IDs and respective countries
     var AllUserInputDb = [];  //array of objects with all the data from the inputs users DB
     var queryInsert;          //SQL string to where all the average costs will be inserted
-    var queryInsertNorm;      //SQL string to where all the average Normalized costs will be inserted (all costs in EUR)    
-
-    //string with the date DD/MM/YYYY
-    var d = new Date();
-    var date_string = d.getFullYear().toString()+"-"+(d.getMonth()+1).toString()+"-"+d.getDate().toString();
-    //console.log(date_string);
-
+    
+    if(DEBUG_USE_MONEY_API){
+        var queryInsertNorm;      //SQL string to where all the average Normalized costs will be inserted (all costs in EUR)    
+    }
+    
     //method that forces several methods to run synchronously
     async.series([
 
+        /*=========================================================================*/
         //Load money API for the currency conversion
         //see: http://openexchangerates.github.io/money.js/
         //and: https://openexchangerates.org/account/app-ids
         function(callback) {
+            if(!DEBUG_USE_MONEY_API){                
+                callback(); return;
+            }
+                
             console.log("\nLoad exchange rates via API on openexchangerates.org");
-            var API_url = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId;
+
+            let API_url = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId;
             //HTTP Header request
-            var options = {
+            let options = {
                 url: API_url,
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
                 }
             };
-            
+
             request(options, function(error, response, body){
                 if (!error && typeof fx !== "undefined" && fx.rates ) {
-                    var result = JSON.parse(body);
+                    let result = JSON.parse(body);
                     fx.rates = result.rates;
                     fx.base = result.base;
                 } else {
                     throw "Error loading money API";
+                    process.exit();
                 }                               
-                                
+
                 callback();
             });
         },
         
+        /*=========================================================================*/
         //creates DB connection and connects
         function(callback) {
 
@@ -135,8 +137,9 @@ isOnline().then(function(online) {
             db.connect(function(err){
                 if (err) {
                     console.error('error connecting: ' + err.stack);
-                    return;
+                    process.exit();
                 }
+                
                 console.log('User ' + DB_INFO.user + 
                             ' connected successfully to DB ' + DB_INFO.database + 
                             ' at ' + DB_INFO.host);
@@ -145,12 +148,17 @@ isOnline().then(function(online) {
             });            
         },
         
+        /*=========================================================================*/
         //Get the set of different countries and set them in array countries[]
         function(callback) {
             //console.log("DB login data: "); console.log(DB_INFO);
 
             db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function(err, results, fields) {
-                if (err) {console.log(err); throw err;}
+                if (err) {
+                    console.error(err);
+                    process.exit();
+                }
+                
                 //Check that a user was found
                 for (var i=0; i<results.length; i++){
                     if (results[i].Country){
@@ -162,6 +170,7 @@ isOnline().then(function(online) {
             });
         },
 
+        /*=========================================================================*/
         //Get users unique ID
         function(callback) {
             console.log('\nGetting users unique IDs from ' +
@@ -169,7 +178,11 @@ isOnline().then(function(online) {
 
             db.query('SELECT DISTINCT uuid_client, country FROM ' + DB_INFO.db_tables.users_insertions, 
                 function(err, results, fields) {
-                    if (err) return callback(err);
+                    if (err){
+                        console.error(err);
+                        process.exit();
+                    }
+                
                     for (var i=0; i<results.length; i++){
                         unique_users.push(results[i]);
                     }
@@ -179,13 +192,17 @@ isOnline().then(function(online) {
             );
         },
 
+        /*=========================================================================*/
         //Get all data from users input DB
         function(callback) {
             console.log('\nGetting all user insertion data from ' +
                         'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions);
 
             db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function(err, results, fields) {
-                if (err) return callback(err);
+                if (err){
+                    console.error(err);
+                    process.exit();
+                }
 
                 for (var i=0; i<results.length; i++){
                     AllUserInputDb.push(results[i]);
@@ -195,28 +212,36 @@ isOnline().then(function(online) {
             });
         },
 
+        /*=========================================================================*/
         //Calculates statistical average costs for each country and builds SQL query
         function(callback) {
             console.log('\nCalculating data and building DB insertion data for ' + 
                         'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
-            var country_users = []; //array with unique users for one specific country
-            var country_data  = []; //array where all data for one specific country is inserted           
+            
+            let country_users = []; //array with unique users for one specific country
+            let country_data  = []; //array where all data for one specific country is inserted   
+            
+            //string with the date DD/MM/YYYY
+            let date = new Date();
+            let dateString = date.getFullYear().toString()+"-"+(date.getMonth()+1).toString()+"-"+date.getDate().toString();            
             
             //queries header
             queryInsert     = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_statistics + " ";
-            queryInsertNorm = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_normalized + " ";
+            
+            if(DEBUG_USE_MONEY_API){
+                queryInsertNorm = "INSERT INTO " + DB_INFO.db_tables.monthly_costs_normalized + " ";
+            }
             
             /*builds sql query Header based on AVG_DB_TEMPLATE*/
-            var queriesHeader = "(";
-            for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
-                queriesHeader += AVG_DB_TEMPLATE[i][0] + (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") ");    
-            }            
+            let queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false); //false removes quotes from strings            
+            //console.log(queriesHeader); process.exit(); 
+                        
+            queryInsert     += queriesHeader + "VALUES ";
             
-            queriesHeader += "VALUES ";
+            if(DEBUG_USE_MONEY_API){
+                queryInsertNorm += queriesHeader + "VALUES ";
+            }
             
-            queryInsert     += queriesHeader;
-            queryInsertNorm += queriesHeader;
-
             //builds the query to insert all the vaules for each country
             //sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
             for (let i = 0; i < countries.length; i++){
@@ -250,102 +275,95 @@ isOnline().then(function(online) {
                 };
                 //if(true) {console.log("country_object:");console.log(country_object);}
 
-                let stats_results = calculateStatistics(country_users, country_data, country_object);
+                let statisticsResults = statsFunctions.calculateStatistics(country_users, country_data, country_object);
+                //console.log(JSON.stringify(statisticsResults, null, 4)); process.exit();
+                
+                let flattenStatisticsResults = flatten(statisticsResults, {delimiter:"_"});
+                //console.log(flattenStatisticsResults); //process.exit();            
 
                 //add computed data to countries array of objects
-                countries[i].valid_users = stats_results.users_counter;
-                countries[i].total_users = country_users.length;
-                countries[i].total_costs = stats_results.totCostsPerMonth.toFixed(1);
+                countries[i].validUsers = statisticsResults.validUsers;
+                countries[i].totalUsers = country_users.length;
+                if(!isNaN(statisticsResults.costs.perMonth.total)){
+                    countries[i].totalCosts = statisticsResults.costs.perMonth.total.toFixed(1);                                
+                }
+                else{
+                    countries[i].totalCosts = undefined;
+                }
                 
                 //currency conversion to EUR
-                let curr = countries[i].currency;
-                let currToEUR = fx(1).from('EUR').to(curr);
-                //console.log(currToEUR);
-
-                /**********************************************************************/
-                //builds sql query for respective country, check var AVG_DB_TEMPLATE
-                let queryInsertCountry =                                       " ('"  + 
-                    countries[i].Country                                     + "', '" +
-                    date_string                                              + "', '" +
-                    curr                                                     + "', '" +
-                    currToEUR                                                + "', '";
+                let currency = countries[i].currency;
+                let currencyConversionToEUR = 1;//fx(1).from('EUR').to(curr);
+                //console.log(currencyConversionToEUR);
                 
-                for (let key of Object.keys(stats_results.monthly_costs)){
-                    queryInsertCountry += stats_results.monthly_costs[key]   + "', '";
-                }
+                //builds sql query for respective country, check var AVG_DB_TEMPLATE                
+                let queryInsertCountry = [ 
+                    countries[i].Country,  
+                    dateString,           
+                    currency,
+                    currencyConversionToEUR,
+                    countries[i].totalUsers,
+                    countries[i].validUsers,
+                    unique_users.length
+                ];
                 
-                queryInsertCountry += 
-                    stats_results.standCos                                   + "', '" +
-                    stats_results.runnCos                                    + "', '" +
-                    stats_results.totCostsPerMonth                           + "', '";
+                delete flattenStatisticsResults.validUsers;
+                queryInsertCountry = queryInsertCountry.concat(Object.values(flattenStatisticsResults));                
+                                
+                queryInsert += sqlStringFromArray(queryInsertCountry);                
+                //console.log("\n\n\n\n",sqlFormatter.format(queryInsert), "\n\n"); //process.exit(); 
                 
-                for (let key of Object.keys(stats_results.fin_effort)){
-                    queryInsertCountry += stats_results.fin_effort[key]      + "', '";
-                }
-                
-                queryInsertCountry += 
-                    stats_results.runCostsPerDist                            + "', '" +
-                    stats_results.totCostsPerDist                            + "', '" +               
-                    stats_results.kinetic_speed                              + "', '" +
-                    stats_results.virtual_speed                              + "', '" +
-                    countries[i].valid_users                                 + "', '" +
-                    countries[i].total_users                                 + "', '" +
-                    unique_users.length + 
-                    "' )";
-                
-                //console.log(queryInsertCountry, "\n\n");
-                queryInsert += queryInsertCountry;
-                /**************************************************************/
-                
-                
-                /**************************************************************/
                 //sql query for table for the normalized costs (all costs in EUR), check var AVG_DB_TEMPLATE
-                let queryInsertNormCountry =                                    " ('"   + 
-                    countries[i].Country                                       + "', '" +
-                    date_string                                                + "', '" +
-                    ('EUR')                                                    + "', '" +
-                    currToEUR                                                  + "', '";  
-                
-                for (let key of Object.keys(stats_results.monthly_costs)){
+                if(DEBUG_USE_MONEY_API){
+                    let queryInsertNormCountry =                                    " ('"   + 
+                        countries[i].Country                                       + "', '" +
+                        date_string                                                + "', '" +
+                        ('EUR')                                                    + "', '" +
+                        currencyConversionToEUR                                                  + "', '";  
+
+                    for (let key of Object.keys(stats_results.monthly_costs)){
+                        queryInsertNormCountry += 
+                            fx(stats_results.monthly_costs[key]).from(curr).to('EUR') + "', '";
+                    }
+
                     queryInsertNormCountry += 
-                        fx(stats_results.monthly_costs[key]).from(curr).to('EUR') + "', '";
+                        fx(stats_results.standCos).from(curr).to('EUR')            + "', '" +
+                        fx(stats_results.runnCos).from(curr).to('EUR')             + "', '" +
+                        fx(stats_results.totCostsPerMonth).from(curr).to('EUR')    + "', '";                    
+
+                    let fe = stats_results.fin_effort;
+                    queryInsertNormCountry += 
+                        fx(fe.aver_income_per_hour).from(curr).to('EUR')           + "', '" +
+                        fx(fe.aver_income_per_month).from(curr).to('EUR')          + "', '" +
+                        fx(fe.income_per_year).from(curr).to('EUR')                + "', '" +
+                        fx(fe.total_costs_year).from(curr).to('EUR')               + "', '" +
+                        fe.hours_per_year_to_afford_car                            + "', '" +
+                        fe.days_car_paid                                           + "', '" +
+                        fe.month_per_year_to_afford_car                            + "', '";
+
+                    queryInsertNormCountry +=                    
+                        fx(stats_results.runCostsPerDist).from(curr).to('EUR')     + "', '" +
+                        fx(stats_results.totCostsPerDist).from(curr).to('EUR')     + "', '" +
+                        stats_results.kinetic_speed                                + "', '" +
+                        stats_results.virtual_speed                                + "', '" +
+                        countries[i].valid_users                                   + "', '" +
+                        countries[i].total_users                                   + "', '" +
+                        unique_users.length + 
+                        "' )";      
+
+                    queryInsertNorm += queryInsertNormCountry;
                 }
-                
-                queryInsertNormCountry += 
-                    fx(stats_results.standCos).from(curr).to('EUR')            + "', '" +
-                    fx(stats_results.runnCos).from(curr).to('EUR')             + "', '" +
-                    fx(stats_results.totCostsPerMonth).from(curr).to('EUR')    + "', '";                    
-                
-                let fe = stats_results.fin_effort;
-                queryInsertNormCountry += 
-                    fx(fe.aver_income_per_hour).from(curr).to('EUR')           + "', '" +
-                    fx(fe.aver_income_per_month).from(curr).to('EUR')          + "', '" +
-                    fx(fe.income_per_year).from(curr).to('EUR')                + "', '" +
-                    fx(fe.total_costs_year).from(curr).to('EUR')               + "', '" +
-                    fe.hours_per_year_to_afford_car                            + "', '" +
-                    fe.days_car_paid                                           + "', '" +
-                    fe.month_per_year_to_afford_car                            + "', '";
-                
-                queryInsertNormCountry +=                    
-                    fx(stats_results.runCostsPerDist).from(curr).to('EUR')     + "', '" +
-                    fx(stats_results.totCostsPerDist).from(curr).to('EUR')     + "', '" +
-                    stats_results.kinetic_speed                                + "', '" +
-                    stats_results.virtual_speed                                + "', '" +
-                    countries[i].valid_users                                   + "', '" +
-                    countries[i].total_users                                   + "', '" +
-                    unique_users.length + 
-                    "' )";      
-                
-                queryInsertNorm += queryInsertNormCountry;
-                /**************************************************************/
-                
-                if (i != countries.length-1){//doesn't add "," on the last set of values
+            
+                if (i !== countries.length-1){//doesn't add "," on the last set of values
                     queryInsert     += ", ";
-                    queryInsertNorm += ", ";
+                    
+                    if(DEBUG_USE_MONEY_API){
+                        queryInsertNorm += ", ";
+                    }
                 }
                 //console.log(countries[i].Country);
             }
-            //console.log(queryInsert.replace(/\s\s+/g, ' ').replace(/(\)\,\s)/g, `),\n`));
+            //console.log(sqlFormatter.format(queryInsert)); process.exit();  
 
             //console.log(countries);
             //prints in the shell a sorted list of the computed countries
@@ -355,127 +373,160 @@ isOnline().then(function(online) {
             var total_valid_users = 0;
             var total_users = 0;
             for (let i=0; i<countries.length; i++) {
-                total_valid_users += countries[i].valid_users;
-                total_users += countries[i].total_users;
+                total_valid_users += countries[i].validUsers;
+                total_users += countries[i].totalUsers;
             }
             console.log("\nTotal users: " + total_users);
             console.log("Total valid users: " + total_valid_users);
 
-            console.log("\nCountry | Total costs | Valid users | Total users | Valid ratio | % of total valid users");
+            console.log("\nCountry |  Total costs  | Valid users | Total users | Valid ratio | % of total valid users");
             for (let i=0; i<countries.length; i++) {
                 console.log("\n" + ("        " + countries[i].Country).slice(-5) + "  " +
-                    " | " + ("        " + countries[i].total_costs).slice(-7) + " " + countries[i].currency +
-                    " | " + ("            " + countries[i].valid_users).slice(-11) +
-                    " | " + ("            " + countries[i].total_users).slice(-11) +
-                    " | " + ("            " + 
-                             (countries[i].valid_users/countries[i].total_users*100).toFixed(1) + "%").slice(-11) +
-                    " | " + ("               " + (countries[i].valid_users/total_valid_users*100).toFixed(1) + "%").slice(-14));
+                    " | " + ("          " + countries[i].totalCosts).slice(-9) + " " + countries[i].currency +
+                    " | " + ("            " + countries[i].validUsers).slice(-11) +
+                    " | " + ("            " + countries[i].totalUsers).slice(-11) +
+                    " | " + ("            " + (countries[i].validUsers/countries[i].totalUsers*100).toFixed(1) + "%").slice(-11) +
+                    " | " + ("               " + (countries[i].validUsers/total_valid_users*100).toFixed(1) + "%").slice(-14));
             }
             console.log("\nData calculated and DB query built");
             callback();
         },
 
+        /*=========================================================================*/
         //Deletes table completely: monthly_costs_statistics
         function(callback) {
             console.log("\nDeleting table from DB");
 
             //deletes table completely
             db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics, function(err, results, fields) {
-                if (err){console.log(err); return callback(err);}                
-                console.error('Previous table deleted from ' +
-                              'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
+                if (err){
+                    console.log(err); 
+                    process.exit();
+                }
+                
+                console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
                 callback();
             });
         },
         
+        /*=========================================================================*/
         //Deletes table completely: monthly_costs_normalized
         function(callback) {
+            if(!DEBUG_USE_MONEY_API){
+                callback(); return;
+            }
+            
             console.log("\nDeleting table from DB");
 
             //deletes table completely
             db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized, function(err, results, fields) {
-                if (err){console.log(err); return callback(err);}                
-                console.error('Previous table deleted from ' +
-                              'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
+                if (err){
+                    console.log(err); 
+                    process.exit();
+                }
+                
+                console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
                 callback();
             });
         },        
         
+        /*=========================================================================*/
         //Creates new table: monthly_costs_statistics
         function(callback) {
             console.log("\nCreating new table into DB");
             
-            var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_statistics; 
+            let createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_statistics + " "; 
             
-            createTableQuery += " (";
             
-            for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
-                createTableQuery += AVG_DB_TEMPLATE[i][0] + " " + AVG_DB_TEMPLATE[i][1];
-                createTableQuery += (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") "); 
+            let arrayOfEntries = [];
+            for(let key of Object.keys(AVG_DB_TEMPLATE)){
+                arrayOfEntries.push(key + " " + AVG_DB_TEMPLATE[key]);
             }
             
+            createTableQuery += sqlStringFromArray(arrayOfEntries, false);
+            //console.log(sqlFormatter.format(createTableQuery)); process.exit();   
+            
             db.query(createTableQuery, function(err, results, fields) {
-                if (err){console.log(err); return callback(err);}
-                console.error('Table created in ' +
-                              'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
+                if (err){
+                    console.error(err); 
+                    process.exit();
+                }
+                
+                console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
                 callback();
             });
         },   
         
+        /*=========================================================================*/
         //Creates new table: monthly_costs_normalized
         //where the costs are all converted to EUR
-        function(callback) {
+        function(callback) {            
+            if(!DEBUG_USE_MONEY_API){
+                callback(); return;
+            }
+            
             console.log("\nCreating new table into DB");
 
             var createTableQuery = "CREATE TABLE IF NOT EXISTS " + DB_INFO.db_tables.monthly_costs_normalized;
 
             createTableQuery += " (";
-            
+
             for (let i=0; i<AVG_DB_TEMPLATE.length; i++){
                 createTableQuery += AVG_DB_TEMPLATE[i][0] + " " + AVG_DB_TEMPLATE[i][1];
                 createTableQuery += (i != AVG_DB_TEMPLATE.length-1 ? ", " : ") "); 
             }
-            
+
             db.query(createTableQuery, function(err, results, fields) {
-                if (err){console.log(err); return callback(err);}
-                console.error('Table created in ' +
-                              'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
+                if (err){
+                    console.error(err); 
+                    process.exit();
+                }
+                
+                console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
                 callback();
             });
         },        
 
+        /*=========================================================================*/
         //insert table monthly_costs_statistics into DB
         function(callback) {
             console.log("\nInserting new calculated data into DB");
 
             db.query(queryInsert, function(err, results, fields) {
                 if (err){
-                    console.log(err); 
-                    return callback(err);
+                    console.error(("\n\n SQL ERROR: " + err.sqlMessage).red.bold);
+                    console.error(sqlFormatter.format(err.sql));
+                    process.exit();
                 }
-                console.log('All new data successfully added into ' +
-                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics + '\n\n');
                 
+                console.log('All new data successfully added into ' + 
+                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics + '\n\n');                
                 callback();
             });
         },
 
+        /*=========================================================================*/
         //insert table monthly_costs_normalized into DB
-        function(callback) {
+        function(callback) {            
+            if(!DEBUG_USE_MONEY_API){
+                callback(); return;
+            }
+            
             console.log("\nInserting new calculated data into DB");
 
             db.query(queryInsertNorm, function(err, results, fields) {
                 if (err){
-                    console.log(err); 
-                    return callback(err);
+                    console.error(err); 
+                    process.exit();
                 }
-                console.log('All new data successfully added into ' +
-                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized + '\n\n');
                 
+                console.log('All new data successfully added into ' + 
+                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized + '\n\n');
                 callback();
             });
         },        
-        
+                
+        /*=========================================================================*/
         //finishes DB connection
         function(callback) {
             db.end();
@@ -487,3 +538,28 @@ isOnline().then(function(online) {
     process.exit();
 });
     
+
+//from an array ["a", "b", undefined, true, 3, false] returns string "('a', 'b', NULL, 1, 3, 0)"
+function sqlStringFromArray(inputArray, addQuotesInStringsBool=true){
+
+    var str = "(";
+    
+    var length = inputArray.length;
+    for (let i=0; i<length; i++){
+        let item = inputArray[i];
+        let isStr = typeof item === "string" && addQuotesInStringsBool;
+        
+        //sanitize for sql string
+        if(typeof item === "undefined" || 
+           typeof item === "number" && !isFinite(item)){
+            item = 'NULL';
+            isStr = false;
+        }        
+        
+        str += (isStr ? "'" : "") + item + (isStr ? "'" : "");
+        str += (i !== length-1 ? ", " : ") " );
+    }
+    
+    return str;
+}
+
