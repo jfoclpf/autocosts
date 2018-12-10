@@ -431,9 +431,9 @@ function setFILENAMES(){
             "statsFunctions.js" : path.join(DIRECTORIES.server.build, "statsFunctions.js")
         },
         "src": {
-            "conversionFunctions.js" : path.join(DIRECTORIES.src.client, "conversionFunctions.js"),
-            "coreFunctions.js"       : path.join(DIRECTORIES.src.client, "core", "coreFunctions.js"),
-            "getData.js"             : path.join(DIRECTORIES.src.client, "getData.js")
+            "conversions.js"  : path.join(DIRECTORIES.src.client, "core", "conversions.js"),
+            "calculator.js"   : path.join(DIRECTORIES.src.client, "core", "calculator.js"),
+            "transferData.js" : path.join(DIRECTORIES.src.client, "transferData.js")
         },
         //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER, 
         //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
