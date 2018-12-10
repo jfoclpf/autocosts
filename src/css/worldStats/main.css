@@ -1,75 +1,27 @@
-body {
-    font-family: Arial;
-}
-table {
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid grey;
-    padding: 4px;
-}
-h1 { font-size: 2em; 
-     text-align:center;
-     margin:0;
-}
-h3 { font-size: 1.17em; 
-     text-align:center; 
-     margin:0;
-}
-.chart {
-    position: relative;
-    margin: auto;
-}
-table {
-    margin: 0 auto;
-}
-th, 
-.country {
-    font-size:80%;
-}
-th {
-    border-bottom: solid 2px;
-}
-.center{
-    text-align:center;                
-}
-.tdRight{
-    text-align:right;
-    padding-right: 10px;
-}
-.justify{
-    text-align: justify;
-}    
-.right2px {
-    border-right: solid 2px;
-}
+.section-wrapper {max-width: 1170px; width: 100%; margin: 0 auto; }
 
-table {
-  overflow: hidden;
-}
+.worldStats-car-costs-chart {display: block; width: 100%; height: auto; margin-bottom: 25px;}
 
-tr:hover {
-  background-color: #ffa;
-}
+.worldStats-car-costs .stats-references {display: inline-block; margin-bottom: 100px;}
 
-td, th {
-  position: relative;
-}
-td:hover::after,
-th:hover::after {
-  content: "";
-  position: absolute;
-  background-color: #ffa;
-  left: 0;
-  top: -5000px;
-  height: 10000px;
-  width: 100%;
-  z-index: -1;
-}
+.notes-sources {display: block; background: #eceffb; margin: 100px 0 0; padding: 100px 0 }
+.notes-sources .section-wrapper {max-width: 770px}
+.notes-sources .section-wrapper h2 {margin: 0 0 20px}
+.notes-sources .section-wrapper ul {text-align: left;}
+.notes-sources .section-wrapper ul li {margin: 0 0 10px 18px}
+.notes-sources .section-wrapper ul li a {display: inherit;}
+
+.notes-sources .section-wrapper table.stats-table tr th {padding: 18px 4px}
 
 
-/*colours*/
-.white {
-    background-color: white;
-    padding: 1px;
-}
+/* ---------- Stats Table ---------- */
+table.stats-table {border-collapse: collapse; border-radius: 5px; width: 100%; color: #000000; font-size: 14px; line-height: 16px; margin: 0; background: white; -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
+table.stats-table tr {display: table-row; border-bottom: 1px solid #d2d4de }
+table.stats-table tr:last-child {border-bottom: none}
+table.stats-table tr:hover {background: #f4f6fe}
+table.stats-table tr th {border-top: 3px solid #f4f6fe; text-align: right;color: #797b82; font-size: 10px; line-height: 12px; text-transform: uppercase; padding: 8px 4px; background: #f4f6fe}
+table.stats-table tr th:first-child, table.stats-table tr td:first-child {text-align: left; padding-left: 10px}
+table.stats-table tr th:last-child, table.stats-table tr td:first-child {padding-right: 10px}
+table.stats-table tr td {padding: 8px; text-align: right; width: auto; margin: 0;}
+table.stats-table tr td + td {text-align: right; width: auto}
+table.stats-table tr td.bold {font-weight: bold}
