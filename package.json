@@ -61,6 +61,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
     "smart-app-banner": "^1.5.1",
+    "sql-formatter": "^2.3.2",
     "uglify-js": "^3.4.9",
     "uglifycss": "0.0.27",
     "walk": "^2.3.14",
