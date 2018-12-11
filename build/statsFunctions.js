@@ -27,18 +27,18 @@ var statsConstants = {
     MAX_EUR_CAR_VALUE:   100000,
 
     MAX_EUR_MONTHLY: {
-        DEPRECIATION: 800,
-        INSURANCE:    900,
-        CREDIT:       150,
-        INSPECTION:   250,
-        TAXES:        200,
-        FUEL:         950,
-        MAINTENANCE:  250,
-        REPAIRS:      250,
-        TOLLS:        250,
-        PARKING:      250,
-        FINES:        150,
-        WASHING:      150
+        depreciation:        800,
+        insurance:           900,
+        credit:              150,
+        inspection:          250,
+        roadTaxes:           250,
+        fuel:                950,
+        maintenance:         250,
+        repairsImprovements: 250,
+        parking:             250,
+        tolls:               250,
+        fines:               150,
+        washing:             150
     },
 
     MIN_EUR_MONTHLY: {
@@ -143,51 +143,45 @@ function CreateCalculatedDataObj(){
 
 
 //***************************************************************************************
-//this functions calculates the avearge of the averages of the same user inputs
-//for a corresponding country
-function calculateStatistics(userIds, data, country){
-// userIds => is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client),
-//the 2nd column has always the same country
-// data    => is a matrix with everything for the specific country
-// country => is the country whose average is being calculated
-//userIds.length is smaller than data.length, because some users fill in more than one time
-
-//console.log(" "); console.log(" "); console.log(" "); console.log(" "); console.log(" ");
-//console.log("************************************************************************");
+//this functions calculates the avearge of the averages of the same user inputs for a corresponding country
+function calculateStatisticsForADefinedCountry(userIds, countryData, countryObj, fx){
+//    userIds     => is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), the 2nd column has always the same country
+//    countryData => is a matrix with everything for the specific country
+//    countryObj  => is a country object whose average is being calculated
+//    fx          => is the currency conversion object
+//userIds.length is smaller than countryData.length, because some users fill in more than one time
 
     //object to be output as result
     var averageCalculatedData;
 
-    if(userIds.length !== 0 && data.length !== 0){
+    if(userIds.length !== 0 && countryData.length !== 0){
         var temp_i = []; //array with unique users, having one element per different user
         var temp_j = []; //array having the several inputs from the same user
 
         for(var i=0; i<userIds.length; i++){
 
-            for(var j=0, n=0; j<data.length; j++){
-                if(data[j].uuid_client == userIds[i].uuid_client){
+            for(var j=0, n=0; j<countryData.length; j++){
+                if(countryData[j].uuid_client == userIds[i].uuid_client){
 
                     //checks if the entry is ok
                     //and if it is an input spam/bot
                     //(the time to fill the form for the first input mus be greater than a time value)
-                    //console.log("(i,j)=("+i+","+j+")"); console.log(data[j]);console.log(country);
+                    //console.log("(i,j)=("+i+","+j+")"); console.log(countryData[j]);console.log(countryObj);
 
-                    let wasEnoughTimeFillingTheForm = data[j].time_to_fill_form > statsConstants.MIN_TIME_TO_FILL_FORM;
+                    let wasEnoughTimeFillingTheForm = countryData[j].time_to_fill_form > statsConstants.MIN_TIME_TO_FILL_FORM;
 
-                    if(isUserDataEntryOk(data[j], country) &&
+                    if(isUserDataEntryOk(countryData[j], countryObj) &&
                        /*just checks if was enough time, on the first calculation from the same user*/
                        ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
                       ){
 
-                        let userData = transferData.createUserDataObjectFromDB(data[j])
-                        //console.log("calculateCosts");
-                        let calculatedData = calculator.calculateCosts(userData, country);
-                        
-                        //console.log("(i,j)=("+i+","+j+")");console.log(country);console.log(calculatedData);
+                        let userData = transferData.createUserDataObjectFromDB(countryData[j])
+                        let calculatedData = calculator.calculateCosts(userData, countryObj);                        
+                        //console.log("(i,j)=("+i+","+j+")");console.log(countryObj);console.log(calculatedData);
 
                         //checks if the calculatedData is an outlier
-                        if (isCalculatedDataOk(calculatedData, country)){
-                            //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+data[j].time_to_fill_form);                            
+                        if (isCalculatedDataOk(calculatedData, countryObj, fx)){
+                            //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);                            
                             temp_j.push(calculatedData);
                             n++;
                         }
@@ -358,27 +352,21 @@ function getAverageCosts(calculatedDataArray){
     if(drivingDistanceCounter > 0){
 
         averageCalculatedData.drivingDistance.calculated = true;
-
         averageCalculatedData.drivingDistance.perMonth = calculatedSum.drivingDistance.perMonth / drivingDistanceCounter;
         averageCalculatedData.drivingDistance.perYear = calculatedSum.drivingDistance.perYear / drivingDistanceCounter;
 
         averageCalculatedData.costs.perUnitDistance.runningCosts = 
             averageCalculatedData.costs.perMonth.runningCosts * 12 / averageCalculatedData.drivingDistance.perYear;
 
-        averageCalculatedData.costs.perUnitDistance.totalCosts = 
-            averageCalculatedData.costs.totalPerYear / averageCalculatedData.drivingDistance.perYear;
+        averageCalculatedData.costs.perUnitDistance.totalCosts = averageCalculatedData.costs.totalPerYear / averageCalculatedData.drivingDistance.perYear;
 
     }
 
     if(timeSpentInDrivingCounter > 0 && drivingDistanceCounter > 0){
 
         averageCalculatedData.timeSpentInDriving.calculated = true;
-
-        averageCalculatedData.timeSpentInDriving.hoursPerYear = 
-            calculatedSum.timeSpentInDriving.hoursPerYear / timeSpentInDrivingCounter;
-
-        averageCalculatedData.speeds.averageKineticSpeed = 
-            averageCalculatedData.drivingDistance.perYear / averageCalculatedData.timeSpentInDriving.hoursPerYear;
+        averageCalculatedData.timeSpentInDriving.hoursPerYear = calculatedSum.timeSpentInDriving.hoursPerYear / timeSpentInDrivingCounter;
+        averageCalculatedData.speeds.averageKineticSpeed = averageCalculatedData.drivingDistance.perYear / averageCalculatedData.timeSpentInDriving.hoursPerYear;
     }
 
     if(financialEffortCounter > 0 && timeSpentInDrivingCounter > 0 && drivingDistanceCounter > 0){
@@ -395,14 +383,14 @@ function getAverageCosts(calculatedDataArray){
 //**********************************************************************
 //**********************************************************************
 // checks whether the DB entry is valid
-function isUserDataEntryOk(dbEntry, country) {
+function isUserDataEntryOk(dbEntry, countryObj) {
 
     var today = new Date();
-    var date_auto = new Date(dbEntry.acquisition_year, dbEntry.acquisition_month - 1);
-    var age_months = calculator.differenceBetweenDates(date_auto,today); //age of car in months
+    var acquisitionDate = new Date(dbEntry.acquisition_year, dbEntry.acquisition_month - 1);
+    var ageOfCarInMonths = calculator.differenceBetweenDates(acquisitionDate, today);
 
     if (dbEntry.acquisition_year && dbEntry.acquisition_month) {
-        if(isNaN(age_months) || age_months > statsConstants.MAX_CAR_AGE_MONTHS){
+        if(isNaN(ageOfCarInMonths) || ageOfCarInMonths > statsConstants.MAX_CAR_AGE_MONTHS){
             return false;
         }
     }
@@ -411,8 +399,8 @@ function isUserDataEntryOk(dbEntry, country) {
     }
 
     //depreciation must be positive
-    if((isNaN(dbEntry.commercial_value_at_acquisition) || isNaN(dbEntry.commercial_value_at_now) ) ||
-       (Number(dbEntry.commercial_value_at_acquisition) < Number(dbEntry.commercial_value_at_now))){
+    if( (isNaN(dbEntry.commercial_value_at_acquisition) || isNaN(dbEntry.commercial_value_at_now)) ||
+        (Number(dbEntry.commercial_value_at_acquisition) < Number(dbEntry.commercial_value_at_now)) ){
 
         return false;
     }
@@ -423,7 +411,7 @@ function isUserDataEntryOk(dbEntry, country) {
     }
 
     //credit
-    if(dbEntry.credit == "true" && (isNaN(dbEntry.credit_number_installments) ||
+    if(dbEntry.credit === "true" && (isNaN(dbEntry.credit_number_installments) ||
                                  isNaN(dbEntry.credit_amount_installment) ||
                                  isNaN(dbEntry.credit_residual_value) ||
                                  isNaN(dbEntry.credit_borrowed_amount))){
@@ -443,7 +431,7 @@ function isUserDataEntryOk(dbEntry, country) {
     //fuel & distance
     switch(dbEntry.fuel_calculation){
 
-        case "km"/*old versions compatibility*/:
+        case "km"/*old versions support*/:
         case "distance":
 
             if(isNaN(dbEntry.fuel_distance_based_fuel_efficiency) || isNaN(dbEntry.fuel_distance_based_fuel_price)){
@@ -451,7 +439,7 @@ function isUserDataEntryOk(dbEntry, country) {
             }
 
             //remove outliers
-            if (conversions.convertFuelEfficiencyToL100km(dbEntry.fuel_distance_based_fuel_efficiency, country.fuel_efficiency_std) >
+            if (conversions.convertFuelEfficiencyToL100km(dbEntry.fuel_distance_based_fuel_efficiency, countryObj.fuel_efficiency_std) >
                 statsConstants.MAX_FUEL_EFF_L100KM){
 
                 return false;
@@ -469,13 +457,13 @@ function isUserDataEntryOk(dbEntry, country) {
                     }
 
                     //remove outliers
-                    if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_home_work, country.distance_std) >
+                    if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_home_work, countryObj.distance_std) >
                         statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK){
 
                         return false;
                     }
 
-                    if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_weekend, country.distance_std) >
+                    if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_weekend, countryObj.distance_std) >
                         statsConstants.MAX_KM_DRIVEN_WEEKEND){
 
                         return false;
@@ -498,7 +486,7 @@ function isUserDataEntryOk(dbEntry, country) {
             break;
 
         case "money":
-        case "euros"/*old versions compatibility*/:
+        case "euros"/*old versions support*/:
 
             if(isNaN(dbEntry.fuel_currency_based_currency_value)){
                 return false;
@@ -588,9 +576,16 @@ function isUserDataEntryOk(dbEntry, country) {
 
 //checks if the computed calculatedData was OK and is not an outlier
 //for the typeof "calculatedData" see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
-function isCalculatedDataOk(calculatedData, country) {
+function isCalculatedDataOk(calculatedData, countryObj, fx) {
 
     var monthlyCosts = calculatedData.costs.perMonth.items;
+    var currency = countryObj.currency;
+    
+    for (let monthlyItem in monthlyCosts){
+        if(!isFinite(monthlyCosts[monthlyItem])){
+            return false;
+        }
+    }
 
     //kinetic speed and virtual/consumer speed
     if(calculatedData.drivingDistance.calculated && calculatedData.timeSpentInDriving.calculated){
@@ -616,14 +611,14 @@ function isCalculatedDataOk(calculatedData, country) {
 
     //distance per month
     if(calculatedData.driving_distance_calculated){
-        var distance_per_month_km = conversions.convertDistanceToKm(calculatedData.distance_per_month, country.distance_std);
+        var distance_per_month_km = conversions.convertDistanceToKm(calculatedData.distance_per_month, countryObj.distance_std);
         if(distance_per_month_km > statsConstants.MAX_KM_DRIVEN_PER_MONTH){
             return false;
         }
     }
 
     if(calculatedData.drivingDistance.calculated && calculatedData.financialEffort.calculated){
-        if(country.currency == "EUR" && calculatedData.financialEffort.income.averagePerHour > statsConstants.MAX_EUR_INCOME_PER_HOUR){
+        if(countryObj.currency == "EUR" && calculatedData.financialEffort.income.averagePerHour > statsConstants.MAX_EUR_INCOME_PER_HOUR){
             return false;
         }
     }
@@ -633,6 +628,21 @@ function isCalculatedDataOk(calculatedData, country) {
             return false;
         }
     }
+    
+    if(currency === "EUR"){
+        for (let monthlyItem in monthlyCosts){
+            if(monthlyCosts[monthlyItem] > statsConstants.MAX_EUR_MONTHLY[monthlyItem]){
+                return false;
+            }
+        }    
+    }
+    else if(fx){
+        for (let monthlyItem in monthlyCosts){
+            if( fx(monthlyCosts[monthlyItem]).from(currency).to('EUR') > statsConstants.MAX_EUR_MONTHLY[monthlyItem] ){
+                return false;
+            }
+        } 
+    }
 
     return true;
 }
@@ -640,10 +650,11 @@ function isCalculatedDataOk(calculatedData, country) {
 
 //node module exports
 module.exports = {
-    calculateStatistics: calculateStatistics,
+    calculateStatisticsForADefinedCountry: calculateStatisticsForADefinedCountry,
     CreateCalculatedDataObj: CreateCalculatedDataObj,
     statsConstants: statsConstants
 };
+
 
 
 
