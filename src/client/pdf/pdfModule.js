@@ -31,7 +31,8 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
         };
         
         var isFinancialEffortChart = calculatedData.financialEffort.calculated && chartsInfo.financialEffort.isVisible;
-        var isAlternativesToCarChart = (calculatedData.publicTransports.calculated || calculatedData.uber.calculated) && chartsInfo.alternativesToCar.isVisible;
+        var isAlternativesToCarChart = (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)) &&
+            chartsInfo.alternativesToCar.isVisible;
         
         $.when(switches.charts ? getChartSize("costsDoughnut") : {}, 
                switches.charts ? getChartSize("costsBars") : {},
@@ -204,7 +205,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             }
 
             //Equivalent transport costs / uber / public transports
-            if (calculatedData.publicTransports.calculated || calculatedData.uber.calculated){   
+            if (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)){   
                 //header
                 content.push( 
                     {
@@ -248,7 +249,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
                 }
 
                 //uber
-                if(calculatedData.uber.calculated){
+                if(switches.uber && calculatedData.uber.calculated){
                     content.push(
                         {
                             style:'tableMarging',
