@@ -51,95 +51,6 @@ var statsConstants = {
     MAX_HOURS_DRIVE_PER_YEAR: 20*365
 };
 
-//Object Constructor for the Results, where the calculated averages are stored
-//see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
-//because it is a constructor, first letter is capital
-function CreateCalculatedDataObj(){
-    const u = undefined;
-    return {
-        costs: {
-            totalPerYear: u,
-            totalEver: u,
-
-            perMonth: {
-                items: {
-                    depreciation: u,
-                    insurance: u,
-                    credit: u,
-                    inspection: u,
-                    roadTaxes: u,
-                    fuel: u,
-                    maintenance: u,
-                    repairsImprovements: u,
-                    parking: u,
-                    tolls: u,
-                    fines: u,
-                    washing: u
-                },
-                standingCosts: u,
-                runningCosts: u,
-                total: u
-            },
-
-            perUnitDistance: { //"km", "mile", etc.
-                runningCosts: u,
-                totalCosts: u
-            }
-        },
-
-        speeds: {
-            averageKineticSpeed: u,
-            averageConsumerSpeed: u //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
-        },
-
-        financialEffort: {
-            calculated: false,            //boolean whether the public transports info was calculated
-            income: {
-                averagePerHour: u,
-                averagePerWeek: u,
-                averagePerMonth: u,
-                perYear: u
-            },
-            workingTime: {
-                hoursPerWeek: u,      //hours of work per week
-                weeksPerYear: u,      //weeks of work per year
-                monthsPerYear: u,     //months of work per year
-                hoursPerMonth: u,     //average total working hours per month
-                hoursPerYear: u,      //average total working hours per year
-            },
-            totalCarCostsPerYear: u,               //total costs per year
-            workingHoursPerYearToAffordCar: u,     //hours per year to afford the car
-            workingMonthsPerYearToAffordCar: u,    //months per year to afford the car
-            daysForCarToBePaid: u,                 //number of days till the car is paid
-            financialEffortPercentage: u           //percentage of income that car costs represent
-        },
-        
-        drivingDistance: {
-            calculated: false,                //boolean
-            perMonth: u,                  //total distance driven per month
-            perYear: u,                   //total distance driven per year
-            betweenHomeAndJob: u,         //distance between home and job (one-way)
-            duringEachWeekend: u,         //distance the user drives during weekend
-            averagePerWeek: u,            //average distance driven per week        
-        },
-
-        timeSpentInDriving: {
-            calculated: false,                //boolean
-            minutesBetweenHomeAndJob: u,  //time (in minutes) driven between home and job
-            minutesInEachWeekend: u,      //time (in minutes) driven during weekends
-            minutesPerWeek: u,            //time (in minutes) driven per week
-            minutesPerDay: u,             //time (in minutes) driven per day
-            daysPerMonth: u,              //number of days driven per month
-            hoursPerMonth: u,             //number of hours driven per month
-            hoursPerYear: u               //number of hours driven per year
-        }      
-    };
-}
-
-
-/*********************************************************************************************************/
-/*********************************************************************************************************/
-/*********************************************************************************************************/
 
 
 //***************************************************************************************
@@ -176,12 +87,12 @@ function calculateStatisticsForADefinedCountry(userIds, countryData, countryObj,
                       ){
 
                         let userData = transferData.createUserDataObjectFromDB(countryData[j])
-                        let calculatedData = calculator.calculateCosts(userData, countryObj);                        
+                        let calculatedData = calculator.calculateCosts(userData, countryObj);
                         //console.log("(i,j)=("+i+","+j+")");console.log(countryObj);console.log(calculatedData);
 
                         //checks if the calculatedData is an outlier
                         if (isCalculatedDataOk(calculatedData, countryObj, fx)){
-                            //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);                            
+                            //console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);
                             temp_j.push(calculatedData);
                             n++;
                         }
@@ -197,7 +108,7 @@ function calculateStatisticsForADefinedCountry(userIds, countryData, countryObj,
 
         //if the array with the average results is empty
         if(temp_i.length === 0){
-            averageCalculatedData = CreateCalculatedDataObj();
+            averageCalculatedData = calculator.CreateCalculatedDataObj();
             averageCalculatedData.validUsers = 0;
         }
         else{
@@ -206,7 +117,7 @@ function calculateStatisticsForADefinedCountry(userIds, countryData, countryObj,
         }
     }
     else{
-        averageCalculatedData = CreateCalculatedDataObj();
+        averageCalculatedData = calculator.CreateCalculatedDataObj();
         averageCalculatedData.validUsers = 0;
     }
 
@@ -229,10 +140,10 @@ function getAverageCosts(calculatedDataArray){
         return null;
     }
     //from here length must be >=1
-    
+
     //object to be returned by this function
-    var averageCalculatedData = CreateCalculatedDataObj();    
-    
+    var averageCalculatedData = calculator.CreateCalculatedDataObj();
+
     //If the length is greater than 1, finds the average of variables whose function is linear, such as Costs
     //Costs are linear functions because they are of the type f(x,y,z)=a*x+b*y+c*z, and therefore
     //the average of the functions is equal to the function of the averages, that is
@@ -240,7 +151,7 @@ function getAverageCosts(calculatedDataArray){
     //we just sum all the entries of the array, and divide by the number of items (length of the array)
 
     //the sum of all items, for dividing afterwards by its length, to get the average
-    var calculatedSum = CreateCalculatedDataObj();
+    var calculatedSum = calculator.CreateCalculatedDataObj();
 
     //initialize cost items to zero, for the sum to be made
     for (key of Object.keys(calculatedSum.costs.perMonth.items)){
@@ -355,7 +266,7 @@ function getAverageCosts(calculatedDataArray){
         averageCalculatedData.drivingDistance.perMonth = calculatedSum.drivingDistance.perMonth / drivingDistanceCounter;
         averageCalculatedData.drivingDistance.perYear = calculatedSum.drivingDistance.perYear / drivingDistanceCounter;
 
-        averageCalculatedData.costs.perUnitDistance.runningCosts = 
+        averageCalculatedData.costs.perUnitDistance.runningCosts =
             averageCalculatedData.costs.perMonth.runningCosts * 12 / averageCalculatedData.drivingDistance.perYear;
 
         averageCalculatedData.costs.perUnitDistance.totalCosts = averageCalculatedData.costs.totalPerYear / averageCalculatedData.drivingDistance.perYear;
@@ -412,9 +323,9 @@ function isUserDataEntryOk(dbEntry, countryObj) {
 
     //credit
     if(dbEntry.credit === "true" && (isNaN(dbEntry.credit_number_installments) ||
-                                 isNaN(dbEntry.credit_amount_installment) ||
-                                 isNaN(dbEntry.credit_residual_value) ||
-                                 isNaN(dbEntry.credit_borrowed_amount))){
+                                     isNaN(dbEntry.credit_amount_installment) ||
+                                     isNaN(dbEntry.credit_residual_value) ||
+                                     isNaN(dbEntry.credit_borrowed_amount))){
         return false;
     }
 
@@ -580,7 +491,7 @@ function isCalculatedDataOk(calculatedData, countryObj, fx) {
 
     var monthlyCosts = calculatedData.costs.perMonth.items;
     var currency = countryObj.currency;
-    
+
     for (let monthlyItem in monthlyCosts){
         if(!isFinite(monthlyCosts[monthlyItem])){
             return false;
@@ -628,20 +539,20 @@ function isCalculatedDataOk(calculatedData, countryObj, fx) {
             return false;
         }
     }
-    
+
     if(currency === "EUR"){
         for (let monthlyItem in monthlyCosts){
             if(monthlyCosts[monthlyItem] > statsConstants.MAX_EUR_MONTHLY[monthlyItem]){
                 return false;
             }
-        }    
+        }
     }
     else if(fx){
         for (let monthlyItem in monthlyCosts){
             if( fx(monthlyCosts[monthlyItem]).from(currency).to('EUR') > statsConstants.MAX_EUR_MONTHLY[monthlyItem] ){
                 return false;
             }
-        } 
+        }
     }
 
     return true;
@@ -651,10 +562,5 @@ function isCalculatedDataOk(calculatedData, countryObj, fx) {
 //node module exports
 module.exports = {
     calculateStatisticsForADefinedCountry: calculateStatisticsForADefinedCountry,
-    CreateCalculatedDataObj: CreateCalculatedDataObj,
     statsConstants: statsConstants
 };
-
-
-
-
