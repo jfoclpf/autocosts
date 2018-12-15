@@ -14,7 +14,7 @@ var statsLabels = JSON.parse(decodeURI(statsDataEl.dataset.stats_labels)); //the
 
 //gives 50px of height for every  horizontal bar
 var nmbrOfCountries = statsLabels.length;
-$("#overallStatsChartDiv").height(50*nmbrOfCountries);
+$(".worldStats-car-costs-chart").height(50*nmbrOfCountries);
 
 var costsColors = {        
     depreciation:        '#2ba3d6',
@@ -141,5 +141,5 @@ var chartContent = {
     options: options
 };        
 
-new Chart(overallStatsChart, chartContent);
+new Chart("worldStatsChart", chartContent);
 

@@ -280,7 +280,7 @@ autocosts.transferDataModule = (function(thisModule){
             },
 
             income: {
-                isOk:         false, //boolean whether this section was correctly filled in
+                isOk:         isIncomeOk(dbObject), //boolean whether this section was correctly filled in
                 incomePeriod: dbObject.income_type, //"year", "month", "week" or "hour"
                 year: {
                     amount: dbObject.income_per_year
@@ -353,13 +353,13 @@ autocosts.transferDataModule = (function(thisModule){
                 return (isDef(dbObject.income_per_hour) && isDef(dbObject.income_hours_per_week) && isDef(dbObject.income_hour_weeks_per_year));
         }
 
-        console.error("isIncomeOk() gives error, unknown income period: " + dbObject.income_type);
+        //console.error("isIncomeOk() gives error, unknown income period: " + dbObject.income_type);
         return false;
     }     
     
     //detects if a variable is defined and different from zero
-    function isDef(variable){
-        return typeof variable !== 'undefined' && variable !== 0;
+    function isDef(num){
+        return isFinite(num) && num !== 0;
     }    
     
     /* === Public methods to be returned ===*/

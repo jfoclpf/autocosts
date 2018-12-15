@@ -5,6 +5,9 @@ const async = require('async'); //module to allow to execute the queries in seri
 const debug = require('debug')('app:stats'); //run "DEBUG=app:stats node index.js"
 const fs    = require('fs');
 
+const commons   = require(path.join(__dirname, '..', '..', 'commons'));
+const fileNames = commons.getFileNames();
+
 const MIN_VALID_USERS = 20; //minimum number of valid users to show the country on world chart
 
 var statsData;              //chartjs content of World statistics
@@ -27,6 +30,7 @@ module.exports = {
         data.chartTable             = chartTable;
         data.dateOfCalculation      = dateOfCalculation;
         data.averageNormalizedCosts = averageNormalizedCosts;
+        data.isThisStatsPage        = true;
 
         //information depending on this request from the client    
         var clientData = {
@@ -50,14 +54,14 @@ module.exports = {
     prepareStats : function(serverData, WORDS, eventEmitter){
         
         //get statsFunctions.js Object Constructors/Templates        
-        const statsFunctions = require(serverData.fileNames.server["statsFunctions.js"]);
+        const calculator = require(fileNames.src["calculator.js"]);
         
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(" ===== dbInfo ===== \n", dbInfo);
                 
         //get current date in a formated string
-        var d = new Date();
-        dateOfCalculation = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
+        var date = new Date();
+        dateOfCalculation = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
 
         var costs = {}; //object of arrays, each property is a cost item array
         var labels = [];
@@ -85,13 +89,14 @@ module.exports = {
                 
                 var i, n, cc;
                 db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized, 
-                    function(err, results, fields) {
+                    function(err, normalizedStatistics, fields) {
+                    //normalizedStatistics is a flattened object
                                             
-                        //got statistical results; convert array to object and send to index.js
+                        //got normalized statistical results; convert array to object and send to index.js
                         var resultsToSend = {};
-                        for (i=0; i<results.length; i++){  
-                            cc = results[i].country;
-                            resultsToSend[cc] = JSON.parse(JSON.stringify(results[i])); //cone object
+                        for (i=0; i<normalizedStatistics.length; i++){  
+                            cc = normalizedStatistics[i].countryCode;
+                            resultsToSend[cc] = JSON.parse(JSON.stringify(normalizedStatistics[i])); //cone object
                             resultsToSend[cc].curr_symbol = WORDS[cc].curr_symbol;
                         }
                         eventEmitter.emit("statsColected", resultsToSend);
@@ -102,79 +107,72 @@ module.exports = {
                         }                        
                         
                         //removes entries with not enough valid users
-                        for (i=0; i<results.length; i++){  
-                            if(results[i].valid_users < MIN_VALID_USERS){
-                                results.splice(i, 1); //removes element i
+                        for (i=0; i<normalizedStatistics.length; i++){  
+                            if(normalizedStatistics[i].validUsers < MIN_VALID_USERS){
+                                normalizedStatistics.splice(i, 1); //removes element i
                                 i--;
                             }
                         }
-                        debug("results:  ", results);
+                    
+                        //sort countries by total costs per year
+                        normalizedStatistics.sort(function(a,b){
+                            return b.costs_totalPerYear - a.costs_totalPerYear
+                        });                    
+                    
+                        //debug(normalizedStatistics);
 
-                        //fills array costsSrts with the keys of object MonthlyCostsObj; see statsFunctions.js
+                        //fills array with the costs items names/strings
                         var costsStrs = [];
-                        var monthlyCosts = new statsFunctions.MonthlyCostsObj();
+                        var monthlyCosts = calculator.CreateCalculatedDataObj().costs.perMonth.items;
                         for (let key of Object.keys(monthlyCosts)){
                             costsStrs.push(key);
-                        }
-                    
-                        results.sort(function(a,b){
-                            return b.total_costs_year-a.total_costs_year
-                        });
+                        }                    
                     
                         //on every cost item, builds an array of values for said cost item
                         //to be used by the chartjs chart
                         for (n=0; n<costsStrs.length; n++){
                             costs[costsStrs[n]]=[];//cost item array                         
-                            for (i=0; i<results.length; i++){
-                                cc = results[i].country;
+                            for (i=0; i<normalizedStatistics.length; i++){
+                                cc = normalizedStatistics[i].countryCode;
                                 if (cc !== "XX"){
-                                    var yearlyCost = results[i][costsStrs[n]]*12;
+                                    let yearlyCost = normalizedStatistics[i]["costs_perMonth_items_" + costsStrs[n]]*12;
                                     //copies value from db (monthly) to object (yearly)
                                     costs[costsStrs[n]].push(yearlyCost);
                                     //fills labels, but just needs once
                                     if(n==0){
-                                        labels.push(results[i].country);
+                                        labels.push(normalizedStatistics[i].countryCode);
                                     }
                                 }
                             }
                         }                                                
-                        debug("costs: ", costs);
+                        //debug(costs);                   
                     
-                        //convert values from monthly to yearly on every cost item
-                        for (n=0; n<costsStrs.length; n++){
-                            var costItem = costsStrs[n];
-                            for (cc in results){
-                                results[cc][costItem] = results[cc][costItem]*12;
-                            }
-                        }
-                    
-                        //calculate values for the last table on web page
-                        var v, t;
-                        for (i=0; i<results.length; i++){                        
-                            cc = results[i].country; //country code string
+                        //calculate values for the last table on web page                        
+                        for (i=0; i<normalizedStatistics.length; i++){                                                    
+                            let v, t;
                             
-                            //add some extra info the the object results to be parsed into the web page
-                            results[i].countryName = serverData.availableCountries[cc];
-                            results[i].distance_std_option = WORDS[cc].distance_std_option;
+                            cc = normalizedStatistics[i].countryCode; //country code string
+                            
+                            //add some extra info the the object results to be passed into the web page
+                            normalizedStatistics[i].countryName = serverData.availableCountries[cc];
+                            normalizedStatistics[i].distance_std_option = WORDS[cc].distance_std_option;
                             
                             table[cc] = {}; //creates object for the country
-                            table[cc].country_name = serverData.availableCountries[cc];
-                            table[cc].valid_users = v = results[i].valid_users;
-                            table[cc].total_users = t = results[i].total_users;
-                            table[cc].global_total_users = results[i].global_total_users; //total users from all countries
-                            table[cc].percentage_valid = v/t*100; //% of valid users                            
+                            table[cc].countryName = serverData.availableCountries[cc];
+                            table[cc].validUsers = v = normalizedStatistics[i].validUsers;
+                            table[cc].totalUsers = t = normalizedStatistics[i].totalUsers;
+                            table[cc].globalTotalUsers = normalizedStatistics[i].globalTotalUsers; //total users from all countries
+                            table[cc].percentageOfValidUsers = v/t*100; 
                             //currency
-                            table[cc].CurrToEUR = results[i].CurrToEUR
-                            table[cc].Currency  = WORDS[cc].curr_code;
-                        }
-                        chartTable = table;
+                            table[cc].currencyConversionToEUR = normalizedStatistics[i].currencyConversionToEUR
+                            table[cc].currency = WORDS[cc].currency;
+                        }                        
                         //debug(table);
                                         
-                        averageNormalizedCosts = results;
-                        debug(averageNormalizedCosts);
-                    
-                        statsData = costs;
-                        statsLabels = labels;
+                        averageNormalizedCosts = normalizedStatistics;   //values got directly from normalized costs database               
+                        chartTable = table;                              //table on the footnotes of the HTML worldstats webpage
+                        statsData = costs;                               //costs array to be process the chart
+                        statsLabels = labels;                            //labels of the chart
                     
                         console.log("World statistical data calculated"); 
                     }

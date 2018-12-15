@@ -35,3 +35,11 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
     data-nonce =            "{{{ nonce }}}">
 </data>
       
+{{#if isThisStatsPage}}
+    <data
+        id =    "chart" 
+        value = "chart" 
+        data-stats_data = "{{{ jsonObj statsData }}}"
+        data-stats_labels = "{{{ jsonObj statsLabels }}}">
+    </data>
+{{/if}}

@@ -175,13 +175,11 @@ module.exports = {
     
     //convert number to string with n decimal values
     toFixed: function(num, n){
-        if(num !== undefined){
-            return num.toFixed(n);
-        }
-        else{
-            debug("Error: passed variable not defined");
-            return "";
-        }
+        return _toFixed(num, n);
+    },
+    
+    times12toFixed: function(num, n){
+        return _toFixed(num*12, n);
     },
     
     createParagraphs: function(text){
@@ -214,4 +212,14 @@ module.exports = {
 /*server side Handlebars function to tell whether the Statistical Database Information is activated*/
 function isDB(_this){
     return _this.serverData.settings.switches.dataBase && _this.CC.toUpperCase() !== "XX";
+}
+
+function _toFixed(num, n){
+    if(num && !isNaN(num)){            
+        return num.toFixed(n);
+    }
+    else{
+        debug("Error: passed variable not defined");
+        return "";
+    }
 }
