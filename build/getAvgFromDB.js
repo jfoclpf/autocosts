@@ -16,18 +16,22 @@ const flatten      = require('flat');
 const sqlFormatter = require("sql-formatter");
 const colors       = require('colors');
 
-if(USE_MONEY_API){
-    var fx = require("money"); //currency conversion API; needs to be "var" because it will change
-}
+var fx = USE_MONEY_API ? require("money") : null; //currency conversion API; needs to be "var" because it will change
 
 commons.init();
 //Main directories got from commons
-var directories = commons.getDirectories();
-var ROOT_DIR = directories.server.root;
-var SRC_DIR  = directories.server.src;
+const directories = commons.getDirectories();
+const ROOT_DIR = directories.server.root;
+const SRC_DIR  = directories.server.src;
 
-var settings  = commons.getSettings();
-var fileNames = commons.getFileNames();
+const settings  = commons.getSettings();
+const fileNames = commons.getFileNames();
+
+//own project modules
+const statsFunctions = require(fileNames.server["statsFunctions.js"]);
+const calculator     = require(fileNames.src["calculator.js"]);
+
+const DB_INFO = settings.dataBase.credentials;
 
 //checks for internet connection
 isOnline().then(function(online) {
@@ -37,16 +41,13 @@ isOnline().then(function(online) {
         process.exit();
     }
 
-    const statsFunctions = require(fileNames.server["statsFunctions.js"]);
-    const calculator = require(fileNames.src["calculator.js"]);
-
     var AVG_DB_TEMPLATE; //Database for Average template
 
     // Template of the DBs (monthly costs statistics and monthly costs normalized) that will be created
     // and into which the averages from the users will be stored, with a row of said DB for each country
     (function(){
         AVG_DB_TEMPLATE = {
-            'country':                 "text" ,
+            'countryCode':             "text",
             'dateOfCalculation':       "date",
             'currency':                "text",
             'currencyConversionToEUR': "float",
@@ -56,6 +57,9 @@ isOnline().then(function(online) {
         };
 
         let objectWithCalculatedAverages = flatten(calculator.CreateCalculatedDataObj(), {delimiter:"_"});
+        delete objectWithCalculatedAverages.countryCode;
+        
+        //the last properties named "calculated" in the object chain are booleans
         for (let averageItem of Object.keys(objectWithCalculatedAverages)) {
             if(averageItem.endsWith("_calculated")){
                 objectWithCalculatedAverages[averageItem] = "boolean";
@@ -66,12 +70,10 @@ isOnline().then(function(online) {
         }
 
         AVG_DB_TEMPLATE = Object.assign(AVG_DB_TEMPLATE, objectWithCalculatedAverages); //concatenates objects
-
         //console.log(AVG_DB_TEMPLATE); process.exit();
     }());
 
-    var DB_INFO    = settings.dataBase.credentials;
-    var MoneyApiId = settings.money.ApiId;
+
     //detect for null or empty object
     if(!DB_INFO || Object.keys(DB_INFO).length === 0){
         throw commons.getDataBaseErrMsg(__filename, settings.dataBase);
@@ -104,6 +106,7 @@ isOnline().then(function(online) {
 
             console.log("\nLoad exchange rates via API on openexchangerates.org");
 
+            let MoneyApiId = settings.money.ApiId;
             let API_url = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId;
             //HTTP Header request
             let options = {
@@ -282,19 +285,15 @@ isOnline().then(function(online) {
                 //console.log(JSON.stringify(statisticsResults, null, 4));
 
                 let flattenStatisticsResults = flatten(statisticsResults, {delimiter:"_"});
+                delete flattenStatisticsResults.countryCode;
                 delete flattenStatisticsResults.validUsers;
                 //console.log(flattenStatisticsResults); //process.exit();
 
                 //add computed data to countries array of objects
                 countries[i].validUsers = statisticsResults.validUsers;
                 countries[i].totalUsers = countryUsers.length;
-                if(!isNaN(statisticsResults.costs.perMonth.total)){
-                    countries[i].totalCosts = statisticsResults.costs.perMonth.total.toFixed(1);
-                }
-                else{
-                    countries[i].totalCosts = undefined;
-                }
-
+                countries[i].totalCosts = statisticsResults.costs.perMonth.total;
+                
                 //currency conversion to EUR
                 let currencyConversionToEUR = USE_MONEY_API ? fx(1).from('EUR').to(currency) : null;
                 //console.log(currencyConversionToEUR);
@@ -320,6 +319,7 @@ isOnline().then(function(online) {
 
                     let flattenNormalizedStatisticsResults = Object.assign({}, flattenStatisticsResults); //clone object
 
+                    //converts all costs to EUR, the costs are in object costs, which after being flattened every property starts with "costs_"
                     for (let costItem of Object.keys(flattenNormalizedStatisticsResults)){
                         if (costItem.startsWith("costs_") &&
                             costItem in flattenStatisticsResults &&
@@ -545,7 +545,7 @@ function consoleLogTheFinalAverages(countries){
 
     for (let i=0; i<countries.length; i++) {
         total_valid_users += countries[i].validUsers;
-        total_users += countries[i].totalUsers;
+        total_users += countries[i].totalUsers;        
     }
 
     console.log("\nTotal users: " + total_users);
@@ -553,8 +553,11 @@ function consoleLogTheFinalAverages(countries){
 
     console.log("\nCountry | Monthly costs | Valid users | Total users | Valid ratio | % of total valid users");
     for (let i=0; i<countries.length; i++) {
+        
+        let totalCostsStr = !isNaN(countries[i].totalCosts) ? countries[i].totalCosts.toFixed(0) : "";
+        
         console.log("\n" + ("        " + countries[i].Country).slice(-5) + "  " +
-            " | " + ("          " + countries[i].totalCosts).slice(-9) + " " + countries[i].currency +
+            " | " + ("          " + totalCostsStr).slice(-9) + " " + countries[i].currency +
             " | " + ("            " + countries[i].validUsers).slice(-11) +
             " | " + ("            " + countries[i].totalUsers).slice(-11) +
             " | " + ("            " + (countries[i].validUsers/countries[i].totalUsers*100).toFixed(1) + "%").slice(-11) +

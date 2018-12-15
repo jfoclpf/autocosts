@@ -122,6 +122,7 @@ function calculateStatisticsForADefinedCountry(userIds, countryData, countryObj,
     }
 
     //console.log(output);
+    averageCalculatedData.countryCode = countryObj.code;
     return averageCalculatedData;
 }
 
@@ -178,7 +179,6 @@ function getAverageCosts(calculatedDataArray){
 
         //some calculatedData have no financial effort info, because they are optional
         if(calculatedDataArray[i].financialEffort.calculated){
-
             //for the first time puts variables to zero
             if(financialEffortCounter === 0){
                 for(key of Object.keys(calculatedSum.financialEffort.income)){

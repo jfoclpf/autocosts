@@ -51,7 +51,7 @@ autocosts.calculatorModule = (function(thisModule){
         //for the object full structure see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
         calculatedData = CreateCalculatedDataObj();
 
-        calculatedData.countryCode = country.countryCode;
+        calculatedData.countryCode = country.code;        
     }
 
     //Object Constructor for the Results, where the calculated averages are stored
