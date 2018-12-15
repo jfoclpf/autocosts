@@ -48,7 +48,7 @@
 			        <div class="standing-costs">
 			            <h5>{{{fixed_costs}}}</h5>
 			            <ul>
-			                <li class="depreciation_color">Depreciation of the vehicl</li>
+			                <li class="depreciation_color">Depreciation of the vehicle</li>
 			                <li class="insurance_color">Vehicle insurance and Breakdown cover</li>
 			                <li class="credit_color">Car finance</li>
 			                <li class="inspection_color">Vehicle inspection (MOT test)</li>
@@ -72,55 +72,60 @@
 
 			    <!--stats data table-->
 			    <table class="stats-table">
-		            <tr>
-		                <th>Country</th>
-		                <th class="depreciation_color">Depreciation</th>
-		                <th class="insurance_color">Insurance and Breakdown cover</th>
-		                <th class="credit_color">Car finance</th>
-		                <th class="inspection_color">Inspection</th>
-		                <th class="roadTaxes_color">Car tax</th>
-		                <th class="fuel_color">Fuel</th>
-		                <th class="maintenance_color">Maintenance</th>
-		                <th class="repairsImprovements_color">Repairs and Improvs</th>
-		                <th class="parking_color">Parking</th>
-		                <th class="tolls_color">Tolls</th>
-		                <th class="fines_color">Traffic fines</th>
-		                <th class="washing_color">Washing and cleaning</th>
-		                <th>Running costs per distance</th>
-		                <th>Total costs per distance</th>
-		                <th>Kinetic speed</th>
-		                <th>Consumer speed</th>
-		                <th>Total costs per year</th>
-		            </tr>
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Country</th>
+                            <th scope="col" class="depreciation_color">Depreciation</th>
+                            <th scope="col" class="insurance_color">Insurance and Breakdown cover</th>
+                            <th scope="col" class="credit_color">Car finance</th>
+                            <th scope="col" class="inspection_color">Inspection</th>
+                            <th scope="col" class="roadTaxes_color">Car tax</th>
+                            <th scope="col" class="fuel_color">Fuel</th>
+                            <th scope="col" class="maintenance_color">Maintenance</th>
+                            <th scope="col" class="repairsImprovements_color">Repairs and Improvs</th>
+                            <th scope="col" class="parking_color">Parking</th>
+                            <th scope="col" class="tolls_color">Tolls</th>
+                            <th scope="col" class="fines_color">Traffic fines</th>
+                            <th scope="col" class="washing_color">Washing and cleaning</th>
+                            <th scope="col">Running costs per distance</th>
+                            <th scope="col">Total costs per distance</th>
+                            <th scope="col">Kinetic speed</th>
+                            <th scope="col">Consumer speed</th>
+                            <th scope="col">Total costs per year</th>
+                        </tr>
+                    </thead>
  
+                    <tbody>
                     {{#each averageNormalizedCosts}}
                         <tr>
-                            <td><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br />{{{countryName}}}</a></td>
+                            <td data-label="Country"><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br />{{{countryName}}}</a></td>
                             <!-- multiplies by 12 to get yearly cost -->
-                            <td>{{times12toFixed costs_perMonth_items_depreciation 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_insurance 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_credit 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_inspection 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_roadTaxes 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_fuel 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_maintenance 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</td>                            
-                            <td>{{times12toFixed costs_perMonth_items_parking 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_tolls 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_fines 0}}</td>
-                            <td>{{times12toFixed costs_perMonth_items_washing 0}}</td>
-                            <td>{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</td>
-                            <td>{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</td>
-                            <td>{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</td>
-                            <td>{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</td>
-                            <td class="bold">
+                            <td data-label="Depreciation">{{times12toFixed costs_perMonth_items_depreciation 0}}</td>
+                            <td data-label="Insurance and Breakdown cover">{{times12toFixed costs_perMonth_items_insurance 0}}</td>
+                            <td data-label="Car finance">{{times12toFixed costs_perMonth_items_credit 0}}</td>
+                            <td data-label="Inspection">{{times12toFixed costs_perMonth_items_inspection 0}}</td>
+                            <td data-label="Car tax">{{times12toFixed costs_perMonth_items_roadTaxes 0}}</td>
+                            <td data-label="Fuel">{{times12toFixed costs_perMonth_items_fuel 0}}</td>
+                            <td data-label="Maintenance">{{times12toFixed costs_perMonth_items_maintenance 0}}</td>
+                            <td data-label="Repairs and Improvs">{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</td>                            
+                            <td data-label="Parking">{{times12toFixed costs_perMonth_items_parking 0}}</td>
+                            <td data-label="Tolls">{{times12toFixed costs_perMonth_items_tolls 0}}</td>
+                            <td data-label="Traffic fines">{{times12toFixed costs_perMonth_items_fines 0}}</td>
+                            <td data-label="Washing and cleaning">{{times12toFixed costs_perMonth_items_washing 0}}</td>
+                            <td data-label="Running costs per distance">{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</td>
+                            <td data-label="Total costs per distance">{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</td>
+                            <td data-label="Kinetic Speed">{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</td>
+                            <td data-label="Consumer Speed">{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</td>
+                            <td  data-label="Total costs per year" class="bold">
                                 <a href="{{{../serverData.directories.client.tables}}}/{{country}}.jpg" target="_blank">
                                     &euro;{{toFixed costs_totalPerYear 0}}
                                 </a>
                             </td>
                         </tr>
-                    {{/each}}                    
-		              
+                    {{/each}}
+                    </tbody>
+                    
 		        </table><!--end stats data table-->
 		    </div><!--end section wrapper-->
 		</section><!-- end World stats car cost -->
@@ -142,25 +147,31 @@
 
 				<!--User survey table-->
 			    <table class="stats-table">
-		            <tr>
-		                <th>Country code</th>
-		                <th>Country name</th>
-		                <th>Currency Rate (1 EUR)</th>
-		                <th>Surveyed users</th>
-		                <th>Valid users</th>
-		                <th>% of valid users</th>
-		        	</tr>
+                    
+                    <thead>
+                        <tr>
+                            <th>Country code</th>
+                            <th>Country name</th>
+                            <th>Currency Rate (1 EUR)</th>
+                            <th>Surveyed users</th>
+                            <th>Valid users</th>
+                            <th>% of valid users</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
                     {{#each chartTable as |value key|}}
                         <tr>
-                            <td class="center">{{key}}</td>
-                            <td class="tdRight">{{countryName}}</td>
-                            <td class="tdRight">{{toFixed currencyConversionToEUR 2}} {{currency}}</td>                      
-                            <td class="tdRight">{{totalUsers}}</td>
-                            <td class="tdRight">{{validUsers}}</td>
-                            <td class="tdRight">{{toFixed percentageOfValidUsers 1}}</td>                    
+                            <td data-label="Country Code">{{key}}</td>
+                            <td data-label="Country Name">{{countryName}}</td>
+                            <td data-label="Currency Rate (1 EUR)">{{toFixed currencyConversionToEUR 2}} {{currency}}</td>                      
+                            <td data-label="Surveyed users">{{totalUsers}}</td>
+                            <td data-label="Valid users">{{validUsers}}</td>
+                            <td data-label="% of valid users">{{toFixed percentageOfValidUsers 1}}</td>                    
                         </tr>
                     {{/each}}
-
+                    </tbody>
+                    
 		        </table><!--Ends user survey table-->
 			</div><!--Ends section wrapper-->
 		</section><!--Ends notes and sources-->

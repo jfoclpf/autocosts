@@ -11,8 +11,6 @@
 .notes-sources .section-wrapper ul li {margin: 0 0 10px 18px}
 .notes-sources .section-wrapper ul li a {display: inherit;}
 
-.notes-sources .section-wrapper table.stats-table tr th {padding: 18px 4px}
-
 
 /* ---------- Stats Table ---------- */
 table.stats-table {border-collapse: collapse; border-radius: 5px; width: 100%; color: #000000; font-size: 14px; line-height: 16px; margin: 0; background: white; -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
@@ -25,3 +23,44 @@ table.stats-table tr th:last-child, table.stats-table tr td:first-child {padding
 table.stats-table tr td {padding: 8px; text-align: right; width: auto; margin: 0;}
 table.stats-table tr td + td {text-align: right; width: auto}
 table.stats-table tr td.bold {font-weight: bold}
+
+
+.notes-sources .section-wrapper table.stats-table tr th {padding: 18px 10px}
+.notes-sources .section-wrapper table.stats-table tr td {padding: 12px 10px}
+
+.notes-sources table.stats-table tr td + td:nth-child(2),
+.notes-sources table.stats-table tr th + th:nth-child(2) {text-align: left; }
+
+
+@media screen and (max-width: 1024px) {
+
+  .worldStats-car-costs {width: 94%; margin: 0 auto;}
+  .notes-sources .section-wrapper {width: 94%;}
+
+  #statspage_body table.stats-table {border: 0; background: none; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
+  #statspage_body table thead {border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px;}
+  #statspage_body table tr { border-bottom: none; display: block; margin-bottom: 15px; background: white; box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
+  #statspage_body table td { border-bottom: 1px solid #ddd; display: block; font-size: 14px; text-align: right;}
+  #statspage_body table td::before {content: attr(data-label); float: left; color: #797b82; font-size: 14px; text-transform: uppercase;}
+  #statspage_body table td:last-child {border-bottom: 0;}
+  #statspage_body table.stats-table tr th:first-child, #statspage_body table.stats-table tr td:first-child {text-align: right}
+  #statspage_body table.stats-table tr td:first-child a br{display: none}
+
+
+}
+
+
+
+@media screen and (max-width: 600px) {
+    
+    #statspage_body table td::before {font-size: 12px;}
+
+    .notes-sources {margin: 50px 0 0; padding: 50px 0}
+
+
+}
+
+
+
+
+

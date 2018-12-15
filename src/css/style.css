@@ -264,7 +264,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .close span{ position: relative; display: inline-block; width: 25px; height: 25px; overflow: hidden; margin: 12px 0 0 10px}
 .close span::before, .close span::after { content: ''; position: absolute; height: 4px; width: 100%; top: 50%; left: 0; margin-top: -1px; background: white; margin-top: -4px; border-radius: 5px;}
 .close span:before {transform: rotate(45deg);}
-.close span:after {transform: rotate(-45deg);}
+.close span:after {transform: rotate(-45deg);} 
 
 
 /* ---------- Tables ---------- */

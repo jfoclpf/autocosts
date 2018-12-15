@@ -75,7 +75,8 @@
     
     #results .stats-references .standing-costs {width: 47%}
     #results .stats-references .running-costs {width: 50%}
-    #results .stats-references ul li {display: block;}
+    #results .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 19px;}
+    #results .stats-references ul li:before {margin: 3px 0 0 -15px}
 
     #results #avg-periodic-cost .three-boxes .box {width: 100%; margin: 10px auto; min-height: auto; float: none; padding-bottom: 20px}
     #results #avg-periodic-cost .three-boxes .box .title {width: 94%; padding: 3px 3% 0 8px;}
