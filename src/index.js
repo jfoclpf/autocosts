@@ -63,7 +63,7 @@ for (var CC in serverData.availableCountries){
     WORDS[CC].domain = serverData.domains.countries[CC]; 
     //process the sentences, uppercasing the first letters of the words right after "<br>"
     //Ex: "This is text 1<br>this is text 2" ==> "This is text 1<br>This is text 2"
-    for (var word in WORDS[CC]){
+    for (let word in WORDS[CC]){
         if(typeof WORDS[CC][word] == 'string'){
             WORDS[CC][word] = WORDS[CC][word].replace(/(<br><i>|<br>)(\w)/g, 
                 function(match, p1, p2){ return p1 + p2.toUpperCase();});          
@@ -71,11 +71,23 @@ for (var CC in serverData.availableCountries){
     }
 }
 
-//in case a certain word or string is not available in a certain language, use the correspondent English version
+//in case a certain word or string is not available in a certain language, 
+//use the file from the country which founded the language (ex: Spanish was founded by Spain) 
+//if that is not either available, use English version
 for (var CC in serverData.availableCountries){
-    for (var word in WORDS.UK){
-        if(!WORDS[CC][word]){
-            WORDS[CC][word] = WORDS.UK[word];
+    
+    let languageDefault = {
+        "es" : "ES",
+        "en" : "UK",
+        "pt" : "PT",
+        "fr" : "FR"
+    };
+    
+    //WORDS.UK is an Object with all the possible properties available
+    for (let word in WORDS.UK){
+        if(!WORDS[CC][word]){    
+            let languageFounderCC = languageDefault[WORDS[CC].languageCode.substring(0, 2)];
+            WORDS[CC][word] = languageFounderCC && WORDS[languageFounderCC][word] ? WORDS[languageFounderCC][word] : WORDS.UK[word];
         } 
     }
 }
