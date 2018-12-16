@@ -76,7 +76,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         //Load statistics table on sidebars.hbs
         function updateStatsTable(cc){
 
-            if(cc.toUpperCase() === "XX" || !serverInfo.switches.database){
+            if(!cc || cc.toUpperCase() === "XX" || !serverInfo.switches.database){
                 return;
             }
             
