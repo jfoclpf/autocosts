@@ -57,6 +57,8 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
     //settings and handlers of the elements on the landing page
     function loadMainPageSettings(){
 
+        $("#hero").slideDown("fast");
+        
         //When clicked the Calculate Button shown on the landing page
         var calculateButtonOnclick = function(){
             $("#hero, footer").fadeOut("slow");
