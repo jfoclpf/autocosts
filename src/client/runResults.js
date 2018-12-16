@@ -257,6 +257,9 @@ autocosts.resultsModule.runResultsModule =
         if(switches.uber && calculatedData.publicTransports.calculated){
             calculatedData.uber = calculatorModule.calculateUberCosts(mainObjs.uberApiObj); 
         } 
+        else{
+            calculatedData.uber = {calculated: false};
+        }
 
         resultsModule.setCalculatedData(calculatedData);
         mainObjs.calculatedData = calculatedData; //assigns to global variable
