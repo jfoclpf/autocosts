@@ -54,7 +54,7 @@ module.exports = {
         if(clientData.notLocalhost){
             let nonce = crypto.randomBytes(16).toString('base64');
             data.nonce = nonce;
-            let CSPstr = getCSPstr(nonce);
+            let CSPstr = getCSPstr(nonce);            
             debug(CSPstr.replace(/;/g,`;\n`));
             res.set('Content-Security-Policy', CSPstr);
         }

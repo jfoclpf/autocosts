@@ -52,7 +52,8 @@ module.exports = {
         var fileToRender = path.join(serverData.directories.index, "views", "stats.hbs");
         
         if(clientData.notLocalhost){
-            res.set('Content-Security-Policy', serverData.CSPstrig);   
+            let CSPstr = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
+            res.set('Content-Security-Policy', CSPstr);   
         }
         
         res.render(fileToRender, data);
