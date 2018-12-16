@@ -1,0 +1,58 @@
+<meta charset="UTF-8">
+<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0' >
+
+{{#if isGetCC}}
+    <title>{{{ getAdaptedTitle }}}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{{ getAdaptedTitle }}}" />
+    <meta property="og:description" content="{{{ getMetaDescription }}}" />
+    <meta property="og:url" content="{{{clientData.fullURL}}}" />
+    <meta property="og:site_name" content="autocosts.info" />
+    <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" />    
+    <meta property="og:locale" content="{{{ getLocale }}}" />
+
+    <meta name="description" content="{{{ getMetaDescription }}}" />
+    <meta name="keywords" content="{{{ getKeywords }}}" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Autocosts Org" />
+    <meta name="author" content="Autocosts Org" />
+    <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
+
+    <meta name="google-play-app" content="app-id=info.autocosts">
+
+    <link href="css/smart-app-banner.css" rel="stylesheet" media="screen" />
+{{/if}}
+
+{{#if isStats}}
+    <title>World statistics of the Car Costs</title>  
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="World statistics of Car Costs" />
+    <meta property="og:description" content="World statistics of the Car Costs for different countries" />
+    <meta property="og:url" content="{{{clientData.fullURL}}}" />
+    <meta property="og:site_name" content="autocosts.info" />
+    <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" />    
+    <meta property="og:locale" content="{{{ getLocale }}}" />
+    
+    <link rel="stylesheet" href="css/worldStats/main.css" type="text/css">
+    <link rel="stylesheet" href="css/results.css" media="screen" />
+{{/if}}
+
+<!--<link rel="stylesheet" href="css/merged_init.css" media="screen" />-->
+<!--temporary-->
+<link rel="stylesheet" href="css/style.css" media="screen" />
+<link rel="stylesheet" href="css/responsive.css" media="screen" />
+<link rel="stylesheet" href="css/fonts.css" media="screen" />
+<link rel="stylesheet" href="css/colors.css" media="screen" />
+<!--end of temporary-->
+
+<link href="favicon.png" rel="shortcut icon" type="image/png" />
+<link href="favicon32x32.png" sizes="32x32" rel="shortcut icon" type="image/png" />
+<link href="favicon72x72.png" sizes="72x72" rel="shortcut icon" type="image/png" />
+<link href="favicon114x114.png" sizes="114x114" rel="shortcut icon" type="image/png" />
+<link href="favicon144x144.png" sizes="144x144" rel="shortcut icon" type="image/png" />
+<link href="favicon192x192.png" sizes="192x192" rel="shortcut icon" type="image/png" />
+
+<script type="application/ld+json">{{> structuredData }}</script>
+
