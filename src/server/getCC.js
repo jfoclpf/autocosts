@@ -20,6 +20,9 @@ module.exports = {
         //data to be rendered embedded in the HTML file
         var data = {};    
 
+        data.isGetCC = true;
+        data.isStats = false;
+        
         //Object with all the expressions for each country
         data.words = wordsOfCountry;
         data.words.word_per += "&#32;" //add non-breaking space
@@ -48,10 +51,10 @@ module.exports = {
 
         var fileToRender = path.join(serverData.directories.index, "views", "main.hbs");
 
-        if(false/*clientData.notLocalhost*/){
-            var nonce = crypto.randomBytes(16).toString('base64');
+        if(clientData.notLocalhost){
+            let nonce = crypto.randomBytes(16).toString('base64');
             data.nonce = nonce;
-            var CSPstr = getCSPstr(nonce);
+            let CSPstr = getCSPstr(nonce);
             debug(CSPstr.replace(/;/g,`;\n`));
             res.set('Content-Security-Policy', CSPstr);
         }

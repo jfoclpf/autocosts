@@ -2,37 +2,7 @@
 <html lang="{{{get2letterLangCode}}}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0' >
-    
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{{ getAdaptedTitle }}}" />
-    <meta property="og:description" content="{{{ getMetaDescription }}}" />
-    <meta property="og:url" content="{{{clientData.fullURL}}}" />
-    <meta property="og:site_name" content="{{{ getAdaptedTitle }}}" />
-    <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" />    
-    <meta property="og:locale" content="{{{ getLocale }}}" />
-    
-    <title>{{{ getAdaptedTitle }}}</title>
-
-    <meta name="description" content="{{{ getMetaDescription }}}" />
-    <meta name="keywords" content="{{{ getKeywords }}}" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="author" content="Autocosts Org" />
-    <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
-    
-    <meta name="google-play-app" content="app-id=info.autocosts">
-    
-    <!--<link href="css/merged_init.css" rel="stylesheet" media="screen" />-->
-    <!--temporary-->
-    <link href="css/style.css" rel="stylesheet" media="screen" />
-    <link href="css/responsive.css" rel="stylesheet" media="screen" />
-    <link href="css/fonts.css" rel="stylesheet" media="screen" />
-    <link href="css/colors.css" rel="stylesheet" media="screen" />
-    <link href="css/smart-app-banner.css" rel="stylesheet" media="screen" />
-    <!--end of temporary-->
-    
-    <link href="favicon.png" rel="shortcut icon" type="image/png" />
+    {{> head }}
 </head>
 
 <body>
@@ -95,8 +65,8 @@
     <!-- Data sent to JS code on browser -->
     {{> globalData }}
     
-    <script src="client/jquery/jquery.min.js"></script>
-    <script src="client/main.js"></script>
+    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="client/jquery/jquery.min.js"></script>
+    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="client/main.js"></script>
     
 </body>
 </html>

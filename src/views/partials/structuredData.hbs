@@ -7,10 +7,10 @@
     "countriesSupported": "{{{ serverData.CClistOnString }}}",
     "about" : {
         "@type": "Thing",
-        "description": "{{{ metaDescription words.initial_text }}}",
-        "image": "http://autocosts.info/images/logos/autocosts_dollar.png",
-        "name": "{{{ adaptTitle words.web_page_title}}}",
-        "url": "autocosts.info/{{{CC}}}"
+        "description": "{{{ getMetaDescription }}}",
+        "image": "{{{clientData.basicURL}}}/img/logo/logo.svg",
+        "name": "{{{ getAdaptedTitle }}}",
+        "url": "{{{clientData.fullURL}}}"
     },
     "audience": {
         "@type": "Audience",
@@ -20,7 +20,7 @@
     "inLanguage": "{{{LangCode}}}",
     "isAccessibleForFree": "True",
     "isFamilyFriendly": "True",
-    "keywords": "{{{ getKeywords words.web_page_title words.fixed_costs words.running_costs }}}",
-    "text": "{{{ striOutHTML words.initial_text}}}"  
+    "keywords": "{{{ getKeywords }}}",
+    "text": "{{{ getMetaDescription }}}"  
 }
 

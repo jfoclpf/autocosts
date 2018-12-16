@@ -1,9 +1,10 @@
-const path  = require('path');
-const url   = require(path.join(__dirname, 'url'));
-const mysql = require('mysql'); //module to get info from DB
-const async = require('async'); //module to allow to execute the queries in series
-const debug = require('debug')('app:stats'); //run "DEBUG=app:stats node index.js"
-const fs    = require('fs');
+const path    = require('path');
+const url     = require(path.join(__dirname, 'url')); //own project module
+const mysql   = require('mysql'); //module to get info from DB
+const async   = require('async'); //module to allow to execute the queries in series
+const debug   = require('debug')('app:stats'); //run "DEBUG=app:stats node index.js"
+const fs      = require('fs');
+const nodeUrl = require('url'); //npm external express package
 
 const commons   = require(path.join(__dirname, '..', '..', 'commons'));
 const fileNames = commons.getFileNames();
@@ -21,6 +22,10 @@ module.exports = {
     req: function(req, res, serverData, wordsOfUK) {
 
         var data = {};
+        
+        data.isStats = true;
+        data.isGetCC = false;
+        
         data.words = wordsOfUK;
         data.serverData = serverData;        
         delete data.serverData.availableCountries.XX;   
@@ -34,6 +39,9 @@ module.exports = {
 
         //information depending on this request from the client    
         var clientData = {
+            "fullURL"      : fullUrl(req),              //full url, ex: "https://autocosts.info/stats"
+            "basicURL"     : basicURL(req),             //basic url, ex: "https://autocosts.info"
+            "languageCode" : "en",                      //this page of World Statistics of car, renders only in English             
             "isThisATest"  : url.isThisATest(req),      //boolean variable regarding if present request is a test
             "notLocalhost" : !url.isThisLocalhost(req), //boolean variable regarding if present request is from localhost
             "httpProtocol" : url.getProtocol(req, serverData.settings.switches.https)
@@ -187,4 +195,19 @@ module.exports = {
 }
 
 
+//for example: "https://autocosts.info/stats"
+function fullUrl(req){
+    return nodeUrl.format({
+        protocol: req.protocol,
+        host: req.get('host'),
+        pathname: req.originalUrl
+    });
+}
 
+//for example: "https://autocosts.info"
+function basicURL(req){
+    return nodeUrl.format({
+        protocol: req.protocol,
+        host: req.get('host')        
+    });
+}
