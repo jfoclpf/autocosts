@@ -55,9 +55,7 @@
                 <h1>{{{words.web_page_title}}}</h1>
 
                 <h2>
-                    {{#if serverData.settings.switches.dataBase}}
-                        {{getSubTitleArr 1}}
-                    {{/if}} 
+                    {{{getSubTitleArr 1}}}
                     <select name="country_select" id="country_select">
                         {{~#each serverData.availableCountries~}}
                         <option value="{{@key}}"{{{isSelected ../CC @key}}}>
@@ -65,10 +63,7 @@
                         </option>
                         {{/each}}
                     </select>
-                    {{#if serverData.settings.switches.dataBase}}
-                        {{getSubTitleArr 2}} <b>{{{words.curr_symbol}}}{{{ getStatsData "total_costs_year"}}}</b> 
-                        {{getSubTitleArr 3}} <b>{{{getStatsData "month_per_year_to_afford_car" 1}}}</b> {{getSubTitleArr 4}}
-                    {{/if}}
+                    {{{getSubTitleArr 2}}}
                 </h2>
 
                 <input type="button" id="calculateButton" class="button big btn-blue cursor_pointer" value="{{{words.calculate_car_costs}}}" />
