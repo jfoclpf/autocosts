@@ -1,23 +1,24 @@
 <meta charset="UTF-8">
 <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0' >
 
+<meta name="author" content="Autocosts Org" />
+<meta name="viewport" content="width=device-width" />
+<meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{{clientData.fullURL}}}" />
+<meta property="og:site_name" content="autocosts.info" />
+<meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" /> 
+<meta property="og:locale" content="{{{ getLocale }}}" />
+
 {{#if isGetCC}}
     <title>{{{ getAdaptedTitle }}}</title>
-
-    <meta property="og:type" content="website" />
+   
     <meta property="og:title" content="{{{ getAdaptedTitle }}}" />
-    <meta property="og:description" content="{{{ getMetaDescription }}}" />
-    <meta property="og:url" content="{{{clientData.fullURL}}}" />
-    <meta property="og:site_name" content="autocosts.info" />
-    <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" />    
-    <meta property="og:locale" content="{{{ getLocale }}}" />
-
+    <meta property="og:description" content="{{{ getMetaDescription }}}" />    
+   
     <meta name="description" content="{{{ getMetaDescription }}}" />
-    <meta name="keywords" content="{{{ getKeywords }}}" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="author" content="Autocosts Org" />
-    <meta name="author" content="Autocosts Org" />
-    <meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
+    <meta name="keywords" content="{{{ getKeywords }}}" />        
 
     <meta name="google-play-app" content="app-id=info.autocosts">
 
@@ -26,14 +27,9 @@
 
 {{#if isStats}}
     <title>World statistics of the Car Costs</title>  
-
-    <meta property="og:type" content="website" />
+    
     <meta property="og:title" content="World statistics of Car Costs" />
     <meta property="og:description" content="World statistics of the Car Costs for different countries" />
-    <meta property="og:url" content="{{{clientData.fullURL}}}" />
-    <meta property="og:site_name" content="autocosts.info" />
-    <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" />    
-    <meta property="og:locale" content="{{{ getLocale }}}" />
     
     <link rel="stylesheet" href="css/worldStats/main.css" type="text/css">
     <link rel="stylesheet" href="css/results.css" media="screen" />
