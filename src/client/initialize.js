@@ -74,8 +74,12 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         };
 
         //Load statistics table on sidebars.hbs
-        var updateStatsTable = function(cc){
+        function updateStatsTable(cc){
 
+            if(cc.toUpperCase() === "XX" || !serverInfo.switches.database){
+                return;
+            }
+            
             //rounds a number
             var round = function(number, precision) {
                 var shift = function (number, precision) {
@@ -84,25 +88,29 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
                 };
                 return shift(Math.round(shift(number, +precision)), -precision);
             };
-
+            
+            var currencySymbol = statistics.statisticsObj[cc].currencySymbol;
+            
             for (var key in statistics.statisticsObj[cc]){
-                var elementClass = "stats_table-"+key; //see sidebars.hbs
+                
+                var elementClass = "stats_table-" + key; //see sidebars.hbs
                 if($("." + elementClass).length){//element exists
                     var $el = $("." + elementClass);
+                    
                     var value = statistics.statisticsObj[cc][key];
-                    var currSymb = statistics.statisticsObj[cc].curr_symbol;
-                    if(key == "running_costs_dist" || key == "total_costs_dist"){
-                        $el.text(currSymb + round(value, 2) + "/" + commonsModule.getStringFor("distanceShort"));
+                    value = key.includes("maintenance") ? value/2 : value;  //it shows maintenance in both standing and running costs                                                            
+                    if(key === "costs_perUnitDistance_runningCosts" || key === "costs_perUnitDistance_totalCosts"){
+                        $el.text(currencySymbol + round(value, 2) + "/" + commonsModule.getStringFor("distanceShort"));
                     }
-                    else if (key == "kinetic_speed" || key == "virtual_speed"){
+                    else if (key === "speeds_averageKineticSpeed" || key === "speeds_averageConsumerSpeed"){
                         $el.text(round(value, 0) + commonsModule.getStringFor("distanceShort") + "/h");
                     }
                     else{
-                        $el.text(currSymb + " " + round(value, 0));
+                        $el.text(currencySymbol + " " + round(value, 0));
                     }
                 }
             }
-        };
+        }
 
         //adjusts the size of select according to content
         var resizeSelectToContent = function(jqueryId){
@@ -322,7 +330,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         };
 
         $.each(mappingIDs, function(key, value){
-            if($("#"+value).length && translatedStrings[key] !== undefined){
+            if($("#"+value).length && translatedStrings[key]){
                 $("#"+value).val(translatedStrings[key]);
             }
         });

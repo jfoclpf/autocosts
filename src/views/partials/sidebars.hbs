@@ -23,8 +23,8 @@
                         </option>
                         {{/each}}
                     </select>
-        </h3>
-        <a href="">World stats</a>
+            <a href="/stats">World stats</a>
+        </h3>        
         
         {{#with words}}
         <h4>{{{average_costs_per_type}}}</h4>
@@ -35,31 +35,31 @@
             </tr>
             <tr>
                 <td>{{{depreciation}}}</td>
-                <td><span class="stats_table-depreciation"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_depreciation"></span></td>
             </tr>
             <tr>
                 <td>{{{insurance}}}</td>
-                <td><span class="stats_table-insurance"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_insurance"></span></td>
             </tr>
             <tr>
                 <td>{{{credit}}}</td>
-                <td><span class="stats_table-credit"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_credit"></span></td>
             </tr>
             <tr>
                 <td>{{{inspection}}}</td>
-                <td><span class="stats_table-inspection"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_inspection"></span></td>
             </tr>
             <tr>
                 <td>{{{road_taxes}}}</td>
-                <td><span class="stats_table-roadTaxes"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_roadTaxes"></span></td>
             </tr>
             <tr>
                 <td>50% {{{maintenance}}}</td>
-                <td><span class="stats_table-maintenance"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_maintenance"></span></td>
             </tr>    
             <tr class="subtotal">
                 <td>{{{total_fixed}}}</td>
-                <td><span class="stats_table-standing_costs"></span></td>
+                <td><span class="stats_table-costs_perMonth_standingCosts"></span></td>
             </tr>     
         </table>
         <table>
@@ -69,41 +69,41 @@
             </tr>
             <tr>
                 <td>{{{fuel}}}</td>
-                <td><span class="stats_table-fuel"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_fuel"></span></td>
             </tr>
             <tr>
                 <td>50% {{{maintenance}}}</td>
-                <td><span class="stats_table-maintenance"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_maintenance"></span></td>
             </tr>
             <tr>
                 <td>{{{rep_st}}}</td>
-                <td><span class="stats_table-repairsImprovements"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_repairsImprovements"></span></td>
             </tr>
             <tr>
                 <td>{{{parking}}}</td>
-                <td><span class="stats_table-parking"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_parking"></span></td>
             </tr>
             <tr>
                 <td>{{{tolls}}}</td>
-                <td><span class="stats_table-tolls"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_tolls"></span></td>
             </tr>
             <tr>
                 <td>{{{fines}}}</td>
-                <td><span class="stats_table-fines"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_fines"></span></td>
             </tr>
             <tr>
                 <td>{{{washing}}}</td>
-                <td><span class="stats_table-washing"></span></td>
+                <td><span class="stats_table-costs_perMonth_items_washing"></span></td>
             </tr>    
             <tr class="subtotal">
                 <td>{{{total_variable}}}</td>
-                <td><span class="stats_table-running_costs"></span></td>
+                <td><span class="stats_table-costs_perMonth_runningCosts"></span></td>
             </tr>     
         </table>
         <table class="total blue-bg">
             <tr>
                 <th>{{{monthly_amount}}}</th>
-                <th><span class="stats_table-total_costs"></span></th>
+                <th><span class="stats_table-costs_perMonth_total"></span></th>
             </tr>
         </table>
 
@@ -112,25 +112,25 @@
         <table>
             <tr>
                 <td>{{{run_cp_dist}}}</td>
-                <td><span class="stats_table-running_costs_dist"></span></td>
+                <td><span class="stats_table-costs_perUnitDistance_runningCosts"></span></td>
             </tr>
             <tr>
                 <td>{{{total_cp_dist}}}</td>
-                <td><span class="stats_table-total_costs_dist"></span></td>
+                <td><span class="stats_table-costs_perUnitDistance_totalCosts"></span></td>
             </tr>
             <tr>
                 <td>{{{kinetic_speed}}}</td>
-                <td><span class="stats_table-kinetic_speed"></span></td>
+                <td><span class="stats_table-speeds_averageKineticSpeed"></span></td>
             </tr>
             <tr>
                 <td>{{{virtual_speed}}}</td>
-                <td><span class="stats_table-virtual_speed"></span></td>
+                <td><span class="stats_table-speeds_averageConsumerSpeed"></span></td>
             </tr>
         </table>
         <table class="total yellow-bg">
             <tr>
                 <th>{{{total_costs_per_year}}}</th>
-                <th><span class="stats_table-total_costs_year"></span></th>
+                <th><span class="stats_table-costs_totalPerYear"></span></th>
             </tr>
         </table>
         {{/with}}

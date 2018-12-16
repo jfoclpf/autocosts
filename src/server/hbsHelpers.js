@@ -78,8 +78,8 @@ module.exports = {
         return keywords_string;
     },
 
-    //The subtitle string in main.hbs: "postion 1 string" + country select box +  "postion 2 string"
-    //from sub_title properties at src/countries/UK.json
+    //gets the subtitle string in main.hbs: "postion 1 string" + [country select box] +  "postion 2 string"
+    //from sub_title properties at src/countries/
     //"sub_title1a": "The average total costs in [country] is [yearly_costs] per year"
     //"sub_title1b": "representing [nbrMonths] months of average salary."
     //"sub_title2":  "Find the true cost of owning a car in your country!"    
@@ -97,7 +97,7 @@ module.exports = {
         var sub_title2 = this.words.sub_title2 ? this.words.sub_title2.trim() : "";
 
         var addPeriodIfInexistent = function(str){
-            if(str && str.slice(-1) !== "."){
+            if(str && str.slice(-1) !== "." && str.slice(-1) !== "!"){
                 str += ".";
             }
             return str;
@@ -115,7 +115,8 @@ module.exports = {
 
         if(!checkSanityOfStr(sub_title1a, "[yearly_costs]")){ return ""; }
         
-        if(!statsData.costs_totalPerYear){
+        let totalCostsPerYear = statsData.costs_totalPerYear;
+        if(!totalCostsPerYear || !isFinite(totalCostsPerYear) || parseInt(totalCostsPerYear) === 0){
             return "";
         }
 
@@ -125,12 +126,16 @@ module.exports = {
         }
 
         else if(position === 2){
+            
+            sub_title2 = addPeriodIfInexistent(sub_title2);
 
             //this tring shoud be: "is [yearly_costs] per year"
             let sub_title1a_part2 = sub_title1a.split("[country]")[1].trim();
             sub_title1a_part2 = sub_title1a_part2.replace("[yearly_costs]", getStatsData(this, "costs_totalPerYear", 0, true));
 
-            let useFinancialEffortInfo = statsData.financialEffort_calculated && statsData.financialEffort_workingMonthsPerYearToAffordCar;
+            let workingMonthsPerYearToAffordCar = statsData.financialEffort_workingMonthsPerYearToAffordCar;
+            let useFinancialEffortInfo = statsData.financialEffort_calculated && workingMonthsPerYearToAffordCar &&
+                typeof workingMonthsPerYearToAffordCar === "number" && parseInt(workingMonthsPerYearToAffordCar) !== 0;
 
             if(useFinancialEffortInfo && !checkSanityOfStr(sub_title1b, "[nbrMonths]")){
                 return "";

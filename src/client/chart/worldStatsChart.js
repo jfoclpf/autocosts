@@ -145,3 +145,4 @@
     new Chart("worldStatsChart", chartContent);
 })();
 
+
