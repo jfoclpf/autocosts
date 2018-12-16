@@ -92,14 +92,17 @@ module.exports = {
                     function(err, normalizedStatistics, fields) {
                     //normalizedStatistics is a flattened object
                                             
-                        //got normalized statistical results; convert array to object and send to index.js
-                        var resultsToSend = {};
-                        for (i=0; i<normalizedStatistics.length; i++){  
-                            cc = normalizedStatistics[i].countryCode;
-                            resultsToSend[cc] = JSON.parse(JSON.stringify(normalizedStatistics[i])); //cone object
-                            resultsToSend[cc].curr_symbol = WORDS[cc].curr_symbol;
-                        }
-                        eventEmitter.emit("statsColected", resultsToSend);
+                        //got normalized statistical results; convert array to object and send to index.js for sidebar statistics
+                        (function(){                            
+                            var resultsToSendToIndex = {};
+                            for (i=0; i<normalizedStatistics.length; i++){  
+                                cc = normalizedStatistics[i].countryCode;
+                                resultsToSendToIndex[cc] = Object.assign({}, normalizedStatistics[i]);//clone object
+                                resultsToSendToIndex[cc].currencySymbol = WORDS[cc].curr_symbol;
+                            }
+                        
+                            eventEmitter.emit("statsColected", resultsToSendToIndex);
+                        })();
                     
                         if (err) {
                             console.log("Cannot connect to Database");
