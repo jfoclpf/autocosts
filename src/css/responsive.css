@@ -75,8 +75,8 @@
     
     #results .stats-references .standing-costs {width: 47%}
     #results .stats-references .running-costs {width: 50%}
-    #results .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 19px;}
-    #results .stats-references ul li:before {margin: 3px 0 0 -15px}
+    .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 15px; margin-bottom: 5px}
+    .stats-references ul li:before {margin: 0px 0 0 -15px; }
 
     #results #avg-periodic-cost .three-boxes .box {width: 100%; margin: 10px auto; min-height: auto; float: none; padding-bottom: 20px}
     #results #avg-periodic-cost .three-boxes .box .title {width: 94%; padding: 3px 3% 0 8px;}
@@ -152,7 +152,7 @@
     #hero {padding: 0px 0 30px;}
     #hero .container h2 {margin: 7px 0 20px; line-height: 30px; font-size: 18px }
     #hero .container h2 select {font-size: 18px }
-    #hero .container .big {max-width: 80%}
+    #hero .container .big {max-width: 100%}
 
     /* ------ Sidebars ------*/
     .sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
@@ -289,6 +289,17 @@
 
 
 }
+
+
+@media screen and (max-width:340px) {
+
+
+    #hero .container .big {font-size: 15px!important;}
+
+
+}
+
+
 
 
 /*
