@@ -87,8 +87,8 @@
     var options = {
         maintainAspectRatio: false,
         legend: {
-            position: 'bottom', // place legend on the right side of chart
-            display: true, //do not display
+            position: 'bottom',
+            display: true,
             labels : {
                 usePointStyle: true,
                 fontSize: 10,
