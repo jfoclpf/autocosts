@@ -90,8 +90,9 @@
             position: 'bottom', // place legend on the right side of chart
             display: true, //do not display
             labels : {
-                fontSize: 12,
-                fontColor: 'black'
+                usePointStyle: true,
+                fontSize: 10,
+                fontColor: '#868790'
             }
         },
         scales: {
