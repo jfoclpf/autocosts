@@ -85,7 +85,7 @@ colors.setTheme(commons.getConsoleColors());
 var runDir = process.cwd(); //directory from where the script is called
 var diffDir = path.relative(runDir, ROOT_DIR);
 if(diffDir !== '' && diffDir !== '.'){
-    console.log("You must call this builiding script from within the directory where this file is located: " + ROOT_DIR);
+    console.log("You must call this building script from within the directory where this file is located: " + ROOT_DIR);
     console.log("Do first " + ("cd " + path.relative(runDir, ROOT_DIR) ).blue + " and then call this script again.");
     process.exit();
 }
