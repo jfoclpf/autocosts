@@ -57,7 +57,7 @@
     "jshint": "^2.9.7",
     "jsonminify": "^0.4.1",
     "money": "^0.2.0",
-    "pdfmake": "^0.1.39",
+    "pdfmake": "^0.1.40",
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
     "smart-app-banner": "^1.5.1",
