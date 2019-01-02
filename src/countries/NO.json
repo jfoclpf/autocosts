@@ -27,7 +27,7 @@
     "help_project" : "Støtt dette prosjektet",
     "ac_mobile" : "AUTOCOSTS<br> for mobile produkter",
     "ac_sub_header" : "KOSTNADSKALKULATOR FOR BIL",    
-    "sub_title1a" : "De gjennomsnittlige totalkostnadene i [country] er [yearly_costs] per år",
+    "sub_title1a" : "De totale gjennomsnittskostnadene i [country] er [yearly_costs] per år",
     "sub_title1b" : "som representerer [nbrMonths] måneders gjennomsnittslønn",
     "sub_title2" : "Finn den riktige prisen på bilen din!",
     "press_enter_or_tab": "klikk <b> Enter </ b> eller <b> Tab </ b>",

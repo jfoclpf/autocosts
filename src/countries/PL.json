@@ -28,7 +28,7 @@
     "help_project" : "Wesprzyj ten projekt",
     "ac_mobile" : "AUTOKOSZTY<br>na urządzenia mobilne",
     "ac_sub_header" : "KALKULATOR KOSZTÓW SAMOCHODOWYCH",    
-    "sub_title1a" : "Średnie całkowite koszty w [country] to [yearly_costs] rocznie",
+    "sub_title1a" : "Średnie całkowite koszty w [country] wynoszą [yearly_costs] rocznie",
     "sub_title1b" : "reprezentujący [nbrMonths] miesiące przeciętnego wynagrodzenia",
     "sub_title2" : "Znajdź prawdziwy koszt swojego samochodu!",
     "press_enter_or_tab": "kliknij <b> Enter </ b> lub <b> Tab </ b>",

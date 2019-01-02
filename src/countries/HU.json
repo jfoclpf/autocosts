@@ -27,7 +27,7 @@
     "help_project" : "Támogassa projektünket",
     "ac_mobile" : "AUTÓKÖLTSÉGEK<br>mobileszközökhöz",
     "ac_sub_header" : "GÉPJÁRMŰ KÖLTSÉGKALKULÁTOR",    
-    "sub_title1a" : "Az [country] átlagos költsége [yearly_costs] évente",
+    "sub_title1a" : "[country] az átlagos teljes költség [yearly_costs] évente",
     "sub_title1b" : "az [nbrMonths] hónap átlagkeresetét jelenti",
     "sub_title2" : "Keresse meg az autó valódi költségeit!",
     "press_enter_or_tab": "Kattintson a <b> Enter </ b> vagy <b> Tab </ b>",
