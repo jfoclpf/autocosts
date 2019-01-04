@@ -68,7 +68,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
                 
                 //on test version shows everything right from the beginning
                 if(serverInfo.selectedCountry == "XX"){
-                    $(".field_container").show();
+                    $(".field_container, .form_part_head_title").show();
                 }     
                 
                 $("#form").show();
