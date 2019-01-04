@@ -8,6 +8,7 @@
     "curr_name_plural" : "Forint",
     "curr_name_big_plural" : "HUF",
     "curr_symbol" : "ft",
+    "invert_currency" : "1",    
     "std_dist" : "km",
     "std_dist_full" : "kilométer",
     "std_fuel_calc" : "l/100km",

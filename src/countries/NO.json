@@ -8,6 +8,7 @@
     "curr_name_plural" : "Kroner",
     "curr_name_big_plural" : "KRONER",
     "curr_symbol" : "kr",
+    "invert_currency" : "1",
     "std_dist" : "mil",
     "std_dist_full" : "mil",
     "std_fuel_calc" : "l/10km",

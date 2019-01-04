@@ -8,6 +8,7 @@
     "curr_name_plural" : "Koruny české",
     "curr_name_big_plural" : "KORUNY ČESKÈ",
     "curr_symbol" : "Kč",
+    "invert_currency" : "1",
     "std_dist" : "km",
     "std_dist_full" : "kilometr",
     "std_fuel_calc" : "l/100km",

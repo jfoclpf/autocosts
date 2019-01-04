@@ -298,9 +298,22 @@ function getStatsData(_this, entry, toFixed, isBold=false){
         let val = _this.serverData.statsData[_this.CC][entry];
 
         if(typeof toFixed !== "undefined" && typeof val === "number"){
-            return (isBold ? "<b>" : "") + 
-                   (entry.startsWith("costs_") ? currencySymbol : "") + val.toFixed(toFixed) + 
-                   (isBold ? "</b>" : "");
+            
+            let finalValue;
+            
+            if(entry.startsWith("costs_")){//it's a cost, thus use currency symbol
+                if (_this.words.invert_currency){
+                    finalValue = val.toFixed(toFixed) + " " + currencySymbol;
+                }
+                else{
+                    finalValue = currencySymbol + val.toFixed(toFixed);
+                }            
+            }
+            else{
+                finalValue = val.toFixed(toFixed);
+            }
+                                    
+            return (isBold ? "<b>" : "") + finalValue + (isBold ? "</b>" : "");
         }
         else{
             return val;
