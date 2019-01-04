@@ -30,10 +30,10 @@ module.exports = {
         //lower case all string
         var title = this.words.web_page_title.toLowerCase();
         //get an array of words stripped by space
-        var words = title.split(" ");
-        //if a word has a size bigger than 4, uppercase first letter
+        var words = title.split(" ");                
+        //if a word has a size bigger than 4 char or it is the 1st word of the sentence, uppercase 1st letter of the word
         for (var i = 0; i< words.length;  i++){
-            if (words[i].length > 4){
+            if (words[i].length > 4 || i === 0){
                 words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1); //uppercase of first letter of word
             }
         }
