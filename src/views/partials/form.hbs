@@ -180,7 +180,7 @@
                         {{{credit_loan}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="number" min="0" step="Any" name="borrowedAmount"
+                         <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="borrowedAmount"
                                 id="borrowedAmount" class="currencyInput unit_left" />
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -199,7 +199,7 @@
                         {{{credit_average_value}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="number" min="0" step="Any" name="amountInstallment"
+                         <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="amountInstallment"
                                 id="amountInstallment" class="currencyInput unit_left" />
                         <span class="unit">
                             {{{curr_symbol}}}
@@ -246,7 +246,7 @@
                         {{{inspection_price}}}
                     </label>
                     <div class="input_value small_input">
-                         <input type="number" min="0" step="Any" name="averageInspectionCost"
+                         <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="averageInspectionCost"
                                 id="averageInspectionCost" class="currencyInput unit_left" />
                          <span class="unit">
                             {{{curr_symbol}}}
@@ -374,7 +374,7 @@
                         <label>
                             {{{fuel_dist_home_job}}}
                         </label>
-                        <input type="number" min="0" step="Any" name="km_entre_casa_trabalho"
+                        <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="km_entre_casa_trabalho"
                                id="car_to_work_distance_home_work" class="no_padding_left" />
                         <span class="unit_kms">
                             {{{std_dist}}}
@@ -399,9 +399,9 @@
                         <label>
                             {{{fuel_dist}}}
                         </label>
-                        <input type="number" min="0" step="Any" name="km_por_mes"
+                        <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="km_por_mes"
                                id="no_car_to_work_distance" class="no_padding_left" />
-                         <span class="unit_kms">
+                        <span class="unit_kms">
                             {{{std_dist}}}
                         </span>
                         <span class="per">
@@ -417,7 +417,7 @@
                             {{{fuel_car_eff}}}
                         </label>
                         <!-- fuel efficiency either in l/100km or mpg cannot be zero -->
-                        <input type="number" min="0.000001" step="Any" class="no_padding_left"
+                        <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" class="no_padding_left"
                                id="fuel_efficiency" name="fuel_efficiency" />
                         <span class="unit_litre_100kms">
                             {{{std_fuel_calc}}}
@@ -427,7 +427,8 @@
                         {{{fuel_price}}}
                     </label>
                     <div class="input_value small_input">
-                        <input type="number" min="0" step="Any" name="fuel_price"
+                        <!-- fuel price -->
+                        <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="fuel_price"
                                id="fuel_price" class="currencyInput small_input_unit_per_litre unit_gallon_left" />
                         <span class="unit">
                             {{{curr_symbol}}}/{{{std_volume_short}}}
@@ -760,7 +761,7 @@
 
                 <!-- Year -->
                 <div id="income_per_year_form3" class="div_element input_value">
-                    <input type="number" min="0" step="Any" name="income_per_year"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="income_per_year"
                            id="income_per_year" class="currencyInput unit_n_year_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{year}}}
@@ -769,7 +770,7 @@
 
                 <!-- Month -->
                 <div id="income_per_month_form3" class="input_value div_element hidden">
-                    <input type="number" min="0" step="Any" name="income_per_month"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="income_per_month"
                            id="income_per_month" class="currencyInput unit_n_month_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{month}}}
@@ -784,13 +785,13 @@
 
                 <!-- Week -->
                 <div id="income_per_week_form3" class="input_value div_element hidden">
-                    <input type="number" min="0" step="Any" name="income_per_week"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="income_per_week"
                            id="income_per_week" class="currencyInput unit_n_month_left input_300" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{week}}}
                     </span>
                     <br><br>
-                    <input type="number" min="0" max="53" step="Any" name="income_weeks_per_year"
+                    <input type="number" min="1" max="52" step="Any" name="income_weeks_per_year"
                            id="income_weeks_per_year" class="input_40" />
                     <span class="months_year">
                         {{{weeks}}}/{{{year}}}
@@ -799,19 +800,19 @@
 
                 <!-- Hour -->
                 <div id="income_per_hour_form3" class="input_value div_element hidden">
-                    <input type="number" min="0" step="Any" name="income_per_hour"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="income_per_hour"
                            id="income_per_hour" class="currencyInput unit_n_hour_left input_90" />
                     <span class="unit">
                         {{{curr_symbol}}}/{{{hour}}}
                     </span>
                     <br><br>
-                    <input type="number" min="0" max="168" step="Any" name="income_hours_per_week"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" max="168" step="Any" name="income_hours_per_week"
                            id="income_hours_per_week" class="input_80" />
                     <span class="hours_week">
                         {{{hours}}}/{{{week}}}
                     </span>
                     <br><br>
-                    <input type="number" min="0" max="53" step="Any" name="income_hour_weeks_per_year"
+                    <input type="number" min="1" max="52" step="Any" name="income_hour_weeks_per_year"
                            id="income_hour_weeks_per_year" class="input_80" />
                     <span class="hours_week">
                         {{{weeks}}}/{{{year}}}
