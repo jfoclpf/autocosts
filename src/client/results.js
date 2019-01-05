@@ -97,7 +97,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                 attr("href", encodeURI("https://www.facebook.com/sharer/sharer.php?u=" + fullUrl)).attr("target", "_blank");
             
             $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
-                attr("href", encodeURI("https://twitter.com/share?text=" + descriptionText + "&url=" + fullUrl + "&title=" + translatedStrings.web_page_title)).
+                attr("href", 
+                     encodeURI("https://twitter.com/share?text=" + descriptionText + "&url=" + fullUrl + "&title=" + translatedStrings.web_page_title)).
                 attr("target", "_blank");
             
             $(".right-actions .linkedin a, .right-actions-mobile .linkedin a").
@@ -327,7 +328,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
 
         //Taxes
         addLiElm("roadTaxes",
-                 form.roadTaxes.amountPerYear + " " + translatedStrings.curr_name_plural + " " + translatedStrings.word_per + " " + translatedStrings.year);
+                 form.roadTaxes.amountPerYear + " " + translatedStrings.curr_name_plural + " " + 
+                 translatedStrings.word_per + " " + translatedStrings.year);
 
         //Fuel
         switch(form.fuel.typeOfCalculation){
