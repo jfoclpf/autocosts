@@ -30,7 +30,10 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             style: 'title'
         };
         
-        var isFinancialEffortChart = calculatedData.financialEffort.calculated && chartsInfo.financialEffort.isVisible;
+        var isFinancialEffortChart = calculatedData.financialEffort.calculated && 
+            calculatedData.financialEffort.isLikelyToBeValid && 
+            chartsInfo.financialEffort.isVisible;
+        
         var isAlternativesToCarChart = (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)) &&
             chartsInfo.alternativesToCar.isVisible;
         
@@ -160,7 +163,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             );
 
             //financial effort title and table
-            if(calculatedData.financialEffort.calculated){ 
+            if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid){ 
                 //header
                 content.push(
                     {
@@ -390,7 +393,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             ]
         ];
 
-        if (calculatedData.financialEffort.calculated){
+        if (calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid){
             body.push(
                 [
                     {text:translatedStrings.financial_effort + ": " + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + "%",

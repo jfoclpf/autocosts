@@ -24,6 +24,14 @@ autocosts.calculatorModule = (function(thisModule){
         numberOfWeeksInAYear:  365.25 / 7,
         numberOfWeeksInAMonth: 365.25 / 7 / 12
     };
+    
+    //says if some calculated results are likely to be valid
+    var isLikelyToBeValidConst = {
+        financialEffortPercentage: {
+            min: 5,
+            max: 110
+        }    
+    };
 
     var errMsgDataCountry = "Input data or input country not defined. Class not initialized with function calculateCosts";
 
@@ -125,6 +133,7 @@ autocosts.calculatorModule = (function(thisModule){
 
             financialEffort: {
                 calculated: false,            //boolean whether the public transports info was calculated
+                isLikelyToBeValid: false,     //says if this result is likely to be valid
                 income: {
                     averagePerHour: u,
                     averagePerWeek: u,
@@ -351,7 +360,9 @@ autocosts.calculatorModule = (function(thisModule){
 
                     var daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
 
-                    var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) * consts.numberOfWeeksInAMonth;
+                    var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) *
+                        consts.numberOfWeeksInAMonth;
+                    
                     monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100;
 
                     //after computation is made, convert backwards to standard distance
@@ -639,7 +650,8 @@ autocosts.calculatorModule = (function(thisModule){
                 financialEffort.workingTime.hoursPerWeek = parseFloat(inputData.income.hour.hoursPerWeek);
                 financialEffort.workingTime.weeksPerYear = parseFloat(inputData.income.hour.weeksPerYear);
                 financialEffort.income.perYear =
-                    parseFloat(inputData.income.hour.amountPerHour) * financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
+                    parseFloat(inputData.income.hour.amountPerHour) * 
+                    financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
                 break;
             default:
                 throw errMsg;
@@ -681,8 +693,16 @@ autocosts.calculatorModule = (function(thisModule){
         financialEffort.workingHoursPerYearToAffordCar  = totalCostsPerYear / financialEffort.income.averagePerHour;
         financialEffort.workingMonthsPerYearToAffordCar = totalCostsPerYear / financialEffort.income.perYear * 12;
         financialEffort.daysForCarToBePaid              = totalCostsPerYear / financialEffort.income.perYear * consts.numberOfDaysInAYear;
-        financialEffort.financialEffortPercentage       = totalCostsPerYear / financialEffort.income.perYear * 100;
-
+        financialEffort.financialEffortPercentage       = totalCostsPerYear / financialEffort.income.perYear * 100;        
+        
+        if(financialEffort.financialEffortPercentage >= isLikelyToBeValidConst.financialEffortPercentage.min &&
+           financialEffort.financialEffortPercentage <= isLikelyToBeValidConst.financialEffortPercentage.max){
+            financialEffort.isLikelyToBeValid = true;
+        } 
+        else{
+            financialEffort.isLikelyToBeValid = false;
+        }
+        
         financialEffort.calculated = true;
 
         calculatedData.financialEffort = financialEffort;

@@ -276,9 +276,9 @@ autocosts.resultsModule.runResultsModule =
         chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
 
         //The first three boxes on the top
-        //if financial effort was not calculated, does not show doughnut chart
+        //if financial effort was not calculated or not likely, does not show doughnut chart
         //on the third box, and adapt the three boxes css classes
-        if(calculatedData.financialEffort.calculated && switches.charts){ 
+        if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid && switches.charts){ 
             chartsModule.drawDoughnutFinancialEffort(calculatedData);
             //shows third box where the financial effort doughnut chart appears
             $("#results #info-boxes .info-box.box-3").show();
@@ -304,7 +304,7 @@ autocosts.resultsModule.runResultsModule =
         }
 
         //Financial Effort 
-        if(calculatedData.financialEffort.calculated){            
+        if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid){            
             resultsModule.setFinancialEffortDetails(form, calculatedData);
 
             //shows financial effort section 
