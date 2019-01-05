@@ -924,7 +924,7 @@
                         <label>
                             {{{fuel_dist_home_job}}}
                         </label>
-                        <input type="number" min="0" step="Any" class="no_padding_left small_input_kms"
+                        <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" class="no_padding_left small_input_kms"
                                id="dist_home_job" name="dist_home_job" />
                         <span class="unit_kms">
                             {{{std_dist}}}
@@ -977,7 +977,8 @@
                     {{{extra_data_time_question1}}}
                 </label>
                 <div class="input_value">
-                    <input type="number" min="0" step="Any" class="input_90" id="time_home_job" name="time_home_job" />
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any"
+                           class="input_90" id="time_home_job" name="time_home_job" />
                     <span class="min">
                         {{{min}}}
                     </span>

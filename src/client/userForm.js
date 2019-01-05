@@ -8,9 +8,9 @@
 
 //USER FORM INTERFACE MODULE
 //see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
-autocosts.userFormModule = (function(thisModule){
+autocosts.userFormModule = (function(thisModule, translatedStrings){
 
-    var validateFormModule, commonsModule;    
+    var validateFormModule, commonsModule;
 
     function initialize(){
         loadModuleDependencies();
@@ -22,7 +22,7 @@ autocosts.userFormModule = (function(thisModule){
         validateFormModule = autocosts.userFormModule.validateFormModule;
         commonsModule = autocosts.commonsModule;
     }
-    
+
     //initial settings regarding the calculator form itself
     //that is, after the user has pressed "calculate" button on the landing page
     function setFormSettings(){
@@ -65,7 +65,7 @@ autocosts.userFormModule = (function(thisModule){
         //PART 1
         //depreciation
         $("#acquisitionYear").attr("max", (new Date()).getFullYear());
-        
+
         //credit
         $('#sim_credDiv').hide();
 
@@ -130,8 +130,8 @@ autocosts.userFormModule = (function(thisModule){
             }
 
             inputHandler($("#acquisitionMonth"));
-        });        
-        
+        });
+
         //insurance
         setRadioButton("insurancePaymentPeriod", "semestral"); //insurance radio button set to half-yearly
 
@@ -374,7 +374,7 @@ autocosts.userFormModule = (function(thisModule){
                 $buttonNext.stop(true).hide();
             }
 
-              
+
             if(isReadyToCalc()){
                 $(".calculate_bottom_bar").fadeIn("slow");
             }
@@ -545,7 +545,7 @@ autocosts.userFormModule = (function(thisModule){
             return "empty";
         }
 
-        var val, min, max;
+        var val, min, max, bValueGreaterThanMin, bValueSmallerThanMax;
 
         //A text input's value attribute will always return a string.
         //One needs to parseFloat to convert string to float
@@ -564,10 +564,18 @@ autocosts.userFormModule = (function(thisModule){
 
         min = parseFloat($this.attr('min'));
         max = parseFloat($this.attr('max'));
-        //console.log(min, max);
+        bValueGreaterThanMin = Boolean($this.attr('data-valueGreaterThanMin'));
+        bValueSmallerThanMax = Boolean($this.attr('data-valueSmallerThanMax'));
+        //console.log(min, max, bValueGreaterThanMin);
 
         if (isNumber(min) && isNumber(max)){
             if(val < min || val > max ){
+                return "wrong";
+            }
+            if(bValueGreaterThanMin && val === min){
+                return "wrong";
+            }
+            if(bValueSmallerThanMax && val === max){
                 return "wrong";
             }
         }
@@ -575,9 +583,15 @@ autocosts.userFormModule = (function(thisModule){
             if(val < min){
                 return "wrong";
             }
+            if(bValueGreaterThanMin && val === min){
+                return "wrong";
+            }
         }
         else if (isNumber(max)){
             if(val > max ){
+                return "wrong";
+            }
+            if(bValueSmallerThanMax && val === max){
                 return "wrong";
             }
         }
@@ -671,35 +685,47 @@ autocosts.userFormModule = (function(thisModule){
 
         var errId = "error_msg_" + $this.prop('id');
 
-        if(status==="show" && !$("#"+errId).length){
+        if(status === "show" && !$("#"+errId).length){
 
             //if default function paramters are not set, get min and max from HTML attributes
             var min = $this.attr('min');
             var max = $this.attr('max');
+            var bValueGreaterThanMin = Boolean($this.attr('data-valueGreaterThanMin'));
+            var bValueSmallerThanMax = Boolean($this.attr('data-valueSmallerThanMax'));
 
             var strEnterAValue;
             if ($this.hasClass("input_integer")){
-                strEnterAValue = "Enter an integer value";
+                strEnterAValue = translatedStrings.enter_an_integer;
             }
             else{
-                strEnterAValue = "Enter value";
+                strEnterAValue = translatedStrings.enter_an_amount;
             }
 
             $this.after(function(){
 
                 if(min && max){
                     return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + "between " + min + " and " + max +
+                           strEnterAValue + " " + translatedStrings.between + " " + min + " " + translatedStrings.and + " " + max +
                            "</div>";
                 }
-                else if(min){
+                else if(min && !bValueGreaterThanMin){
                     return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + "greater or equal to " + min +
+                           strEnterAValue + " " + translatedStrings.greater_or_equal_to + " " + min +
                            "</div>";
                 }
-                else if(max){
+                else if(min && bValueGreaterThanMin){
                     return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + "smaller or equal to " + max +
+                           strEnterAValue + " " + translatedStrings.greater_than + " " + min +
+                           "</div>";
+                }
+                else if(max && !bValueSmallerThanMax){
+                    return '<div class="error_msg" id="'+errId+'">' +
+                           strEnterAValue + " " + translatedStrings.smaller_or_equal_to + " " + max +
+                           "</div>";
+                }
+                else if(max && bValueSmallerThanMax){
+                    return '<div class="error_msg" id="'+errId+'">' +
+                           strEnterAValue + " " + translatedStrings.smaller_than + " " + max +
                            "</div>";
                 }
             });
@@ -752,8 +778,8 @@ autocosts.userFormModule = (function(thisModule){
     //When the form is filled and the calculator is already ready to calculate car costs
     //The form is ready to be calculated when Standing Costs (form part 1) and Running Costs (form part 2) are filled
     //The Extra data (form part 3) is optional
-    function isReadyToCalc(){        
-        
+    function isReadyToCalc(){
+
         var status, fieldN, isOk = true;
 
         $(".form_part").find(".field_container").each(function(index, item){
@@ -1011,5 +1037,6 @@ autocosts.userFormModule = (function(thisModule){
 
     return thisModule;
 
-})(autocosts.userFormModule || {});
+})(autocosts.userFormModule || {},
+   autocosts.serverInfo.translatedStrings);
 

@@ -30,7 +30,7 @@ module.exports = {
         //lower case all string
         var title = this.words.web_page_title.toLowerCase();
         //get an array of words stripped by space
-        var words = title.split(" ");                
+        var words = title.split(" ");
         //if a word has a size bigger than 4 char or it is the 1st word of the sentence, uppercase 1st letter of the word
         for (var i = 0; i< words.length;  i++){
             if (words[i].length > 4 || i === 0){
@@ -82,7 +82,7 @@ module.exports = {
     //from sub_title properties at src/countries/
     //"sub_title1a": "The average total costs in [country] is [yearly_costs] per year"
     //"sub_title1b": "representing [nbrMonths] months of average salary."
-    //"sub_title2":  "Find the true cost of owning a car in your country!"    
+    //"sub_title2":  "Find the true cost of owning a car in your country!"
     getSubTitleArr: function(position){
         if(!isDB(this)){
             return "";
@@ -90,7 +90,7 @@ module.exports = {
 
         var errMsg = "Error in handlebars function getSubTitleArr";
 
-        var statsData = this.serverData.statsData[this.CC];        
+        var statsData = this.serverData.statsData[this.CC];
 
         var sub_title1a = this.words.sub_title1a ? this.words.sub_title1a.trim() : "";
         var sub_title1b = this.words.sub_title1b ? this.words.sub_title1b.trim() : "";
@@ -114,7 +114,7 @@ module.exports = {
         if(!checkSanityOfStr(sub_title1a, "[country]")){ return ""; }
 
         if(!checkSanityOfStr(sub_title1a, "[yearly_costs]")){ return ""; }
-        
+
         let totalCostsPerYear = statsData.costs_totalPerYear;
         if(!totalCostsPerYear || !isFinite(totalCostsPerYear) || parseInt(totalCostsPerYear) === 0){
             return "";
@@ -126,7 +126,7 @@ module.exports = {
         }
 
         else if(position === 2){
-            
+
             sub_title2 = addPeriodIfInexistent(sub_title2);
 
             //this tring shoud be: "is [yearly_costs] per year"
@@ -153,10 +153,10 @@ module.exports = {
                     sub_title1a_part2 = sub_title1a_part2.slice(0, -1); //removes last character
                 }
                 sub_title1a_part2 += ", ";
-                
+
                 sub_title1b = sub_title1b.replace("[nbrMonths]", getStatsData(this, "financialEffort_workingMonthsPerYearToAffordCar", 1, true));
                 sub_title1b = addPeriodIfInexistent(sub_title1b);
-                
+
                 //this returns "is [yearly_costs] per year, representing [nbrMonths] months of average salary.
                 //Find the true cost of owning a car in your country."
                 return sub_title1a_part2 + sub_title1b + " " + sub_title2;
@@ -290,29 +290,29 @@ function _toFixed(num, n){
 
 //gets an entry from the statistical DB
 function getStatsData(_this, entry, toFixed, isBold=false){
-    
+
     if(isDB(_this)){
-        
+
         var currencySymbol = _this.words.curr_symbol;
-        
+
         let val = _this.serverData.statsData[_this.CC][entry];
 
         if(typeof toFixed !== "undefined" && typeof val === "number"){
-            
+
             let finalValue;
-            
+
             if(entry.startsWith("costs_")){//it's a cost, thus use currency symbol
                 if (_this.words.invert_currency){
                     finalValue = val.toFixed(toFixed) + " " + currencySymbol;
                 }
                 else{
                     finalValue = currencySymbol + val.toFixed(toFixed);
-                }            
+                }
             }
             else{
                 finalValue = val.toFixed(toFixed);
             }
-                                    
+
             return (isBold ? "<b>" : "") + finalValue + (isBold ? "</b>" : "");
         }
         else{
