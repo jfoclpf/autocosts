@@ -702,31 +702,34 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
             }
 
             $this.after(function(){
+                
+                var errorMessage;
 
-                if(min && max){
-                    return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + translatedStrings.between + " " + min + " " + translatedStrings.and + " " + max +
-                           "</div>";
+                if(min && max && !bValueGreaterThanMin){
+                    errorMessage = translatedStrings.between + " " + min + " " + translatedStrings.and + " " + max;
                 }
+                else if(min && max && bValueGreaterThanMin){
+                    errorMessage = translatedStrings.between + " " + min + " " + translatedStrings.and + " " + max + ", " +
+                        translatedStrings.and + " " + translatedStrings.greater_than + " " + min;
+                }                
                 else if(min && !bValueGreaterThanMin){
-                    return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + translatedStrings.greater_or_equal_to + " " + min +
-                           "</div>";
+                    errorMessage = translatedStrings.greater_or_equal_to + " " + min;
                 }
                 else if(min && bValueGreaterThanMin){
-                    return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + translatedStrings.greater_than + " " + min +
-                           "</div>";
+                    errorMessage = translatedStrings.greater_than + " " + min;
                 }
                 else if(max && !bValueSmallerThanMax){
-                    return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + translatedStrings.smaller_or_equal_to + " " + max +
-                           "</div>";
+                    errorMessage = translatedStrings.smaller_or_equal_to + " " + max;
                 }
                 else if(max && bValueSmallerThanMax){
-                    return '<div class="error_msg" id="'+errId+'">' +
-                           strEnterAValue + " " + translatedStrings.smaller_than + " " + max +
-                           "</div>";
+                    errorMessage = translatedStrings.smaller_than + " " + max;
+                }
+                
+                if(errorMessage){
+                    return '<div class="error_msg" id="'+errId+'">' + strEnterAValue + " " + errorMessage + "</div>";
+                }
+                else{
+                    return;
                 }
             });
         }
