@@ -462,6 +462,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
         var income_type = commonsModule.getCheckedValue(form.radio_income);
         var maxNumberOfWeeksPerYear = 52; //roughly 356.25/7=52,178
         var maxNumberOfHoursPerWeek = 168; //7 days times 24 hours
+        var maxNumberOfIncomeMonthsPerYear = 14; //in some countries, workers get 14 months per year of salary
 
         switch(income_type){
             case 'year':
@@ -474,7 +475,7 @@ autocosts.userFormModule.validateFormModule = (function(form){
                     return false;
                 }
                 if(!isNumber(form.income_months_per_year.value) ||
-                   Number(form.income_months_per_year.value) <=0 || Number(form.income_months_per_year.value) > 12){
+                   Number(form.income_months_per_year.value) <=0 || Number(form.income_months_per_year.value) > maxNumberOfIncomeMonthsPerYear){
                     return false;
                 }
                 break;
