@@ -460,37 +460,43 @@ autocosts.userFormModule.validateFormModule = (function(form){
 
         /*income*/
         var income_type = commonsModule.getCheckedValue(form.radio_income);
+        var maxNumberOfWeeksPerYear = 52; //roughly 356.25/7=52,178
+        var maxNumberOfHoursPerWeek = 168; //7 days times 24 hours
 
         switch(income_type){
             case 'year':
-                if(!isNumber(form.income_per_year.value)){
+                if(!isNumber(form.income_per_year.value) || Number(form.income_per_year.value) <=0 ){
                     return false;
                 }
                 break;
             case 'month':
-                if(!isNumber(form.income_per_month.value)){
+                if(!isNumber(form.income_per_month.value) || Number(form.income_per_month.value) <=0){
                     return false;
                 }
-                if(!isNumber(form.income_months_per_year.value)){
+                if(!isNumber(form.income_months_per_year.value) ||
+                   Number(form.income_months_per_year.value) <=0 || Number(form.income_months_per_year.value) > 12){
                     return false;
                 }
                 break;
             case 'week':
-                if(!isNumber(form.income_per_week.value)){
+                if(!isNumber(form.income_per_week.value) || Number(form.income_per_week.value) <=0){
                     return false;
                 }
-                if(!isNumber(form.income_weeks_per_year.value)){
+                if(!isNumber(form.income_weeks_per_year.value) || 
+                   Number(form.income_weeks_per_year.value) <= 0 || Number(form.income_weeks_per_year.value) > maxNumberOfWeeksPerYear){
                     return false;
                 }
                 break;
             case 'hour':
-                if(!isNumber(form.income_per_hour.value)){
+                if(!isNumber(form.income_per_hour.value) || Number(form.income_per_hour.value) <=0){
                     return false;
                 }
-                if(!isNumber(form.income_hours_per_week.value)){
+                if(!isNumber(form.income_hours_per_week.value) || 
+                   Number(form.income_hours_per_week.value) <= 0 || Number(form.income_hours_per_week.value) > maxNumberOfHoursPerWeek){
                     return false;
                 }   
-                if(!isNumber(form.income_hour_weeks_per_year.value)){
+                if(!isNumber(form.income_hour_weeks_per_year.value) || 
+                   Number(form.income_hour_weeks_per_year.value) <= 0 || Number(form.income_hour_weeks_per_year.value) > maxNumberOfWeeksPerYear){
                     return false;
                 } 
                 break;
