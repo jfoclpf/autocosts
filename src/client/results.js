@@ -117,6 +117,15 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         else{
             $(".right-actions, .right-actions-mobile").hide();
         }
+        
+        //remove hash tag from url on mobile version caused by ARIA events: http://localhost:3027/XX#main-menu
+        //https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
+        $(".right-actions-mobile #main-menu, .right-actions-mobile #main-menu-toggle").on( "click", function(e){            
+            //I cannot find a way to get a callback for these ARIA events            
+            setTimeout(function(){ 
+                commonsModule.removeHashFromUrl(); 
+            }, 100); 
+        });
     }
 
     //scans all flattened calculatedDat and assigns each result value to respective HTML class element

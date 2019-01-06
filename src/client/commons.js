@@ -67,6 +67,10 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
         return getMobileOperatingSystem() !== "unknown" || window.matchMedia("only screen and (max-width: 760px)").matches;
     }
     
+    function removeHashFromUrl() { 
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+    }    
+    
     //Get the applicable standard values
     function getStringFor(setting){
         
@@ -172,6 +176,7 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
     thisModule.isThisAtest = isThisAtest;
     thisModule.getMobileOperatingSystem = getMobileOperatingSystem;
     thisModule.isMobile = isMobile;
+    thisModule.removeHashFromUrl = removeHashFromUrl;
     thisModule.getStringFor = getStringFor;
     thisModule.getCheckedValue = getCheckedValue;
 
