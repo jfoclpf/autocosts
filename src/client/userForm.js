@@ -16,6 +16,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
         loadModuleDependencies();
         setFormSettings();
         setFormHandlers();
+        setIconListClickHandlers();
     }
 
     function loadModuleDependencies(){
@@ -201,6 +202,38 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
         });
     }
 
+    //set links on the items costs list
+    //https://user-images.githubusercontent.com/3984909/50729986-9746ee80-1143-11e9-9124-85de9efcacad.png
+    //these links shoud scroll the page to the correspondent costs section
+    function setIconListClickHandlers(){
+        $(".container .steps").find(".icon").each(function(){
+            var fieldN,
+                $this = $(this);
+
+            //it has one class "fieldN", gets N
+            var classesStr = $this.attr("class").split(" "); //get array of classes
+            $.each(classesStr, function(index, value){
+                if(value.indexOf("field") !== -1){
+                    fieldN = parseInt(value.replace("field", ""), 10);
+                }
+            })
+
+            if(!fieldN){
+                console.error("The field has no class with the expression 'field#' ");
+                return;
+            }
+
+            //on click scrolls to the correponding section, and shows it
+            $this.click(function(){
+                var $that = $(".form_part .field_container.field"+fieldN);
+                if($(this).hasClass("active") || $(this).hasClass("done")){
+                    $that.stop(true).fadeTo("fast", 1);
+                    scrollsPageTo($that, false);
+                }
+            });
+        });
+    }
+
     //When button "Next" is clicked, this function is called; var $thisButton makes reference to the "Next" button itself
     //It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
     //It scrolls down the page till a field_container is: NOT valid OR NOT visible
@@ -254,8 +287,8 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
                             $i.find(".next").stop(true).show(); //shows "next" button
                         }
 
-                        //scrols the page to the corresponding div, considering the header
-                        scrollsPageTo($i, (function(){return;}));
+                        //scrols the center of the page to the corresponding div
+                        scrollsPageTo($i, true);
 
                         updatesFieldsAndIcons($i);
 
@@ -328,7 +361,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     }
 
 
-    //This function fires every time on("input") in
+    //This function fires every time .onInput in
     //input[type="number"] OR input input[type="radio"]
     //that is when the numbers inputs are changed or when the radio buttons are clicked
     //check initialize.js in function loadsButtonsHandlers
@@ -400,7 +433,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     }
 
 
-    //fades out or fades in all visible fields, except itself, according to validity
+    //fades out or fades in all visible fields, except itself/$this, according to validity
     //also updates icon list on the left panel
     function updatesFieldsAndIcons($this){
         //console.log("updatesFieldsAndIcons($this)");
@@ -604,7 +637,8 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     }
 
 
-    //sets correspondent icon on icon list within the div with class "steps"
+    //sets correspondent icon on costs items vertical list (inside <div class="steps"> on form.hbs)
+    //https://user-images.githubusercontent.com/3984909/50729986-9746ee80-1143-11e9-9124-85de9efcacad.png
     //$this is the current field with class "field_container"
     //status may be "inactive", "active", "done", "wrong" or "hidden"
     function setIcon($this, status){
@@ -627,12 +661,11 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
                         $(this).closest(".list").addClass("active");
                         break;
                     case "done":
-                        $(this).addClass("active");
-                        $(this).addClass("done");
+                        $(this).addClass("active done");
                         $(this).closest(".list").addClass("active");
                         break;
                     case "wrong":
-                        $(this).addClass("wrong");
+                        $(this).addClass("active wrong");
                         $(this).find("span").addClass("wrong");//text
                         break;
                     case "hidden":
@@ -702,7 +735,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
             }
 
             $this.after(function(){
-                
+
                 var errorMessage;
 
                 if(min && max && !bValueGreaterThanMin){
@@ -711,7 +744,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
                 else if(min && max && bValueGreaterThanMin){
                     errorMessage = translatedStrings.between + " " + min + " " + translatedStrings.and + " " + max + ", " +
                         translatedStrings.and + " " + translatedStrings.greater_than + " " + min;
-                }                
+                }
                 else if(min && !bValueGreaterThanMin){
                     errorMessage = translatedStrings.greater_or_equal_to + " " + min;
                 }
@@ -724,7 +757,7 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
                 else if(max && bValueSmallerThanMax){
                     errorMessage = translatedStrings.smaller_than + " " + max;
                 }
-                
+
                 if(errorMessage){
                     return '<div class="error_msg" id="'+errId+'">' + strEnterAValue + " " + errorMessage + "</div>";
                 }
@@ -740,38 +773,48 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     }
 
     //scrols the page to the corresponding div, considering the header
-    function scrollsPageTo($this, callback){
+    //toCenterOfPage; if false scrolls to top of page
+    function scrollsPageTo($this, toCenterOfPageBool){
 
-        //returns integer 1, 2, 3, etc. for "field1", "field2", "field3", etc. of field_container
-        var fieldN = getFieldNum($this, true);
+        var scrollingTime = 600;
 
-        if(fieldN <= 15){
-            //gets relative postion with respect to parent element
-            var fixedTopPos = $this.offset().top-$(".form_part").scrollTop()-$("header").outerHeight()-200;
+        //scrolls to center of page
+        if(toCenterOfPageBool){
+            //returns integer 1, 2, 3, etc. for "field1", "field2", "field3", etc. of field_container
+            var fieldN = getFieldNum($this, true);
 
-            $("html").animate({scrollTop: fixedTopPos}, 600, "linear", function(){
+            if(fieldN <= 15){
+                //gets relative postion with respect to parent element
+                var fixedTopPos = $this.offset().top-$(".form_part").scrollTop()-$("header").outerHeight()-200;
 
-                if($(".bottom_spacer").css("padding-top") !== "450px"){
-                    $(".bottom_spacer").animate({"padding-top": "450px"}, 600, "linear", callback);
-                }
-                else{
-                    callback();
-                }
-            });
-        }
-        else if(fieldN <= 17){
-            //scrolls to end of page and change bottom spacer
-            if($(".bottom_spacer").css("padding-top") !== "150px"){
-                $(".bottom_spacer").animate({"padding-top": "150px"}, 600, "linear", function(){
-                    $("html").animate({ scrollTop: $(document).height()}, 600, "linear", callback);
+                $("html").animate({scrollTop: fixedTopPos}, scrollingTime, "linear", function(){
+
+                    if($(".bottom_spacer").css("padding-top") !== "450px"){
+                        $(".bottom_spacer").animate({"padding-top": "450px"}, scrollingTime, "linear");
+                    }
                 });
             }
+            else if(fieldN <= 17){
+                //scrolls to end of page and change bottom spacer
+                if($(".bottom_spacer").css("padding-top") !== "150px"){
+                    $(".bottom_spacer").animate({"padding-top": "150px"}, scrollingTime, "linear", function(){
+                        $("html").animate({ scrollTop: $(document).height()}, scrollingTime, "linear");
+                    });
+                }
+                else{
+                    $("html").animate({ scrollTop: $(document).height()}, scrollingTime, "linear");
+                }
+            }
             else{
-                $("html").animate({ scrollTop: $(document).height()}, 600, "linear", callback);
+                console.error("Error on scrollsPageTo(), invalid index: " + fieldN);
             }
         }
+
+        //scrolls to top of page
         else{
-            console.error("Error on scrollsPageTo(), invalid index: " + fieldN);
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $this.offset().top - $("header").outerHeight()
+            }, scrollingTime);
         }
     }
 

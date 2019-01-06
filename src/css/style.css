@@ -67,7 +67,7 @@ input[type='date']:-ms-input-placeholder {color: #b0b2be;}
 input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
 input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
-input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; -moz-appearance: none; margin: 0;}
 input[type='number'] {-moz-appearance:textfield;}
 
@@ -95,7 +95,7 @@ input[type='number'] {-moz-appearance:textfield;}
 .small_input input[type='number'] {width: 152px; font-size: 22px; padding-left: 34px}
 
 .small_input input,
-.small_input select, 
+.small_input select,
 .small_input .unit,
 .small_input .per,
 .small_input .unit_kms,
@@ -147,7 +147,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* target Internet Explorer 9 to undo the custom arrow */
 @media screen and (min-width:0\0) {
-    select {background:none\9; padding: 5px\9;} 
+    select {background:none\9; padding: 5px\9;}
 }
 
 
@@ -159,10 +159,10 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .big {width: 370px; font-size: 18px!important; /*padding: 18px 30px!important;*/}
 .medium {padding: 8px 30px!important;}
 
-.btn-blue {background-color: #2c49b9} 
+.btn-blue {background-color: #2c49b9}
 .btn-blue:hover {color: white; background-color: #385be1}
 
-.btn-orange {background-color: #efa00b; padding: 8px 20px;} 
+.btn-orange {background-color: #efa00b; padding: 8px 20px;}
 .btn-orange:hover {color: white; background-color: #ffae16; cursor: pointer;}
 
 
@@ -187,6 +187,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .steps ul .three:before {content: "3"}
 .container .steps ul .one:after {display: none}
 
+.container .steps ul li {cursor: default;}
+.container .steps ul li.active {cursor: pointer;}
 .container .steps ul li.active:before {background-color: #2c49b9; color: white}
 .container .steps ul li.active:after {background-color: #2c49b9;}
 .container .steps ul li.active > span, .container .steps ul li.active ul li.active > span {color: #2c49b9}
@@ -264,7 +266,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .close span{ position: relative; display: inline-block; width: 25px; height: 25px; overflow: hidden; margin: 12px 0 0 10px}
 .close span::before, .close span::after { content: ''; position: absolute; height: 4px; width: 100%; top: 50%; left: 0; margin-top: -1px; background: white; margin-top: -4px; border-radius: 5px;}
 .close span:before {transform: rotate(45deg);}
-.close span:after {transform: rotate(-45deg);} 
+.close span:after {transform: rotate(-45deg);}
 
 
 /* ---------- Tables ---------- */
