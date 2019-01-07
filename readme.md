@@ -3,6 +3,12 @@ Automobile costs calculator
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
+## Test it on your local machine
+Install it, build it and run it with the single command<br>
+`npm i autocosts`
+
+it will open a http local server which you can access through `http://localhost:3027`
+
 ## Website
 https://autocosts.info
 
@@ -21,9 +27,6 @@ https://autocosts.info/domains
 ### World statistics of Car Costs
 https://autocosts.info/stats
 
-## How to install
-Install it, build it and run it with the single command<br>
-`npm i autocosts`
 
 ## How does it work?
 Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser. 
@@ -149,7 +152,10 @@ The credentials for the above services are in the JSON file `workCredentials.jso
 
 The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
 
-## License<br>
-GNU GPLv3<br>
-http://www.gnu.org/licenses/gpl-3.0.en.html <br>
-http://choosealicense.com/licenses/gpl-3.0/
+## License
+
+<a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a>
+
+## Privacy
+
+This calculator is and shall always be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
