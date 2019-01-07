@@ -1,0 +1,276 @@
+<html>
+    <head>
+        <title>{{{words.statistic_title}}}</title>
+        
+        <style>
+            #tbl_statistics {
+                font-family: "Verdana", Helvetica, Arial, sans-serif;
+                border: 2px solid #b4b4b4;
+                border-radius: 10px;
+                border-collapse: separate;
+                width: 100%;
+                margin:0;
+            }
+
+            #tbl_statistics td {
+                border-left: 1px solid #000;
+                border-top: 1px solid #000;
+                background: #f0f0f0;
+                padding: 4px 5px;
+                line-height: 100%;
+                text-align: left;
+            }
+
+            #tbl_statistics td + td {
+                text-align: right;
+                padding-right: 5%;
+            }
+
+            #tbl_statistics tr:first-child td {
+                border-radius: 10px 10px 0 0;
+                border-collapse: separate;
+                border: 0;
+                text-align: center;
+                vertical-align: middle;
+                padding: 5%;
+                line-height: 16px;  
+            }
+
+            #tbl_statistics tr:last-child td {
+                border-radius: 0 0 0 10px;
+                border-collapse: separate;
+            }
+
+            #tbl_statistics tr:last-child td + td {
+                border-radius: 0 0 10px 0;
+                border-collapse: separate;
+            }
+
+            #tbl_statistics td:nth-child(1n) {
+                border-left: 0;
+            }
+
+            #tbl_statistics td:nth-child(2n) {
+                color: #000;
+                width: 30%;
+                border-left: 1px solid #000;
+            }
+
+            #tbl_statistics .tr-result td {
+                font-weight: bold;
+                color: #8a2727;
+                background: #fff8dc;
+            }
+            #tbl_statistics .tr-result td:first-child {
+                text-align:right;
+                font-size:95%;
+            }
+
+            #tbl_statistics .tr-sub-title td {
+                background: #ffec8b;
+                color: #000;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            #tbl_statistics .main_total td {
+                font-weight: bold;
+                color: #000;
+                background: #ffec8b;
+            }
+            #tbl_statistics .main_total td:first-child {
+                text-align:right;
+                font-size:98%;
+            }
+
+            #tbl_statistics tr:nth-child(1n+21) td{
+                font-size:90%;
+            }
+
+            #tbl_statistics tr:last-child td{
+                font-weight: bold;
+                background: #ffec8b;
+            }            
+        </style>        
+    </head>
+    <body>
+        <table id="tbl_statistics">
+            <tr class="tr-title">
+                <td id="td-top-title" colspan="2" class="center td-title">
+                    <b><span>{{{words.statistic_title}}}</span><span class="stat_title">{{{countryName}}}</span></b><br>
+                    <span>{{{words.average_costs_per_type}}}</span>
+                </td>
+            </tr>
+            <tr class="tr-sub-title">
+                <td colspan="2" class="center"><span>{{{words.fixed_costs}}}</span></td>
+            </tr>
+            <tr>
+                <td style="width:50%"><span>{{{words.depreciation}}}</span></td>
+                <td style="width:25%">
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_depreciation value-field">{{{statsData.costs_perMonth_items_depreciation}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.insurance}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_insurance value-field">{{{statsData.costs_perMonth_items_insurance}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.credit_interests}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_credit value-field">{{{statsData.costs_perMonth_items_credit}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.inspection}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_inspection value-field">{{{statsData.costs_perMonth_items_inspection}}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.road_taxes}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_roadTaxes value-field">{{{statsData.costs_perMonth_items_roadTaxes}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>50% {{{words.maintenance}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_maintenance value-field">{{{statsData.costs_perMonth_items_maintenance}}}</span>
+                </td>
+            </tr>
+            <tr class="tr-result">
+                <td><span>{{{words.total_fixed}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_standing_costs value-field">{{{statsData.costs_perMonth_items_standingCosts}}}</span>
+                </td>
+            </tr>
+            <tr class="tr-sub-title">
+                <td colspan="2" class="center"><span>{{{words.running_costs}}}</span></td>
+            </tr>
+            <tr>
+                <td><span>{{{words.fuel}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_fuel value-field">{{{statsData.costs_perMonth_items_fuel}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>50% {{{words.maintenance}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_maintenance value-field">{{{statsData.costs_perMonth_items_maintenance}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.rep_improv}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_repairsImprovements value-field">{{{statsData.costs_perMonth_items_repairsImprovements}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.parking}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_parking value-field">{{{statsData.costs_perMonth_items_parking}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.tolls}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_tolls value-field">{{{statsData.costs_perMonth_items_tolls}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.fines}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_fines value-field">{{{statsData.costs_perMonth_items_fines}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.washing}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_washing value-field">{{{statsData.costs_perMonth_items_washing}}}</span>
+                </td>
+            </tr>
+            <tr class="tr-result">
+                <td><span>{{{words.total_variable}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_running_costs value-field">{{{statsData.costs_perMonth_items_runningCosts}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="main_total">
+                <td><span>{{{words.word_total_cap}}}</span></td>
+                <td>
+                    <span>{{{words.curr_symbol}}} </span>
+                    <span class="text_total_overal value-field">{{{statsData.costs_perMonth_total}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>{{{words.run_cp_dist}}}</span>
+                </td>
+                <td>
+                    <span>{{{words.curr_symbol}}}</span>
+                    <span class="text_running_costs_dist value-field">{{{statsData.costs_perUnitDistance_runningCosts}}}</span>
+                    <span>/{{{words.std_dist}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>{{{words.total_cp_dist}}}</span>
+                </td>
+                <td>
+                    <span>{{{words.curr_symbol}}}</span>
+                    <span class="text_total_costs_p_unit value-field">{{{statsData.costs_perUnitDistance_totalCosts}}}</span>
+                    <span>/{{{words.std_dist}}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span>{{{words.kinetic_speed}}}</span></td>
+                <td><span class="text_kinetic_speed value-field">{{{statsData.speeds_averageKineticSpeed}}}</span>
+                    <span>{{{words.std_dist}}}/h</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <a target="_blank" 
+                           href="http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
+                            {{{words.virtual_speed}}}
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span class="text_virtual_speed value-field">{{{statsData.speeds_averageConsumerSpeed}}}</span>
+                    <span>{{{words.std_dist}}}/h</span>
+                </td>
+            </tr>
+            <tr>
+                <td id="table-td-bottom-left"><span>{{{words.total_costs_per_year}}}</span></td>
+                <td id="table-td-bottom-right">
+                    <span>{{{words.curr_symbol}}}</span>
+                    <span class="text_total_costs_year value-field">{{{statsData.costs_totalPerYear}}}</span>
+                </td>
+            </tr>
+        </table>
+        <div id="tbl_statistics_footer">
+        </div>
+    </body>
+</html>

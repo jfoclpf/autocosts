@@ -1,5 +1,5 @@
-/*PhantomJS script (not node script, but PhantomJS script)
-which converts table costs HTML.hbs files into correspondent table costs jpg images*/
+/*PhantomJS script (NOT a NODE script, but PhantomJS script)
+which converts table costs HTML files into correspondent table costs jpg images*/
 
 var fs = require('fs');
 
@@ -14,7 +14,7 @@ console.log("BIN_DIR: " + BIN_DIR);
 var TABLES_DIR  = fs.absolute("bin/tables/");
 console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
 
-var css_file = fs.absolute(BIN_DIR + "css/") + "right.css";
+var css_file = fs.absolute(BIN_DIR + "css/") + "tables.css";
 console.log("The CSS main file is in: " + css_file);
 
 // Get a list all files in directory
@@ -29,18 +29,14 @@ function render_pages(){
         var file_name = list[x];
         var file_path = TABLES_DIR + file_name;
         //it must be a file with the format of XX.html
-        if(fs.isFile(file_path) && (file_name.split("."))[1]=="hbs" ){
+        if(fs.isFile(file_path) && (file_name.split("."))[1]=="html" ){
             //console.log("Creating page");
 
             pages[n] = require('webpage').create();
             pages[n].settings.localToRemoteUrlAccessEnabled = true;
 
-            content = '';
-            content += '<html><head>';
-            content += '<link rel="stylesheet" href="file://'+ css_file + '" type="text/css" media="screen">';
-            content += '</head><body>';
-            content += fs.read(TABLES_DIR + file_name);
-            content += '</body></html>';
+            content = fs.read(TABLES_DIR + file_name);
+            if(n==1)console.log("\n\n\n\n"+content+"\n\n\n\n");
             pages[n].content = content;
 
             img_fname = (file_name.split("."))[0]+".jpg";
@@ -52,17 +48,11 @@ function render_pages(){
         }
     }
     if (n==0){
-        console.log("Error: no HTML.hbs files processed in folder " + TABLES_DIR);
+        console.log("Error: no HTML files processed in folder " + TABLES_DIR);
     }
 }
 
-//upload CSS file for caching
-var page_css = require('webpage').create();
-var content_css = '<html><head><link rel="stylesheet" href="file://'+ css_file + '" type="text/css" media="screen"></head><body></body></html>';
-page_css.content = content_css;
-page_css.onLoadFinished = function(status) {
-    console.log('CSS status file: ' + status);
-    render_pages();
-    phantom.exit();
-};
+render_pages();
+phantom.exit();
+
 
