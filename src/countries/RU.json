@@ -30,7 +30,7 @@
     "sub_title1a" : "Средние общие затраты в [country] составляют [yearly_costs] в год",
     "sub_title1b" : "представляющий [nbrMonths] месяцев средней заработной платы",
     "sub_title2" : "Найдите истинную стоимость вашего автомобиля!",
-    "press_enter_or_tab": "нажмите <b> Enter </ b> или <b> Tab </ b>",
+    "press_enter_or_tab": "нажмите <b> Enter </b> или <b> Tab </b>",
     "calculate_car_costs": "Рассчитать стоимость автомобиля",
     "in_months_of_possession": "через [nbrMonths] месяцев владения",
     "of_your_income": "вашего дохода",
