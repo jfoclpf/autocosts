@@ -13,11 +13,11 @@ const mysql      = require('mysql');        //module to get info from DB
 const sortObj    = require('sort-object');  //to sort JS objects
 const isOnline   = require('is-online');
 const handlebars = require('handlebars');   //see why here: https://stackoverflow.com/a/30032819/1243247
+const colors     = require('colors');
 
 const commons  = require(path.join(__dirname, '..', 'commons'));
 const childProcess = require('child_process');
-const phantomjs = require('phantomjs-prebuilt'); //to use './rasterTables.js'
-const binPath = phantomjs.path;
+
 
 commons.init();
 //Main directories got from commons
@@ -157,11 +157,17 @@ function rasterTables(){
         path.join(__dirname, 'rasterTables.js')
     ];
 
-    console.log(binPath, childArgs[0]);       
+    const phantomjs = require('phantomjs-prebuilt'); //to use './rasterTables.js'
+
+    console.log("running bin command: " + (phantomjs.path + " " + childArgs[0]).green + "\n");       
     
-    childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
-        if (err){throw err;}
-        console.log(stdout);
+    childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+        if (err){
+            throw err;
+            console.log("Try rebuilding phantomjs module with: " + "npm rebuild phantomjs-prebuilt".red);     
+        }
+        
+        console.log(stdout);    
     });
 }
 

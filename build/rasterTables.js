@@ -12,10 +12,7 @@ var fs = require('fs');
 var BIN_DIR     = fs.absolute("bin/");
 console.log("BIN_DIR: " + BIN_DIR);
 var TABLES_DIR  = fs.absolute("bin/tables/");
-console.log("The tables HTML files with .hbs extension MUST already be in: " + TABLES_DIR);
-
-var css_file = fs.absolute(BIN_DIR + "css/") + "tables.css";
-console.log("The CSS main file is in: " + css_file);
+console.log("The tables HTML files with .html extension MUST already be in: " + TABLES_DIR);
 
 // Get a list all files in directory
 var list = fs.list(TABLES_DIR);
@@ -35,8 +32,7 @@ function render_pages(){
             pages[n] = require('webpage').create();
             pages[n].settings.localToRemoteUrlAccessEnabled = true;
 
-            content = fs.read(TABLES_DIR + file_name);
-            if(n==1)console.log("\n\n\n\n"+content+"\n\n\n\n");
+            content = fs.read(TABLES_DIR + file_name);            
             pages[n].content = content;
 
             img_fname = (file_name.split("."))[0]+".jpg";
