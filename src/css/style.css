@@ -58,14 +58,8 @@ textarea, input[type="text"], input[type="button"], input[type="submit"]{-webkit
 input {transition: ease-in-out, width .35s ease-in-out; border: none; border-bottom: 1px solid #b0b2be; color: black; font-family: 'Nunito'; background: transparent; font-size: 30px }
 input:focus {border-bottom: 1px solid black; outline: none;}
 
-input[type='date'], input[type='number'] {font-size: 30px; text-transform: uppercase; }
+input[type='number'] {font-size: 30px; text-transform: uppercase; }
 input[type=date]:invalid::-webkit-datetime-edit {color: #b0b2be;}
-
-input[type='date']-webkit-input-placeholder {color: #b0b2be;}
-input[type='date']::-moz-placeholder {color: #b0b2be;}
-input[type='date']:-ms-input-placeholder {color: #b0b2be;}
-input[type='date']::-webkit-input-placeholder {color: #b0b2be;}
-input[type='date']::placeholder {color: #b0b2be; opacity: 1; }
 
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; -moz-appearance: none; margin: 0;}

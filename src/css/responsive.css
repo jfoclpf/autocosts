@@ -187,10 +187,6 @@
 
     label {font-size: 16px; line-height: 18px}
     input {font-size: 22px; width: 84%; border-radius: 0; -webkit-appearance: none}
-    input[type='date'] {width: 100%; min-height: 2.5rem;}
-    input[type="tel"].input_month::before, input[type="tel"].input_year::before { content: attr(data-placeholder); width: 100%;}
-    input[type="tel"].input_month:focus::before, input[type="tel"].input_year:focus::before,
-    input[type="tel"].input_month:valid::before, input[type="tel"].input_year:valid::before { display: none }
 
     .input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
     .input_200 {width: 65%!important}
