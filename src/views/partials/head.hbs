@@ -23,16 +23,21 @@
     <meta name="google-play-app" content="app-id=info.autocosts">
 
     <link href="css/smart-app-banner.css" rel="stylesheet" media="screen" />
-{{/if}}
-
-{{#if isStats}}
+{{else if isStats}}
     <title>World statistics of the Car Costs</title>  
     
     <meta property="og:title" content="World statistics of Car Costs" />
     <meta property="og:description" content="World statistics of the Car Costs for different countries" />
     
     <link rel="stylesheet" href="css/stats/main.css" type="text/css">
-    <link rel="stylesheet" href="css/results.css" media="screen" />
+    <link rel="stylesheet" href="css/results.css" media="screen" /><!--this is needed here-->
+{{else if isList}}
+    <title>List of Countries for the Car Costs Calculator</title>  
+    
+    <meta property="og:title" content="List of Countries for the Car Costs Calculator" />
+    <meta property="og:description" content="List of Countries for the Car Costs Calculator" />
+    
+    <link rel="stylesheet" href="css/list/main.css" type="text/css">
 {{/if}}
 
 <!--<link rel="stylesheet" href="css/merged_init.css" media="screen" />-->
