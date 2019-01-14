@@ -253,6 +253,10 @@ module.exports = {
     get2letterLangCode: function(){
         return this.clientData.languageCode.substr(0, 2);
     },
+    
+    get2letterLangCode2: function(languageCode){
+        return languageCode.substr(0, 2);
+    },  
 
     //convert number to string with n decimal values
     toFixed: function(num, n){
