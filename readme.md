@@ -4,7 +4,7 @@ Automobile costs calculator
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
 ## Test it on your local machine
-Install it, build it and run it with the single command<br>
+Install it and run it with the single command<br>
 `npm i autocosts`
 
 it will open a http local server which you can access through `http://localhost:3027`
