@@ -211,7 +211,7 @@ module.exports = {
     },
 
     getDistanceOptStr: function(){
-        switch(optN){
+        switch(this.distance_std_option){
             case 1:
                 return "kilometres";
             case 2:
