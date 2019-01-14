@@ -21,9 +21,6 @@ https://autocosts.info/list
 The translations are in corresponding `json` files, namely in the folder `src/countries/`.<br>
 The list of available countries is from the file `src/countries/list.json`
 
-### The registered associated domains
-https://autocosts.info/domains
-
 ### World statistics of Car Costs
 https://autocosts.info/stats
 
