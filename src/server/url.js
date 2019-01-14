@@ -3,8 +3,9 @@ The server side code shall thus forward the page if the entry URL is not correct
 according to the domain name vs. country code combinatorial rules.
 For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector */
 
-const GEO_IP = require('geoip-lite');
-const debug  = require('debug')('app:url');
+const GEO_IP  = require('geoip-lite');
+const debug   = require('debug')('app:url');
+const nodeUrl = require('url'); //npm external express package
 
 module.exports = {
     
@@ -118,7 +119,24 @@ module.exports = {
     
     getValidURL: function(req, domainsCountries, IS_HTTPS){ //returns full URL
         return getValidURL(req, domainsCountries, IS_HTTPS);
-    }
+    },
+    
+    //for example: "https://autocosts.info/stats"
+    fullUrl: function(req){
+        return nodeUrl.format({
+            protocol: req.protocol,
+            host: req.get('host'),
+            pathname: req.originalUrl
+        });
+    },
+
+    //for example: "https://autocosts.info"
+    basicURL: function(req){
+        return nodeUrl.format({
+            protocol: req.protocol,
+            host: req.get('host')        
+        });
+    } 
 };
 
 //302 redirects are temporary
