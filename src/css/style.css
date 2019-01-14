@@ -129,9 +129,8 @@ input:disabled, span.disabled, label.disabled, input:disabled + .unit  {opacity:
 .radio_tab_container:first-child label {border-radius: 5px 0 0 5px}
 .radio_tab_container:last-child label {border-right: 1px solid #b0b2be;  border-radius: 0 5px 5px 0}
 
-.radio_tab_container input[type='radio']:checked + label {background-color: black; color: white;
-    .radio_tab_container label {color: white; background-color: black;}
- }
+.radio_tab_container input[type='radio']:checked + label {background-color: black; color: white;}
+ 
  /* Small tabs */
  .small_tabs .radio_tab_container  {height:  29px; width: auto;}
  .small_tabs .radio_tab_container label {font-size: 14px; padding: 4px 10px}
