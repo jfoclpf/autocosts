@@ -349,8 +349,8 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
     }
 
     function loadDeferredFiles(callback){
-        //loadCSSFiles(['css/merged_deferred.css']);
-        loadCSSFiles(['css/results.css', 'css/smart-app-banner.css']); //temporary line
+        loadCSSFiles(['css/mergedDeferred.css']);
+        //loadCSSFiles(['css/colors.css', 'css/results.css', 'css/smart-app-banner.css']); //temporary debug line
 
         loadDeferredJSFiles(function(){
             console.log("All deferred JS files loaded OK");

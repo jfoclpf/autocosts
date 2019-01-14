@@ -250,15 +250,16 @@ function concatCSSFiles(mainCallback){
         'style.css', 'responsive.css', 'fonts.css'
     ];
     //name given to the merged file
-    var files1MergedName = 'merged_init.css';
+    var files1MergedName = 'mergedInit.css';
 
     //CSS files to be concatenated, 
     //the ones which are deferred from initial loading
+    //loaded through JS on client/main.js
     var files2Arr = [
         'colors.css', 'results.css', 'smart-app-banner.css'
     ]; 
     //name given to the merged file
-    var files2MergedName = 'merged_deferred.css';    
+    var files2MergedName = 'mergedDeferred.css';    
     
     /*************************************************************/
     
