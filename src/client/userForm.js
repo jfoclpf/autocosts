@@ -443,15 +443,9 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
         if(fieldStatus($this) === "wrong"){
             setIcon($this, "wrong");
         }
-        else if (fieldStatus($this) === "fully_valid"){
-            setIcon($this, "done");
-        }
         else {
             setIcon($this, "active");
         }
-
-        //the zero based index within its siblings
-        var thisIndex = $this.index();
 
         //remainig field_containers except itself
         $fieldHead.siblings(".field_container").each(function(){
@@ -473,11 +467,8 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
                 $(this).find(".next").stop(true).hide();
                 setIcon($(this), "done");
             }
-
-            if ($(this).index() < thisIndex){
-                if( status !== "fully_valid" && status !== "no_inputs" && status !== "hidden"){
-                    setIcon($(this), "wrong");
-                }
+            else if (status !== "fully_hidden" || status === "valid"){
+                setIcon($(this), "wrong");
             }
 
         });
@@ -498,6 +489,11 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     function fieldStatus($this){
         //console.log("fieldStatus($this)");
 
+        if($this.length !== 1){
+            console.error("'fieldStatus' function called for more than one element")
+            return;
+        }
+        
         //goes to top ascendents till it finds the class "field_container"
         //.closest: for each element in the set, get the first element that matches the selector by testing
         //the element itself and traversing up through its ancestors in the DOM tree.
@@ -645,37 +641,35 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
 
         //getFieldNum returns string "field1", "field2", "field3", etc. of field_container
         var fieldN = getFieldNum($this, false); //the field number will be taken from class name
+        
+        //icon from the left icon list
+        var $icon = $("#form .steps .icon."+fieldN);        
 
-        $(".steps").find(".icon").each(function(index, item){
-            if ($(this).hasClass(fieldN)){
+        $icon.removeClass("active done wrong");
+        $icon.find("span").removeClass("wrong");
+        $icon.show();
 
-                $(this).removeClass("active done wrong");
-                $(this).find("span").removeClass("wrong");
-                $(this).show();
-
-                switch(status) {
-                    case "inactive":
-                        break;
-                    case "active":
-                        $(this).addClass("active");
-                        $(this).closest(".list").addClass("active");
-                        break;
-                    case "done":
-                        $(this).addClass("active done");
-                        $(this).closest(".list").addClass("active");
-                        break;
-                    case "wrong":
-                        $(this).addClass("active wrong");
-                        $(this).find("span").addClass("wrong");//text
-                        break;
-                    case "hidden":
-                        $(this).hide();
-                        break;
-                    default:
-                        console.error("status in setIcon function not correct");
-                }
-            }
-        });
+        switch(status) {
+            case "inactive":
+                break;
+            case "active":
+                $icon.addClass("active");
+                $icon.closest(".list").addClass("active");
+                break;
+            case "done":
+                $icon.addClass("active done");
+                $icon.closest(".list").addClass("active");
+                break;
+            case "wrong":
+                $icon.addClass("active wrong");
+                $icon.find("span").addClass("wrong");//text
+                break;
+            case "hidden":
+                $icon.hide();
+                break;
+            default:
+                console.error("'status' parameter not correct in 'setIcon' function, using class .icon." + fieldN);
+        }
 
     }
 
@@ -1080,6 +1074,9 @@ autocosts.userFormModule = (function(thisModule, translatedStrings){
     //own module, since it may have been defined erlier by children modules
     thisModule.initialize = initialize;
     thisModule.isReadyToCalc = isReadyToCalc;
+    
+    thisModule.fieldStatus = fieldStatus;   //temp 
+    
 
     return thisModule;
 
