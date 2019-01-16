@@ -39,7 +39,7 @@ var   fileNames = commons.getFileNames();
 var   settings  = commons.getSettings();
 
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
-var countriesInfo = JSON.parse(fs.readFileSync(fileNames.server.countriesListFile, 'utf8'));
+var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'));
 var serverData = {
     "release"            : release,   //Release: "work" or "prod"
     "settings"           : settings,  //Settings set in commons.js

@@ -4,9 +4,9 @@ const path      = require("path");
 const commons   = require(path.join(__dirname, '..', 'commons'));
 const fileNames = commons.getFileNames();
 
-const transferData = require(fileNames.src["transferData.js"]);
-const conversions  = require(fileNames.src["conversions.js"]);
-const calculator   = require(fileNames.src["calculator.js"]);
+const transferData = require(fileNames.project["transferData.js"]);
+const conversions  = require(fileNames.project["conversions.js"]);
+const calculator   = require(fileNames.project["calculator.js"]);
 calculator.initialize();
 
 //statistics outlier removal constants

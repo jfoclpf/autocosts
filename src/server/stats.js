@@ -62,7 +62,7 @@ module.exports = {
     prepareStats : function(serverData, WORDS, eventEmitter){
         
         //get statsFunctions.js Object Constructors/Templates        
-        const calculator = require(fileNames.src["calculator.js"]);
+        const calculator = require(fileNames.project["calculator.js"]);
         
         var dbInfo = serverData.settings.dataBase.credentials;
         debug(" ===== dbInfo ===== \n", dbInfo);
@@ -80,6 +80,7 @@ module.exports = {
             function(callback) {
 
                 db = mysql.createConnection(dbInfo);
+                debug(dbInfo);
                 console.log('\nGetting normalised costs from ' +
                             'DB table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized);
 

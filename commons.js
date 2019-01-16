@@ -405,6 +405,9 @@ function setFILENAMES(){
     if(isEmptyOrInvalidObj(DIRECTORIES)){        
         setDIRECTORIES();
     }
+    
+    var countriesDir = RELEASE === "prod" ? DIRECTORIES.bin.countries : DIRECTORIES.src.countries;
+    var clientDir = RELEASE === "prod" ? DIRECTORIES.bin.client : DIRECTORIES.src.client;
 
     //Default file names for JSON files with credentials for each external service
     FILENAMES = {
@@ -418,6 +421,12 @@ function setFILENAMES(){
             "setCountrySpecsDB" : path.join(DIRECTORIES.server.build, "setCountrySpecsDB.js"),
             "statsFunctions"    : path.join(DIRECTORIES.server.build, "statsFunctions.js")
         },
+        "project" : {
+            "countriesListFile" : path.join(countriesDir, "list.json"),
+            "conversions.js"    : path.join(clientDir, "core", "conversions.js"),
+            "calculator.js"     : path.join(clientDir, "core", "calculator.js"),
+            "transferData.js"   : path.join(clientDir, "transferData.js")                
+        },      
         "server" : {
             "credentials" : {
                 "prod"          : "prodCredentials.json",
@@ -426,14 +435,7 @@ function setFILENAMES(){
             "credentialsFullPath" : {
                 "prod"          : "",
                 "work"          : ""
-            },        
-            "countriesListFile" : path.join(DIRECTORIES.src.countries, "list.json"),
-            "statsFunctions.js" : path.join(DIRECTORIES.server.build, "statsFunctions.js")
-        },
-        "src": {
-            "conversions.js"  : path.join(DIRECTORIES.src.client, "core", "conversions.js"),
-            "calculator.js"   : path.join(DIRECTORIES.src.client, "core", "calculator.js"),
-            "transferData.js" : path.join(DIRECTORIES.src.client, "transferData.js")
+            }           
         },
         //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER, 
         //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
@@ -450,7 +452,7 @@ function setFILENAMES(){
             },            
             "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
             "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
-        }
+        }       
     };  
     
     //fills credentialsFullPath subObject

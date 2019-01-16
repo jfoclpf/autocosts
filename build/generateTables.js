@@ -24,7 +24,7 @@ commons.init();
 const directories    = commons.getDirectories();
 
 const fileNames         = commons.getFileNames();
-const COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
+const COUNTRY_LIST_FILE = fileNames.project.countriesListFile;
 
 var settings = commons.getSettings();
 
