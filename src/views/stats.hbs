@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     {{> head }}
 
@@ -37,113 +37,111 @@
                 </div><!-- end stats reference -->
 
                 <!--stats data table-->
-                <div class="table stats-table" id="">
-                <div class='theader'>
-                    <div class="table_header">Country</div>
-                    <div class="table_header depreciation_color">Depreciation</div>
-                    <div class="table_header insurance_color">Insurance and Breakdown cover</div>
-                    <div class="table_header credit_color">Car finance</div>
-                    <div class="table_header inspection_color">Inspection</div>
-                    <div class="table_header roadTaxes_color">Car tax</div>
-                    <div class="table_header fuel_color">Fuel</div>
-                    <div class="table_header maintenance_color">Maintenance</div>
-                    <div class="table_header repairsImprovements_color">Repairs and Improvs</div>
-                    <div class="table_header parking_color">Parking</div>
-                    <div class="table_header tolls_color">Tolls</div>
-                    <div class="table_header fines_color">Traffic fines</div>
-                    <div class="table_header washing_color">Washing and cleaning</div>
-                    <div class="table_header">Running costs per distance</div>
-                    <div class="table_header">Total costs per distance</div>
-                    <div class="table_header">Kinetic speed</div>
-                    <div class="table_header">Consumer speed</div>
-                    <div class="table_header">Total costs per year</div>
-                </div>
-
-                {{#each averageNormalizedCosts}}
-                <div class='table_row'>
-                    
-                    <div class='table_small'>
-                        <div class='table_cell'>Country</div>
-                        <div class='table_cell'><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br />{{{countryName}}}</a></div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Depreciation</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Insurance and Breakdown cover</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_insurance 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Car finance</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_credit 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Inspection</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_inspection 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Car Tax</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Fuel</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_fuel 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Maintenance</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Repair and Improvs</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
+                <div class="table stats-table">
+                    <div class='theader'>
+                        <div class="table_header">Country</div>
+                        <div class="table_header depreciation_color">Depreciation</div>
+                        <div class="table_header insurance_color">Insurance and Breakdown cover</div>
+                        <div class="table_header credit_color">Car finance</div>
+                        <div class="table_header inspection_color">Inspection</div>
+                        <div class="table_header roadTaxes_color">Car tax</div>
+                        <div class="table_header fuel_color">Fuel</div>
+                        <div class="table_header maintenance_color">Maintenance</div>
+                        <div class="table_header repairsImprovements_color">Repairs and Improvs</div>
+                        <div class="table_header parking_color">Parking</div>
+                        <div class="table_header tolls_color">Tolls</div>
+                        <div class="table_header fines_color">Traffic fines</div>
+                        <div class="table_header washing_color">Washing and cleaning</div>
+                        <div class="table_header">Running costs per distance</div>
+                        <div class="table_header">Total costs per distance</div>
+                        <div class="table_header">Kinetic speed</div>
+                        <div class="table_header">Consumer speed</div>
+                        <div class="table_header">Total costs per year</div>
                     </div>
 
-                    <div class='table_small'>
-                        <div class='table_cell'>Parking</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_parking 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Tolls</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_tolls 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Traffic Fines</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_fines 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Washing and Cleaning</div>
-                        <div class='table_cell'>{{times12toFixed costs_perMonth_items_washing 0}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Running costs per distance</div>
-                        <div class='table_cell'>{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Total costs per distance</div>
-                        <div class='table_cell'>{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Kinetic speed</div>
-                        <div class='table_cell'>{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Consumer speed</div>
-                        <div class='table_cell'>{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
-                    </div>
-                    <div class='table_small'>
-                        <div class='table_cell'>Total costs per year</div>
-                        <div class='table_cell'>
-                          <a href="{{{../serverData.directories.client.tables}}}/{{country}}.jpg" target="_blank">
-                                &euro;{{toFixed costs_totalPerYear 0}}
-                          </a>
+                    {{#each averageNormalizedCosts}}
+                    <div class='table_row'>
+
+                        <div class='table_small'>
+                            <div class='table_cell'>Country</div>
+                            <div class='table_cell'><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br />{{{countryName}}}</a></div>
                         </div>
-                    </div>
-                </div><!--en table row-->
-                {{/each}}
-            </div><!--end table-->
+                        <div class='table_small'>
+                            <div class='table_cell'>Depreciation</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Insurance and Breakdown cover</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_insurance 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Car finance</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_credit 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Inspection</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_inspection 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Car Tax</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Fuel</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_fuel 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Maintenance</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Repair and Improvs</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
+                        </div>
 
-
+                        <div class='table_small'>
+                            <div class='table_cell'>Parking</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_parking 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Tolls</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_tolls 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Traffic Fines</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_fines 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Washing and Cleaning</div>
+                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_washing 0}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Running costs per distance</div>
+                            <div class='table_cell'>{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Total costs per distance</div>
+                            <div class='table_cell'>{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Kinetic speed</div>
+                            <div class='table_cell'>{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Consumer speed</div>
+                            <div class='table_cell'>{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                        </div>
+                        <div class='table_small'>
+                            <div class='table_cell'>Total costs per year</div>
+                            <div class='table_cell'>
+                              <a href="{{{../serverData.directories.client.tables}}}/{{country}}.jpg" target="_blank">
+                                    &euro;{{toFixed costs_totalPerYear 0}}
+                              </a>
+                            </div>
+                        </div>
+                    </div><!--en table row-->
+                    {{/each}}
+                </div><!--end table-->
 
             </div><!--end section wrapper-->
         </section><!-- end World stats car cost -->
@@ -164,7 +162,7 @@
                 </ul>
 
                 <!--User survey table-->
-                <div class="table stats-table" id="">
+                <div class="table stats-table">
                     <div class='theader'>
                         <div class="table_header">Country code</div>
                         <div class="table_header">Country name</div>
