@@ -69,7 +69,7 @@ module.exports = {
                 
         //get current date in a formated string
         var date = new Date();
-        dateOfCalculation = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+        dateOfCalculation = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();        
 
         var costs = {}; //object of arrays, each property is a cost item array
         var labels = [];
