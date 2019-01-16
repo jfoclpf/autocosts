@@ -28,7 +28,7 @@ const settings  = commons.getSettings();
 const fileNames = commons.getFileNames();
 
 //own project modules
-const statsFunctions = require(fileNames.build["statsFunctions.js"]);
+const statsFunctions = require(fileNames.build.statsFunctions);
 const calculator     = require(fileNames.project["calculator.js"]);
 
 const DB_INFO = settings.dataBase.credentials;
