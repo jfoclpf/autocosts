@@ -3,7 +3,7 @@
 <head>
     {{> head }}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi" />
 
 </head>
 
@@ -64,7 +64,7 @@
 
                         <div class='table_small'>
                             <div class='table_cell'>Country</div>
-                            <div class='table_cell'><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br />{{{countryName}}}</a></div>
+                            <div class='table_cell'><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br/>{{{countryName}}}</a></div>
                         </div>
                         <div class='table_small'>
                             <div class='table_cell'>Depreciation</div>
@@ -98,7 +98,6 @@
                             <div class='table_cell'>Repair and Improvs</div>
                             <div class='table_cell'>{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
                         </div>
-
                         <div class='table_small'>
                             <div class='table_cell'>Parking</div>
                             <div class='table_cell'>{{times12toFixed costs_perMonth_items_parking 0}}</div>
