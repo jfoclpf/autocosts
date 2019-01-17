@@ -48,9 +48,10 @@
             .stats_total tr:last-child {background: #fdf5e6!important}
 
             #tbl_statistics td {
-                padding: 10px 20px;
+                padding: 10px 2%;
                 line-height: 100%;
                 text-align: left;
+                width: 45%;
             }
 
             #tbl_statistics td + td {
@@ -116,8 +117,8 @@
             <table id="tbl_statistics">
                 
                 <tr>
-                    <td style="width:50%"><span>{{{words.depreciation}}}</span></td>
-                    <td style="width:25%">
+                    <td><span>{{{words.depreciation}}}</span></td>
+                    <td>
                         <span>{{{words.curr_symbol}}} </span>
                         <span class="text_depreciation value-field">{{{statsData.costs_perMonth_items_depreciation}}}</span>
                     </td>
