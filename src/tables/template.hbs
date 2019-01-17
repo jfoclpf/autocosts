@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!--This file must be a singleton, that is, it may not depend on external files -->
+<!--because after handlebars renders the html files, these html files will be futher rendered as jpg by phantomjs -->
 <head>
+
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 
     <title>{{{words.statistic_title}}}</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
-    
+
     <style>
+
         body {
-            font-family: "Nunito", Helvetica, Arial, sans-serif;
-            font-size: 14px; 
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 14px;
             background: #f4f6fe;
-            margin: 20px
+            margin: 20px;
+            max-width: 400px;
         }
 
         .statistics {
@@ -19,8 +24,8 @@
             border-collapse: separate;
             width: 100%;
             margin:0;
-            -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); 
-            -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); 
+            -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
+            -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05);
             box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
             background: white;
             padding: 20px 0;
@@ -33,42 +38,33 @@
         .statistics .section-title h4{margin: 10px 0; font-size: 18px; font-weight: 700}
         .statistics .section-title h4:before{content: " -"; background-color: #2c49b9; color: #2c49b9; margin-right: 10px;}
         .statistics .total h4:before{background-color: #efa00b; color: #efa00b;}
-
-        #tbl_statistics {font-family: "Nunito", Helvetica, Arial, sans-serif; color: #797b82; border-radius: 10px; border-collapse: separate; width: 96%; margin: 0 2%;}
-        #tbl_statistics tr {display: block; border-bottom: #d2d4de 1px solid;}
-        #tbl_statistics tr:first-child {border-top: #d2d4de 1px solid}
-        #tbl_statistics tr:last-child {background: #e9ecf8}
-
         .stats_total tr:last-child {background: #fdf5e6!important}
 
-        #tbl_statistics td {padding: 10px 2%; line-height: 100%; text-align: left; width: 45%;}
-        #tbl_statistics td + td {text-align: right;}
-        #tbl_statistics tr:last-child td {border-collapse: separate;}
-        #tbl_statistics tr:last-child td + td {border-collapse: separate;}
-        #tbl_statistics td:nth-child(1n) {border-left: 0;}
-        #tbl_statistics td:nth-child(2n) {width: 30%;}
-
+        .tbl_statistics {width: 90%; padding: 0px 14px; margin: auto;}
         .tbl_statistics .tr-result td {font-weight: bold; color: #000;}
         .tbl_statistics .tr-sub-title td {background: #ffec8b; color: #000; font-weight: bold; text-align: center;}
         .tbl_statistics .main_total {font-weight: bold; color: #000; background: #fdf5e6;}
+        .tbl_statistics td:nth-child(2) {text-align: right; min-width: 100px;}
         .tbl_statistics tr:nth-child(1n+21) td{font-size:90%;}
-        .tbl_statistics tr:last-child td{font-weight: bold; color: #000}            
-    </style>        
+        .tbl_statistics tr:last-child td{font-weight: bold; color: #000}
+
+    </style>
+
 </head>
 <body>
     <div class="statistics">
         <div class="main-title">
             <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
             <span>{{{words.average_costs_per_type}}}</span>
-        </div>   
+        </div>
 
         <!--Standing Costs-->
         <div class="section-title">
             <h4>{{{words.fixed_costs}}}</h4>
         </div>
-        
+
         <table class="tbl_statistics">
-            
+
             <tr>
                 <td><span>{{{words.depreciation}}}</span></td>
                 <td>
@@ -116,7 +112,7 @@
                 <td><span>{{{words.total_fixed}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_standing_costs value-field">{{{statsData.costs_perMonth_items_standingCosts}}}</span>
+                    <span class="text_standing_costs value-field">{{{statsData.costs_perMonth_standingCosts}}}</span>
                 </td>
             </tr>
         </table>
@@ -182,7 +178,7 @@
                 <td><span>{{{words.total_variable}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_running_costs value-field">{{{statsData.costs_perMonth_items_runningCosts}}}</span>
+                    <span class="text_running_costs value-field">{{{statsData.costs_perMonth_runningCosts}}}</span>
                 </td>
             </tr>
 
@@ -230,7 +226,7 @@
             <tr>
                 <td>
                     <span>
-                        <a target="_blank" 
+                        <a target="_blank"
                            href="http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
                             {{{words.virtual_speed}}}
                         </a>
