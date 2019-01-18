@@ -6,24 +6,24 @@
 <head>
 
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <link href="../favicon.png" rel="shortcut icon" type="image/png" />
+    <link rel="stylesheet" href="../css/fonts.css" media="screen" />
 
     <title>{{{words.statistic_title}}}</title>
 
     <style>
 
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: "Nunito", Helvetica, Arial, sans-serif;
             font-size: 14px;
             background: #f4f6fe;
             margin: 20px;
-            max-width: 400px;
+            max-width: 430px;
         }
 
         .statistics {
             border-radius: 3px;
             border-collapse: separate;
-            width: 100%;
-            margin:0;
             -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
             -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05);
             box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
@@ -34,7 +34,7 @@
         .statistics .main-title {margin: 0 20px 20px}
         .statistics .main-title h2 {margin: 0}
         .statistics .main-title > span {color: #42444a; font-size: 16px;}
-        .statistics .section-title {margin: 30px 0 0}
+        .statistics .section-title {margin: 10px 0 0}
         .statistics .section-title h4{margin: 10px 0; font-size: 18px; font-weight: 700}
         .statistics .section-title h4:before{content: " -"; background-color: #2c49b9; color: #2c49b9; margin-right: 10px;}
         .statistics .total h4:before{background-color: #efa00b; color: #efa00b;}
@@ -47,6 +47,8 @@
         .tbl_statistics td:nth-child(2) {text-align: right; min-width: 100px;}
         .tbl_statistics tr:nth-child(1n+21) td{font-size:90%;}
         .tbl_statistics tr:last-child td{font-weight: bold; color: #000}
+        
+        .statistics .footnote {margin: 15px 20px 0 20px; font-style: italic;}
 
     </style>
 
@@ -69,28 +71,28 @@
                 <td><span>{{{words.depreciation}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_depreciation value-field">{{{statsData.costs_perMonth_items_depreciation}}}</span>
+                    <span class="text_depreciation value-field">{{{toFixed statsData.costs_perMonth_items_depreciation 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.insurance}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_insurance value-field">{{{statsData.costs_perMonth_items_insurance}}}</span>
+                    <span class="text_insurance value-field">{{{toFixed statsData.costs_perMonth_items_insurance 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.credit_interests}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_credit value-field">{{{statsData.costs_perMonth_items_credit}}}</span>
+                    <span class="text_credit value-field">{{{toFixed statsData.costs_perMonth_items_credit 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.inspection}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_inspection value-field">{{{statsData.costs_perMonth_items_inspection}}}
+                    <span class="text_inspection value-field">{{{toFixed statsData.costs_perMonth_items_inspection 0}}}
                     </span>
                 </td>
             </tr>
@@ -98,21 +100,21 @@
                 <td><span>{{{words.road_taxes}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_roadTaxes value-field">{{{statsData.costs_perMonth_items_roadTaxes}}}</span>
+                    <span class="text_roadTaxes value-field">{{{toFixed statsData.costs_perMonth_items_roadTaxes 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>50% {{{words.maintenance}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_maintenance value-field">{{{statsData.costs_perMonth_items_maintenance}}}</span>
+                    <span class="text_maintenance value-field">{{{toFixed statsData.costs_perMonth_items_maintenance 0}}}</span>
                 </td>
             </tr>
             <tr class="tr-result">
                 <td><span>{{{words.total_fixed}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_standing_costs value-field">{{{statsData.costs_perMonth_standingCosts}}}</span>
+                    <span class="text_standing_costs value-field">{{{toFixed statsData.costs_perMonth_standingCosts 0}}}</span>
                 </td>
             </tr>
         </table>
@@ -129,56 +131,56 @@
                 <td><span>{{{words.fuel}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_fuel value-field">{{{statsData.costs_perMonth_items_fuel}}}</span>
+                    <span class="text_fuel value-field">{{{toFixed statsData.costs_perMonth_items_fuel 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>50% {{{words.maintenance}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_maintenance value-field">{{{statsData.costs_perMonth_items_maintenance}}}</span>
+                    <span class="text_maintenance value-field">{{{toFixed statsData.costs_perMonth_items_maintenance 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.rep_improv}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_repairsImprovements value-field">{{{statsData.costs_perMonth_items_repairsImprovements}}}</span>
+                    <span class="text_repairsImprovements value-field">{{{toFixed statsData.costs_perMonth_items_repairsImprovements 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.parking}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_parking value-field">{{{statsData.costs_perMonth_items_parking}}}</span>
+                    <span class="text_parking value-field">{{{toFixed statsData.costs_perMonth_items_parking 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.tolls}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_tolls value-field">{{{statsData.costs_perMonth_items_tolls}}}</span>
+                    <span class="text_tolls value-field">{{{toFixed statsData.costs_perMonth_items_tolls 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.fines}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_fines value-field">{{{statsData.costs_perMonth_items_fines}}}</span>
+                    <span class="text_fines value-field">{{{toFixed statsData.costs_perMonth_items_fines 0}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.washing}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_washing value-field">{{{statsData.costs_perMonth_items_washing}}}</span>
+                    <span class="text_washing value-field">{{{toFixed statsData.costs_perMonth_items_washing 0}}}</span>
                 </td>
             </tr>
             <tr class="tr-result">
                 <td><span>{{{words.total_variable}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_running_costs value-field">{{{statsData.costs_perMonth_runningCosts}}}</span>
+                    <span class="text_running_costs value-field">{{{toFixed statsData.costs_perMonth_runningCosts 0}}}</span>
                 </td>
             </tr>
 
@@ -195,7 +197,7 @@
                 <td><span>{{{words.word_total_cap}}}</span></td>
                 <td>
                     <span>{{{words.curr_symbol}}} </span>
-                    <span class="text_total_overal value-field">{{{statsData.costs_perMonth_total}}}</span>
+                    <span class="text_total_overal value-field">{{{toFixed statsData.costs_perMonth_total 0}}}</span>
                 </td>
             </tr>
             <tr>
@@ -204,7 +206,7 @@
                 </td>
                 <td>
                     <span>{{{words.curr_symbol}}}</span>
-                    <span class="text_running_costs_dist value-field">{{{statsData.costs_perUnitDistance_runningCosts}}}</span>
+                    <span class="text_running_costs_dist value-field">{{{toFixed statsData.costs_perUnitDistance_runningCosts 2}}}</span>
                     <span>/{{{words.std_dist}}}</span>
                 </td>
             </tr>
@@ -214,26 +216,25 @@
                 </td>
                 <td>
                     <span>{{{words.curr_symbol}}}</span>
-                    <span class="text_total_costs_p_unit value-field">{{{statsData.costs_perUnitDistance_totalCosts}}}</span>
+                    <span class="text_total_costs_p_unit value-field">{{{toFixed statsData.costs_perUnitDistance_totalCosts 2}}}</span>
                     <span>/{{{words.std_dist}}}</span>
                 </td>
             </tr>
             <tr>
                 <td><span>{{{words.kinetic_speed}}}</span></td>
-                <td><span class="text_kinetic_speed value-field">{{{statsData.speeds_averageKineticSpeed}}}</span>
+                <td><span class="text_kinetic_speed value-field">{{{toFixed statsData.speeds_averageKineticSpeed 0}}}</span>
                     <span>{{{words.std_dist}}}/h</span></td>
             </tr>
             <tr>
                 <td>
-                    <span>
-                        <a target="_blank"
+                    <span>{{{words.virtual_speed}}}</span>
+                    <a target="_blank"
                            href="http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
-                            {{{words.virtual_speed}}}
-                        </a>
-                    </span>
+                    *
+                    </a>
                 </td>
                 <td>
-                    <span class="text_virtual_speed value-field">{{{statsData.speeds_averageConsumerSpeed}}}</span>
+                    <span class="text_virtual_speed value-field">{{{toFixed statsData.speeds_averageConsumerSpeed 0}}}</span>
                     <span>{{{words.std_dist}}}/h</span>
                 </td>
             </tr>
@@ -241,10 +242,15 @@
                 <td id="table-td-bottom-left"><span>{{{words.total_costs_per_year}}}</span></td>
                 <td id="table-td-bottom-right">
                     <span>{{{words.curr_symbol}}}</span>
-                    <span class="text_total_costs_year value-field">{{{statsData.costs_totalPerYear}}}</span>
+                    <span class="text_total_costs_year value-field">{{{toFixed statsData.costs_totalPerYear 0}}}</span>
                 </td>
             </tr>
         </table>
-    </div>
+        
+        <div class="footnote">
+            Based on the inputs of {{{statsData.validUsers}}} validated users, who filled the Car Costs Calculator at                 
+                <a target="_blank" href="http://{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
+        </div>        
+    </div>    
 </body>
 </html>

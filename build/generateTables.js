@@ -18,23 +18,20 @@ const colors     = require('colors');
 const commons  = require(path.join(__dirname, '..', 'commons'));
 const childProcess = require('child_process');
 
-
-commons.init();
-//Main directories got from commons
-const directories    = commons.getDirectories();
-
-const fileNames         = commons.getFileNames();
-const COUNTRY_LIST_FILE = fileNames.project.countriesListFile;
-
-var settings = commons.getSettings();
-
 //checks for internet connection
 isOnline().then(function(online) {
     
     if(!online){
-        console.log("Error: no Internet connection");
+        console.log("ERROR: no Internet connection".red.bold);
         process.exit();
     }
+    
+    commons.init();
+    //Main directories got from commons
+    const directories   = commons.getDirectories();
+    const fileNames     = commons.getFileNames();
+
+    var settings = commons.getSettings();    
     
     var DB_INFO = settings.dataBase.credentials;
     //detect for null or empty object
@@ -44,11 +41,12 @@ isOnline().then(function(online) {
     //console.log(DB_INFO);
 
     //getting country information from 
-    console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
-    var country_list = JSON.parse(fs.readFileSync(COUNTRY_LIST_FILE, 'utf8'));
-    var availableCountries = country_list.availableCountries;
-    var languagesCountries = country_list.languagesCountries;
-    var domains_CT = country_list.domains_CT;
+    console.log("Get Countries info from: " + fileNames.project.countriesListFile);
+    var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'));
+    
+    var availableCountries = countriesInfo.availableCountries;
+    var languagesCountries = countriesInfo.languagesCountries;
+    var domainsCountries = countriesInfo.domainsCountries;
 
     //sorts array of countries
     availableCountries = sortObj(availableCountries);
@@ -91,6 +89,7 @@ isOnline().then(function(online) {
                 function(err, results, fields) {                                
                 
                 var statsData = results[0];
+                //console.log(statsData);
                 
                 if (err) {
                     console.log(err); 
@@ -104,15 +103,25 @@ isOnline().then(function(online) {
                 var fileNameOfTemplate = path.join(directories.src.tables, "template.hbs");
                 var templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8');
 
+                //to convert long numbers to decimal, ex: 1.2222222 to "1.2"
+                handlebars.registerHelper('toFixed', function(num, n) {
+                    if(num && !isNaN(num)){
+                        return num.toFixed(n);
+                    }
+                    else{                        
+                        return "";
+                    }
+                });
+                
                 var hbsTemplate = handlebars.compile(templateRawData);
 
                 var data = {
                     "countryName": countryName, 
                     "statsData": statsData, 
                     "words": words,
-                    "cssFilePath": path.join(directories.src.css, "tables.css")
+                    "domain": domainsCountries[CCfile]
                 };
-                
+                                
                 var result = hbsTemplate(data);                
                 
                 //the file name to which the HTML table will be saved
