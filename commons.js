@@ -622,6 +622,12 @@ function _getConsoleColors(){
 
 //returns an object with several different information about the domains
 function _getDomainsObject(domainsCountries){
+    
+    if(!domainsCountries){
+        let fs = require('fs');
+        let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'));
+        domainsCountries = countriesInfo.domainsCountries;
+    }
 
     var domainsObj = {};
     domainsObj.countries = domainsCountries; //Object that associates a Country Code (CC) with a domain
