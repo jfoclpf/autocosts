@@ -41,14 +41,14 @@ var   settings  = commons.getSettings();
 //fixed unchangeable global data which is constant for all HTTP requests independently of the country
 var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'));
 var serverData = {
-    "release"            : release,   //Release: "work" or "prod"
-    "settings"           : settings,  //Settings set in commons.js
+    "release"            : release,     //Release: "work" or "prod"
+    "settings"           : settings,    //Settings set in commons.js
     "directories"        : directories, //{ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
     "fileNames"          : fileNames,   //Object with the fileNames, on the server and client
-    "availableCountries" : sortObj(countriesInfo.availableCountries), //Array of alphabetically sorted available Countries
-    "languagesCountries" : countriesInfo.languagesCountries, //Array of Language Codes
+    "availableCountries" : sortObj(countriesInfo.availableCountries),   //Array of alphabetically sorted available Countries
+    "languagesCountries" : countriesInfo.languagesCountries,            //Array of Language Codes
     "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
-    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries) //a string with all the CC
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries)  //a string with all the CC
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 

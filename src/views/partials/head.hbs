@@ -11,6 +11,7 @@
 <meta property="og:image" content="{{{clientData.basicURL}}}/img/logo/logo.svg" /> 
 <meta property="og:locale" content="{{{ getLocale }}}" />
 
+<!-- /XX type pages -->
 {{#if isGetCC}}
     <title>{{{ getAdaptedTitle }}}</title>
    
@@ -23,6 +24,8 @@
     <meta name="google-play-app" content="app-id=info.autocosts">
 
     <link href="css/smart-app-banner.css" rel="stylesheet" media="screen" />
+
+<!-- /stat page -->
 {{else if isStats}}
     <title>World statistics of the Car Costs</title>  
     
@@ -30,7 +33,8 @@
     <meta property="og:description" content="World statistics of the Car Costs for different countries" />
     
     <link rel="stylesheet" href="css/stats/main.css" type="text/css">
-    
+
+<!-- /list page -->
 {{else if isList}}
     <title>List of Countries for the Car Costs Calculator</title>  
     
