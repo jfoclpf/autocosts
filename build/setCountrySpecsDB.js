@@ -10,26 +10,21 @@ const async    = require('async'); //module to allow to execute the queries in s
 const mysql    = require('mysql'); //module to get info from DB
 const sortObj  = require('sort-object'); //to sort JS objects
 const isOnline = require('is-online');
+const colors   = require('colors');
+
 const commons  = require(path.join(__dirname, '..', 'commons'));
 
 commons.init();
 //Main directories got from commons
-var directories       = commons.getDirectories();
-var ROOT_DIR          = directories.server.root;
-var SRC_DIR           = directories.server.src;
-var COUNTRIES_DIR     = directories.src.countries; 
-
-var fileNames         = commons.getFileNames();
-var COUNTRY_LIST_FILE = fileNames.server.countriesListFile;
-
+var directories = commons.getDirectories();
 var settings = commons.getSettings();
 
 //checks for internet connection
 isOnline().then(online => {
     
     if(!online){
-        console.log("There is no Internet Connection");
-        process.exit();
+        console.log("ERROR: no Internet connection".red.bold);
+        process.exit(1); //exit with error
     }
     
     var DB_INFO = settings.dataBase.credentials;
@@ -40,13 +35,16 @@ isOnline().then(online => {
     console.log(DB_INFO);
 
     //getting country information from 
-    console.log("Get Countries info from: " + COUNTRY_LIST_FILE);
-    var country_list = JSON.parse(fs.readFileSync(COUNTRY_LIST_FILE, 'utf8'));
-    var availableCountries = country_list.availableCountries;
-    var languagesCountries = country_list.languagesCountries;
-    var domains_CT = country_list.domains_CT;
-    var WORDS;
+    const fileNames = commons.getFileNames(); 
+       
+    //getting country information from
+    console.log("\nGet Countries info from: " + fileNames.project.countriesListFile);
+    var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'));
 
+    var availableCountries = countriesInfo.availableCountries;
+    var languagesCountries = countriesInfo.languagesCountries;
+    var domainsCountries = countriesInfo.domainsCountries;
+    
     //sorts array of countries
     availableCountries = sortObj(availableCountries);
     delete availableCountries["XX"];
@@ -88,7 +86,7 @@ isOnline().then(online => {
             var queryInsert;
             for (var key in availableCountries){                        
 
-                WORDS = JSON.parse(fs.readFileSync(path.join(COUNTRIES_DIR, key + ".json"), 'utf8'));
+                WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, key + ".json"), 'utf8'));
                 queryInsert = "INSERT INTO " + DB_INFO.db_tables.country_specs + " ( \
                     Country, \
                     currency, \
@@ -128,5 +126,5 @@ isOnline().then(online => {
     ]);
 }).catch(function(err){
     console.log(err);
-    process.exit();
+    process.exit(1);//with error
 });
