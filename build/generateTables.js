@@ -23,7 +23,7 @@ isOnline().then(function(online) {
     
     if(!online){
         console.log("ERROR: no Internet connection".red.bold);
-        process.exit();
+        process.exit(1); //exit with error
     }
     
     commons.init();
@@ -154,7 +154,7 @@ isOnline().then(function(online) {
     
 }).catch(function(err){
     console.log(err);
-    process.exit();
+    process.exit(1);
 });
 
 //Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
