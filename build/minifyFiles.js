@@ -61,7 +61,7 @@ function processJSfiles(){
            !filename.includes("vfs_fonts.js") && 
            !filename.includes(".min.js")){
             
-            console.log((filename.replace(ROOT_DIR, '')).verbose); //removes base directory from file name
+            console.log((path.relative(ROOT_DIR, filename)).verbose); //removes base directory from file name
             var code = fs.readFileSync(filename, 'utf-8');            
             
             //file 'Globals.js.hbs' because is a JS file rendered by handlebars
@@ -112,7 +112,7 @@ function minifyCSSFiles(){
         
         if(filename.includes(".css")){        
 
-            console.log((filename.replace(ROOT_DIR, '')).verbose);
+            console.log((path.relative(ROOT_DIR, filename)).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
             var result = uglifycss.processString(code);
@@ -159,7 +159,7 @@ function processHTMLfiles(){
               !filename.includes(".js.hbs") &&  //excludes js files generated bu handlebars
               !filename.includes(".css.hbs")){  //excludes css files generated bu handlebars
 
-            console.log((filename.replace(ROOT_DIR, '')).verbose);
+            console.log((path.relative(ROOT_DIR, filename)).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
 
@@ -210,7 +210,7 @@ function processJSONfiles(){
         
         if(filename.includes(".json")){  
 
-            console.log((filename.replace(ROOT_DIR, '')).verbose);
+            console.log((path.relative(ROOT_DIR, filename)).verbose);
 
             var code = fs.readFileSync(filename, 'utf-8');
             var result = jsonminify(code);

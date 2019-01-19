@@ -48,7 +48,7 @@ function compressJPG(){
 
             if(filename.includes(".jpg")){
 
-                console.log((filename.replace(ROOT_DIR, "")).verbose);
+                console.log((path.relative(ROOT_DIR, filename)).verbose);
 
                 var params = [ filename,
                                '-sampling-factor', '4:2:0',
@@ -97,7 +97,7 @@ function compressPNG(){
         
         if(filename.includes(".png")){
 
-            console.log((filename.replace(ROOT_DIR, "")).verbose);
+            console.log((path.relative(ROOT_DIR, filename)).verbose);
 
             var params = [ filename,
                            '-strip',

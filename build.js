@@ -349,10 +349,10 @@ function checkJS(callback){
             jshint(code, JShintOpt, {});
 
             if (jshint.errors.length == 0){ //no warnings
-                console.log((filename.replace(ROOT_DIR, '')).verbose);
+                console.log((path.relative(ROOT_DIR, filename)).verbose);
             }
             else{
-                console.log((filename.replace(ROOT_DIR, '')).error);
+                console.log((path.relative(ROOT_DIR, filename)).error);
                 console.log(prettyjson.render(jshint.errors));
             }            
         }
