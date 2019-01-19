@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--This file must be a singleton, that is, it may not depend on external files -->
-<!--because after handlebars renders the html files, these html files will be futher rendered as jpg by phantomjs -->
 <head>
 
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <link href="../favicon.png" rel="shortcut icon" type="image/png" />
-    <link rel="stylesheet" href="../css/fonts.css" media="screen" />
+    <link href="http://{{{domain}}}/favicon.png" rel="shortcut icon" type="image/png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700" type="text/css" media="screen">
 
     <title>{{{words.statistic_title}}}</title>
 
@@ -15,13 +13,24 @@
 
         body {
             font-family: "Nunito", Helvetica, Arial, sans-serif;
+
+            {{#if isHtmlPage}}
             font-size: 14px;
-            background: #f4f6fe;
             margin: 20px;
-            max-width: 430px;
+            {{/if}}
+
+            {{#if isJpgImage}}
+            font-size: 20px;
+            background: white;
+            margin: 0;
+            {{/if}}
         }
 
         .statistics {
+            {{#if isJpgImage}}
+            width: 700px;
+            {{/if}}
+
             border-radius: 3px;
             border-collapse: separate;
             -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
@@ -31,7 +40,7 @@
             padding: 20px 0;
         }
 
-        .statistics .main-title {margin: 0 20px 20px}
+        .statistics .main-title {margin: 0 15px; text-align: center;}
         .statistics .main-title h2 {margin: 0}
         .statistics .main-title > span {color: #42444a; font-size: 16px;}
         .statistics .section-title {margin: 10px 0 0}
@@ -40,14 +49,14 @@
         .statistics .total h4:before{background-color: #efa00b; color: #efa00b;}
         .stats_total tr:last-child {background: #fdf5e6!important}
 
-        .tbl_statistics {width: 90%; padding: 0px 14px; margin: auto;}
+        .tbl_statistics {width: 90%; padding: 0px 14px; margin: auto; border-spacing:0;}
         .tbl_statistics .tr-result td {font-weight: bold; color: #000;}
         .tbl_statistics .tr-sub-title td {background: #ffec8b; color: #000; font-weight: bold; text-align: center;}
         .tbl_statistics .main_total {font-weight: bold; color: #000; background: #fdf5e6;}
         .tbl_statistics td:nth-child(2) {text-align: right; min-width: 100px;}
         .tbl_statistics tr:nth-child(1n+21) td{font-size:90%;}
         .tbl_statistics tr:last-child td{font-weight: bold; color: #000}
-        
+
         .statistics .footnote {margin: 15px 20px 0 20px; font-style: italic;}
 
     </style>
@@ -228,10 +237,12 @@
             <tr>
                 <td>
                     <span>{{{words.virtual_speed}}}</span>
-                    <a target="_blank"
-                           href="http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
-                    *
-                    </a>
+                    {{#if isHtmlPage}}
+                        <a target="_blank"
+                               href="http://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
+                        *
+                        </a>
+                    {{/if}}
                 </td>
                 <td>
                     <span class="text_virtual_speed value-field">{{{toFixed statsData.speeds_averageConsumerSpeed 0}}}</span>
@@ -246,11 +257,11 @@
                 </td>
             </tr>
         </table>
-        
+
         <div class="footnote">
-            Based on the inputs of {{{statsData.validUsers}}} validated users, who filled the Car Costs Calculator at                 
+            Based on the inputs of {{{statsData.validUsers}}} validated users, who filled the Car Costs Calculator at
                 <a target="_blank" href="http://{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
-        </div>        
-    </div>    
+        </div>
+    </div>
 </body>
 </html>

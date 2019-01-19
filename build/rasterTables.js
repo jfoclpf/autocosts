@@ -2,53 +2,49 @@
 which converts table costs HTML files into correspondent table costs jpg images*/
 
 var fs = require('fs');
+var system = require('system');
+var args = system.args;
 
-//PhantomJS can't know exactly the directory of this file, 
-//since the directories are always relative to directory where it is called (root directory)
-//console.log(fs.workingDirectory);
-//console.log(fs.absolute("."));
-//phantom.exit(0);
+/*
+  args[1] => the full path of the html file to be rasterized
+  args[2] => the full path of the jpg file to where the rendered html file will be saved
+*/
 
-var BIN_DIR     = fs.absolute("bin/");
-console.log("BIN_DIR: " + BIN_DIR);
-var TABLES_DIR  = fs.absolute("bin/tables/");
-console.log("The tables HTML files with .html extension MUST already be in: " + TABLES_DIR);
-
-// Get a list all files in directory
-var list = fs.list(TABLES_DIR);
-// Cycle through the list and creates array of pages
-//console.log(list);
-
-function render_pages(){
-    var pages=[], content, img_fname;
-    for(var x = 0, n = 0; x < list.length; x++){
-      // Note: If you didn't end path with a slash, you need to do so here.
-        var file_name = list[x];
-        var file_path = TABLES_DIR + file_name;
-        //it must be a file with the format of XX.html
-        if(fs.isFile(file_path) && (file_name.split("."))[1]=="html" ){
-            //console.log("Creating page");
-
-            pages[n] = require('webpage').create();
-            pages[n].settings.localToRemoteUrlAccessEnabled = true;
-
-            content = fs.read(TABLES_DIR + file_name);            
-            pages[n].content = content;
-
-            img_fname = (file_name.split("."))[0]+".jpg";
-            console.log('Rendering file ' + file_name + ' to ' + img_fname);
-            pages[n].render(TABLES_DIR + img_fname, {format: 'jpeg', quality: '100'});
-            pages[n].close();
-
-            n++;
-        }
-    }
-    if (n==0){
-        console.log("Error: no HTML files processed in folder " + TABLES_DIR);
-    }
+if(args.length !== 3){
+    console.log("ERROR: Bad length of arguments");
+    phantom.exit(); 
 }
 
-render_pages();
-phantom.exit();
+if(!fs.exists(args[1]) || args[1].split(".")[1] !== "htm"){
+    console.log("args[1]: " + args[1]);
+    console.log("ERROR: args[1] must be an existing htm file");
+    phantom.exit(); 
+}
 
+if(args[2].split(".")[1] !== "jpg"){
+    console.log("args[2]: " + args[2]);
+    console.log("ERROR: args[2] must have jpg extension");
+    phantom.exit(); 
+}
 
+var htmlFileToBeRendered = args[1];
+var jpgRenderedFile = args[2];
+
+var page = require('webpage').create();
+page.settings.localToRemoteUrlAccessEnabled = true;
+
+/* //for debug, triggered when the html file  gets css external files
+page.onResourceRequested = function(requestData, request) {
+    console.log('::loading', requestData['url']);  
+};
+*/
+
+page.onLoadFinished = function() {
+    //console.log('Rendering file ' + htmlFileToBeRendered + ' to ' + jpgRenderedFile);
+    page.render(jpgRenderedFile, {format: 'jpeg', quality: '100'});
+    page.close();
+    phantom.exit();
+};
+
+var content = fs.read(htmlFileToBeRendered);  
+page.content = content;
