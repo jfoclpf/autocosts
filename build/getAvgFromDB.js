@@ -37,8 +37,8 @@ const DB_INFO = settings.dataBase.credentials;
 isOnline().then(function(online) {
 
     if(!online){
-        console.log("There is no Internet Connection");
-        process.exit();
+        console.log("ERROR: no Internet connection".red.bold);
+        process.exit(1); //exit with error
     }
 
     var AVG_DB_TEMPLATE; //Database for Average template
@@ -123,7 +123,7 @@ isOnline().then(function(online) {
                     fx.base = result.base;
                 } else {
                     throw "Error loading money API";
-                    process.exit();
+                    process.exit(1);
                 }
 
                 callback();
@@ -141,7 +141,7 @@ isOnline().then(function(online) {
             db.connect(function(err){
                 if (err) {
                     console.error('error connecting: ' + err.stack);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.log('User ' + DB_INFO.user +
@@ -160,7 +160,7 @@ isOnline().then(function(online) {
             db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function(err, results, fields) {
                 if (err) {
                     console.error(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 //Check that a user was found
@@ -185,7 +185,7 @@ isOnline().then(function(online) {
                 function(err, results, fields) {
                     if (err){
                         console.error(err);
-                        process.exit();
+                        process.exit(1);
                     }
 
                     for (var i=0; i<results.length; i++){
@@ -206,7 +206,7 @@ isOnline().then(function(online) {
             db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function(err, results, fields) {
                 if (err){
                     console.error(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 for (var i=0; i<results.length; i++){
@@ -369,7 +369,7 @@ isOnline().then(function(online) {
             db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics, function(err, results, fields) {
                 if (err){
                     console.log(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
@@ -390,7 +390,7 @@ isOnline().then(function(online) {
             db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized, function(err, results, fields) {
                 if (err){
                     console.log(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
@@ -416,7 +416,7 @@ isOnline().then(function(online) {
             db.query(createTableQuery, function(err, results, fields) {
                 if (err){
                     console.error(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics);
@@ -447,7 +447,7 @@ isOnline().then(function(online) {
             db.query(createTableQuery, function(err, results, fields) {
                 if (err){
                     console.error(err);
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized);
@@ -464,7 +464,7 @@ isOnline().then(function(online) {
                 if (err){
                     console.error(("\n\n SQL ERROR: " + err.sqlMessage + "\n\n").red.bold);
                     console.error(sqlFormatter.format(err.sql));
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.log('All new data successfully added into ' +
@@ -486,7 +486,7 @@ isOnline().then(function(online) {
                 if (err){
                     console.error(("\n\n SQL ERROR: " + err.sqlMessage + "\n\n").red.bold);
                     console.error(sqlFormatter.format(err.sql));
-                    process.exit();
+                    process.exit(1);
                 }
 
                 console.log('All new data successfully added into ' +
@@ -504,7 +504,7 @@ isOnline().then(function(online) {
     ]);
 }).catch(function(err){
     console.log(err);
-    process.exit();
+    process.exit(1);
 });
 
 
