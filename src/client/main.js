@@ -21,8 +21,9 @@ var autocosts = (function(){
             jsFiles: undefined,                     //Object with locations of Javascript Files
             url: {
                 domainUrl: undefined,               //current domain URL, example 'http://autocosts.info'
-                fullUrl: undefined,                 //full URL of the page, example 'http://autocosts.info/XX'
-                pageUrl: undefined,                 //current page URL, example 'http://autocosts.info/UK'
+                trueUrl: undefined,                 //the true current URL of the page, example 'http://autocosts.info/XX'
+                pageUrl: undefined,                 //the correct url according to country, ex., 
+                                                        //if this is UK => 'http://autocosts.info/UK'
                 cdnUrl: undefined,                  //it's defined in the node server side index.js
                 uberApi: undefined                  //uber url to get UBER API information through AJAX
             },
@@ -121,7 +122,8 @@ var autocosts = (function(){
         /*forms present page full url, example 'http://autocosts.info' */
         mainVariables.paths.url.domainUrl = mainVariables.serverInfo.httpProtocol + "://" +
             mainVariables.serverInfo.domainListObj[selectedCountry];
-        mainVariables.paths.url.fullUrl = window.location.href;
+        
+        mainVariables.paths.url.trueUrl = window.location.href;
 
         /*forms present page full url, example 'http://autocosts.info/UK' */
         mainVariables.paths.url.pageUrl = mainVariables.serverInfo.httpProtocol + "://" +

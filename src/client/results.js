@@ -9,7 +9,7 @@
 /* Module with functions that are used to print the final result */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
-autocosts.resultsModule = (function(thisModule, translatedStrings, switches, language, uberApiObj, fullUrl){
+autocosts.resultsModule = (function(thisModule, translatedStrings, switches, language, uberApiObj, pageUrl){
 
     //modules dependencies
     var chartsModule, pdfModule, commonsModule;
@@ -86,36 +86,42 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
             $("#results").hide();
         });
 
-        //fullURL has the current complete URL, ex: "https://autocosts.info/FR"
+        //pageUrl has the current complete URL, ex: "https://autocosts.info/FR"
         if (switches.social /*&& !commonsModule.isThisAtest()*/){
-            
+                        
             var descriptionText = translatedStrings.initial_text.
-                split(".").slice(0, 3).join("."). //gets only the first three sentences of the text
+                split(".").slice(0, 2).join("."). //gets only the first 2 sentences of the text
                 replace(/<(?:.|\n)*?>/gm, '');   //removes html tags such as <b></b>            
             
-            $(".right-actions .facebook a, .right-actions-mobile .facebook a").
-                attr("href", encodeURI("//www.facebook.com/sharer/sharer.php?u=" + fullUrl)).attr("target", "_blank");
-            
-            $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
-                attr("href", 
-                     encodeURI("//twitter.com/share?text=" + descriptionText + "&url=" + fullUrl + "&title=" + translatedStrings.web_page_title)).
+            $(".share-buttons .facebook a").
+                attr("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(pageUrl)).
                 attr("target", "_blank");
             
-            $(".right-actions .linkedin a, .right-actions-mobile .linkedin a").
-                attr("href", encodeURI("//www.linkedin.com/shareArticle?mini=true&url=" + fullUrl + "&summary= "+ descriptionText)).
+            $(".share-buttons .twitter a").
+                attr("href", 
+                     "https://twitter.com/share?text=" + encodeURI(descriptionText) + 
+                     "&url=" + encodeURI(pageUrl) + 
+                     "&title=" + encodeURI(translatedStrings.web_page_title)).
+                attr("target", "_blank");
+            
+            $(".share-buttons .linkedin a").
+                attr("href", "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURI(pageUrl) + 
+                     "&summary= "+ encodeURI(descriptionText)).
                 attr("target", "_blank");
             
             //only adds whatsapp share button for mobile devices
             if(commonsModule.isMobile()){
-            $(".right-actions .whatsapp a, .right-actions-mobile .whatsapp a").
-                attr("href", encodeURI("//wa.me/?text=" + descriptionText + "   " + fullUrl)).attr("target", "_blank");
+                $(".share-buttons .whatsapp a").show();
+                
+                $(".share-buttons .whatsapp a").
+                    attr("href", "https://wa.me/?text=" + encodeURI(descriptionText + " - " + pageUrl) );                    
             }
             else{
-                $(".right-actions .whatsapp a, .right-actions-mobile .whatsapp a").hide();
+                $(".share-buttons .whatsapp a").hide();
             }
         }
         else{
-            $(".right-actions, .right-actions-mobile").hide();
+            $(".share-buttons").hide();
         }
         
         //remove hash tag from url on mobile version caused by ARIA events: http://localhost:3027/XX#main-menu
@@ -228,11 +234,15 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         });
 
         //extra items
-        $htmlEl.find(".periodic_costs_halfOfMaintenance").html(currSymb + " " + (calculatedData.costs.perMonth.items.maintenance/2*numMonths).toFixed(1));
+        $htmlEl.find(".periodic_costs_halfOfMaintenance").
+            html(currSymb + " " + (calculatedData.costs.perMonth.items.maintenance/2*numMonths).toFixed(1));
 
-        $htmlEl.find(".periodic_costs_total_standing_costs").html(currSymb + " " + (calculatedData.costs.perMonth.standingCosts * numMonths).toFixed(2));
-        $htmlEl.find(".periodic_costs_total_running_costs").html(currSymb + " " + (calculatedData.costs.perMonth.runningCosts * numMonths).toFixed(2));
-        $htmlEl.find(".periodic_costs_total_costs").html(currSymb + " " + (calculatedData.costs.perMonth.total * numMonths).toFixed(2));
+        $htmlEl.find(".periodic_costs_total_standing_costs").
+            html(currSymb + " " + (calculatedData.costs.perMonth.standingCosts * numMonths).toFixed(2));
+        $htmlEl.find(".periodic_costs_total_running_costs").
+            html(currSymb + " " + (calculatedData.costs.perMonth.runningCosts * numMonths).toFixed(2));
+        $htmlEl.find(".periodic_costs_total_costs").
+            html(currSymb + " " + (calculatedData.costs.perMonth.total * numMonths).toFixed(2));
 
     }
 
@@ -318,8 +328,10 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
             addLiElm("credit", translatedStrings.credit_residual_value1, currencyShow(form.credit.yesCredit.residualValue));
 
             addLiElm("credit", translatedStrings.credit_total_interests, currencyShow(calculatedData.details.credit.totalPaidInInterests));
-            addLiElm("credit", "(" + calculatedData.details.credit.numberOfMonthlyInstalments + "*" + form.credit.yesCredit.amountInstallment + ")+" +
-                               form.credit_residual_value + "-" + form.credit.yesCredit.borrowedAmount);
+            addLiElm("credit", 
+                     "(" + calculatedData.details.credit.numberOfMonthlyInstalments + "*" + 
+                        form.credit.yesCredit.amountInstallment + ")+" +
+                        form.credit_residual_value + "-" + form.credit.yesCredit.borrowedAmount);
 
             if(calculatedData.age_months >= calculatedData.details.credit.numberOfMonthlyInstalments){
                 addLiElm("credit", translatedStrings.credit_interests_month + ": " +
@@ -330,9 +342,10 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         //Inspection
         if (form.inspection.numberOfInspections !== 0){
             addLiElm("inspection",
-                     form.inspection.numberOfInspections + " " + translatedStrings.times_costing + " " + form.inspection.averageInspectionCost +
-                     " " + translatedStrings.curr_name_plural + " " + translatedStrings.each_one_during + " " +
-                     calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
+                     form.inspection.numberOfInspections + " " + 
+                        translatedStrings.times_costing + " " + form.inspection.averageInspectionCost +
+                        " " + translatedStrings.curr_name_plural + " " + translatedStrings.each_one_during + " " +
+                        calculatedData.details.ageOfCarInMonths + " " + translatedStrings.months);
         }
 
         //Taxes
@@ -375,9 +388,11 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                             throw errMsg;
                     }
                     addLiElm("fuel",
-                             translatedStrings.fuel_car_eff, form.fuel.distanceBased.fuelEfficiency + " " + translatedStrings.std_fuel_calc);
+                             translatedStrings.fuel_car_eff, 
+                             form.fuel.distanceBased.fuelEfficiency + " " + translatedStrings.std_fuel_calc);
                     addLiElm("fuel",
-                             translatedStrings.fuel_price1, currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + translatedStrings.std_volume_short);
+                             translatedStrings.fuel_price1, 
+                             currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + translatedStrings.std_volume_short);
                 }
                 else{
                     addLiElm("fuel",
@@ -393,9 +408,11 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                              translatedStrings.std_dist + " " + translatedStrings.word_per + " " + translatedStrings.month +
                              " (~30.5 " + translatedStrings.days + ")");
                     addLiElm("fuel",
-                             translatedStrings.fuel_car_eff, form.fuel.distanceBased.fuelEfficiency + " " + translatedStrings.std_fuel_calc);
+                             translatedStrings.fuel_car_eff, 
+                             form.fuel.distanceBased.fuelEfficiency + " " + translatedStrings.std_fuel_calc);
                     addLiElm("fuel",
-                             translatedStrings.fuel_price, currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + translatedStrings.std_volume_short);
+                             translatedStrings.fuel_price, 
+                             currencyShow(form.fuel.distanceBased.fuelPrice) + "/" + translatedStrings.std_volume_short);
                 }
                 break;
 
@@ -647,7 +664,9 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                 addLiElm("working_time",  translatedStrings.working_time_message);
             }
         }
-        addLiElm("working_time", translatedStrings.average_net_income_per + " " + translatedStrings.hour, currencyShow(income.averagePerHour.toFixed(1)));
+        addLiElm("working_time", 
+                 translatedStrings.average_net_income_per + " " + translatedStrings.hour, 
+                 currencyShow(income.averagePerHour.toFixed(1)));
 
         //distance
         var dd = calculatedData.drivingDistance;
@@ -789,7 +808,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
             //the remaining money is applied to public transport
             if(calculatedUber.resultType == 1){
 
-                addLiElm("uber", "UBER - " + translatedStrings.costs + " " + translatedStrings.word_per + " " +  translatedStrings.std_dist_full,
+                addLiElm("uber", 
+                         "UBER - " + translatedStrings.costs + " " + translatedStrings.word_per + " " +  translatedStrings.std_dist_full,
                          currencyShow(calculatedUber.uberCosts.perUnitDistance.toFixed(2)) + "/" + translatedStrings.std_dist);
                 addLiElm("uber", "UBER - " + translatedStrings.costs + " " + translatedStrings.word_per + " " +  translatedStrings.minutes,
                          currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + translatedStrings.min);
@@ -813,7 +833,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                          currencyShow(calculatedUber.uberCosts.perMinute.toFixed(2)) + "/" + translatedStrings.min);
                 addLiElm("uber",
                          translatedStrings.kinetic_speed_title,
-                         calculatedData.speeds.averageKineticSpeed.toFixed(2) + " " + translatedStrings.std_dist + "/" + translatedStrings.hour_abbr);
+                         calculatedData.speeds.averageKineticSpeed.toFixed(2) + " " + translatedStrings.std_dist + "/" +
+                         translatedStrings.hour_abbr);
                 addLiElm("uber",
                          "UBER - " + translatedStrings.std_dist_full + " " + translatedStrings.word_per + " " + translatedStrings.month,
                          calculatedUber.distanceDoneWithUber.toFixed(0) + " " + translatedStrings.std_dist_full);
@@ -822,8 +843,10 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                          currencyShow(calculatedUber.uberCosts.total.toFixed(0)));
 
                 addLiElm("other_pub_trans_for_uber",
-                         translatedStrings.fam_nbr, form.publicTransports.numberOfPeopleInFamily + " " + translatedStrings.person_or_people);
-                addLiElm("other_pub_trans_for_uber", translatedStrings.pass_month_avg, currencyShow(form.publicTransports.monthlyPassCost));
+                         translatedStrings.fam_nbr, form.publicTransports.numberOfPeopleInFamily + " " +
+                         translatedStrings.person_or_people);
+                addLiElm("other_pub_trans_for_uber", translatedStrings.pass_month_avg,
+                         currencyShow(form.publicTransports.monthlyPassCost));
             }
         }
         else{
@@ -861,7 +884,9 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
     //puts the currency symbol after the money value, for certain countries
     function currencyShow(value){
         if (typeof translatedStrings.invert_currency !== 'undefined' &&
-                (translatedStrings.invert_currency == "true" || translatedStrings.invert_currency === true || translatedStrings.invert_currency=="1"))
+            (translatedStrings.invert_currency || 
+             translatedStrings.invert_currency == "true" || 
+             translatedStrings.invert_currency == "1") )
         {
             return (value + " " + translatedStrings.curr_symbol);
         }
@@ -940,5 +965,5 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
    autocosts.serverInfo.switches,
    autocosts.serverInfo.language,
    autocosts.main.uberApiObj,
-   autocosts.paths.url.fullUrl);
+   autocosts.paths.url.pageUrl);
 
