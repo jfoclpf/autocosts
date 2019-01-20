@@ -43,30 +43,31 @@
             background: white;
             padding: 20px 0;
         }
-        
+
         {{#if isHtmlPage}}
-        .header {display: flex; justify-content: space-between;}        
-        {{/if}}          
+        .header {display: flex; justify-content: space-between;}
+        {{/if}}
 
         .statistics .main-title {
-            margin: 0 15px; 
+            margin: 0 15px;
             {{#if isJpgImage}}
             text-align: center;
-            {{/if}} 
+            {{/if}}
         }
-        
+
         {{#if isHtmlPage}}
         .divSelect {}
         .downloadButton {
-            background-color: #2c49b9; 
+            background-color: #2c49b9;
             width: 18px;
-            border-radius: 5px; 
+            border-radius: 5px;
             -webkit-border-radius: 5px;
             padding: 5px 10px !important;
             margin: 15px 15px 0 0;
             float: right;
             width: 18px;
             height: 22px;
+            cursor: pointer;
         }
         select {
             font-family: 'Nunito', Arial,sans-serif;
@@ -83,9 +84,9 @@
             appearance: none;
             border-radius: 0;
             background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;
-        }        
-        {{/if}}        
-                
+        }
+        {{/if}}
+
         .statistics .main-title h2 {margin: 0}
         .statistics .main-title > span {color: #42444a; font-size: 16px;}
         .statistics .section-title {margin: 10px 0 0}
@@ -104,7 +105,7 @@
 
         .statistics .footnote {margin: 15px 20px 0 20px; font-style: italic;}
 
-    </style>   
+    </style>
 
 </head>
 <body>
@@ -114,7 +115,7 @@
                 <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
                 <span>{{{words.average_costs_per_type}}}</span>
             </div>
-            
+
             {{#if isHtmlPage}}
             <div class="divSelect">
                 <div>
@@ -125,18 +126,18 @@
                         </option>
                         {{/each}}
                     </select>
-                </div>                
+                </div>
                 <div class="downloadButton">
                     <svg xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
                      width="15px" height="16px">
                         <path fill-rule="evenodd"  fill="rgb(255, 255, 255)"
                      d="M13.957,15.994 L1.043,15.994 C0.466,15.994 0.000,15.514 0.000,14.921 L0.000,10.195 L2.082,10.195 L2.082,13.848 L12.918,13.848 L12.918,10.195 L15.000,10.195 L15.000,14.921 C15.000,15.514 14.534,15.994 13.957,15.994 ZM7.808,9.864 C7.553,10.128 7.309,9.833 7.309,9.833 L4.328,6.119 C4.328,6.119 3.875,5.677 4.366,5.677 C4.858,5.677 6.046,5.677 6.046,5.677 C6.046,5.677 6.046,5.380 6.046,4.922 C6.046,3.615 6.046,1.238 6.046,0.269 C6.046,0.269 5.980,0.006 6.364,0.006 C6.752,0.006 8.451,0.006 8.729,0.006 C9.007,0.006 9.000,0.228 9.000,0.228 C9.000,1.168 9.000,3.627 9.000,4.890 C9.000,5.300 9.000,5.565 9.000,5.565 C9.000,5.565 9.953,5.565 10.551,5.565 C11.148,5.565 10.698,6.028 10.698,6.028 C10.698,6.028 8.161,9.500 7.808,9.864 Z"/>
-                    </svg>                
+                    </svg>
                 </div>
             </div>
             {{/if}}
-            
+
         </div>
 
         <!--Standing Costs-->
@@ -331,44 +332,21 @@
 
         <div class="footnote">
             Based on the inputs of {{{statsData.validUsers}}} validated users, who filled the Car Costs Calculator at
-                <a target="_blank" href="http://{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
+                <a target="_blank" href="//{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
         </div>
     </div>
-    
-    
+
+
     {{#if isHtmlPage}}
     <data
-    id =                    "global_variables" 
-    value =                 "global_variables" 
+    id =                    "global_variables"
+    value =                 "global_variables"
     data-country_code =      "{{{ countryCode }}}"/>
-    
-    
-    <script src="{{fileNames.client.jquery.cdn}}"></script>
-    <script>        
-        
-        $( document ).ready(function() {            
-            
-            var globalVariables = document.getElementById('global_variables');
-            var countryCode = globalVariables.dataset.country_code;
-            console.log("Loaded stats page for: " + countryCode);
-            
-            $("#countrySelectStats").val(countryCode);
-            
-            $('#countrySelectStats').on('change', function() {
-                //forward to the respective page, from ..../AA.htm to ..../BB.htm
-                window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/")) + 
-                    "/" + this.value + ".htm";
-            });
-            
-            $(".downloadButton").on("click", function(e){
-                e.preventDefault();  //stop the browser from following
-                //forward to the respective page, from ..../AA.htm to ..../AA.jpg
-                window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf(".")) + ".jpg";                
-            });
-        });
-        
-    </script>
-    {{/if}}    
-    
+
+
+    <script src="/client/jquery/jquery.min.js"></script>
+    <script src="/client/tables/main.js"></script>
+    {{/if}}
+
 </body>
 </html>
