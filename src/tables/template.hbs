@@ -69,7 +69,7 @@
             height: 22px;
             cursor: pointer;
         }
-        select {
+        body select {
             font-family: 'Nunito', Arial,sans-serif;
             text-transform: capitalize;
             margin: 0;
@@ -85,6 +85,9 @@
             border-radius: 0;
             background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;
         }
+        .worldStats {float: left; margin-top: 15px;}
+        body a {display: block; font-size: 16px; font-weight: 700; color: #2c49b9; text-decoration: none;}
+        
         {{/if}}
 
         .statistics .main-title h2 {margin: 0}
@@ -339,9 +342,9 @@
 
     {{#if isHtmlPage}}
     <data
-    id =                    "global_variables"
-    value =                 "global_variables"
-    data-country_code =      "{{{ countryCode }}}"/>
+        id =                    "global_variables"
+        value =                 "global_variables"
+        data-country_code =      "{{{ countryCode }}}"/>
 
 
     <script src="/client/jquery/jquery.min.js"></script>

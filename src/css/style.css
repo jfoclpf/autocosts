@@ -252,6 +252,9 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .sidebar > .sidebar-right-container > h4::before {content: " -"; background-color: #2c49b9; color: #2c49b9; margin-right: 10px;}
 .sidebar > .sidebar-right-container > h4.yellow-bar::before {background-color: #efa00b; color: #efa00b;}
 
+.sidebar .sidebar-right-container .worldStats {margin-top: 10px; float:left;}
+.sidebar .sidebar-right-container .headNote {margin: 0 0 40px 20px;}
+
 .sidebar > .sidebar-left-container > .close {position: absolute;margin: -11px 0 0 33%;}
 .sidebar > .sidebar-right-container > .close {position: absolute;margin: 29px 0 0 -18%;}
 
