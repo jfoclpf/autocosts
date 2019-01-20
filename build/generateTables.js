@@ -106,6 +106,19 @@ isOnline().then(function(online) {
                 var fileNameOfTemplate = path.join(directories.src.tables, "template.hbs");
                 var templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8');
 
+                //external files to be used by the template; that is, register Partials
+                var partialsDir = path.join(directories.bin.views, "common", "svgIcons");;
+                var filenames = fs.readdirSync(partialsDir);
+                filenames.forEach(function (filename) {
+                    var matches = /^([^.]+).hbs$/.exec(filename);
+                    if (!matches) {
+                        return;
+                    }
+                    var name = matches[1];
+                    var template = fs.readFileSync(path.join(partialsDir, filename), 'utf8');
+                    handlebars.registerPartial(name, template);
+                });               
+                                
                 //to convert long numbers to decimal, ex: 1.2222222 to "1.2"
                 var toFixed = function(num, n) {
                     if(num && !isNaN(num)){
@@ -115,7 +128,6 @@ isOnline().then(function(online) {
                         return "";
                     }
                 };
-
                 handlebars.registerHelper('toFixed', toFixed);
 
                 var hbsTemplate = handlebars.compile(templateRawData);
