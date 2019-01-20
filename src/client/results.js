@@ -94,21 +94,21 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                 replace(/<(?:.|\n)*?>/gm, '');   //removes html tags such as <b></b>            
             
             $(".right-actions .facebook a, .right-actions-mobile .facebook a").
-                attr("href", encodeURI("https://www.facebook.com/sharer/sharer.php?u=" + fullUrl)).attr("target", "_blank");
+                attr("href", encodeURI("//www.facebook.com/sharer/sharer.php?u=" + fullUrl)).attr("target", "_blank");
             
             $(".right-actions .twitter a,  .right-actions-mobile .twitter a").
                 attr("href", 
-                     encodeURI("https://twitter.com/share?text=" + descriptionText + "&url=" + fullUrl + "&title=" + translatedStrings.web_page_title)).
+                     encodeURI("//twitter.com/share?text=" + descriptionText + "&url=" + fullUrl + "&title=" + translatedStrings.web_page_title)).
                 attr("target", "_blank");
             
             $(".right-actions .linkedin a, .right-actions-mobile .linkedin a").
-                attr("href", encodeURI("https://www.linkedin.com/shareArticle?mini=true&url=" + fullUrl + "&summary= "+ descriptionText)).
+                attr("href", encodeURI("//www.linkedin.com/shareArticle?mini=true&url=" + fullUrl + "&summary= "+ descriptionText)).
                 attr("target", "_blank");
             
             //only adds whatsapp share button for mobile devices
             if(commonsModule.isMobile()){
             $(".right-actions .whatsapp a, .right-actions-mobile .whatsapp a").
-                attr("href", encodeURI("https://wa.me/?text=" + descriptionText + "   " + fullUrl)).attr("target", "_blank");
+                attr("href", encodeURI("//wa.me/?text=" + descriptionText + "   " + fullUrl)).attr("target", "_blank");
             }
             else{
                 $(".right-actions .whatsapp a, .right-actions-mobile .whatsapp a").hide();

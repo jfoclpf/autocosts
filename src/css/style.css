@@ -230,7 +230,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 /* ------------------------------********* SIDEBARS *********----------------------------------- */
 .sidebar {display: none}
 
-.btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('../img/sprites_icons.png') 0 0; }
+.btn-left-sidebar, .btn-right-sidebar {border-radius: 50%; border: 3px solid #2c49b9; width: 45px; height: 45px; background: transparent url('/img/sprites_icons.png') 0 0; }
 .btn-left-sidebar:hover, .btn-right-sidebar:hover {border-color: #385be1}
 .btn-left-sidebar {position: absolute; left: 27px; top: 27px}
 .btn-left-sidebar:hover {background-position: -45px 0}
@@ -283,6 +283,6 @@ table.total tr th + th {text-align: right; width: 25%}
 
 
 /* ---------- Home Footer Animation ---------- */
-footer {display:block; background: transparent url('../img/animation-bg.jpg') repeat-x left 134px; height: 280px}
-footer .animation {display:block; background: transparent url('../img/animation.gif') repeat-x center top; width: 100%; height: 313px}
+footer {display:block; background: transparent url('/img/animation-bg.jpg') repeat-x left 134px; height: 280px}
+footer .animation {display:block; background: transparent url('/img/animation.gif') repeat-x center top; width: 100%; height: 313px}
 

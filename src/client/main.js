@@ -28,13 +28,14 @@ var autocosts = (function(){
             },
             dirs:{
                 clientDir: undefined,               //client directory seen by the browser
-                languagesJsonDir: undefined         //Directory of JSON Translation files
+                languagesJsonDir: undefined,        //path of JSON Translation files
+                translationsDir: undefined
             }
         },
         statistics:{
             statisticsObj: undefined,               //Object with countrys' users costs statistics
-            statisticsHtmlTablesDir: undefined,     //Directory of statistical html tables
-            statisticsJpgTablesDir: undefined       //Directory of statistical jpg tables
+            statisticsHtmlTablesDir: undefined,     //path of statistical html tables
+            statisticsJpgTablesDir: undefined       //path of statistical jpg tables
         },
         serverInfo:{
             switches: undefined,                    //GLOBAL switches Object, got from server configuration
@@ -97,8 +98,8 @@ var autocosts = (function(){
         mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol;
         mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id;
 
-        //booleans
-        mainVariables.serverInfo.booleans.isATest = JSON.parse(globalVariables.dataset.is_this_a_test);  //server refers that this session is a test
+        //booleans, server refers whether this session is a test
+        mainVariables.serverInfo.booleans.isATest = JSON.parse(globalVariables.dataset.is_this_a_test);  
         mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost);
 
         //paths
@@ -118,7 +119,8 @@ var autocosts = (function(){
         mainVariables.paths.url.uberApi = "getUBER/" + selectedCountry;
 
         /*forms present page full url, example 'http://autocosts.info' */
-        mainVariables.paths.url.domainUrl = mainVariables.serverInfo.httpProtocol + "://" + mainVariables.serverInfo.domainListObj[selectedCountry];
+        mainVariables.paths.url.domainUrl = mainVariables.serverInfo.httpProtocol + "://" +
+            mainVariables.serverInfo.domainListObj[selectedCountry];
         mainVariables.paths.url.fullUrl = window.location.href;
 
         /*forms present page full url, example 'http://autocosts.info/UK' */
@@ -126,10 +128,9 @@ var autocosts = (function(){
                                           mainVariables.serverInfo.domainListObj[selectedCountry] + "/" +
                                           selectedCountry;
 
-        var cdnUrl = mainVariables.paths.url.cdnUrl;
-        mainVariables.paths.dirs.translationsDir = cdnUrl + "countries" + "/";       // Directory of JSON Translation files
-        mainVariables.statistics.statisticsHtmlTablesDir = cdnUrl + "tables" + "/";  // Directory of statistical html tables
-        mainVariables.statistics.statisticsJpgTablesDir = cdnUrl + "tables" + "/";   // Directory of statistical jpg tables
+        mainVariables.paths.dirs.translationsDir = "/countries/";       //path JSON Translation files
+        mainVariables.statistics.statisticsHtmlTablesDir = "/tables/";  //path of statistical html tables
+        mainVariables.statistics.statisticsJpgTablesDir = "/tables/";   //path of statistical jpg tables
 
     })();
 
@@ -137,8 +138,6 @@ var autocosts = (function(){
     (function(){
         var globalVariables = document.getElementById('global_variables');
         var jsfilesDefinedByServer = JSON.parse(decodeURI(globalVariables.dataset.js_files));
-        var rootClientURL = mainVariables.paths.url.cdnUrl + mainVariables.paths.dirs.clientDir + "/";
-
         /*var recaptchaFunction = "autocosts.resultsModule.runResultsModule.recaptchaCallback";*/
 
         mainVariables.paths.jsFiles = {
@@ -150,34 +149,34 @@ var autocosts = (function(){
             },
 
             //core functions
-            calculator :          rootClientURL + "core/calculator.js",
-            conversions :         rootClientURL + "core/conversions.js",
+            calculator :          "/client/core/calculator.js",
+            conversions :         "/client/core/conversions.js",
 
-            initialize :          rootClientURL + "initialize.js",
-            commons :             rootClientURL + "commons.js",
-            userForm :            rootClientURL + "userForm.js",
-            validateForm :        rootClientURL + "validateForm.js",
-            runResults :          rootClientURL + "runResults.js",
-            transferData :        rootClientURL + "transferData.js",
-            results :             rootClientURL + "results.js",
-            database :            rootClientURL + "database.js",
+            initialize :          "/client/initialize.js",
+            commons :             "/client/commons.js",
+            userForm :            "/client/userForm.js",
+            validateForm :        "/client/validateForm.js",
+            runResults :          "/client/runResults.js",
+            transferData :        "/client/transferData.js",
+            results :             "/client/results.js",
+            database :            "/client/database.js",
 
-            jQuerySidebar :       rootClientURL + "jquery/jquery.sidebar.min.js",
-            jQueryColor :         rootClientURL + "jquery/jquery.color.min.js",
-            jTimer :              rootClientURL + "jquery/js_timer.js",
+            jQuerySidebar :       "/client/jquery/jquery.sidebar.min.js",
+            jQueryColor :         "/client/jquery/jquery.color.min.js",
+            jTimer :              "/client/jquery/js_timer.js",
 
             PDF : {
-                pdfmake :         rootClientURL + "pdf/pdfmake.min.js",
-                pdfModule :       rootClientURL + "pdf/pdfModule.js",
-                vfs_fonts :       rootClientURL + "pdf/vfs_fonts.js",
-                vfs_fonts_IN :    rootClientURL + "pdf/IN/vfs_fonts.js",
-                vfs_fonts_JP :    rootClientURL + "pdf/JP/vfs_fonts.js",
-                vfs_fonts_CN :    rootClientURL + "pdf/CN/vfs_fonts.js"
+                pdfmake :         "/client/pdf/pdfmake.min.js",
+                pdfModule :       "/client/pdf/pdfModule.js",
+                vfs_fonts :       "/client/pdf/vfs_fonts.js",
+                vfs_fonts_IN :    "/client/pdf/IN/vfs_fonts.js",
+                vfs_fonts_JP :    "/client/pdf/JP/vfs_fonts.js",
+                vfs_fonts_CN :    "/client/pdf/CN/vfs_fonts.js"
             },
 
-            charts :              rootClientURL + "chart/charts.js",
-            chartjs :             rootClientURL + "chart/chartjs.min.js",
-            smartAppBanner:       rootClientURL + "smart-app-banner.js"
+            charts :              "/client/chart/charts.js",
+            chartjs :             "/client/chart/chartjs.min.js",
+            smartAppBanner:       "/client/smart-app-banner.js"
         };
 
         Object.freeze(mainVariables.paths.jsFiles);

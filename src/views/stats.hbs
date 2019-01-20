@@ -19,7 +19,7 @@
             {{#if serverData.settings.switches.dataBase}}
                 <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
             {{/if}}
-            <div class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></div>
+            <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"/></a></div>
         </header>
 
         <!-- World stats car cost -->
@@ -208,12 +208,10 @@
     <!-- Data sent to JS code on browser -->
     {{> globalData }}    
 
-    <script src="{{{serverData.fileNames.client.jquery.uri}}}"></script>
-    <script src="{{{serverData.fileNames.client.chartjs.uri}}}"></script>
-    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/chart/worldStatsChart.js"></script>
-
-    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/jquery/jquery.min.js"></script>
-    <script src="{{{serverData.settings.cdn.url}}}{{{serverData.directories.client.client}}}/main.js"></script>
+    <script src="/client/jquery/jquery.min.js"></script>
+    <script src="/client/chart/chartjs.min.js"></script>
+    <script src="/client/chart/worldStatsChart.js"></script>    
+    <script src="/client/main.js"></script>
 
 </body>
 </html>            

@@ -17,7 +17,7 @@
             {{#if serverData.settings.switches.dataBase}}
                 <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
             {{/if}}
-            <div class="logo"><a href="/" title="Home"><img src="img/logo/logo.svg" alt="Auto Costs"/></a></div>
+            <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"/></a></div>
         </header>
 
         <section id="hero">
@@ -61,13 +61,13 @@
             <div class="animation"></div>
         </footer>
     </main>
-        
+
     <!-- Data sent to JS code on browser -->
     {{> globalData }}
-    
-    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="client/jquery/jquery.min.js"></script>
-    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="client/main.js"></script>
-    
+
+    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/jquery/jquery.min.js"></script>
+    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/main.js"></script>
+
 </body>
 </html>
 
