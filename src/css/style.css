@@ -140,7 +140,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 /* target Internet Explorer 9 to undo the custom arrow */
 @media screen and (min-width:0) {
-    select {background:none; padding: 5px;}
+    select {/*background:none; padding: 5px;*/} /*it was hiding the select arrow on Chrome*/
 }
 
 
