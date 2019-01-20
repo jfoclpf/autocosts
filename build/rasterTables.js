@@ -12,19 +12,19 @@ var args = system.args;
 
 if(args.length !== 3){
     console.log("ERROR: Bad length of arguments");
-    phantom.exit(); 
+    phantom.exit(1);//exit with error
 }
 
-if(!fs.exists(args[1]) || args[1].split(".")[1] !== "htm"){
+if(!fs.exists(args[1]) || args[1].split(".").pop() !== "htm"){
     console.log("args[1]: " + args[1]);
     console.log("ERROR: args[1] must be an existing htm file");
-    phantom.exit(); 
+    phantom.exit(1); 
 }
 
-if(args[2].split(".")[1] !== "jpg"){
+if(args[2].split(".").pop() !== "jpg"){
     console.log("args[2]: " + args[2]);
     console.log("ERROR: args[2] must have jpg extension");
-    phantom.exit(); 
+    phantom.exit(1); 
 }
 
 var htmlFileToBeRendered = args[1];

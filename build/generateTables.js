@@ -1,8 +1,8 @@
 /*
  File which generates the statistics tables. For each country it generates a html file and a jpg file located at bin/tables
  It uses the PhantomJS script 'build/rasterTables.js' to rasterize these tables into JPEG files
- It does it by using a handlebars statistics table template located at bin/tables/template.hbs. 
- With this template it renders for each country two html files, one html temporary file which is used to rasterize the public 
+ It does it by using a handlebars statistics table template located at bin/tables/template.hbs.
+ With this template it renders for each country two html files, one html temporary file which is used to rasterize the public
  permament JPG file accessible via tables/XX.jpg, and another permanent html file that is publicly accessible via tables/XX.html
 */
 
@@ -114,14 +114,14 @@ isOnline().then(function(online) {
                     else{
                         return "";
                     }
-                };                
+                };
 
                 handlebars.registerHelper('toFixed', toFixed);
 
                 var hbsTemplate = handlebars.compile(templateRawData);
 
                 var data = {
-                    "countryCode" : CCfile, 
+                    "countryCode" : CCfile,
                     "countryName": countryName,
                     "availableCountries": availableCountries,
                     "fileNames": fileNames,
@@ -139,8 +139,8 @@ isOnline().then(function(online) {
 
                 var resultForHtmlPage = hbsTemplate(dataHtml);
                 var resultForJpgImage = hbsTemplate(dataJpg);
-                
-                var htmlPermanentFilePath = path.join(directories.bin.tables, CCfile + ".htm"); 
+
+                var htmlPermanentFilePath = path.join(directories.bin.tables, CCfile + ".htm");
                 var htmlFilePathToRenderInJpg = path.join(directories.bin.tables, CCfile + "jpg.htm");
 
                 fs.writeFile(htmlPermanentFilePath, resultForHtmlPage, 'utf8', function (err) {
@@ -154,8 +154,8 @@ isOnline().then(function(online) {
                     if(count2 === numberOfCountries){
                         console.log("\nCreated permanent tables statistical HTML files!\n".info);
                     }
-                });//fs.writeFile  
-                
+                });//fs.writeFile
+
                 fs.writeFile(htmlFilePathToRenderInJpg, resultForJpgImage, 'utf8', function (err) {
                     if (err) {
                         return console.log(err);
@@ -171,7 +171,7 @@ isOnline().then(function(online) {
                         //only after the HTML generation tables was completed
                         rasterTables(directories, availableCountries);
                     }
-                });//fs.writeFile                                                              
+                });//fs.writeFile
 
             });//db.query
 
@@ -216,12 +216,13 @@ function rasterTables(directories, availableCountries){
         ];
 
         (function(CC2, childArgs2){
-            childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+            childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {                
                 if (err){
+                    console.log(stdout.red);
+                    console.log("Try also rebuilding phantomjs module with: " + "npm rebuild phantomjs-prebuilt".red);
                     throw err;
-                    console.log("Try rebuilding phantomjs module with: " + "npm rebuild phantomjs-prebuilt".red);
                 }
-                
+
                 //console.log((path.relative(rootDir, childArgs2[1]) + " => " + path.relative(rootDir, childArgs2[2])).verbose);
 
                 //delete jpg.html file because it was temporary and merely to render jpg file
@@ -230,9 +231,9 @@ function rasterTables(directories, availableCountries){
                         throw err;
                         process.exit(1);
                     }
-                    
+
                     count++;
-                    process.stdout.write(CC2 + (numberOfCountries !== count ? " " : "\n"));                    
+                    process.stdout.write(CC2 + (numberOfCountries !== count ? " " : "\n"));
                 });
             });
         })(CC, childArgs);
