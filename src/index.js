@@ -119,7 +119,8 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
-    partialsDir: [ path.join(__dirname, 'views', 'partials'), 
+    partialsDir: [ path.join(__dirname, 'views', 'main'),
+                   path.join(__dirname, 'views', 'common'), 
                    path.join(__dirname, 'css', 'merged-min'),                   
                    path.join(__dirname, 'tables')],
     helpers: hbsHelpers

@@ -1,0 +1,101 @@
+<div class="wrapper">            
+    <div class="left-actions">
+        <span id="edit_form_btn" class="cursor_pointer">&#8592; {{{edit_form}}}</span>
+    </div>
+
+    <div class="center-actions">
+        <span class="button-pdf button btn-blue medium cursor_pointer">
+            {{> svgIcons/download}} {{{word_download_pdf}}}
+        </span>
+        <span class="button-print button btn-blue medium cursor_pointer">
+            {{> svgIcons/print}} {{{word_print}}}
+        </span>
+    </div>
+
+    <div class="center-actions center-actions-mobile">
+        <a class="button-pdf button btn-blue medium cursor_pointer">
+            {{> svgIcons/download}}
+        </a>
+        <a class="button-print button btn-blue medium cursor_pointer">
+            {{> svgIcons/print}}
+        </a>
+    </div>
+
+    <div class="right-actions">
+        <ul>
+            <li class="facebook">
+                <a class="cursor_pointer">
+                    {{> svgIcons/facebook}}
+                </a>
+            </li>
+            <li class="twitter">
+                <a class="cursor_pointer">
+                    {{> svgIcons/twitter}}
+                </a>
+            </li>
+            <li class="linkedin">
+                <a class="cursor_pointer">
+                    {{> svgIcons/linkedin}}
+                </a>
+            </li>
+            <li class="whatsapp">
+                <a class="cursor_pointer">
+                    {{> svgIcons/whatsapp}}
+                </a>
+            </li>
+        </ul>         
+    </div>
+
+    <!--****** MOBILE ONLY ******-->
+    <div class="right-actions-mobile">
+        <div>
+            <a href="#main-menu"
+               role="button"
+               id="main-menu-toggle"
+               class="menu-toggle button btn-blue medium cursor_pointer"
+               aria-expanded="false"
+               aria-controls="main-menu"
+               aria-label="Open main menu">
+
+                <span class="sr-only">{{{share}}}</span>
+            </a>
+          
+            <nav id="main-menu" class="main-menu" aria-expanded="false" aria-label="Main menu">
+                <a href="#main-menu-toggle"
+                   role="button"
+                   id="main-menu-close"
+                   class="menu-close button btn-blue medium cursor_pointer"
+                   aria-expanded="false"
+                   aria-controls="main-menu"
+                   aria-label="Close main menu">
+
+                    <span class="sr-only">{{{close}}}</span>
+                </a>
+                
+                <ul>
+                    <li class="facebook">
+                        <a class="cursor_pointer">
+                            {{> svgIcons/facebook}}
+                        </a>
+                    </li>
+                    <li class="twitter">
+                        <a class="cursor_pointer">
+                            {{> svgIcons/twitter}}
+                        </a>
+                    </li>
+                    <li class="linkedin">
+                        <a class="cursor_pointer">
+                            {{> svgIcons/linkedin}}
+                        </a>
+                    </li>
+                    <li class="whatsapp">
+                        <a class="cursor_pointer">
+                            {{> svgIcons/whatsapp}}
+                        </a>
+                    </li>
+                </ul>
+            
+            </nav>            
+        </div>
+    </div>
+</div>  
