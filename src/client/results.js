@@ -883,11 +883,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
 
     //puts the currency symbol after the money value, for certain countries
     function currencyShow(value){
-        if (typeof translatedStrings.invert_currency !== 'undefined' &&
-            (translatedStrings.invert_currency || 
-             translatedStrings.invert_currency == "true" || 
-             translatedStrings.invert_currency == "1") )
-        {
+        if (translatedStrings.invert_currency && JSON.parse(translatedStrings.invert_currency)){        
             return (value + " " + translatedStrings.curr_symbol);
         }
         else{
