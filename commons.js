@@ -11,7 +11,7 @@ module.exports = {
         EVENTEMITTER = eventEmitter;
         _init();
     },
-    
+
     getROOT_DIR: function(){
         if(!ROOT_DIR || typeof ROOT_DIR === 'undefined'){
             setROOT_DIR();
@@ -22,7 +22,7 @@ module.exports = {
     getSettings: function(){
         if(isEmptyOrInvalidObj(SETTINGS)){
             _init();
-        }        
+        }
         return SETTINGS;
     },
 
@@ -32,7 +32,7 @@ module.exports = {
         }
         return RELEASE;
     },
-    
+
     setRelease: function(release){
         //check that release was correctly chosen
         if (release !== "work" && release !== "prod"){
@@ -58,7 +58,7 @@ module.exports = {
     getDomainsObject: function(domainsCountries){
         return _getDomainsObject(domainsCountries);
     },
-    
+
     getUniqueArray: function(Arr){
         return _getUniqueArray(Arr);
     },
@@ -70,13 +70,17 @@ module.exports = {
     getCClistOnStr: function(available_CT){
         return getCClistOnStr(available_CT);
     },
-    
+
     getDataBaseErrMsg: function(scriptName, serviceObj){
         return _getDataBaseErrMsg(scriptName, serviceObj);
     },
-    
+
     getConsoleColors: function(){
         return _getConsoleColors();
+    },
+
+    checkForInternet: function(){
+        _checkForInternet();
     }
 };
 
@@ -90,15 +94,18 @@ var ROOT_DIR; //root directory of the project
 var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER;
 var optionDefinitions; //for the commandLineArgs
 
+const path     = require('path');
+const fs       = require('fs');
+const commandLineArgs = require('command-line-args');
+const colors   = require('colors'); 
+const isOnline = require('is-online');
+const flat     = require('flat');
+const debug    = require('debug')('app:commons');
+
+colors.setTheme(_getConsoleColors());
+
 //initialization
 function _init(){
-    
-    //these const npm modules are local and not global to avoid errors with PhantomJS, 
-    //since both NodeJS and PhantomJS load this commons.js module
-    const commandLineArgs = require('command-line-args');
-    const isOnline = require('is-online');
-    const path     = require('path');
-    const fs       = require('fs');
 
     /*GLOBAL switches, false by default*/
     /*these values are defined by the command line arguments*/
@@ -131,7 +138,7 @@ function _init(){
     var options = commandLineArgs(optionDefinitions);
     //this "option" object is just filled with the options that were inserted in the command line
     //console.log(options);
-    
+
     var release = options.release;
     //check that release was correctly chosen
     if (release !== "work" && release !== "prod"){
@@ -139,22 +146,22 @@ function _init(){
     }
     console.log("Release: '" + release + "'");
     RELEASE = release; //set Global variable
-    
+
     //shows NODE_ENV
     if(process.env.NODE_ENV){
         console.log("NODE_ENV: ", process.env.NODE_ENV);
-    }        
-        
+    }
+
     //after the RELEASE is known, the directories and files can be obtained and set
     setDIRECTORIES();
-    setFILENAMES();    
-        
+    setFILENAMES();
+
     //check if --help was selected
     if(options.help){
         console.log(getArgvHelpMsg());
         process.exit();
-    }        
-    
+    }
+
     //set HTTP port
     var HTTPport;
     if(options.port){
@@ -171,7 +178,7 @@ function _init(){
             throw "Error setting port";
         }
     }
-    
+
     //set SWITCHES according to commandLineArgs input options
     if (options.All){
         for (var opt in SWITCHES){
@@ -185,37 +192,7 @@ function _init(){
             }
         }
     }
-    
-    //checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics" 
-    //options are selected. These options require Internet and thus disables them
-    var demandingInternet = ["uber", "cdn", "social", "googleCaptcha", "googleAnalytics"];
-    var isAny = false;
-    for (var i=0; i<demandingInternet.length; i++){
-        isAny = isAny || SWITCHES[demandingInternet[i]]
-    }
-    if(isAny){
-        //check for Internet connection
-        isOnline().then(function(online) {
-            if(!online){
-                if(SWITCHES.cdn){
-                    setCdnOrLocalFiles(false); //set Local files with "false"
-                }
-                
-                process.stdout.write("\nThere is no Internet connection. Services disabled:");
-                for (var i=0; i<demandingInternet.length; i++){
-                    if(SWITCHES[demandingInternet[i]]){
-                        SWITCHES[demandingInternet[i]] = false;
-                        process.stdout.write(" " + demandingInternet[i]);
-                    }
-                }
-                process.stdout.write(".\n");
-                
-                EVENTEMITTER.emit('settingsChanged');
-            }
-        });
-    }
-    
-    
+
     SETTINGS = {
         "release"  : RELEASE,
         "switches" : SWITCHES,
@@ -229,64 +206,66 @@ function _init(){
         },
         "uber": {
             "enabled"  : SWITCHES.uber,
-            "name"     : "uber",            
+            "name"     : "uber",
             "propName" : "token",
             "propType" : "string",
             "token"    : ""
         },
         "googleCaptcha" : {
             "enabled"   : SWITCHES.googleCaptcha,
-            "name"      : "googleCaptcha",            
+            "name"      : "googleCaptcha",
             "propName"  : "secretKey",
             "propType"  : "string",
             "secretKey" : ""
         },
         "googleAnalytics": {
             "enabled"    : SWITCHES.googleAnalytics,
-            "name"       : "googleAnalytics",           
+            "name"       : "googleAnalytics",
             "propName"   : "trackingId",
             "propType"   : "string",
             "trackingId" : ""
         },
         "dataBase" : {
             "enabled"     : SWITCHES.dataBase,
-            "name"        : "dataBase",            
+            "name"        : "dataBase",
             "propName"    : "credentials",
             "propType"    : "object",
             "credentials" : {}
         },
         "money" : {
             "enabled"     : SWITCHES.dataBase, //this switch is linked with switch of dataBase
-            "name"        : "money",            
+            "name"        : "money",
             "propName"    : "ApiId",
             "propType"    : "string",
             "ApiId"       : ""
-        },        
+        },
         "defaultCountry" : defaultCountry
     };
+    
+    _checkForInternet();
 
     //reads data from JSON file with credentials for each service (in directory credentials/)
     var credentialsFileName;
     if (RELEASE === 'prod'){
-        credentialsFileName = FILENAMES.server.credentialsFullPath.prod; 
+        credentialsFileName = FILENAMES.server.credentialsFullPath.prod;
     }
     else{
         credentialsFileName = FILENAMES.server.credentialsFullPath.work;
     }
     console.log(credentialsFileName);
-    
+
     //fills missing information, for each service corresponding property: "url", "token", "secretKey", etc.
-    //gets the information from the credentials JSON file    
+    //gets the information from the credentials JSON file
     for (service in SETTINGS){
         var serviceObj = SETTINGS[service];
-        if(typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled){                                           
-            
+        if(typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled){
+
             if (!fs.existsSync(credentialsFileName)){
-                throw _getNoServiceErrMsg(serviceObj, credentialsFileName);  
+                throw _getNoServiceErrMsg(serviceObj, credentialsFileName);
             }
             var credentialsData = JSON.parse(fs.readFileSync(credentialsFileName));
-            
-            if (serviceObj.propType === 'string'){                
+
+            if (serviceObj.propType === 'string'){
                 var dataStr = credentialsData[serviceObj.name][serviceObj.propName];
                 //check if string is valid (no just whitespaces or asterisks)
                 if(!isValidCredentialString(dataStr)){
@@ -298,7 +277,7 @@ function _init(){
                 var dataObj = credentialsData[serviceObj.name];
                 if(!isValidCredentialString(dataObj)){
                     throw _getNoServiceErrMsg(serviceObj, credentialsFileName);
-                }                
+                }
                 serviceObj[serviceObj.propName] = Object.assign({}, dataObj); //clone object
             }
             else{
@@ -306,23 +285,19 @@ function _init(){
             }
         }
     }
-    
+
     //set FILENAMES URIs for JS known files according to Local files or CDN
     //if cdn option is enabled, select CDN version, otherwise Local files
     setCdnOrLocalFiles(SWITCHES.cdn);
-    
-    const debug = require('debug')('app:commons');
+
     debug("SETTINGS", SETTINGS);
-    debug("DIRECTORIES", DIRECTORIES);    
+    debug("DIRECTORIES", DIRECTORIES);
     debug("FILENAMES", FILENAMES);
 }
 
 
 function setDIRECTORIES(){
 
-    const debug = require('debug')('app:commons');
-    const path = require('path');
-    
     if(typeof ROOT_DIR === 'undefined'){
         setROOT_DIR();
     }
@@ -338,8 +313,8 @@ function setDIRECTORIES(){
     var binDir       = path.join(ROOT_DIR, "bin");
 
     //Build directory - the directory to where the building scripts are stored
-    var buildDir     = path.join(ROOT_DIR, "build");    
-    
+    var buildDir     = path.join(ROOT_DIR, "build");
+
     //credentials directory where json credential files are stored for each service
     var credentialsDir = path.join(ROOT_DIR, "credentials");
 
@@ -349,24 +324,24 @@ function setDIRECTORIES(){
         "bin"               : binDir,
         "build"             : buildDir,
         "credentials"       : credentialsDir
-    };    
+    };
 
     /*#################################*/
-    
-    //these paths are relative, and they refer to the paths which are seen by the browser        
+
+    //these paths are relative, and they refer to the paths which are seen by the browser
     var clientDirs = {
         "client"   : "client", //directory with respect to src/ dir, where the client JS browser files will be stored
         "css"      : "css",    //directory with respect to src/ dir, where the CSS  files will be stored
         "tables"   : "tables"  //where the JPG tables with car costs for each country
     };
-    
+
     /*#################################*/
-    
-    //these paths are relative and refer to the project's code parent folder, 
-    //i.e., the parent directory of these paths is either src/ or bin/  
+
+    //these paths are relative and refer to the project's code parent folder,
+    //i.e., the parent directory of these paths is either src/ or bin/
     var projectDirs = {
         "countries" : "countries",
-        "css"       : "css",      
+        "css"       : "css",
         "tables"    : "tables",
         "images"    : "images",
         "public"    : "public",
@@ -377,35 +352,32 @@ function setDIRECTORIES(){
 
     var srcProjectDirs = {};
     var binProjectDirs = {};
-    
+
     for (var prop in projectDirs){
         srcProjectDirs[prop] = path.join(srcDir, projectDirs[prop]);
         binProjectDirs[prop] = path.join(binDir, projectDirs[prop]);
     }
-    
+
     DIRECTORIES = {
         //these paths are absolute
         "server"  : serverDirs,     //these paths are absolute
         "src"     : srcProjectDirs, //these paths are absolute
         "bin"     : binProjectDirs, //these paths are absolute
-        "client"  : clientDirs,     //these paths are relative (as seen by the browser)       
+        "client"  : clientDirs,     //these paths are relative (as seen by the browser)
         "project" : projectDirs     //these paths are relative (as seen by either src/ or bin/)
-    };    
+    };
 }
 
 function setFILENAMES(){
 
-    const debug = require('debug')('app:commons');  
-    const path = require('path');
-    
     if(!RELEASE){
         _init();
     }
-    
-    if(isEmptyOrInvalidObj(DIRECTORIES)){        
+
+    if(isEmptyOrInvalidObj(DIRECTORIES)){
         setDIRECTORIES();
     }
-    
+
     var countriesDir = RELEASE === "prod" ? DIRECTORIES.bin.countries : DIRECTORIES.src.countries;
     var clientDir = RELEASE === "prod" ? DIRECTORIES.bin.client : DIRECTORIES.src.client;
 
@@ -413,7 +385,7 @@ function setFILENAMES(){
     FILENAMES = {
         //these paths are ABSOLUTE
         "build" : {
-            "compressImages"    : path.join(DIRECTORIES.server.build, "compressImages.js"),   
+            "compressImages"    : path.join(DIRECTORIES.server.build, "compressImages.js"),
             "generateTables"    : path.join(DIRECTORIES.server.build, "generateTables.js"),
             "getAvgFromDB"      : path.join(DIRECTORIES.server.build, "getAvgFromDB.js"),
             "minifyFiles"       : path.join(DIRECTORIES.server.build, "minifyFiles.js"),
@@ -425,8 +397,8 @@ function setFILENAMES(){
             "countriesListFile" : path.join(countriesDir, "list.json"),
             "conversions.js"    : path.join(clientDir, "core", "conversions.js"),
             "calculator.js"     : path.join(clientDir, "core", "calculator.js"),
-            "transferData.js"   : path.join(clientDir, "transferData.js")                
-        },      
+            "transferData.js"   : path.join(clientDir, "transferData.js")
+        },
         "server" : {
             "credentials" : {
                 "prod"          : "prodCredentials.json",
@@ -435,31 +407,31 @@ function setFILENAMES(){
             "credentialsFullPath" : {
                 "prod"          : "",
                 "work"          : ""
-            }           
+            }
         },
-        //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER, 
+        //the LOCAL paths are RELATIVE to the main host as seen by the BROWSER,
         //thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
         "client" : {
             "jquery" : {
                 "local" : DIRECTORIES.client.client + '/jquery/jquery.min.js',
                 "cdn"   : "https://code.jquery.com/jquery-latest.min.js",
                 "uri"   : "" //it will be one of the above
-            },  
+            },
             "chartjs" : {
                 "local" : DIRECTORIES.client.client + '/chart/chartjs.min.js',
                 "cdn"   : 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js',
                 "uri"   : "" //it will be one of the above
-            },            
+            },
             "GrecaptchaAPI" : "https://www.google.com/recaptcha/api.js",
-            "Ganalytics"    : "https://www.google-analytics.com/analytics.js"            
-        }       
-    };  
-    
+            "Ganalytics"    : "https://www.google-analytics.com/analytics.js"
+        }
+    };
+
     //fills credentialsFullPath subObject
     for (file in FILENAMES.server.credentials){
-        FILENAMES.server.credentialsFullPath[file] = 
+        FILENAMES.server.credentialsFullPath[file] =
             path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file]);
-    }     
+    }
 }
 
 //get parent directory of project directory tree
@@ -471,14 +443,12 @@ function setROOT_DIR(){
     if ((typeof process !== 'undefined') &&
         (process.release.name.search(/node|io.js/) !== -1)){//node
 
-        var path = require('path');
         //the root directory of the project is where this file is stored
         root_dir = path.resolve(__dirname, '.');
         console.log("Node is running. ROOT_DIR: " + root_dir);
     }
     else {//PhantomJS?
         try{
-            var fs = require('fs');
             //considering the phantom is called from build/
             //it needs to go back to the parent directory to get the root directory of the project
             root_dir = fs.absolute("../");
@@ -507,6 +477,61 @@ function setCdnOrLocalFiles(isCDN){
     //ensures that CDN URL to be passed to client is blank in case cdn option is not enabled
     if (!isCDN){
         SETTINGS.cdn.url = "";
+    }
+}
+
+//checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics"
+//options are selected. These options require Internet and thus disables them
+function _checkForInternet(){        
+                
+    //bin/index.js services demanding Internet
+    var demandingInternet = ["uber", "cdn", "social", "dataBase", "googleCaptcha", "googleAnalytics"];
+
+    var isAny = false;
+    for (var i=0; i<demandingInternet.length; i++){
+        isAny = isAny || SWITCHES[demandingInternet[i]];
+    }
+    
+    if(isAny){
+        //check for Internet connection
+        isOnline().then(function(online) {
+            if(!online){
+                
+                if(EVENTEMITTER){ EVENTEMITTER.emit('onlineStatus', false); }
+                
+                console.log("There is no Internet connection".warn);
+                
+                if(SWITCHES.cdn){
+                    setCdnOrLocalFiles(false); //set Local files with "false"
+                }                
+
+                let servicesDisabled = [];
+                for (let i=0; i<demandingInternet.length; i++){
+                    if(SWITCHES[demandingInternet[i]]){
+                        SWITCHES[demandingInternet[i]] = false;
+                        servicesDisabled.push(demandingInternet[i]);
+                    }
+                }
+
+                let len = servicesDisabled.length;
+                if(len) {
+                    process.stdout.write("Services disabled: ");
+                    for (let i=0; i<len; i++){
+                        process.stdout.write( servicesDisabled[i] + (i !== len-1 ? ", " : ".\n"));
+                    }
+
+                    if(EVENTEMITTER){ EVENTEMITTER.emit('settingsChanged'); }
+                }
+                else{
+                    process.stdout.write("No services disabled\n");
+                }
+            }
+            else{
+                console.log("The server is online".info);
+                if(EVENTEMITTER){ EVENTEMITTER.emit('onlineStatus', true); }
+            }
+
+        });
     }
 }
 
@@ -545,10 +570,8 @@ function getCClistOnStr(available_CT){
 
 function getArgvHelpMsg(){
 
-    const path = require('path');
-    
     var filename = path.basename(process.mainModule.filename);
-    
+
     //credentials Directory seen from Root directory
     var credDirRelativePath = path.relative(DIRECTORIES.server.root, DIRECTORIES.server.credentials);
 
@@ -558,30 +581,29 @@ function getArgvHelpMsg(){
         "\n" +
         "Options: \n" +
         "-r, --release              'work' for tests or 'prod' for production\n" +
-        "-p, --port                 HTTP port on which the application is listening " + 
+        "-p, --port                 HTTP port on which the application is listening " +
                                     "(default:" + defaultPortWork + " for tests, and " + defaultPortProd + " for production)\n" +
         "    --https                Enables protocol https when available\n" +
         "    --print                Enables the standard printing of final report\n" +
         "    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n" +
         "    --social               Enables social media plugin\n" +
-        "    --disableCharts        Disables Charts on final report\n" +        
+        "    --disableCharts        Disables Charts on final report\n" +
         "\n" +
         "    External API services, disabled by default\n" +
-        "    API credentials must be in either " + credDirRelativePath + "/workCredentials.json or " + credDirRelativePath + "/prodCredentials.json according to release\n" +        
+        "    API credentials must be in either " + credDirRelativePath + "/workCredentials.json or " + credDirRelativePath + "/prodCredentials.json according to release\n" +
         "    --cdn                  Enables Content Delivery Network\n" +
         "    --uber                 Enables UBER API\n" +
         "    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n" +
         "    --googleAnalytics      Enables Google Analytics\n" +
         "    --dataBase             Enables a mysql Database\n" +
         "\n";
-    
+
     return messg;
 }
 
 function _getNoServiceErrMsg(serviceObj, fileName){
 
-    const colors = require('colors/safe'); //does not alter string prototype
-    var messg = "\nConsidering you enabled the " + serviceObj.name + 
+    var messg = "\nConsidering you enabled the " + serviceObj.name +
                 " services and you're using the release '" + RELEASE + "', " +
                 "you have to either:\n" +
                 "  - insert within the file " + colors.green.bold(fileName) + " a valid " +
@@ -592,11 +614,11 @@ function _getNoServiceErrMsg(serviceObj, fileName){
 }
 
 function _getDataBaseErrMsg(scriptName, serviceObj){
-    var messg = "\nThis building script " + scriptName + " needs the Database credentials to run, therefore:\n" + 
-                "- enable the Database option (--dataBase) and provide also its credentials on " + 
+    var messg = "\nThis building script " + scriptName + " needs the Database credentials to run, therefore:\n" +
+                "- enable the Database option (--dataBase) and provide also its credentials on " +
                 serviceObj.filePath + ", or\n" +
                 "- do not run this particular building script file while building.\n";
-    
+
     return messg;
 }
 
@@ -622,9 +644,8 @@ function _getConsoleColors(){
 
 //returns an object with several different information about the domains
 function _getDomainsObject(domainsCountries){
-    
+
     if(!domainsCountries){
-        let fs = require('fs');
         let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'));
         domainsCountries = countriesInfo.domainsCountries;
     }
@@ -632,14 +653,14 @@ function _getDomainsObject(domainsCountries){
     var domainsObj = {};
     domainsObj.countries = domainsCountries; //Object that associates a Country Code (CC) with a domain
     domainsObj.uniqueArr = _getUniqueArray(domainsCountries); //Array with unique domain names
-        
+
     var counts = {};
     var arr = Object.values(domainsCountries);
     for (var i = 0; i < arr.length; i++) {
         counts[arr[i]] = 1 + (counts[arr[i]] || 0);
-    }        
+    }
     domainsObj.counts = counts;  //for every domain, count how many domain names
-    
+
     return domainsObj;
 }
 
@@ -664,22 +685,22 @@ function isValidCredentialString(data){
     if (typeof data === 'string'){
         //check if string is valid (no just whitespaces or asterisks)
         return data && data.replace(/(\s|\*)/g, '').length;
-    }    
-    
-    else if (typeof data === 'object'){                
-        var flattenedObj = require('flat').flatten(data);
+    }
+
+    else if (typeof data === 'object'){
+        var flattenedObj = flat.flatten(data);
         for (var key in flattenedObj){
             var str = flattenedObj[key];
-            //first character. When property of obj starts with '_' it's comment, thus ignore            
-            if (key.charAt(0) !== "_"){ 
+            //first character. When property of obj starts with '_' it's comment, thus ignore
+            if (key.charAt(0) !== "_"){
                 if (!str || !str.replace(/(\s|\*)/g, '').length){
                     return false;
                 }
             }
-        }        
+        }
         return true;
     }
-    
+
     else{
         return false;
     }

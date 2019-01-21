@@ -19,8 +19,9 @@ const exphbs      = require('express-handlebars');
 const bodyParser  = require('body-parser');
 const compression = require('compression');
 const sortObj     = require('sort-object'); //to sort JS objects
-const colors      = require(path.join('colors', 'safe')); //does not alter string prototype
+const colors      = require('colors'); //does not alter string prototype
 const util        = require('util');
+const isOnline    = require('is-online');
 const debug       = require('debug')('app:index');
 
 //personalised requires
@@ -48,7 +49,8 @@ var serverData = {
     "availableCountries" : sortObj(countriesInfo.availableCountries),   //Array of alphabetically sorted available Countries
     "languagesCountries" : countriesInfo.languagesCountries,            //Array of Language Codes
     "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
-    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries)  //a string with all the CC
+    "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries), //a string with all the CC
+    "isOnline"           : undefined    //if the server has access to Internet connection (to use database, uber, etc.)
 };
 debug(util.inspect(serverData, {showHidden: false, depth: null}));
 
@@ -106,6 +108,11 @@ eventEmitter.on('settingsChanged', function(){
     
     console.log("Settings updated.");    
     debug(util.inspect(serverData, {showHidden: false, depth: null}));
+});
+
+//if the server has or has not Internet access
+eventEmitter.on('onlineStatus', function(isOnline){
+    serverData.isOnline = isOnline;
 });
 
 console.log("\n\nServer started at " + __dirname);
@@ -184,24 +191,43 @@ if (SWITCHES.dataBase){
         console.log("Statistical Data colected");           
     });
     
-    //statistics page
     const stats = require(path.join(__dirname, 'server', 'stats'));
-    stats.prepareStats(serverData, WORDS, eventEmitter);
-        
-    app.get('/stats', function(req, res) {
-        debug("\nRoute: app.get('/stats')");
-        stats.req(req, res, serverData, WORDS.UK);
+    
+    isOnline().then(function(online) {
+        if(online){    
+            //statistics page
+            serverData.isOnline = true;
+            
+            stats.prepareStats(serverData, WORDS, eventEmitter);
+        }
+        else{
+            serverData.isOnline = false;
+        }
     });
-
+        
+    app.get('/stats', function(req, res, next) {
+        if(serverData.isOnline){
+            debug("\nRoute: app.get('/stats')");
+            stats.req(req, res, serverData, WORDS.UK);
+        }
+        else{
+            next();
+        }
+    });
     
     //process the users input to be sent to database
     const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'));
-    app.post('/submitUserInput', function(req, res) {
-        debug("\nRoute: app.post('/submitUserInput')");
-        submitUserInput(req, res, serverData);
+    
+    app.post('/submitUserInput', function(req, res, next) {
+        if(serverData.isOnline){        
+            debug("\nRoute: app.post('/submitUserInput')");
+            submitUserInput(req, res, serverData);
+        }
+        else{
+            next();
+        }
     });
 }
-
 
 //before processing the request generate a pre CSP string
 //for fast web delivery

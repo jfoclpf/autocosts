@@ -278,8 +278,11 @@ module.exports = {
 }
 
 /*server side Handlebars function to tell whether the Statistical Database Information is activated*/
-function isDB(_this){
-    return _this.serverData.settings.switches.dataBase && _this.CC.toUpperCase() !== "XX";
+function isDB(_this){        
+    return _this.serverData.statsData && 
+        Object.keys(_this.serverData.statsData).length !== 0 && //check if object not empty
+        _this.serverData.settings.switches.dataBase && 
+        _this.CC.toUpperCase() !== "XX";
 }
 
 function _toFixed(num, n){
