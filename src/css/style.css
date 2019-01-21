@@ -243,7 +243,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .sidebars > .sidebar { position: fixed; color: black; text-align: left; z-index: 9999999; background-color: rgba(0, 0, 0, 0); overflow: hidden;}
 
 .sidebar > .sidebar-left-container, .sidebar > .sidebar-right-container {background: white; width: 30%; height: 110%; padding: 40px 20px; -webkit-box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56); -moz-box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56); box-shadow: 6px 0px 15px -5px rgba(0,0,0,0.56);}
-.sidebar > .sidebar-left-container > .sidebar-contact {margin: 40px 0 0;}
+.sidebar > .sidebar-left-container > .sidebar-contact {margin: 40px 0 0; clear: both;}
 .sidebar > .sidebar-right-container {position: absolute; right: 0; padding: 0 0 40px; -webkit-box-shadow: -6px 0px 15px -5px rgba(0,0,0,0.56);-moz-box-shadow: -6px 0px 15px -5px rgba(0,0,0,0.56);box-shadow: -6px 0px 15px -5px rgba(0,0,0,0.56);}
 
 .sidebar > .sidebar-right-container > h3 {margin: 10px 0 0 20px}
@@ -252,8 +252,14 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .sidebar > .sidebar-right-container > h4::before {content: " -"; background-color: #2c49b9; color: #2c49b9; margin-right: 10px;}
 .sidebar > .sidebar-right-container > h4.yellow-bar::before {background-color: #efa00b; color: #efa00b;}
 
+.sidebar .sidebar-left-container .worldStats {margin: 20px 0 20px 0; float: left;}
+.sidebar .sidebar-left-container .worldStats a {float: left;}
+.sidebar .sidebar-left-container .worldStats span {float: left; margin-top: 12px;}
+.sidebar .sidebar-left-container .chartIcon {width: 45px; height: 45px; float: left; background: transparent url(/img/sprites_icons.png) -90px 0;}
+
 .sidebar .sidebar-right-container .worldStats {margin-top: 10px; float:left;}
-.sidebar .sidebar-right-container .headNote {margin: 0 0 40px 20px;}
+.sidebar .sidebar-right-container .headNote {margin: 0 0 45px 20px;}
+.sidebar .sidebar-right-container .downloadButton {background-color: #2c49b9; border-radius: 5px; -webkit-border-radius: 5px; width:18px; height: 22px; padding: 6px 5px 1px 7px; float: right; margin: 10px 20px 0 0; cursor: pointer;}
 
 .sidebar > .sidebar-left-container > .close {position: absolute;margin: -11px 0 0 33%;}
 .sidebar > .sidebar-right-container > .close {position: absolute;margin: 29px 0 0 -18%;}

@@ -6,8 +6,7 @@ $( document ).ready(function() {
 
     $("#countrySelectStats").val(countryCode);
 
-    $('#countrySelectStats').on('change', function() {
-        //forward to the respective page, from ..../AA.htm to ..../BB.htm
+    $('#countrySelectStats').on('change', function() {        
         window.location.href = window.location.origin + "/tables/" + this.value + ".htm";
     });
 
@@ -19,4 +18,6 @@ $( document ).ready(function() {
         var win = window.open(urlToGo, '_blank');
         win.focus();
     });
+    
+    $(".main-title a").attr("href","/" + countryCode);
 });

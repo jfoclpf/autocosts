@@ -115,7 +115,9 @@
     <div class="statistics">
         <div class="header">
             <div class="main-title">
-                <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
+                {{#if isHtmlPage}}<a href="">{{/if}}
+                    <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
+                {{#if isHtmlPage}}</a>{{/if}}
                 <span>{{{words.average_costs_per_type}}}</span>
             </div>
 

@@ -75,7 +75,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
             });
         };
 
-        //Load statistics table on sidebars.hbs
+        //Load statistics table on sidebars.hbs; paramter cc stands for Country Code
         function updateStatsTable(cc){
 
             if(!cc || cc.toUpperCase() === "XX" || !serverInfo.switches.database){
@@ -112,6 +112,15 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
                     }
                 }
             }
+            
+            
+            //assigns hanlder to show tables
+            $(".sidebar-right-container").
+                off("click", ".downloadButton").
+                on("click", ".downloadButton", function(){
+                
+                window.location.href = "/tables/" + cc + ".htm";
+            });            
         }
 
         //adjusts the size of select according to content
@@ -192,7 +201,8 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         updateStatsTable(serverInfo.selectedCountry);
 
         $("#country_select_stats").on('change', function() {
-            updateStatsTable(this.value);
+            var countryCode = this.value;            
+            updateStatsTable(countryCode);                                    
         });
     }
 

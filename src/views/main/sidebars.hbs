@@ -5,7 +5,14 @@
         <h3>Info</h3>
 
         {{{createParagraphs words.initial_text}}}
-
+        
+        <div class="worldStats">            
+            <a href="/stats">
+                <div class="chartIcon"></div>
+                <span>World stats</span>
+            </a>            
+        </div>
+        
         <div class="sidebar-contact">
             <h3><a href="https://www.npmjs.com/package/autocosts">@npm</a></h3>
             <h3><a href="https://github.com/jfoclpf/autocosts">@github</a></h3>
@@ -30,7 +37,9 @@
             <div class="worldStats">
                 <a href="/stats">World stats</a>
             </div>
-            <div></div>
+            <div class="downloadButton">
+                {{> svgIcons/download}}
+            </div>
         </div>             
         
         {{#with words}}
