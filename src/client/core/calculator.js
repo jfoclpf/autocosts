@@ -735,7 +735,9 @@ autocosts.calculatorModule = (function(thisModule){
             distancePerYear,              //distance driven per year
             distanceBetweenHomeAndJob,    //distance between home and job (one-way)
             distanceDuringEachWeekend,    //distance the user drives during weekend
-            daysPerWeekUserDrivesToJob;
+            daysPerWeekUserDrivesToJob,
+            inputDistance,
+            calculated = false;           //whether Driving Distance is truly calculated
 
         var errMsg = "Error calculating Driving distance";
 
@@ -749,34 +751,54 @@ autocosts.calculatorModule = (function(thisModule){
                 distanceBetweenHomeAndJob  = parseFloat(inputData.distance.carToJob.distanceBetweenHomeAndJob);
                 distanceDuringEachWeekend  = parseFloat(inputData.distance.carToJob.distanceDuringWeekends);
 
-                distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringEachWeekend;
-
-                distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
-                distancePerYear  = distancePerMonth * 12;
+                if(isNumber(daysPerWeekUserDrivesToJob) &&
+                   isNumber(distanceBetweenHomeAndJob) &&
+                   isNumber(distanceDuringEachWeekend)){
+                    
+                    distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringEachWeekend;
+                    distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
+                    distancePerYear  = distancePerMonth * 12;
+                    
+                    calculated = true;
+                }
+                else{
+                    calculated = false;
+                }
             }
             else if(inputData.distance.considerCarToJob === 'false'){
 
-                switch(inputData.distance.noCarToJob.period){
-                    case "1":
-                        distancePerMonth = parseFloat(inputData.distance.noCarToJob.distancePerPeriod);
-                        break;
-                    case "2":
-                        distancePerMonth = parseFloat(inputData.distance.noCarToJob.distancePerPeriod) / 2;
-                        break;
-                    case "3":
-                        distancePerMonth = parseFloat(inputData.distance.noCarToJob.distancePerPeriod) / 3;
-                        break;
-                    case "4":
-                        distancePerMonth = parseFloat(inputData.distance.noCarToJob.distancePerPeriod) / 6;
-                        break;
-                    case "5":
-                        distancePerMonth = parseFloat(inputData.distance.noCarToJob.distancePerPeriod) / 12;
-                        break;
-                    default:
-                        throw errMsg;
+                inputDistance = parseFloat(inputData.distance.noCarToJob.distancePerPeriod);
+
+                if(isNumber(inputDistance)){
+                    
+                    switch(inputData.distance.noCarToJob.period){
+                        case "1":
+                            distancePerMonth = inputDistance;
+                            break;
+                        case "2":
+                            distancePerMonth = inputDistance / 2;
+                            break;
+                        case "3":
+                            distancePerMonth = inputDistance / 3;
+                            break;
+                        case "4":
+                            distancePerMonth = inputDistance / 6;
+                            break;
+                        case "5":
+                            distancePerMonth = inputDistance / 12;
+                            break;
+                        default:
+                            throw errMsg;
+                    }
+                    
+                    distancePerYear = distancePerMonth * 12;
+                    distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
+                    
+                    calculated = true;                    
                 }
-                distancePerYear = distancePerMonth * 12;
-                distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
+                else{
+                    calculated = false;
+                }
 
             }
             else {
@@ -786,26 +808,42 @@ autocosts.calculatorModule = (function(thisModule){
         }
         //gets distance information from form part 2, in fuel section
         else if(inputData.fuel.typeOfCalculation === 'distance' ||
-                inputData.fuel.typeOfCalculation === 'km'/*old versions support*/){
-
-            distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).distancePerMonth;
-
-            if (distancePerMonth === undefined){
-                throw errMsg;
-            }
+                inputData.fuel.typeOfCalculation === 'km'/*old versions support*/){            
 
             if(inputData.fuel.distanceBased.considerCarToJob === 'true'){
                 daysPerWeekUserDrivesToJob = parseInt(inputData.fuel.distanceBased.carToJob.daysPerWeek);
                 distanceBetweenHomeAndJob  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
                 distanceDuringEachWeekend  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceDuringWeekends);
 
-                distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringEachWeekend;
+                if(isNumber(daysPerWeekUserDrivesToJob) &&
+                  isNumber(distanceBetweenHomeAndJob) &&
+                  isNumber(distanceDuringEachWeekend)){
+                    
+                    distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringEachWeekend;
+                    distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
+                    distancePerYear  = distancePerMonth * 12;                    
+                    
+                    calculated = true;
+                }
+                else{
+                    calculated = false;
+                }
             }
             else{
-                distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
+                distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).distancePerMonth;
+                
+                if(isNumber(distancePerMonth)){
+                    
+                    distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
+                    distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
+                    distancePerYear  = distancePerMonth * 12;    
+                    
+                    calculated = true;                    
+                }
+                else{
+                    calculated = false;
+                }                
             }
-
-            distancePerYear = distancePerMonth * 12;
 
         }
         else{
@@ -813,23 +851,25 @@ autocosts.calculatorModule = (function(thisModule){
         }
 
         //details
-        calculatedData.details.numberOfDaysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
-
-        if(!isFinite(distancePerWeek) || !isFinite(distancePerMonth) || !isFinite(distancePerYear)){
-            drivingDistance.calculated = false;
+        if(isNumber(daysPerWeekUserDrivesToJob)){
+            calculatedData.details.numberOfDaysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
         }
-        else {
-            drivingDistance.calculated = true;
 
+        if(calculated){
+            drivingDistance.calculated = true;
+            
             drivingDistance.perWeek = distancePerWeek;
             drivingDistance.perMonth = distancePerMonth;
             drivingDistance.perYear = distancePerYear;
             drivingDistance.betweenHomeAndJob = distanceBetweenHomeAndJob;
             drivingDistance.duringEachWeekend = distanceDuringEachWeekend;
-            drivingDistance.details.daysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
+            drivingDistance.details.daysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;         
+        }
+        else{
+            drivingDistance.calculated = false;
         }
 
-        drivingDistance = calculatedData.drivingDistance;
+        calculatedData.drivingDistance = drivingDistance;
 
         return drivingDistance;
     }
@@ -1129,6 +1169,12 @@ autocosts.calculatorModule = (function(thisModule){
         return calculatedData;
     }
 
+    //this function is very important and checks if number is a finite valid number
+    //no variable coercions, no bullshit, no string, no "1", no true, no NaN, no null, no 1/0, n must be a finite valid number
+    //USE THIS FUNCTION, see https://stackoverflow.com/a/8526029/1243247
+    function isNumber(n){
+        return typeof n == 'number' && !isNaN(n) && isFinite(n);
+    }
 
     //detects if a variable is defined and different from zero
     function isDef(variable){
