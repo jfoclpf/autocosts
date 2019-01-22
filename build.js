@@ -371,14 +371,24 @@ function checkJS(callback){
 function compressImgs(){
     console.log("\n" + ("# --"+optionDefinitions[2].name).mainOption ); 
     console.log("\nCompress images, jpg and png files\n");
-    execSync("node " + filenames.build.compressImages + " -r " + RELEASE, {stdio:'inherit'});
+    try{
+        execSync("node " + filenames.build.compressImages + " -r " + RELEASE, {stdio:'inherit'});
+    }
+    catch(err){
+        _exit(err, optionDefinitions[2]);
+    }        
 }
 
 //-m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify 
 function minify(){
     console.log("\n" + ("# --"+optionDefinitions[3].name).mainOption ); 
     console.log("\nMinify and concatenate js, html/hbs, css and json files\n");
-    execSync("node " + filenames.build.minifyFiles + " -r " + RELEASE, {stdio:'inherit'});
+    try{
+        execSync("node " + filenames.build.minifyFiles + " -r " + RELEASE, {stdio:'inherit'});
+    }
+    catch(err){
+        _exit(err, optionDefinitions[3]);
+    }
 }
 
 /*With these options it needs internet connection to a server's Database*/
@@ -387,14 +397,24 @@ function minify(){
 function specDB(){
     console.log("\n" + ("# --"+optionDefinitions[5].name).mainOption ); 
     console.log("\n" + ("## Creates DB with countries' specifcations").mainOptionStep + " \n");
-    execSync("node " + filenames.build.setCountrySpecsDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    try{
+        execSync("node " + filenames.build.setCountrySpecsDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    }
+    catch(err){
+        _exit(err, optionDefinitions[5]);  
+    }
 }
 
 //-d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database 
 function refreshDB(){
     console.log("\n" + ("# --"+optionDefinitions[6].name).mainOption ); 
     console.log("\n" + ("## Refreshes statistical costs DB").mainOptionStep + " \n");
-    execSync("node " + filenames.build.getAvgFromDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    try{
+        execSync("node " + filenames.build.getAvgFromDB + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    }
+    catch(err){
+        _exit(err, optionDefinitions[6]);
+    }
 }
 
 //-t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database 
@@ -402,7 +422,12 @@ function genTables(){
     console.log("\n" + ("# --"+optionDefinitions[7].name).mainOption ); 
     console.log("\n" + ("## Generating statistical tables").mainOptionStep + " \n");
     console.log("\n    Extracts stat info from prod and create html tables \n");
-    execSync("node " + filenames.build.generateTables + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    try{
+        execSync("node " + filenames.build.generateTables + " --dataBase" + " -r " + RELEASE, {stdio:'inherit'});
+    }
+    catch(err){        
+        _exit(err, optionDefinitions[7]);
+    }
 }
 
 
@@ -411,7 +436,7 @@ function getArgvHelpMsg(){
     var filename = path.basename(process.mainModule.filename);
 
     var messg = "\n" +
-                "Exemple: \n" +
+                "Example: \n" +
                 "node " + filename + " -ceim \n" +
                 "node " + filename + " -A -r prod \n" +
                 "\n" +
@@ -461,4 +486,17 @@ function runApp(){
 
 function getFileExtension(fileName){
     return fileName.split('.').pop();
+}
+
+function _exit(err, option){
+    if(err.stdout){
+        console.log(err.stdout);
+    }
+        
+    console.log("An error has occurred running this script " + 
+                path.relative(__dirname, __filename).warn + " on option " + 
+                ("--" + option.name).warn + " or " + 
+                ("-" + option.alias).warn + "\n");
+    
+    process.exit(1);
 }

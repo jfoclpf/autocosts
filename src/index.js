@@ -48,7 +48,7 @@ var serverData = {
     "fileNames"          : fileNames,   //Object with the fileNames, on the server and client
     "availableCountries" : sortObj(countriesInfo.availableCountries),   //Array of alphabetically sorted available Countries
     "languagesCountries" : countriesInfo.languagesCountries,            //Array of Language Codes
-    "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation    
+    "domains"            : commons.getDomainsObject(countriesInfo.domainsCountries), //Object with Domains Infomation
     "CClistOnString"     : commons.getCClistOnStr(countriesInfo.availableCountries), //a string with all the CC
     "isOnline"           : undefined    //if the server has access to Internet connection (to use database, uber, etc.)
 };
@@ -62,51 +62,51 @@ var WORDS = {};                   //Object of Objects with all the words for eac
 for (var CC in serverData.availableCountries){
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
     WORDS[CC].languageCode = serverData.languagesCountries[CC];
-    WORDS[CC].domain = serverData.domains.countries[CC]; 
+    WORDS[CC].domain = serverData.domains.countries[CC];
     //process the sentences, uppercasing the first letters of the words right after "<br>"
     //Ex: "This is text 1<br>this is text 2" ==> "This is text 1<br>This is text 2"
     for (let word in WORDS[CC]){
         if(typeof WORDS[CC][word] == 'string'){
-            WORDS[CC][word] = WORDS[CC][word].replace(/(<br><i>|<br>)(\w)/g, 
-                function(match, p1, p2){ return p1 + p2.toUpperCase();});          
+            WORDS[CC][word] = WORDS[CC][word].replace(/(<br><i>|<br>)(\w)/g,
+                function(match, p1, p2){ return p1 + p2.toUpperCase();});
         }
     }
 }
 
-//in case a certain word or string is not available in a certain language, 
-//use the file from the country which founded the language (ex: Spanish was founded by Spain) 
+//in case a certain word or string is not available in a certain language,
+//use the file from the country which founded the language (ex: Spanish was founded by Spain)
 //if that is not either available, use English version
 for (var CC in serverData.availableCountries){
-    
+
     let languageDefault = {
         "es" : "ES",
         "en" : "UK",
         "pt" : "PT",
         "fr" : "FR"
     };
-    
+
     //WORDS.UK is an Object with all the possible properties available
     for (let word in WORDS.UK){
-        if(!WORDS[CC][word]){    
+        if(!WORDS[CC][word]){
             let languageFounderCC = languageDefault[WORDS[CC].languageCode.substring(0, 2)];
             WORDS[CC][word] = languageFounderCC && WORDS[languageFounderCC][word] ? WORDS[languageFounderCC][word] : WORDS.UK[word];
-        } 
+        }
     }
 }
 
 //event handler to deal when the settings are changed
-//particularly the event is triggered when 
+//particularly the event is triggered when
 //it is detected that there is no Internet connection and settings are thus changed
 eventEmitter.on('settingsChanged', function(){
     serverData.settings  = settings  = commons.getSettings();
     SWITCHES = settings.switches;
-    
+
     //updates filenames and directory objects
     serverData.fileNames = fileNames = commons.getFileNames();
     serverData.directories = directories = commons.getDirectories();
-    serverData.directories.index = directories.index = __dirname;    
-    
-    console.log("Settings updated.");    
+    serverData.directories.index = directories.index = __dirname;
+
+    console.log("Settings updated.");
     debug(util.inspect(serverData, {showHidden: false, depth: null}));
 });
 
@@ -127,8 +127,8 @@ var hbs = exphbs.create({
     extname: '.hbs',
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
     partialsDir: [ path.join(__dirname, 'views', 'main'),
-                   path.join(__dirname, 'views', 'common'), 
-                   path.join(__dirname, 'css', 'merged-min'),                   
+                   path.join(__dirname, 'views', 'common'),
+                   path.join(__dirname, 'css', 'merged-min'),
                    path.join(__dirname, 'tables')],
     helpers: hbsHelpers
 });
@@ -168,43 +168,50 @@ app.get('/sitemap.xml', function(req, res) {
 
 if (SWITCHES.uber){
     const getUBER = require(path.join(__dirname, 'server', 'getUBER'));
-    app.get('/getUBER/:CC', function(req, res) {
-        debug("\nRoute: app.get('/getUBER')");
-        getUBER(req, res, serverData);
+    app.get('/getUBER/:CC', function(req, res, next) {
+        if(serverData.isOnline){
+            debug("\nRoute: app.get('/getUBER')");
+            getUBER(req, res, serverData);
+        }
+        else{
+            next();
+        }
     });
 }
 
 if (SWITCHES.googleCaptcha){
     const captchaValidate = require(path.join(__dirname, 'server', 'captchaValidate'));
-    app.post('/captchaValidate', function(req, res) {
-        if (!url.isThisLocalhost(req)){
+    app.post('/captchaValidate', function(req, res, next) {
+        if(serverData.isOnline && !url.isThisLocalhost(req)){
             debug("\nRoute: app.post('/captchaValidate')");
             captchaValidate(req, res, serverData);
+        }
+        else{
+            next();
         }
     });
 }
 
 if (SWITCHES.dataBase){
-    
+
     eventEmitter.on('statsColected', function(statsData){
         serverData.statsData = statsData;
-        console.log("Statistical Data colected");           
+        console.log("Statistical Data colected");
     });
-    
+
     const stats = require(path.join(__dirname, 'server', 'stats'));
-    
+
+    //the /stats page shall only be rendered when there is internet, because it needs access to a DB
     isOnline().then(function(online) {
-        if(online){    
-            //statistics page
+        if(online){
             serverData.isOnline = true;
-            
             stats.prepareStats(serverData, WORDS, eventEmitter);
         }
         else{
             serverData.isOnline = false;
         }
     });
-        
+
     app.get('/stats', function(req, res, next) {
         if(serverData.isOnline){
             debug("\nRoute: app.get('/stats')");
@@ -214,12 +221,12 @@ if (SWITCHES.dataBase){
             next();
         }
     });
-    
+
     //process the users input to be sent to database
     const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'));
-    
+
     app.post('/submitUserInput', function(req, res, next) {
-        if(serverData.isOnline){        
+        if(serverData.isOnline){
             debug("\nRoute: app.post('/submitUserInput')");
             submitUserInput(req, res, serverData);
         }
@@ -242,11 +249,11 @@ app.get('/:CC', function (req, res, next) {
     let wasRedirected = url.getCC(req, res, serverData);
     if(wasRedirected){
         return;
-    }    
-    //from here CC is acceptable and the page will be rendered        
-    
+    }
+    //from here CC is acceptable and the page will be rendered
+
     //get words for chosen CC - Country Code
-    let WORDS_CC = WORDS[req.params.CC];    
+    let WORDS_CC = WORDS[req.params.CC];
     getCC.render(req, res, serverData, WORDS_CC);
 });
 
