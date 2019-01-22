@@ -24,13 +24,13 @@ autocosts.calculatorModule = (function(thisModule){
         numberOfWeeksInAYear:  365.25 / 7,
         numberOfWeeksInAMonth: 365.25 / 7 / 12
     };
-    
+
     //says if some calculated results are likely to be valid
     var isLikelyToBeValidConst = {
         financialEffortPercentage: {
             min: 5,
             max: 110
-        }    
+        }
     };
 
     var errMsgDataCountry = "Input data or input country not defined. Class not initialized with function calculateCosts";
@@ -59,7 +59,7 @@ autocosts.calculatorModule = (function(thisModule){
         //for the object full structure see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
         calculatedData = CreateCalculatedDataObj();
 
-        calculatedData.countryCode = country.code;        
+        calculatedData.countryCode = country.code;
     }
 
     //Object Constructor for the Results, where the calculated averages are stored
@@ -102,7 +102,8 @@ autocosts.calculatorModule = (function(thisModule){
 
             speeds: {
                 averageKineticSpeed: u,
-                averageConsumerSpeed: u //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+                averageConsumerSpeed: u //see for more details
+                //https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
             },
 
             publicTransports: {
@@ -321,10 +322,12 @@ autocosts.calculatorModule = (function(thisModule){
             case "distance":
             case "km":/*old version support*/
 
-                var fuelEffL100km = conversionsModule.convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
-                var fuelPriceOnCurrPerLitre = conversionsModule.convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
+                var fuelEffL100km = conversionsModule.convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency,
+                                                                                    country.fuel_efficiency_std);
+                var fuelPriceOnCurrPerLitre = conversionsModule.convertFuelPriceToLitre(fuel.distanceBased.fuelPrice,
+                                                                                        country.fuel_price_volume_std);
 
-                if (fuel.distanceBased.considerCarToJob == "false"){
+                if (fuel.distanceBased.considerCarToJob === "false"){
 
                     switch(fuel.distanceBased.noCarToJob.period){
                         case "1":
@@ -350,19 +353,21 @@ autocosts.calculatorModule = (function(thisModule){
                     var distancePerMonthInKms = conversionsModule.convertDistanceToKm(distancePerMonth, country.distance_std);
                     monthlyCost = fuelEffL100km * distancePerMonthInKms * fuelPriceOnCurrPerLitre / 100;
                 }
-                else if (fuel.distanceBased.considerCarToJob == "true"){   //make calculation considering the user takes his car to work on a daily basis
+                //make calculation considering the user takes his car to work on a daily basis
+                else if (fuel.distanceBased.considerCarToJob === "true"){
 
                     //if miles were chosen must convert input to kilometres
-                    var distanceHomeToJobInKms = conversionsModule.convertDistanceToKm(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob,
-                                                                                       country.distance_std);
-                    var distanceOnWeekendsInKms = conversionsModule.convertDistanceToKm(fuel.distanceBased.carToJob.distanceDuringWeekends,
-                                                                                        country.distance_std);
+                    var distanceHomeToJobInKms = conversionsModule.
+                        convertDistanceToKm(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob, country.distance_std);
+
+                    var distanceOnWeekendsInKms = conversionsModule.
+                        convertDistanceToKm(fuel.distanceBased.carToJob.distanceDuringWeekends, country.distance_std);
 
                     var daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
 
                     var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) *
                         consts.numberOfWeeksInAMonth;
-                    
+
                     monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100;
 
                     //after computation is made, convert backwards to standard distance
@@ -603,9 +608,11 @@ autocosts.calculatorModule = (function(thisModule){
                 taxiTotalCostsPerMonth = totalCarCostsPerMonth * (1 - publicTransports.ratios.ptCostsOverCarCosts) / 2;
 
                 //amount allocated to further Public Transports, besides monthly pass and taxi
-                publicTransports.furtherPublicTransports.totalCosts = totalCarCostsPerMonth * (1 - publicTransports.ratios.ptCostsOverCarCosts) / 2;
+                publicTransports.furtherPublicTransports.totalCosts =
+                    totalCarCostsPerMonth * (1 - publicTransports.ratios.ptCostsOverCarCosts) / 2;
 
-                publicTransports.totalAlternativeCostsWhenUserHasNoCar += taxiTotalCostsPerMonth + publicTransports.furtherPublicTransports.totalCosts;
+                publicTransports.totalAlternativeCostsWhenUserHasNoCar +=
+                    taxiTotalCostsPerMonth + publicTransports.furtherPublicTransports.totalCosts;
             }
 
             publicTransports.taxi.totalCosts = taxiTotalCostsPerMonth;
@@ -641,16 +648,18 @@ autocosts.calculatorModule = (function(thisModule){
                 financialEffort.income.perYear = parseFloat(inputData.income.year.amount) * 1;
                 break;
             case 'month':
-                financialEffort.income.perYear = parseFloat(inputData.income.month.amountPerMonth) * parseFloat(inputData.income.month.monthsPerYear);
+                financialEffort.income.perYear =
+                    parseFloat(inputData.income.month.amountPerMonth) * parseFloat(inputData.income.month.monthsPerYear);
                 break;
             case 'week':
-                financialEffort.income.perYear = parseFloat(inputData.income.week.amountPerWeek) * parseFloat(inputData.income.week.weeksPerYear);
+                financialEffort.income.perYear =
+                    parseFloat(inputData.income.week.amountPerWeek) * parseFloat(inputData.income.week.weeksPerYear);
                 break;
             case 'hour':
                 financialEffort.workingTime.hoursPerWeek = parseFloat(inputData.income.hour.hoursPerWeek);
                 financialEffort.workingTime.weeksPerYear = parseFloat(inputData.income.hour.weeksPerYear);
                 financialEffort.income.perYear =
-                    parseFloat(inputData.income.hour.amountPerHour) * 
+                    parseFloat(inputData.income.hour.amountPerHour) *
                     financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
                 break;
             default:
@@ -662,7 +671,9 @@ autocosts.calculatorModule = (function(thisModule){
         //working time
         //uses inputData section "income", as the income was selected per hour
         if(incomePeriod == 'hour'){
-            financialEffort.workingTime.hoursPerYear = financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
+            financialEffort.workingTime.hoursPerYear =
+                financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
+
             financialEffort.workingTime.hoursPerMonth = financialEffort.workingTime.hoursPerYear / 12;
         }
         //uses inputData section "working time"
@@ -679,6 +690,7 @@ autocosts.calculatorModule = (function(thisModule){
 
             financialEffort.workingTime.hoursPerYear =
                 consts.numberOfWeeksInAMonth * financialEffort.workingTime.monthsPerYear * financialEffort.workingTime.hoursPerWeek;
+
             financialEffort.workingTime.hoursPerMonth = financialEffort.workingTime.hoursPerYear / 12;
         }
         else{
@@ -693,16 +705,16 @@ autocosts.calculatorModule = (function(thisModule){
         financialEffort.workingHoursPerYearToAffordCar  = totalCostsPerYear / financialEffort.income.averagePerHour;
         financialEffort.workingMonthsPerYearToAffordCar = totalCostsPerYear / financialEffort.income.perYear * 12;
         financialEffort.daysForCarToBePaid              = totalCostsPerYear / financialEffort.income.perYear * consts.numberOfDaysInAYear;
-        financialEffort.financialEffortPercentage       = totalCostsPerYear / financialEffort.income.perYear * 100;        
-        
+        financialEffort.financialEffortPercentage       = totalCostsPerYear / financialEffort.income.perYear * 100;
+
         if(financialEffort.financialEffortPercentage >= isLikelyToBeValidConst.financialEffortPercentage.min &&
            financialEffort.financialEffortPercentage <= isLikelyToBeValidConst.financialEffortPercentage.max){
             financialEffort.isLikelyToBeValid = true;
-        } 
+        }
         else{
             financialEffort.isLikelyToBeValid = false;
         }
-        
+
         financialEffort.calculated = true;
 
         calculatedData.financialEffort = financialEffort;
@@ -915,7 +927,8 @@ autocosts.calculatorModule = (function(thisModule){
 
         //Virtual/Consumer Speed calculated if info of Financial Effort is available
         if (financialEffort.calculated){
-            averageConsumerSpeed = drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar);
+            averageConsumerSpeed = 
+                drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar);
         }
 
         //set object
@@ -944,7 +957,7 @@ autocosts.calculatorModule = (function(thisModule){
         var distancePerMonthInKms = conversionsModule.convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
 
         externalCosts.totalPerMonth = (externalCosts.polution + externalCosts.greenhouseGases + externalCosts.noise +
-                                       externalCosts.fatalities + externalCosts.congestion + externalCosts.infrastr) * distancePerMonthInKms;
+            externalCosts.fatalities + externalCosts.congestion + externalCosts.infrastr) * distancePerMonthInKms;
 
         externalCosts.calculated = true;
 
@@ -1019,7 +1032,8 @@ autocosts.calculatorModule = (function(thisModule){
 
         //total costs of uber for the same distance and time as the ones driven using private car
         //Total equivalent Uber Costs
-        var uberCostsByFullyReplacingCarWithUber = uberCostPerUnitDistance * drivingDistancePerMonth + uberCostPerMinute * minutesDrivenPerMonth;
+        var uberCostsByFullyReplacingCarWithUber =
+            uberCostPerUnitDistance * drivingDistancePerMonth + uberCostPerMinute * minutesDrivenPerMonth;
 
         //1st case, in which driver can replace every journey by uber
         //the remianing amount of money is used to further public transports
@@ -1098,11 +1112,8 @@ autocosts.calculatorModule = (function(thisModule){
             calculateFinancialEffort();
         }
 
-        if (inputData.income.isOk || inputData.publicTransports.isOk){
-            calculateDrivingDistance();
-            calculateTimeSpentInDriving();
-        }
-
+        calculateDrivingDistance();
+        calculateTimeSpentInDriving();
         calculateSpeeds();
         //calculateExternalCosts();
 
