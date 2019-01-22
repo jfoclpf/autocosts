@@ -169,6 +169,14 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
         return "";
     }    
     
+    //this function is very important and checks if number is a finite valid number
+    //no variable coercions, no bullshit, no string, no "1", no true, no NaN, no null, no 1/0, 
+    //and 0 returns true. n must be a finite valid number
+    //USE THIS FUNCTION, see https://stackoverflow.com/a/8526029/1243247
+    function isNumber(n){
+        return typeof n == 'number' && !isNaN(n) && isFinite(n);
+    }    
+    
     /* === Public methods to be returned ===*/
 
     //own module, since it may have been defined erlier by children modules
@@ -179,6 +187,7 @@ autocosts.commonsModule = (function(thisModule, serverInfo, translatedStrings){
     thisModule.removeHashFromUrl = removeHashFromUrl;
     thisModule.getStringFor = getStringFor;
     thisModule.getCheckedValue = getCheckedValue;
+    thisModule.isNumber = isNumber;
 
     return thisModule;
 
