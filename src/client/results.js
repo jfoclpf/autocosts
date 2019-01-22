@@ -12,7 +12,8 @@
 autocosts.resultsModule = (function(thisModule, translatedStrings, switches, language, uberApiObj, pageUrl){
 
     //modules dependencies
-    var chartsModule, pdfModule, commonsModule;
+    var chartsModule, pdfModule, commonsModule,
+        isNumber; //is function that is imported from commons.js
 
     var calculatedData;
 
@@ -24,6 +25,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
 
     function loadModuleDependencies(){
         commonsModule = autocosts.commonsModule;
+        isNumber = commonsModule.isNumber; //function
+        
         chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {};
         pdfModule = switches.pdf ? autocosts.resultsModule.pdfModule : {};
     }
@@ -403,10 +406,15 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                     addLiElm("fuel",
                              translatedStrings.you_drive + " " + form.fuel.distanceBased.carToJob.distanceDuringWeekends + " " +
                              translatedStrings.fuel_dist_no_job1);
-                    addLiElm("fuel",
-                             translatedStrings.you_drive_tottaly_avg + " " + calculatedData.drivingDistance.perMonth.toFixed(1) + " " +
-                             translatedStrings.std_dist + " " + translatedStrings.word_per + " " + translatedStrings.month +
-                             " (~30.5 " + translatedStrings.days + ")");
+                    
+                    if(calculatedData.drivingDistance.calculated){
+                        addLiElm("fuel",
+                                 translatedStrings.you_drive_tottaly_avg + " " + 
+                                 calculatedData.drivingDistance.perMonth.toFixed(1) + " " +
+                                 translatedStrings.std_dist + " " + translatedStrings.word_per + " " + 
+                                 translatedStrings.month + " (~30.5 " + translatedStrings.days + ")");
+                    }
+                    
                     addLiElm("fuel",
                              translatedStrings.fuel_car_eff, 
                              form.fuel.distanceBased.fuelEfficiency + " " + translatedStrings.std_fuel_calc);
@@ -668,31 +676,40 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                  translatedStrings.average_net_income_per + " " + translatedStrings.hour, 
                  currencyShow(income.averagePerHour.toFixed(1)));
 
-        //distance
-        var dd = calculatedData.drivingDistance;
-        if((form.fuel.typeOfCalculation != 'km' && form.distance.considerCarToJob == 'true') ||
-           (form.fuel.typeOfCalculation != 'km' && form.fuel.distanceBased.considerCarToJob == 'true')){
-
-            addLiElm("distance",
-                     translatedStrings.dist_home_job,
-                     parseInt(form.distance.carToJob.distanceBetweenHomeAndJob).toFixed(1) + " " + translatedStrings.std_dist);
-            addLiElm("distance",
-                     translatedStrings.days_drive_job,
-                     form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
-            addLiElm("distance",
-                     translatedStrings.dist_jorney_weekend,
-                     parseInt(form.distance.carToJob.distanceDuringWeekends).toFixed(1) + " " + translatedStrings.std_dist);
+        //Driving Distance
+        var drivingDistance = calculatedData.drivingDistance;
+        
+        if(drivingDistance.calculated){
+        
+            if(isNumber(drivingDistance.betweenHomeAndJob)){
+                addLiElm("distance",
+                         translatedStrings.dist_home_job,
+                         drivingDistance.betweenHomeAndJob.toFixed(1) + " " + translatedStrings.std_dist);
+            }
+                
+            if(isNumber(drivingDistance.details.daysPerWeekUserDrivesToJob)){
+                addLiElm("distance",
+                         translatedStrings.days_drive_job,
+                         drivingDistance.details.daysPerWeekUserDrivesToJob.toFixed(0) + " " + translatedStrings.days);
+            }
+            
+            if(isNumber(drivingDistance.duringEachWeekend)){         
+                addLiElm("distance",
+                         translatedStrings.dist_jorney_weekend,
+                         drivingDistance.duringEachWeekend.toFixed(1) + " " + translatedStrings.std_dist);
+            }
+            
+            //if drivingDistance.calculated is true, the values perWeek, perMonth and perYear must exist
             addLiElm("distance",
                      translatedStrings.average_dist_per_week,
-                     dd.perWeek.toFixed(1) + " " + translatedStrings.std_dist);
+                     drivingDistance.perWeek.toFixed(1) + " " + translatedStrings.std_dist);            
+            addLiElm("distance",
+                     translatedStrings.you_drive_per + " " + translatedStrings.month,
+                     drivingDistance.perMonth.toFixed(1) + " " + translatedStrings.std_dist);
+            addLiElm("distance",
+                     translatedStrings.you_drive_per + " " + translatedStrings.year,
+                     drivingDistance.perYear.toFixed(1) + " " + translatedStrings.std_dist);
         }
-
-        addLiElm("distance",
-                 translatedStrings.you_drive_per + " " + translatedStrings.month,
-                 dd.perMonth.toFixed(1) + " " + translatedStrings.std_dist);
-        addLiElm("distance",
-                 translatedStrings.you_drive_per + " " + translatedStrings.year,
-                 dd.perYear.toFixed(1) + " " + translatedStrings.std_dist);
 
         //time spent in driving
         var tsd = calculatedData.timeSpentInDriving;
