@@ -317,7 +317,7 @@ autocosts.calculatorModule = (function(thisModule){
 
         var errMsg = "Error calculating fuel";
 
-        //the results shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
+        //the result shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
         var typeOfCalculation = function(){
             switch(fuel.typeOfCalculation){
                 case "distance":
@@ -349,9 +349,12 @@ autocosts.calculatorModule = (function(thisModule){
 
             var fuelEffL100km,
                 fuelPriceOnCurrPerLitre,
-                distancePerPeriod;
+                distancePerPeriod,
+                distanceBetweenHomeAndJob,
+                distanceDuringWeekends,
+                daysPerWeekUserDrivesToJob;
 
-            //the results shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
+            //the result shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
             switch(typeOfCalculation()){
 
                 case "distanceNoCarToJob":
@@ -362,23 +365,23 @@ autocosts.calculatorModule = (function(thisModule){
                     fuelPriceOnCurrPerLitre = conversionsModule.
                         convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
 
-                    distancePerPeriod = fuel.distanceBased.noCarToJob.distancePerPeriod;
+                    distancePerPeriod = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod);
 
                     switch(fuel.distanceBased.noCarToJob.period){
                         case "1":
-                            distancePerMonth = parseFloat(distancePerPeriod);
+                            distancePerMonth = distancePerPeriod;
                             break;
                         case "2":
-                            distancePerMonth = parseFloat(distancePerPeriod) / 2;
+                            distancePerMonth = distancePerPeriod / 2;
                             break;
                         case "3":
-                            distancePerMonth = parseFloat(distancePerPeriod) / 3;
+                            distancePerMonth = distancePerPeriod / 3;
                             break;
                         case "4":
-                            distancePerMonth = parseFloat(distancePerPeriod) / 6;
+                            distancePerMonth = distancePerPeriod / 6;
                             break;
                         case "5":
-                            distancePerMonth = parseFloat(distancePerPeriod) / 12;
+                            distancePerMonth = distancePerPeriod / 12;
                             break;
                         default:
                             throw errMsg;
@@ -391,7 +394,11 @@ autocosts.calculatorModule = (function(thisModule){
                     break;
 
                 case "distanceCarToJob":
-
+                    
+                    distanceBetweenHomeAndJob = parseFloat(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
+                    distanceDuringWeekends = parseFloat(fuel.distanceBased.carToJob.distanceDuringWeekends);
+                    daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
+                        
                     fuelEffL100km = conversionsModule.
                         convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std);
 
@@ -399,21 +406,16 @@ autocosts.calculatorModule = (function(thisModule){
                         convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std);
 
                     //if miles were chosen must convert input to kilometres
-                    var distanceHomeToJobInKms = conversionsModule.
-                        convertDistanceToKm(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob, country.distance_std);
-
-                    var distanceOnWeekendsInKms = conversionsModule.
-                        convertDistanceToKm(fuel.distanceBased.carToJob.distanceDuringWeekends, country.distance_std);
-
-                    var daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek);
+                    var distanceHomeToJobInKms = conversionsModule.convertDistanceToKm(distanceBetweenHomeAndJob, country.distance_std);
+                    var distanceOnWeekendsInKms = conversionsModule.convertDistanceToKm(distanceDuringWeekends, country.distance_std);
 
                     var totalKmPerMonth = (2 * distanceHomeToJobInKms * daysPerWeekUserDrivesToJob + distanceOnWeekendsInKms) *
                         consts.numberOfWeeksInAMonth;
 
                     monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100;
 
-                    //after computation is made, convert backwards to user chosen standard distance
-                    distancePerMonth = conversionsModule.convertDistanceFromKm(totalKmPerMonth, country.distance_std);
+                    distancePerMonth = (2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringWeekends) *
+                        consts.numberOfWeeksInAMonth;
 
                     break;
 
@@ -787,9 +789,11 @@ autocosts.calculatorModule = (function(thisModule){
 
         var errMsg = "Error calculating Driving distance";
 
+        //the result shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
+        var fuelTypeOfCalculation = calculateMonthlyFuel(inputData.fuel, country).typeOfCalculation();
+        
         //if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
-        if(inputData.fuel.typeOfCalculation === 'money' ||
-           inputData.fuel.typeOfCalculation === 'euros'/*old versions support*/){
+        if(fuelTypeOfCalculation === "money"){
 
             if(inputData.distance.considerCarToJob === 'true'){
 
@@ -851,42 +855,20 @@ autocosts.calculatorModule = (function(thisModule){
 
         }
         //gets distance information from form part 2, in fuel section
-        else if(inputData.fuel.typeOfCalculation === 'distance' ||
-                inputData.fuel.typeOfCalculation === 'km'/*old versions support*/){
+        else if(fuelTypeOfCalculation === "distanceCarToJob" || fuelTypeOfCalculation === "distanceNoCarToJob"){
 
-            if(inputData.fuel.distanceBased.considerCarToJob === 'true'){
-                daysPerWeekUserDrivesToJob = parseInt(inputData.fuel.distanceBased.carToJob.daysPerWeek);
-                distanceBetweenHomeAndJob  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
-                distanceDuringEachWeekend  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceDuringWeekends);
+            distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).getDistancePerMonth();
 
-                if(areAllNumbers(daysPerWeekUserDrivesToJob, distanceBetweenHomeAndJob, distanceDuringEachWeekend)){
+            if(isNumber(distancePerMonth)){
 
-                    distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringEachWeekend;
-                    distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
-                    distancePerYear  = distancePerMonth * 12;
+                distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
+                distancePerYear  = distancePerMonth * 12;
 
-                    calculated = true;
-                }
-                else{
-                    calculated = false;
-                }
+                calculated = true;
             }
             else{
-                distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).getDistancePerMonth();
-
-                if(isNumber(distancePerMonth)){
-
-                    distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
-                    distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
-                    distancePerYear  = distancePerMonth * 12;
-
-                    calculated = true;
-                }
-                else{
-                    calculated = false;
-                }
-            }
-
+                calculated = false;
+            }            
         }
         else{
             throw errMsg;
@@ -1198,7 +1180,11 @@ autocosts.calculatorModule = (function(thisModule){
         }
 
         calculateDrivingDistance();
-        calculateTimeSpentInDriving();
+        
+        if(inputData.publicTransports.isOk || inputData.income.isOk){
+            calculateTimeSpentInDriving();
+        }
+        
         calculateSpeeds();
         //calculateExternalCosts();
 

@@ -677,8 +677,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                  currencyShow(income.averagePerHour.toFixed(1)));
 
         //Driving Distance
-        var drivingDistance = calculatedData.drivingDistance;
-        
+        var drivingDistance = calculatedData.drivingDistance;        
         if(drivingDistance.calculated){
         
             if(isNumber(drivingDistance.betweenHomeAndJob)){
@@ -712,37 +711,40 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         }
 
         //time spent in driving
-        var tsd = calculatedData.timeSpentInDriving;
-        if(form.distance.considerCarToJob == 'true' || form.fuel.distanceBased.considerCarToJob == 'true'){
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.minutes_home_job,
-                     form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + " " + translatedStrings.min);
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.days_drive_to_job,
-                     form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.time_drive_weekend,
-                     form.timeSpentInDriving.option1.minutesDuringWeekend + " " + translatedStrings.min);
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.minutes_drive_per + " " + translatedStrings.week,
-                     tsd.minutesPerWeek + " " + translatedStrings.min);
-        }
-        else{
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.minutes_drive_per + " " + translatedStrings.day,
-                     form.timeSpentInDriving.option2.minutesPerDay + " " + translatedStrings.min);
-            addLiElm("time_spent_in_driving",
-                     translatedStrings.days_drive_per_month,
-                     form.timeSpentInDriving.option2.daysPerMonth + " " + translatedStrings.days);
-        }
+        var timeSpentInDriving = calculatedData.timeSpentInDriving;
+        if(timeSpentInDriving.calculated){
+            
+            if(form.distance.considerCarToJob == 'true' || form.fuel.distanceBased.considerCarToJob == 'true'){
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.minutes_home_job,
+                         form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + " " + translatedStrings.min);
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.days_drive_to_job,
+                         form.distance.carToJob.daysPerWeek + " " + translatedStrings.days);
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.time_drive_weekend,
+                         form.timeSpentInDriving.option1.minutesDuringWeekend + " " + translatedStrings.min);
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.minutes_drive_per + " " + translatedStrings.week,
+                         timeSpentInDriving.minutesPerWeek + " " + translatedStrings.min);
+            }
+            else{
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.minutes_drive_per + " " + translatedStrings.day,
+                         form.timeSpentInDriving.option2.minutesPerDay + " " + translatedStrings.min);
+                addLiElm("time_spent_in_driving",
+                         translatedStrings.days_drive_per_month,
+                         form.timeSpentInDriving.option2.daysPerMonth + " " + translatedStrings.days);
+            }
 
-        addLiElm("time_spent_in_driving",
-                 translatedStrings.hours_drive_per + " " + translatedStrings.month,
-                 tsd.hoursPerMonth.toFixed(1) + " " + translatedStrings.hour_abbr);
+            addLiElm("time_spent_in_driving",
+                     translatedStrings.hours_drive_per + " " + translatedStrings.month,
+                     timeSpentInDriving.hoursPerMonth.toFixed(1) + " " + translatedStrings.hour_abbr);
 
-        addLiElm("time_spent_in_driving",
-                 translatedStrings.hours_drive_per + " " + translatedStrings.year,
-                 tsd.hoursPerYear.toFixed(1) + " " + translatedStrings.hour_abbr);
+            addLiElm("time_spent_in_driving",
+                     translatedStrings.hours_drive_per + " " + translatedStrings.year,
+                     timeSpentInDriving.hoursPerYear.toFixed(1) + " " + translatedStrings.hour_abbr);
+        }
 
         //financial effort
         var fe = calculatedData.financialEffort;
