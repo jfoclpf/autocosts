@@ -126,7 +126,7 @@ autocosts.transferDataModule = (function(thisModule){
             },
 
             income: {
-                isOk:         autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean whether this section was correctly filled in
+                isOk: autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), //boolean if this section is correctly filled in
                 incomePeriod: commonsModule.getCheckedValue(f.radio_income), //"year", "month", "week" or "hour"
                 year: {
                     amount: f.income_per_year.value
@@ -231,7 +231,7 @@ autocosts.transferDataModule = (function(thisModule){
                     },
                     noCarToJob : {
                         distancePerPeriod: dbObject.fuel_distance_based_no_car_to_work_distance,
-                        period:            dbObject.fuel_distance_based_no_car_to_fuel_period_distance //month, two months, trimester, semester, year
+                        period: dbObject.fuel_distance_based_no_car_to_fuel_period_distance //month, two months, trimester, semester, year
                     },
                     fuelEfficiency: dbObject.fuel_distance_based_fuel_efficiency, 
                     fuelPrice:      dbObject.fuel_distance_based_fuel_price
@@ -350,7 +350,9 @@ autocosts.transferDataModule = (function(thisModule){
             case 'week':
                 return (isDef(dbObject.income_per_week) && isDef(dbObject.income_weeks_per_year));
             case 'hour':
-                return (isDef(dbObject.income_per_hour) && isDef(dbObject.income_hours_per_week) && isDef(dbObject.income_hour_weeks_per_year));
+                return (isDef(dbObject.income_per_hour) && 
+                        isDef(dbObject.income_hours_per_week) && 
+                        isDef(dbObject.income_hour_weeks_per_year));
         }
 
         //console.error("isIncomeOk() gives error, unknown income period: " + dbObject.income_type);

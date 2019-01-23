@@ -961,7 +961,10 @@ autocosts.calculatorModule = (function(thisModule){
         var speeds = calculatedData.speeds;
 
         var averageKineticSpeed,
-            averageConsumerSpeed; //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+            averageConsumerSpeed; 
+        
+        /*For more details on the Consumer Speed concept, check:
+        https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs */
 
         averageKineticSpeed = drivingDistance.perYear / timeSpentInDriving.hoursPerYear;
 
