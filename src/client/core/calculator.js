@@ -797,9 +797,7 @@ autocosts.calculatorModule = (function(thisModule){
                 distanceBetweenHomeAndJob  = parseFloat(inputData.distance.carToJob.distanceBetweenHomeAndJob);
                 distanceDuringEachWeekend  = parseFloat(inputData.distance.carToJob.distanceDuringWeekends);
 
-                if(isNumber(daysPerWeekUserDrivesToJob) &&
-                   isNumber(distanceBetweenHomeAndJob) &&
-                   isNumber(distanceDuringEachWeekend)){
+                if(areAllNumbers(daysPerWeekUserDrivesToJob, distanceBetweenHomeAndJob, distanceDuringEachWeekend)){                    
 
                     distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringEachWeekend;
                     distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
@@ -861,9 +859,7 @@ autocosts.calculatorModule = (function(thisModule){
                 distanceBetweenHomeAndJob  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob);
                 distanceDuringEachWeekend  = parseFloat(inputData.fuel.distanceBased.carToJob.distanceDuringWeekends);
 
-                if(isNumber(daysPerWeekUserDrivesToJob) &&
-                  isNumber(distanceBetweenHomeAndJob) &&
-                  isNumber(distanceDuringEachWeekend)){
+                if(areAllNumbers(daysPerWeekUserDrivesToJob, distanceBetweenHomeAndJob, distanceDuringEachWeekend)){
 
                     distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringEachWeekend;
                     distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
@@ -1223,6 +1219,20 @@ autocosts.calculatorModule = (function(thisModule){
     //USE THIS FUNCTION, see https://stackoverflow.com/a/8526029/1243247
     function isNumber(n){
         return typeof n == 'number' && !isNaN(n) && isFinite(n);
+    }
+    
+    //check if all the input arguments are numbers; areAllNumbers(1,0,-1) => true, but areAllNumbers(1,1/0,-1) => false 
+    function areAllNumbers(){
+        if(arguments.length === 0){
+            return false;
+        }
+        
+        for (var i=0; i<arguments.length; i++){
+            if(!isNumber(arguments[i])){
+                return false;
+            }
+        }
+        return true;
     }
 
     //detects if a variable is defined and different from zero
