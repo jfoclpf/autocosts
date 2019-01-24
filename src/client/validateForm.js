@@ -174,16 +174,6 @@ autocosts.userFormModule.validateFormModule = (function(form){
             return false;
         }
 
-        if (!isDistanceOk()){
-            console.warn("Distance not Ok => isFinancialEffortOk() returns false");
-            return false;
-        }
-
-        if (!isTimeSpentInDrivingOk()){
-            console.warn("TimeSpentInDriving not Ok => isFinancialEffortOk() returns false");
-            return false;
-        }
-
         return true;
     }
 

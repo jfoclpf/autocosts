@@ -326,11 +326,16 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         if(form.credit.creditBool == "true") {
 
             addLiElm("credit", translatedStrings.credit_loan2, currencyShow(form.credit.yesCredit.borrowedAmount));
-            addLiElm("credit", translatedStrings.credit_period, form.credit.yesCredit.numberInstallments + " " + translatedStrings.months);
+            
+            addLiElm("credit", translatedStrings.credit_period, 
+                     form.credit.yesCredit.numberInstallments + " " + translatedStrings.months);
+            
             addLiElm("credit", translatedStrings.credit_instalment, currencyShow(form.credit.yesCredit.amountInstallment));
             addLiElm("credit", translatedStrings.credit_residual_value1, currencyShow(form.credit.yesCredit.residualValue));
 
-            addLiElm("credit", translatedStrings.credit_total_interests, currencyShow(calculatedData.details.credit.totalPaidInInterests));
+            addLiElm("credit", translatedStrings.credit_total_interests,
+                     currencyShow(calculatedData.details.credit.totalPaidInInterests));
+            
             addLiElm("credit", 
                      "(" + calculatedData.details.credit.numberOfMonthlyInstalments + "*" + 
                         form.credit.yesCredit.amountInstallment + ")+" +
@@ -495,8 +500,8 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         }
         else{
             addLiElm("tolls", form.tolls.yesBasedOnDay.amountPerDay + " " + translatedStrings.curr_name_plural + " " +
-                              translatedStrings.during + " " + form.tolls.yesBasedOnDay.daysPerMonth + " " + translatedStrings.days + " " +
-                              translatedStrings.word_per + " " + translatedStrings.month);
+                              translatedStrings.during + " " + form.tolls.yesBasedOnDay.daysPerMonth + " " + 
+                              translatedStrings.days + " " + translatedStrings.word_per + " " + translatedStrings.month);
         }
 
         //Fines
@@ -589,92 +594,103 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
 
         //income
         var income = calculatedData.financialEffort.income;
-        switch(form.income.incomePeriod){
-            case 'year':
-                addLiElm("income",
-                         translatedStrings.net_income_per + " " + translatedStrings.year,
-                         currencyShow(form.income.year.amount));
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.month,
-                         currencyShow(income.averagePerMonth.toFixed(1)));
-                break;
+        if(income.calculated){
+            
+            switch(form.income.incomePeriod){
+                case 'year':
+                    addLiElm("income",
+                             translatedStrings.net_income_per + " " + translatedStrings.year,
+                             currencyShow(form.income.year.amount));
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.month,
+                             currencyShow(income.averagePerMonth.toFixed(1)));
+                    break;
 
-            case 'month':
-                addLiElm("income",
-                         translatedStrings.net_income_per + " " + translatedStrings.month,
-                         currencyShow(form.income.month.amountPerMonth));
-                addLiElm("income",
-                         translatedStrings.number_of_months,
-                         form.income.month.monthsPerYear);
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.month,
-                         currencyShow(income.averagePerMonth.toFixed(1)));
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.year,
-                         currencyShow(income.perYear.toFixed(1)));
-                break;
+                case 'month':
+                    addLiElm("income",
+                             translatedStrings.net_income_per + " " + translatedStrings.month,
+                             currencyShow(form.income.month.amountPerMonth));
+                    addLiElm("income",
+                             translatedStrings.number_of_months,
+                             form.income.month.monthsPerYear);
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.month,
+                             currencyShow(income.averagePerMonth.toFixed(1)));
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.year,
+                             currencyShow(income.perYear.toFixed(1)));
+                    break;
 
-            case 'week':
-                addLiElm("income",
-                         translatedStrings.net_income_per + " " + translatedStrings.week,
-                         currencyShow(form.income.week.amountPerWeek));
-                addLiElm("income",
-                         translatedStrings.number_of_weeks,
-                         form.income.week.weeksPerYear);
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.month,
-                         currencyShow(income.averagePerMonth.toFixed(1)));
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.year,
-                         currencyShow(income.perYear.toFixed(1)));
-                break;
+                case 'week':
+                    addLiElm("income",
+                             translatedStrings.net_income_per + " " + translatedStrings.week,
+                             currencyShow(form.income.week.amountPerWeek));
+                    addLiElm("income",
+                             translatedStrings.number_of_weeks,
+                             form.income.week.weeksPerYear);
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.month,
+                             currencyShow(income.averagePerMonth.toFixed(1)));
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.year,
+                             currencyShow(income.perYear.toFixed(1)));
+                    break;
 
-            case 'hour':
-                addLiElm("income",
-                         translatedStrings.net_income_per + " " + translatedStrings.hour,
-                         currencyShow(form.income.hour.amountPerHour));
-                addLiElm("income",
-                         translatedStrings.number_of_hours,
-                         form.income.hour.hoursPerWeek + " " + translatedStrings.hour_abbr);
-                addLiElm("income",
-                         translatedStrings.number_of_weeks,
-                         form.income.hour.weeksPerYear);
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.month,
-                         currencyShow(income.averagePerMonth.toFixed(1)));
-                addLiElm("income",
-                         translatedStrings.average_net_income_per + " " + translatedStrings.year,
-                         currencyShow(income.perYear.toFixed(1)));
-                break;
-            default:
-                throw errMsg;
+                case 'hour':
+                    addLiElm("income",
+                             translatedStrings.net_income_per + " " + translatedStrings.hour,
+                             currencyShow(form.income.hour.amountPerHour));
+                    addLiElm("income",
+                             translatedStrings.number_of_hours,
+                             form.income.hour.hoursPerWeek + " " + translatedStrings.hour_abbr);
+                    addLiElm("income",
+                             translatedStrings.number_of_weeks,
+                             form.income.hour.weeksPerYear);
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.month,
+                             currencyShow(income.averagePerMonth.toFixed(1)));
+                    addLiElm("income",
+                             translatedStrings.average_net_income_per + " " + translatedStrings.year,
+                             currencyShow(income.perYear.toFixed(1)));
+                    break;
+                default:
+                    throw errMsg;
+            }
         }
 
         //working time
-        var wt = calculatedData.financialEffort.workingTime;
-        if(form.income.incomePeriod != 'hour'){
-            if(form.workingTime.isActivated == 'true'){
+        var workingTime = calculatedData.financialEffort.workingTime;
+        if(workingTime.calculated){
+            
+            if(form.income.incomePeriod != 'hour'){
+                if(form.workingTime.isActivated == 'true'){
 
-                addLiElm("working_time",
-                         translatedStrings.hours_per + " " + translatedStrings.week,
-                         wt.hoursPerWeek + " " + translatedStrings.hour_abbr);
-                addLiElm("working_time",
-                         translatedStrings.months_per + " " + translatedStrings.year,
-                         wt.monthsPerYear);
-                addLiElm("working_time",
-                         translatedStrings.average_working_hours_per + " " + translatedStrings.month,
-                         wt.hoursPerMonth.toFixed(1) + " " + translatedStrings.hour_abbr);
-                addLiElm("working_time",
-                         translatedStrings.working_hours_per + " " + translatedStrings.year,
-                         wt.hoursPerYear.toFixed(1) + " " + translatedStrings.hour_abbr);
+                    addLiElm("working_time",
+                             translatedStrings.hours_per + " " + translatedStrings.week,
+                             workingTime.hoursPerWeek + " " + translatedStrings.hour_abbr);
+                    addLiElm("working_time",
+                             translatedStrings.months_per + " " + translatedStrings.year,
+                             workingTime.monthsPerYear);
+                    
+                    //if workingTime.calculated is true, the values hoursPerMonth and hoursPerYear must be valid numbers
+                    addLiElm("working_time",
+                             translatedStrings.average_working_hours_per + " " + translatedStrings.month,
+                             workingTime.hoursPerMonth.toFixed(1) + " " + translatedStrings.hour_abbr);
+                    addLiElm("working_time",
+                             translatedStrings.working_hours_per + " " + translatedStrings.year,
+                             workingTime.hoursPerYear.toFixed(1) + " " + translatedStrings.hour_abbr);
+                }
+                else{
+                    addLiElm("working_time",  translatedStrings.working_time_message);
+                }
             }
-            else{
-                addLiElm("working_time",  translatedStrings.working_time_message);
+            
+            if(isNumber(income.averagePerHour)){
+                addLiElm("working_time", 
+                         translatedStrings.average_net_income_per + " " + translatedStrings.hour, 
+                         currencyShow(income.averagePerHour.toFixed(1)));
             }
         }
-        addLiElm("working_time", 
-                 translatedStrings.average_net_income_per + " " + translatedStrings.hour, 
-                 currencyShow(income.averagePerHour.toFixed(1)));
 
         //Driving Distance
         var drivingDistance = calculatedData.drivingDistance;        
@@ -686,10 +702,10 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                          drivingDistance.betweenHomeAndJob.toFixed(1) + " " + translatedStrings.std_dist);
             }
                 
-            if(isNumber(drivingDistance.details.daysPerWeekUserDrivesToJob)){
+            if(isNumber(calculatedData.details.numberOfDaysPerWeekUserDrivesToJob)){
                 addLiElm("distance",
                          translatedStrings.days_drive_job,
-                         drivingDistance.details.daysPerWeekUserDrivesToJob.toFixed(0) + " " + translatedStrings.days);
+                         calculatedData.details.numberOfDaysPerWeekUserDrivesToJob.toFixed(0) + " " + translatedStrings.days);
             }
             
             if(isNumber(drivingDistance.duringEachWeekend)){         
@@ -698,7 +714,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                          drivingDistance.duringEachWeekend.toFixed(1) + " " + translatedStrings.std_dist);
             }
             
-            //if drivingDistance.calculated is true, the values perWeek, perMonth and perYear must exist
+            //if drivingDistance.calculated is true, the values perWeek, perMonth and perYear must be valid numbers
             addLiElm("distance",
                      translatedStrings.average_dist_per_week,
                      drivingDistance.perWeek.toFixed(1) + " " + translatedStrings.std_dist);            
@@ -737,6 +753,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                          form.timeSpentInDriving.option2.daysPerMonth + " " + translatedStrings.days);
             }
 
+            //if timeSpentInDriving.calculated is true, the values hoursPerMonth and hoursPerYear must be valid numbers
             addLiElm("time_spent_in_driving",
                      translatedStrings.hours_drive_per + " " + translatedStrings.month,
                      timeSpentInDriving.hoursPerMonth.toFixed(1) + " " + translatedStrings.hour_abbr);
@@ -747,28 +764,34 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         }
 
         //financial effort
-        var fe = calculatedData.financialEffort;
-        addLiElm("financial_effort",
-                 translatedStrings.total_costs_per_year,
-                 currencyShow(fe.totalCarCostsPerYear.toFixed(1)));
-        addLiElm("financial_effort",
-                 translatedStrings.hours_to_afford_car,
-                 fe.workingHoursPerYearToAffordCar.toFixed(1) + " " + translatedStrings.hour_abbr);
-        addLiElm("financial_effort",
-                 translatedStrings.months_to_afford_car,
-                 fe.workingMonthsPerYearToAffordCar.toFixed(2));
-        addLiElm("financial_effort",
-                 translatedStrings.days_car_paid,
-                 Math.ceil(fe.daysForCarToBePaid) + " " + translatedStrings.days);
+        var financialEffort = calculatedData.financialEffort;
+        if(financialEffort.calculated){
+            addLiElm("financial_effort",
+                     translatedStrings.total_costs_per_year,
+                     currencyShow(financialEffort.totalCarCostsPerYear.toFixed(1)));
+            addLiElm("financial_effort",
+                     translatedStrings.hours_to_afford_car,
+                     financialEffort.workingHoursPerYearToAffordCar.toFixed(1) + " " + translatedStrings.hour_abbr);
+            addLiElm("financial_effort",
+                     translatedStrings.months_to_afford_car,
+                     financialEffort.workingMonthsPerYearToAffordCar.toFixed(2));
+            addLiElm("financial_effort",
+                     translatedStrings.days_car_paid,
+                     Math.ceil(financialEffort.daysForCarToBePaid) + " " + translatedStrings.days);
+        }
 
         //speeds
         var speeds = calculatedData.speeds;
-        addLiElm("financial_effort",
-                 translatedStrings.aver_yearly + " " + translatedStrings.kinetic_speed,
-                 speeds.averageKineticSpeed.toFixed(1) + " " + translatedStrings.std_dist+"/h");
-        addLiElm("financial_effort",
-                 translatedStrings.aver_yearly + translatedStrings.virtual_speed,
-                 speeds.averageConsumerSpeed.toFixed(1) + " " + translatedStrings.std_dist+"/h");
+        if(isNumber(speeds.averageKineticSpeed)){
+            addLiElm("financial_effort",
+                     translatedStrings.aver_yearly + " " + translatedStrings.kinetic_speed,
+                     speeds.averageKineticSpeed.toFixed(1) + " " + translatedStrings.std_dist+"/h");
+        }
+        if(isNumber(speeds.averageConsumerSpeed)){
+            addLiElm("financial_effort",
+                     translatedStrings.aver_yearly + translatedStrings.virtual_speed,
+                     speeds.averageConsumerSpeed.toFixed(1) + " " + translatedStrings.std_dist+"/h");
+        }
     }
 
     function setEquivTransportCostsDetails(form, calculatedData){
