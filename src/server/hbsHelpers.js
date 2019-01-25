@@ -154,7 +154,9 @@ module.exports = {
                 }
                 sub_title1a_part2 += ", ";
 
-                sub_title1b = sub_title1b.replace("[nbrMonths]", getStatsData(this, "financialEffort_workingMonthsPerYearToAffordCar", 1, true));
+                sub_title1b = sub_title1b.replace("[nbrMonths]", 
+                                                  getStatsData(this, "financialEffort_workingMonthsPerYearToAffordCar", 1, true));
+                
                 sub_title1b = addPeriodIfInexistent(sub_title1b);
 
                 //this returns "is [yearly_costs] per year, representing [nbrMonths] months of average salary.
@@ -189,6 +191,10 @@ module.exports = {
     //return, for example, "pt_PT" or "en_US"
     getLocale: function(){
         return this.clientData.languageCode.substring(0, 2) + "_" + this.CC;
+    },
+    
+    getCapitalizedWord(str){
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     },
 
     getFuelEfficiencyOptStr: function(){
