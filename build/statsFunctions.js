@@ -488,6 +488,10 @@ function isUserDataEntryOk(dbEntry, countryObj) {
 //checks if the computed calculatedData was OK and is not an outlier
 //for the typeof "calculatedData" see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
 function isCalculatedDataOk(calculatedData, countryObj, fx) {
+    
+    if(!calculatedData){
+        return false;
+    }
 
     var monthlyCosts = calculatedData.costs.perMonth.items;
     var currency = countryObj.currency;
