@@ -4,24 +4,27 @@
 
 autocosts.resultsModule = autocosts.resultsModule || {};
 autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selectedCountry){
-    
-    var resultsModule;
-    
+
+    var resultsModule, commonsModule,
+        isNumber; //is function that is imported from commons.js
+
     var calculatedData, pdfReport, chartsInfo;
-    
+
     function initialize(){
         loadModuleDependencies();
-        $('#results .button-pdf, #results .button-print').removeClass('disabled'); 
+        $('#results .button-pdf, #results .button-print').removeClass('disabled');
     }
-    
+
     function loadModuleDependencies(){
         resultsModule = autocosts.resultsModule;
-    }       
-    
+        commonsModule = autocosts.commonsModule;
+        isNumber = commonsModule.isNumber; //function
+    }
+
     function generatePDF(calculatedDataIn){
-        
+
         calculatedData = calculatedDataIn;
-        
+
         //see modules tree at https://github.com/jfoclpf/autocosts/wiki/Modules-tree
         chartsInfo = resultsModule.chartsModule.getChartsInfo();
 
@@ -29,45 +32,45 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             text: translatedStrings.main_title,
             style: 'title'
         };
-        
-        var isFinancialEffortChart = calculatedData.financialEffort.calculated && 
-            calculatedData.financialEffort.isLikelyToBeValid && 
+
+        var isFinancialEffortChart = calculatedData.financialEffort.calculated &&
+            calculatedData.financialEffort.isLikelyToBeValid &&
             chartsInfo.financialEffort.isVisible;
-        
+
         var isAlternativesToCarChart = (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)) &&
             chartsInfo.alternativesToCar.isVisible;
-        
-        $.when(switches.charts ? getChartSize("costsDoughnut") : {}, 
+
+        $.when(switches.charts ? getChartSize("costsDoughnut") : {},
                switches.charts ? getChartSize("costsBars") : {},
                switches.charts && isFinancialEffortChart ? getChartSize("financialEffort") : {},
                switches.charts && isAlternativesToCarChart ? getChartSize("alternativesToCar") : {}).
         done(function(costsDoughnutSize, costsBarsSize, financialEffortSize, alternativesToCarSize){
-            
+
             var costsDoughnutChartWHProp, costsDoughnutChartWidth,
                 costsBarsChartWHProp, costsBarsChartWidth,
                 financialEffortChartWHProp, financialEffortChartWidth,
                 alternativesToCarChartWHProp, alternativesToCarChartWidth;
-            
+
             if (switches.charts){
                 //costs Doughnut Chart width/height proportion
                 costsDoughnutChartWHProp = costsDoughnutSize.width/costsDoughnutSize.height;
                 costsDoughnutChartWidth = 180; //pixels
-                
+
                 //costs Bars Chart width/height proportion
                 costsBarsChartWHProp = costsBarsSize.width/costsBarsSize.height;
                 costsBarsChartWidth = 420; //pixels
-                
+
                 if(isFinancialEffortChart){
                     financialEffortChartWHProp = financialEffortSize.width/financialEffortSize.height;
-                    financialEffortChartWidth = 320; //pixels                
+                    financialEffortChartWidth = 320; //pixels
                 }
-                
+
                 if(isAlternativesToCarChart){
                     alternativesToCarChartWHProp = alternativesToCarSize.width/alternativesToCarSize.height;
-                    alternativesToCarChartWidth = 350; //pixels                
+                    alternativesToCarChartWidth = 350; //pixels
                 }
             }
-                
+
             var styles = {
                 title:{
                     fontSize: 14,
@@ -107,7 +110,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
                 }
             ];
 
-            if (switches.charts){    
+            if (switches.charts){
                 content.push(
                     {
                         image: chartsInfo.costsDoughnut.base64Image,
@@ -131,15 +134,15 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
                             body: getChartsLegend()
                         },
                         pageBreak: 'after'
-                    }                       
+                    }
                 );
             }
 
             //adds tables of monthly car costs
-            content.push(             
+            content.push(
                 {
                     style: 'tableMarging',
-                    table:{                
+                    table:{
                         widths: [ 390, '*' ],
                         body: getStandingCostsTable()
                     }
@@ -163,7 +166,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             );
 
             //financial effort title and table
-            if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid){ 
+            if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid){
                 //header
                 content.push(
                     {
@@ -208,9 +211,9 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             }
 
             //Equivalent transport costs / uber / public transports
-            if (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)){   
+            if (calculatedData.publicTransports.calculated || (switches.uber && calculatedData.uber.calculated)){
                 //header
-                content.push( 
+                content.push(
                     {
                         style: 'tableMarging',
                         table: {
@@ -279,10 +282,10 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
 
             pdfReport = pdfMake.createPdf(docDefinition);
             console.log("pdfReport created");
-            
+
         });
     }
-    
+
     function download(){
         pdfReport.download(translatedStrings.web_page_title + '.pdf');
     }
@@ -291,19 +294,19 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
         var win = window.open('', '_blank');
         pdfReport.print({}, win);
     }
-    
+
     function getChartSize(chart){
-        
-        var $deferredEvent = $.Deferred(); 
-        
-        var img = new Image(); 
-        img.onload = function(){            
+
+        var $deferredEvent = $.Deferred();
+
+        var img = new Image();
+        img.onload = function(){
             $deferredEvent.resolve({ width: img.width, height: img.height});
-        };        
-        
+        };
+
         switch(chart){
             case "costsDoughnut":
-                img.src = chartsInfo.costsDoughnut.base64Image;                 
+                img.src = chartsInfo.costsDoughnut.base64Image;
                 break;
             case "costsBars":
                 img.src = chartsInfo.costsBars.base64Image;
@@ -317,10 +320,10 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             default:
                 throw "Error on getChartSize, unknown chart: " + chart;
         }
-        
+
         return $deferredEvent;
-    }   
-    
+    }
+
     //Languages/alphabets that need special fonts, load such fonts from different files
     //These fonts files are virtually created into the file vfs_fonts.js in folder /js/pdf/XX/
     //more information here: https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side
@@ -373,16 +376,16 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
                 {},{},{}
             ],
             [
-                translatedStrings.word_per + translatedStrings.month + "\n" + 
+                translatedStrings.word_per + translatedStrings.month + "\n" +
                 translatedStrings.curr_symbol     + calculatedData.costs.perMonth.total.toFixed(),
-                
-                translatedStrings.word_per + translatedStrings.trimester + "\n" + 
+
+                translatedStrings.word_per + translatedStrings.trimester + "\n" +
                 translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
-                
-                translatedStrings.word_per + translatedStrings.semester + "\n" + 
+
+                translatedStrings.word_per + translatedStrings.semester + "\n" +
                 translatedStrings.curr_symbol  + (calculatedData.costs.perMonth.total * 6).toFixed(),
-                
-                translatedStrings.word_per + translatedStrings.year + "\n" + 
+
+                translatedStrings.word_per + translatedStrings.year + "\n" +
                 translatedStrings.curr_symbol      + (calculatedData.costs.perMonth.total * 12).toFixed()
             ],
             [
@@ -436,7 +439,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
 
     function getStandingCostsTable(){
 
-        var cc = resultsModule.getCostsColors();  
+        var cc = resultsModule.getCostsColors();
         var costItems = calculatedData.costs.perMonth.items;
 
         var body = [
@@ -484,7 +487,7 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
     function getRunningCostsTable(){
 
         var cc = resultsModule.getCostsColors();
-        var costItems = calculatedData.costs.perMonth.items;    
+        var costItems = calculatedData.costs.perMonth.items;
 
         var body = [
             [
@@ -579,7 +582,9 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
 
     function getBodyFinEffort(){
 
-        var fe = calculatedData.financialEffort;
+        var financialEffort = calculatedData.financialEffort;
+        var drivingDistance = calculatedData.drivingDistance;
+        var timeSpentInDriving = calculatedData.timeSpentInDriving;
 
         var body = [
             [
@@ -588,25 +593,38 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
             ],
             [
                 {text: translatedStrings.extra_data_income + "\n" + gstr("#financial-effort .income_details")},
-                {text: translatedStrings.curr_symbol + fe.income.perYear.toFixed(0)}
+                {text: translatedStrings.curr_symbol + financialEffort.income.perYear.toFixed(0)}
             ],
             [
                 {text: translatedStrings.extra_data_working_time + "\n" + gstr("#financial-effort .working_time_details")},
-                {text: fe.workingHoursPerYearToAffordCar.toFixed(0) + " " + translatedStrings.hour_abbr}
-            ],
-            [
-                {text: translatedStrings.distance + "\n" + gstr("#financial-effort .distance_details")},
-                {text: calculatedData.drivingDistance.perYear.toFixed(0) + " " + translatedStrings.std_dist}
-            ],
-            [
-                {text: translatedStrings.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
-                {text: calculatedData.timeSpentInDriving.hoursPerYear.toFixed(0) + " " + translatedStrings.hour_abbr}
-            ],
-            [
-                {text: translatedStrings.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
-                {text: translatedStrings.curr_symbol + fe.financialEffortPercentage.toFixed(0) + "%"}
+                {text: financialEffort.workingHoursPerYearToAffordCar.toFixed(0) + " " + translatedStrings.hour_abbr}
             ]
         ];
+
+        if(drivingDistance.calculated && isNumber(drivingDistance.perYear)){
+            body.push(
+                [
+                    {text: translatedStrings.distance + "\n" + gstr("#financial-effort .distance_details")},
+                    {text: drivingDistance.perYear.toFixed(0) + " " + translatedStrings.std_dist}
+                ]
+            );
+        }
+
+        if(timeSpentInDriving.calculated && isNumber(timeSpentInDriving.hoursPerYear)){
+            body.push(
+                [
+                    {text: translatedStrings.extra_data_time_spent_in_driving + "\n" + gstr("#financial-effort .time_spent_in_driving_details")},
+                    {text: timeSpentInDriving.hoursPerYear.toFixed(0) + " " + translatedStrings.hour_abbr}
+                ]
+            );
+        }
+
+        body.push(
+            [
+                {text: translatedStrings.financial_effort + "\n" + gstr("#financial-effort .financial_effort_details")},
+                {text: translatedStrings.curr_symbol + financialEffort.financialEffortPercentage.toFixed(0) + "%"}
+            ]
+        );
 
         return body;
     }
@@ -629,13 +647,13 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
                 {text: translatedStrings.curr_symbol + pt.taxi.totalCosts.toFixed(0)}
             ]
         ];
-        
+
         if(pt.furtherPublicTransports.display){
             body.push(
                 [
                     {text: translatedStrings.other_pub_trans + "\n" + gstr("#equivalent-transport-costs .other_pub_trans_details")},
                     {text: translatedStrings.curr_symbol + pt.furtherPublicTransports.totalCosts.toFixed(0)}
-                ]            
+                ]
             );
         }
 
@@ -684,12 +702,12 @@ autocosts.resultsModule.pdfModule = (function(translatedStrings, switches, selec
 
         return str;
     }
-    
+
     return {
         initialize: initialize,
         generatePDF: generatePDF,
         download: download,
-        print: print        
+        print: print
     };
 
 })(autocosts.serverInfo.translatedStrings,
