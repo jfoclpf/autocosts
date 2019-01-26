@@ -28,7 +28,7 @@ autocosts.calculatorModule = (function(thisModule){
     //says if some calculated results are likely to be valid
     var isLikelyToBeValidConst = {
         financialEffortPercentage: {
-            min: 5,
+            min: 2,
             max: 110
         }
     };
