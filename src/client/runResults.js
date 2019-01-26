@@ -275,10 +275,10 @@ autocosts.resultsModule.runResultsModule =
         
         chartsDrawnPromisesObj = chartsModule.initialize(calculatedData);        
 
-        //The first three boxes on the top
+        //The third of the three boxes on the top
         //if financial effort was not calculated or not likely, does not show doughnut chart
         //on the third box, and adapt the three boxes css classes
-        if(calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid && switches.charts){ 
+        if(calculatedData.financialEffort.income.calculated && calculatedData.financialEffort.isLikelyToBeValid && switches.charts){ 
             chartsModule.drawDoughnutFinancialEffort(calculatedData);
             //shows third box where the financial effort doughnut chart appears
             $("#results #info-boxes .info-box.box-3").show();
@@ -288,7 +288,7 @@ autocosts.resultsModule.runResultsModule =
             //hides third box where the financial effort doughnut chart appears
             $("#results #info-boxes .info-box.box-3").hide();
             $("#results #info-boxes .info-box").removeClass("three-boxes").addClass("two-boxes");       
-        }                
+        }              
 
         resultsModule.setPeriodicCosts(calculatedData, "month");
         resultsModule.setPeriodicCostsDetails(form, calculatedData); //the details on the dropdown boxes                         
