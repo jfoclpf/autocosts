@@ -332,7 +332,7 @@ autocosts.calculatorModule = (function(thisModule){
                         case false:
                             return "distanceNoCarToJob";
                         default:
-                            throw errMsg;
+                            throw errMsg + " - Invalid fuel.distanceBased.considerCarToJob";
                     }
                     break;
                 case "money":
@@ -340,7 +340,7 @@ autocosts.calculatorModule = (function(thisModule){
                 case "euros":
                     return "money";
                 default:
-                    throw errMsg;
+                    throw errMsg + " - Invalid fuel.typeOfCalculation";
             }
         };
 
@@ -415,7 +415,7 @@ autocosts.calculatorModule = (function(thisModule){
 
                     distancePerMonth = (2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringWeekends) *
                         consts.numberOfWeeksInAMonth;
-                    
+
                     calculatedData.details.numberOfDaysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
 
                     break;
@@ -541,7 +541,9 @@ autocosts.calculatorModule = (function(thisModule){
         }
     }
 
-    function calculateMonthlyCosts(){
+    function calculateMonthlyCosts(costs, details){
+        //'costs' and 'details' are assigned by reference and makes reference to calculatedData.costs and calculatedData.details
+        //no other methods and properties of calculatedData are touched
 
         var today = new Date();
         var acquisitionDate = new Date(inputData.depreciation.acquisitionYear, inputData.depreciation.acquisitionMonth - 1);
@@ -551,7 +553,7 @@ autocosts.calculatorModule = (function(thisModule){
             throw "Age of vehicle invalid or equals zero";
         }
 
-        var monthlyCosts = calculatedData.costs.perMonth.items;
+        var monthlyCosts = costs.perMonth.items;
 
         monthlyCosts.depreciation =        calculateMonthlyDepreciation(inputData.depreciation, ageInMonths);
         monthlyCosts.insurance =           calculateInsuranceMonthlyValue(inputData.insurance);
@@ -585,32 +587,44 @@ autocosts.calculatorModule = (function(thisModule){
 
         var totalCostsEver = totalCostsPerMonth * ageInMonths;
 
-        //details
-        calculatedData.details.ageOfCarInMonths = ageInMonths;
+        //details and costs are references
+        details.ageOfCarInMonths = ageInMonths;
         var creditObj = calculateInterestsMonthlyValue(inputData.credit, ageInMonths);
-        calculatedData.details.credit.numberOfMonthlyInstalments = creditObj.numberOfMonthlyInstalments;
-        calculatedData.details.credit.totalPaidInInterests = creditObj.totalInterests;
+        details.credit.numberOfMonthlyInstalments = creditObj.numberOfMonthlyInstalments;
+        details.credit.totalPaidInInterests = creditObj.totalInterests;
 
-        calculatedData.costs.perMonth.items = monthlyCosts;
-        calculatedData.costs.perMonth.standingCosts = totalStandingCostsPerMonth;
-        calculatedData.costs.perMonth.runningCosts = totalRunningCostsPerMonth;
-        calculatedData.costs.perMonth.total = totalCostsPerMonth;
-        calculatedData.costs.totalPerYear = totalCostsPerYear;
-        calculatedData.costs.totalEver = totalCostsEver;
-
-        return calculatedData.costs;
+        costs.perMonth.items = monthlyCosts;
+        costs.perMonth.standingCosts = totalStandingCostsPerMonth;
+        costs.perMonth.runningCosts = totalRunningCostsPerMonth;
+        costs.perMonth.total = totalCostsPerMonth;
+        costs.totalPerYear = totalCostsPerYear;
+        costs.totalEver = totalCostsEver;
+        
+        //because NaN+1+2+3=NaN this also checks if any cost itme is a valid number
+        if(areAllNumbers(totalStandingCostsPerMonth, totalRunningCostsPerMonth, totalCostsPerMonth, totalCostsPerYear, totalCostsEver)){
+            return true;
+        }
+        else{
+            return false;
+        }        
     }
 
-    function calculatePublicTransports(){
-
-        if(!inputData || !country){
-            throw errMsgDataCountry;
-        }
-
-        //Object for public transports as an alternative to car usage
-        //i.e., how much of public transports could be used with the same amount
+    function calculatePublicTransports(publicTransports, inputPublicTransports, totalCarCostsPerMonth, taxiPrice){
+        //'publicTransports' is assigned by reference and refers to calculatedData.publicTransports
+        //'inputPublicTransports' is assigned by reference and makes reference to inputData.publicTransports
+        
+        //This function calculates the public transports costs as an alternative to car usage
+        //that is, how much of public transports could be used with the same amount
         //of money that the user spends totally with automobile
-        var publicTransports = calculatedData.publicTransports;
+        
+        var errMsg = "Error calculating Public Transports";
+
+        if(!publicTransports || !inputPublicTransports || !isNumber(totalCarCostsPerMonth)){
+            consoleErrorPairs("publicTransports", publicTransports,
+                              "inputPublicTransports", inputPublicTransports,
+                              "totalCarCostsPerMonth", totalCarCostsPerMonth)
+            throw errMsg;
+        }        
 
         /* ratios */
         //ratio (costs of public transports)/(car costs), under which it shows public transports as an alternative
@@ -618,17 +632,22 @@ autocosts.calculatorModule = (function(thisModule){
         //ratio of (costs of public transports)/(car costs), under which shows further public transports (intercity trains for example)
         publicTransports.ratios.showFurtherPt = 0.6;
 
-        var totalCarCostsPerMonth = calculatedData.costs.perMonth.total;
+        var costOfEachMonthlyPass  = parseFloat(inputPublicTransports.monthlyPassCost);
+        var numberOfPeopleInFamily = parseInt(inputPublicTransports.numberOfPeopleInFamily);
 
-        var costOfEachMonthlyPass  = parseFloat(inputData.publicTransports.monthlyPassCost);
-        var numberOfPeopleInFamily = parseInt(inputData.publicTransports.numberOfPeopleInFamily);
-
-        publicTransports.taxi.costPerUnitDistance = country.taxi_price;
+        if(!areAllNumbersGreaterThanZero(costOfEachMonthlyPass, numberOfPeopleInFamily)){
+            publicTransports.calculated = false;
+            return;
+        }
+        
+        if(isNumber(taxiPrice)){
+            publicTransports.taxi.costPerUnitDistance = taxiPrice;
+        }
 
         var totalCostsOfStandardPt = costOfEachMonthlyPass * numberOfPeopleInFamily;
         publicTransports.totalCostsOfStandardPublicTransports = totalCostsOfStandardPt;
 
-        //boolean function that says if public transports are shown
+        //boolean function that says if public transports alternatives are calculated 
         publicTransports.toBeDisplayed =
             (totalCostsOfStandardPt < publicTransports.ratios.showPt * totalCarCostsPerMonth) &&
             costOfEachMonthlyPass > 0;
@@ -669,149 +688,158 @@ autocosts.calculatorModule = (function(thisModule){
 
             publicTransports.calculated = true;
         }
-
-        calculatedData.publicTransports = publicTransports;
-
-        return publicTransports;
-    }
-
-    function calculateFinancialEffort(){
-
-        if(!inputData || !country){
-            throw errMsgDataCountry;
+        else{
+            publicTransports.calculated = false;
         }
 
-        var financialEffort = calculatedData.financialEffort;
-       
-        var errMsg = "Error calculating Financial Effort";
+    }
 
-        var totalCostsPerYear = calculatedData.costs.totalPerYear;
-        if(!isNumber(totalCostsPerYear)){
-            throw errMsg;
-        }        
+    function calculateFinancialEffort(financialEffort, inputIncome, inputWorkingTime, totalCostsPerYear){
+        //'financialEffort' is assigned by reference and makes reference to calculatedData.financialEffort
+        //'inputIncome' and 'inputWorkingTime' are assigned by reference and make reference to inputData.income and inputData.inputData
+        //no other methods and properties of calculatedData or inputData are touched
+
+        var errMsg = "Error calculating Financial Effort";
         
+        if(!financialEffort || !inputIncome || !inputWorkingTime || !isNumber(totalCostsPerYear)){
+            consoleErrorPairs("financialEffort", financialEffort, 
+                              "inputIncome", inputIncome, 
+                              "inputWorkingTime", inputWorkingTime, 
+                              "totalCostsPerYear", totalCostsPerYear);            
+            throw errMsg;
+        }
+
         financialEffort.totalCarCostsPerYear = totalCostsPerYear;
 
-        //income and financial effort
-        var incomePeriod = inputData.income.incomePeriod;
+        //Income and financial effort
+        var incomePeriod = inputIncome.incomePeriod;     
         switch(incomePeriod){
             case 'year':
-                financialEffort.income.perYear = parseFloat(inputData.income.year.amount) * 1;
+                financialEffort.income.perYear = parseFloat(inputIncome.year.amount) * 1;
                 break;
             case 'month':
                 financialEffort.income.perYear =
-                    parseFloat(inputData.income.month.amountPerMonth) * parseFloat(inputData.income.month.monthsPerYear);
+                    parseFloat(inputIncome.month.amountPerMonth) * parseFloat(inputIncome.month.monthsPerYear);
                 break;
             case 'week':
                 financialEffort.income.perYear =
-                    parseFloat(inputData.income.week.amountPerWeek) * parseFloat(inputData.income.week.weeksPerYear);
+                    parseFloat(inputIncome.week.amountPerWeek) * parseFloat(inputIncome.week.weeksPerYear);
                 break;
             case 'hour':
-                financialEffort.workingTime.hoursPerWeek = parseFloat(inputData.income.hour.hoursPerWeek);
-                financialEffort.workingTime.weeksPerYear = parseFloat(inputData.income.hour.weeksPerYear);
+                financialEffort.workingTime.hoursPerWeek = parseFloat(inputIncome.hour.hoursPerWeek);
+                financialEffort.workingTime.weeksPerYear = parseFloat(inputIncome.hour.weeksPerYear);
                 financialEffort.income.perYear =
-                    parseFloat(inputData.income.hour.amountPerHour) *
+                    parseFloat(inputIncome.hour.amountPerHour) *
                     financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
                 break;
-            default:
-                throw errMsg;
+                
+            default:   
+                //if income period is not valid, return the function immediately
+                financialEffort.calculated = financialEffort.income.calculated = false;
+                return;
         }
-        
+
         //this function also works with one parameter, must be a valid number > 0
         if(areAllNumbersGreaterThanZero(financialEffort.income.perYear)){
-            
+
             financialEffort.income.averagePerMonth = financialEffort.income.perYear / 12;
             financialEffort.income.averagePerWeek = financialEffort.income.perYear / consts.numberOfWeeksInAYear;
-            
+
             financialEffort.workingMonthsPerYearToAffordCar = totalCostsPerYear / financialEffort.income.perYear * 12;
-            
-            financialEffort.daysForCarToBePaid = 
-                totalCostsPerYear / financialEffort.income.perYear * consts.numberOfDaysInAYear;     
-            
+
+            financialEffort.daysForCarToBePaid =
+                totalCostsPerYear / financialEffort.income.perYear * consts.numberOfDaysInAYear;
+
             financialEffort.financialEffortPercentage = totalCostsPerYear / financialEffort.income.perYear * 100;
-            
+
             financialEffort.income.calculated = true;
         }
         else{
             financialEffort.income.calculated = false;
-        }        
-        
-        //working time
-        //uses inputData section "income", as the income was selected per hour
+        }
+
+        //Working Time
+        //uses input Data section "income", as the income was selected per hour
         if(incomePeriod === 'hour'){
-            
+
             if(areAllNumbersGreaterThanZero(financialEffort.workingTime.hoursPerWeek, financialEffort.workingTime.weeksPerYear)){
-                
+
                 financialEffort.workingTime.hoursPerYear =
                     financialEffort.workingTime.hoursPerWeek * financialEffort.workingTime.weeksPerYear;
 
                 financialEffort.workingTime.hoursPerMonth = financialEffort.workingTime.hoursPerYear / 12;
-                
+
                 financialEffort.workingTime.calculated = true;
             }
             else{
                 financialEffort.workingTime.calculated = false;
             }
         }
-        //uses inputData section "working time"
+        //uses input data section "working time"
         else if (incomePeriod === 'week' || incomePeriod === 'month' || incomePeriod === 'year'){
-            if(inputData.workingTime.isActivated == 'true'){
-                financialEffort.workingTime.hoursPerWeek  = parseFloat(inputData.workingTime.hoursPerWeek);
-                financialEffort.workingTime.monthsPerYear = parseFloat(inputData.workingTime.monthsPerYear);
+            if(inputWorkingTime.isActivated == 'true'){
+                financialEffort.workingTime.hoursPerWeek  = parseFloat(inputWorkingTime.hoursPerWeek);
+                financialEffort.workingTime.monthsPerYear = parseFloat(inputWorkingTime.monthsPerYear);
             }
             //if user doesn't input, use standard values
             else {
                 financialEffort.workingTime.hoursPerWeek  = 36;
                 financialEffort.workingTime.monthsPerYear = 11;
             }
-            
+
             if(areAllNumbersGreaterThanZero(financialEffort.workingTime.hoursPerWeek, financialEffort.workingTime.monthsPerYear)){
-                
+
                 financialEffort.workingTime.hoursPerYear =
                     consts.numberOfWeeksInAMonth * financialEffort.workingTime.monthsPerYear * financialEffort.workingTime.hoursPerWeek;
 
                 financialEffort.workingTime.hoursPerMonth = financialEffort.workingTime.hoursPerYear / 12;
-                
-                financialEffort.workingTime.calculated = true;                
+
+                financialEffort.workingTime.calculated = true;
             }
             else{
                 financialEffort.workingTime.calculated = false;
             }
         }
         else{
-            throw errMsg;
+            financialEffort.calculated = financialEffort.workingTime.calculated = false;
+            return;
         }
 
         //find average income per hour
         financialEffort.calculated = financialEffort.income.calculated && financialEffort.workingTime.calculated;
-        
+
         if(financialEffort.calculated){
             financialEffort.income.averagePerHour = financialEffort.income.perYear / financialEffort.workingTime.hoursPerYear;
-            financialEffort.workingHoursPerYearToAffordCar  = totalCostsPerYear / financialEffort.income.averagePerHour;        
+            financialEffort.workingHoursPerYearToAffordCar  = totalCostsPerYear / financialEffort.income.averagePerHour;
         }
-            
+
         if(financialEffort.income.calculated &&
            financialEffort.financialEffortPercentage >= isLikelyToBeValidConst.financialEffortPercentage.min &&
            financialEffort.financialEffortPercentage <= isLikelyToBeValidConst.financialEffortPercentage.max){
-            
+
             financialEffort.isLikelyToBeValid = true;
         }
         else{
             financialEffort.isLikelyToBeValid = false;
-        }        
-        
-        calculatedData.financialEffort = financialEffort;
-
-        return financialEffort;
-    }
-
-    function calculateDrivingDistance(){
-
-        if(!inputData || !country){
-            throw errMsgDataCountry;
         }
 
-        var drivingDistance = calculatedData.drivingDistance;
+        //doesn't need to return because financialEffort is a referece to calculatedData.financialEffort
+        //and calculatedData is global in this module
+    }
+
+    function calculateDrivingDistance(drivingDistance, details, inputFuel, inputDistance){
+        //'drivingDistance' and 'details' are assigned by reference and refer to calculatedData.drivingDistance and calculatedData.inputFuel
+        //'inputDistance' and 'inputFuel' are assigned by reference and refer to inputData.inputDistance and inputData.details
+
+        var errMsg = "Error calculating Driving Distance";
+        
+        if(!drivingDistance || !details || !inputFuel || !inputDistance){
+            consoleErrorPairs("drivingDistance", drivingDistance, 
+                              "details", details,
+                              "inputFuel", inputFuel,
+                              "inputDistance", inputDistance);
+            throw errMsg;
+        }        
 
         var distancePerWeek,              //distance driven per week
             distancePerMonth,             //distance driven per month
@@ -819,58 +847,54 @@ autocosts.calculatorModule = (function(thisModule){
             distanceBetweenHomeAndJob,    //distance between home and job (one-way)
             distanceDuringEachWeekend,    //distance the user drives during weekend
             daysPerWeekUserDrivesToJob,
-            inputDistance,
-            calculated = false;           //whether Driving Distance is truly calculated
-
-        var errMsg = "Error calculating Driving distance";
+            noCarToJobDistancePerPeriod;
 
         //the result shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
-        var fuelTypeOfCalculation = calculateMonthlyFuel(inputData.fuel, country).typeOfCalculation();
+        var fuelTypeOfCalculation = calculateMonthlyFuel(inputFuel, country).typeOfCalculation();
 
         //if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
         if(fuelTypeOfCalculation === "money"){
 
-            if(inputData.distance.considerCarToJob === 'true'){
+            if(inputDistance.considerCarToJob === 'true'){
 
-                daysPerWeekUserDrivesToJob = parseInt(inputData.distance.carToJob.daysPerWeek);
-                distanceBetweenHomeAndJob  = parseFloat(inputData.distance.carToJob.distanceBetweenHomeAndJob);
-                distanceDuringEachWeekend  = parseFloat(inputData.distance.carToJob.distanceDuringWeekends);
+                daysPerWeekUserDrivesToJob = parseInt(inputDistance.carToJob.daysPerWeek);
+                distanceBetweenHomeAndJob  = parseFloat(inputDistance.carToJob.distanceBetweenHomeAndJob);
+                distanceDuringEachWeekend  = parseFloat(inputDistance.carToJob.distanceDuringWeekends);
 
                 if(areAllNumbers(daysPerWeekUserDrivesToJob, distanceBetweenHomeAndJob, distanceDuringEachWeekend)){
 
                     distancePerWeek = 2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob  + distanceDuringEachWeekend;
                     distancePerMonth = consts.numberOfWeeksInAMonth * distancePerWeek;
                     distancePerYear  = distancePerMonth * 12;
-                    
-                    calculatedData.details.numberOfDaysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
 
-                    calculated = true;
+                    details.numberOfDaysPerWeekUserDrivesToJob = daysPerWeekUserDrivesToJob;
                 }
                 else{
-                    calculated = false;
+                    drivingDistance.calculated = false;
+                    return;
                 }
             }
-            else if(inputData.distance.considerCarToJob === 'false'){
+            else if(inputDistance.considerCarToJob === 'false'){
 
-                inputDistance = parseFloat(inputData.distance.noCarToJob.distancePerPeriod);
+                noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod);
 
-                if(isNumber(inputDistance)){
+                if(isNumber(noCarToJobDistancePerPeriod)){
 
-                    switch(inputData.distance.noCarToJob.period){
+                    switch(inputDistance.noCarToJob.period){
                         case "1":
-                            distancePerMonth = inputDistance;
+                            distancePerMonth = noCarToJobDistancePerPeriod;
                             break;
                         case "2":
-                            distancePerMonth = inputDistance / 2;
+                            distancePerMonth = noCarToJobDistancePerPeriod / 2;
                             break;
                         case "3":
-                            distancePerMonth = inputDistance / 3;
+                            distancePerMonth = noCarToJobDistancePerPeriod / 3;
                             break;
                         case "4":
-                            distancePerMonth = inputDistance / 6;
+                            distancePerMonth = noCarToJobDistancePerPeriod / 6;
                             break;
                         case "5":
-                            distancePerMonth = inputDistance / 12;
+                            distancePerMonth = noCarToJobDistancePerPeriod / 12;
                             break;
                         default:
                             throw errMsg;
@@ -878,11 +902,10 @@ autocosts.calculatorModule = (function(thisModule){
 
                     distancePerYear = distancePerMonth * 12;
                     distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
-
-                    calculated = true;
                 }
                 else{
-                    calculated = false;
+                    drivingDistance.calculated = false;
+                    return;
                 }
 
             }
@@ -894,51 +917,50 @@ autocosts.calculatorModule = (function(thisModule){
         //gets distance information from form part 2, in fuel section
         else if(fuelTypeOfCalculation === "distanceCarToJob" || fuelTypeOfCalculation === "distanceNoCarToJob"){
 
-            distancePerMonth = calculateMonthlyFuel(inputData.fuel, country).getDistancePerMonth();
+            distancePerMonth = calculateMonthlyFuel(inputFuel, country).getDistancePerMonth();
 
             if(isNumber(distancePerMonth)){
 
                 distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth;
                 distancePerYear  = distancePerMonth * 12;
-
-                calculated = true;
             }
             else{
-                calculated = false;
+                drivingDistance.calculated = false;
+                return;
             }
         }
         else{
             throw errMsg;
         }
 
-        if(calculated){
-            drivingDistance.calculated = true;
+        drivingDistance.calculated = true;
 
-            drivingDistance.perWeek = distancePerWeek;
-            drivingDistance.perMonth = distancePerMonth;
-            drivingDistance.perYear = distancePerYear;
-            drivingDistance.betweenHomeAndJob = distanceBetweenHomeAndJob;
-            drivingDistance.duringEachWeekend = distanceDuringEachWeekend;
-        }
-        else{
-            drivingDistance.calculated = false;
-        }
-
-        calculatedData.drivingDistance = drivingDistance;
-
-        return drivingDistance;
+        drivingDistance.perWeek = distancePerWeek;
+        drivingDistance.perMonth = distancePerMonth;
+        drivingDistance.perYear = distancePerYear;
+        drivingDistance.betweenHomeAndJob = distanceBetweenHomeAndJob;
+        drivingDistance.duringEachWeekend = distanceDuringEachWeekend;
+        
+        //doesn't need to return because drivingDistance is a referece to calculatedData.drivingDistance
+        //and calculatedData is global in this module        
     }
 
-    function calculateTimeSpentInDriving(){
-
-        if(!inputData || !country){
-            throw errMsgDataCountry;
-        }
-
-        var timeSpentInDriving = calculatedData.timeSpentInDriving;
+    function calculateTimeSpentInDriving(timeSpentInDriving, details, inputFuel, inputDistance, inputTimeSpentInDriving){
+        //'timeSpentInDriving' is assigned by reference and makes reference to calculatedData.timeSpentInDriving
+        //'details' is assigned by reference and makes reference to calculatedData.details
+        //inputFuel, inputDistance and inputTimeSpentInDriving make reference to 
+        //inputData.inputFuel inputData.inputDistance and inputData.inputTimeSpentInDriving
 
         var errMsg = "Error calculating Time Spent In Driving";
-        var calculated = false;
+        
+        if(!timeSpentInDriving || !details || !inputFuel || !inputDistance || !inputTimeSpentInDriving){
+            consoleErrorPairs("timeSpentInDriving", timeSpentInDriving,
+                              "details", details,
+                              "inputFuel", inputFuel,
+                              "inputDistance", inputDistance, 
+                              "inputTimeSpentInDriving", inputTimeSpentInDriving);
+            throw errMsg;
+        }  
 
         var minutesBetweenHomeAndJob,   //time (in minutes) driven between home and job
             minutesInEachWeekend,       //time (in minutes) driven during weekends
@@ -951,15 +973,15 @@ autocosts.calculatorModule = (function(thisModule){
             fuelTypeOfCalculation;
 
         //the result shall be: "money", "distanceNoCarToJob" or "distanceCarToJob"
-        fuelTypeOfCalculation = calculateMonthlyFuel(inputData.fuel, country).typeOfCalculation();
+        fuelTypeOfCalculation = calculateMonthlyFuel(inputFuel, country).typeOfCalculation();
 
         //When user refers that "takes car to job", either in Fuel section (form part 2) or in Distance section (part 3).
         //In this situation, the form displays "option 1" in "Time Spent in Driving" section
-        if(fuelTypeOfCalculation === "distanceCarToJob" || inputData.distance.considerCarToJob == 'true'){
+        if(fuelTypeOfCalculation === "distanceCarToJob" || inputDistance.considerCarToJob == 'true'){
 
-            minutesBetweenHomeAndJob   = parseFloat(inputData.timeSpentInDriving.option1.minutesBetweenHomeAndJob);
-            minutesInEachWeekend       = parseFloat(inputData.timeSpentInDriving.option1.minutesDuringWeekend);
-            daysPerWeekUserDrivesToJob = parseInt(calculatedData.details.numberOfDaysPerWeekUserDrivesToJob);            
+            minutesBetweenHomeAndJob   = parseFloat(inputTimeSpentInDriving.option1.minutesBetweenHomeAndJob);
+            minutesInEachWeekend       = parseFloat(inputTimeSpentInDriving.option1.minutesDuringWeekend);
+            daysPerWeekUserDrivesToJob = parseInt(details.numberOfDaysPerWeekUserDrivesToJob);
 
             if(areAllNumbersGreaterThanZero(minutesBetweenHomeAndJob, minutesInEachWeekend) &&
                isNumber(daysPerWeekUserDrivesToJob)){
@@ -970,60 +992,57 @@ autocosts.calculatorModule = (function(thisModule){
                 daysPerMonth  = consts.numberOfWeeksInAMonth * ( (minutesInEachWeekend > 0 ? 2 : 0) + daysPerWeekUserDrivesToJob );
                 hoursPerYear = hoursPerMonth * 12;
 
-                calculated = true;
             }
             else{
-                calculated = false;
+                timeSpentInDriving.calculated = false;
+                return;
             }
         }
         else{
-            minutesPerDay = parseFloat(inputData.timeSpentInDriving.option2.minutesPerDay);
-            daysPerMonth  = parseFloat(inputData.timeSpentInDriving.option2.daysPerMonth);
+            minutesPerDay = parseFloat(inputTimeSpentInDriving.option2.minutesPerDay);
+            daysPerMonth  = parseFloat(inputTimeSpentInDriving.option2.daysPerMonth);
 
             if(areAllNumbersGreaterThanZero(minutesPerDay, daysPerMonth)){
+                
                 hoursPerMonth  = minutesPerDay * daysPerMonth / 60;
                 minutesPerWeek = hoursPerMonth / consts.numberOfWeeksInAMonth * 60;
                 hoursPerYear = hoursPerMonth * 12;
-
-                calculated = true;
+                
             }
             else{
-                calculated = false;
+                timeSpentInDriving.calculated = false;
+                return;
             }
         }
 
         //sets object
-        if(calculated){
-            timeSpentInDriving.calculated = true;
+        timeSpentInDriving.calculated = true;
 
-            timeSpentInDriving.minutesBetweenHomeAndJob = minutesBetweenHomeAndJob;
-            timeSpentInDriving.minutesInEachWeekend = minutesInEachWeekend;
-            timeSpentInDriving.minutesPerWeek = minutesPerWeek;
-            timeSpentInDriving.minutesPerDay = minutesPerDay;
-            timeSpentInDriving.daysPerMonth = daysPerMonth;
-            timeSpentInDriving.hoursPerMonth = hoursPerMonth;
-            timeSpentInDriving.hoursPerYear = hoursPerYear;
-        }
-        else{
-            timeSpentInDriving.calculated = false;
-        }
-
-        calculatedData.timeSpentInDriving = timeSpentInDriving;
-
-        return timeSpentInDriving;
+        timeSpentInDriving.minutesBetweenHomeAndJob = minutesBetweenHomeAndJob;
+        timeSpentInDriving.minutesInEachWeekend = minutesInEachWeekend;
+        timeSpentInDriving.minutesPerWeek = minutesPerWeek;
+        timeSpentInDriving.minutesPerDay = minutesPerDay;
+        timeSpentInDriving.daysPerMonth = daysPerMonth;
+        timeSpentInDriving.hoursPerMonth = hoursPerMonth;
+        timeSpentInDriving.hoursPerYear = hoursPerYear;
+        
+        //doesn't need to return because timeSpentInDriving is a referece to calculatedData.timeSpentInDriving
+        //and calculatedData is global in this module         
     }
 
-    function calculateSpeeds(){
+    function calculateSpeeds(speeds, financialEffort, drivingDistance, timeSpentInDriving){
+        //speeds, financialEffort, drivingDistance and timeSpentInDriving are assigned by reference and make reference to 
+        //calculatedData.speeds, calculatedData.financialEffort, calculatedData.drivingDistance and calculatedData.timeSpentInDriving
 
-        var financialEffort     = calculatedData.financialEffort;
-        var drivingDistance     = calculatedData.drivingDistance;
-        var timeSpentInDriving  = calculatedData.timeSpentInDriving;
-
-        if(!inputData || !country || !drivingDistance || !timeSpentInDriving){
-            throw errMsgDataCountry;
-        }
-
-        var speeds = calculatedData.speeds;
+        var errMsg = "Error calculating Speeds";
+        
+        if(!speeds || !financialEffort || !drivingDistance || !timeSpentInDriving){
+            consoleErrorPairs("speeds", speeds, 
+                              "financialEffort", financialEffort, 
+                              "drivingDistance", drivingDistance,
+                              "timeSpentInDriving", timeSpentInDriving);
+            throw errMsg;
+        } 
 
         /*For more details on the Consumer Speed concept, check:
         https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs */
@@ -1044,15 +1063,23 @@ autocosts.calculatorModule = (function(thisModule){
         //set object
         speeds.averageKineticSpeed = averageKineticSpeed;
         speeds.averageConsumerSpeed = averageConsumerSpeed;
-
-        calculatedData.speeds = speeds;
-
-        return speeds;
+        
+        //doesn't need to return because speeds is a referece to calculatedData.speeds
+        //and calculatedData is global in this module          
     }
 
-    function calculateExternalCosts(){
-
-        var externalCosts = calculatedData.externalCosts;
+    function calculateExternalCosts(externalCosts, drivingDistancePerMonth){  
+        
+        var errMsg = "Error calculating External Costs";
+        
+        if(!externalCosts){
+            throw errMsg;  
+        }
+        
+        if(!isNumber(drivingDistancePerMonth)){
+            externalCosts.calculated = false;
+            return;
+        }
 
         //by month, source: https://ec.europa.eu/transport/themes/sustainable/doc/2008_costs_handbook.pdf
         externalCosts.handbookOfeExternalCostsURL = 'http:\/\/ec.europa.eu\/transport\/themes\/sustainable\/doc\/2008_costs_handbook.pdf';
@@ -1064,16 +1091,12 @@ autocosts.calculatorModule = (function(thisModule){
         externalCosts.infrastr =        0.001;      //infrastructures in €/km
 
         //converts distance unit to kilometres
-        var distancePerMonthInKms = conversionsModule.convertDistanceToKm(calculatedData.drivingDistance.perMonth, country.distance_std);
+        var distancePerMonthInKms = conversionsModule.convertDistanceToKm(drivingDistancePerMonth, country.distance_std);
 
         externalCosts.totalPerMonth = (externalCosts.polution + externalCosts.greenhouseGases + externalCosts.noise +
             externalCosts.fatalities + externalCosts.congestion + externalCosts.infrastr) * distancePerMonthInKms;
 
         externalCosts.calculated = true;
-
-        calculatedData.externalCosts = externalCosts;
-
-        return externalCosts;
     }
 
     //gets uber object to compare uber costs with private car costs
@@ -1208,26 +1231,51 @@ autocosts.calculatorModule = (function(thisModule){
     function calculateCosts(inputDataObj, countryObj){
         //inputData is the raw input data, normally from user form, but also from a databse
         //country is an input object with country information
-        //calculateCosts returns the object "output"
+        //calculateCosts returns the object "output"        
         inputData = inputDataObj;
         country = countryObj;
 
         //the Order on which these functions are called is Important!
-        //since they use data calculated from the previous function        
+        //since they use data calculated from the previous function
         initializeCalculatedData();
-        
-        calculateMonthlyCosts();
+
+        //calculates and verifies
+        if(!calculateMonthlyCosts(calculatedData.costs,     //object passed by reference
+                                  calculatedData.details))  //object passed by reference
+        {
+            return null;
+        }
 
         if (inputData.publicTransports.isOk){
-            calculatePublicTransports();
+            calculatePublicTransports(calculatedData.publicTransports,      //object passed by reference
+                                      inputData.publicTransports,           //object passed by reference
+                                      calculatedData.costs.perMonth.total,  //value
+                                      country.taxi_price);                  //value
         }
-        
-        calculateFinancialEffort();        
 
-        calculateDrivingDistance();
-        calculateTimeSpentInDriving();
-        calculateSpeeds();
-        //calculateExternalCosts();
+        calculateFinancialEffort(calculatedData.financialEffort,     //object passed by reference (to be changed)
+                                 inputData.income,                   //object passed by reference (read-only)
+                                 inputData.workingTime,              //object passed by reference (read-only)
+                                 calculatedData.costs.totalPerYear); //value
+
+        calculateDrivingDistance(calculatedData.drivingDistance,    //object passed by reference (to be changed)
+                                 calculatedData.details,            //object passed by reference (to be changed)
+                                 inputData.fuel,                    //object passed by reference (read-only)
+                                 inputData.distance);               //object passed by reference (read-only)
+        
+        calculateTimeSpentInDriving(calculatedData.timeSpentInDriving,  //object passed by reference (to be changed)
+                                    calculatedData.details,             //object passed by reference (to be changed)
+                                    inputData.fuel,                     //object passed by reference (read-only)
+                                    inputData.distance,                 //object passed by reference (read-only)
+                                    inputData.timeSpentInDriving);      //object passed by reference (read-only)
+        
+        calculateSpeeds(calculatedData.speeds,              //object passed by reference (to be changed)
+                        calculatedData.financialEffort,     //object passed by reference (read-only)
+                        calculatedData.drivingDistance,     //object passed by reference (read-only)
+                        calculatedData.timeSpentInDriving); //object passed by reference (read-only)
+        
+        calculateExternalCosts(calculatedData.externalCosts,             //object passed by reference (to be changed)
+                               calculatedData.drivingDistance.perMonth); //value
 
         if(calculatedData.drivingDistance.perMonth){
             //running costs per unit dist.
@@ -1289,6 +1337,20 @@ autocosts.calculatorModule = (function(thisModule){
         else{
             return true;
         }
+    }
+    
+    function consoleErrorPairs(){
+        console.error(""); console.error("");
+        for (var i=0; i<arguments.length; i=i+2){
+            if(typeof arguments[i+1] === "object"){
+                console.error("'" + arguments[i] + "'" + " Object is:");
+                console.error(arguments[i+1]);                
+            }
+            else{
+                console.error(arguments[i] + ": " + arguments[i+1]);
+            }
+        console.error("");
+        } 
     }
 
     /* === Public methods to be returned ===*/
