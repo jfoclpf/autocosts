@@ -16,6 +16,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         initTimer();
         initGoogleAnalytics();
         getUniqueIdentifier();
+        renderImages();
     }
 
     function loadModuleDependencies(){
@@ -251,6 +252,13 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
             return (S4()+"-"+S4()+"-"+S4());
         }
         userInfo.uniqueUserId = guid();
+    }
+    
+    //allows images to be rendered after the document is loaded
+    function renderImages(){
+        $('img').each(function(){
+          $(this).attr('src', $(this).data('delayedsrc'));
+        });    
     }
 
     //gets default protocol defined by Global Variable
