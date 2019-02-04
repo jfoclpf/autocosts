@@ -141,7 +141,14 @@ module.exports = {
                 return "";
             }
 
-            if (!useFinancialEffortInfo){
+            let workingMonthsPerYearToAffordCarString = getStatsData(this, "financialEffort_workingMonthsPerYearToAffordCar", 
+                                                                     1,     //toFixed=1
+                                                                     true,  //bold string (with <b></b>)
+                                                                     true); //ignore (returns "") if number is small
+            
+            debug("workingMonthsPerYearToAffordCarString", workingMonthsPerYearToAffordCarString);
+            
+            if (!useFinancialEffortInfo || !workingMonthsPerYearToAffordCarString){
                 sub_title1a_part2 = addPeriodIfInexistent(sub_title1a_part2);
 
                 //this returns "is [yearly_costs] per year. Find the true cost of owning a car in your country."
@@ -154,9 +161,8 @@ module.exports = {
                 }
                 sub_title1a_part2 += ", ";
 
-                sub_title1b = sub_title1b.replace("[nbrMonths]", 
-                                                  getStatsData(this, "financialEffort_workingMonthsPerYearToAffordCar", 1, true));
-                
+                sub_title1b = sub_title1b.replace("[nbrMonths]", workingMonthsPerYearToAffordCarString);
+
                 sub_title1b = addPeriodIfInexistent(sub_title1b);
 
                 //this returns "is [yearly_costs] per year, representing [nbrMonths] months of average salary.
@@ -192,7 +198,7 @@ module.exports = {
     getLocale: function(){
         return this.clientData.languageCode.substring(0, 2) + "_" + this.CC;
     },
-    
+
     getCapitalizedWord(str){
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     },
@@ -259,10 +265,10 @@ module.exports = {
     get2letterLangCode: function(){
         return this.clientData.languageCode.substr(0, 2);
     },
-    
+
     get2letterLangCode2: function(languageCode){
         return languageCode.substr(0, 2);
-    },  
+    },
 
     //convert number to string with n decimal values
     toFixed: function(num, n){
@@ -284,10 +290,10 @@ module.exports = {
 }
 
 /*server side Handlebars function to tell whether the Statistical Database Information is activated*/
-function isDB(_this){        
-    return _this.serverData.statsData && 
+function isDB(_this){
+    return _this.serverData.statsData &&
         Object.keys(_this.serverData.statsData).length !== 0 && //check if object not empty
-        _this.serverData.settings.switches.dataBase && 
+        _this.serverData.settings.switches.dataBase &&
         _this.CC.toUpperCase() !== "XX";
 }
 
@@ -302,7 +308,7 @@ function _toFixed(num, n){
 }
 
 //gets an entry from the statistical DB
-function getStatsData(_this, entry, toFixed, isBold=false){
+function getStatsData(_this, entry, toFixed, isBold=false, ignoreSmallNumbers=false){
 
     if(isDB(_this)){
 
@@ -311,22 +317,26 @@ function getStatsData(_this, entry, toFixed, isBold=false){
         let val = _this.serverData.statsData[_this.CC][entry];
 
         if(typeof toFixed !== "undefined" && typeof val === "number"){
+            
+            if(ignoreSmallNumbers && Math.round(val) === 0){
+                return "";
+            }            
 
-            let finalValue;
+            let valueToString; //it will have further, or not, the currency symbol
 
             if(entry.startsWith("costs_")){//it's a cost, thus use currency symbol
                 if (_this.words.invert_currency){
-                    finalValue = val.toFixed(toFixed) + " " + currencySymbol;
+                    valueToString = val.toFixed(toFixed) + " " + currencySymbol;
                 }
                 else{
-                    finalValue = currencySymbol + val.toFixed(toFixed);
+                    valueToString = currencySymbol + val.toFixed(toFixed);
                 }
             }
             else{
-                finalValue = val.toFixed(toFixed);
+                valueToString = val.toFixed(toFixed);
             }
 
-            return (isBold ? "<b>" : "") + finalValue + (isBold ? "</b>" : "");
+            return (isBold ? "<b>" : "") + valueToString + (isBold ? "</b>" : "");
         }
         else{
             return val;
