@@ -109,7 +109,7 @@ autocosts.resultsModule.runResultsModule =
 
                     if(calculateCostsAndShowResults() && selectedCountry != "XX"){
                         //if not a test triggers event for Google Analytics
-                        if(!commonsModule.isThisAtest() && servicesAvailabilityObj.googleAnalytics && switches.googleAnalytics){
+                        if(switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics){
                             ga('send', 'event', 'form_part', 'run_OK');
                         }
                         //submits data to database if no XX version

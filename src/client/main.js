@@ -196,7 +196,7 @@ var autocosts = (function(){
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
 
 //module for getting JS, CSS or other files
-autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, translatedStrings, uberApiUrl){
+autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, translatedStrings, servicesAvailabilityObj, uberApiUrl){
     
     function getUberInfo(){
 
@@ -210,17 +210,17 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
                 if(data && !$.isEmptyObject(data)){
                     autocosts.main.uberApiObj =  data; //uberApi is a global variable
                     //console.log("uber data got from uber API: ", data);
-                    autocosts.servicesAvailabilityObj.uber = true;
+                    servicesAvailabilityObj.uber = true;
                     console.log("Uber info loaded OK");
                 }
                 else{                    
-                    autocosts.servicesAvailabilityObj.uber = false;
+                    servicesAvailabilityObj.uber = false;
                     console.warn("No uber info");
                 }
                 $deferredEvent.resolve();
             }).
             fail(function(){
-                autocosts.servicesAvailabilityObj.uber = false;
+                servicesAvailabilityObj.uber = false;
                 console.warn("No uber info");  
                 $deferredEvent.resolve();
             });
@@ -233,7 +233,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
             uberApi.distance_unit = "mile";
 
             autocosts.main.uberApiObj = uberApi;
-            autocosts.servicesAvailabilityObj.uber = true;
+            servicesAvailabilityObj.uber = true;
 
             $deferredEvent.resolve();
         }
@@ -373,6 +373,10 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
                 autocosts.databaseModule.initialize();
             }
             
+            if(switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics){
+                ga("send", "event", "form_part", "form_loaded");
+            }
+            
             callback();            
         });
     }
@@ -387,6 +391,7 @@ autocosts.getFilesModule = (function(jsFiles, switches, country, notLocalhost, t
    autocosts.serverInfo.selectedCountry,
    autocosts.serverInfo.booleans.notLocalhost,
    autocosts.serverInfo.translatedStrings,
+   autocosts.servicesAvailabilityObj,
    autocosts.paths.url.uberApi);
 
 
