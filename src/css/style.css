@@ -22,6 +22,7 @@ main section {display:block; position:relative; }
 main #form, #results {width: 1170px; max-width: 100%; margin: 0 auto;}
 main #form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
 
+main > .img_loader {display: none;}
 
 /* ---------- Fonts ---------- */
 h1,h2,h3,h4,h5,h5 {font-weight: 700; font-family: 'Nunito',Arial,sans-serif;}

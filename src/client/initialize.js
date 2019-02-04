@@ -61,10 +61,12 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
 
         //When clicked the Calculate Button shown on the landing page
         var calculateButtonOnclick = function(){
-            $("#hero, footer").fadeOut("slow");
-
+            $("#hero, footer").fadeOut("slow", function(){
+                $("main > .img_loader").show();
+            });                        
+            
             getFilesModule.loadDeferredFiles(function(){
-                $("#hero, footer").hide();
+                $("#hero, footer, main > .img_loader").stop(true).hide();
 
                 //on test version shows everything right from the beginning
                 if(serverInfo.selectedCountry == "XX"){
