@@ -8,7 +8,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
 
     function initialize(){
         loadModuleDependencies();
-        
+
         oldIE();                        //detects old versions of Internet Explorer, and in that case warn the user to update browser
         fillPeriodsInSelectBoxes();     //fills periods (month, two months, etc.) in HTML select boxes
         loadMainPageSettings();
@@ -58,19 +58,19 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
     function loadMainPageSettings(){
 
         $("#hero").slideDown("fast");
-        
+
         //When clicked the Calculate Button shown on the landing page
         var calculateButtonOnclick = function(){
             $("#hero, footer").fadeOut("slow");
 
             getFilesModule.loadDeferredFiles(function(){
                 $("#hero, footer").hide();
-                
+
                 //on test version shows everything right from the beginning
                 if(serverInfo.selectedCountry == "XX"){
                     $(".field_container, .form_part_head_title").show();
-                }     
-                
+                }
+
                 $("#form").show();
             });
         };
@@ -81,7 +81,7 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
             if(!cc || cc.toUpperCase() === "XX" || !serverInfo.switches.database){
                 return;
             }
-            
+
             //rounds a number
             var round = function(number, precision) {
                 var shift = function (number, precision) {
@@ -90,17 +90,17 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
                 };
                 return shift(Math.round(shift(number, +precision)), -precision);
             };
-            
+
             var currencySymbol = statistics.statisticsObj[cc].currencySymbol;
-            
+
             for (var key in statistics.statisticsObj[cc]){
-                
+
                 var elementClass = "stats_table-" + key; //see sidebars.hbs
                 if($("." + elementClass).length){//element exists
                     var $el = $("." + elementClass);
-                    
+
                     var value = statistics.statisticsObj[cc][key];
-                    value = key.includes("maintenance") ? value/2 : value;  //it shows maintenance in both standing and running costs                                                            
+                    value = key.includes("maintenance") ? value/2 : value;  //it shows maintenance in both standing and running costs
                     if(key === "costs_perUnitDistance_runningCosts" || key === "costs_perUnitDistance_totalCosts"){
                         $el.text(currencySymbol + round(value, 2) + "/" + commonsModule.getStringFor("distanceShort"));
                     }
@@ -112,15 +112,15 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
                     }
                 }
             }
-            
-            
+
+
             //assigns hanlder to show tables
             $(".sidebar-right-container").
                 off("click", ".downloadButton").
                 on("click", ".downloadButton", function(){
-                
+
                 window.location.href = "/tables/" + cc + ".htm";
-            });            
+            });
         }
 
         //adjusts the size of select according to content
@@ -201,8 +201,8 @@ autocosts.initializeModule = (function(thisModule, serverInfo, translatedStrings
         updateStatsTable(serverInfo.selectedCountry);
 
         $("#country_select_stats").on('change', function() {
-            var countryCode = this.value;            
-            updateStatsTable(countryCode);                                    
+            var countryCode = this.value;
+            updateStatsTable(countryCode);
         });
     }
 
