@@ -137,7 +137,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
         });
     }
 
-    //scans all flattened calculatedDat and assigns each result value to respective HTML class element
+    //scans all flattened calculatedData and assigns each result value to respective HTML class element
     function setCalculatedDataToHTML(flattenedData){
 
         for (var key in flattenedData){
@@ -168,7 +168,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                         numToShow = amount;
                     }
 
-                    $i.html(numToShow);
+                    $i.show().html(numToShow);
                     }
                 else{
                     $i.hide();
