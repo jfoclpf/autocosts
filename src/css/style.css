@@ -12,7 +12,7 @@ header {position:fixed; top:0; left:0; width:100%; /*background:#f4f6fe;*/ z-ind
 
 header .logo { width:215px; height:40px; margin:30px auto 0;}
 header .logo a {display:block; text-indent:-9999px;}
-header .logo a img {display:block;}
+header .logo a img {display:block; height:41px;}
 
 container {display:block;}
 .wrapper {display:block; position:relative; width:100%; max-width:1170px; margin:0 auto;}
