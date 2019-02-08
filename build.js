@@ -462,7 +462,7 @@ function getArgvHelpMsg(){
 
 function getFinalRunMsg(){
     //built filename
-    var filename = path.join(process.cwd(), 'bin', "index.js");
+    var filename = path.join('bin', "index.js");
     
     var messg = "\nRun " + ("node " + filename).green.bold + " to start application with default options\n" + 
                 "or " + ("node " + filename + " -h").green.bold + " for more information\n";          
@@ -473,7 +473,7 @@ function getFinalRunMsg(){
 function runApp(){
 
     //built filename
-    var filename = path.join(process.cwd(), 'bin', "index.js");
+    var filename = path.join('bin', "index.js");
     
     console.log("Building complete with " + ("--run").bold + " option enabled, therefore");
     console.log("starting application with default options using command: "); 
