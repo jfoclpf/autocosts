@@ -129,7 +129,7 @@
     "fuel_car_eff" : "Autójának üzemanyag-fogyasztási hatékonysága",
     "fuel_price" : "Átlagosan fizetett üzemanyagár",
     "fuel_price1" : "Átlagos üzemanyagár",
-    "you_drive_tottaly_avg" : "Autóval átlagosan, összesen:",
+    "you_drive_totally_avg" : "Autóval átlagosan, összesen:",
     "you_drive" : "Autóval",
     "maintenance" : "Karbantartás",
     "maintenance_desc" : "Az átlagos karbantartási és az autómentési költségek:<br><i>olajcsere, szűrök, világítás, abroncsok, fékek, légkondicionálás, futóműbeállítás, stb.</i>",

@@ -129,7 +129,7 @@
     "fuel_car_eff" : "Aracınızın yakıt tüketimi",
     "fuel_price" : "Yakıt/gaz için ödediğiniz ortalama tutar",
     "fuel_price1" : "Ortalama yakıt fiyatı",
-    "you_drive_tottaly_avg" : "Ortalama kat edilen toplam kilometre",
+    "you_drive_totally_avg" : "Ortalama kat edilen toplam kilometre",
     "you_drive" : "Kat edersiniz",
     "maintenance" : "Bakım ",
     "maintenance_desc" : "Bakım ve arıza sigortasının ortalama maliyeti:<br><i>motor yağ değişimi, filtreler, lambalar, lastikler, frenler, klima, direksiyon ayarı, v.b.</i>",

@@ -414,7 +414,7 @@ autocosts.resultsModule = (function(thisModule, translatedStrings, switches, lan
                     
                     if(calculatedData.drivingDistance.calculated){
                         addLiElm("fuel",
-                                 translatedStrings.you_drive_tottaly_avg + " " + 
+                                 translatedStrings.you_drive_totally_avg + " " + 
                                  calculatedData.drivingDistance.perMonth.toFixed(1) + " " +
                                  translatedStrings.std_dist + " " + translatedStrings.word_per + " " + 
                                  translatedStrings.month + " (~30.5 " + translatedStrings.days + ")");

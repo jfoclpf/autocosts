@@ -127,7 +127,7 @@
     "fuel_car_eff" : "車の燃費",
     "fuel_price" : "燃料がかかった平均費用",
     "fuel_price1" : "燃料の平均価格",
-    "you_drive_tottaly_avg" : "ある期間で平均運転総距離",
+    "you_drive_totally_avg" : "ある期間で平均運転総距離",
     "you_drive" : "あなたが運転します",
     "maintenance" : "メンテナンス",
     "maintenance_desc" : "メンテナンスと故障カバーの平均コスト:<br><i>エンジンオイル交換、フィルター、ライト、タイヤ、ブレーキ、空調、ステアリングアラインメントなど。</i>",

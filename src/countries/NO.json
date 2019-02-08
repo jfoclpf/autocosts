@@ -130,7 +130,7 @@
     "fuel_car_eff" : "Bilens drivstoffeffektivitet",
     "fuel_price" : "Gjennomsnittlig pris for drivstofforbruket",
     "fuel_price1" : "Gjennomsnittlig drivstoffpris",
-    "you_drive_tottaly_avg" : "Du kjører i gjennomsnitt totalt",
+    "you_drive_totally_avg" : "Du kjører i gjennomsnitt totalt",
     "you_drive" : "Du kjører",
     "maintenance" : "Vedlikehold",
     "maintenance_desc" : "Gjennomsnittlig kostnad på vedlikehold og veiforsikring:<br><i>bytte av motorolje, filter, lys, bildekk, bremser, klimaanlegg, kalibrering av styret, etc.</i>",

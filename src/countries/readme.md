@@ -286,7 +286,7 @@ Example for USA<br>
 <tr><td>fuel_car_eff</td><td> Fuel efficiency of your vehicle </td><td></td></tr>
 <tr><td>fuel_price</td><td> Average price you pay for fuel/gas </td><td></td></tr>
 <tr><td>fuel_price1</td><td> Average price of gas </td><td></td></tr>
-<tr><td>you_drive_tottaly_avg</td><td> Total mileage driven on average </td><td><b>You drive on average a total of</b> 5 miles per day</td></tr>
+<tr><td>you_drive_totally_avg</td><td> Total mileage driven on average </td><td><b>You drive on average a total of</b> 5 miles per day</td></tr>
 <tr><td>you_drive</td><td> You drive </td><td><b>You drive</b> 5 miles per day</td></tr>
 </table>
 

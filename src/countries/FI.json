@@ -130,7 +130,7 @@
     "fuel_car_eff" : "Kulkuneuvosi polttoainetehokkuus",
     "fuel_price" : "Keskimääräinen polttoaineesta maksamasi hinta",
     "fuel_price1" : "Polttoaineen keskimääräinen hinta",
-    "you_drive_tottaly_avg" : "Ajat kuluttaen keskimäärin",
+    "you_drive_totally_avg" : "Ajat kuluttaen keskimäärin",
     "you_drive" : "Ajat",
     "maintenance" : "Huolto",
     "maintenance_desc" : "Huollon ja hajoamisten keskivertokustannukset:<br><i>moottoriöljyn vaihto, suodattimet, valot, renkaat, jarrut, ilmastointi, ohjaus, jne.</i>",
