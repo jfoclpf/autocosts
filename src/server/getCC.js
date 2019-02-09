@@ -54,7 +54,13 @@ module.exports = {
         if(clientData.notLocalhost){
             let nonce = crypto.randomBytes(16).toString('base64');
             data.nonce = nonce;
-            let CSPstr = this.getCSPstr(nonce);
+            
+            //nonce is giving several problems with jQuery and backward compatibility
+            //when jQuery deals with it fully correctly, in theory in v 3.4.0, nonce should be added again
+            //https://github.com/jquery/jquery/milestone/18
+            let CSPstr = this.getCSPstr(/*nonce*/);
+            
+            
             debug(CSPstr.replace(/;/g,`;\n`));
             res.set('Content-Security-Policy', CSPstr);
         }
