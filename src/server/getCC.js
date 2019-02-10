@@ -52,15 +52,14 @@ module.exports = {
         var fileToRender = path.join(serverData.directories.index, "views", "main.hbs");
 
         if(clientData.notLocalhost){
-            let nonce = crypto.randomBytes(16).toString('base64');
-            data.nonce = nonce;
-            
             //nonce is giving several problems with jQuery and backward compatibility
             //when jQuery deals with it fully correctly, in theory in v 3.4.0, nonce should be added again
             //https://github.com/jquery/jquery/milestone/18
+
+            //let nonce = crypto.randomBytes(16).toString('base64');
+            //data.nonce = nonce;            
             let CSPstr = this.getCSPstr(/*nonce*/);
-            
-            
+                        
             debug(CSPstr.replace(/;/g,`;\n`));
             res.set('Content-Security-Policy', CSPstr);
         }
