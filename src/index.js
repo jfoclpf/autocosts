@@ -31,6 +31,7 @@ const hbsHelpers  = require(path.join(__dirname, 'server', 'hbsHelpers'));
 const list        = require(path.join(__dirname, 'server', 'list'));
 const domains     = require(path.join(__dirname, 'server', 'domains'));
 const sitemap     = require(path.join(__dirname, 'server', 'sitemap'));
+const preprocess  = require(path.join(__dirname, 'server', 'preprocess'));
 
 const release   = commons.getRelease(); //release shall be 'work' or 'prod', it's 'work' by default
 
@@ -57,42 +58,8 @@ debug(util.inspect(serverData, {showHidden: false, depth: null}));
 var SWITCHES = settings.switches; //Global switches with the available services; for more information see commons.js
 var WORDS = {};                   //Object of Objects with all the words for each country
 
-//creates Object of objects with Words and Standards for each Country
-//such that it can be loaded faster as it is already in memory when the server starts
-for (var CC in serverData.availableCountries){
-    WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'));
-    WORDS[CC].languageCode = serverData.languagesCountries[CC];
-    WORDS[CC].domain = serverData.domains.countries[CC];
-    //process the sentences, uppercasing the first letters of the words right after "<br>"
-    //Ex: "This is text 1<br>this is text 2" ==> "This is text 1<br>This is text 2"
-    for (let word in WORDS[CC]){
-        if(typeof WORDS[CC][word] == 'string'){
-            WORDS[CC][word] = WORDS[CC][word].replace(/(<br><i>|<br>)(\w)/g,
-                function(match, p1, p2){ return p1 + p2.toUpperCase();});
-        }
-    }
-}
-
-//in case a certain word or string is not available in a certain language,
-//use the file from the country which founded the language (ex: Spanish was founded by Spain)
-//if that is not either available, use English version
-for (var CC in serverData.availableCountries){
-
-    let languageDefault = {
-        "es" : "ES",
-        "en" : "UK",
-        "pt" : "PT",
-        "fr" : "FR"
-    };
-
-    //WORDS.UK is an Object with all the possible properties available
-    for (let word in WORDS.UK){
-        if(!WORDS[CC][word]){
-            let languageFounderCC = languageDefault[WORDS[CC].languageCode.substring(0, 2)];
-            WORDS[CC][word] = languageFounderCC && WORDS[languageFounderCC][word] ? WORDS[languageFounderCC][word] : WORDS.UK[word];
-        }
-    }
-}
+//processes and builds data (WORDS) here on server side, for fast delivery
+preprocess(serverData, WORDS, eventEmitter);
 
 //event handler to deal when the settings are changed
 //particularly the event is triggered when

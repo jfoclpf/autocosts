@@ -25,7 +25,7 @@
                 <h1>{{{words.web_page_title}}}</h1>
 
                 <h2>
-                    {{{getSubTitleArr 1}}}
+                    {{{words.sub_title_pos1}}}
                     <select name="country_select" id="country_select">
                         {{~#each serverData.availableCountries~}}
                         <option value="{{@key}}"{{{isSelected ../CC @key}}}>
@@ -33,7 +33,7 @@
                         </option>
                         {{/each}}
                     </select>
-                    {{{getSubTitleArr 2}}}
+                    {{{words.sub_title_pos2}}}
                 </h2>
 
                 <input type="button" id="calculateButton" 
