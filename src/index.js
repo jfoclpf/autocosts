@@ -235,6 +235,11 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 })
 
+console.log(process.env);
+if(process.env.NODE_ENV === "TEST" && process.env.DO_NOT_START_SERVER === "1"){
+    process.exit(0);
+}
+
 var server = app.listen(settings.HTTPport, function () {
     console.log('Listening on port ' + settings.HTTPport);
     console.log('To stop server press ' + colors.red.bold('CTRL+C') + "\n");

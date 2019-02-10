@@ -3,4 +3,7 @@ language: node_js
 # test on two node.js versions
 node_js:
   - "node"
-  - 9.4.0
+  
+env:
+- DO_NOT_START_SERVER=1
+- NODE_ENV=TEST
