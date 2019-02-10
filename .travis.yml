@@ -3,6 +3,11 @@ language: node_js
 # test on two node.js versions
 node_js:
   - "node"
+  - 11.0.0
+  - 10.0.0
+  - 9.4.0
+  - 9.0.0
+  - 8.0.0
   
 env:
 - DO_NOT_START_HTTP_SERVER=1
