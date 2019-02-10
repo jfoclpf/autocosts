@@ -235,8 +235,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 })
 
-if(process.env.DO_NOT_START_HTTP_SERVER === "1"){
-    console.log("Didn't start http server, exiting...\n");
+if(process.env.NODE_ENV === "TEST"){
+    console.log("Does not start http server, exiting...\n");
     process.exit(0);
 }
 

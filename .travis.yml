@@ -10,4 +10,4 @@ node_js:
   - 8.0.0
   
 env:
-- DO_NOT_START_HTTP_SERVER=1
+- NODE_ENV=TEST
