@@ -82,7 +82,7 @@ eventEmitter.on('onlineStatus', function(isOnline){
     serverData.isOnline = isOnline;
 });
 
-console.log("\n\nServer started at " + __dirname);
+console.log("\n\nRunning script at " + __dirname);
 
 var app = express();
 app.enable('case sensitive routing');
@@ -235,8 +235,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 })
 
-console.log(process.env);
-if(process.env.NODE_ENV === "TEST" && process.env.DO_NOT_START_SERVER === "1"){
+if(process.env.DO_NOT_START_HTTP_SERVER === "1"){
+    console.log("Didn't start http server, exiting...\n");
     process.exit(0);
 }
 
