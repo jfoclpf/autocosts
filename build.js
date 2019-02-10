@@ -129,9 +129,19 @@ async.series([
     }, 
 
     //Check JS syntax errors
-    function(callback){
+    function(callback){                
+                
         if(options.checkJS){
-            checkJS(callback); 
+            //if this was the only option selected, it's just for testing
+            if(Object.keys(options).length === 1){
+                checkJS(function(){
+                    console.log("All JS files are syntactically OK\n".green);
+                    process.exit(0); //exit ok
+                });
+            }
+            else{
+                checkJS(callback);
+            }
         }
         else{
             callback();
@@ -164,13 +174,15 @@ async.series([
     
     function(callback){
         if(options.run){
-            //when option run is selected, at least makes a new copy from src/ to bin/ if not enabled
+            //when option run is selected, at least makes a new copy from src/ to bin/, if option was not enabled
             if(!options.copy){
                 copy();
                 concatCSSFiles(callback);
             }                        
             runApp();
-        }        
+        } 
+        
+        process.exit(0); //exit correctly
     }
     
 ]);//async.series
