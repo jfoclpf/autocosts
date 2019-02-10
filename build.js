@@ -347,6 +347,8 @@ function checkJS(callback){
     
     console.log("Checking JS files syntax in "+ directories.server.src + "\n");
     
+    var numberOfTotalErrors = 0;
+    
     walker.on("file", function (root, fileStats, next) {
 
         var filename = path.join(root, fileStats.name);              
@@ -360,12 +362,13 @@ function checkJS(callback){
 
             jshint(code, JShintOpt, {});
 
-            if (jshint.errors.length == 0){ //no warnings
-                console.log((path.relative(ROOT_DIR, filename)).verbose);
+            if (jshint.errors.length == 0){ //no errors
+                console.log((path.relative(ROOT_DIR, filename)).verbose);                
             }
             else{
                 console.log((path.relative(ROOT_DIR, filename)).error);
                 console.log(prettyjson.render(jshint.errors));
+                numberOfTotalErrors++;
             }            
         }
 
@@ -374,7 +377,13 @@ function checkJS(callback){
 
     walker.on("end", function () {
         console.log("\nAll JS files checked\n");
-        callback();
+        if(numberOfTotalErrors === 0){
+            callback();
+        }
+        else{
+            console.log(numberOfTotalErrors + " JS " + "file" + (numberOfTotalErrors > 1 ? "s" : "") + " with " + "error".error + "\n");
+            _exit("", optionDefinitions[1]);
+        }
     });
 
 }
