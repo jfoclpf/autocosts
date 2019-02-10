@@ -5,5 +5,4 @@ node_js:
   - "node"
   
 env:
-- DO_NOT_START_SERVER=1
-- NODE_ENV=TEST
+- DO_NOT_START_HTTP_SERVER=1
