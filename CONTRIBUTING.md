@@ -1,8 +1,6 @@
 ## Coding rules
-### Some coding rules
- - Use four spaces for indentations
- - Comment the code in English
- - The local variables names, object properties, functions names and directories names shall obey [CamelCase](https://en.wikipedia.org/wiki/Camel_case)
+### Coding rules
+ - <a href="https://standardjs.com/">standardJS</a>
  
  ### Costs items
  The car cost items' terminology should be, for programmatic and variable naming purposes:
