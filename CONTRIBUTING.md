@@ -1,5 +1,5 @@
 ## Coding rules
-### Coding rules
+### Syntax
  - <a href="https://standardjs.com/">standardJS</a>
  
  ### Costs items
