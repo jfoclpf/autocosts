@@ -1,6 +1,6 @@
 autocosts &ndash; car costs calculator 
 =========
-[![Build Status][travis_img]][travis_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url]
+[![Build Status][travis_img]][travis_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url] [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 
 [travis_img]: https://travis-ci.org/jfoclpf/autocosts.svg?branch=master
 [travis_url]: https://travis-ci.org/jfoclpf/autocosts
@@ -11,6 +11,8 @@ autocosts &ndash; car costs calculator
 [npm_img]: https://img.shields.io/npm/v/autocosts.svg?colorB=0E7FBF
 [npm_url]: https://www.npmjs.com/package/autocosts
 
+[npm_module_downloads_img]: https://img.shields.io/npm/dt/autocosts.svg
+[npm_module_downloads_url]: https://www.npmjs.com/package/autocosts
 
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
