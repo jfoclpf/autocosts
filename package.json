@@ -4,7 +4,7 @@
   "description": "Automobile Costs Calculator",
   "main": "bin/index.js",
   "scripts": {
-    "test": "node build.js -e && ./node_modules/.bin/standard '*.js' 'build/*.js' 'src/*.js' 'src/client/*.js' 'src/server/*.js'",
+    "test": "node build.js -e && ./node_modules/.bin/standard '*.js' 'build/*.js' 'src/*.js' 'src/client/*.js' 'src/client/chart/*.js' 'src/client/pdf/*.js' 'src/client/core/*.js' 'src/server/*'",
     "postinstall": "node build.js -ceim && node bin/index.js --print --pdf -r prod"
   },
   "repository": {
