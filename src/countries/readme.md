@@ -43,6 +43,7 @@ The <b>value</b> of the key <b>distance_std_option</b> shall be the number accor
 <tr><th>key value</th><th>description</th></tr>
 <tr><td>1</td><td>kilometres</td></tr>
 <tr><td>2</td><td>miles</td></tr>
+<tr><td>3</td><td>nordic mile (10km)</td></tr>  
 </table>
 
 ## Standard volume for the price of fuels
