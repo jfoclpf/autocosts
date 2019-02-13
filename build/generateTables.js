@@ -1,7 +1,7 @@
 /*
  File which generates the statistics tables. For each country it generates a html file and a jpg file located at bin/tables
  It uses the PhantomJS script 'build/rasterTables.js' to rasterize these tables into JPEG files
- It does it by using a handlebars statistics table template located at bin/tables/template.hbs.
+ It does it by using a handlebars statistics table template located at tables/template.hbs.
  With this template it renders for each country two html files, one html temporary file which is used to rasterize the public
  permament JPG file accessible via tables/XX.jpg, and another permanent html file that is publicly accessible via tables/XX.html
 */
