@@ -35,7 +35,8 @@ module.exports = {
 
     // information depending on this request from the client
     var clientData = {
-      'fullURL': fullUrl(req), // full url, ex: "https://autocosts.info/PT"
+      /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
+      'urlHref': getUrlHref(req), // full url, ex: "https://autocosts.info/PT"
       'basicURL': basicURL(req), // basic url, ex: "https://autocosts.info"
       'languageCode': serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test
@@ -145,7 +146,7 @@ module.exports = {
 }
 
 // for example: "https://autocosts.info/PT"
-function fullUrl (req) {
+function getUrlHref (req) {
   return nodeUrl.format({
     protocol: getProtocol(req),
     host: req.get('host'),

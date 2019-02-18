@@ -13,7 +13,7 @@ module.exports = function (req, res, serverData, words) {
 
   // information depending on this request from the client
   var clientData = {
-    'fullURL': url.fullUrl(req), // full url, ex: "https://autocosts.info/stats"
+    'urlHref': url.getUrlHref(req), // full url, ex: "https://autocosts.info/stats"
     'basicURL': url.basicURL(req), // basic url, ex: "https://autocosts.info"
     'languageCode': 'en', // this page of World Statistics of car, renders only in English
     'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test

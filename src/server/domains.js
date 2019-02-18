@@ -39,12 +39,12 @@ module.exports = function (req, res, serverData, WORDS) {
       var first = (j === 0)
 
       req.params.CC = CC
-      var fullURL = url.getValidURL(req, domainsCountries, serverData.settings.switches.https)
+      var urlHref = url.getValidURL(req, domainsCountries, serverData.settings.switches.https)
 
       var Obj = {
         'country': country,
         'first': first,
-        'fullURL': fullURL
+        'urlHref': urlHref
       }
       domains[domain].countries[CC] = Obj
     }
