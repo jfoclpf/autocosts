@@ -128,7 +128,7 @@ module.exports = {
   },
 
   // for example: "https://autocosts.info"
-  basicURL: function (req) {
+  getUrlOrigin: function (req) {
     return nodeUrl.format({
       protocol: req.protocol,
       host: req.get('host')

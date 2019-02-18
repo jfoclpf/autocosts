@@ -37,7 +37,7 @@ module.exports = {
     var clientData = {
       /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
       'urlHref': getUrlHref(req), // full url, ex: "https://autocosts.info/PT"
-      'basicURL': basicURL(req), // basic url, ex: "https://autocosts.info"
+      'urlOrigin': getUrlOrigin(req), // basic url, ex: "https://autocosts.info"
       'languageCode': serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test
       'notLocalhost': !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
@@ -155,7 +155,8 @@ function getUrlHref (req) {
 }
 
 // for example: "https://autocosts.info"
-function basicURL (req) {
+// check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
+function getUrlOrigin (req) {
   return nodeUrl.format({
     protocol: getProtocol(req),
     host: req.get('host')
