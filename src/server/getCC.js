@@ -147,7 +147,7 @@ module.exports = {
 // for example: "https://autocosts.info/PT"
 function fullUrl (req) {
   return nodeUrl.format({
-    protocol: req.protocol,
+    protocol: getProtocol(req),
     host: req.get('host'),
     pathname: req.originalUrl
   })
@@ -156,7 +156,11 @@ function fullUrl (req) {
 // for example: "https://autocosts.info"
 function basicURL (req) {
   return nodeUrl.format({
-    protocol: req.protocol,
+    protocol: getProtocol(req),
     host: req.get('host')
   })
+}
+
+function getProtocol (req) {
+  return req.secure ? 'https' : 'http'
 }
