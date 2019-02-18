@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const stripHtmlTags = require('striptags')
 const debug = require('debug')('app:preprocess')
 
 // processes and builds the WORDS/Strings objects on server side, for fast delivery
@@ -18,7 +19,10 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
 
     addUpperCaseAfterBr(WORDS[CC])
 
-    WORDS[CC].sub_title_pos1 = WORDS[CC].sub_title_pos2 = '' // to be assigned later if stats are colected
+    // to be assigned later if stats are colected
+    WORDS[CC].sub_title_pos1 = WORDS[CC].sub_title_pos2 = ''
+    // to be changed later if stats are colected
+    WORDS[CC].socialmedia_description = getMetaDescription(WORDS[CC].initial_text)
   }
 
   fillBlanks(serverData, WORDS)
@@ -27,6 +31,7 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
     for (let CC in serverData.availableCountries) {
       WORDS[CC].sub_title_pos1 = getSubTitleArr(1, WORDS[CC], statsData[CC])
       WORDS[CC].sub_title_pos2 = getSubTitleArr(2, WORDS[CC], statsData[CC])
+      WORDS[CC].socialmedia_description = getSocialMediaDescription(WORDS[CC], statsData[CC])
     }
   })
 }
@@ -235,6 +240,10 @@ function getSubTitleArr (position, words, statsData) {
     debug(errMsg + '; Position parameter in getSubTitleArr must be 1 or 2')
     return ''
   }
+}
+
+function getSocialMediaDescription (words, statsData) {
+  return stripHtmlTags(getSubTitleArr(1, words, statsData) + ' ' + words.country_name + ' ' + getSubTitleArr(2, words, statsData))
 }
 
 // gets an entry from the statistical DB
