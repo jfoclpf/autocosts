@@ -34,8 +34,8 @@ module.exports = {
   // to be used from app.get('/:CC')
   // returns true if it redirects
   getCC: function (req, res, serverData) {
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-    debug('Entry URL: ' + fullUrl)
+    var urlHref = req.protocol + '://' + req.get('host') + req.originalUrl
+    debug('Entry URL: ' + urlHref)
 
     var CC = req.params.CC
     var url2redirect
@@ -118,7 +118,8 @@ module.exports = {
   },
 
   // for example: "https://autocosts.info/stats"
-  fullUrl: function (req) {
+  // see https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
+  getUrlHref: function (req) {
     return nodeUrl.format({
       protocol: req.protocol,
       host: req.get('host'),

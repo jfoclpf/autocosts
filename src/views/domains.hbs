@@ -14,7 +14,7 @@
             th, td {
                 border: 1px solid grey;
                 padding: 4px;
-            }          
+            }
         </style>
     </head>
 <body>
@@ -38,31 +38,31 @@
             <th>
                 CC
             </th>
-        </tr>        
+        </tr>
     {{#each domains as |entry domain|}}
         {{#if singular}}
         <tr>
-            <td>1</td>            
+            <td>1</td>
             <td>{{domain}}</td>
             {{#each countries as |value CC|}}
-            <td><a href="{{value.fullURL}}">{{value.country}}</a></td>
+            <td><a href="{{value.urlHref}}">{{value.country}}</a></td>
             <td>{{CC}}</td>
             {{/each}}
-        </tr> 
+        </tr>
         {{else}}
         {{#each countries as |value CC|}}
         <tr>
             {{#if value.first}}
             <td rowspan="{{../nbrItems}}">{{../nbrItems}}</td>
-            <td rowspan="{{../nbrItems}}">{{domain}}</td>            
+            <td rowspan="{{../nbrItems}}">{{domain}}</td>
             {{/if}}
-            <td><a href="{{value.fullURL}}">{{value.country}}</a></td>
-            <td>{{CC}}</td>            
+            <td><a href="{{value.urlHref}}">{{value.country}}</a></td>
+            <td>{{CC}}</td>
         </tr>
         {{/each}}
         {{/if}}
     {{/each}}
-                            
+
     </table>
 </div>
 <br><br>
