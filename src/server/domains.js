@@ -39,7 +39,7 @@ module.exports = function (req, res, serverData, WORDS) {
       var first = (j === 0)
 
       req.params.CC = CC
-      var urlHref = url.getValidURL(req, domainsCountries, serverData.settings.switches.https)
+      var urlHref = url.getValidURL(req, domainsCountries)
 
       var Obj = {
         'country': country,

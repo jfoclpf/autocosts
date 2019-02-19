@@ -23,7 +23,7 @@ module.exports = {
     if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
       debug('isSingleDomain', CC)
       req.params.CC = CC.toUpperCase()
-      let url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https)
+      let url2redirect = getValidURL(req, serverData.domains.countries)
       redirect301(res, url2redirect)
     } else {
       // redirects according to locale and/or browser settings
@@ -34,7 +34,7 @@ module.exports = {
   // to be used from app.get('/:CC')
   // returns true if it redirects
   getCC: function (req, res, serverData) {
-    var urlHref = req.protocol + '://' + req.get('host') + req.originalUrl
+    var urlHref = getProtocol(req) + '//' + req.get('host') + req.originalUrl
     debug('Entry URL: ' + urlHref)
 
     var CC = req.params.CC
@@ -52,7 +52,7 @@ module.exports = {
       if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
         debug('isSingleDomain', CC)
         req.params.CC = CC.toUpperCase()
-        url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https)
+        url2redirect = getValidURL(req, serverData.domains.countries)
         redirect301(res, url2redirect)
       } else {
         debug('isSingleDomain == false', CC)
@@ -69,7 +69,7 @@ module.exports = {
     // But if the two-letter code are NOT all in upper case domain.info/CC
     if (!isCC2letterUpperCase(CC)) {
       debug('if (!isCC2letterUpperCase)')
-      url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https)
+      url2redirect = getValidURL(req, serverData.domains.countries)
       redirect301(res, url2redirect)
       return true
     }
@@ -79,7 +79,7 @@ module.exports = {
     // check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
     if (isSubdomain(req)) {
       debug('if(isSubdomain)')
-      url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https)
+      url2redirect = getValidURL(req, serverData.domains.countries)
       redirect301(res, url2redirect)
       return true
     }
@@ -93,7 +93,7 @@ module.exports = {
     // example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)
     if (!isDomainCCcombValid(req, serverData.availableCountries, serverData.domains.countries)) {
       debug('if (!isDomainCCcombValid)')
-      url2redirect = getValidURL(req, serverData.domains.countries, serverData.settings.switches.https)
+      url2redirect = getValidURL(req, serverData.domains.countries)
       redirect301(res, url2redirect)
       return true
     }
@@ -105,32 +105,32 @@ module.exports = {
     return isThisATest(req)
   },
 
-  getProtocol: function (req, IS_HTTPS) {
-    return getProtocol(req, IS_HTTPS)
+  getProtocol: function (req) {
+    return _getProtocol(req)
   },
 
   isThisLocalhost: function (req) {
     return isThisLocalhost(req)
   },
 
-  getValidURL: function (req, domainsCountries, IS_HTTPS) { // returns full URL
-    return getValidURL(req, domainsCountries, IS_HTTPS)
+  getValidURL: function (req, domainsCountries) { // returns full URL
+    return getValidURL(req, domainsCountries)
   },
 
   // for example: "https://autocosts.info/stats"
   // see https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
-  getUrlHref: function (req) {
+  getHref: function (req) {
     return nodeUrl.format({
-      protocol: req.protocol,
+      protocol: getProtocol(req),
       host: req.get('host'),
       pathname: req.originalUrl
     })
   },
 
   // for example: "https://autocosts.info"
-  getUrlOrigin: function (req) {
+  getOrigin: function (req) {
     return nodeUrl.format({
-      protocol: req.protocol,
+      protocol: getProtocol(req),
       host: req.get('host')
     })
   }
@@ -141,7 +141,7 @@ module.exports = {
 // redirect to different URLs according to the locale of the user,
 // and we don't want to inform search engines that a page of a country
 // makes a permanent redirect to a page of another country
-var redirect302 = function (req, res, serverData) {
+function redirect302 (req, res, serverData) {
   // get country by locale or HTTP header from browser
   var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
@@ -149,13 +149,11 @@ var redirect302 = function (req, res, serverData) {
   if (isWorkDomain(req)) {
     url2redirect = req.protocol + '://autocosts.work/' + geoCC
   } else if (isThisLocalhost(req)) {
-    url2redirect = req.protocol + '://' + req.get('host') + '/' + geoCC
+    url2redirect = getProtocol(req) + '//' + req.get('host') + '/' + geoCC
   } else {
     // production
 
-    url2redirect = getProtocol(req, serverData.settings.switches.https) +
-                       '://' + serverData.domains.countries[geoCC] +
-                       '/' + geoCC
+    url2redirect = getProtocol(req) + '//' + serverData.domains.countries[geoCC] + '/' + geoCC
   }
 
   res.redirect(302, url2redirect)
@@ -163,17 +161,17 @@ var redirect302 = function (req, res, serverData) {
 }
 
 // 301 redirects are permanent
-var redirect301 = function (res, url2redirect) {
+function redirect301 (res, url2redirect) {
   res.redirect(301, url2redirect)
   debug('redirecting 301 to ' + url2redirect)
 }
 
 // CC must be in the format PT, XX, UK, i.e. the letters uppercase
-var isCC2letterUpperCase = function (CC) {
+function isCC2letterUpperCase (CC) {
   return CC === CC.toUpperCase()
 }
 
-var isCCinCountriesList = function (CC, availableCountries) {
+function isCCinCountriesList (CC, availableCountries) {
   // 2-letter ISO Country Code (CC)
   if (!CC || CC.length !== 2) {
     return false
@@ -186,7 +184,7 @@ var isCCinCountriesList = function (CC, availableCountries) {
 }
 
 // get the 2-letter country code of user according to locale or HTTP header
-var getGeoCC = function (req, availableCountries, defaultCountry) {
+function getGeoCC (req, availableCountries, defaultCountry) {
   // try to get country by IP
   if (!isThisLocalhost(req)) {
     // tries to get IP from user
@@ -227,7 +225,7 @@ var getGeoCC = function (req, availableCountries, defaultCountry) {
 }
 
 // is Domain/CC Combination valid?
-var isDomainCCcombValid = function (req, availableCountries, domainsCountries) {
+function isDomainCCcombValid (req, availableCountries, domainsCountries) {
   var CC = req.params.CC
   var host = req.get('host')
 
@@ -239,38 +237,44 @@ var isDomainCCcombValid = function (req, availableCountries, domainsCountries) {
 }
 
 // full URL https://autocustos.info/PT
-var getValidURL = function (req, domainsCountries, IS_HTTPS) {
+function getValidURL (req, domainsCountries) {
   debug('getValidURL')
 
   var CC = req.params.CC
-  var protocol = req.protocol
+  var protocol = getProtocol(req)
   var host = req.get('host')
 
   var upCC = CC.toUpperCase()
 
   var URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
-    URL = protocol + '://' + host + '/' + upCC
+    URL = protocol + '//' + host + '/' + upCC
   } else if (isWorkDomain(req)) {
-    URL = 'http://autocosts.work/' + upCC
+    URL = protocol + '//' + 'autocosts.work/' + upCC
   } else {
-    URL = getProtocol(req, IS_HTTPS) + '://' + domainsCountries[upCC] + '/' + upCC
+    URL = protocol + '//' + domainsCountries[upCC] + '/' + upCC
   }
 
-  debug('Prod URL: ' + getProtocol(req, IS_HTTPS) + '://' + domainsCountries[upCC] + '/' + upCC)
+  debug('Prod URL: ' + getProtocol(req) + '//' + domainsCountries[upCC] + '/' + upCC)
   debug('Valid URL: ' + URL)
   return URL
 }
 
-var getProtocol = function (req, IS_HTTPS) {
-  if (!isThisLocalhost(req) && IS_HTTPS) {
-    return 'https'
+// check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
+// the `:` is part of the protocol
+function getProtocol (req) {
+  if (req.secure && !isThisLocalhost(req)) {
+    return 'https:'
   }
-  return 'http'
+  return 'http:'
+}
+
+function _getProtocol (req) {
+  return getProtocol(req)
 }
 
 // www.example.com returns true and example.com returns false
-var isSubdomain = function (req) {
+function isSubdomain (req) {
   var host = req.get('host')
 
   var hostRoot = host.split(':')[0]
@@ -286,7 +290,7 @@ var isSubdomain = function (req) {
 // for example autokoszty.info is associated only with PL,
 // whilst autocosts.info has several CCs associated
 // returns the associated Country Code (CC) or false
-var isSingleDomain = function (host, domains) {
+function isSingleDomain (host, domains) {
   if (host) {
     for (var domain in domains.counts) {
       if (host.indexOf(domain) > -1 && domains.counts[domain] === 1) {
@@ -297,9 +301,8 @@ var isSingleDomain = function (host, domains) {
   return false
 }
 
-/*******************************************************************************/
 // Functions to check if it is a test
-var isThisATest = function (req) {
+function isThisATest (req) {
   debug('isThisATest')
 
   var CC = req.params.CC
@@ -310,7 +313,7 @@ var isThisATest = function (req) {
   }
 }
 
-var isWorkDomain = function (req) {
+function isWorkDomain (req) {
   var host = req.get('host')
   var hostSplit = host.split('.')
   var tld = hostSplit[hostSplit.length - 1] // top level domain, ex: ".info"
@@ -321,7 +324,7 @@ var isWorkDomain = function (req) {
   return false
 }
 
-var isThisLocalhost = function (req) {
+function isThisLocalhost (req) {
   debug('isThisLocalhost')
 
   var ip = req.ip
@@ -331,7 +334,7 @@ var isThisLocalhost = function (req) {
   return ip === '127.0.0.1' || ip === '::ffff:127.0.0.1' || ip === '::1'
 }
 
-var isCCXX = function (CC) {
+function isCCXX (CC) {
   if (CC) {
     return CC.toUpperCase() === 'XX'
   } else {
@@ -339,11 +342,9 @@ var isCCXX = function (CC) {
   }
 }
 
-/*******************************************************************************/
-
 // acceptLanguage may be "pt"  or "pt-PT" or
 // "pt-PT,pt;q=0.9,en;q=0.8,en-GB;q=0.7,de-DE;q=0.6,de;q=0.5,fr-FR;q=0.4,fr;q=0.3,es;q=0.2"
-var getCountryfromHTTP = function (acceptLanguage) {
+function getCountryfromHTTP (acceptLanguage) {
   var CC // Country Code
 
   // in some cases like "fr" or "hu" the language and the country codes are the same

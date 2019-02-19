@@ -21,9 +21,9 @@ var autocosts = (function () {
     paths: {
       jsFiles: undefined, // Object with locations of Javascript Files
       url: {
-        domainUrl: undefined, // current domain URL, example 'http://autocosts.info'
-        trueUrl: undefined, // the true current URL of the page, example 'http://autocosts.info/XX'
-        pageUrl: undefined, // the correct url according to country, ex.,
+        origin: undefined, // current domain URL, example 'http://autocosts.info'
+        href: undefined, // the true current URL of the page, example 'http://autocosts.info/XX'
+        canonicalUrl: undefined, // the correct url according to country, ex.,
         // if this is UK => 'http://autocosts.info/UK'
         cdnUrl: undefined, // it's defined in the node server side index.js
         uberApi: undefined // uber url to get UBER API information through AJAX
@@ -47,7 +47,7 @@ var autocosts = (function () {
       language: undefined, // Current Language Code according to ISO_639-1 codes
       translatedStrings: undefined, // Object with country's language text strings
       nonce: undefined, // Number used only once for CSP rules in scrips
-      httpProtocol: undefined, // it's defined in node server side index.js*/
+      urlProtocol: undefined, // it's defined in node server side index.js*/
       googleAnalyticsTrackingId: undefined, // Google analytics Tracking ID
       booleans: {
         isATest: undefined, // server refers that this session is a test
@@ -70,7 +70,6 @@ var autocosts = (function () {
   (function () {
     var globalSwitches = document.getElementById('global_switches')
     mainVariables.serverInfo.switches = {
-      https: JSON.parse(globalSwitches.dataset.https), /* true for https, false for http */
       uber: JSON.parse(globalSwitches.dataset.uber), /* Uber */
       social: JSON.parse(globalSwitches.dataset.social), /* Social media pulgins */
       charts: JSON.parse(globalSwitches.dataset.charts), /* Charts */
@@ -96,7 +95,7 @@ var autocosts = (function () {
     mainVariables.serverInfo.language = globalVariables.dataset.language
     mainVariables.serverInfo.translatedStrings = JSON.parse(decodeURI(globalVariables.dataset.words))
     mainVariables.serverInfo.nonce = globalVariables.dataset.nonce
-    mainVariables.serverInfo.httpProtocol = globalVariables.dataset.http_protocol
+    mainVariables.serverInfo.urlProtocol = globalVariables.dataset.url_protocol
     mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id
 
     // booleans, server refers whether this session is a test
@@ -118,15 +117,13 @@ var autocosts = (function () {
     mainVariables.paths.url.uberApi = 'getUBER/' + selectedCountry
 
     /* forms present page full url, example 'http://autocosts.info' */
-    mainVariables.paths.url.domainUrl = mainVariables.serverInfo.httpProtocol + '://' +
-            mainVariables.serverInfo.domainListObj[selectedCountry]
+    mainVariables.paths.url.origin = window.location.origin
 
-    mainVariables.paths.url.trueUrl = window.location.href
+    mainVariables.paths.url.href = window.location.href
 
     /* forms present page full url, example 'http://autocosts.info/UK' */
-    mainVariables.paths.url.pageUrl = mainVariables.serverInfo.httpProtocol + '://' +
-                                          mainVariables.serverInfo.domainListObj[selectedCountry] + '/' +
-                                          selectedCountry
+    mainVariables.paths.url.canonicalUrl = mainVariables.serverInfo.urlProtocol + '//' +
+      mainVariables.serverInfo.domainListObj[selectedCountry] + '/' + selectedCountry
 
     mainVariables.paths.dirs.translationsDir = '/countries/' // path JSON Translation files
     mainVariables.statistics.statisticsHtmlTablesDir = '/tables/' // path of statistical html tables
