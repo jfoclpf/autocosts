@@ -112,7 +112,6 @@ function _init () {
   /* GLOBAL switches, false by default */
   /* these values are defined by the command line arguments */
   SWITCHES = {
-    'https': false, /* true for https when requested, only set to true when SSL is available */
     'cdn': false, /* Content Delivery Network */
     'uber': false, /* uses UBER API to give car user comparisions with UBER costs */
     'social': false, /* Social media pulgins */
@@ -563,7 +562,6 @@ function getArgvHelpMsg () {
         "-r, --release              'work' for tests or 'prod' for production\n" +
         '-p, --port                 HTTP port on which the application is listening ' +
                                     '(default:' + defaultPortWork + ' for tests, and ' + defaultPortProd + ' for production)\n' +
-        '    --https                Enables protocol https when available\n' +
         '    --print                Enables the standard printing of final report\n' +
         '    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n' +
         '    --social               Enables social media plugin\n' +

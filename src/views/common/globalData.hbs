@@ -3,9 +3,8 @@ The data transfer should not be made writing directly on JS dynamic files, to av
 see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes -->
 
 <data
-    id =                "global_switches" 
+    id =                "global_switches"
     value =             "global_switches"
-    data-https =        "{{{ serverData.settings.switches.https }}}"
     data-uber =         "{{{ serverData.settings.switches.uber }}}"
     data-social =       "{{{ serverData.settings.switches.social }}}"
     data-charts =       "{{{ negate serverData.settings.switches.disableCharts }}}"
@@ -17,15 +16,15 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
 </data>
 
 <data
-    id =                    "global_variables" 
-    value =                 "global_variables" 
-    data-country =          "{{{ CC }}}"       
+    id =                    "global_variables"
+    value =                 "global_variables"
+    data-country =          "{{{ CC }}}"
     data-language =         "{{{ clientData.languageCode }}}"
     data-js_files =         "{{{ jsonObj serverData.fileNames.client }}}"
     data-country_list =     "{{{ jsonObj serverData.availableCountries }}}"
     data-domain_list =      "{{{ jsonObj serverData.domains.countries }}}"
     data-cdn_url =          "{{{ serverData.settings.cdn.url }}}"
-    data-http_protocol =    "{{{ clientData.httpProtocol }}}"
+    data-url_protocol =     "{{{ clientData.urlProtocol }}}"
     data-client_dir =       "{{{ serverData.directories.client.client }}}"
     data-words =            "{{{ jsonObj words }}}"
     data-stats =            "{{{ jsonObj serverData.statsData }}}"
@@ -34,11 +33,11 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
     data-is_this_a_test =   "{{{ clientData.isThisATest }}}"
     data-nonce =            "{{{ nonce }}}">
 </data>
-      
+
 {{#if isThisStatsPage}}
     <data
-        id =    "chart" 
-        value = "chart" 
+        id =    "chart"
+        value = "chart"
         data-stats_data = "{{{ jsonObj statsData }}}"
         data-stats_labels = "{{{ jsonObj statsLabels }}}">
     </data>

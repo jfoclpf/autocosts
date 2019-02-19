@@ -164,16 +164,6 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
     return ''
   }
 
-  // gets default protocol defined by Global Variable
-  // it returns either "http://" or "https://", i.e., it returns including the "://"
-  function getProtocol () {
-    if (serverInfo.switches.https) {
-      return window.location.protocol + '//'
-    } else {
-      return 'http://'
-    }
-  }
-
   // this function is very important and checks if number is a finite valid number
   // no variable coercions, no bullshit, no string, no "1", no true, no NaN, no null, no 1/0,
   // and 0 returns true. n must be a finite valid number
@@ -192,7 +182,6 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
   thisModule.removeHashFromUrl = removeHashFromUrl
   thisModule.getStringFor = getStringFor
   thisModule.getCheckedValue = getCheckedValue
-  thisModule.getProtocol = getProtocol
   thisModule.isNumber = isNumber
 
   return thisModule

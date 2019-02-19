@@ -16,7 +16,7 @@ module.exports = function (req, res, serverData, WORDS) {
   var twoLetterLang = getUniqueLangObj(serverData)
   data.twoLetterLang = twoLetterLang
 
-  data.HTTP_Protocol = url.getProtocol(req, serverData.settings.switches.https)
+  data.HTTP_Protocol = url.getProtocol(req)
 
   data.layout = false
 

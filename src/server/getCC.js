@@ -1,6 +1,5 @@
 
 const path = require('path')
-const nodeUrl = require('url')
 
 const url = require(path.join(__dirname, 'url'))
 const crypto = require('crypto') // eslint-disable-line
@@ -36,12 +35,12 @@ module.exports = {
     // information depending on this request from the client
     var clientData = {
       /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
-      'urlHref': getUrlHref(req), // full url, ex: "https://autocosts.info/PT"
-      'urlOrigin': getUrlOrigin(req), // basic url, ex: "https://autocosts.info"
+      'urlHref': url.getHref(req), // full url, ex: "https://autocosts.info/PT"
+      'urlOrigin': url.getOrigin(req), // basic url, ex: "https://autocosts.info"
+      'urlProtocol': url.getProtocol(req),
       'languageCode': serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test
-      'notLocalhost': !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
-      'httpProtocol': url.getProtocol(req, serverData.settings.switches.https)
+      'notLocalhost': !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
     }
     data.clientData = clientData
 
@@ -143,26 +142,4 @@ module.exports = {
     return CSPstr0 + nonceStr + CSPstr1
   }
 
-}
-
-// for example: "https://autocosts.info/PT"
-function getUrlHref (req) {
-  return nodeUrl.format({
-    protocol: getProtocol(req),
-    host: req.get('host'),
-    pathname: req.originalUrl
-  })
-}
-
-// for example: "https://autocosts.info"
-// check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
-function getUrlOrigin (req) {
-  return nodeUrl.format({
-    protocol: getProtocol(req),
-    host: req.get('host')
-  })
-}
-
-function getProtocol (req) {
-  return req.secure ? 'https' : 'http'
 }
