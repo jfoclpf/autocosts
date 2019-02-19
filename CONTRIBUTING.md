@@ -158,6 +158,31 @@ $.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(
 });
 ```
 
+## URL parts terminology
+
+We follow Javascript on browsers variable:  `window.location`
+
+```
+protocol://username:password@hostname:port/pathname?search#hash
+-----------------------------href------------------------------
+                             -----host----
+-----------      origin      -------------
+```
+
+ - `protocol` - protocol scheme of the URL, including the final ':'
+ - `hostname` - domain name
+ - `port` - port number
+ - `pathname` - /pathname
+ - `search` - ?parameters
+ - `hash` - #fragment_identifier
+ - `username` - username specified before the domain name
+ - `password` - password specified before the domain name
+ - `href` - the entire URL
+ - `origin` - protocol://hostname:port
+ - `host` - hostname:port
+
+Variable names should be proceeded by `url`, for example `urlHref` for the whole url.
+
 ## Wiki page
 
 Check also our [wiki home page](https://github.com/jfoclpf/autocosts/wiki).
