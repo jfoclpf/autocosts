@@ -64,7 +64,7 @@ if (release !== 'work' && release !== 'prod') {
   release = 'work'
 }
 
-console.log("Release: '" + release + "'")
+console.log(("Release: '" + release + "'").mainOption)
 var RELEASE = release // set Global variable
 
 commons.setRelease(RELEASE)
@@ -286,7 +286,7 @@ function concatCSSFiles (mainCallback) {
           if (err) { throw err };
 
           // builds console.log msg
-          let consoleMsg = 'Concatenation done on ' + files1MergedName.magenta.bold + ' from '
+          let consoleMsg = 'Merged file ' + files1MergedName.magenta.bold + ' from: '
           for (let i = 0; i < files1Arr.length; i++) {
             consoleMsg += files1Arr[i].magenta.bold + (i === files1Arr.length - 1 ? '.' : (i === files1Arr.length - 2 ? ' and ' : ', '))
           }
@@ -302,7 +302,7 @@ function concatCSSFiles (mainCallback) {
           if (err) { throw err };
 
           // builds console.log msg
-          let consoleMsg = 'Concatenation done on ' + files2MergedName.magenta.bold + ' from '
+          let consoleMsg = 'Merged file ' + files2MergedName.magenta.bold + ' from: '
           for (let i = 0; i < files2Arr.length; i++) {
             consoleMsg += files2Arr[i].magenta.bold + (i === files1Arr.length - 1 ? '.' : (i === files1Arr.length - 2 ? ' and ' : ', '))
           }
