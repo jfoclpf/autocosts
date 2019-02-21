@@ -27,7 +27,7 @@ module.exports = {
       redirect301(res, url2redirect)
     } else {
       // redirects according to locale and/or browser settings
-      redirect302(req, res, serverData)
+      redirect302(req, res, serverData) // temporary
     }
   },
 
@@ -355,6 +355,10 @@ function isCCXX (CC) {
 function getCountryfromHTTP (acceptLanguage) {
   var CC // Country Code
 
+  if (!acceptLanguage) {
+    return null
+  }
+
   // in some cases like "fr" or "hu" the language and the country codes are the same
   if (acceptLanguage.length === 2) {
     CC = acceptLanguage.toUpperCase()
@@ -378,7 +382,7 @@ function getCountryfromHTTP (acceptLanguage) {
     return CC
   }
 
-  return false
+  return null
 }
 
 // on a certain Object, gets the key, given the value
