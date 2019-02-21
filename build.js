@@ -60,8 +60,8 @@ if (options.All) {
 
 var release = options.release
 // check that release was correctly chosen
-if (release !== 'work' && release !== 'prod') {
-  release = 'work'
+if (release !== 'dev' && release !== 'prod') {
+  release = 'dev'
 }
 
 console.log(("Release: '" + release + "'").mainOption)
@@ -446,7 +446,7 @@ function getArgvHelpMsg () {
                 '-m  --minify        [m]inify js, json, css and html files in bin/        with npm: minifier, html-minifier, uglifycss and json-minify \n' +
                 '\n\n' +
                 "#With these options it needs internet connection to a server's Database\n" +
-                '-r  --release       selects Database [r]elease (-r work or -r prod)      Database credentials in directory keys/work/ or keys/prod/\n' +
+                '-r  --release       selects Database [r]elease (-r dev or -r prod)       Database credentials in directory credentials/\n' +
                 "-s  --specDB        creates a Database with countries' [s]pecifications  connection to a Database\n" +
                 "-d  --refreshDB     refreshes the statistical costs [d]atabase           connection to the countries' specifcations Database \n" +
                 '-t  --genTables     generate html and jpeg stats [t]ables in bin/        based on the statistical costs Database \n' +

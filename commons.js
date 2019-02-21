@@ -2,7 +2,7 @@
 
 // Default Country when any possible method to get country isn't available
 var defaultCountry = 'UK' // when no other method finds the country of user, use this by default
-var defaultPortWork = 3027 // default HTTP Port where the app listens - test version
+var defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
 var defaultPortProd = 3028 // default HTTP Port where the app listens - prod version
 
 module.exports = {
@@ -35,8 +35,8 @@ module.exports = {
 
   setRelease: function (release) {
     // check that release was correctly chosen
-    if (release !== 'work' && release !== 'prod') {
-      throw Error("Error on function setRelease(release) in commons.js; 'work' or 'prod' must be selected")
+    if (release !== 'dev' && release !== 'prod') {
+      throw Error("Error on function setRelease(release) in commons.js; 'dev' or 'prod' must be selected")
     }
     RELEASE = release
   },
@@ -92,7 +92,7 @@ module.exports = {
 /***************************************************************************************************/
 /***************************************************************************************************/
 
-var RELEASE // release, "work" or "prod"
+var RELEASE // release, "dev" or "prod"
 var ROOT_DIR // root directory of the project
 var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER
 var optionDefinitions // for the commandLineArgs
@@ -142,8 +142,8 @@ function _init () {
 
   var release = options.release
   // check that release was correctly chosen
-  if (release !== 'work' && release !== 'prod') {
-    release = 'work'
+  if (release !== 'dev' && release !== 'prod') {
+    release = 'dev'
   }
   console.log("Release: '" + release + "'")
   RELEASE = release // set Global variable
@@ -170,8 +170,8 @@ function _init () {
   } else {
     if (release === 'prod') {
       HTTPport = defaultPortProd
-    } else if (release === 'work') {
-      HTTPport = defaultPortWork
+    } else if (release === 'dev') {
+      HTTPport = defaultPortDev
     } else {
       throw Error('Error setting port')
     }
@@ -246,7 +246,7 @@ function _init () {
   if (RELEASE === 'prod') {
     credentialsFileName = FILENAMES.server.credentialsFullPath.prod
   } else {
-    credentialsFileName = FILENAMES.server.credentialsFullPath.work
+    credentialsFileName = FILENAMES.server.credentialsFullPath.dev
   }
   console.log(credentialsFileName)
 
@@ -392,11 +392,11 @@ function setFILENAMES () {
     'server': {
       'credentials': {
         'prod': 'prodCredentials.json',
-        'work': 'workCredentials.json'
+        'dev': 'devCredentials.json'
       },
       'credentialsFullPath': {
         'prod': '',
-        'work': ''
+        'dev': ''
       }
     },
     // the LOCAL paths are RELATIVE to the main host as seen by the BROWSER,
@@ -559,9 +559,9 @@ function getArgvHelpMsg () {
         'Ex:    node ' + filename + ' -r prod --uber --dataBase\n' +
         '\n' +
         'Options: \n' +
-        "-r, --release              'work' for tests or 'prod' for production\n" +
+        "-r, --release              'dev' for development or 'prod' for production\n" +
         '-p, --port                 HTTP port on which the application is listening ' +
-                                    '(default:' + defaultPortWork + ' for tests, and ' + defaultPortProd + ' for production)\n' +
+                                    '(default:' + defaultPortDev + ' for development, and ' + defaultPortProd + ' for production)\n' +
         '    --print                Enables the standard printing of final report\n' +
         '    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n' +
         '    --social               Enables social media plugin\n' +

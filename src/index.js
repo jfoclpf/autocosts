@@ -33,7 +33,7 @@ const domains = require(path.join(__dirname, 'server', 'domains'))
 const sitemap = require(path.join(__dirname, 'server', 'sitemap'))
 const preprocess = require(path.join(__dirname, 'server', 'preprocess'))
 
-const release = commons.getRelease() // release shall be 'work' or 'prod', it's 'work' by default
+const release = commons.getRelease() // release shall be 'dev' or 'prod', it's 'dev' by default
 
 var directories = commons.getDirectories()
 directories.index = __dirname // directory where this script index.js is located
@@ -43,7 +43,7 @@ var settings = commons.getSettings()
 // fixed unchangeable global data which is constant for all HTTP requests independently of the country
 var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
 var serverData = {
-  'release': release, // Release: "work" or "prod"
+  'release': release, // Release: "dev" or "prod"
   'settings': settings, // Settings set in commons.js
   'directories': directories, // {ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
   'fileNames': fileNames, // Object with the fileNames, on the server and client

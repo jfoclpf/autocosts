@@ -1,4 +1,4 @@
-autocosts &ndash; car costs calculator 
+autocosts &ndash; car costs calculator
 =========
 [![Build Status][travis_img]][travis_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url] [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url] [![js-standard-style][js-standard-style_img]][js-standard-style_url] [![Dependency Status][dependency status_img]][dependency status_url]
 
@@ -32,7 +32,7 @@ it will open a http local server which you can access through `http://localhost:
 https://autocosts.info
 
 ### Playground
-https://autocosts.info/XX 
+https://autocosts.info/XX
 
 ### The list of available countries
 https://autocosts.info/list
@@ -45,7 +45,7 @@ https://autocosts.info/stats
 
 
 ## How does it work?
-Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser. 
+Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser.
 
 The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The 2 last letters on the URI stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country.
 
@@ -69,29 +69,28 @@ For more information regarding how the costs are calculated, you can check the `
   * Car washes
 
 ### Aditional services
-Autocosts supports the following additional services, which can be enabled or disabled (default), 
+Autocosts supports the following additional services, which can be enabled or disabled (default),
 using the `node bin/index.js` command line options:
 
 ```
 Usage: node index.js [options]
 Ex:    node index.js -r prod --uber --dataBase
 
-Options: 
--r, --release              'work' for tests or 'prod' for production
--p, --port                 HTTP port on which the application is listening (default:3027 for tests, and 3028 for production)
-    --https                Enables protocol https when available
+Options:
+-r, --release              'dev' for development or 'prod' for production
+-p, --port                 HTTP port on which the application is listening (default:3027 for development, and 3028 for production)
     --print                Enables the standard printing of final report
     --pdf                  Enables the downloading of a pdf final report (using pdfmake)
     --social               Enables social media plugin (js-socials)
     --disableCharts        Disables Charts on final report
 
     External API services, disabled by default
-    API credentials must be in either credentials/workCredentials.json or credentials/prodCredentials.json according to release
+    API credentials must be in either credentials/devCredentials.json or credentials/prodCredentials.json according to release
     --cdn                  Enables Content Delivery Network
     --uber                 Enables UBER API
     --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
     --googleAnalytics      Enables Google Analytics
-    --dataBase             Enables a mysql Database
+    --dataBase             Enables the mysql database wherein the user inputs are stored
 ```
 
 ### Database
@@ -142,7 +141,7 @@ The credentials for the above services are in the JSON file `workCredentials.jso
         "_comment"      : "Load money API for the currency conversion information (mandatory if dataBase is enabled)",
         "_getYourApiOn" : "https://openexchangerates.org/account/app-ids",
         "ApiId"         : "************************************"
-    }, 
+    },
     "uber" : {
         "_comment"      : "UBER API to get uber prices for each region, as an alternative to car",
         "_getYourApiOn" : "https://auth.uber.com/login",
