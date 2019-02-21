@@ -36,20 +36,23 @@ module.exports = {
     data.isThisStatsPage = true
 
     // information depending on this request from the client
-    var clientData = {
-      'urlHref': url.getHref(req), // full url, ex: "https://autocosts.info/stats"
-      'urlOrigin': url.getOrigin(req), // basic url, ex: "https://autocosts.info"
-      'urlProtocol': url.getProtocol(req), // 'http' or 'https'
-      'languageCode': 'en', // this page of World Statistics of car, renders only in English
-      'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test
-      'notLocalhost': !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
+    var pageData = {
+      /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
+      url: {
+        href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"
+        origin: url.getOrigin(req), // basic url, ex: "https://autocosts.info"
+        protocol: url.getProtocol(req) // `http:` or `https:`
+      },
+      languageCode: 'en', // this page of World Statistics of car, renders only in English
+      isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
+      notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
     }
-    data.clientData = clientData
+    data.pageData = pageData
 
     data.layout = false
     var fileToRender = path.join(serverData.directories.index, 'views', 'stats.hbs')
 
-    if (clientData.notLocalhost) {
+    if (pageData.notLocalhost) {
       let CSPstr = getCC.getCSPstr()
       debug(CSPstr.replace(/;/g, `;\n`))
       res.set('Content-Security-Policy', CSPstr)

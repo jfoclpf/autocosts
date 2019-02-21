@@ -33,26 +33,28 @@ module.exports = {
     delete data.serverData.availableCountries.XX
 
     // information depending on this request from the client
-    var clientData = {
+    var pageData = {
       /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
-      'urlHref': url.getHref(req), // full url, ex: "https://autocosts.info/PT"
-      'urlOrigin': url.getOrigin(req), // basic url, ex: "https://autocosts.info"
-      'urlProtocol': url.getProtocol(req),
-      'languageCode': serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
-      'isThisATest': url.isThisATest(req), // boolean variable regarding if present request is a test
-      'notLocalhost': !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
+      url: {
+        href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"
+        origin: url.getOrigin(req), // basic url, ex: "https://autocosts.info"
+        protocol: url.getProtocol(req), // `http:` or `https:`
+        canonical: url.getCanonicUrl(req, serverData, CC)
+      },
+      languageCode: serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
+      isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
+      notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
     }
-    data.clientData = clientData
-
+    data.pageData = pageData
     // ISO 2 letter Country Code
-    data.CC = data.words.CC = data.clientData.CC = CC
+    data.CC = data.words.CC = data.pageData.CC = CC
 
     data.emptyChar = '' // empty character to be used in handlebars for whitespace trimming
     data.layout = false // doesn't use handlebars default template
 
     var fileToRender = path.join(serverData.directories.index, 'views', 'main.hbs')
 
-    if (clientData.notLocalhost) {
+    if (pageData.notLocalhost) {
       // nonce is giving several problems with jQuery and backward compatibility
       // when jQuery deals with it fully correctly, in theory in v 3.4.0, nonce should be added again
       // https://github.com/jquery/jquery/milestone/18

@@ -43,7 +43,7 @@ module.exports = {
 
   // return, for example, "pt_PT" or "en_US"
   getLocale: function () {
-    return this.clientData.languageCode.substring(0, 2) + '_' + this.CC
+    return this.pageData.languageCode.substring(0, 2) + '_' + this.CC
   },
 
   getCapitalizedWord (str) {
@@ -109,7 +109,7 @@ module.exports = {
   },
 
   get2letterLangCode: function () {
-    return this.clientData.languageCode.substr(0, 2)
+    return this.pageData.languageCode.substr(0, 2)
   },
 
   get2letterLangCode2: function (languageCode) {
