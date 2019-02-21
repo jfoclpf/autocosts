@@ -21,8 +21,9 @@ var autocosts = (function () {
     paths: {
       jsFiles: undefined, // Object with locations of Javascript Files
       url: {
-        origin: undefined, // current domain URL, example 'http://autocosts.info'
+        origin: undefined, // origin from URL, example 'http://autocosts.info'
         href: undefined, // the true current URL of the page, example 'http://autocosts.info/XX'
+        protocol: undefined, // `http:` or `https:`
         canonicalUrl: undefined, // the correct url according to country, ex.,
         // if this is UK => 'http://autocosts.info/UK'
         cdnUrl: undefined, // it's defined in the node server side index.js
@@ -47,7 +48,6 @@ var autocosts = (function () {
       language: undefined, // Current Language Code according to ISO_639-1 codes
       translatedStrings: undefined, // Object with country's language text strings
       nonce: undefined, // Number used only once for CSP rules in scrips
-      urlProtocol: undefined, // it's defined in node server side index.js*/
       googleAnalyticsTrackingId: undefined, // Google analytics Tracking ID
       booleans: {
         isATest: undefined, // server refers that this session is a test
@@ -95,7 +95,6 @@ var autocosts = (function () {
     mainVariables.serverInfo.language = globalVariables.dataset.language
     mainVariables.serverInfo.translatedStrings = JSON.parse(decodeURI(globalVariables.dataset.words))
     mainVariables.serverInfo.nonce = globalVariables.dataset.nonce
-    mainVariables.serverInfo.urlProtocol = globalVariables.dataset.url_protocol
     mainVariables.serverInfo.googleAnalyticsTrackingId = globalVariables.dataset.ga_tracking_id
 
     // booleans, server refers whether this session is a test
@@ -103,6 +102,7 @@ var autocosts = (function () {
     mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost)
 
     // paths
+    mainVariables.paths.url.protocol = globalVariables.dataset.url_protocol
     mainVariables.paths.url.cdnUrl = globalVariables.dataset.cdn_url
     mainVariables.paths.dirs.clientDir = globalVariables.dataset.client_dir
 
@@ -116,13 +116,11 @@ var autocosts = (function () {
     mainVariables.main.uberApiObj = {}
     mainVariables.paths.url.uberApi = 'getUBER/' + selectedCountry
 
-    /* forms present page full url, example 'http://autocosts.info' */
     mainVariables.paths.url.origin = window.location.origin
-
     mainVariables.paths.url.href = window.location.href
 
-    /* forms present page full url, example 'http://autocosts.info/UK' */
-    mainVariables.paths.url.canonicalUrl = mainVariables.serverInfo.urlProtocol + '//' +
+    /* forms present page full canonical url, example 'http://autocosts.info/UK' */
+    mainVariables.paths.url.canonicalUrl = mainVariables.paths.url.protocol + '//' +
       mainVariables.serverInfo.domainListObj[selectedCountry] + '/' + selectedCountry
 
     mainVariables.paths.dirs.translationsDir = '/countries/' // path JSON Translation files
