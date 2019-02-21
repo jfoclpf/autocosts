@@ -19,18 +19,18 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
     id =                    "global_variables"
     value =                 "global_variables"
     data-country =          "{{{ CC }}}"
-    data-language =         "{{{ clientData.languageCode }}}"
+    data-language =         "{{{ pageData.languageCode }}}"
     data-js_files =         "{{{ jsonObj serverData.fileNames.client }}}"
     data-country_list =     "{{{ jsonObj serverData.availableCountries }}}"
     data-domain_list =      "{{{ jsonObj serverData.domains.countries }}}"
     data-cdn_url =          "{{{ serverData.settings.cdn.url }}}"
-    data-url_protocol =     "{{{ clientData.urlProtocol }}}"
+    data-url_protocol =     "{{{ pageData.url.protocol }}}"
     data-client_dir =       "{{{ serverData.directories.client.client }}}"
     data-words =            "{{{ jsonObj words }}}"
     data-stats =            "{{{ jsonObj serverData.statsData }}}"
     data-ga_tracking_id =   "{{{ serverData.settings.googleAnalytics.trackingId }}}"
-    data-not_localhost =    "{{{ clientData.notLocalhost }}}"
-    data-is_this_a_test =   "{{{ clientData.isThisATest }}}"
+    data-not_localhost =    "{{{ pageData.notLocalhost }}}"
+    data-is_this_a_test =   "{{{ pageData.isThisATest }}}"
     data-nonce =            "{{{ nonce }}}">
 </data>
 

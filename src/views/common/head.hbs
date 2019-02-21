@@ -3,10 +3,10 @@
 
 <meta name="author" content="Autocosts Org" />
 <meta name="viewport" content="width=device-width" />
-<meta name="robots" content="{{#if clientData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
+<meta name="robots" content="{{#if pageData.isThisATest}}noindex, nofollow{{else}}index, follow{{/if}}" />
 
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{{{clientData.urlHref}}}" />
+<meta property="og:url" content="{{{pageData.url.href}}}" />
 <meta property="og:site_name" content="autocosts.info" />
 <meta property="og:locale" content="{{{ getLocale }}}" />
 
@@ -60,20 +60,20 @@
 end of temporary debug lines-->
 
 <!-- open graph image array (http://ogp.me/#array), see also issue #115-->
-<meta property="og:image" content="{{{clientData.urlOrigin}}}/img/logo/logo400x400.png" />
-<meta property="og:image:url" content="{{{clientData.urlOrigin}}}/img/logo/logo400x400.png" />
+<meta property="og:image" content="{{{pageData.url.origin}}}/img/logo/logo400x400.png" />
+<meta property="og:image:url" content="{{{pageData.url.origin}}}/img/logo/logo400x400.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="400" />
 <meta property="og:image:height" content="400" />
 <meta property="og:image:alt" content="An icon representing a colorful symetric car, having a dollar sign inside it" />
-<meta property="og:image" content="{{{clientData.urlOrigin}}}/img/logo/logo200x147.png" />
-<meta property="og:image:url" content="{{{clientData.urlOrigin}}}/img/logo/logo200x147.png" />
+<meta property="og:image" content="{{{pageData.url.origin}}}/img/logo/logo200x147.png" />
+<meta property="og:image:url" content="{{{pageData.url.origin}}}/img/logo/logo200x147.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="200" />
 <meta property="og:image:height" content="147" />
 <meta property="og:image:alt" content="An icon representing a colorful symetric car, having a dollar sign inside it" />
-<meta property="og:image" content="{{{clientData.urlOrigin}}}/img/logo/logo1059x200.png" />
-<meta property="og:image:url" content="{{{clientData.urlOrigin}}}/img/logo/logo1059x200.png" />
+<meta property="og:image" content="{{{pageData.url.origin}}}/img/logo/logo1059x200.png" />
+<meta property="og:image:url" content="{{{pageData.url.origin}}}/img/logo/logo1059x200.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1059" />
 <meta property="og:image:height" content="200" />
