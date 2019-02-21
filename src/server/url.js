@@ -5,7 +5,7 @@ For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector *
 
 const GEO_IP = require('geoip-lite')
 const debug = require('debug')('app:url')
-const nodeUrl = require('url') // npm external express package
+const nodeUrl = require('url')
 
 module.exports = {
 
@@ -117,6 +117,14 @@ module.exports = {
     return getValidURL(req, domainsCountries)
   },
 
+  getCanonicUrl: function (req, serverData, CC) {
+    return nodeUrl.format({
+      protocol: getProtocol(req),
+      host: serverData.domains.countries[CC],
+      pathname: CC
+    })
+  },
+
   // for example: "https://autocosts.info/stats"
   // see https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
   getHref: function (req) {
@@ -147,13 +155,16 @@ function redirect302 (req, res, serverData) {
 
   var url2redirect
   if (isWorkDomain(req)) {
-    url2redirect = req.protocol + '://autocosts.work/' + geoCC
+    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.work', pathname: geoCC })
   } else if (isThisLocalhost(req)) {
-    url2redirect = getProtocol(req) + '//' + req.get('host') + '/' + geoCC
+    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: geoCC })
   } else {
     // production
-
-    url2redirect = getProtocol(req) + '//' + serverData.domains.countries[geoCC] + '/' + geoCC
+    url2redirect = nodeUrl.format({
+      protocol: getProtocol(req),
+      host: serverData.domains.countries[geoCC],
+      pathname: geoCC
+    })
   }
 
   res.redirect(302, url2redirect)
@@ -236,26 +247,23 @@ function isDomainCCcombValid (req, availableCountries, domainsCountries) {
   return host.toLowerCase() === domainsCountries[CC]
 }
 
-// full URL https://autocustos.info/PT
+// full URL, ex: for PT https://autocustos.info/PT
 function getValidURL (req, domainsCountries) {
   debug('getValidURL')
 
   var CC = req.params.CC
-  var protocol = getProtocol(req)
-  var host = req.get('host')
-
   var upCC = CC.toUpperCase()
 
   var URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
-    URL = protocol + '//' + host + '/' + upCC
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: upCC })
   } else if (isWorkDomain(req)) {
-    URL = protocol + '//' + 'autocosts.work/' + upCC
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.work', pathname: upCC })
   } else {
-    URL = protocol + '//' + domainsCountries[upCC] + '/' + upCC
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: domainsCountries[upCC], pathname: upCC })
   }
 
-  debug('Prod URL: ' + getProtocol(req) + '//' + domainsCountries[upCC] + '/' + upCC)
+  debug('Canonical URL: ' + nodeUrl.format({ protocol: getProtocol(req), host: domainsCountries[upCC], pathname: upCC }))
   debug('Valid URL: ' + URL)
   return URL
 }
