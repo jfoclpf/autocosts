@@ -25,6 +25,13 @@ module.exports = function (req, res, serverData, words) {
   }
   data.pageData = pageData
 
+  if (res.statusCode === 404) {
+    data.title = 'This page does not exist!<br>Choose a calculator according to your country'
+    data.error404 = true
+  } else {
+    data.title = 'List of Countries for the Car Costs Calculator'
+  }
+
   data.layout = false
 
   var fileToRender = path.join(serverData.directories.index, 'views', 'list.hbs')

@@ -115,8 +115,8 @@ app.use(compression({ level: 1 })) // level 1 is for fastest compression
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
-// lists all Countries information
-app.get('/list', function (req, res) {
+// lists all Countries information - /list or /lista or /liste
+app.get('/list[a,e]?$/', function (req, res) {
   debug("\nRoute: app.get('/list')")
   list(req, res, serverData, WORDS)
 })
@@ -206,16 +206,20 @@ getCC.preGenerateCSPstring(serverData)
 app.get('/:CC', function (req, res, next) {
   debug("\nRoute: app.get('/CC')")
 
-  // returns true if it was redirected to another URL
-  let wasRedirected = url.getCC(req, res, serverData)
-  if (wasRedirected) {
-    return
+  if (req.params.CC.length !== 2) {
+    res.status(404)
+    list(req, res, serverData, WORDS)
+  } else {
+    // wasRedirected is true if it was redirected to another URL
+    let wasRedirected = url.getCC(req, res, serverData)
+    if (wasRedirected) {
+      return
+    }
+    // from here CC is acceptable and the page will be rendered
+    // get words for chosen CC - Country Code
+    let WORDS_CC = WORDS[req.params.CC]
+    getCC.render(req, res, serverData, WORDS_CC)
   }
-  // from here CC is acceptable and the page will be rendered
-
-  // get words for chosen CC - Country Code
-  let WORDS_CC = WORDS[req.params.CC]
-  getCC.render(req, res, serverData, WORDS_CC)
 })
 
 app.get('/', function (req, res, next) {

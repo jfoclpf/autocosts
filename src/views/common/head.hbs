@@ -20,6 +20,8 @@
     <meta name="description" content="{{{ words.socialmedia_description }}}" />
     <meta name="keywords" content="{{{ words.meta_keywords }}}" />
 
+    <link rel="canonical" href="{{{ pageData.url.canonical }}}"/>
+
     <!-- Banner to link to the APP, uncomment when APP is also upgraded to new UI
     <meta name="google-play-app" content="app-id=info.autocosts">
     <link href="/css/smart-app-banner.css" rel="stylesheet" media="screen" />
@@ -33,16 +35,22 @@
     <meta property="og:description" content="World statistics of the Car Costs for different countries" />
     <meta name="description" content="World statistics of the Car Costs for different countries" />
 
+    <link rel="canonical" href="{{{ pageData.url.origin }}}/stats"/>
+
     <link rel="stylesheet" href="/css/stats/main.css" type="text/css">
 
 <!-- /list page -->
 {{else if isList}}
-    <title>List of Countries for the Car Costs Calculator</title>
-
-    <meta property="og:title" content="List of Countries for the Car Costs Calculator at autocosts.info" />
-    <meta property="og:description" content="List of different Countries for the Car Costs Calculator" />
-    <meta name="description" content="List of different Countries for the Car Costs Calculator" />
-
+    {{#if error404}}
+        <title>Error, page does not exist</title>
+        <meta property="og:title" content="Error, page does not exist" />
+    {{else}}
+        <title>{{{ title }}}</title>
+        <meta property="og:title" content="{{{ title }}} - autocosts.info" />
+        <meta property="og:description" content="{{{ title }}}" />
+        <meta name="description" content="{{{ title }}}" />
+        <link rel="canonical" href="{{{ pageData.url.origin }}}/list"/>
+    {{/if}}
     <link rel="stylesheet" href="/css/list/main.css" type="text/css">
 {{/if}}
 
