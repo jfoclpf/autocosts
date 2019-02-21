@@ -321,6 +321,7 @@ function isThisATest (req) {
   }
 }
 
+// tells of TLD of host is .work
 function isWorkDomain (req) {
   var host = req.get('host')
   var hostSplit = host.split('.')
