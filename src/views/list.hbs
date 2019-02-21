@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html>
     <head>
-        {{> head }}        
+        {{> head }}
     </head>
-    
+
     <body id="listpage_body">
 
-        <h1 style="text-align:center">
-            List of Countries for the Car Costs Calculator
+        <h1 style="text-align:center; margin: 25px auto;">
+            {{{ title }}}
         </h1>
 
         <div style="width:100%">
@@ -18,7 +18,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Country</th>
                         <th scope="col">CC</th>
-                        <th scope="col">Language</th>        
+                        <th scope="col">Language</th>
                         <th scope="col">Main domain</th>
                         <th scope="col">Curr. code</th>
                         <th scope="col">Currency name</th>
@@ -26,7 +26,7 @@
                         <th scope="col">Fuel efficiency</th>
                         <th scope="col">Standard distance</th>
                         <th scope="col">Fuel volume</th>
-                        <th scope="col">Costs</th>        
+                        <th scope="col">Costs</th>
                     </tr>
                 </thead>
 
@@ -40,7 +40,7 @@
                         <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
                         <td style="text-align:center">{{{Country.curr_code}}}</td>
                         <td>{{{Country.curr_name}}}</td>
-                        <td style="text-align:center">{{{Country.curr_symbol}}}</td>   
+                        <td style="text-align:center">{{{Country.curr_symbol}}}</td>
                         <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
                         <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
                         <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
@@ -51,8 +51,8 @@
 
             </table>
         </div>
-        
+
         <br><br>
-        
+
     </body>
-</html>            
+</html>
