@@ -1,0 +1,272 @@
+
+[{
+    "Country": "AR",
+    "currency": "ARS",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "AU",
+    "currency": "AUD",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "BO",
+    "currency": "BOB",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "BR",
+    "currency": "BRL",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CA",
+    "currency": "CAD",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CL",
+    "currency": "CLP",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CN",
+    "currency": "CNY",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CO",
+    "currency": "COP",
+    "distance_std": "1",
+    "fuel_efficiency_std": "6",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "CR",
+    "currency": "CRC",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CU",
+    "currency": "CUC",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "CZ",
+    "currency": "CZK",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "DE",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "DK",
+    "currency": "DKK",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "DO",
+    "currency": "DOP",
+    "distance_std": "1",
+    "fuel_efficiency_std": "6",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "EC",
+    "currency": "USD",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "ES",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "FI",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "FR",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "GR",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "GT",
+    "currency": "GTQ",
+    "distance_std": "1",
+    "fuel_efficiency_std": "6",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "HU",
+    "currency": "HUF",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "IE",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "IN",
+    "currency": "INR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "IT",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "JP",
+    "currency": "JPY",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "MX",
+    "currency": "MXN",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "NI",
+    "currency": "NIO",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "NL",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "NO",
+    "currency": "NOK",
+    "distance_std": "3",
+    "fuel_efficiency_std": "5",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "PA",
+    "currency": "PAB",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "PE",
+    "currency": "PEN",
+    "distance_std": "1",
+    "fuel_efficiency_std": "6",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "PL",
+    "currency": "PLN",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "PR",
+    "currency": "USD",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "PT",
+    "currency": "EUR",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "PY",
+    "currency": "PYG",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "RO",
+    "currency": "RON",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "RU",
+    "currency": "RUB",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "SE",
+    "currency": "SEK",
+    "distance_std": "3",
+    "fuel_efficiency_std": "5",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "SV",
+    "currency": "SVC",
+    "distance_std": "1",
+    "fuel_efficiency_std": "6",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "TR",
+    "currency": "TRY",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "UA",
+    "currency": "UAH",
+    "distance_std": "1",
+    "fuel_efficiency_std": "1",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "UK",
+    "currency": "GBP",
+    "distance_std": "2",
+    "fuel_efficiency_std": "3",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "US",
+    "currency": "USD",
+    "distance_std": "2",
+    "fuel_efficiency_std": "4",
+    "fuel_price_volume_std": "3"
+}, {
+    "Country": "UY",
+    "currency": "UYU",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}, {
+    "Country": "VE",
+    "currency": "VEF",
+    "distance_std": "1",
+    "fuel_efficiency_std": "2",
+    "fuel_price_volume_std": "1"
+}]
