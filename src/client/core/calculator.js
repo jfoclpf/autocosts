@@ -332,7 +332,7 @@ autocosts.calculatorModule = (function (thisModule) {
         case 'euros':
           return 'money'
         default:
-          throw Error(errMsg + ' - Invalid fuel.typeOfCalculation')
+          throw Error(errMsg + ' - Invalid fuel.typeOfCalculation: ' + fuel.typeOfCalculation)
       }
     }
 
@@ -356,24 +356,24 @@ autocosts.calculatorModule = (function (thisModule) {
 
           distancePerPeriod = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod)
 
-          switch (fuel.distanceBased.noCarToJob.period) {
-            case '1':
+          switch (parseInt(fuel.distanceBased.noCarToJob.period)) {
+            case 1:
               distancePerMonth = distancePerPeriod
               break
-            case '2':
+            case 2:
               distancePerMonth = distancePerPeriod / 2
               break
-            case '3':
+            case 3:
               distancePerMonth = distancePerPeriod / 3
               break
-            case '4':
+            case 4:
               distancePerMonth = distancePerPeriod / 6
               break
-            case '5':
+            case 5:
               distancePerMonth = distancePerPeriod / 12
               break
             default:
-              throw errMsg
+              throw Error(errMsg + ' - fuel.distanceBased.noCarToJob.period: ' + fuel.distanceBased.noCarToJob.period)
           }
 
           // converts distance unit to kilometres
@@ -412,24 +412,24 @@ autocosts.calculatorModule = (function (thisModule) {
 
         case 'money':
 
-          switch (fuel.currencyBased.period) {
-            case '1':
+          switch (parseInt(fuel.currencyBased.period)) {
+            case 1:
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod)
               break
-            case '2':
+            case 2:
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 2
               break
-            case '3':
+            case 3:
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 3
               break
-            case '4':
+            case 4:
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 6
               break
-            case '5':
+            case 5:
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod) / 12
               break
             default:
-              throw errMsg
+              throw Error(errMsg + ' - Invalid fuel.currencyBased.period: ' + fuel.currencyBased.period)
           }
 
           distancePerMonth = undefined
@@ -437,7 +437,7 @@ autocosts.calculatorModule = (function (thisModule) {
           break
 
         default:
-          throw errMsg
+          throw Error(errMsg + ' - Invalid result from typeOfCalculation(): ' + typeOfCalculation())
       }
 
       return monthlyCost
@@ -471,16 +471,16 @@ autocosts.calculatorModule = (function (thisModule) {
     var errMsg = 'Error calculating tolls'
 
     if (tolls.calculationBasedOnDay === 'false') { // calculation not done by day
-      switch (tolls.noBasedOnDay.period) {
-        case '1':
+      switch (parseInt(tolls.noBasedOnDay.period)) {
+        case 1:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod)
-        case '2':
+        case 2:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 2
-        case '3':
+        case 3:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 3
-        case '4':
+        case 4:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 6
-        case '5':
+        case 5:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 12
         default:
           throw errMsg
@@ -493,16 +493,16 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyFines (fines) {
-    switch (fines.period) {
-      case '1':
+    switch (parseInt(fines.period)) {
+      case 1:
         return parseFloat(fines.amountPerPeriod)
-      case '2':
+      case 2:
         return parseFloat(fines.amountPerPeriod) / 2
-      case '3':
+      case 3:
         return parseFloat(fines.amountPerPeriod) / 3
-      case '4':
+      case 4:
         return parseFloat(fines.amountPerPeriod) / 6
-      case '5':
+      case 5:
         return parseFloat(fines.amountPerPeriod) / 12
       default:
         throw Error('Error calculating fines')
@@ -510,16 +510,16 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyWashing (washing) {
-    switch (washing.period) {
-      case '1':
+    switch (parseInt(washing.period)) {
+      case 1:
         return parseFloat(washing.amountPerPeriod)
-      case '2':
+      case 2:
         return parseFloat(washing.amountPerPeriod) / 2
-      case '3':
+      case 3:
         return parseFloat(washing.amountPerPeriod) / 3
-      case '4':
+      case 4:
         return parseFloat(washing.amountPerPeriod) / 6
-      case '5':
+      case 5:
         return parseFloat(washing.amountPerPeriod) / 12
       default:
         throw Error('Error calculating washing')
@@ -844,20 +844,20 @@ autocosts.calculatorModule = (function (thisModule) {
         noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod)
 
         if (isNumber(noCarToJobDistancePerPeriod)) {
-          switch (inputDistance.noCarToJob.period) {
-            case '1':
+          switch (parseInt(inputDistance.noCarToJob.period)) {
+            case 1:
               distancePerMonth = noCarToJobDistancePerPeriod
               break
-            case '2':
+            case 2:
               distancePerMonth = noCarToJobDistancePerPeriod / 2
               break
-            case '3':
+            case 3:
               distancePerMonth = noCarToJobDistancePerPeriod / 3
               break
-            case '4':
+            case 4:
               distancePerMonth = noCarToJobDistancePerPeriod / 6
               break
-            case '5':
+            case 5:
               distancePerMonth = noCarToJobDistancePerPeriod / 12
               break
             default:
