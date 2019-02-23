@@ -275,6 +275,10 @@ function getAverageCosts (calculatedDataArray) {
 //* *********************************************************************
 // checks whether the DB entry is valid
 function isUserDataEntryOk (dbEntry, countryObj) {
+  if (!dbEntry.time_to_fill_form || !dbEntry.uuid_client || !dbEntry.country) {
+    return false
+  }
+
   var today = new Date()
   var acquisitionDate = new Date(dbEntry.acquisition_year, dbEntry.acquisition_month - 1)
   var ageOfCarInMonths = calculator.differenceBetweenDates(acquisitionDate, today)
@@ -531,5 +535,6 @@ function isCalculatedDataOk (calculatedData, countryObj, fx) {
 // node module exports
 module.exports = {
   calculateStatisticsForADefinedCountry: calculateStatisticsForADefinedCountry,
+  isUserDataEntryOk: isUserDataEntryOk,
   statsConstants: statsConstants
 }
