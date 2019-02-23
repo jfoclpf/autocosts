@@ -200,6 +200,8 @@ isOnline().then(function (online) {
           process.exit(1)
         }
 
+        // copy results to global array
+        AllUserInputDb = []
         for (var i = 0; i < results.length; i++) {
           AllUserInputDb.push(results[i])
         }
