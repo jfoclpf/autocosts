@@ -44,7 +44,7 @@ isOnline().then(online => {
 
   // sorts array of countries
   availableCountries = sortObj(availableCountries)
-  delete availableCountries['XX']
+  delete availableCountries.XX
 
   // process.exit();
 
@@ -91,10 +91,10 @@ isOnline().then(online => {
                     ') ' +
                     'VALUES ( ' +
                     '"' + key + '", ' +
-                    '"' + WORDS['curr_code'] + '", ' +
-                    WORDS['distance_std_option'] + ', ' +
-                    WORDS['fuel_efficiency_std_option'] + ', ' +
-                    WORDS['fuel_price_volume_std'] +
+                    '"' + WORDS.curr_code + '", ' +
+                    WORDS.distance_std_option + ', ' +
+                    WORDS.fuel_efficiency_std_option + ', ' +
+                    WORDS.fuel_price_volume_std +
                     ')'
 
         var size = Object.keys(availableCountries).length

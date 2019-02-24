@@ -306,6 +306,9 @@ function setDIRECTORIES () {
   // Build directory - the directory to where the building scripts are stored
   var buildDir = path.join(ROOT_DIR, 'build')
 
+  // directory where test scripts and files are stored
+  var testDir = path.join(ROOT_DIR, 'test')
+
   // credentials directory where json credential files are stored for each service
   var credentialsDir = path.join(ROOT_DIR, 'credentials')
 
@@ -314,6 +317,7 @@ function setDIRECTORIES () {
     'src': srcDir,
     'bin': binDir,
     'build': buildDir,
+    'test': testDir,
     'credentials': credentialsDir
   }
 

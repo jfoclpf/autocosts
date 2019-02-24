@@ -6,9 +6,6 @@ const colors = require('colors')
 const fs = require('fs')
 const fse = require('fs-extra')
 const path = require('path')
-const walk = require('walk')
-const jshint = require('jshint').JSHINT
-const prettyjson = require('prettyjson')
 const async = require('async') // module to allow to execute the queries in series
 const concat = require('concat-files') // concatenation file tool
 
@@ -20,7 +17,6 @@ const commons = require(path.join(__dirname, 'commons'))
 var optionDefinitions = [
   /* With these options it may run just locally */
   { name: 'copy', alias: 'c', type: Boolean },
-  { name: 'checkJS', alias: 'e', type: Boolean },
   { name: 'compressImgs', alias: 'i', type: Boolean },
   { name: 'minify', alias: 'm', type: Boolean },
 
@@ -50,7 +46,6 @@ if (options.help) {
 // if --All was selected select all
 if (options.All) {
   options.copy = true
-  options.checkJS = true
   options.compressImgs = true
   options.minify = true
   options.specDB = true
@@ -69,12 +64,8 @@ var RELEASE = release // set Global variable
 
 commons.setRelease(RELEASE)
 // these calls must be called after setRelease()
-var directories = commons.getDirectories()
-var filenames = commons.getFileNames()
-
-var ROOT_DIR = directories.server.root
-var BIN_DIR = directories.server.bin
-var SRC_DIR = directories.server.src
+const directories = commons.getDirectories()
+const filenames = commons.getFileNames()
 
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
@@ -82,10 +73,10 @@ colors.setTheme(commons.getConsoleColors())
 // makes sure the build.js script is called from this own directory
 // (problems regarding the PhantomJS script which messes with relative paths)
 var runDir = process.cwd() // directory from where the script is called
-var diffDir = path.relative(runDir, ROOT_DIR)
+var diffDir = path.relative(runDir, directories.server.root)
 if (diffDir !== '' && diffDir !== '.') {
-  console.log('You must call this building script from within the directory where this file is located: ' + ROOT_DIR)
-  console.log('Do first ' + ('cd ' + path.relative(runDir, ROOT_DIR)).blue + ' and then call this script again.')
+  console.log('You must call this building script from within the directory where this file is located: ' + directories.server.root)
+  console.log('Do first ' + ('cd ' + path.relative(runDir, directories.server.root)).blue + ' and then call this script again.')
   process.exit()
 }
 
@@ -124,23 +115,6 @@ async.series([
       genTables()
     }
     callback()
-  },
-
-  // Check JS syntax errors
-  function (callback) {
-    if (options.checkJS) {
-      // if this was the only option selected, it's just for testing
-      if (Object.keys(options).length === 1) {
-        checkJS(function () {
-          console.log('All JS files are syntactically OK\n'.green)
-          process.exit(0) // exit ok
-        })
-      } else {
-        checkJS(callback)
-      }
-    } else {
-      callback()
-    }
   },
 
   // Minify code
@@ -189,10 +163,10 @@ function copy () {
   console.log('\n' + ('## Making a clean copy from src/ to bin/').mainOptionStep + ' \n')
 
   // deletes fully the directory and creates empty one
-  fse.removeSync(BIN_DIR) // equivalent in Unix to "rm -rf"
-  fs.mkdirSync(BIN_DIR)
+  fse.removeSync(directories.server.bin) // equivalent in Unix to "rm -rf"
+  fs.mkdirSync(directories.server.bin)
 
-  fse.copySync(SRC_DIR, BIN_DIR)
+  fse.copySync(directories.server.src, directories.server.bin)
 
   console.log('Files from src/ to bin/ copied')
 
@@ -206,11 +180,11 @@ function copy () {
     // https://stackoverflow.com/a/49455609/1243247
     let packageDirFullpath = path.dirname(require.resolve(path.join(npmPackage, 'package.json')))
 
-    fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(BIN_DIR, destFilePath))
+    fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(directories.server.bin, destFilePath))
 
     let packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath)
     let consoleMsg = npmPackage + ': ' + (path.join(packageDirRelativepath, fileRelativePath)).verbose + ' -> ' +
-            (path.join(path.relative(path.dirname(BIN_DIR), BIN_DIR), destFilePath)).verbose
+            (path.join(path.relative(path.dirname(directories.server.bin), directories.server.bin), destFilePath)).verbose
 
     console.log(consoleMsg)
   }
@@ -318,61 +292,6 @@ function concatCSSFiles (mainCallback) {
   ])// async.series
 }
 
-function checkJS (callback) {
-  console.log('\n' + ('# --' + optionDefinitions[1].name).mainOption)
-
-  console.log('\n' + ('## Checking for JS syntax errors in src/').mainOptionStep + ' \n')
-
-  var JShintOpt = {
-    '-W041': true,
-    'multistr': true,
-    'asi': true,
-    'expr': true,
-    'evil': true,
-    'funcscope': false,
-    'esversion': 6
-  }
-
-  var walker = walk.walk(directories.server.src)
-
-  console.log('Checking JS files syntax in ' + directories.server.src + '\n')
-
-  var numberOfTotalErrors = 0
-
-  walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
-
-    // gets file extension and avoids exceptions
-    if (getFileExtension(filename) === 'js' &&
-           !filename.includes('vfs_fonts') &&
-           !filename.includes('js_timer.js')) {
-      var code = fs.readFileSync(filename, 'utf-8')
-
-      jshint(code, JShintOpt, {})
-
-      if (jshint.errors.length === 0) { // no errors
-        console.log((path.relative(ROOT_DIR, filename)).verbose)
-      } else {
-        console.log((path.relative(ROOT_DIR, filename)).error)
-        console.log(prettyjson.render(jshint.errors))
-        numberOfTotalErrors++
-      }
-    }
-
-    next()
-  })
-
-  walker.on('end', function () {
-    console.log('\nAll JS files checked\n')
-    if (numberOfTotalErrors === 0) {
-      callback()
-    } else {
-      console.log(numberOfTotalErrors + ' JS ' + 'file' + (numberOfTotalErrors > 1 ? 's' : '') + ' with ' + 'error'.error + '\n')
-      _exit('', optionDefinitions[1])
-    }
-  })
-}
-
 // -i compress [i]mages, jpg and png files in bin/ | with ImageMagick
 function compressImgs () {
   console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
@@ -441,7 +360,6 @@ function getArgvHelpMsg () {
                 '\n' +
                 '#With these options it may run just locally\n' +
                 '-c  --copy          makes a [c]lean copy from src/ to bin/               need to be done on the 1st time \n' +
-                '-e  --checkJS       check for JS syntax [e]rrors in src/                 with npm jshint \n' +
                 '-i  --compressImgs  compress [i]mages, jpg and png files in bin/         with ImageMagick \n' +
                 '-m  --minify        [m]inify js, json, css and html files in bin/        with npm: minifier, html-minifier, uglifycss and json-minify \n' +
                 '\n\n' +
@@ -479,10 +397,6 @@ function runApp () {
   console.log(('node ' + filename + ' -h\n').green.bold)
 
   execSync('node ' + filename + ' -r ' + RELEASE, { stdio: 'inherit' })
-}
-
-function getFileExtension (fileName) {
-  return fileName.split('.').pop()
 }
 
 function _exit (err, option) {
