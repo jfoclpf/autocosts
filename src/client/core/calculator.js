@@ -53,7 +53,7 @@ autocosts.calculatorModule = (function (thisModule) {
   // private method
   function initializeCalculatedData () {
     if (!inputData || !country) {
-      throw errMsgDataCountry
+      throw Error(errMsgDataCountry)
     }
 
     // object to be returned by the function calculateCosts
@@ -483,12 +483,12 @@ autocosts.calculatorModule = (function (thisModule) {
         case 5:
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod) / 12
         default:
-          throw errMsg
+          throw Error(errMsg)
       }
     } else if (tolls.calculationBasedOnDay === 'true') {
       return parseFloat(tolls.yesBasedOnDay.amountPerDay) * parseFloat(tolls.yesBasedOnDay.daysPerMonth)
     } else {
-      throw errMsg
+      throw Error(errMsg)
     }
   }
 
@@ -607,7 +607,7 @@ autocosts.calculatorModule = (function (thisModule) {
       consoleErrorPairs('publicTransports', publicTransports,
         'inputPublicTransports', inputPublicTransports,
         'totalCarCostsPerMonth', totalCarCostsPerMonth)
-      throw errMsg
+      throw Error(errMsg)
     }
 
     /* ratios */
@@ -687,7 +687,7 @@ autocosts.calculatorModule = (function (thisModule) {
         'inputIncome', inputIncome,
         'inputWorkingTime', inputWorkingTime,
         'totalCostsPerYear', totalCostsPerYear)
-      throw errMsg
+      throw Error(errMsg)
     }
 
     financialEffort.totalCarCostsPerYear = totalCostsPerYear
@@ -809,7 +809,7 @@ autocosts.calculatorModule = (function (thisModule) {
         'details', details,
         'inputFuel', inputFuel,
         'inputDistance', inputDistance)
-      throw errMsg
+      throw Error(errMsg)
     }
 
     var distancePerWeek, // distance driven per week
@@ -861,7 +861,7 @@ autocosts.calculatorModule = (function (thisModule) {
               distancePerMonth = noCarToJobDistancePerPeriod / 12
               break
             default:
-              throw errMsg
+              throw Error(errMsg)
           }
 
           distancePerYear = distancePerMonth * 12
@@ -871,7 +871,7 @@ autocosts.calculatorModule = (function (thisModule) {
           return
         }
       } else {
-        throw errMsg
+        throw Error(errMsg)
       }
     } else if (fuelTypeOfCalculation === 'distanceCarToJob' || fuelTypeOfCalculation === 'distanceNoCarToJob') {
       // gets distance information from form part 2, in fuel section
@@ -886,7 +886,7 @@ autocosts.calculatorModule = (function (thisModule) {
         return
       }
     } else {
-      throw errMsg
+      throw Error(errMsg)
     }
 
     drivingDistance.calculated = true
@@ -915,7 +915,7 @@ autocosts.calculatorModule = (function (thisModule) {
         'inputFuel', inputFuel,
         'inputDistance', inputDistance,
         'inputTimeSpentInDriving', inputTimeSpentInDriving)
-      throw errMsg
+      throw Error(errMsg)
     }
 
     var minutesBetweenHomeAndJob, // time (in minutes) driven between home and job
@@ -989,7 +989,7 @@ autocosts.calculatorModule = (function (thisModule) {
         'financialEffort', financialEffort,
         'drivingDistance', drivingDistance,
         'timeSpentInDriving', timeSpentInDriving)
-      throw errMsg
+      throw Error(errMsg)
     }
 
     /* For more details on the Consumer Speed concept, check:
@@ -1019,7 +1019,7 @@ autocosts.calculatorModule = (function (thisModule) {
     var errMsg = 'Error calculating External Costs'
 
     if (!externalCosts) {
-      throw errMsg
+      throw Error(errMsg)
     }
 
     if (!isNumber(drivingDistancePerMonth)) {
@@ -1052,7 +1052,7 @@ autocosts.calculatorModule = (function (thisModule) {
         inputData is the object output of function calculate_costs  */
 
     if (!inputData || !country) {
-      throw errMsgDataCountry
+      throw Error(errMsgDataCountry)
     }
 
     var uberNotCalculated = { calculated: false }
