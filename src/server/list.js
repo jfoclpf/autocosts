@@ -34,6 +34,5 @@ module.exports = function (req, res, serverData, words) {
 
   data.layout = false
 
-  var fileToRender = path.join(serverData.directories.index, 'views', 'list.hbs')
-  res.render(fileToRender, data)
+  res.render('list', data)
 }

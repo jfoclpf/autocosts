@@ -90,12 +90,10 @@ app.enable('trust proxy')
 
 // rendering engine for dynamically loaded HTML/JS files
 var hbs = exphbs.create({
-  defaultLayout: 'main',
   extname: '.hbs',
-  layoutsDir: path.join(__dirname, 'views', 'layouts'),
   partialsDir: [
-    path.join(__dirname, 'views', 'main'),
     path.join(__dirname, 'views', 'common'),
+    path.join(__dirname, 'views', 'main'),
     path.join(__dirname, 'css', 'merged-min'),
     path.join(__dirname, 'tables')
   ],
@@ -104,6 +102,7 @@ var hbs = exphbs.create({
 
 app.engine('.hbs', hbs.engine)
 app.set('view engine', '.hbs')
+app.set('views', path.join(__dirname, 'views'))
 
 // static content
 app.use(express.static(path.join(__dirname, 'public'))) // root public folder of the site /
@@ -120,8 +119,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 // robots.txt for search engines
 app.get('/robots.txt', function (req, res) {
   debug("\nRoute: app.get('/robots.txt')")
-  var fileToRender = path.join(serverData.directories.index, 'public', 'robots.txt.hbs')
-  res.type('text/plain').render(fileToRender, { layout: false, isReleaseProd: release === 'prod' })
+  res.type('text/plain').render('robots.txt', { layout: false, isReleaseProd: release === 'prod' })
 })
 
 // lists all Countries information - /list or /lista or /liste

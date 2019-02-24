@@ -50,7 +50,6 @@ module.exports = {
     data.pageData = pageData
 
     data.layout = false
-    var fileToRender = path.join(serverData.directories.index, 'views', 'stats.hbs')
 
     if (pageData.notLocalhost) {
       let CSPstr = getCC.getCSPstr()
@@ -58,7 +57,7 @@ module.exports = {
       res.set('Content-Security-Policy', CSPstr)
     }
 
-    res.render(fileToRender, data)
+    res.render('stats', data)
   },
 
   // this method is executed right after the server starts, such that the statisitcal data may be pre-calculated and ready for the client
