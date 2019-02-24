@@ -63,6 +63,7 @@ for (let item of Object.keys(_countrySpecs)) {
   ...
 */
 
+var stepCounter = 0
 console.log()
 
 async.parallel([
@@ -83,7 +84,7 @@ async.parallel([
 })
 
 function testCalculatorFunction (callback) {
-  console.log('Inserting thousands of user inputs from ' +
+  console.log(++stepCounter + '. Inserting thousands of user inputs from ' +
     path.relative(directories.server.root, path.join(__dirname, 'users_insertions.json')) +
     ' into the core calculator function. Progress bar...\n')
 
@@ -135,7 +136,7 @@ function testCalculatorFunction (callback) {
 
 // check JS files for JS syntax errors (jshint) and for StandardJS syntax rules (standardJS)
 function checkJsCodeSyntax (callback) {
-  console.log('Checking .js files syntax with jshint (https://jshint.com/) in ' +
+  console.log(++stepCounter + '. Checking .js files syntax with jshint (https://jshint.com/) in ' +
     path.relative(directories.server.root, directories.server.src).mainOption, '\n')
 
   var numberOfTotalErrorsOrWanings = 0
@@ -201,7 +202,7 @@ function checkJsCodeStandard (callback) {
   ]
 
   // just console log the directories to be checked
-  process.stdout.write('Checking for .js files standardJS rules (https://standardjs.com/) in the directories: ')
+  process.stdout.write(++stepCounter + '. Checking for .js files standardJS rules (https://standardjs.com/) in the directories: ')
   var len = directoriesToCheck.length
   for (let i = 0; i < len; i++) {
     process.stdout.write(path.relative(directories.server.root, directoriesToCheck[i]).mainOption)
