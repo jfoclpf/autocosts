@@ -52,8 +52,6 @@ module.exports = {
     data.emptyChar = '' // empty character to be used in handlebars for whitespace trimming
     data.layout = false // doesn't use handlebars default template
 
-    var fileToRender = path.join(serverData.directories.index, 'views', 'main.hbs')
-
     if (pageData.notLocalhost) {
       // nonce is giving several problems with jQuery and backward compatibility
       // when jQuery deals with it fully correctly, in theory in v 3.4.0, nonce should be added again
@@ -69,7 +67,7 @@ module.exports = {
       data.nonce = ''
     }
 
-    res.render(fileToRender, data)
+    res.render('main', data)
   },
 
   // Content Security Policy for webpages in Internet

@@ -54,8 +54,7 @@ module.exports = function (req, res, serverData, WORDS) {
 
   data.layout = false
 
-  var fileToRender = path.join(serverData.directories.index, 'views', 'domains.hbs')
-  res.render(fileToRender, data)
+  res.render('domains', data)
 }
 
 // get array of countries codes (CC) having a specific domain

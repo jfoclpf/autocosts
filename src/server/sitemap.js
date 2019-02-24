@@ -21,9 +21,7 @@ module.exports = function (req, res, serverData, WORDS) {
   data.layout = false
 
   res.header('Content-Type', 'application/xml')
-
-  var fileToRender = path.join(serverData.directories.index, 'views', 'sitemap.hbs')
-  res.render(fileToRender, data)
+  res.render('sitemap', data)
 }
 
 // function that gets an Object associating a language with a country/domain
