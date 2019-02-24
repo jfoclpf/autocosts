@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "test": "node test/test.js",
-    "postinstall": "node build.js -ceim && node bin/index.js --print --pdf -r prod"
+    "postinstall": "node build.js -cim && node bin/index.js --print --pdf -r prod"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "command-line-args": "^5.0.2",
     "compression": "^1.7.3",
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.1",
+    "express-handlebars": "https://github.com/jfoclpf/express-handlebars/tarball/master",
     "flat": "^4.1.0",
     "fs": "0.0.1-security",
     "fs-extra": "^5.0.0",
