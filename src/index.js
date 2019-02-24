@@ -240,7 +240,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!')
 })
 
-if (process.env.NODE_ENV === 'TEST') {
+if (process.env.NODE_ENV === 'test') {
   console.log('Does not start http server, exiting...\n')
   process.exit(0)
 }
