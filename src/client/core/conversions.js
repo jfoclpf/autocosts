@@ -20,39 +20,59 @@ autocosts.calculatorModule.conversionsModule = (function () {
     GALLON_US_TO_LITER: 3.78541178
   }
 
+  // this dictionary is not a language dictionary, it is merely for backward
+  // and broad function input compatibility and to encompass user old inputs in databases
+  var dictionary = {
+    distance: {
+      'km': [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
+      'mile': [2, 'mi', 'miles'],
+      'nordicMile': [3, 'nordic mile', 'mil(10km)', 'scandinavian mile']
+    },
+    fuelAmount: {
+      'ltr': [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
+      'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
+      'gal(US)': [3, 'US gallon', 'US gal'],
+      'kWh': [4, 'KWH']
+    },
+    fuelEfficiency: {
+      'l/100km': [1, 'ltr/100km'],
+      'km/l': [2, 'km/ltr'],
+      'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
+      'mpg(US)': [4, 'US mpg'],
+      'l/nordicMile': [5, 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
+      'km/gal(US)': [6, 'km/USGalon']
+    }
+  }
+
+  function mapUnit (concept, value) {
+    var val = !isNaN(value) ? parseInt(value) : value
+    for (var key in dictionary[concept]) {
+      if (key === val || dictionary[concept][key].indexOf(val) !== -1) {
+        return key
+      }
+    }
+    throw Error('Uknown value "' + value + '" for concept "' + concept + '". Check the variable dictionary.\n')
+  }
+
   // converts chosen fuel consumption to l/100km
   function convertFuelEfficiencyToL100km (fuelEfficiency, fuelEfficiencyOption) {
-    // fuelEfficiencyOption shall be either:
-    // 1 - l/100km - litres per 100 kilometres
-    // 2 - km/l - kilometres per litre
-    // 3 - mpg(imp) - miles per imperial gallon
-    // 4 - mpg(US) - miles per US gallon
-    // 5 - l/mil - litres per 10 kilometers
-    // 6 - km/gal(US) - km per US gallon
-
     fuelEfficiency = parseFloat(fuelEfficiency)
 
     if (isNaN(fuelEfficiency)) {
       throw Error('Error on convertFuelEfficiencyToL100km, fuelEfficiency is not a number: ' + fuelEfficiency)
     }
 
-    switch (fuelEfficiencyOption) {
-      case 1:
+    switch (mapUnit('fuelEfficiency', fuelEfficiencyOption)) {
       case 'l/100km':
         return fuelEfficiency
-      case 2:
       case 'km/l':
         return 100 / fuelEfficiency // km/l -> l/100km
-      case 3:
       case 'mpg(imp)':
         return (100 * conversionConstants.GALLON_IMP_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(imp) -> l/100km
-      case 4:
       case 'mpg(US)':
         return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(US) -> l/100km
-      case 5:
-      case 'l/mil':
+      case 'l/nordicMile':
         return conversionConstants.KM_TO_MIL * fuelEfficiency // l/mil -> l/100km (1 mil = 10km)
-      case 6:
       case 'km/gal(US)':
         return (100 * conversionConstants.GALLON_US_TO_LITER) / fuelEfficiency // km/gal(US) -> l/100km (1 mil = 10km)
       default:
@@ -68,24 +88,12 @@ autocosts.calculatorModule.conversionsModule = (function () {
       throw Error('Error on convertFuelPriceToLitre, fuelPrice is not a number: ' + fuelPrice)
     }
 
-    switch (fuelPriceVolumeUnit) {
-      case 1:
-      case 'litre':
-      case 'Litre':
-      case 'liter':
-      case 'Liter':
+    switch (mapUnit('fuelAmount', fuelPriceVolumeUnit)) {
       case 'ltr':
-      case 'l':
         return fuelPrice // CURRENCY_unit/litre to CURRENCY_unit/litre
-      case 2:
-      case 'imp gallon':
-      case 'imperial gallon':
-      case 'imp gal':
-      case 'imperial gal':
+      case 'gal(imp)':
         return fuelPrice / conversionConstants.GALLON_IMP_TO_LITER // currency/(imp gallon) -> currency/litre
-      case 3:
-      case 'US gallon':
-      case 'US gal':
+      case 'gal(US)':
         return fuelPrice / conversionConstants.GALLON_US_TO_LITER // currency/(US gallon) -> currency/litre
       default:
         throw Error('Error on convertFuelPriceToLitre, fuelPriceVolumeUnit ' + fuelPriceVolumeUnit + ' unknown')
@@ -100,18 +108,12 @@ autocosts.calculatorModule.conversionsModule = (function () {
       throw Error('Error on convertDistanceToKm, distance is not a number: ' + distance)
     }
 
-    switch (distanceUnitOption) {
-      case 1:
+    switch (mapUnit('distance', distanceUnitOption)) {
       case 'km':
         return distance
-      case 2:
       case 'mile':
-      case 'miles':
         return distance * conversionConstants.KM_TO_MILES // miles to km
-      case 3:
-      case 'mil(10km)':
-      case 'scandinavian mile':
-      case 'nordic mile':
+      case 'nordicMile':
         return distance * conversionConstants.KM_TO_MIL // mil(10km) to km
       default:
         throw Error('Error on convertDistanceToKm, distanceUnitOption ' + distanceUnitOption + ' unknown')
@@ -126,18 +128,12 @@ autocosts.calculatorModule.conversionsModule = (function () {
       throw Error('Error on convertDistanceFromKm, distance is not a number: ' + distance)
     }
 
-    switch (distanceUnitOption) {
-      case 1:
+    switch (mapUnit('distance', distanceUnitOption)) {
       case 'km':
         return distance
-      case 2:
       case 'mile':
-      case 'miles':
         return distance / conversionConstants.KM_TO_MILES // km to miles
-      case 3:
-      case 'mil(10km)':
-      case 'scandinavian mile':
-      case 'nordic mile':
+      case 'nordicMile':
         return distance / conversionConstants.KM_TO_MIL // km to mil(10km)
       default:
         throw Error('Error on convertDistanceFromKm, distanceUnitOption ' + distanceUnitOption + ' unknown')
