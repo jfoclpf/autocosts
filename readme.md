@@ -72,7 +72,7 @@ For more information regarding how the costs are calculated, you can check the `
 
 ### Aditional services
 Autocosts supports the following additional services, which can be enabled or disabled (default).
-Run the `node bin/index.js -h` for more information.
+After building with `node build.js`, run `node bin/index.js -h` for more information.
 
 ### Database
 
@@ -85,14 +85,6 @@ Autocosts may use the UBER API, such that at the final repport, the user calcula
 ### Charts
 
 Autocosts uses <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
-
-### Google Analytics
-
-You may also add your Google Analytics credentials.
-
-### Google Captcha v2
-
-Autocosts support the Google Captcha v2 API to avoid spam bots from poluting the database.
 
 ### PDF
 
