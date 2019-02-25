@@ -284,7 +284,8 @@ function isUserDataEntryOk (dbEntry, countryObj) {
   var ageOfCarInMonths = calculator.differenceBetweenDates(acquisitionDate, today)
 
   if (dbEntry.acquisition_year && dbEntry.acquisition_month) {
-    if (isNaN(ageOfCarInMonths) || ageOfCarInMonths > statsConstants.MAX_CAR_AGE_MONTHS) {
+    if (isNaN(ageOfCarInMonths) || ageOfCarInMonths <= 0 ||
+      ageOfCarInMonths > statsConstants.MAX_CAR_AGE_MONTHS) {
       return false
     }
   } else {
