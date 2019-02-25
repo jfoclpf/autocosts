@@ -33,7 +33,7 @@ const domains = require(path.join(__dirname, 'server', 'domains'))
 const sitemap = require(path.join(__dirname, 'server', 'sitemap'))
 const preprocess = require(path.join(__dirname, 'server', 'preprocess'))
 
-const release = commons.getRelease() // release shall be 'dev' or 'prod', it's 'dev' by default
+const release = commons.getRelease() // release shall be 'dev', 'test' or 'prod', it's 'dev' by default
 
 var directories = commons.getDirectories()
 directories.index = __dirname // directory where this script index.js is located

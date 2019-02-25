@@ -55,7 +55,7 @@ if (options.All) {
 
 var release = options.release
 // check that release was correctly chosen
-if (release !== 'dev' && release !== 'prod') {
+if (release !== 'dev' && release !== 'prod' && release !== 'test') {
   release = 'dev'
 }
 
@@ -342,7 +342,7 @@ function refreshDB () {
 function genTables () {
   console.log('\n' + ('# --' + optionDefinitions[7].name).mainOption)
   console.log('\n' + ('## Generating statistical tables').mainOptionStep + ' \n')
-  console.log('\n    Extracts stat info from prod and create html tables \n')
+  console.log('\n    Extracts stat info and create html tables \n')
   try {
     execSync('node ' + filenames.build.generateTables + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
@@ -359,15 +359,15 @@ function getArgvHelpMsg () {
                 'node ' + filename + ' -A -r prod \n' +
                 '\n' +
                 '#With these options it may run just locally\n' +
-                '-c  --copy          makes a [c]lean copy from src/ to bin/               need to be done on the 1st time \n' +
-                '-i  --compressImgs  compress [i]mages, jpg and png files in bin/         with ImageMagick \n' +
-                '-m  --minify        [m]inify js, json, css and html files in bin/        with npm: minifier, html-minifier, uglifycss and json-minify \n' +
+                '-c  --copy          makes a [c]lean copy from src/ to bin/                need to be done on the 1st time \n' +
+                '-i  --compressImgs  compress [i]mages, jpg and png files in bin/          with ImageMagick \n' +
+                '-m  --minify        [m]inify js, json, css and html files in bin/         with npm: minifier, html-minifier, uglifycss and json-minify \n' +
                 '\n\n' +
                 "#With these options it needs internet connection to a server's Database\n" +
-                '-r  --release       selects Database [r]elease (-r dev or -r prod)       Database credentials in directory credentials/\n' +
-                "-s  --specDB        creates a Database with countries' [s]pecifications  connection to a Database\n" +
-                "-d  --refreshDB     refreshes the statistical costs [d]atabase           connection to the countries' specifcations Database \n" +
-                '-t  --genTables     generate html and jpeg stats [t]ables in bin/        based on the statistical costs Database \n' +
+                '-r  --release       selects Database [r]elease ("dev", "test" or "prod")  Database credentials in directory credentials/\n' +
+                "-s  --specDB        creates a Database with countries' [s]pecifications   connection to a Database\n" +
+                "-d  --refreshDB     refreshes the statistical costs [d]atabase            connection to the countries' specifcations Database \n" +
+                '-t  --genTables     generate html and jpeg stats [t]ables in bin/         based on the statistical costs Database \n' +
                 '\n' +
                 '-A  --All           enables [a]ll previous options\n' +
                 '    --run           runs built with default options, after building is complete\n' +

@@ -2,8 +2,6 @@
 
 console.log('\nRunning script ', __filename, '\n')
 
-const USE_MONEY_API = true
-
 // includes
 const path = require('path')
 const async = require('async') // module to allow to execute the queries in series
@@ -15,6 +13,8 @@ const flatten = require('flat')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
 
+const release = commons.getRelease()
+const USE_MONEY_API = release !== 'test'
 var fx = USE_MONEY_API ? require('money') : null // currency conversion API; needs to be "var" because it will change
 
 commons.init()
