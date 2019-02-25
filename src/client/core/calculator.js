@@ -1288,7 +1288,7 @@ autocosts.calculatorModule = (function (thisModule) {
       }
     }
 
-    throw Error('Unknown Time Period defintion: ' + timePeriod)
+    return null
   }
 
   // detects if a variable is defined and different from zero
