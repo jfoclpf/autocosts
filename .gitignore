@@ -1,5 +1,5 @@
 app/
-credentials/*
+credentials/prodCredentials.json
 bin/*
 node_modules/
 rsync2work.sh
