@@ -208,7 +208,9 @@ autocosts.calculatorModule = (function (thisModule) {
     }
   }
 
-  function differenceBetweenDates (date1, date2) { // return the difference in months between two dates date2-date1
+  // return the difference in months between two dates date2-date1
+  // if date1 is after date2 returns null
+  function differenceBetweenDates (date1, date2) {
     var m2, y2, m1, y1
     m2 = date2.getUTCMonth() + 1
     y2 = date2.getUTCFullYear()
@@ -217,10 +219,10 @@ autocosts.calculatorModule = (function (thisModule) {
 
     // check if date2>date1
     if (y1 > y2) {
-      return (false)
+      return null
     }
     if (y1 === y2 && m1 > m2) {
-      return false
+      return null
     }
 
     if (m2 >= m1) {

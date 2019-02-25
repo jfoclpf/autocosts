@@ -202,7 +202,8 @@ autocosts.userFormModule.validateFormModule = (function (form) {
 
     var carNumberOfMonths = calculatorModule.differenceBetweenDates(carAcquisitionDate, today)
 
-    if (!carNumberOfMonths) {
+    // carNumberOfMonths may be zero which is falsy, but acceptable
+    if (carNumberOfMonths === null) {
       return false
     }
 
