@@ -332,7 +332,9 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
       })
       promisesArray.push($('*').promise())
       $.when.apply($, promisesArray).done(function () {
-        pdfModule.generatePDF(calculatedData)
+        if (pdfModule && !$.isEmptyObject(pdfModule)) {
+          pdfModule.generatePDF(calculatedData)
+        }
       })
     })
 
