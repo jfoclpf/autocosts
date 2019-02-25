@@ -2,8 +2,9 @@
 
 // Default Country when any possible method to get country isn't available
 var defaultCountry = 'UK' // when no other method finds the country of user, use this by default
-var defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
 var defaultPortProd = 3028 // default HTTP Port where the app listens - prod version
+var defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
+var defaultPortTest = 3026 // default HTTP Port where the app listens - prod version
 
 module.exports = {
 
@@ -35,8 +36,8 @@ module.exports = {
 
   setRelease: function (release) {
     // check that release was correctly chosen
-    if (release !== 'dev' && release !== 'prod') {
-      throw Error("Error on function setRelease(release) in commons.js; 'dev' or 'prod' must be selected")
+    if (release !== 'dev' && release !== 'prod' && release !== 'test') {
+      throw Error("Error on function setRelease(release) in commons.js; 'dev', 'test' or 'prod' must be selected")
     }
     RELEASE = release
   },
@@ -92,7 +93,7 @@ module.exports = {
 /***************************************************************************************************/
 /***************************************************************************************************/
 
-var RELEASE // release, "dev" or "prod"
+var RELEASE // release, "dev", "test" or "prod"
 var ROOT_DIR // root directory of the project
 var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER
 var optionDefinitions // for the commandLineArgs
@@ -140,13 +141,12 @@ function _init () {
   // this "option" object is just filled with the options that were inserted in the command line
   // console.log(options);
 
-  var release = options.release
+  RELEASE = options.release // set Global variable
   // check that release was correctly chosen
-  if (release !== 'dev' && release !== 'prod') {
-    release = 'dev'
+  if (RELEASE !== 'dev' && RELEASE !== 'test' && RELEASE !== 'prod') {
+    RELEASE = 'dev'
   }
-  console.log("Release: '" + release + "'")
-  RELEASE = release // set Global variable
+  console.log("Release: '" + RELEASE + "'")
 
   // shows NODE_ENV
   if (process.env.NODE_ENV) {
@@ -168,10 +168,12 @@ function _init () {
   if (options.port) {
     HTTPport = options.port
   } else {
-    if (release === 'prod') {
+    if (RELEASE === 'prod') {
       HTTPport = defaultPortProd
-    } else if (release === 'dev') {
+    } else if (RELEASE === 'dev') {
       HTTPport = defaultPortDev
+    } else if (RELEASE === 'test') {
+      HTTPport = defaultPortTest
     } else {
       throw Error('Error setting port')
     }
@@ -230,7 +232,9 @@ function _init () {
       'credentials': {}
     },
     'money': {
-      'enabled': SWITCHES.dataBase, // this switch is linked with switch of dataBase
+      // in test version we don't use the money API because test version credentials are public
+      // and money API credentials must be private
+      'enabled': RELEASE === 'test' ? false : SWITCHES.dataBase,
       'name': 'money',
       'propName': 'ApiId',
       'propType': 'string',
@@ -245,9 +249,14 @@ function _init () {
   var credentialsFileName
   if (RELEASE === 'prod') {
     credentialsFileName = FILENAMES.server.credentialsFullPath.prod
-  } else {
+  } else if (RELEASE === 'dev') {
     credentialsFileName = FILENAMES.server.credentialsFullPath.dev
+  } else if (RELEASE === 'test') {
+    credentialsFileName = FILENAMES.server.credentialsFullPath.test
+  } else {
+    throw Error('Unkown Release ' + RELEASE)
   }
+
   console.log(credentialsFileName)
 
   // fills missing information, for each service corresponding property: "url", "token", "secretKey", etc.
@@ -396,11 +405,13 @@ function setFILENAMES () {
     'server': {
       'credentials': {
         'prod': 'prodCredentials.json',
-        'dev': 'devCredentials.json'
+        'dev': 'devCredentials.json',
+        'test': 'testCredentials.json'
       },
       'credentialsFullPath': {
         'prod': '',
-        'dev': ''
+        'dev': '',
+        'test': ''
       }
     },
     // the LOCAL paths are RELATIVE to the main host as seen by the BROWSER,
@@ -563,16 +574,16 @@ function getArgvHelpMsg () {
         'Ex:    node ' + filename + ' -r prod --uber --dataBase\n' +
         '\n' +
         'Options: \n' +
-        "-r, --release              'dev' for development or 'prod' for production\n" +
-        '-p, --port                 HTTP port on which the application is listening ' +
-                                    '(default:' + defaultPortDev + ' for development, and ' + defaultPortProd + ' for production)\n' +
+        '-r, --release              [dev]elopment, [test] or [prod]uction\n' +
+        '-p, --port                 HTTP port on which the application is listening. ' +
+                                    'Default (test|dev|prod)=(' + defaultPortTest + '|' + defaultPortDev + '|' + defaultPortProd + ')\n' +
         '    --print                Enables the standard printing of final report\n' +
         '    --pdf                  Enables the downloading of a pdf final report (using pdfmake)\n' +
         '    --social               Enables social media plugin\n' +
         '    --disableCharts        Disables Charts on final report\n' +
         '\n' +
         '    External API services, disabled by default\n' +
-        '    API credentials must be in either ' + credDirRelativePath + '/workCredentials.json or ' + credDirRelativePath + '/prodCredentials.json according to release\n' +
+        '    API credentials must be in either ' + credDirRelativePath + '/(prod|work|test)Credentials.json according to release\n' +
         '    --cdn                  Enables Content Delivery Network\n' +
         '    --uber                 Enables UBER API\n' +
         '    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n' +
