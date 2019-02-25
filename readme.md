@@ -69,29 +69,8 @@ For more information regarding how the costs are calculated, you can check the `
   * Car washes
 
 ### Aditional services
-Autocosts supports the following additional services, which can be enabled or disabled (default),
-using the `node bin/index.js` command line options:
-
-```
-Usage: node index.js [options]
-Ex:    node index.js -r prod --uber --dataBase
-
-Options:
--r, --release              'dev' for development or 'prod' for production
--p, --port                 HTTP port on which the application is listening (default:3027 for development, and 3028 for production)
-    --print                Enables the standard printing of final report
-    --pdf                  Enables the downloading of a pdf final report (using pdfmake)
-    --social               Enables social media plugin (js-socials)
-    --disableCharts        Disables Charts on final report
-
-    External API services, disabled by default
-    API credentials must be in either credentials/devCredentials.json or credentials/prodCredentials.json according to release
-    --cdn                  Enables Content Delivery Network
-    --uber                 Enables UBER API
-    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button
-    --googleAnalytics      Enables Google Analytics
-    --dataBase             Enables the mysql database wherein the user inputs are stored
-```
+Autocosts supports the following additional services, which can be enabled or disabled (default).
+Run the `node bin/index.js -h` for more information.
 
 ### Database
 
@@ -119,49 +98,7 @@ Autocosts also allows the final report to be printed into a PDF report. It makes
 
 ### Credentials file
 
-The credentials for the above services are in the JSON file `workCredentials.json` or `prodCredentials.json` stored in the directory `credentials/`. If you enable a service while running `node bin/index.js` the corresponding credential must be present in that JSON file. If you don't use the service the corresponding information in the JSON file will be ignored. This JSON file must obey the following structure:
-
-```
-{
-    "dataBase" : {
-        "_comment"  : "SQL Database where to store all the Countries' specifications and users average costs",
-        "host"      : "***********",
-        "user"      : "***********",
-        "password"  : "***********",
-        "database"  : "***********",
-        "port"      : "3306",
-        "db_tables" : {
-            "country_specs"    : "country_specs" ,
-            "users_insertions" : "users_insertions",
-            "monthly_costs_statistics" : "monthly_costs_statistics",
-            "monthly_costs_normalized" : "monthly_costs_normalized"
-      }
-    },
-    "money" : {
-        "_comment"      : "Load money API for the currency conversion information (mandatory if dataBase is enabled)",
-        "_getYourApiOn" : "https://openexchangerates.org/account/app-ids",
-        "ApiId"         : "************************************"
-    },
-    "uber" : {
-        "_comment"      : "UBER API to get uber prices for each region, as an alternative to car",
-        "_getYourApiOn" : "https://auth.uber.com/login",
-        "token"         : "*************************************"
-    },
-    "googleCaptcha" : {
-        "_comment"           : "Google reCaptacha to avoid spam bots from polluting the database",
-        "_getYourGCaptchaOn" : "https://www.google.com/recaptcha",
-        "secretKey"          : "*******************************************"
-    },
-    "googleAnalytics" : {
-        "_comment"   : "Google Analytics Tracking ID",
-        "trackingId" : "UA-*********"
-    },
-    "cdn" : {
-        "_comment" : "Content Delivery Network base URL in case such service is enabled",
-        "url"      : "https://yourCDNdomain.com/"
-    }       
-}
-```
+The credentials for the above services are in the JSON files stored in [`credentials/`](/credentials/)
 
 ## Android APP<br>
 
