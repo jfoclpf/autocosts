@@ -136,8 +136,17 @@ function testCalculatorFunction (callback) {
 
 // check JS files for JS syntax errors (jshint) and for StandardJS syntax rules (standardJS)
 function checkJsCodeSyntax (callback) {
-  console.log(++stepCounter + '. Checking .js files syntax with jshint (https://jshint.com/) in ' +
-    path.relative(directories.server.root, directories.server.src).mainOption, '\n')
+  var directoriesToCheck = [
+    directories.server.src
+  ]
+
+  // just console log the directories to be checked
+  process.stdout.write(++stepCounter + '. Checking .js files syntax with jshint (https://jshint.com/) in the directories: ')
+  var len = directoriesToCheck.length
+  for (let i = 0; i < len; i++) {
+    process.stdout.write(path.relative(directories.server.root, directoriesToCheck[i]).mainOption)
+    process.stdout.write(i !== len - 1 ? ', ' : '.\n\n')
+  }
 
   var numberOfTotalErrorsOrWanings = 0
 
@@ -175,10 +184,20 @@ function checkJsCodeSyntax (callback) {
     next()
   }
 
-  var walker = walk.walk(directories.server.src)
-  walker.on('file', walking)
+  var functionArray = []
+  for (let i = 0; i < directoriesToCheck.length; i++) {
+    functionArray.push(function (callback) {
+      var walker = walk.walk(directoriesToCheck[i])
+      walker.on('file', walking)
+      walker.on('end', callback)
+    })
+  }
 
-  walker.on('end', function () {
+  async.parallel(functionArray, function (err, results) {
+    if (err) {
+      callback(new Error(err))
+    }
+
     console.log('\nAll .js files checked for jshint rules\n')
     if (numberOfTotalErrorsOrWanings !== 0) {
       let pluralChar = numberOfTotalErrorsOrWanings > 1 ? 's' : ''
