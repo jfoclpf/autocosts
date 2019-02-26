@@ -6,96 +6,53 @@ console.log('\nRunning script ', __filename, '\n')
 const im = require('imagemagick')
 const path = require('path')
 const fs = require('fs')
-const commons = require(path.join(__dirname, '..', 'commons'))
+const async = require('async')
 const walk = require('walk')
 const colors = require('colors')
 
-// Main directories got from commons
-var directories = commons.getDirectories()
+// own module
+const commons = require(path.join(__dirname, '..', 'commons'))
 
-var ROOT_DIR = directories.server.root
-var BIN_DIR = directories.server.bin
-console.log('BIN_DIR: ', BIN_DIR)
+var directories = commons.getDirectories()
+console.log('bin/: ', directories.server.bin)
 
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
-compressImages()
+async.parallel([compressJPG, compressPNG], function (err, results) {
+  if (err) {
+    throw Error(err)
+  }
+  console.log('All images compressed successfully'.green)
+})
 
 // end of script
 /* ###############################################################################
 ################################################################################ */
 
-async function compressImages () {
-  await compressJPG()
-  compressPNG()
-}
-
-function compressJPG () {
+function compressJPG (callback) {
   console.log(('\n## Compressing JPG files \n').mainOptionStep)
 
-  return new Promise(function (resolve) {
-    // gets all jpg files in builddir
-
-    // BIN_DIR has a trailing slash, removes it for the walker function
-    var walker = walk.walk(BIN_DIR)
-
-    walker.on('file', function (root, fileStats, next) {
-      var filename = path.join(root, fileStats.name)
-
-      if (filename.includes('.jpg')) {
-        console.log((path.relative(ROOT_DIR, filename)).verbose)
-
-        var params = [ filename,
-          '-sampling-factor', '4:2:0',
-          '-strip', '-quality', '85',
-          '-interlace', 'Plane',
-          '-colorspace', 'RGB',
-          filename + '.min']
-
-        im.convert(params, function (err, stdout) {
-          if (err) throw err
-          fs.unlinkSync(filename)
-          fs.renameSync(filename + '.min', filename)
-          next()
-        })
-      } else {
-        next()
-      }
-    })
-
-    walker.on('errors', function (root, nodeStatsArray, next) {
-      console.log(('There was an error with' + nodeStatsArray.name).error)
-      next()
-    })
-
-    walker.on('end', function () {
-      console.log('\nAll JPG files compressed\n')
-      resolve()
-    })
-  })
-}
-
-function compressPNG () {
-  console.log(('\n## Compressing PNG files \n').mainOptionStep)
-
-  // gets all png files in builddir
-
-  // BIN_DIR has a trailing slash, removes it for the walker function
-  var walker = walk.walk(BIN_DIR)
+  var walker = walk.walk(directories.server.bin)
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
 
-    if (filename.includes('.png')) {
-      console.log((path.relative(ROOT_DIR, filename)).verbose)
+    if (filename.includes('.jpg')) {
+      console.log((path.relative(directories.server.root, filename)).verbose.bold)
 
       var params = [ filename,
-        '-strip',
+        '-sampling-factor', '4:2:0',
+        '-strip', '-quality', '85',
+        '-interlace', 'Plane',
+        '-colorspace', 'RGB',
         filename + '.min']
 
       im.convert(params, function (err, stdout) {
-        if (err) throw err
+        if (err) {
+          throw err
+        }
+        // removes original and renames
         fs.unlinkSync(filename)
         fs.renameSync(filename + '.min', filename)
         next()
@@ -105,12 +62,43 @@ function compressPNG () {
     }
   })
 
-  walker.on('errors', function (root, nodeStatsArray, next) {
-    console.log(('There was an error with' + nodeStatsArray.name).error)
-    next()
+  walker.on('end', function () {
+    console.log('\nAll JPG files compressed\n')
+    callback()
+  })
+}
+
+function compressPNG (callback) {
+  console.log(('\n## Compressing PNG files \n').mainOptionStep)
+
+  var walker = walk.walk(directories.server.bin)
+
+  walker.on('file', function (root, fileStats, next) {
+    var filename = path.join(root, fileStats.name)
+
+    if (filename.includes('.png')) {
+      console.log((path.relative(directories.server.root, filename)).verbose)
+
+      var params = [ filename,
+        '-strip',
+        filename + '.min']
+
+      im.convert(params, function (err, stdout) {
+        if (err) {
+          throw err
+        }
+        // removes original and renames
+        fs.unlinkSync(filename)
+        fs.renameSync(filename + '.min', filename)
+        next()
+      })
+    } else {
+      next()
+    }
   })
 
   walker.on('end', function () {
     console.log('\nAll PNG files compressed\n')
+    callback()
   })
 }
