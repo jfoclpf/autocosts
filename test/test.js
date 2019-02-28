@@ -88,9 +88,10 @@ function testCalculatorFunction (callback) {
     path.relative(directories.server.root, path.join(__dirname, 'users_insertions.json')) +
     ' into the core calculator function. Progress bar...\n')
 
-  fs.readFile(path.join(__dirname, 'users_insertions.json'), 'utf8', function (err, data) {
+  var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
+  fs.readFile(userInsertionsFile, 'utf8', function (err, data) {
     if (err) {
-      callback(new Error(err))
+      callback(Error('Error reading file ' + userInsertionsFile + '. ' + err.message))
     }
 
     var usersInput = JSON.parse(data, parseJsonProperty)
@@ -125,7 +126,7 @@ function testCalculatorFunction (callback) {
           '\n\nstructuredUserInput: ', JSON.stringify(structuredUserInput, undefined, 2),
           '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
 
-        callback(new Error(err))
+        callback(Error(err))
       }
     }
 
@@ -137,7 +138,8 @@ function testCalculatorFunction (callback) {
 // check JS files for JS syntax errors (jshint) and for StandardJS syntax rules (standardJS)
 function checkJsCodeSyntax (callback) {
   var directoriesToCheck = [
-    directories.server.src
+    directories.server.src,
+    directories.server.build
   ]
 
   // just console log the directories to be checked
@@ -195,7 +197,7 @@ function checkJsCodeSyntax (callback) {
 
   async.parallel(functionArray, function (err, results) {
     if (err) {
-      callback(new Error(err))
+      callback(Error(err))
     }
 
     console.log('\nAll .js files checked for jshint rules\n')
@@ -241,7 +243,7 @@ function checkJsCodeStandard (callback) {
 
       standard.lintText(code, { filename: filename }, function (err, results) {
         if (err) {
-          callback(new Error(err))
+          callback(Error(err))
         }
 
         if (results.errorCount || results.warningCount) {
@@ -268,7 +270,7 @@ function checkJsCodeStandard (callback) {
 
   async.parallel(functionArray, function (err, results) {
     if (err) {
-      callback(new Error(err))
+      callback(Error(err))
     }
 
     console.log('\nAll .js files checked for standardJS rules\n')
