@@ -159,8 +159,7 @@ async.series([
 // copy files from src/ to bin/
 function copy () {
   console.log('\n' + ('# --' + optionDefinitions[0].name).mainOption)
-
-  console.log('\n' + ('## Making a clean copy from src/ to bin/').mainOptionStep + ' \n')
+  console.log('\n', 'Making a clean copy from src/ to bin/'.mainOption, '\n')
 
   // deletes fully the directory and creates empty one
   fse.removeSync(directories.server.bin) // equivalent in Unix to "rm -rf"
@@ -294,23 +293,23 @@ function concatCSSFiles (mainCallback) {
 
 // -i compress [i]mages, jpg and png files in bin/ | with ImageMagick
 function compressImgs () {
-  console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
-  console.log('\nCompress images, jpg and png files\n')
+  console.log('\n' + ('# --' + optionDefinitions[1].name).mainOption)
+  console.log('\n', 'Compress images in jpg and png files'.mainOption, '\n')
   try {
     execSync('node ' + filenames.build.compressImages + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
-    _exit(err, optionDefinitions[2])
+    _exit(err, optionDefinitions[1])
   }
 }
 
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
 function minify () {
-  console.log('\n' + ('# --' + optionDefinitions[3].name).mainOption)
-  console.log('\nMinify and concatenate js, html/hbs, css and json files\n')
+  console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
+  console.log('\n', 'Minify and concatenate js, html/hbs, css and json files'.mainOption, '\n')
   try {
     execSync('node ' + filenames.build.minifyFiles + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
-    _exit(err, optionDefinitions[3])
+    _exit(err, optionDefinitions[2])
   }
 }
 
@@ -318,35 +317,35 @@ function minify () {
 
 // -s  creates a Database with countries' [s]pecifcations  connection to a Database
 function specDB () {
-  console.log('\n' + ('# --' + optionDefinitions[5].name).mainOption)
-  console.log('\n' + ("## Creates DB with countries' specifcations").mainOptionStep + ' \n')
+  console.log('\n' + ('# --' + optionDefinitions[4].name).mainOption)
+  console.log('\n', 'Creates database with countries specifcations'.mainOption, '\n')
   try {
     execSync('node ' + filenames.build.setCountrySpecsDB + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
-    _exit(err, optionDefinitions[5])
+    _exit(err, optionDefinitions[4])
   }
 }
 
 // -d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database
 function refreshDB () {
-  console.log('\n' + ('# --' + optionDefinitions[6].name).mainOption)
-  console.log('\n' + ('## Refreshes statistical costs DB').mainOptionStep + ' \n')
+  console.log('\n' + ('# --' + optionDefinitions[5].name).mainOption)
+  console.log('\n', 'Refreshes statistical costs database'.mainOption, '\n')
   try {
     execSync('node ' + filenames.build.getAvgFromDB + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
-    _exit(err, optionDefinitions[6])
+    _exit(err, optionDefinitions[5])
   }
 }
 
 // -t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database
 function genTables () {
-  console.log('\n' + ('# --' + optionDefinitions[7].name).mainOption)
-  console.log('\n' + ('## Generating statistical tables').mainOptionStep + ' \n')
+  console.log('\n' + ('# --' + optionDefinitions[6].name).mainOption)
+  console.log('\n', 'Generating statistical html and jpg tables'.mainOption, '\n')
   console.log('\n    Extracts stat info and create html tables \n')
   try {
     execSync('node ' + filenames.build.generateTables + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
-    _exit(err, optionDefinitions[7])
+    _exit(err, optionDefinitions[6])
   }
 }
 
