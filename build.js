@@ -305,7 +305,7 @@ function compressImgs () {
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
 function minify () {
   console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
-  console.log('\n', 'Minify and concatenate js, html/hbs, css and json files'.mainOption, '\n')
+  console.log('\n', 'Minify js, html/hbs, css and json files'.mainOption, '\n')
   try {
     execSync('node ' + filenames.build.minifyFiles + ' -r ' + RELEASE, { stdio: 'inherit' })
   } catch (err) {
