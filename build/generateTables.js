@@ -59,7 +59,7 @@ isOnline().then(function (online) {
   availableCountries = sortObj(availableCountries)
   delete availableCountries.XX
 
-  async.series([dbConnect, createTables, dbClose, rasterTables],
+  async.series([dbConnect, createTables, dbEnd, rasterTables],
     function (err, results) {
       console.log() // breaks a line
       if (err) {
@@ -76,7 +76,7 @@ isOnline().then(function (online) {
   process.exit(1)
 })
 
-// main function from async.series([dbConnect, createTables, dbClose, rasterTables])
+// main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 function dbConnect (next) {
   db = mysql.createConnection(DB_INFO)
   db.connect(function (err) {
@@ -90,7 +90,7 @@ function dbConnect (next) {
   })
 }
 
-// main function from async.series([dbConnect, createTables, dbClose, rasterTables])
+// main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 function createTables (next) {
   console.log('Creating html tables on ', directories.bin.tables, '\n')
 
@@ -218,13 +218,17 @@ function createTable (CC, callback) {
 }
 // eof createTable
 
-// main function from async.series([dbConnect, createTables, dbClose, rasterTables])
-function dbClose (next) {
-  db.end() // doesn't need the db to close to call next function
-  next()
+// main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
+function dbEnd (next) {
+  db.end(function (err) {
+    if (err) {
+      next(Error('Error ending connection' + err.message))
+    }
+    next()
+  })
 }
 
-// main function from async.series([dbConnect, createTables, dbClose, rasterTables])
+// main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 // Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
 function rasterTables (next) {
   console.log('Rasterizing JPG tables using phantomjs')
