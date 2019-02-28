@@ -111,6 +111,7 @@ function createTables (next) {
 
   async.parallel(functionsArray, function (err, results) {
     if (err) {
+      db.end()
       next(Error('Error creating tables: ' + err.message))
     }
     console.log('\nAll html tables created')
