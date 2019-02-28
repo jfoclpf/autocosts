@@ -1,14 +1,15 @@
-/* NodeJS script that minifies files stored in the BUILD folder
-replacing their content with the minfied version
-
-It also concatenates somes files, for better bandwith performance */
+/* NodeJS script that minifies files stored in the bin/ folder replacing their content
+  with the minfied version, that is, it minifies all js files that will be sent to the client side,
+  namely on the build/client/ directory. These are thus .js files that will be sent from
+  the server to the client. It also concatenates somes files, for better bandwith performance
+*/
 
 console.log('\nRunning script ', __filename, '\n')
 
 // node/npm includes
 const fs = require('fs')
 const path = require('path')
-const commons = require(path.join(__dirname, '..', 'commons'))
+const async = require('async')
 const walk = require('walk')
 const colors = require('colors')
 
@@ -18,6 +19,9 @@ const uglifycss = require('uglifycss')
 const minifyHTML = require('html-minifier').minify
 const jsonminify = require('jsonminify')
 
+// own module
+const commons = require(path.join(__dirname, '..', 'commons'))
+
 // Main directories got from commons
 var directories = commons.getDirectories()
 var ROOT_DIR = directories.server.root
@@ -26,25 +30,22 @@ var BIN_DIR = directories.server.bin
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
-console.log('Minifying and concatenating files')
+console.log('Minifying files')
 
-processFiles()
+async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfiles],
+  function (err, results) {
+    console.log() // adds a breakline
+    if (err) {
+      console.log(Error(err))
+      process.exit(1) // exit with error
+    }
+    console.log('All files minified successfully'.green)
+    process.exit(0) // exit successfully
+  }
+)
 
-console.log('\n')
-
-// end of script
-/* ###############################################################################
-################################################################################ */
-
-// minifies all js files on the client side, namely on the build/client/ directory,
-// i.e., these are JS files that will be sent from the server to the client
-
-function processFiles () {
-  processJSfiles()
-}
-
-function processJSfiles () {
-  console.log(('\n## Minifying JS files in ' + path.join('build', 'client')).mainOptionStep)
+function processJSfiles (callback) {
+  console.log(('## Minifying JS files in ' + path.join('build', 'client')).mainOptionStep)
 
   var walker = walk.walk(path.join(BIN_DIR, directories.client.client))
 
@@ -64,7 +65,8 @@ function processJSfiles () {
       var result = UglifyJS.minify(code, options)
 
       if (result.error) {
-        console.log('\nERROR minifying JS file ', filename, result.error, '\n')
+        console.log('ERROR minifying JS file ', filename, result.error, '\n')
+        callback(Error(result.error))
       } else {
         fs.writeFileSync(filename, result.code, 'utf8')
       }
@@ -74,24 +76,19 @@ function processJSfiles () {
   })
 
   walker.on('errors', function (root, nodeStatsArray, next) {
-    console.log(('There was an error with' + nodeStatsArray.name).error)
-    next()
+    callback(Error('There was an error with' + nodeStatsArray.name))
   })
 
   walker.on('end', function () {
-    console.log('\nAll JS files minified\n')
-    processCSSfiles()
+    console.log('All JS files minified')
+    callback()
   })
 }
 
 // minifies all css files on the client side, namely on the build/css/ directory,
 // i.e., these are CSS files that will be sent from the server to the client
-function processCSSfiles () {
-  minifyCSSFiles()
-}
-
-function minifyCSSFiles () {
-  console.log(('\n## Minifying CSS files in build/css/\n').mainOptionStep)
+function processCSSFiles (callback) {
+  console.log(('## Minifying CSS files in build/css/').mainOptionStep)
 
   var walker = walk.walk(directories.bin.css)// dir to walk into
 
@@ -106,6 +103,7 @@ function minifyCSSFiles () {
 
       if (!result) {
         console.log(('ERROR minifying CSS file ', filename, '\n').error)
+        callback(Error(result.error))
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
@@ -115,13 +113,12 @@ function minifyCSSFiles () {
   })
 
   walker.on('errors', function (root, nodeStatsArray, next) {
-    console.log(('There was an error with' + nodeStatsArray.name).error)
-    next()
+    callback(Error('There was an error with' + nodeStatsArray.name))
   })
 
   walker.on('end', function () {
-    console.log('\nAll CSS files minified\n')
-    processHTMLfiles()
+    console.log('All CSS files minified')
+    callback()
   })
 }
 
@@ -129,8 +126,8 @@ function minifyCSSFiles () {
 // namely on the build/views/ directory,
 // i.e., these are handlebars .hbs files that will be rendered as HTML files
 // and then sent from the server to the client/browser
-function processHTMLfiles () {
-  console.log(('\n## Minifying HTML .hbs files in build/views/\n').mainOptionStep)
+function processHTMLfiles (callback) {
+  console.log(('## Minifying HTML .hbs files in build/views/').mainOptionStep)
 
   var walker = walk.walk(directories.server.bin)// dir to walk into
   walker.on('file', function (root, fileStats, next) {
@@ -156,6 +153,7 @@ function processHTMLfiles () {
 
       if (!result) {
         console.log('ERROR minifying .hbs file ', filename, '\n')
+        callback(Error(result.error))
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
@@ -165,19 +163,18 @@ function processHTMLfiles () {
   })
 
   walker.on('errors', function (root, nodeStatsArray, next) {
-    console.log(('There was an error with' + nodeStatsArray.name).error)
-    next()
+    callback(Error('There was an error with' + nodeStatsArray.name))
   })
 
   walker.on('end', function () {
-    console.log('\nAll html/hbs files minified\n')
-    processJSONfiles()
+    console.log('All html/hbs files minified')
+    callback()
   })
 }
 
 // minifies all json files on the client side, namely on the build/countries/ directory,
-function processJSONfiles () {
-  console.log(('\n## Minifying JSON files in build/countries/\n').mainOptionStep)
+function processJSONfiles (callback) {
+  console.log(('## Minifying JSON files in build/countries/').mainOptionStep)
 
   var walker = walk.walk(directories.bin.countries)// dir to walk into
 
@@ -192,6 +189,7 @@ function processJSONfiles () {
 
       if (!result) {
         console.log(('ERROR minifying JSON file ', filename, '\n').error)
+        callback(Error(result.error))
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
@@ -201,12 +199,12 @@ function processJSONfiles () {
   })
 
   walker.on('errors', function (root, nodeStatsArray, next) {
-    console.log(('There was an error with' + nodeStatsArray.name).error)
-    next()
+    callback(Error('There was an error with' + nodeStatsArray.name))
   })
 
   walker.on('end', function () {
-    console.log('\nAll JSON files minified\n')
+    console.log('All JSON files minified')
+    callback()
   })
 }
 
