@@ -21,9 +21,11 @@ colors.setTheme(commons.getConsoleColors())
 
 async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
-    throw Error(err)
+    console.log(Error('An error was found: '.error + err.message))
+    process.exit(1)
   }
   console.log('All images compressed successfully'.green)
+  process.exit(0) // exit successfully
 })
 
 // end of script
@@ -50,7 +52,7 @@ function compressJPG (callback) {
 
       im.convert(params, function (err, stdout) {
         if (err) {
-          throw err
+          callback(Error('Error compressing ' + filename + '. ' + err.message))
         }
         // removes original and renames
         fs.unlinkSync(filename)
@@ -85,7 +87,7 @@ function compressPNG (callback) {
 
       im.convert(params, function (err, stdout) {
         if (err) {
-          throw err
+          callback(Error('Error compressing ' + filename + '. ' + err.message))
         }
         // removes original and renames
         fs.unlinkSync(filename)
