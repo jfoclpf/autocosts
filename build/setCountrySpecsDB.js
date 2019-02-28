@@ -92,6 +92,7 @@ function deletesTable (next) {
 
   db.query('DELETE FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
     if (err) {
+      db.end()
       next(Error('Error on db query' + err.message))
     }
     // console.log(countries);
@@ -119,7 +120,8 @@ function populatesTable (next) {
 
   async.parallel(functionsArray, function (err, results) {
     if (err) {
-      next(Error('Error rasterizing tables: ' + err.message))
+      db.end()
+      next(Error('Error inserting query: ' + err.message))
     }
     console.log('\nTable created')
     next()
@@ -146,7 +148,7 @@ function queryForCC (CC, callback) {
 
   db.query(queryCC, function (err, results, fields) {
     if (err) {
-      callback(Error(err))
+      callback(Error('Error inserting query for ' + CC + '. ' + err.message))
     }
     process.stdout.write(CC + ' ')
     callback()
