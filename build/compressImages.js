@@ -22,15 +22,11 @@ colors.setTheme(commons.getConsoleColors())
 async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
     console.log(Error('An error was found: '.error + err.message))
-    process.exit(1)
+    process.exit(1) // exit with error
   }
   console.log('All images compressed successfully'.green)
   process.exit(0) // exit successfully
 })
-
-// end of script
-/* ###############################################################################
-################################################################################ */
 
 function compressJPG (callback) {
   console.log(('\n## Compressing JPG files \n').mainOptionStep)
