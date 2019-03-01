@@ -36,7 +36,7 @@ async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfi
   function (err, results) {
     console.log() // adds a breakline
     if (err) {
-      console.log(Error(err))
+      console.log(Error(('Error minifying files.\n' + err.message).error))
       process.exit(1) // exit with error
     }
     console.log('All files minified successfully'.green)
@@ -65,13 +65,12 @@ function processJSfiles (callback) {
       var result = UglifyJS.minify(code, options)
 
       if (result.error) {
-        console.log('ERROR minifying JS file ', filename, result.error, '\n')
-        callback(Error(result.error))
+        callback(Error('Error minifying file: ' + filename + '.\n'))
+        return
       } else {
         fs.writeFileSync(filename, result.code, 'utf8')
       }
     }
-
     next()
   })
 
@@ -102,13 +101,12 @@ function processCSSFiles (callback) {
       var result = uglifycss.processString(code)
 
       if (!result) {
-        console.log(('ERROR minifying CSS file ', filename, '\n').error)
-        callback(Error(result.error))
+        callback(Error('Error minifying file: ' + filename + '.\n'))
+        return
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
-
     next()
   })
 
@@ -152,13 +150,12 @@ function processHTMLfiles (callback) {
       })
 
       if (!result) {
-        console.log('ERROR minifying .hbs file ', filename, '\n')
-        callback(Error(result.error))
+        callback(Error('Error minifying file: ' + filename + '.\n'))
+        return
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
-
     next()
   })
 
@@ -188,13 +185,12 @@ function processJSONfiles (callback) {
       var result = jsonminify(code)
 
       if (!result) {
-        console.log(('ERROR minifying JSON file ', filename, '\n').error)
-        callback(Error(result.error))
+        callback(Error('Error minifying file: ' + filename + '.\n'))
+        return
       } else {
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
-
     next()
   })
 

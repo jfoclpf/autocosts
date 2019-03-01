@@ -82,11 +82,11 @@ function dbConnect (next) {
   db.connect(function (err) {
     if (err) {
       next(Error('Error connecting to database: ' + err.message))
+    } else {
+      console.log('\n' + 'User ' + DB_INFO.user + ' connected successfully to DB ' +
+        DB_INFO.database + ' at ' + DB_INFO.host + '\n')
+      next()
     }
-    console.log('\n' + 'User ' + DB_INFO.user +
-                    ' connected successfully to DB ' + DB_INFO.database +
-                    ' at ' + DB_INFO.host + '\n')
-    next()
   })
 }
 
@@ -113,9 +113,10 @@ function createTables (next) {
     if (err) {
       db.end()
       next(Error('Error creating tables: ' + err.message))
+    } else {
+      console.log('\nAll html tables created')
+      next()
     }
-    console.log('\nAll html tables created')
-    next()
   })
 }
 
@@ -131,6 +132,7 @@ function createTable (CC, callback) {
     if (err) {
       let errMsg = 'Error inserting query for ' + CC + '. ' + err.message
       callback(Error(errMsg))
+      return // this MUST be here, see https://caolan.github.io/async/
     }
 
     var fileNameOfTemplate = path.join(directories.src.tables, 'template.hbs')
@@ -191,9 +193,10 @@ function createTable (CC, callback) {
           if (err) {
             let errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
             fsWriteCallback(Error(errMsg))
+          } else {
+            process.stdout.write(CC.info + ' ')
+            fsWriteCallback()
           }
-          process.stdout.write(CC.info + ' ')
-          fsWriteCallback()
         })// fs.writeFile
       },
 
@@ -203,17 +206,19 @@ function createTable (CC, callback) {
           if (err) {
             let errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
             fsWriteCallback(Error(errMsg))
+          } else {
+            process.stdout.write(CC.verbose + ' ')
+            fsWriteCallback()
           }
-          process.stdout.write(CC.verbose + ' ')
-          fsWriteCallback()
         })// fs.writeFile
       }
     ],
     function (err, results) {
       if (err) {
         callback(Error(err.message))
+      } else {
+        callback()
       }
-      callback()
     })
   }) // db.query
 }
@@ -224,8 +229,9 @@ function dbEnd (next) {
   db.end(function (err) {
     if (err) {
       next(Error('Error ending connection' + err.message))
+    } else {
+      next()
     }
-    next()
   })
 }
 
@@ -255,9 +261,10 @@ function rasterTables (next) {
   async.parallel(functionsArray, function (err, results) {
     if (err) {
       next(Error('Error rasterizing tables: ' + err.message))
+    } else {
+      console.log('\nAll tables created')
+      next()
     }
-    console.log('\nAll tables created')
-    next()
   })
 }
 
@@ -282,6 +289,7 @@ function rasterTable (CC, phantomjsPath, callback) {
       errMsg += 'Try also rebuilding phantomjs module with: ' + 'npm rebuild phantomjs-prebuilt'.bold + '\n'
       errMsg += err.message
       callback(Error(errMsg))
+      return
     }
     // console.log((path.relative(rootDir, childArgs[1]) + " => " + path.relative(rootDir, childArgs[2])).verbose);
 
@@ -289,9 +297,10 @@ function rasterTable (CC, phantomjsPath, callback) {
     fs.unlink(childArgs[1], function (err) {
       if (err) {
         callback(Error('error deleting file ' + childArgs[1] + '. ' + err.message))
+      } else {
+        process.stdout.write(CC + ' ')
+        callback()
       }
-      process.stdout.write(CC + ' ')
-      callback()
     })
   })
 }
