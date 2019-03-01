@@ -91,7 +91,10 @@ function testCalculatorFunction (callback) {
   var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
   fs.readFile(userInsertionsFile, 'utf8', function (err, data) {
     if (err) {
+      // It is always good practice to return after callback(err, result)
+      // whenever a callback call is not the last statement of a function
       callback(Error('Error reading file ' + userInsertionsFile + '. ' + err.message))
+      return
     }
 
     var usersInput = JSON.parse(data, parseJsonProperty)
@@ -198,6 +201,7 @@ function checkJsCodeSyntax (callback) {
   async.parallel(functionArray, function (err, results) {
     if (err) {
       callback(Error(err))
+      return
     }
 
     console.log('\nAll .js files checked for jshint rules\n')
@@ -244,6 +248,7 @@ function checkJsCodeStandard (callback) {
       standard.lintText(code, { filename: filename }, function (err, results) {
         if (err) {
           callback(Error(err))
+          return
         }
 
         if (results.errorCount || results.warningCount) {
@@ -253,10 +258,11 @@ function checkJsCodeStandard (callback) {
         } else {
           console.log('standard: ', (path.relative(directories.server.root, filename)).verbose)
         }
+        next()
       })
+    } else {
+      next()
     }
-
-    next()
   }
 
   var functionArray = []
@@ -271,6 +277,7 @@ function checkJsCodeStandard (callback) {
   async.parallel(functionArray, function (err, results) {
     if (err) {
       callback(Error(err))
+      return
     }
 
     console.log('\nAll .js files checked for standardJS rules\n')

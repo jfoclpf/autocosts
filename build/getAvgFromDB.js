@@ -93,7 +93,11 @@ isOnline().then(function (online) {
     // and: https://openexchangerates.org/account/app-ids
     function (callback) {
       if (!USE_MONEY_API) {
-        callback(); return
+        // It is always good practice to return after callback(err, result)
+        // whenever a callback call is not the last statement of a function
+        // from https://caolan.github.io/async/
+        callback()
+        return // this MUST be here
       }
 
       console.log('\nLoad exchange rates via API on openexchangerates.org')
@@ -108,17 +112,16 @@ isOnline().then(function (online) {
         }
       }
 
-      request(options, function (error, response, body) {
-        if (!error && typeof fx !== 'undefined' && fx.rates) {
+      request(options, function (err, response, body) {
+        if (!err && typeof fx !== 'undefined' && fx.rates) {
           let result = JSON.parse(body)
           fx.rates = result.rates
           fx.base = result.base
+          callback()
         } else {
           console.error('Error loading money API')
-          process.exit(1) // error
+          callback(Error(err))
         }
-
-        callback()
       })
     },
 
@@ -126,64 +129,62 @@ isOnline().then(function (online) {
     // creates DB connection and connects
     function (callback) {
       db = mysql.createConnection(DB_INFO)
-      console.log('\nGetting the set of different countries from ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs)
+      console.log('\nGetting the set of different countries from: ' +
+        DB_INFO.database + '->' + DB_INFO.db_tables.country_specs)
 
       db.connect(function (err) {
         if (err) {
-          console.error('error connecting: ' + err.stack)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('User ' + DB_INFO.user + ' connected successfully to DB ' +
+            DB_INFO.database + ' at ' + DB_INFO.host)
+          // console.log(DB_INFO);
+          callback()
         }
-
-        console.log('User ' + DB_INFO.user +
-                            ' connected successfully to DB ' + DB_INFO.database +
-                            ' at ' + DB_INFO.host)
-        // console.log(DB_INFO);
-        callback()
       })
     },
 
     /* ========================================================================= */
-    // Get the set of different countries and set them in array countries[]
+    // Get the set of different countries and the corresponding specifications/standards
     function (callback) {
       // console.log("DB login data: "); console.log(DB_INFO);
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
         if (err) {
-          console.error(err)
-          process.exit(1)
-        }
-
-        // Check that a user was found
-        for (var i = 0; i < results.length; i++) {
-          if (results[i].Country) {
-            countries.push(results[i])
+          callback(Error(err))
+        } else {
+          // copy info to global array countries
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].Country) {
+              countries.push(results[i])
+            }
           }
+          // console.log(countries);
+          // countries[i]: {Country: 'UK', currency: 'GBP', distance_std: 2, fuel_efficiency_std: 3, fuel_price_volume_std: 1 }
+          callback()
         }
-        // console.log(countries);
-        // countries[i]: {Country: 'UK', currency: 'GBP', distance_std: 2, fuel_efficiency_std: 3, fuel_price_volume_std: 1 }
-        callback()
       })
     },
 
     /* ========================================================================= */
     // Get users unique ID
     function (callback) {
-      console.log('\nGetting users unique IDs from ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
+      console.log('Getting users unique IDs from: ' +
+        DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT DISTINCT uuid_client, country FROM ' + DB_INFO.db_tables.users_insertions,
         function (err, results, fields) {
           if (err) {
-            console.error(err)
-            process.exit(1)
+            callback(Error(err))
+          } else {
+            // copy info to global array uniqueUsers
+            // array of objects having uniqueUsers IDs and respective countries
+            for (var i = 0; i < results.length; i++) {
+              uniqueUsers.push(results[i])
+            }
+            // console.log(uniqueUsers);
+            callback()
           }
-
-          for (var i = 0; i < results.length; i++) {
-            uniqueUsers.push(results[i])
-          }
-          // console.log(uniqueUsers);
-          callback()
         }
       )
     },
@@ -191,30 +192,29 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Get all data from users input DB
     function (callback) {
-      console.log('\nGetting all user insertion data from ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
+      console.log('Getting all user insertion data from: ' +
+        DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function (err, results, fields) {
         if (err) {
-          console.error(err)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          // copy results to global array
+          AllUserInputDb = []
+          for (var i = 0; i < results.length; i++) {
+            AllUserInputDb.push(results[i])
+          }
+          // console.log(AllUserInputDb);
+          callback()
         }
-
-        // copy results to global array
-        AllUserInputDb = []
-        for (var i = 0; i < results.length; i++) {
-          AllUserInputDb.push(results[i])
-        }
-        // console.log(AllUserInputDb);
-        callback()
       })
     },
 
     /* ========================================================================= */
     // Calculates statistical average costs for each country and builds SQL query
     function (callback) {
-      console.log('\nCalculating data and building DB insertion data for ' +
-                        'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
+      console.log('Calculating data and building DB insertion data for: ' +
+        DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
 
       // string with current date DD/MM/YYYY
       let date = new Date()
@@ -270,7 +270,8 @@ isOnline().then(function (online) {
           fuel_price_volume_std: countries[i].fuel_price_volume_std
         }
 
-        let statisticsResults = statsFunctions.calculateStatisticsForADefinedCountry(countryUsers,
+        let statisticsResults = statsFunctions.calculateStatisticsForADefinedCountry(
+          countryUsers,
           countryData,
           countryObject,
           USE_MONEY_API ? fx : null)
@@ -353,17 +354,17 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Deletes table completely: monthly_costs_statistics
     function (callback) {
-      console.log('\nDeleting table from DB')
+      console.log('\nDeleting table from database')
 
       // deletes table completely
       db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics, function (err, results, fields) {
         if (err) {
-          console.log(err)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('Previous table deleted from database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
+          callback()
         }
-
-        console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-        callback()
       })
     },
 
@@ -371,27 +372,28 @@ isOnline().then(function (online) {
     // Deletes table completely: monthly_costs_normalized
     function (callback) {
       if (!USE_MONEY_API) {
-        callback(); return
+        callback()
+        return
       }
 
-      console.log('\nDeleting table from DB')
+      console.log('Deleting table from database')
 
       // deletes table completely
       db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized, function (err, results, fields) {
         if (err) {
-          console.log(err)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('Previous table deleted from database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
+          callback()
         }
-
-        console.error('Previous table deleted from ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-        callback()
       })
     },
 
     /* ========================================================================= */
     // Creates new table: monthly_costs_statistics
     function (callback) {
-      console.log('\nCreating new table into DB')
+      console.log('Creating new table into database')
 
       let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics + ' '
 
@@ -405,12 +407,12 @@ isOnline().then(function (online) {
 
       db.query(createTableQuery, function (err, results, fields) {
         if (err) {
-          console.error(err)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('Table created in database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
+          callback()
         }
-
-        console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-        callback()
       })
     },
 
@@ -419,10 +421,14 @@ isOnline().then(function (online) {
     // where the costs are all converted to EUR
     function (callback) {
       if (!USE_MONEY_API) {
-        callback(); return
+        // It is always good practice to return after callback(err, result)
+        // whenever a callback call is not the last statement of a function
+        // from https://caolan.github.io/async/
+        callback()
+        return
       }
 
-      console.log('\nCreating new table into DB')
+      console.log('Creating new table into database')
 
       let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized
 
@@ -436,30 +442,30 @@ isOnline().then(function (online) {
 
       db.query(createTableQuery, function (err, results, fields) {
         if (err) {
-          console.error(err)
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('Table created in database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
+          callback()
         }
-
-        console.error('Table created in ' + 'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-        callback()
       })
     },
 
     /* ========================================================================= */
-    // insert table monthly_costs_statistics into DB
+    // insert table monthly_costs_statistics into database
     function (callback) {
-      console.log('\nInserting new calculated data into DB')
+      console.log('Inserting new calculated data into database')
 
       db.query(queryInsert, function (err, results, fields) {
         if (err) {
           console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').red.bold)
           console.error(sqlFormatter.format(err.sql))
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('All new data successfully added into database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
+          callback()
         }
-
-        console.log('All new data successfully added into ' +
-                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-        callback()
       })
     },
 
@@ -467,31 +473,51 @@ isOnline().then(function (online) {
     // insert table monthly_costs_normalized into DB
     function (callback) {
       if (!USE_MONEY_API) {
-        callback(); return
+        callback()
+        return // this return MUST be here
       }
 
-      console.log('\nInserting new calculated data into DB')
+      console.log('Inserting new calculated data into database')
 
       db.query(queryInsertNorm, function (err, results, fields) {
         if (err) {
           console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').red.bold)
           console.error(sqlFormatter.format(err.sql))
-          process.exit(1)
+          callback(Error(err))
+        } else {
+          console.log('All new data successfully added into database: ' +
+            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
+          callback()
         }
-
-        console.log('All new data successfully added into ' +
-                            'DB table ' + DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-        callback()
       })
     },
 
     /* ========================================================================= */
-    // finishes DB connection
+    // finishes database connection
     function (callback) {
-      db.end()
-      callback()
+      db.end(function (err) {
+        if (err) {
+          callback(Error(err))
+        } else {
+          callback()
+        }
+      })
     }
-  ])
+  ],
+  function (err, results) {
+    if (err) {
+      // if any error occurs in the process, closes the database connection
+      db.end(function (errDbEnd) {
+        if (errDbEnd) {
+          console.error(Error(errDbEnd))
+        }
+        console.error(Error(err))
+        process.exit(1)
+      })
+    }
+    console.log('All the statistics have been computed successfully'.green)
+    process.exit(0)
+  })
 }).catch(function (err) {
   console.log(err)
   process.exit(1)

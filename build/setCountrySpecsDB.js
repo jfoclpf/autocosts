@@ -76,11 +76,11 @@ function dbConnects (next) {
   db.connect(function (err) {
     if (err) {
       next(Error('Error connecting to database: ' + err.message))
+    } else {
+      console.log('User ' + DB_INFO.user + ' connected successfully to DB ' +
+        DB_INFO.database + ' at ' + DB_INFO.host)
+      next()
     }
-    console.log('User ' + DB_INFO.user +
-                        ' connected successfully to DB ' + DB_INFO.database +
-                        ' at ' + DB_INFO.host)
-    next()
   })
 }
 
@@ -94,10 +94,11 @@ function deletesTable (next) {
     if (err) {
       db.end()
       next(Error('Error on db query' + err.message))
+    } else {
+      // console.log(countries);
+      console.log('Previous data deleted from table')
+      next()
     }
-    // console.log(countries);
-    console.log('Previous data deleted from table')
-    next()
   })
 }
 
@@ -120,11 +121,17 @@ function populatesTable (next) {
 
   async.parallel(functionsArray, function (err, results) {
     if (err) {
-      db.end()
-      next(Error('Error inserting query: ' + err.message))
+      db.end(function (errDbEnd) {
+        if (errDbEnd) {
+          next(Error('Error inserting query\n' + errDbEnd.message + '\n' + err.message))
+        } else {
+          next(Error('Error inserting query\n' + err.message))
+        }
+      })
+    } else {
+      console.log('\nTable created')
+      next()
     }
-    console.log('\nTable created')
-    next()
   })
 }
 
@@ -149,9 +156,10 @@ function queryForCC (CC, callback) {
   db.query(queryCC, function (err, results, fields) {
     if (err) {
       callback(Error('Error inserting query for ' + CC + '. ' + err.message))
+    } else {
+      process.stdout.write(CC + ' ')
+      callback()
     }
-    process.stdout.write(CC + ' ')
-    callback()
   })
 }
 
@@ -160,7 +168,8 @@ function dbEnd (next) {
   db.end(function (err) {
     if (err) {
       next(Error('Error ending connection' + err.message))
+    } else {
+      next()
     }
-    next()
   })
 }

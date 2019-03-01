@@ -49,11 +49,12 @@ function compressJPG (callback) {
       im.convert(params, function (err, stdout) {
         if (err) {
           callback(Error('Error compressing ' + filename + '. ' + err.message))
+        } else {
+          // removes original and renames
+          fs.unlinkSync(filename)
+          fs.renameSync(filename + '.min', filename)
+          next()
         }
-        // removes original and renames
-        fs.unlinkSync(filename)
-        fs.renameSync(filename + '.min', filename)
-        next()
       })
     } else {
       next()
@@ -84,11 +85,12 @@ function compressPNG (callback) {
       im.convert(params, function (err, stdout) {
         if (err) {
           callback(Error('Error compressing ' + filename + '. ' + err.message))
+        } else {
+          // removes original and renames
+          fs.unlinkSync(filename)
+          fs.renameSync(filename + '.min', filename)
+          next()
         }
-        // removes original and renames
-        fs.unlinkSync(filename)
-        fs.renameSync(filename + '.min', filename)
-        next()
       })
     } else {
       next()
