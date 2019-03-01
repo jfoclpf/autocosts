@@ -376,13 +376,17 @@ function getArgvHelpMsg () {
 }
 
 function getFinalRunMsg () {
-  // built filename
-  var filename = path.join('bin', 'index.js')
+  if (RELEASE !== 'test') {
+    // built filename
+    var filename = path.join('bin', 'index.js')
 
-  var messg = '\nRun ' + ('node ' + filename).green.bold + ' to start application with default options\n' +
-                'or ' + ('node ' + filename + ' -h').green.bold + ' for more information\n'
+    var messg = '\nRun ' + ('node ' + filename).green.bold + ' to start application with default options\n' +
+      'or ' + ('node ' + filename + ' -h').green.bold + ' for more information\n'
 
-  return messg
+    return messg
+  } else {
+    return ''
+  }
 }
 
 function runApp () {
