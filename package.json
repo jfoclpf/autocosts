@@ -4,7 +4,7 @@
   "description": "Automobile Costs Calculator",
   "main": "bin/index.js",
   "scripts": {
-    "test": "node test/test.js && node build.js -A -r test",
+    "test": "node test/test.js",
     "postinstall": "node build.js -cim && node bin/index.js --print --pdf -r prod"
   },
   "repository": {
@@ -32,10 +32,10 @@
     "express-handlebars": "^3.0.2",
     "flat": "^4.1.0",
     "fs": "0.0.1-security",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^7.0.1",
     "geoip-lite": "^1.3.6",
     "handlebars": "^4.1.0",
-    "is-online": "^7.0.0",
+    "is-online": "^8.0.0",
     "mysql": "^2.16.0",
     "paragraph-builder": "^1.0.7",
     "path": "^0.12.7",
@@ -47,7 +47,7 @@
     "chart.js": "^2.7.3",
     "concat-files": "^0.1.1",
     "csslint": "^1.0.5",
-    "debug": "^3.2.6",
+    "debug": "^4.1.1",
     "html-minifier": "^3.5.21",
     "imagemagick": "^0.1.3",
     "jquery": "^3.3.1",
@@ -59,11 +59,11 @@
     "pdfmake": "^0.1.53",
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
-    "smart-app-banner": "^1.5.1",
+    "smart-app-banner": "^2.0.0",
     "sql-formatter": "^2.3.2",
     "standard": "^12.0.1",
     "uglify-js": "^3.4.9",
-    "uglifycss": "0.0.27",
+    "uglifycss": "0.0.29",
     "walk": "^2.3.14",
     "webpage": "^0.3.0"
   }
