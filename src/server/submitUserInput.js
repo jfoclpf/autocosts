@@ -1,6 +1,6 @@
 /* functions which deal with the user POST submission */
 
-const mysql = require('mysql') // module to get info from DB
+const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app:submitUserInput')
 
 module.exports = function (req, res, serverData) {
@@ -11,7 +11,7 @@ module.exports = function (req, res, serverData) {
 
   debug(databaseObj)
   debug('\nInserting user data into ' +
-                'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions)
+                'database table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions)
 
   var queryInsert = 'INSERT INTO ' + DBInfo.db_tables.users_insertions + ` (
         time_to_fill_form,
@@ -155,19 +155,17 @@ module.exports = function (req, res, serverData) {
       console.error('error connecting: ' + err.stack)
       throw err
     }
-    debug('User ' + DBInfo.user +
-                    ' connected successfully to DB ' + DBInfo.database +
-                    ' at ' + DBInfo.host)
+    debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
   })
 
   db.query(queryInsert, function (err, results, fields) {
     if (err) {
       // error handling code goes here
-      debug('Error inserting user data into DB: ', err)
-      res.status(501).send('Error inserting user data into DB')
+      debug('Error inserting user data into database: ', err)
+      res.status(501).send('Error inserting user data into database')
     } else {
       debug('User data successfully added into ' +
-                        'DB table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n')
+                        'database table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n')
       debug('Result from db query is : ', results)
       res.send(results)
     }

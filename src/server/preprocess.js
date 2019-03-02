@@ -246,7 +246,7 @@ function getSocialMediaDescription (words, statsData) {
   return stripHtmlTags(getSubTitleArr(1, words, statsData) + ' ' + words.country_name + ' ' + getSubTitleArr(2, words, statsData))
 }
 
-// gets an entry from the statistical DB
+// gets an entry from the statistical database
 function getProcessedStatsDataEntry (words, statsData, entry, toFixed, isBold = false, ignoreSmallNumbers = false) {
   var currencySymbol = words.curr_symbol
 
