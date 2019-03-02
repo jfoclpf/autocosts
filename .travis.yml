@@ -3,8 +3,8 @@ language: node_js
 # test on several node versions
 node_js:
   - "node"
-  - 9.4.0
-  - 8.0.0
-  - 7.0.0
+  - '10'
+  - '9'
+  - '8'
 env:
 - NODE_ENV=test
