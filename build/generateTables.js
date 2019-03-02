@@ -127,13 +127,14 @@ function createTable (CC, callback) {
 
   var dbQuery = 'SELECT * FROM ' + DB_INFO.db_tables.monthly_costs_statistics + " WHERE countryCode='" + CC + "'"
   db.query(dbQuery, function (err, results, fields) {
-    var statsData = results[0]
-    // console.log(statsData);
     if (err) {
       let errMsg = 'Error inserting query for ' + CC + '. ' + err.message
       callback(Error(errMsg))
       return // this MUST be here, see https://caolan.github.io/async/
     }
+
+    var statsData = results[0]
+    // console.log(statsData);
 
     var fileNameOfTemplate = path.join(directories.src.tables, 'template.hbs')
     var templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8')
