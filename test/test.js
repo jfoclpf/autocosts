@@ -19,6 +19,7 @@ const jshint = require('jshint').JSHINT
 const prettyjson = require('prettyjson')
 const standard = require('standard')
 const _cliProgress = require('cli-progress')
+const { execSync } = require('child_process')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
@@ -66,6 +67,7 @@ for (let item of Object.keys(_countrySpecs)) {
 var stepCounter = 0
 console.log()
 
+// main script
 async.parallel([
   testCalculatorFunction,
   checkJsCodeSyntax,
@@ -80,8 +82,11 @@ async.parallel([
       process.exit(1) // exit test with error
     }
   }
+
+  buildAll()
   process.exit(0) // exit test successfully
 })
+// eof main script
 
 function testCalculatorFunction (callback) {
   console.log(++stepCounter + '. Inserting thousands of user inputs from ' +
@@ -292,6 +297,18 @@ function checkJsCodeStandard (callback) {
       callback(null, 0)
     }
   })
+}
+
+// build all (copy files to bin/, minify files and compress images, and generates stats tables)
+// uses the command `node build.js -r test` on the root directory
+function buildAll () {
+  try {
+    let buildFileName = path.join(directories.server.root, 'build.js')
+    execSync('node ' + buildFileName + ' -A -r test', { stdio: 'inherit' })
+    console.log('Building successfully'.green)
+  } catch (err) {
+    throw Error(err)
+  }
 }
 
 function getFileExtension (fileName) {
