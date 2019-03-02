@@ -354,7 +354,7 @@ function getArgvHelpMsg () {
 
   var messg = '\n' +
                 'Example: \n' +
-                'node ' + filename + ' -ceim \n' +
+                'node ' + filename + ' -cim \n' +
                 'node ' + filename + ' -A -r prod \n' +
                 '\n' +
                 '#With these options it may run just locally\n' +
