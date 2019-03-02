@@ -1,6 +1,6 @@
 const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
-const mysql = require('mysql') // module to get info from DB
+const mysql = require('mysql') // module to get info from database
 const async = require('async') // module to allow to execute the queries in series
 const debug = require('debug')('app:stats') // run "DEBUG=app:stats node index.js"
 
@@ -78,12 +78,12 @@ module.exports = {
     var db
 
     async.series([
-      // creates DB connection and connects
+      // creates database connection and connects
       function (callback) {
         db = mysql.createConnection(dbInfo)
         debug(dbInfo)
         console.log('\nGetting normalised costs from ' +
-                            'DB table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized)
+                            'database table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized)
 
         db.connect(function (err) {
           if (err) {

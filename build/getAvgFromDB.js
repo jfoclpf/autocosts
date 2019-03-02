@@ -1,11 +1,11 @@
-/* Node script which populates the costs statistical DB tables for each country */
+/* Node script which populates the costs statistical database tables for each country */
 
 console.log('\nRunning script ', __filename, '\n')
 
 // includes
 const path = require('path')
 const async = require('async') // module to allow to execute the queries in series
-const mysql = require('mysql') // module to get info from DB
+const mysql = require('mysql') // module to get info from database
 const isOnline = require('is-online')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const request = require('request') // to make HTTP requests
@@ -38,7 +38,7 @@ isOnline().then(function (online) {
   var AVG_DB_TEMPLATE; // Database for Average template
 
   // Template of the DBs (monthly costs statistics and monthly costs normalized) that will be created
-  // and into which the averages from the users will be stored, with a row of said DB for each country
+  // and into which the averages from the users will be stored, with a row of said database for each country
   (function () {
     AVG_DB_TEMPLATE = {
       'countryCode': 'text',
@@ -70,14 +70,13 @@ isOnline().then(function (online) {
   if (!DB_INFO || Object.keys(DB_INFO).length === 0) {
     throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
   }
-  console.log(DB_INFO)
 
   // database variable
   var db
 
   var countries = [] // array of objects with countries information
   var uniqueUsers = [] // array of objects having uniqueUsers IDs and respective countries
-  var AllUserInputDb = [] // array of objects with all the data from the inputs users DB
+  var AllUserInputDb = [] // array of objects with all the data from the inputs users database
   var queryInsert // SQL string to where all the average costs will be inserted
 
   if (USE_MONEY_API) {
@@ -126,7 +125,7 @@ isOnline().then(function (online) {
     },
 
     /* ========================================================================= */
-    // creates DB connection and connects
+    // creates database connection and connects
     function (callback) {
       db = mysql.createConnection(DB_INFO)
       console.log('\nGetting the set of different countries from: ' +
@@ -136,8 +135,8 @@ isOnline().then(function (online) {
         if (err) {
           callback(Error(err))
         } else {
-          console.log('User ' + DB_INFO.user + ' connected successfully to DB ' +
-            DB_INFO.database + ' at ' + DB_INFO.host)
+          console.log(('User ' + DB_INFO.user + ' connected successfully to database ' +
+            DB_INFO.database + ' at ' + DB_INFO.host).green)
           // console.log(DB_INFO);
           callback()
         }
@@ -147,7 +146,7 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Get the set of different countries and the corresponding specifications/standards
     function (callback) {
-      // console.log("DB login data: "); console.log(DB_INFO);
+      // console.log("database login data: "); console.log(DB_INFO);
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
         if (err) {
@@ -190,7 +189,7 @@ isOnline().then(function (online) {
     },
 
     /* ========================================================================= */
-    // Get all data from users input DB
+    // Get all data from users input database
     function (callback) {
       console.log('Getting all user insertion data from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
@@ -213,7 +212,7 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Calculates statistical average costs for each country and builds SQL query
     function (callback) {
-      console.log('Calculating data and building DB insertion data for: ' +
+      console.log('Calculating data and building database insertion data for: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
 
       // string with current date DD/MM/YYYY
@@ -470,7 +469,7 @@ isOnline().then(function (online) {
     },
 
     /* ========================================================================= */
-    // insert table monthly_costs_normalized into DB
+    // insert table monthly_costs_normalized into database
     function (callback) {
       if (!USE_MONEY_API) {
         callback()
@@ -575,5 +574,5 @@ function consoleLogTheFinalAverages (countries) {
             ' | ' + ('               ' + (countries[i].validUsers / totalValidUsers * 100).toFixed(1) + '%').slice(-14))
   }
 
-  console.log('\nData calculated and DB query built')
+  console.log('\nData calculated and database query built')
 }

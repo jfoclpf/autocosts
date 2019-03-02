@@ -273,7 +273,7 @@ function getAverageCosts (calculatedDataArray) {
 
 //* *********************************************************************
 //* *********************************************************************
-// checks whether the DB entry is valid
+// checks whether the database entry is valid
 function isUserDataEntryOk (dbEntry, countryObj) {
   if (!dbEntry.time_to_fill_form || !dbEntry.uuid_client || !dbEntry.country) {
     return false

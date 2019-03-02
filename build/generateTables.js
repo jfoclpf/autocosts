@@ -11,7 +11,7 @@ console.log('\nRunning script ', __filename, '\n')
 // includes
 const fs = require('fs')
 const path = require('path')
-const mysql = require('mysql') // module to get info from DB
+const mysql = require('mysql') // module to get info from database
 const sortObj = require('sort-object') // to sort JS objects
 const isOnline = require('is-online')
 const handlebars = require('handlebars') // see why here: https://stackoverflow.com/a/30032819/1243247
@@ -83,8 +83,8 @@ function dbConnect (next) {
     if (err) {
       next(Error('Error connecting to database: ' + err.message))
     } else {
-      console.log('\n' + 'User ' + DB_INFO.user + ' connected successfully to DB ' +
-        DB_INFO.database + ' at ' + DB_INFO.host + '\n')
+      console.log('\n', ('User ' + DB_INFO.user + ' connected successfully to database ' +
+        DB_INFO.database + ' at ' + DB_INFO.host).green, '\n')
       next()
     }
   })

@@ -172,7 +172,7 @@ if (SWITCHES.dataBase) {
 
   const stats = require(path.join(__dirname, 'server', 'stats'))
 
-  // the /stats page shall only be rendered when there is internet, because it needs access to a DB
+  // the /stats page shall only be rendered when there is internet, because it needs access to a database
   isOnline().then(function (online) {
     if (online) {
       serverData.isOnline = true

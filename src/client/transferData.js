@@ -332,12 +332,12 @@ autocosts.transferDataModule = (function (thisModule) {
     return data
   }
 
-  // Gets information from DB whether DB has or not Public Transport data
+  // Gets information from database whether database has or not Public Transport data
   function isPublicTransportsOk (dbObject) {
     return (isDef(dbObject.household_number_people) && isDef(dbObject.public_transportation_month_expense))
   }
 
-  // Gets information from DB whether DB has or not Financial Effort data
+  // Gets information from database whether database has or not Financial Effort data
   function isIncomeOk (dbObject) {
     switch (dbObject.income_type) {
       case 'year':

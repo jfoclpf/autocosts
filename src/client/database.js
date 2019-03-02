@@ -193,11 +193,11 @@ autocosts.databaseModule = (function (thisModule, DOMform, serverInfo, userInfo)
         databaseObj: databaseObj
       },
       success: function (data) {
-        console.log('Values inserted into DB with success. Returned: ', data)
+        console.log('Values inserted into database with success. Returned: ', data)
         console.log('User took' + ' ' + databaseObj.time_to_fill_form + ' ' + 'seconds to fill the form')
       },
       error: function (error) {
-        console.error('There was an error submitting the values into the DB', error)
+        console.error('There was an error submitting the values into the database', error)
       }
     })
   }

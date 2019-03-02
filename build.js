@@ -93,7 +93,7 @@ async.series([
     }
   },
 
-  // Creates DB with countries' specifcations
+  // Creates databse with countries' specifcations
   function (callback) {
     if (options.specDB) {
       specDB()
@@ -101,7 +101,7 @@ async.series([
     callback()
   },
 
-  // Refreshes statistical costs DB
+  // Refreshes statistical costs databse
   function (callback) {
     if (options.refreshDB) {
       refreshDB()
