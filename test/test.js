@@ -305,7 +305,7 @@ function buildAll () {
   try {
     let buildFileName = path.join(directories.server.root, 'build.js')
     execSync('node ' + buildFileName + ' -A -r test', { stdio: 'inherit' })
-    console.log('Building successfully'.green)
+    console.log('Building successful'.green)
   } catch (err) {
     throw Error(err)
   }
