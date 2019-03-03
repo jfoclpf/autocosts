@@ -113,7 +113,7 @@ function createTable (next) {
 function createTableKey (next) {
   console.log('Creating table keys')
 
-  var querySetKey = 'CREATE UNIQUE INDEX `Country` ON country_specs(`Country`);'
+  var querySetKey = 'CREATE UNIQUE INDEX `Country` ON ' + DB_INFO.db_tables.country_specs + '(`Country`);'
 
   var dbQuery = querySetKey
   db.query(dbQuery, function (err, results, fields) {
