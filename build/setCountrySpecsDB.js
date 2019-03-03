@@ -53,7 +53,7 @@ isOnline().then(function (online) {
   availableCountries = sortObj(availableCountries)
   delete availableCountries.XX
 
-  async.series([dbConnects, deletesTable, populatesTable, dbEnd],
+  async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd],
     function (err, results) {
       if (err) {
         console.log(err.message)
@@ -70,7 +70,7 @@ isOnline().then(function (online) {
   process.exit(1) // with error
 })
 
-// main function of async.series([dbConnects, deletesTable, populatesTable]
+// main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function dbConnects (next) {
   db = mysql.createConnection(DB_INFO)
   db.connect(function (err) {
@@ -84,25 +84,49 @@ function dbConnects (next) {
   })
 }
 
-// main function of async.series([dbConnects, deletesTable, populatesTable, dbEnd]
-// delete table before populate it
-function deletesTable (next) {
-  console.log('Deleting database table ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs +
+// main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
+// creates table if nonexistent
+function createTable (next) {
+  console.log('Creating table if nonexistent: ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs.mainOption +
                     ' ' + 'before populating it with country specs')
 
-  db.query('DELETE FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
+  var queryCreate = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.country_specs +
+      ' ( ' +
+        'Country VARCHAR(2), ' +
+        'currency VARCHAR(3), ' +
+        'distance_std int(11), ' +
+        'fuel_efficiency_std int(11), ' +
+        'fuel_price_volume_std int(11)' +
+      ')'
+
+  db.query(queryCreate, function (err, results, fields) {
     if (err) {
       db.end()
-      next(Error('Error on db query' + err.message))
+      next(Error('Error on db query (creatign table): ' + err.message))
     } else {
-      // console.log(countries);
-      console.log('Previous data deleted from table')
       next()
     }
   })
 }
 
-// main function of async.series([dbConnects, deletesTable, populatesTable, dbEnd]
+// main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
+function createTableKey (next) {
+  console.log('Creating table keys')
+
+  var querySetKey = 'CREATE UNIQUE INDEX `Country` ON country_specs(`Country`);'
+
+  var dbQuery = querySetKey
+  db.query(dbQuery, function (err, results, fields) {
+    if (err) {
+      console.log('Keys were already present')
+    } else {
+      console.log('Keys created')
+    }
+    next()
+  })
+}
+
+// main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function populatesTable (next) {
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
   var numberOfCountries = countryCodesArray.length
@@ -129,7 +153,7 @@ function populatesTable (next) {
         }
       })
     } else {
-      console.log('\nTable created')
+      console.log('\nAll insert queries executed successfully')
       next()
     }
   })
@@ -138,7 +162,7 @@ function populatesTable (next) {
 function queryForCC (CC, callback) {
   let WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
 
-  let queryCC = 'INSERT INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
+  let queryCC = 'REPLACE INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
     'Country, ' +
     'currency, ' +
     'distance_std, ' +
@@ -163,7 +187,7 @@ function queryForCC (CC, callback) {
   })
 }
 
-// main function of async.series([dbConnects, deletesTable, populatesTable, dbEnd]
+// main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function dbEnd (next) {
   db.end(function (err) {
     if (err) {
