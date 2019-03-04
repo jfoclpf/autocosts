@@ -468,6 +468,7 @@ function createDatabaseTableKey (table, callback) {
   })
 }
 
+// executes the query into the chosen table, verbosing calculated data
 function insertCalculatedDataIntoTable (query, table, callback) {
   console.log('Inserting new calculated data into table: ', table)
 
