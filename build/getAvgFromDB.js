@@ -26,7 +26,11 @@ const fileNames = commons.getFileNames()
 const statsFunctions = require(fileNames.build.statsFunctions)
 const calculator = require(fileNames.project['calculator.js'])
 
+var db // database Connection Object
 const DB_INFO = settings.dataBase.credentials
+
+// Average Costs table database template
+var AVG_DB_TEMPLATE, DB_TABLE_KEY
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -35,15 +39,14 @@ isOnline().then(function (online) {
     process.exit(1) // exit with error
   }
 
-  var AVG_DB_TEMPLATE; // Database for Average template
-
   // Template of the DBs (monthly costs statistics and monthly costs normalized) that will be created
   // and into which the averages from the users will be stored, with a row of said database for each country
   (function () {
+    DB_TABLE_KEY = 'countryCode'
     AVG_DB_TEMPLATE = {
-      'countryCode': 'text',
+      'countryCode': 'VARCHAR(2)', // this is the index/key of the database tables
       'dateOfCalculation': 'date',
-      'currency': 'text',
+      'currency': 'VARCHAR(3)',
       'currencyConversionToEUR': 'float',
       'totalUsers': 'int(11)',
       'validUsers': 'int(11)',
@@ -71,16 +74,14 @@ isOnline().then(function (online) {
     throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
   }
 
-  // database variable
-  var db
-
   var countries = [] // array of objects with countries information
   var uniqueUsers = [] // array of objects having uniqueUsers IDs and respective countries
   var AllUserInputDb = [] // array of objects with all the data from the inputs users database
   var queryInsert // SQL string to where all the average costs will be inserted
 
   if (USE_MONEY_API) {
-    var queryInsertNorm // SQL string to where all the average Normalized costs will be inserted (all costs in EUR)
+    // SQL query to where all the average Normalized (in EUR) Costs will be inserted
+    var queryInsertNorm
   }
 
   // method that forces several methods to run synchronously
@@ -90,12 +91,12 @@ isOnline().then(function (online) {
     // Load money API for the currency conversion
     // see: http://openexchangerates.github.io/money.js/
     // and: https://openexchangerates.org/account/app-ids
-    function (callback) {
+    function (next) {
       if (!USE_MONEY_API) {
-        // It is always good practice to return after callback(err, result)
-        // whenever a callback call is not the last statement of a function
+        // It is always good practice to return after next(err, result)
+        // whenever a next call is not the last statement of a function
         // from https://caolan.github.io/async/
-        callback()
+        next()
         return // this MUST be here
       }
 
@@ -116,41 +117,41 @@ isOnline().then(function (online) {
           let result = JSON.parse(body)
           fx.rates = result.rates
           fx.base = result.base
-          callback()
+          next()
         } else {
           console.error('Error loading money API')
-          callback(Error(err))
+          next(Error(err))
         }
       })
     },
 
     /* ========================================================================= */
     // creates database connection and connects
-    function (callback) {
+    function (next) {
       db = mysql.createConnection(DB_INFO)
       console.log('\nGetting the set of different countries from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.country_specs)
 
       db.connect(function (err) {
         if (err) {
-          callback(Error(err))
+          next(Error(err))
         } else {
           console.log(('User ' + DB_INFO.user + ' connected successfully to database ' +
             DB_INFO.database + ' at ' + DB_INFO.host).green)
           // console.log(DB_INFO);
-          callback()
+          next()
         }
       })
     },
 
     /* ========================================================================= */
     // Get the set of different countries and the corresponding specifications/standards
-    function (callback) {
+    function (next) {
       // console.log("database login data: "); console.log(DB_INFO);
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
         if (err) {
-          callback(Error(err))
+          next(Error(err))
         } else {
           // copy info to global array countries
           for (var i = 0; i < results.length; i++) {
@@ -160,21 +161,21 @@ isOnline().then(function (online) {
           }
           // console.log(countries);
           // countries[i]: {Country: 'UK', currency: 'GBP', distance_std: 2, fuel_efficiency_std: 3, fuel_price_volume_std: 1 }
-          callback()
+          next()
         }
       })
     },
 
     /* ========================================================================= */
     // Get users unique ID
-    function (callback) {
+    function (next) {
       console.log('Getting users unique IDs from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT DISTINCT uuid_client, country FROM ' + DB_INFO.db_tables.users_insertions,
         function (err, results, fields) {
           if (err) {
-            callback(Error(err))
+            next(Error(err))
           } else {
             // copy info to global array uniqueUsers
             // array of objects having uniqueUsers IDs and respective countries
@@ -182,7 +183,7 @@ isOnline().then(function (online) {
               uniqueUsers.push(results[i])
             }
             // console.log(uniqueUsers);
-            callback()
+            next()
           }
         }
       )
@@ -190,13 +191,13 @@ isOnline().then(function (online) {
 
     /* ========================================================================= */
     // Get all data from users input database
-    function (callback) {
+    function (next) {
       console.log('Getting all user insertion data from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function (err, results, fields) {
         if (err) {
-          callback(Error(err))
+          next(Error(err))
         } else {
           // copy results to global array
           AllUserInputDb = []
@@ -204,36 +205,21 @@ isOnline().then(function (online) {
             AllUserInputDb.push(results[i])
           }
           // console.log(AllUserInputDb);
-          callback()
+          next()
         }
       })
     },
 
     /* ========================================================================= */
     // Calculates statistical average costs for each country and builds SQL query
-    function (callback) {
-      console.log('Calculating data and building database insertion data for: ' +
-        DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-
-      // string with current date DD/MM/YYYY
-      let date = new Date()
-      let dateString = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString()
+    function (next) {
+      console.log('Calculating statistical data...')
 
       // queries header
-      queryInsert = 'INSERT INTO ' + DB_INFO.db_tables.monthly_costs_statistics + ' '
+      queryInsert = getInsertDataQueryHeader('monthly_costs_statistics')
 
       if (USE_MONEY_API) {
-        queryInsertNorm = 'INSERT INTO ' + DB_INFO.db_tables.monthly_costs_normalized + ' '
-      }
-
-      /* builds sql query Header based on AVG_DB_TEMPLATE */
-      let queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false) // false removes quotes from strings
-      // console.log(queriesHeader); process.exit();
-
-      queryInsert += queriesHeader + 'VALUES '
-
-      if (USE_MONEY_API) {
-        queryInsertNorm += queriesHeader + 'VALUES '
+        queryInsertNorm = getInsertDataQueryHeader('monthly_costs_normalized')
       }
 
       // builds the query to insert all the vaules for each country
@@ -276,229 +262,65 @@ isOnline().then(function (online) {
           USE_MONEY_API ? fx : null)
         // console.log(JSON.stringify(statisticsResults, null, 4));
 
-        let flattenStatisticsResults = flatten(statisticsResults, { delimiter: '_' })
-        delete flattenStatisticsResults.countryCode
-        delete flattenStatisticsResults.validUsers
-        // console.log(flattenStatisticsResults); //process.exit();
-
         // add computed data to countries array of objects
         countries[i].validUsers = statisticsResults.validUsers
         countries[i].totalUsers = countryUsers.length
         countries[i].totalCosts = statisticsResults.costs.perMonth.total
 
-        // currency conversion to EUR
-        let currencyConversionToEUR = USE_MONEY_API ? fx(1).from('EUR').to(currency) : null
-        // console.log(currencyConversionToEUR);
-
-        // builds sql query for respective country, check var AVG_DB_TEMPLATE
-        let queryInsertCountryArray = [
-          countryCode,
-          dateString,
-          currency,
-          currencyConversionToEUR,
-          countries[i].totalUsers,
-          countries[i].validUsers,
-          uniqueUsers.length
-        ]
-
-        queryInsertCountryArray = queryInsertCountryArray.concat(Object.values(flattenStatisticsResults))
-
-        queryInsert += sqlStringFromArray(queryInsertCountryArray)
-        // console.log("\n\n\n\n",sqlFormatter.format(queryInsert), "\n\n"); //process.exit();
+        queryInsert += getQueryWithValuesForCountry('monthly_costs_statistics',
+          statisticsResults, countries[i], uniqueUsers.length)
 
         // sql query for table for the normalized costs (all costs in EUR), check var AVG_DB_TEMPLATE
         if (USE_MONEY_API) {
-          let flattenNormalizedStatisticsResults = Object.assign({}, flattenStatisticsResults) // clone object
-
-          // converts all costs to EUR, the costs are in object costs, which after being flattened every property starts with "costs_"
-          for (let costItem of Object.keys(flattenNormalizedStatisticsResults)) {
-            if (costItem.startsWith('costs_') &&
-                            costItem in flattenStatisticsResults &&
-                            isFinite(flattenStatisticsResults[costItem])) {
-              flattenNormalizedStatisticsResults[costItem] = fx(flattenStatisticsResults[costItem]).from(currency).to('EUR')
-            }
-          }
-
-          let queryInsertNormCountryArray = [
-            countryCode,
-            dateString,
-            'EUR',
-            currencyConversionToEUR,
-            countries[i].totalUsers,
-            countries[i].validUsers,
-            uniqueUsers.length
-          ]
-
-          queryInsertNormCountryArray = queryInsertNormCountryArray.concat(Object.values(flattenNormalizedStatisticsResults))
-
-          queryInsertNorm += sqlStringFromArray(queryInsertNormCountryArray)
+          queryInsertNorm += getQueryWithValuesForCountry('monthly_costs_normalized',
+            statisticsResults, countries[i], uniqueUsers.length)
         }
 
-        if (i !== countries.length - 1) { // doesn't add "," on the last set of values
-          queryInsert += ', '
-
-          if (USE_MONEY_API) {
-            queryInsertNorm += ', '
-          }
+        // add `,` after, except on the last set of values
+        queryInsert += i !== countries.length - 1 ? ', ' : ''
+        if (USE_MONEY_API) {
+          queryInsertNorm += i !== countries.length - 1 ? ', ' : ''
         }
-        // console.log(countryCode);
       }
       // console.log(sqlFormatter.format(queryInsert)); process.exit();
 
       consoleLogTheFinalAverages(countries)
 
-      callback()
+      next()
     },
 
     /* ========================================================================= */
-    // Deletes table completely: monthly_costs_statistics
-    function (callback) {
-      console.log('\nDeleting table from database')
-
-      // deletes table completely
-      db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics, function (err, results, fields) {
-        if (err) {
-          callback(Error(err))
-        } else {
-          console.log('Previous table deleted from database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-          callback()
+    // statistical data is calculated: create table, create key, and inserts data
+    function (next) {
+      async.parallel([
+        function (callback) {
+          createTableAndKeyToInsertData(queryInsert, DB_INFO.db_tables.monthly_costs_statistics, callback)
+        },
+        function (callback) {
+          if (USE_MONEY_API) {
+            createTableAndKeyToInsertData(queryInsertNorm, DB_INFO.db_tables.monthly_costs_normalized, callback)
+          } else {
+            callback()
+          }
         }
-      })
-    },
-
-    /* ========================================================================= */
-    // Deletes table completely: monthly_costs_normalized
-    function (callback) {
-      if (!USE_MONEY_API) {
-        callback()
-        return
-      }
-
-      console.log('Deleting table from database')
-
-      // deletes table completely
-      db.query('DROP TABLE IF EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized, function (err, results, fields) {
+      ],
+      function (err, results) {
         if (err) {
-          callback(Error(err))
+          next(Error(err))
         } else {
-          console.log('Previous table deleted from database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-          callback()
-        }
-      })
-    },
-
-    /* ========================================================================= */
-    // Creates new table: monthly_costs_statistics
-    function (callback) {
-      console.log('Creating new table into database')
-
-      let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.monthly_costs_statistics + ' '
-
-      let arrayOfEntries = []
-      for (let key of Object.keys(AVG_DB_TEMPLATE)) {
-        arrayOfEntries.push(key + ' ' + AVG_DB_TEMPLATE[key])
-      }
-
-      createTableQuery += sqlStringFromArray(arrayOfEntries, false)
-      // console.log(sqlFormatter.format(createTableQuery)); process.exit();
-
-      db.query(createTableQuery, function (err, results, fields) {
-        if (err) {
-          callback(Error(err))
-        } else {
-          console.log('Table created in database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-          callback()
-        }
-      })
-    },
-
-    /* ========================================================================= */
-    // Creates new table: monthly_costs_normalized
-    // where the costs are all converted to EUR
-    function (callback) {
-      if (!USE_MONEY_API) {
-        // It is always good practice to return after callback(err, result)
-        // whenever a callback call is not the last statement of a function
-        // from https://caolan.github.io/async/
-        callback()
-        return
-      }
-
-      console.log('Creating new table into database')
-
-      let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.monthly_costs_normalized
-
-      let arrayOfEntries = []
-      for (let key of Object.keys(AVG_DB_TEMPLATE)) {
-        arrayOfEntries.push(key + ' ' + AVG_DB_TEMPLATE[key])
-      }
-
-      createTableQuery += sqlStringFromArray(arrayOfEntries, false)
-      // console.log(sqlFormatter.format(createTableQuery)); process.exit();
-
-      db.query(createTableQuery, function (err, results, fields) {
-        if (err) {
-          callback(Error(err))
-        } else {
-          console.log('Table created in database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-          callback()
-        }
-      })
-    },
-
-    /* ========================================================================= */
-    // insert table monthly_costs_statistics into database
-    function (callback) {
-      console.log('Inserting new calculated data into database')
-
-      db.query(queryInsert, function (err, results, fields) {
-        if (err) {
-          console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').red.bold)
-          console.error(sqlFormatter.format(err.sql))
-          callback(Error(err))
-        } else {
-          console.log('All new data successfully added into database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_statistics)
-          callback()
-        }
-      })
-    },
-
-    /* ========================================================================= */
-    // insert table monthly_costs_normalized into database
-    function (callback) {
-      if (!USE_MONEY_API) {
-        callback()
-        return // this return MUST be here
-      }
-
-      console.log('Inserting new calculated data into database')
-
-      db.query(queryInsertNorm, function (err, results, fields) {
-        if (err) {
-          console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').red.bold)
-          console.error(sqlFormatter.format(err.sql))
-          callback(Error(err))
-        } else {
-          console.log('All new data successfully added into database: ' +
-            DB_INFO.database + '->' + DB_INFO.db_tables.monthly_costs_normalized)
-          callback()
+          next()
         }
       })
     },
 
     /* ========================================================================= */
     // finishes database connection
-    function (callback) {
+    function (next) {
       db.end(function (err) {
         if (err) {
-          callback(Error(err))
+          next(Error(err))
         } else {
-          callback()
+          next()
         }
       })
     }
@@ -514,13 +336,152 @@ isOnline().then(function (online) {
         process.exit(1)
       })
     }
-    console.log('All the statistics have been computed successfully'.green)
+    console.log('All the statistics have been computed successfully and updated into database'.green)
     process.exit(0)
   })
 }).catch(function (err) {
-  console.log(err)
+  console.log(Error(err))
   process.exit(1)
 })
+
+// for each country, get the header of the insert data query
+function getInsertDataQueryHeader (tableParameter) {
+  var table
+
+  if (tableParameter === 'monthly_costs_statistics') {
+    table = DB_INFO.db_tables.monthly_costs_statistics
+  } else if (tableParameter === 'monthly_costs_normalized') {
+    table = DB_INFO.db_tables.monthly_costs_normalized
+  } else {
+    throw Error('wrong table' + tableParameter)
+  }
+
+  var query = 'REPLACE INTO ' + table + ' '
+
+  // builds sql query Header based on database table template
+  var queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false) // false removes quotes from strings
+  // console.log(queriesHeader); process.exit();
+
+  query += queriesHeader + 'VALUES '
+
+  return query
+}
+
+function getQueryWithValuesForCountry (tableParameter, statisticsResults, country, numberOfUniqueUsers) {
+  if (tableParameter !== 'monthly_costs_statistics' && tableParameter !== 'monthly_costs_normalized') {
+    throw Error('wrong table' + tableParameter)
+  }
+
+  // mysql query string to be returned
+  var query
+
+  var countryCode = country.Country
+  var currency = country.currency
+
+  // string with current date DD/MM/YYYY
+  var date = new Date()
+  var dateString = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString()
+
+  var flattenStatisticsResults = flatten(statisticsResults, { delimiter: '_' })
+  delete flattenStatisticsResults.countryCode
+  delete flattenStatisticsResults.validUsers
+
+  // currency conversion to EUR
+  var currencyConversionToEUR = USE_MONEY_API ? fx(1).from('EUR').to(currency) : null
+
+  // converts all costs to EUR, the costs are in object costs,
+  // which after being flattened every property starts with "costs_"
+  if (tableParameter === 'monthly_costs_normalized') {
+    for (let costItem of Object.keys(flattenStatisticsResults)) {
+      if (costItem.startsWith('costs_') && costItem in flattenStatisticsResults &&
+                      isFinite(flattenStatisticsResults[costItem])) {
+        flattenStatisticsResults[costItem] = fx(flattenStatisticsResults[costItem]).from(currency).to('EUR')
+      }
+    }
+  }
+
+  // builds sql query for respective country, check var AVG_DB_TEMPLATE
+  let queryInsertCountryArray = [
+    countryCode,
+    dateString,
+    tableParameter === 'monthly_costs_normalized' ? 'EUR' : currency,
+    currencyConversionToEUR,
+    country.totalUsers,
+    country.validUsers,
+    numberOfUniqueUsers
+  ]
+
+  // concatenate arrays
+  queryInsertCountryArray = queryInsertCountryArray.concat(Object.values(flattenStatisticsResults))
+
+  query = sqlStringFromArray(queryInsertCountryArray)
+
+  return query
+}
+
+function createTableAndKeyToInsertData (query, table, callback) {
+  createDatabaseTable(table, function () {
+    createDatabaseTableKey(table, function () {
+      insertCalculatedDataIntoTable(query, table, callback)
+    })
+  })
+}
+
+function createDatabaseTable (table, callback) {
+  console.log('Creating new database table if nonexistent: ', table)
+
+  let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + table + ' '
+
+  let arrayOfEntries = []
+  for (let key of Object.keys(AVG_DB_TEMPLATE)) {
+    arrayOfEntries.push(key + ' ' + AVG_DB_TEMPLATE[key])
+  }
+
+  createTableQuery += sqlStringFromArray(arrayOfEntries, false)
+  // console.log(sqlFormatter.format(createTableQuery)); process.exit();
+
+  db.query(createTableQuery, function (err, results, fields) {
+    if (err) {
+      callback(Error(err))
+    } else {
+      console.log('Table created if nonexistent: ' + table)
+      callback()
+    }
+  })
+}
+
+function createDatabaseTableKey (table, callback) {
+  console.log("Creating key '" + DB_TABLE_KEY + "' on table: ", table)
+
+  var querySetKey = 'CREATE UNIQUE INDEX `' + DB_TABLE_KEY +
+    '` ON ' + table + '(`' + DB_TABLE_KEY + '`);'
+
+  db.query(querySetKey, function (err, results, fields) {
+    if (err) {
+      // mysql returns error when keys are already present
+      // on the table and this query is executed
+      console.log('Key was already present')
+    } else {
+      console.log("Key '" + DB_TABLE_KEY + "' created on table: ", table)
+    }
+    callback()
+  })
+}
+
+function insertCalculatedDataIntoTable (query, table, callback) {
+  console.log('Inserting new calculated data into table: ', table)
+
+  db.query(query, function (err, results, fields) {
+    if (err) {
+      console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').error)
+      console.error(sqlFormatter.format(err.sql))
+      callback(Error(err))
+    } else {
+      console.log('All new data successfully added into table: ', table)
+      callback()
+    }
+  })
+}
 
 // from an array ["a", "b", undefined, true, 3, false] returns string "('a', 'b', NULL, 1, 3, 0)"
 function sqlStringFromArray (inputArray, addQuotesInStringsBool = true) {
