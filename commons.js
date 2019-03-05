@@ -9,7 +9,9 @@ var defaultPortTest = 3026 // default HTTP Port where the app listens - prod ver
 module.exports = {
 
   init: function (eventEmitter) {
-    EVENTEMITTER = eventEmitter
+    if (eventEmitter) {
+      EVENTEMITTER = eventEmitter
+    }
     _init()
   },
 
@@ -141,7 +143,7 @@ function _init () {
   // this "option" object is just filled with the options that were inserted in the command line
   // console.log(options);
 
-  RELEASE = options.release // set Global variable
+  RELEASE = RELEASE || options.release // set Global variable
   // check that release was correctly chosen
   if (RELEASE !== 'dev' && RELEASE !== 'test' && RELEASE !== 'prod') {
     RELEASE = 'dev'
