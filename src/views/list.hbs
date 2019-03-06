@@ -1,58 +1,59 @@
-<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html>
-    <head>
-        {{> head }}
-    </head>
+<!DOCTYPE html>
+<html lang="en">
 
-    <body id="listpage_body">
+<head>
+    {{> head }}
+</head>
 
-        <h1 style="text-align:center; margin: 25px auto;">
-            {{{ title }}}
-        </h1>
+<body id="listpage_body">
 
-        <div style="width:100%">
-            <table class="list-table">
+    <h1 style="text-align:center; margin: 25px auto;">
+        {{{ title }}}
+    </h1>
 
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">CC</th>
-                        <th scope="col">Language</th>
-                        <th scope="col">Main domain</th>
-                        <th scope="col">Curr. code</th>
-                        <th scope="col">Currency name</th>
-                        <th scope="col">Curr. symbol</th>
-                        <th scope="col">Fuel efficiency</th>
-                        <th scope="col">Standard distance</th>
-                        <th scope="col">Fuel volume</th>
-                        <th scope="col">Costs</th>
-                    </tr>
-                </thead>
+    <div style="width:100%">
+        <table class="list-table">
 
-                <tbody>
-                {{#each wordsMatrix as |Country CC|}}
-                    <tr>
-                        <td>{{@index}}</td>
-                        <td>{{{Country.country_name}}}</td>
-                        <td>{{{CC}}}</td>
-                        <td style="text-align:center"> {{{Country.languageCode}}} </td>
-                        <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
-                        <td style="text-align:center">{{{Country.curr_code}}}</td>
-                        <td>{{{Country.curr_name}}}</td>
-                        <td style="text-align:center">{{{Country.curr_symbol}}}</td>
-                        <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
-                        <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
-                        <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
-                        <td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
-                    </tr>
-                {{/each}}
-                </tbody>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">CC</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Main domain</th>
+                    <th scope="col">Curr. code</th>
+                    <th scope="col">Currency name</th>
+                    <th scope="col">Curr. symbol</th>
+                    <th scope="col">Fuel efficiency</th>
+                    <th scope="col">Standard distance</th>
+                    <th scope="col">Fuel volume</th>
+                    <th scope="col">Costs</th>
+                </tr>
+            </thead>
 
-            </table>
-        </div>
+            <tbody>
+            {{#each wordsMatrix as |Country CC|}}
+                <tr>
+                    <td>{{@index}}</td>
+                    <td>{{{Country.country_name}}}</td>
+                    <td>{{{CC}}}</td>
+                    <td style="text-align:center"> {{{Country.languageCode}}} </td>
+                    <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
+                    <td style="text-align:center">{{{Country.curr_code}}}</td>
+                    <td>{{{Country.curr_name}}}</td>
+                    <td style="text-align:center">{{{Country.curr_symbol}}}</td>
+                    <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
+                    <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
+                    <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
+                    <td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
+                </tr>
+            {{/each}}
+            </tbody>
 
-        <br><br>
+        </table>
+    </div>
 
-    </body>
+    <br><br>
+
+</body>
 </html>
