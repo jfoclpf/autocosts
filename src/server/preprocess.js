@@ -19,6 +19,11 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
 
     addUpperCaseAfterBr(WORDS[CC])
 
+    // normalize with NFC Indian strings
+    if (CC === 'IN') {
+      normalizeNFC(WORDS[CC])
+    }
+
     // to be assigned later if stats are colected
     WORDS[CC].sub_title_pos1 = WORDS[CC].sub_title_pos2 = ''
     // to be changed later if stats are colected
@@ -272,5 +277,14 @@ function getProcessedStatsDataEntry (words, statsData, entry, toFixed, isBold = 
     return (isBold ? '<b>' : '') + valueToString + (isBold ? '</b>' : '')
   } else {
     return val
+  }
+}
+
+// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+function normalizeNFC (words) {
+  for (let key in words) {
+    if (typeof words[key] === 'string') {
+      words[key] = words[key].normalize('NFC')
+    }
   }
 }
