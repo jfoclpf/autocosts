@@ -248,5 +248,16 @@ if (process.env.NODE_ENV === 'test') {
 app.listen(settings.HTTPport, function () {
   console.log('Listening on port ' + settings.HTTPport)
   console.log('To stop server press ' + colors.red.bold('CTRL+C') + '\n')
-  console.log('check ' + colors.green.bold('http://localhost:' + settings.HTTPport) + '\n')
+  console.log('*******************************************************************************')
+  console.log('**                    The Car Costs Calculator                               **')
+  console.log('**             can be now accessed on ' +
+    colors.green.bold('http://localhost:' + settings.HTTPport) + '                  **')
+  console.log('**                                                                           **')
+  console.log('*******************************************************************************')
+
+  // this is a code received by parent scripts (ex: test/test.js)
+  // https://medium.com/@NorbertdeLangen/communicating-between-nodejs-processes-4e68be42b917
+  if (process.send) {
+    process.send('SERVER_STARTED:' + settings.HTTPport)
+  }
 })
