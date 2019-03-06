@@ -23,6 +23,7 @@ const { execSync } = require('child_process')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
+commons.setRelease('test')
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
@@ -72,7 +73,8 @@ async.parallel([
   testCalculatorFunction,
   checkJsCodeSyntax,
   checkJsCodeStandard
-], function (err, results) {
+],
+function (err, results) {
   if (err) {
     console.error(err)
     process.exit(1)
@@ -83,8 +85,7 @@ async.parallel([
     }
   }
 
-  buildAll()
-  process.exit(0) // exit test successfully
+  buildAll() // this runs synchronously
 })
 // eof main script
 
