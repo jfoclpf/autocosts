@@ -18,6 +18,7 @@ const handlebars = require('handlebars') // see why here: https://stackoverflow.
 const async = require('async') // module to allow to execute the queries in series
 const colors = require('colors')
 const childProcess = require('child_process')
+const phantomjsPath = require('phantomjs-prebuilt').path // to raster in jpg stats tables
 
 const commons = require(path.join(__dirname, '..', 'commons'))
 colors.setTheme(commons.getConsoleColors())
@@ -93,23 +94,10 @@ function dbConnect (next) {
 // main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 function createTables (next) {
   console.log('Creating html tables on ', directories.bin.tables, '\n')
-
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
-  var numberOfCountries = countryCodesArray.length
 
-  var createFunctionForAsync = function (CC) {
-    return function (callback) {
-      createTable(CC, callback)
-    }
-  }
-
-  var functionsArray = []
-  for (let i = 0; i < numberOfCountries; i++) {
-    let CC = countryCodesArray[i]
-    functionsArray.push(createFunctionForAsync(CC))
-  }
-
-  async.parallel(functionsArray, function (err, results) {
+  // async.each runs tasks in parallel
+  async.each(countryCodesArray, createTable, function (err) {
     if (err) {
       db.end()
       next(Error('Error creating tables: ' + err.message))
@@ -240,26 +228,11 @@ function dbEnd (next) {
 // Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
 function rasterTables (next) {
   console.log('Rasterizing JPG tables using phantomjs')
-
-  const phantomjs = require('phantomjs-prebuilt') // to use './rasterTables.js'
-  console.log('phantomjs path: ' + (phantomjs.path) + '\n')
+  console.log('phantomjs path: ' + phantomjsPath + '\n')
 
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
-  var numberOfCountries = countryCodesArray.length
 
-  var createFunctionForAsync = function (CC, phantomjsPath) {
-    return function (callback) {
-      rasterTable(CC, phantomjsPath, callback)
-    }
-  }
-
-  var functionsArray = []
-  for (let i = 0; i < numberOfCountries; i++) {
-    let CC = countryCodesArray[i]
-    functionsArray.push(createFunctionForAsync(CC, phantomjs.path))
-  }
-
-  async.parallel(functionsArray, function (err, results) {
+  async.each(countryCodesArray, rasterTable, function (err, results) {
     if (err) {
       next(Error('Error rasterizing tables: ' + err.message))
     } else {
@@ -269,7 +242,7 @@ function rasterTables (next) {
   })
 }
 
-function rasterTable (CC, phantomjsPath, callback) {
+function rasterTable (CC, callback) {
   let htmlTempFilePath = path.join(directories.bin.tables, CC + 'jpg.htm')
   let imageFilePath = path.join(directories.bin.tables, CC + '.jpg')
 

@@ -129,21 +129,8 @@ function createTableKey (next) {
 // main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function populatesTable (next) {
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
-  var numberOfCountries = countryCodesArray.length
 
-  var createFunctionForAsync = function (CC) {
-    return function (callback) {
-      queryForCC(CC, callback)
-    }
-  }
-
-  var functionsArray = []
-  for (let i = 0; i < numberOfCountries; i++) {
-    let CC = countryCodesArray[i]
-    functionsArray.push(createFunctionForAsync(CC))
-  }
-
-  async.parallel(functionsArray, function (err, results) {
+  async.each(countryCodesArray, queryForCC, function (err, results) {
     if (err) {
       db.end(function (errDbEnd) {
         if (errDbEnd) {
