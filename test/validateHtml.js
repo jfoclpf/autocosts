@@ -63,22 +63,13 @@ function validateHtmlOnAllPages (next) {
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
   var numberOfCountries = countryCodesArray.length
 
-  var createFunctionForAsync = function (pathname) {
-    return function (callback) {
-      validatePage(pathname, callback)
-    }
-  }
-
-  var functionsArray = []
+  var pathnames = ['/stats', '/list']
   for (let i = 0; i < numberOfCountries; i++) {
-    let CC = countryCodesArray[i]
-    functionsArray.push(createFunctionForAsync('/' + CC))
+    pathnames.push('/' + countryCodesArray[i])
   }
+  // pathnames = ['/stats', '/list', '/PT', '/US', '/AU', etc.]
 
-  functionsArray.push(createFunctionForAsync('/stats'))
-  functionsArray.push(createFunctionForAsync('/list'))
-
-  async.parallel(functionsArray, function (err, results) {
+  async.each(pathnames, validatePage, function (err) {
     if (err) {
       next(Error('Error validating html on pages: ' + err.message))
     } else {
