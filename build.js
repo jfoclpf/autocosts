@@ -1,7 +1,6 @@
 /* Building script */
 
 const commandLineArgs = require('command-line-args')
-const { execSync } = require('child_process')
 const colors = require('colors')
 const fs = require('fs')
 const fse = require('fs-extra')
@@ -295,22 +294,16 @@ function concatCSSFiles (mainCallback) {
 function compressImgs () {
   console.log('\n' + ('# --' + optionDefinitions[1].name).mainOption)
   console.log('\n', 'Compress images in jpg and png files'.mainOption, '\n')
-  try {
-    execSync('node ' + filenames.build.compressImages + ' -r ' + RELEASE, { stdio: 'inherit' })
-  } catch (err) {
-    _exit(err, optionDefinitions[1])
-  }
+
+  commons.runNodeScriptSync(filenames.build.compressImages)
 }
 
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
 function minify () {
   console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
   console.log('\n', 'Minify js, html/hbs, css and json files'.mainOption, '\n')
-  try {
-    execSync('node ' + filenames.build.minifyFiles + ' -r ' + RELEASE, { stdio: 'inherit' })
-  } catch (err) {
-    _exit(err, optionDefinitions[2])
-  }
+
+  commons.runNodeScriptSync(filenames.build.minifyFiles)
 }
 
 /* With these options it needs internet connection to a server's Database */
@@ -319,22 +312,16 @@ function minify () {
 function specDB () {
   console.log('\n' + ('# --' + optionDefinitions[4].name).mainOption)
   console.log('\n', 'Creates database with countries specifcations'.mainOption, '\n')
-  try {
-    execSync('node ' + filenames.build.setCountrySpecsDB + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
-  } catch (err) {
-    _exit(err, optionDefinitions[4])
-  }
+
+  commons.runNodeScriptSync(filenames.build.setCountrySpecsDB, ['--dataBase'])
 }
 
 // -d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database
 function refreshDB () {
   console.log('\n' + ('# --' + optionDefinitions[5].name).mainOption)
   console.log('\n', 'Refreshes statistical costs database'.mainOption, '\n')
-  try {
-    execSync('node ' + filenames.build.getAvgFromDB + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
-  } catch (err) {
-    _exit(err, optionDefinitions[5])
-  }
+
+  commons.runNodeScriptSync(filenames.build.getAvgFromDB, ['--dataBase'])
 }
 
 // -t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database
@@ -342,11 +329,7 @@ function genTables () {
   console.log('\n' + ('# --' + optionDefinitions[6].name).mainOption)
   console.log('\n', 'Generating statistical html and jpg tables'.mainOption, '\n')
   console.log('\n    Extracts stat info and create html tables \n')
-  try {
-    execSync('node ' + filenames.build.generateTables + ' --dataBase' + ' -r ' + RELEASE, { stdio: 'inherit' })
-  } catch (err) {
-    _exit(err, optionDefinitions[6])
-  }
+  commons.runNodeScriptSync(filenames.build.generateTables, ['--dataBase'])
 }
 
 function getArgvHelpMsg () {
@@ -399,18 +382,5 @@ function runApp () {
   console.log('For other options stop server and run:')
   console.log(('node ' + filename + ' -h\n').green.bold)
 
-  execSync('node ' + filename + ' -r ' + RELEASE, { stdio: 'inherit' })
-}
-
-function _exit (err, option) {
-  if (err.stdout) {
-    console.log(err.stdout)
-  }
-
-  console.log('An error has occurred running this script ' +
-                path.relative(__dirname, __filename).warn + ' on option ' +
-                ('--' + option.name).warn + ' or ' +
-                ('-' + option.alias).warn + '\n')
-
-  process.exit(1)
+  // execSync('node ' + filename + ' -r ' + RELEASE, { stdio: 'inherit' })
 }
