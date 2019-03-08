@@ -10,6 +10,7 @@ const isOnline = require('is-online')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const request = require('request') // to make HTTP requests
 const flatten = require('flat')
+const cliProgress = require('cli-progress')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
 
@@ -215,6 +216,15 @@ isOnline().then(function (online) {
     function (next) {
       console.log('Calculating statistical data...')
 
+      var numberOfCountries = countries.length
+      var numberOfUniqueUsers = uniqueUsers.length
+      var numberOfTotalUserInputs = AllUserInputDb.length
+
+      // create a new progress bar instance and use shades_classic theme
+      const progressBar = new cliProgress.Bar({}, cliProgress.Presets.shades_classic)
+
+      progressBar.start(numberOfCountries - 1, 0)
+
       // queries header
       queryInsert = getInsertDataQueryHeader('monthly_costs_statistics')
 
@@ -224,24 +234,26 @@ isOnline().then(function (online) {
 
       // builds the query to insert all the vaules for each country
       // sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
-      for (let i = 0; i < countries.length; i++) {
+      for (let i = 0; i < numberOfCountries; i++) {
+        progressBar.update(i)
+
         let countryCode = countries[i].Country
         let currency = countries[i].currency
 
-        process.stdout.write(countryCode + ' ')
+        // process.stdout.write(countryCode + ' ')
 
         let countryUsers = [] // array with unique users for selected countries[i]
         let countryData = [] // array with everything for selected countries[i]
 
         // creates an array of unique users for the selected country
-        for (let j = 0; j < uniqueUsers.length; j++) {
+        for (let j = 0; j < numberOfUniqueUsers; j++) {
           if (uniqueUsers[j].country === countryCode) {
             countryUsers.push(uniqueUsers[j])
           }
         }
 
         // creates an array with all the inputs for the selected country
-        for (let j = 0; j < AllUserInputDb.length; j++) {
+        for (let j = 0; j < numberOfTotalUserInputs; j++) {
           if (AllUserInputDb[j].country === countryCode) {
             countryData.push(AllUserInputDb[j])
           }
@@ -268,22 +280,23 @@ isOnline().then(function (online) {
         countries[i].totalCosts = statisticsResults.costs.perMonth.total
 
         queryInsert += getQueryWithValuesForCountry('monthly_costs_statistics',
-          statisticsResults, countries[i], uniqueUsers.length)
+          statisticsResults, countries[i], numberOfUniqueUsers)
 
         // sql query for table for the normalized costs (all costs in EUR), check var AVG_DB_TEMPLATE
         if (USE_MONEY_API) {
           queryInsertNorm += getQueryWithValuesForCountry('monthly_costs_normalized',
-            statisticsResults, countries[i], uniqueUsers.length)
+            statisticsResults, countries[i], numberOfUniqueUsers)
         }
 
         // add `,` after, except on the last set of values
-        queryInsert += i !== countries.length - 1 ? ', ' : ''
+        queryInsert += i !== numberOfCountries - 1 ? ', ' : ''
         if (USE_MONEY_API) {
-          queryInsertNorm += i !== countries.length - 1 ? ', ' : ''
+          queryInsertNorm += i !== numberOfCountries - 1 ? ', ' : ''
         }
       }
       // console.log(sqlFormatter.format(queryInsert)); process.exit();
 
+      progressBar.stop()
       consoleLogTheFinalAverages(countries)
 
       next()
