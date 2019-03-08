@@ -86,6 +86,8 @@ function (err, results) {
   }
 
   buildAll() // this runs synchronously
+
+  commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
 })
 // eof main script
 
