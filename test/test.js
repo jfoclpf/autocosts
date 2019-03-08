@@ -18,7 +18,7 @@ const async = require('async')
 const jshint = require('jshint').JSHINT
 const prettyjson = require('prettyjson')
 const standard = require('standard')
-const _cliProgress = require('cli-progress')
+const cliProgress = require('cli-progress')
 const { execSync } = require('child_process')
 
 // this should be here on the beginning to set global environments
@@ -32,7 +32,7 @@ const transferData = require(fileNames.project['transferData.js'])
 const calculator = require(fileNames.project['calculator.js'])
 
 // create a new progress bar instance and use shades_classic theme
-const progressBar = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic)
+const progressBar = new cliProgress.Bar({}, cliProgress.Presets.shades_classic)
 
 // if json property is a number within a String (!isNaN) convert its type to Number
 var parseJsonProperty = function (key, value) {
