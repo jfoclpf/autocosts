@@ -11,7 +11,7 @@ const walk = require('walk')
 const im = require('imagemagick')
 const colors = require('colors')
 const ProgressBar = require('progress')
-const debug = require('debug')('app:build')
+const debug = require('debug')('build:compressImages')
 
 // own module
 const commons = require(path.join(__dirname, '..', 'commons'))

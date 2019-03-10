@@ -14,7 +14,7 @@ const find = require('find')
 const walk = require('walk')
 const colors = require('colors')
 const ProgressBar = require('progress')
-const debug = require('debug')('app:build')
+const debug = require('debug')('build:minifyFiles')
 
 // minification tools
 const UglifyJS = require('uglify-js')

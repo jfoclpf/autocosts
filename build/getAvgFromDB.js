@@ -12,7 +12,7 @@ const flatten = require('flat')
 const ProgressBar = require('progress')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
-const debug = require('debug')('app:build')
+const debug = require('debug')('build:getAvgFromDB')
 
 const release = commons.getRelease()
 const USE_MONEY_API = release !== 'test'
