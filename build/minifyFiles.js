@@ -31,15 +31,16 @@ var directories = commons.getDirectories()
 colors.setTheme(commons.getConsoleColors())
 
 debug('Minifying files')
-var Bar = commons.getProgressBar(getNuberOfTotalFiles(), debug.enabled)
+var Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
 async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfiles],
   function (err, results) {
-    console.log() // adds a breakline
     if (err) {
       console.log(Error(('Error minifying files.\n' + err.message).error))
       process.exit(1) // exit with error
     }
+    Bar.tick({ info: '' })
+    Bar.terminate()
     console.log('All files minified successfully'.green)
     process.exit(0) // exit successfully
   }

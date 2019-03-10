@@ -37,7 +37,7 @@ console.log('Updating statistics database...')
 const BarBigTick = 3
 // if debug is enabled disable the progress bar
 
-var Bar = commons.getProgressBar(commons.getNumberOfCountries() + (USE_MONEY_API ? 5 : 3) * BarBigTick, debug.enabled)
+var Bar = commons.getProgressBar(commons.getNumberOfCountries() + (USE_MONEY_API ? 6 : 4) * BarBigTick, debug.enabled)
 
 // checks for internet connection
 isOnline().then(function (online) {
