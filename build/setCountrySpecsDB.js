@@ -3,7 +3,7 @@
    fuel efficiency (l/100km, km/l, mpg(imp), etc.) */
 
 console.log("Populating the 'countries specs database' with information from the countries files")
-console.log('\nRunning script ', __filename, '\n')
+console.log('Running script ', __filename, '\n')
 
 // includes
 const fs = require('fs')
@@ -13,7 +13,6 @@ const mysql = require('mysql') // module to get info from database
 const sortObj = require('sort-object') // to sort JS objects
 const isOnline = require('is-online')
 const colors = require('colors') // eslint-disable-line
-const ProgressBar = require('progress')
 const debug = require('debug')('build:setCountrySpecsDB')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
@@ -29,9 +28,7 @@ commons.init()
 var directories = commons.getDirectories()
 var settings = commons.getSettings()
 
-var Bar = new ProgressBar('[:bar] :percent',
-  { total: commons.getNumberOfCountries() + 4, width: 80 }
-)
+var Bar = commons.getProgressBar(commons.getNumberOfCountries() + 4, debug.enabled)
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -65,7 +62,7 @@ isOnline().then(function (online) {
         console.log(err.message)
         process.exit(1)
       }
-      console.log('\nCountries specifications and standards inserted successfully into respective database'.green)
+      console.log('Countries specifications and standards inserted successfully into respective database'.green)
       process.exit(0) // exit successfully
     }
   )
@@ -149,7 +146,7 @@ function populatesTable (next) {
         }
       })
     } else {
-      debug('\nAll insert queries executed successfully')
+      debug('All insert queries executed successfully')
       Bar.tick()
       next()
     }
@@ -178,7 +175,8 @@ function queryForCC (CC, callback) {
     if (err) {
       callback(Error('Error inserting query for ' + CC + '. ' + err.message))
     } else {
-      Bar.tick()
+      debug('Inserting query for ' + CC)
+      Bar.tick({ info: CC })
       callback()
     }
   })

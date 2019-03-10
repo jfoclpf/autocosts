@@ -1,6 +1,6 @@
 /* Node script which populates the costs statistical database tables for each country */
 
-console.log('\nRunning script ', __filename, '\n')
+console.log('Running script ', __filename)
 
 const path = require('path')
 const async = require('async') // module to allow to execute the queries in series
@@ -9,7 +9,6 @@ const isOnline = require('is-online')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const request = require('request') // to make HTTP requests
 const flatten = require('flat')
-const ProgressBar = require('progress')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
 const debug = require('debug')('build:getAvgFromDB')
@@ -33,10 +32,12 @@ const DB_INFO = settings.dataBase.credentials
 // Average Costs table database template
 var AVG_DB_TEMPLATE, DB_TABLE_KEY
 
+console.log('Updating statistics database...')
+
 const BarBigTick = 3
-var Bar = new ProgressBar('[:bar] :percent | :info',
-  { total: commons.getNumberOfCountries() + (USE_MONEY_API ? 5 : 3) * BarBigTick, width: 80 }
-)
+// if debug is enabled disable the progress bar
+
+var Bar = commons.getProgressBar(commons.getNumberOfCountries() + (USE_MONEY_API ? 5 : 3) * BarBigTick, debug.enabled)
 
 // checks for internet connection
 isOnline().then(function (online) {
