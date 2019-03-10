@@ -20,7 +20,7 @@ const colors = require('colors')
 const ProgressBar = require('progress')
 const childProcess = require('child_process')
 const phantomjsPath = require('phantomjs-prebuilt').path // to raster in jpg stats tables
-const debug = require('debug')('app:build')
+const debug = require('debug')('build:generateTables')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
 colors.setTheme(commons.getConsoleColors())

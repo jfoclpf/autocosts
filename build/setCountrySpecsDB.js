@@ -14,7 +14,7 @@ const sortObj = require('sort-object') // to sort JS objects
 const isOnline = require('is-online')
 const colors = require('colors') // eslint-disable-line
 const ProgressBar = require('progress')
-const debug = require('debug')('app:build')
+const debug = require('debug')('build:setCountrySpecsDB')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
 
