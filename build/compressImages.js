@@ -3,21 +3,28 @@ Optimal compression settings were defined by Google from the Page Speed Insights
 
 console.log('\nRunning script ', __filename, '\n')
 
-const im = require('imagemagick')
-const path = require('path')
 const fs = require('fs')
+const path = require('path')
+const find = require('find')
 const async = require('async')
 const walk = require('walk')
+const im = require('imagemagick')
 const colors = require('colors')
+const ProgressBar = require('progress')
+const debug = require('debug')('app:build')
 
 // own module
 const commons = require(path.join(__dirname, '..', 'commons'))
 
 var directories = commons.getDirectories()
-console.log('bin/: ', directories.server.bin)
+debug('bin/: ', directories.server.bin)
 
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
+
+var Bar = new ProgressBar('[:bar] :percent',
+  { total: getNuberOfTotalFiles(), width: 80 }
+)
 
 async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
@@ -29,7 +36,7 @@ async.parallel([compressJPG, compressPNG], function (err, results) {
 })
 
 function compressJPG (callback) {
-  console.log(('\n## Compressing JPG files \n').mainOptionStep)
+  debug(('\n## Compressing JPG files \n').mainOptionStep)
 
   var walker = walk.walk(directories.server.bin)
 
@@ -37,7 +44,7 @@ function compressJPG (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.jpg')) {
-      console.log((path.relative(directories.server.root, filename)).verbose.bold)
+      debug((path.relative(directories.server.root, filename)).verbose.bold)
 
       var params = [ filename,
         '-sampling-factor', '4:2:0',
@@ -53,6 +60,7 @@ function compressJPG (callback) {
           // removes original and renames
           fs.unlinkSync(filename)
           fs.renameSync(filename + '.min', filename)
+          Bar.tick()
           next()
         }
       })
@@ -62,13 +70,13 @@ function compressJPG (callback) {
   })
 
   walker.on('end', function () {
-    console.log('\nAll JPG files compressed\n')
+    debug('\nAll JPG files compressed\n')
     callback()
   })
 }
 
 function compressPNG (callback) {
-  console.log(('\n## Compressing PNG files \n').mainOptionStep)
+  debug(('\n## Compressing PNG files \n').mainOptionStep)
 
   var walker = walk.walk(directories.server.bin)
 
@@ -76,7 +84,7 @@ function compressPNG (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.png')) {
-      console.log((path.relative(directories.server.root, filename)).verbose)
+      debug((path.relative(directories.server.root, filename)).verbose)
 
       var params = [ filename,
         '-strip',
@@ -89,6 +97,7 @@ function compressPNG (callback) {
           // removes original and renames
           fs.unlinkSync(filename)
           fs.renameSync(filename + '.min', filename)
+          Bar.tick()
           next()
         }
       })
@@ -98,7 +107,16 @@ function compressPNG (callback) {
   })
 
   walker.on('end', function () {
-    console.log('\nAll PNG files compressed\n')
+    debug('\nAll PNG files compressed\n')
     callback()
   })
+}
+
+function getNuberOfTotalFiles () {
+  // var numberOfTotalFiles = find.fileSync(/(?<!\.min|vfs_fonts)\.js$$/, directories.bin.client).length
+
+  var numberOfTotalFiles = find.fileSync(/\.jpg$/, directories.server.bin).length
+  numberOfTotalFiles += find.fileSync(/\.png$/, directories.server.bin).length
+
+  return numberOfTotalFiles
 }

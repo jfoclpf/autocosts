@@ -10,8 +10,11 @@ console.log('\nRunning script ', __filename, '\n')
 const fs = require('fs')
 const path = require('path')
 const async = require('async')
+const find = require('find')
 const walk = require('walk')
 const colors = require('colors')
+const ProgressBar = require('progress')
+const debug = require('debug')('app:build')
 
 // minification tools
 const UglifyJS = require('uglify-js')
@@ -24,13 +27,15 @@ const commons = require(path.join(__dirname, '..', 'commons'))
 
 // Main directories got from commons
 var directories = commons.getDirectories()
-var ROOT_DIR = directories.server.root
-var BIN_DIR = directories.server.bin
 
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
-console.log('Minifying files')
+debug('Minifying files')
+
+var Bar = new ProgressBar('[:bar] :percent',
+  { total: getNuberOfTotalFiles(), width: 80 }
+)
 
 async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfiles],
   function (err, results) {
@@ -45,9 +50,9 @@ async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfi
 )
 
 function processJSfiles (callback) {
-  console.log(('## Minifying JS files in ' + path.join('build', 'client')).mainOptionStep)
+  debug(('## Minifying JS files in ' + path.join('build', 'client')).mainOptionStep)
 
-  var walker = walk.walk(path.join(BIN_DIR, directories.client.client))
+  var walker = walk.walk(directories.bin.client)
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
@@ -56,7 +61,7 @@ function processJSfiles (callback) {
     if (getFileExtension(filename) === 'js' &&
            !filename.includes('vfs_fonts.js') &&
            !filename.includes('.min.js')) {
-      console.log((path.relative(ROOT_DIR, filename)).verbose) // removes base directory from file name
+      debug((path.relative(directories.server.root, filename)).verbose) // removes base directory from file name
       var code = fs.readFileSync(filename, 'utf-8')
 
       // file 'Globals.js.hbs' because is a JS file rendered by handlebars
@@ -68,6 +73,7 @@ function processJSfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
+        Bar.tick()
         fs.writeFileSync(filename, result.code, 'utf8')
       }
     }
@@ -79,7 +85,7 @@ function processJSfiles (callback) {
   })
 
   walker.on('end', function () {
-    console.log('All JS files minified')
+    debug('All JS files minified')
     callback()
   })
 }
@@ -87,15 +93,15 @@ function processJSfiles (callback) {
 // minifies all css files on the client side, namely on the build/css/ directory,
 // i.e., these are CSS files that will be sent from the server to the client
 function processCSSFiles (callback) {
-  console.log(('## Minifying CSS files in build/css/').mainOptionStep)
+  debug(('## Minifying CSS files in build/css/').mainOptionStep)
 
-  var walker = walk.walk(directories.bin.css)// dir to walk into
+  var walker = walk.walk(directories.bin.css) // dir to walk into
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.css')) {
-      console.log((path.relative(ROOT_DIR, filename)).verbose)
+      debug((path.relative(directories.server.root, filename)).verbose)
 
       var code = fs.readFileSync(filename, 'utf-8')
       var result = uglifycss.processString(code)
@@ -104,6 +110,7 @@ function processCSSFiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
+        Bar.tick()
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -115,7 +122,7 @@ function processCSSFiles (callback) {
   })
 
   walker.on('end', function () {
-    console.log('All CSS files minified')
+    debug('All CSS files minified')
     callback()
   })
 }
@@ -125,9 +132,9 @@ function processCSSFiles (callback) {
 // i.e., these are handlebars .hbs files that will be rendered as HTML files
 // and then sent from the server to the client/browser
 function processHTMLfiles (callback) {
-  console.log(('## Minifying HTML .hbs files in build/views/').mainOptionStep)
+  debug(('## Minifying HTML .hbs files in build/views/').mainOptionStep)
 
-  var walker = walk.walk(directories.server.bin)// dir to walk into
+  var walker = walk.walk(directories.server.bin) // dir to walk into
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
 
@@ -135,7 +142,7 @@ function processHTMLfiles (callback) {
               !filename.includes('sitemap.hbs') &&
               !filename.includes('.js.hbs') && // excludes js files generated bu handlebars
               !filename.includes('.css.hbs')) { // excludes css files generated bu handlebars
-      console.log((path.relative(ROOT_DIR, filename)).verbose)
+      debug((path.relative(directories.server.root, filename)).verbose)
 
       var code = fs.readFileSync(filename, 'utf-8')
 
@@ -153,6 +160,7 @@ function processHTMLfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
+        Bar.tick()
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -164,22 +172,22 @@ function processHTMLfiles (callback) {
   })
 
   walker.on('end', function () {
-    console.log('All html/hbs files minified')
+    debug('All html/hbs files minified')
     callback()
   })
 }
 
 // minifies all json files on the client side, namely on the build/countries/ directory,
 function processJSONfiles (callback) {
-  console.log(('## Minifying JSON files in build/countries/').mainOptionStep)
+  debug(('## Minifying JSON files in build/countries/').mainOptionStep)
 
-  var walker = walk.walk(directories.bin.countries)// dir to walk into
+  var walker = walk.walk(directories.bin.countries) // dir to walk into
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.json')) {
-      console.log((path.relative(ROOT_DIR, filename)).verbose)
+      debug((path.relative(directories.server.root, filename)).verbose)
 
       var code = fs.readFileSync(filename, 'utf-8')
       var result = jsonminify(code)
@@ -188,6 +196,7 @@ function processJSONfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
+        Bar.tick()
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -199,9 +208,22 @@ function processJSONfiles (callback) {
   })
 
   walker.on('end', function () {
-    console.log('All JSON files minified')
+    debug('All JSON files minified')
     callback()
   })
+}
+
+function getNuberOfTotalFiles () {
+  // all *.js files except *.min.js and except vfs_fonts.js in directories.bin.client
+  var numberOfTotalFiles = find.fileSync(/(?<!\.min|vfs_fonts)\.js$$/, directories.bin.client).length
+
+  numberOfTotalFiles += find.fileSync(/\.css$/, directories.bin.css).length
+
+  // all *.hbs files except *sitemap.hbs and except *.js.hbs and except *.css.hbs
+  numberOfTotalFiles += find.fileSync(/(?<!sitemap|.js|.css)\.hbs$$/, directories.server.bin).length
+
+  numberOfTotalFiles += find.fileSync(/\.json$/, directories.bin.countries).length
+  return numberOfTotalFiles
 }
 
 function getFileExtension (fileName) {

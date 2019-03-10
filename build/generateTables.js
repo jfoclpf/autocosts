@@ -17,8 +17,10 @@ const isOnline = require('is-online')
 const handlebars = require('handlebars') // see why here: https://stackoverflow.com/a/30032819/1243247
 const async = require('async') // module to allow to execute the queries in series
 const colors = require('colors')
+const ProgressBar = require('progress')
 const childProcess = require('child_process')
 const phantomjsPath = require('phantomjs-prebuilt').path // to raster in jpg stats tables
+const debug = require('debug')('app:build')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
 colors.setTheme(commons.getConsoleColors())
@@ -36,6 +38,9 @@ const fileNames = commons.getFileNames()
 const rootDir = commons.getROOT_DIR() // eslint-disable-line
 var settings = commons.getSettings()
 
+// progress bar
+var Bar
+
 // checks for internet connection
 isOnline().then(function (online) {
   if (!online) {
@@ -48,7 +53,7 @@ isOnline().then(function (online) {
   if (!DB_INFO || Object.keys(DB_INFO).length === 0) {
     throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
   }
-  // console.log(DB_INFO)
+  debug(DB_INFO)
 
   // getting country information from
   console.log('Get Countries info from: ' + fileNames.project.countriesListFile)
@@ -60,6 +65,11 @@ isOnline().then(function (online) {
   availableCountries = sortObj(availableCountries)
   delete availableCountries.XX
 
+  var numberOfCountries = Object.keys(availableCountries).length
+  Bar = new ProgressBar('[:bar] :percent | :info',
+    { total: numberOfCountries * 3 + 2, width: 80 }
+  )
+
   async.series([dbConnect, createTables, dbEnd, rasterTables],
     function (err, results) {
       console.log() // breaks a line
@@ -67,7 +77,7 @@ isOnline().then(function (online) {
         console.log(('There was an error: ' + err.message).error)
         process.exit(1)
       }
-      console.log('Creation of html tables and rasterization of jpg tables successfully completed'.green)
+      debug('Creation of html tables and rasterization of jpg tables successfully completed'.green)
       process.exit(0) // exit successfully
     }
   )
@@ -84,7 +94,7 @@ function dbConnect (next) {
     if (err) {
       next(Error('Error connecting to database: ' + err.message))
     } else {
-      console.log('\n', ('User ' + DB_INFO.user + ' connected successfully to database ' +
+      debug('\n', ('User ' + DB_INFO.user + ' connected successfully to database ' +
         DB_INFO.database + ' at ' + DB_INFO.host).green, '\n')
       next()
     }
@@ -93,7 +103,9 @@ function dbConnect (next) {
 
 // main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 function createTables (next) {
-  console.log('Creating html tables on ', directories.bin.tables, '\n')
+  Bar.tick({ info: 'creating html files' })
+
+  debug('Creating html tables on ', directories.bin.tables, '\n')
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
   // async.each runs tasks in parallel
@@ -102,7 +114,7 @@ function createTables (next) {
       db.end()
       next(Error('Error creating tables: ' + err.message))
     } else {
-      console.log('\nAll html tables created')
+      debug('\nAll html tables created')
       next()
     }
   })
@@ -122,7 +134,7 @@ function createTable (CC, callback) {
     }
 
     var statsData = results[0]
-    // console.log(statsData);
+    debug(statsData)
 
     var fileNameOfTemplate = path.join(directories.src.tables, 'template.hbs')
     var templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8')
@@ -183,7 +195,7 @@ function createTable (CC, callback) {
             let errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            process.stdout.write(CC.info + ' ')
+            Bar.tick()
             fsWriteCallback()
           }
         })// fs.writeFile
@@ -196,7 +208,8 @@ function createTable (CC, callback) {
             let errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            process.stdout.write(CC.verbose + ' ')
+            // process.stdout.write(CC.verbose + ' ')
+            Bar.tick()
             fsWriteCallback()
           }
         })// fs.writeFile
@@ -227,8 +240,10 @@ function dbEnd (next) {
 // main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 // Runs PhantomJS script to raster the tables, only after the HTML.hbs generation was completed
 function rasterTables (next) {
-  console.log('Rasterizing JPG tables using phantomjs')
-  console.log('phantomjs path: ' + phantomjsPath + '\n')
+  debug('Rasterizing JPG tables using phantomjs')
+  debug('phantomjs path: ' + phantomjsPath + '\n')
+
+  Bar.tick({ info: 'rastering tables' })
 
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
@@ -236,7 +251,7 @@ function rasterTables (next) {
     if (err) {
       next(Error('Error rasterizing tables: ' + err.message))
     } else {
-      console.log('\nAll tables created')
+      debug('\nAll tables created')
       next()
     }
   })
@@ -265,14 +280,14 @@ function rasterTable (CC, callback) {
       callback(Error(errMsg))
       return
     }
-    // console.log((path.relative(rootDir, childArgs[1]) + " => " + path.relative(rootDir, childArgs[2])).verbose);
+    debug((path.relative(rootDir, childArgs[1]) + ' => ' + path.relative(rootDir, childArgs[2])).verbose)
 
     // delete jpg.html file because it was temporary and merely to render jpg file
     fs.unlink(childArgs[1], function (err) {
       if (err) {
         callback(Error('error deleting file ' + childArgs[1] + '. ' + err.message))
       } else {
-        process.stdout.write(CC + ' ')
+        Bar.tick()
         callback()
       }
     })
