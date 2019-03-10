@@ -13,6 +13,8 @@ const mysql = require('mysql') // module to get info from database
 const sortObj = require('sort-object') // to sort JS objects
 const isOnline = require('is-online')
 const colors = require('colors') // eslint-disable-line
+const ProgressBar = require('progress')
+const debug = require('debug')('app:build')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
 
@@ -27,6 +29,10 @@ commons.init()
 var directories = commons.getDirectories()
 var settings = commons.getSettings()
 
+var Bar = new ProgressBar('[:bar] :percent',
+  { total: commons.getNumberOfCountries() + 4, width: 80 }
+)
+
 // checks for internet connection
 isOnline().then(function (online) {
   if (!online) {
@@ -39,13 +45,13 @@ isOnline().then(function (online) {
   if (!DB_INFO || Object.keys(DB_INFO).length === 0) {
     throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
   }
-  // console.log(DB_INFO)
+  debug(DB_INFO)
 
   // getting country information from
   const fileNames = commons.getFileNames()
 
   // getting country information from
-  console.log('\nGet Countries info from: ' + fileNames.project.countriesListFile)
+  debug('\nGet Countries info from: ' + fileNames.project.countriesListFile)
   var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries
 
@@ -59,7 +65,7 @@ isOnline().then(function (online) {
         console.log(err.message)
         process.exit(1)
       }
-      console.log('Countries specifications and standards inserted successfully into respective database'.green)
+      console.log('\nCountries specifications and standards inserted successfully into respective database'.green)
       process.exit(0) // exit successfully
     }
   )
@@ -77,8 +83,9 @@ function dbConnects (next) {
     if (err) {
       next(Error('Error connecting to database: ' + err.message))
     } else {
-      console.log(('User ' + DB_INFO.user + ' connected successfully to database ' +
+      debug(('User ' + DB_INFO.user + ' connected successfully to database ' +
         DB_INFO.database + ' at ' + DB_INFO.host).green)
+      Bar.tick()
       next()
     }
   })
@@ -87,7 +94,7 @@ function dbConnects (next) {
 // main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 // creates table if nonexistent
 function createTable (next) {
-  console.log('Creating table if nonexistent: ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs.mainOption +
+  debug('Creating table if nonexistent: ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs.mainOption +
                     ' ' + 'before populating it with country specs')
 
   var queryCreate = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.country_specs +
@@ -104,6 +111,7 @@ function createTable (next) {
       db.end()
       next(Error('Error on db query (creatign table): ' + err.message))
     } else {
+      Bar.tick()
       next()
     }
   })
@@ -111,17 +119,18 @@ function createTable (next) {
 
 // main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function createTableKey (next) {
-  console.log('Creating table keys')
+  debug('Creating table keys')
 
   var querySetKey = 'CREATE UNIQUE INDEX `Country` ON ' + DB_INFO.db_tables.country_specs + '(`Country`);'
 
   var dbQuery = querySetKey
   db.query(dbQuery, function (err, results, fields) {
     if (err) {
-      console.log('Keys were already present')
+      debug('Keys were already present')
     } else {
-      console.log('Keys created')
+      debug('Keys created')
     }
+    Bar.tick()
     next()
   })
 }
@@ -140,16 +149,17 @@ function populatesTable (next) {
         }
       })
     } else {
-      console.log('\nAll insert queries executed successfully')
+      debug('\nAll insert queries executed successfully')
+      Bar.tick()
       next()
     }
   })
 }
 
 function queryForCC (CC, callback) {
-  let WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
+  var WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
 
-  let queryCC = 'REPLACE INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
+  var queryCC = 'REPLACE INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
     'Country, ' +
     'currency, ' +
     'distance_std, ' +
@@ -168,7 +178,7 @@ function queryForCC (CC, callback) {
     if (err) {
       callback(Error('Error inserting query for ' + CC + '. ' + err.message))
     } else {
-      process.stdout.write(CC + ' ')
+      Bar.tick()
       callback()
     }
   })
@@ -180,6 +190,7 @@ function dbEnd (next) {
     if (err) {
       next(Error('Error ending connection' + err.message))
     } else {
+      Bar.tick()
       next()
     }
   })

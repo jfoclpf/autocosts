@@ -2,7 +2,6 @@
 
 console.log('\nRunning script ', __filename, '\n')
 
-// includes
 const path = require('path')
 const async = require('async') // module to allow to execute the queries in series
 const mysql = require('mysql') // module to get info from database
@@ -10,9 +9,10 @@ const isOnline = require('is-online')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const request = require('request') // to make HTTP requests
 const flatten = require('flat')
-const cliProgress = require('cli-progress')
+const ProgressBar = require('progress')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
+const debug = require('debug')('app:build')
 
 const release = commons.getRelease()
 const USE_MONEY_API = release !== 'test'
@@ -32,6 +32,11 @@ const DB_INFO = settings.dataBase.credentials
 
 // Average Costs table database template
 var AVG_DB_TEMPLATE, DB_TABLE_KEY
+
+const BarBigTick = 3
+var Bar = new ProgressBar('[:bar] :percent | :info',
+  { total: commons.getNumberOfCountries() + (USE_MONEY_API ? 5 : 3) * BarBigTick, width: 80 }
+)
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -67,7 +72,7 @@ isOnline().then(function (online) {
     }
 
     AVG_DB_TEMPLATE = Object.assign(AVG_DB_TEMPLATE, objectWithCalculatedAverages) // concatenates objects
-    // console.log(AVG_DB_TEMPLATE); process.exit();
+    debug(AVG_DB_TEMPLATE)
   }())
 
   // detect for null or empty object
@@ -101,7 +106,7 @@ isOnline().then(function (online) {
         return // this MUST be here
       }
 
-      console.log('\nLoad exchange rates via API on openexchangerates.org')
+      debug('\nLoad exchange rates via API on openexchangerates.org')
 
       let MoneyApiId = settings.money.ApiId
       let ApiUrl = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId
@@ -118,6 +123,8 @@ isOnline().then(function (online) {
           let result = JSON.parse(body)
           fx.rates = result.rates
           fx.base = result.base
+
+          Bar.tick(BarBigTick, { info: 'Loaded exchange rates API' })
           next()
         } else {
           console.error('Error loading money API')
@@ -130,16 +137,17 @@ isOnline().then(function (online) {
     // creates database connection and connects
     function (next) {
       db = mysql.createConnection(DB_INFO)
-      console.log('\nGetting the set of different countries from: ' +
+      debug('\nGetting the set of different countries from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.country_specs)
 
       db.connect(function (err) {
         if (err) {
           next(Error(err))
         } else {
-          console.log(('User ' + DB_INFO.user + ' connected successfully to database ' +
+          debug(('User ' + DB_INFO.user + ' connected successfully to database ' +
             DB_INFO.database + ' at ' + DB_INFO.host).green)
-          // console.log(DB_INFO);
+          debug(DB_INFO)
+          Bar.tick(BarBigTick, { info: 'Created sql connection' })
           next()
         }
       })
@@ -148,8 +156,6 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Get the set of different countries and the corresponding specifications/standards
     function (next) {
-      // console.log("database login data: "); console.log(DB_INFO);
-
       db.query('SELECT * FROM ' + DB_INFO.db_tables.country_specs, function (err, results, fields) {
         if (err) {
           next(Error(err))
@@ -160,8 +166,9 @@ isOnline().then(function (online) {
               countries.push(results[i])
             }
           }
-          // console.log(countries);
+          debug(countries)
           // countries[i]: {Country: 'UK', currency: 'GBP', distance_std: 2, fuel_efficiency_std: 3, fuel_price_volume_std: 1 }
+          Bar.tick(BarBigTick, { info: 'Loaded countries standards' })
           next()
         }
       })
@@ -170,7 +177,7 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Get users unique ID
     function (next) {
-      console.log('Getting users unique IDs from: ' +
+      debug('Getting users unique IDs from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT DISTINCT uuid_client, country FROM ' + DB_INFO.db_tables.users_insertions,
@@ -183,7 +190,8 @@ isOnline().then(function (online) {
             for (var i = 0; i < results.length; i++) {
               uniqueUsers.push(results[i])
             }
-            // console.log(uniqueUsers);
+            debug(uniqueUsers)
+            Bar.tick(BarBigTick, { info: 'Loaded unique users' })
             next()
           }
         }
@@ -193,7 +201,7 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Get all data from users input database
     function (next) {
-      console.log('Getting all user insertion data from: ' +
+      debug('Getting all user insertion data from: ' +
         DB_INFO.database + '->' + DB_INFO.db_tables.users_insertions)
 
       db.query('SELECT * FROM ' + DB_INFO.db_tables.users_insertions, function (err, results, fields) {
@@ -205,7 +213,8 @@ isOnline().then(function (online) {
           for (var i = 0; i < results.length; i++) {
             AllUserInputDb.push(results[i])
           }
-          // console.log(AllUserInputDb);
+          debug(AllUserInputDb)
+          Bar.tick(BarBigTick, { info: 'Loaded all users' })
           next()
         }
       })
@@ -214,16 +223,9 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Calculates statistical average costs for each country and builds SQL query
     function (next) {
-      console.log('Calculating statistical data...')
-
       var numberOfCountries = countries.length
       var numberOfUniqueUsers = uniqueUsers.length
       var numberOfTotalUserInputs = AllUserInputDb.length
-
-      // create a new progress bar instance and use shades_classic theme
-      const progressBar = new cliProgress.Bar({}, cliProgress.Presets.shades_classic)
-
-      progressBar.start(numberOfCountries - 1, 0)
 
       // queries header
       queryInsert = getInsertDataQueryHeader('monthly_costs_statistics')
@@ -235,12 +237,10 @@ isOnline().then(function (online) {
       // builds the query to insert all the vaules for each country
       // sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
       for (let i = 0; i < numberOfCountries; i++) {
-        progressBar.update(i)
-
         let countryCode = countries[i].Country
         let currency = countries[i].currency
 
-        // process.stdout.write(countryCode + ' ')
+        Bar.tick({ info: 'Calculating statistics for ' + countryCode })
 
         let countryUsers = [] // array with unique users for selected countries[i]
         let countryData = [] // array with everything for selected countries[i]
@@ -272,7 +272,7 @@ isOnline().then(function (online) {
           countryData,
           countryObject,
           USE_MONEY_API ? fx : null)
-        // console.log(JSON.stringify(statisticsResults, null, 4));
+        debug(JSON.stringify(statisticsResults, null, 4))
 
         // add computed data to countries array of objects
         countries[i].validUsers = statisticsResults.validUsers
@@ -294,10 +294,7 @@ isOnline().then(function (online) {
           queryInsertNorm += i !== numberOfCountries - 1 ? ', ' : ''
         }
       }
-      // console.log(sqlFormatter.format(queryInsert)); process.exit();
-
-      progressBar.stop()
-      consoleLogTheFinalAverages(countries)
+      debug(sqlFormatter.format(queryInsert))
 
       next()
     },
@@ -349,7 +346,10 @@ isOnline().then(function (online) {
         process.exit(1)
       })
     }
+
+    consoleLogTheFinalAverages(countries)
     console.log('All the statistics have been computed successfully and updated into database'.green)
+
     process.exit(0)
   })
 }).catch(function (err) {
@@ -373,7 +373,7 @@ function getInsertDataQueryHeader (tableParameter) {
 
   // builds sql query Header based on database table template
   var queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false) // false removes quotes from strings
-  // console.log(queriesHeader); process.exit();
+  debug(queriesHeader)
 
   query += queriesHeader + 'VALUES '
 
@@ -441,7 +441,7 @@ function createTableAndKeyToInsertData (query, table, callback) {
 }
 
 function createDatabaseTable (table, callback) {
-  console.log('Creating new database table if nonexistent: ', table)
+  debug('Creating new database table if nonexistent: ', table)
 
   let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + table + ' '
 
@@ -451,20 +451,20 @@ function createDatabaseTable (table, callback) {
   }
 
   createTableQuery += sqlStringFromArray(arrayOfEntries, false)
-  // console.log(sqlFormatter.format(createTableQuery)); process.exit();
+  debug(sqlFormatter.format(createTableQuery))
 
   db.query(createTableQuery, function (err, results, fields) {
     if (err) {
       callback(Error(err))
     } else {
-      console.log('Table created if nonexistent: ' + table)
+      debug('Table created if nonexistent: ' + table)
       callback()
     }
   })
 }
 
 function createDatabaseTableKey (table, callback) {
-  console.log("Creating key '" + DB_TABLE_KEY + "' on table: ", table)
+  debug("Creating key '" + DB_TABLE_KEY + "' on table: ", table)
 
   var querySetKey = 'CREATE UNIQUE INDEX `' + DB_TABLE_KEY +
     '` ON ' + table + '(`' + DB_TABLE_KEY + '`);'
@@ -473,9 +473,9 @@ function createDatabaseTableKey (table, callback) {
     if (err) {
       // mysql returns error when keys are already present
       // on the table and this query is executed
-      console.log('Key was already present')
+      debug('Key was already present')
     } else {
-      console.log("Key '" + DB_TABLE_KEY + "' created on table: ", table)
+      debug("Key '" + DB_TABLE_KEY + "' created on table: ", table)
     }
     callback()
   })
@@ -483,7 +483,7 @@ function createDatabaseTableKey (table, callback) {
 
 // executes the query into the chosen table, verbosing calculated data
 function insertCalculatedDataIntoTable (query, table, callback) {
-  console.log('Inserting new calculated data into table: ', table)
+  debug('Inserting new calculated data into table: ', table)
 
   db.query(query, function (err, results, fields) {
     if (err) {
@@ -491,7 +491,8 @@ function insertCalculatedDataIntoTable (query, table, callback) {
       console.error(sqlFormatter.format(err.sql))
       callback(Error(err))
     } else {
-      console.log('All new data successfully added into table: ', table)
+      debug('All new data successfully added into table: ', table)
+      Bar.tick(BarBigTick, { info: 'New stats data successfully added' })
       callback()
     }
   })
@@ -548,6 +549,4 @@ function consoleLogTheFinalAverages (countries) {
             ' | ' + ('            ' + (countries[i].validUsers / countries[i].totalUsers * 100).toFixed(1) + '%').slice(-11) +
             ' | ' + ('               ' + (countries[i].validUsers / totalValidUsers * 100).toFixed(1) + '%').slice(-14))
   }
-
-  console.log('\nData calculated and database query built')
 }
