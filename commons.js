@@ -58,39 +58,27 @@ module.exports = {
     return FILENAMES
   },
 
-  getDomainsObject: function (domainsCountries) {
-    return _getDomainsObject(domainsCountries)
-  },
+  getDomainsObject: getDomainsObject,
 
-  getUniqueArray: function (Arr) {
-    return _getUniqueArray(Arr)
-  },
+  getUniqueArray: getUniqueArray,
 
-  getKeyByValue: function (object, value) {
-    return _getKeyByValue(object, value)
-  },
+  getKeyByValue: getKeyByValue,
 
-  getCClistOnStr: function (availableCT) {
-    return getCClistOnStr(availableCT)
-  },
+  getCClistOnStr: getCClistOnStr,
 
-  getDataBaseErrMsg: function (scriptName, serviceObj) {
-    return _getDataBaseErrMsg(scriptName, serviceObj)
-  },
+  getDataBaseErrMsg: getDataBaseErrMsg,
 
-  getConsoleColors: function () {
-    return _getConsoleColors()
-  },
+  getConsoleColors: getConsoleColors,
 
-  checkForInternet: function () {
-    _checkForInternet()
-  },
+  checkForInternet: checkForInternet,
 
-  extractHostname: function (url) {
-    return _extractHostname(url)
-  },
+  extractHostname: extractHostname,
 
-  runNodeScriptSync: runNodeScriptSync
+  runNodeScriptSync: runNodeScriptSync,
+
+  getCountriesObj: getCountriesObj,
+
+  getNumberOfCountries: getNumberOfCountries
 }
 
 /***************************************************************************************************/
@@ -110,7 +98,7 @@ const isOnline = require('is-online')
 const flat = require('flat')
 const debug = require('debug')('app:commons')
 
-colors.setTheme(_getConsoleColors())
+colors.setTheme(getConsoleColors())
 
 // initialization
 function _init () {
@@ -247,7 +235,7 @@ function _init () {
     'defaultCountry': defaultCountry
   }
 
-  _checkForInternet()
+  checkForInternet()
 
   // reads data from JSON file with credentials for each service (in directory credentials/)
   var credentialsFileName
@@ -269,7 +257,7 @@ function _init () {
     var serviceObj = SETTINGS[service]
     if (typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled) {
       if (!fs.existsSync(credentialsFileName)) {
-        throw _getNoServiceErrMsg(serviceObj, credentialsFileName)
+        throw getNoServiceErrMsg(serviceObj, credentialsFileName)
       }
       var credentialsData = JSON.parse(fs.readFileSync(credentialsFileName))
 
@@ -277,13 +265,13 @@ function _init () {
         var dataStr = credentialsData[serviceObj.name][serviceObj.propName]
         // check if string is valid (no just whitespaces or asterisks)
         if (!isValidCredentialString(dataStr)) {
-          throw _getNoServiceErrMsg(serviceObj, credentialsFileName)
+          throw getNoServiceErrMsg(serviceObj, credentialsFileName)
         }
         serviceObj[serviceObj.propName] = dataStr
       } else if (serviceObj.propType === 'object') { // if service data is an object (normally applies to dataBase)
         var dataObj = credentialsData[serviceObj.name]
         if (!isValidCredentialString(dataObj)) {
-          throw _getNoServiceErrMsg(serviceObj, credentialsFileName)
+          throw getNoServiceErrMsg(serviceObj, credentialsFileName)
         }
         serviceObj[serviceObj.propName] = Object.assign({}, dataObj) // clone object
       } else {
@@ -452,13 +440,13 @@ function setROOT_DIR () { // eslint-disable-line camelcase
         (process.release.name.search(/node|io.js/) !== -1)) { // node
     // the root directory of the project is where this file is stored
     rootDir = path.resolve(__dirname, '.')
-    console.log('Node is running. ROOT_DIR: ' + rootDir)
+    debug('Node is running. ROOT_DIR: ' + rootDir)
   } else { // PhantomJS?
     try {
       // considering the phantom is called from build/
       // it needs to go back to the parent directory to get the root directory of the project
       rootDir = fs.absolute('../')
-      console.log('Phantom is running. ROOT_DIR: ' + rootDir)
+      debug('Phantom is running. ROOT_DIR: ' + rootDir)
     } catch (err) {
       throw Error('Engine not recognized, nor NodeJS nor PhantomJS')
     }
@@ -486,7 +474,7 @@ function setCdnOrLocalFiles (isCDN) {
 
 // checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics"
 // options are selected. These options require Internet and thus disables them
-function _checkForInternet () {
+function checkForInternet () {
   // bin/index.js services demanding Internet
   var demandingInternet = ['uber', 'cdn', 'social', 'dataBase', 'googleCaptcha', 'googleAnalytics']
 
@@ -534,9 +522,29 @@ function _checkForInternet () {
   }
 }
 
+function getCountriesObj () {
+  if (isEmptyOrInvalidObj(FILENAMES)) {
+    setFILENAMES()
+  }
+
+  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
+  var availableCountries = countriesInfo.availableCountries
+  return availableCountries
+}
+
+function getNumberOfCountries () {
+  if (isEmptyOrInvalidObj(FILENAMES)) {
+    setFILENAMES()
+  }
+
+  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
+  var numberOfCountries = Object.keys(countriesInfo.availableCountries).length
+  return numberOfCountries
+}
+
 // gets Array with unique non-repeated values
 // ex: [2,2,3,4,4] returns [2,3,4]
-function _getUniqueArray (Arr) {
+function getUniqueArray (Arr) {
   var newArr = (Object.values(Arr))
     .filter(function (x, i, a) {
       return a.indexOf(x) === i
@@ -546,7 +554,7 @@ function _getUniqueArray (Arr) {
 }
 
 // get Key by Value, ex: var hash = {foo: 1, bar: 2}; getKeyByValue(hash, 2); => 'bar'
-function _getKeyByValue (object, value) {
+function getKeyByValue (object, value) {
   var key = Object.keys(object)
     .find(function (key) {
       return object[key] === value
@@ -598,7 +606,7 @@ function getArgvHelpMsg () {
   return messg
 }
 
-function _getNoServiceErrMsg (serviceObj, fileName) {
+function getNoServiceErrMsg (serviceObj, fileName) {
   var messg = '\nConsidering you enabled the ' + serviceObj.name +
                 " services and you're using the release '" + RELEASE + "', " +
                 'you have to either:\n' +
@@ -609,7 +617,7 @@ function _getNoServiceErrMsg (serviceObj, fileName) {
   return messg
 }
 
-function _getDataBaseErrMsg (scriptName, serviceObj) {
+function getDataBaseErrMsg (scriptName, serviceObj) {
   var messg = '\nThis building script ' + scriptName + ' needs the Database credentials to run, therefore:\n' +
                 '- enable the Database option (--dataBase) and provide also its credentials on ' +
                 serviceObj.filePath + ', or\n' +
@@ -618,7 +626,7 @@ function _getDataBaseErrMsg (scriptName, serviceObj) {
   return messg
 }
 
-function _getConsoleColors () {
+function getConsoleColors () {
   var colorsTheme = {
     mainOption: ['yellow', 'bold'],
     mainOptionStep: ['blue', 'bold'],
@@ -638,7 +646,7 @@ function _getConsoleColors () {
 }
 
 // returns an object with several different information about the domains
-function _getDomainsObject (domainsCountries) {
+function getDomainsObject (domainsCountries) {
   if (!domainsCountries) {
     let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
     domainsCountries = countriesInfo.domainsCountries
@@ -646,7 +654,7 @@ function _getDomainsObject (domainsCountries) {
 
   var domainsObj = {}
   domainsObj.countries = domainsCountries // Object that associates a Country Code (CC) with a domain
-  domainsObj.uniqueArr = _getUniqueArray(domainsCountries) // Array with unique domain names
+  domainsObj.uniqueArr = getUniqueArray(domainsCountries) // Array with unique domain names
 
   var counts = {}
   var arr = Object.values(domainsCountries)
@@ -695,7 +703,7 @@ function isValidCredentialString (data) {
 }
 
 // extract hostname/domain from url
-function _extractHostname (url) {
+function extractHostname (url) {
   var hostname
   // find & remove protocol (http, ftp, etc.) and get hostname
 
