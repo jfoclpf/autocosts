@@ -9,26 +9,38 @@ const async = require('async')
 const request = require('request')
 const { fork } = require('child_process')
 const validator = require('html-validator')
+const ProgressBar = require('progress')
+const debug = require('debug')('test:validateHtml')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
 commons.setRelease('test')
+
 const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
+
+// ['/stats', '/list', '/PT', '/US', '/AU', etc.]
+var PathnamesToValidateArr = getPathnamesToValidate()
+
+var Bar = new ProgressBar('[:bar] :percent :pathname',
+  { total: PathnamesToValidateArr.length + 1, width: 80 }
+)
 
 async.series([startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
     if (results[0].httpLocalServer) {
-      console.log('Closing http server')
+      debug('Closing http server')
       results[0].httpLocalServer.kill('SIGINT')
     }
     if (err) {
       console.log(Error(err))
       process.exit(1)
     } else {
-      console.log('All pages validated correctly'.green)
+      Bar.tick({ pathname: '' })
+      Bar.terminate()
+      console.log('All html/hbs pages validated correctly'.green)
       process.exit(0)
     }
   })
@@ -45,7 +57,7 @@ function startsHttpServer (callback) {
     }
     httpLocalServer = fork(index, parameters, options)
     httpLocalServer.on('message', message => {
-      console.log('message from child:', message)
+      debug('message from child:', message)
       if (message.includes('SERVER_STARTED')) {
         callback(null, { httpLocalServer: httpLocalServer })
       }
@@ -55,8 +67,8 @@ function startsHttpServer (callback) {
   }
 }
 
-// validates html code of pages using validator.w3.org/nu
-function validateHtmlOnAllPages (next) {
+// returns ['/stats', '/list', '/PT', '/US', '/AU', etc.]
+function getPathnamesToValidate () {
   var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
   var availableCountries = countriesInfo.availableCountries
 
@@ -67,13 +79,16 @@ function validateHtmlOnAllPages (next) {
   for (let i = 0; i < numberOfCountries; i++) {
     pathnames.push('/' + countryCodesArray[i])
   }
-  // pathnames = ['/stats', '/list', '/PT', '/US', '/AU', etc.]
+  return pathnames
+}
 
-  async.each(pathnames, validatePage, function (err) {
+// validates html code of pages using validator.w3.org/nu
+function validateHtmlOnAllPages (next) {
+  async.each(PathnamesToValidateArr, validatePage, function (err) {
     if (err) {
       next(Error('Error validating html on pages: ' + err.message))
     } else {
-      console.log('\nAll html pages validated')
+      debug('All html pages validated')
       next()
     }
   })
@@ -107,7 +122,8 @@ function validatePage (pathname, callback) {
           console.log(`Warning on ${url}\n`.error, result)
           callback(Error('Found html warning'))
         } else {
-          process.stdout.write(pathname.green + ' ')
+          debug(pathname)
+          Bar.tick({ pathname: pathname })
           callback()
         }
       })
