@@ -4,7 +4,7 @@
   the server to the client. It also concatenates somes files, for better bandwith performance
 */
 
-console.log('\nRunning script ', __filename, '\n')
+console.log('Running script ', __filename)
 
 // node/npm includes
 const fs = require('fs')
@@ -13,7 +13,6 @@ const async = require('async')
 const find = require('find')
 const walk = require('walk')
 const colors = require('colors')
-const ProgressBar = require('progress')
 const debug = require('debug')('build:minifyFiles')
 
 // minification tools
@@ -32,10 +31,7 @@ var directories = commons.getDirectories()
 colors.setTheme(commons.getConsoleColors())
 
 debug('Minifying files')
-
-var Bar = new ProgressBar('[:bar] :percent',
-  { total: getNuberOfTotalFiles(), width: 80 }
-)
+var Bar = commons.getProgressBar(getNuberOfTotalFiles(), debug.enabled)
 
 async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfiles],
   function (err, results) {
@@ -61,7 +57,6 @@ function processJSfiles (callback) {
     if (getFileExtension(filename) === 'js' &&
            !filename.includes('vfs_fonts.js') &&
            !filename.includes('.min.js')) {
-      debug((path.relative(directories.server.root, filename)).verbose) // removes base directory from file name
       var code = fs.readFileSync(filename, 'utf-8')
 
       // file 'Globals.js.hbs' because is a JS file rendered by handlebars
@@ -73,7 +68,8 @@ function processJSfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        Bar.tick()
+        let fileRelativePath = path.relative(directories.server.root, filename)
+        Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result.code, 'utf8')
       }
     }
@@ -101,8 +97,6 @@ function processCSSFiles (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.css')) {
-      debug((path.relative(directories.server.root, filename)).verbose)
-
       var code = fs.readFileSync(filename, 'utf-8')
       var result = uglifycss.processString(code)
 
@@ -110,7 +104,8 @@ function processCSSFiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        Bar.tick()
+        let fileRelativePath = path.relative(directories.server.root, filename)
+        Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -142,8 +137,6 @@ function processHTMLfiles (callback) {
               !filename.includes('sitemap.hbs') &&
               !filename.includes('.js.hbs') && // excludes js files generated bu handlebars
               !filename.includes('.css.hbs')) { // excludes css files generated bu handlebars
-      debug((path.relative(directories.server.root, filename)).verbose)
-
       var code = fs.readFileSync(filename, 'utf-8')
 
       var result = minifyHTML(code, {
@@ -160,7 +153,8 @@ function processHTMLfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        Bar.tick()
+        let fileRelativePath = path.relative(directories.server.root, filename)
+        Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -187,8 +181,6 @@ function processJSONfiles (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.json')) {
-      debug((path.relative(directories.server.root, filename)).verbose)
-
       var code = fs.readFileSync(filename, 'utf-8')
       var result = jsonminify(code)
 
@@ -196,7 +188,8 @@ function processJSONfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        Bar.tick()
+        let fileRelativePath = path.relative(directories.server.root, filename)
+        Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -214,7 +207,7 @@ function processJSONfiles (callback) {
 }
 
 function getNuberOfTotalFiles () {
-  // all *.js files except *.min.js and except vfs_fonts.js in directories.bin.client
+  // all *.js files except *.min.js and except *vfs_fonts.js in directories.bin.client
   var numberOfTotalFiles = find.fileSync(/(?<!\.min|vfs_fonts)\.js$$/, directories.bin.client).length
 
   numberOfTotalFiles += find.fileSync(/\.css$/, directories.bin.css).length
@@ -223,6 +216,7 @@ function getNuberOfTotalFiles () {
   numberOfTotalFiles += find.fileSync(/(?<!sitemap|.js|.css)\.hbs$$/, directories.server.bin).length
 
   numberOfTotalFiles += find.fileSync(/\.json$/, directories.bin.countries).length
+
   return numberOfTotalFiles
 }
 

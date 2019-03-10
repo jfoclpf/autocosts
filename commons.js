@@ -78,7 +78,9 @@ module.exports = {
 
   getCountriesObj: getCountriesObj,
 
-  getNumberOfCountries: getNumberOfCountries
+  getNumberOfCountries: getNumberOfCountries,
+
+  getProgressBar: getProgressBar
 }
 
 /***************************************************************************************************/
@@ -249,7 +251,7 @@ function _init () {
     throw Error('Unkown Release ' + RELEASE)
   }
 
-  console.log(credentialsFileName)
+  debug(credentialsFileName)
 
   // fills missing information, for each service corresponding property: "url", "token", "secretKey", etc.
   // gets the information from the credentials JSON file
@@ -515,7 +517,7 @@ function checkForInternet () {
           process.stdout.write('No services disabled\n')
         }
       } else {
-        console.log('The server is online'.info)
+        debug('The server is online')
         if (EVENTEMITTER) { EVENTEMITTER.emit('onlineStatus', true) }
       }
     })
@@ -734,4 +736,15 @@ function runNodeScriptSync (scriptPath, args) {
     console.log(Error(errMsg + '\n' + err))
     process.exit(1)
   }
+}
+
+function getProgressBar (totalNumberOfTicks, muted) {
+  var Bar
+  if (!muted) {
+    let ProgressBar = require('progress')
+    Bar = new ProgressBar('[:bar] :percent :info', { total: totalNumberOfTicks, width: 80 })
+  } else {
+    Bar = { tick: function () {}, terminate: function () {} }
+  }
+  return Bar
 }

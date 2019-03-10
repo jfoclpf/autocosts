@@ -6,7 +6,7 @@
  permament JPG file accessible via tables/XX.jpg, and another permanent html file that is publicly accessible via tables/XX.html
 */
 
-console.log('\nRunning script ', __filename, '\n')
+console.log('Running script ', __filename)
 
 // includes
 const fs = require('fs')
@@ -17,7 +17,6 @@ const isOnline = require('is-online')
 const handlebars = require('handlebars') // see why here: https://stackoverflow.com/a/30032819/1243247
 const async = require('async') // module to allow to execute the queries in series
 const colors = require('colors')
-const ProgressBar = require('progress')
 const childProcess = require('child_process')
 const phantomjsPath = require('phantomjs-prebuilt').path // to raster in jpg stats tables
 const debug = require('debug')('build:generateTables')
@@ -56,7 +55,7 @@ isOnline().then(function (online) {
   debug(DB_INFO)
 
   // getting country information from
-  console.log('Get Countries info from: ' + fileNames.project.countriesListFile)
+  debug('Get Countries info from: ' + fileNames.project.countriesListFile)
   var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries // global
   domainsCountries = countriesInfo.domainsCountries
@@ -66,9 +65,7 @@ isOnline().then(function (online) {
   delete availableCountries.XX
 
   var numberOfCountries = Object.keys(availableCountries).length
-  Bar = new ProgressBar('[:bar] :percent | :info',
-    { total: numberOfCountries * 3 + 2, width: 80 }
-  )
+  Bar = commons.getProgressBar(numberOfCountries * 3 + 2, debug.enabled)
 
   async.series([dbConnect, createTables, dbEnd, rasterTables],
     function (err, results) {
@@ -103,9 +100,9 @@ function dbConnect (next) {
 
 // main function from async.series([dbConnect, createTables, dbEnd, rasterTables])
 function createTables (next) {
-  Bar.tick({ info: 'creating html files' })
+  Bar.tick({ info: 'Creating html files' })
 
-  debug('Creating html tables on ', directories.bin.tables, '\n')
+  debug('Creating html tables on ', directories.bin.tables)
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
   // async.each runs tasks in parallel
@@ -114,7 +111,7 @@ function createTables (next) {
       db.end()
       next(Error('Error creating tables: ' + err.message))
     } else {
-      debug('\nAll html tables created')
+      debug('All html tables created')
       next()
     }
   })
@@ -195,7 +192,8 @@ function createTable (CC, callback) {
             let errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            Bar.tick()
+            let filePathRelative = path.relative(rootDir, htmlPermanentFilePath)
+            Bar.tick({ info: filePathRelative }); debug(filePathRelative)
             fsWriteCallback()
           }
         })// fs.writeFile
@@ -208,8 +206,8 @@ function createTable (CC, callback) {
             let errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            // process.stdout.write(CC.verbose + ' ')
-            Bar.tick()
+            let filePathRelative = path.relative(rootDir, htmlFilePathToRenderInJpg)
+            Bar.tick({ info: filePathRelative }); debug(filePathRelative)
             fsWriteCallback()
           }
         })// fs.writeFile
@@ -243,7 +241,7 @@ function rasterTables (next) {
   debug('Rasterizing JPG tables using phantomjs')
   debug('phantomjs path: ' + phantomjsPath + '\n')
 
-  Bar.tick({ info: 'rastering tables' })
+  Bar.tick({ info: 'Rastering tables' })
 
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
@@ -251,7 +249,7 @@ function rasterTables (next) {
     if (err) {
       next(Error('Error rasterizing tables: ' + err.message))
     } else {
-      debug('\nAll tables created')
+      debug('All tables created')
       next()
     }
   })
@@ -287,7 +285,8 @@ function rasterTable (CC, callback) {
       if (err) {
         callback(Error('error deleting file ' + childArgs[1] + '. ' + err.message))
       } else {
-        Bar.tick()
+        let filePathRelative = path.relative(rootDir, imageFilePath)
+        Bar.tick({ info: filePathRelative }); debug(filePathRelative)
         callback()
       }
     })
