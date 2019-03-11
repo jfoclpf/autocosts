@@ -2,6 +2,9 @@
   validate JS files syntax using both standardJS (https://standardjs.com/) and jshint (https://jshint.com/)
 */
 
+console.log('Running script ', __filename)
+console.log('Validating js files...')
+
 const fs = require('fs')
 const path = require('path')
 const walk = require('walk')

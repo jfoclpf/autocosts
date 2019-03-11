@@ -28,11 +28,13 @@ const transferData = require(fileNames.project['transferData.js'])
 const calculator = require(fileNames.project['calculator.js'])
 
 testCalculatorFunction(function () {
-  console.log('Validating js files...')
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js'))
-  console.log('Validating html/hbs pages...')
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
+  commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
+
+  console.log('All tests ran successfully'.green)
+  process.exit(0)
 })
 
 // eof main script

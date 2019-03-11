@@ -3,6 +3,9 @@
   using W3 html validator all the html pages served
 */
 
+console.log('Running script ', __filename)
+console.log('Validating html/hbs pages...')
+
 const fs = require('fs')
 const path = require('path')
 const async = require('async')
