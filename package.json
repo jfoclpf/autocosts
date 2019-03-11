@@ -66,6 +66,7 @@
     "jquery-sidebar": "^3.3.2",
     "jshint": "^2.10.1",
     "jsonminify": "^0.4.1",
+    "libxmljs": "0.19.5",
     "money": "^0.2.0",
     "pdfmake": "^0.1.53",
     "phantomjs-prebuilt": "^2.1.16",
