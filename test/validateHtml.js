@@ -44,7 +44,8 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
       console.log('All html/hbs pages validated correctly'.green)
       process.exit(0)
     }
-  })
+  }
+)
 
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
