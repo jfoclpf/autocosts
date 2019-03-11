@@ -2,42 +2,27 @@
 
 /*Results of calculator*/
 /*Periodic costs*/
-.depreciation_color:before {background-color: #2ba3d6;}
-.insurance_color:before {background-color: #10c6e6;}
-.credit_color:before {background-color: #5ae0e2;}
-.inspection_color:before {background-color: #99e6bc;}
-.roadTaxes_color:before {background-color: #ffda70;}
-.fuel_color:before {background-color: #ff9e84;}
-.maintenance_color:before {background-color: #ff7192;}
-.repairsImprovements_color:before {background-color: #e562aa;}
-.parking_color:before {background-color: #ea90cd;}
-.tolls_color:before {background-color: #eabcef;}
-.fines_color:before {background-color: #9f97ef;}
-.washing_color:before {background-color: #867ae3;}
+.depreciation_color:before {color: inherit; background-color: #2ba3d6;}
+.insurance_color:before {color:inherit; background-color: #10c6e6;}
+.credit_color:before {color:inherit; background-color: #5ae0e2;}
+.inspection_color:before {color:inherit; background-color: #99e6bc;}
+.roadTaxes_color:before {color:inherit; background-color: #ffda70;}
+.fuel_color:before {color:inherit; background-color: #ff9e84;}
+.maintenance_color:before {color:inherit; background-color: #ff7192;}
+.repairsImprovements_color:before {color:inherit; background-color: #e562aa;}
+.parking_color:before {color:inherit; background-color: #ea90cd;}
+.tolls_color:before {color:inherit; background-color: #eabcef;}
+.fines_color:before {color:inherit; background-color: #9f97ef;}
+.washing_color:before {color:inherit; background-color: #867ae3;}
 
-#results .net-income_color:before {background-color: #2ba3d6;}
-#results .total-costs_color:before {background-color: #10c6e6;}
-#results .car-cost_color:before {background-color: #5ae0e2;}
-#results .public-trans_color:before {background-color: #99e6bc;}
-#results .taxi-trans_color:before {background-color: #ffda70;}
-#results .other-trans_color:before {background-color: #ff9e84;}
-#results .uber_color:before {background-color: #ff7192;}
-#results .other-trans-2_color:before {background-color: #e562aa;}
-
-/*World statistics of car costs*/
-/* References colors 
-#statspage_body .depreciation_color {background-color: #2ba3d6;}
-#statspage_body .insurance_color {background-color: #10c6e6;}
-#statspage_body .credit_color {background-color: #5ae0e2;}
-#statspage_body .inspection_color {background-color: #99e6bc;}
-#statspage_body .roadTaxes_color {background-color: #ffda70;}
-#statspage_body .fuel_color {background-color: #ff9e84;}
-#statspage_body .maintenance_color {background-color: #ff7192;}
-#statspage_body .repairsImprovements_color {background-color: #e562aa;}
-#statspage_body .parking_color {background-color: #ea90cd;}
-#statspage_body .tolls_color {background-color: #eabcef;}
-#statspage_body .fines_color {background-color: #9f97ef;}
-#statspage_body .washing_color {background-color: #867ae3;}*/
+#results .net-income_color:before {color:inherit; background-color: #2ba3d6;}
+#results .total-costs_color:before {color:inherit; background-color: #10c6e6;}
+#results .car-cost_color:before {color:inherit; background-color: #5ae0e2;}
+#results .public-trans_color:before {color:inherit; background-color: #99e6bc;}
+#results .taxi-trans_color:before {color:inherit; background-color: #ffda70;}
+#results .other-trans_color:before {color:inherit; background-color: #ff9e84;}
+#results .uber_color:before {color:inherit; background-color: #ff7192;}
+#results .other-trans-2_color:before {color:inherit; background-color: #e562aa;}
 
 table.stats-table tr th.depreciation_color {border-color: #2ba3d6;}
 table.stats-table tr th.insurance_color {border-color: #10c6e6;}
@@ -51,5 +36,3 @@ table.stats-table tr th.parking_color {border-color: #ea90cd;}
 table.stats-table tr th.tolls_color {border-color: #eabcef;}
 table.stats-table tr th.fines_color {border-color: #9f97ef;}
 table.stats-table tr th.washing_color {border-color: #867ae3;}
-
-
