@@ -723,14 +723,14 @@ function extractHostname (url) {
   return hostname
 }
 
-function runNodeScriptSync (scriptPath, args) {
+function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
   const { execSync } = require('child_process')
 
   args = args || []
   args.unshift(scriptPath) // adds element at beginning
   args.push('-r', RELEASE)
   try {
-    execSync('node ' + args.join(' '), { stdio: 'inherit' })
+    execSync('node ' + args.join(' '), { stdio: stdio })
   } catch (err) {
     let errMsg = 'Error executing script: ' + path.relative(__dirname, scriptPath).error
     console.log(Error(errMsg + '\n' + err))

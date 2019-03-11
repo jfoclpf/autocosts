@@ -47,7 +47,7 @@ async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
 // copy from /src to /bin to be freshly loaded by the http server
 function copyCssFilesToBin (callback) {
   debug('Copying files...')
-  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'])
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'pipe')
   callback()
 }
 
