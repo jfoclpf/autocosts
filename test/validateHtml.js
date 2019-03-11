@@ -9,7 +9,6 @@ const async = require('async')
 const request = require('request')
 const { fork } = require('child_process')
 const validator = require('html-validator')
-const ProgressBar = require('progress')
 const debug = require('debug')('test:validateHtml')
 
 // this should be here on the beginning to set global environments
@@ -23,22 +22,21 @@ const directories = commons.getDirectories()
 // ['/stats', '/list', '/PT', '/US', '/AU', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()
 
-var Bar = new ProgressBar('[:bar] :percent :pathname',
-  { total: PathnamesToValidateArr.length + 1, width: 80 }
-)
+var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 1, debug.enabled)
 
 async.series([startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
-    if (results[0].httpLocalServer) {
+    if (results[0] && results[0].httpLocalServer) {
       debug('Closing http server')
+      // results[0] makes reference always to the first declared function: startsHttpServer
       results[0].httpLocalServer.kill('SIGINT')
     }
     if (err) {
       console.log(Error(err))
       process.exit(1)
     } else {
-      Bar.tick({ pathname: '' })
+      Bar.tick({ info: '' })
       Bar.terminate()
       console.log('All html/hbs pages validated correctly'.green)
       process.exit(0)
@@ -123,7 +121,7 @@ function validatePage (pathname, callback) {
           callback(Error('Found html warning'))
         } else {
           debug(pathname)
-          Bar.tick({ pathname: pathname })
+          Bar.tick({ info: pathname })
           callback()
         }
       })
@@ -134,10 +132,13 @@ function validatePage (pathname, callback) {
   })
 }
 
+// for debug purposes. On a big string of code with many breaklines,
+// adds after a breakline, the correspondig line number
+// from "abc\ndef\nghi" => "1: abc\n 2: def\n 3: ghi"
 function addLinesToStr (str) {
   var arr = str.split('\n')
   for (let i = 0; i < arr.length; i++) {
-    arr[i] = (i + 1).toString() + ': ' + arr[i] + '\n'
+    arr[i] = (i + 1).toString().padStart(4, ' ') + ':  ' + arr[i] + '\n'
   }
   return arr.join('')
 }
