@@ -22,13 +22,10 @@ table.list-table tr td.bold {font-weight: bold}
   #listpage_body table.stats-table tr th:first-child, #listpage_body table.stats-table tr td:first-child {text-align: right}
   #listpage_body table.stats-table tr td:first-child a br{display: none}
 
-
 }
 
-
-
 @media screen and (max-width: 600px) {
-    
+
     #listpage_body table td::before {font-size: 12px;}
 
 }
