@@ -50,6 +50,10 @@ module.exports = {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
   },
 
+  getLandingPageMainButtonText () {
+    return this.words.sub_title2 ? this.words.sub_title2 : this.words.calculate_car_costs
+  },
+
   getFuelEfficiencyOptStr: function () {
     switch (this.fuel_efficiency_std_option) {
       case 1:
