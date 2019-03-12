@@ -2,20 +2,19 @@
 /* ------------------------------********* RESPONSIVE *********------------------------------ */
 
 @media screen and (max-width:1150px) {
-    .sidebar > .sidebar-left-container, 
+    .sidebar > .sidebar-left-container,
     .sidebar > .sidebar-right-container {width: 40%;}
 
     .sidebar > .sidebar-left-container > .close {margin-left: 44%;}
 
     .container .steps {width: 27%;}
     .container .form_part {width: 67%; margin-left: 31%;}
-    
 }
 
 
 @media screen and (max-width:768px) {
 
-    .sidebars > .left > .sidebar-left-container, 
+    .sidebars > .left > .sidebar-left-container,
     .sidebars > .right > .sidebar-right-container {width: 50%;}
 
     .sidebars > .left > .sidebar-left-container > .close {margin-left: 54%;}
@@ -36,7 +35,7 @@
     .container .steps ul li > ul > li.done:before,
     .container .steps ul li > ul > li.active:before {float: left;}
 
-    .container .steps ul li.active > span, 
+    .container .steps ul li.active > span,
     .container .steps ul li.active ul li.active > span,
     .container .steps ul li > ul > li > span,
     .container .steps ul li span {display: none}
@@ -59,12 +58,12 @@
     #results .results-section {margin-bottom: 20px }
     #results #equivalent-transport-costs {margin-bottom: 160px }
 
-    #results #avg-periodic-cost {width: 100%; display: inline-block; margin: 36px 0 60px} 
+    #results #avg-periodic-cost {width: 100%; display: inline-block; margin: 36px 0 60px}
 
     #results #info-boxes .container {height: auto}
     #results #info-boxes .container .info-box {float: none; margin: 10px auto; width: 90%; max-width: 280px}
-    #info-boxes .container .info-box select {width: auto!important}    
-    
+    #info-boxes .container .info-box select {width: auto!important}
+
     #results .results-section .values .accordion {padding: 5px 0% 0 3%}
     #results #financial-effort .values .accordion {padding: 5px 0 0}
 
@@ -72,7 +71,7 @@
 
     #results #avg-periodic-cost .costs-bars-chart-stats {float: none; width: 98%; margin:0px;}
     #results #avg-periodic-cost .costs-doughnut-chart   {float: none; width: 300px; margin-bottom: 30px;}
-    
+
     #results .stats-references .standing-costs {width: 47%}
     #results .stats-references .running-costs {width: 50%}
     .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 15px; margin-bottom: 5px}
@@ -113,20 +112,15 @@
     .bottom-actions-bar .right-actions-mobile .main-menu ul li a svg {width: 20px!important; height: 20px!important}
 
     #results .panel ul li {padding-left:  9px}
-
-
-
-
 }
 
 
 @media screen and (max-width:600px) {
 
-    .sidebars > .left > .sidebar-left-container, 
+    .sidebars > .left > .sidebar-left-container,
     .sidebars > .right > .sidebar-right-container {width: 70%;}
 
     .sidebars > .left > .sidebar-left-container > .close {margin-left: 74%;}
-
 }
 
 
@@ -147,12 +141,11 @@
 
     header .logo {width: 40%; height: auto; margin-top: 4%; max-width: 160px;}
 
-
     /* ------ Hero ------*/
     #hero {padding: 0px 0 30px;}
-    #hero .container h2 {margin: 7px 0 20px; line-height: 30px; font-size: 18px }
-    #hero .container h2 select {font-size: 18px }
-    #hero .container .big {max-width: 100%}
+    #hero .container h2 {margin: 7px 0 20px; line-height: 30px; font-size: 18px;}
+    #hero .container h2 select {font-size: 18px;}
+    #hero .container .big {max-width: 100%; padding:15px 10px;}
 
     /* ------ Sidebars ------*/
     .sidebars > .left > .sidebar-left-container {width: 88%; padding: 6%}
@@ -169,7 +162,6 @@
     .close span {width: 20px; height: 20px; margin: 8px 0 0 5px;}
     .close span::before, .close span::after {background: #2c49b9; height: 3px;}
 
-
     /* ------------------ FORM ELEMENTS ------------------*/
     main {margin-top: 90px}
     main #form {max-width: 100%;}
@@ -177,7 +169,7 @@
     main #form .container {margin-top: 0px}
 
     .container .form_part {width: 90%; margin: 0 5%;}
-    
+
     .container .form_part .form_part_head_title {margin: 3% 0 25px;}
     .container .form_part h2.lang-fixed_costs_header_1 {font-size: 22px}
 
@@ -205,11 +197,11 @@
 
     label.float_left {float: inherit; margin-bottom: 10px}
 
-    .unit, .per, .during, .months_year, .minutes_day, 
+    .unit, .per, .during, .months_year, .minutes_day,
     .unit_days-per-week, .days_per_month, .hours_week, .min {font-size: 22px}
 
     .unit {top: 9px}
-    
+
     .small_input .unit {top: 9px!important}
     .small_input input[type='number'] {font-size: 30px; width: 199px; padding-left: 48px}
 
@@ -225,9 +217,8 @@
     #daily_tolls_false_div input {width: 50%!important }
 
     #working_time_input_form3 input.input_70 {width: 40%!important }
-    
-    .time_spent_part2_form3 .input_70 {width: 40px!important }
 
+    .time_spent_part2_form3 .input_70 {width: 40px!important }
 
     /* Steps */
     .container .steps {min-width: auto; height: 32px; }
@@ -243,8 +234,8 @@
     .container .steps ul li.two ul,
     .container .steps ul li.three ul {margin-left: 29px}
 
-    .container .steps ul li.active > span, 
-    .container .steps ul li.active ul li.active > span, 
+    .container .steps ul li.active > span,
+    .container .steps ul li.active ul li.active > span,
     .container .steps ul li > ul > li > span {text-indent: -9999px; display: inline-block; width: 8px; height: 8px; background-color: #d7dbee; margin: 0; border: 1px solid #f4f6ff; border-radius: 50%;}
 
     .container .steps ul li.active ul li.active {margin-top: 0}
@@ -261,42 +252,25 @@
     .container .steps ul li > ul > li:after,
     .container .steps ul li.active > span {display: none}
 
-
     /* ------ Results ------*/
     #results .results-section .values .accordion {padding: 5px 0 0 4%}
-    #results .results-section .values span {padding-left: 0} 
+    #results .results-section .values span {padding-left: 0}
 
-    
     /* ------ Footer Animation ------*/
 
     footer .animation {width: 100%; background-size: 160%;}
     footer, footer .animation {height: 250px}
-
-
-    }   
+}
 
 
 @media screen and (max-width:460px) {
-
-
     #results #avg-monthly-cost h2, #results .results-section h2 {font-size: 22px; line-height: 25px;}
-
-    footer {background-position: left 90px;}    
-
-
+    footer {background-position: left 90px;}
 }
-
 
 @media screen and (max-width:340px) {
-
-
     #hero .container .big {font-size: 15px!important;}
-
-
 }
-
-
-
 
 /*
  Share expandable navigation for mobile only
@@ -363,7 +337,7 @@
 .main-menu:target + .backdrop,
 .main-menu[aria-expanded="true"] + .backdrop {
   position: absolute;
-  display: block;  
+  display: block;
   content: "";
   left: 0;
   top: 0;
@@ -390,7 +364,7 @@
 
 .smartbanner > .smartbanner-container {margin: 5px 0!important}
 
-.smartbanner > .smartbanner-container > .smartbanner-close { 
+.smartbanner > .smartbanner-container > .smartbanner-close {
     background: none;
     box-shadow: none;
     text-shadow: none;
@@ -399,7 +373,7 @@
     font-weight: 400;
 }
 
-.smartbanner > .smartbanner-container > .smartbanner-close > .smartbanner-icon { 
+.smartbanner > .smartbanner-container > .smartbanner-close > .smartbanner-icon {
     background: #ebeef9 url(/img/logo/logo_sm.png) no-repeat center;
     padding: 10px;
     background-size: 65%;
@@ -434,4 +408,3 @@
     margin: 0 15px 0 10px;
 
 }
-
