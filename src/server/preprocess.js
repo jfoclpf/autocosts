@@ -148,7 +148,6 @@ function addUpperCaseAfterBr (words) {
 // from sub_title properties at src/countries/
 // "sub_title1a": "The average total costs in [country] is [yearly_costs] per year"
 // "sub_title1b": "representing [nbrMonths] months of average salary."
-// "sub_title2":  "Find the true cost of owning a car in your country!"
 function getSubTitleArr (position, words, statsData) {
   // check if object not empty
   if (!statsData || Object.keys(statsData).length === 0) {
@@ -159,7 +158,6 @@ function getSubTitleArr (position, words, statsData) {
 
   var subTitle1a = words.sub_title1a ? words.sub_title1a.trim() : ''
   var subTitle1b = words.sub_title1b ? words.sub_title1b.trim() : ''
-  var subTitle2 = words.sub_title2 ? words.sub_title2.trim() : ''
 
   var addPeriodIfInexistent = function (str) {
     if (str && str.slice(-1) !== '.' && str.slice(-1) !== '!') {
@@ -189,8 +187,6 @@ function getSubTitleArr (position, words, statsData) {
     // this should return: "The average total costs in"; see main.hbs
     return subTitle1a.split('[country]')[0].trim()
   } else if (position === 2) {
-    subTitle2 = addPeriodIfInexistent(subTitle2)
-
     // this tring shoud be: "is [yearly_costs] per year"
     let subTitle1aPart2 = subTitle1a.split('[country]')[1].trim()
 
@@ -225,7 +221,7 @@ function getSubTitleArr (position, words, statsData) {
       subTitle1aPart2 = addPeriodIfInexistent(subTitle1aPart2)
 
       // this returns "is [yearly_costs] per year. Find the true cost of owning a car in your country."
-      return subTitle1aPart2 + ' ' + subTitle2
+      return subTitle1aPart2
     } else {
       // removes period if existent
       if (subTitle1aPart2.slice(-1) === '.') { // slice(-1) gets the last character
@@ -239,7 +235,7 @@ function getSubTitleArr (position, words, statsData) {
 
       // this returns "is [yearly_costs] per year, representing [nbrMonths] months of average salary.
       // Find the true cost of owning a car in your country."
-      return subTitle1aPart2 + subTitle1b + ' ' + subTitle2
+      return subTitle1aPart2 + subTitle1b
     }
   } else {
     debug(errMsg + '; Position parameter in getSubTitleArr must be 1 or 2')

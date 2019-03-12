@@ -125,7 +125,7 @@ input:disabled, span.disabled, label.disabled, input:disabled + .unit  {opacity:
 .radio_tab_container:last-child label {border-right: 1px solid #b0b2be;  border-radius: 0 5px 5px 0}
 
 .radio_tab_container input[type='radio']:checked + label {background-color: black; color: white;}
- 
+
  /* Small tabs */
  .small_tabs .radio_tab_container  {height:  29px; width: auto;}
  .small_tabs .radio_tab_container label {font-size: 14px; padding: 4px 10px}
@@ -150,7 +150,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .cursor_pointer:hover {cursor: pointer;}
 
-.big {width: 370px; font-size: 18px!important; /*padding: 18px 30px!important;*/}
+.big {font-size: 18px!important; white-space: normal;}
 .medium {padding: 8px 30px!important;}
 
 .btn-blue {background-color: #2c49b9}
@@ -295,4 +295,3 @@ table.total tr th + th {text-align: right; width: 25%}
 /* ---------- Home Footer Animation ---------- */
 footer {display:block; background: transparent url('/img/animation-bg.jpg') repeat-x left 134px; height: 280px}
 footer .animation {display:block; background: transparent url('/img/animation.gif') repeat-x center top; width: 100%; height: 313px}
-
