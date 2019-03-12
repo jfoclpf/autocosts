@@ -29,7 +29,7 @@
                 <p><b>Yearly</b> average costs per country (all values in <b>Euros</b>)</p>
 
                 <div class="worldStats-car-costs-chart">
-                    <canvas id="worldStatsChart"></canvas>                  
+                    <canvas id="worldStatsChart"></canvas>
                 </div>
 
                 <!-- stats reference -->
@@ -133,7 +133,7 @@
                         <div class='table_small'>
                             <div class='table_cell'>Total costs per year</div>
                             <div class='table_cell'>
-                              <a href="{{{../serverData.directories.client.tables}}}/{{country}}.jpg" target="_blank">
+                              <a href="{{{../serverData.directories.client.tables}}}/{{countryCode}}.jpg" target="_blank">
                                     &euro;{{toFixed costs_totalPerYear 0}}
                               </a>
                             </div>
@@ -204,14 +204,14 @@
         </section><!--Ends notes and sources-->
 
     </main>
-    
+
     <!-- Data sent to JS code on browser -->
-    {{> globalData }}    
+    {{> globalData }}
 
     <script src="/client/jquery/jquery.min.js"></script>
     <script src="/client/chart/chartjs.min.js"></script>
-    <script src="/client/chart/worldStatsChart.js"></script>    
+    <script src="/client/chart/worldStatsChart.js"></script>
     <script src="/client/main.js"></script>
 
 </body>
-</html>            
+</html>
