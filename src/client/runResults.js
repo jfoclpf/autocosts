@@ -325,7 +325,7 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     $('#results').show()
 
     $('*').promise().done(function () {
-      // it needs these promises, since the pdfMake body can only be generated when the charts are alredy fully drawn
+      // it needs these promises, since the pdfMake body can only be generated when the charts are already fully drawn
       // such that, the pdf generation can extract the charts to base64 images
       promisesArray = Object.keys(chartsDrawnPromisesObj).map(function (key) {
         return chartsDrawnPromisesObj[key]
