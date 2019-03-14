@@ -284,8 +284,7 @@ autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, sele
   }
 
   function print () {
-    var win = window.open('', '_blank')
-    pdfReport.print({}, win)
+    pdfReport.print()
   }
 
   function getChartSize (chart) {
