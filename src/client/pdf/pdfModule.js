@@ -284,7 +284,8 @@ autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, sele
   }
 
   function print () {
-    pdfReport.print()
+    // open in the same window to avoid adblock to block the opening in another window/tab
+    pdfReport.print({}, window)
   }
 
   function getChartSize (chart) {
