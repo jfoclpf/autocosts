@@ -18,6 +18,8 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
   var calculatedData
 
+  var downloadPdfButton // submodule
+
   function initialize () {
     loadModuleDependencies()
     loadResultsSettingsAndHandlers()
@@ -61,12 +63,8 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     })
 
     if (switches.pdf) {
-      $('#results .button-pdf').show().addClass('disabled')
-      // download pdf button handler
-      $('#results .button-pdf').on('click', function () {
-        console.log('Download pdf clicked')
-        pdfModule.download()
-      })
+      downloadPdfButton.init()
+      $('#results .button-pdf').on('click', downloadPdfButton.onClick)
     } else {
       $('#results .button-pdf').hide()
     }
@@ -918,6 +916,76 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
   }
 
+  // submodule that deals with the download pdf button
+  downloadPdfButton = (function () {
+    var $button = $('#results .button-pdf')
+    var loaderPathname = '/img/loader30x30.gif'
+    var htmlContent, buttonWidth
+
+    function init (callback) {
+      checkSanity()
+      $button.show()
+      htmlContent = $button.html()
+      promise(callback)
+    }
+
+    function onClick () {
+      checkSanity()
+      buttonWidth = $button.width()
+      console.log('Download pdf clicked')
+      loadLoader(function () {
+        setTimeout(function () {
+          pdfModule.download()
+          setTimeout(removeLoader, 500)
+        }, 500)
+      })
+    }
+
+    function loadLoader (callback) {
+      checkSanity()
+      $button.html('').removeClass('btn-blue medium').addClass('btn-blue-loader')
+      promise(function () {
+        // the loader gif is smaller in width. To avoid changes in layout set the same width
+        $button.width(buttonWidth)
+        $('<img/>').attr('src', loaderPathname).on('load', function () {
+          $(this).remove()
+          $button.css('background-image', 'url(' + loaderPathname + ')')
+          promise(callback)
+        })
+      })
+    }
+
+    function removeLoader (callback) {
+      checkSanity()
+      $button.html(htmlContent).removeClass('btn-blue-loader').addClass('btn-blue medium')
+      promise(function () {
+        $button.width('') // removes css width property
+        $button.css('background-image', '')
+        promise(callback)
+      })
+    }
+
+    function promise (callback) {
+      $button.find('*').promise().done(function () {
+        if (typeof callback === 'function') {
+          callback()
+        }
+      })
+    }
+
+    function checkSanity () {
+      if (!switches.pdf) {
+        throw Error('pdf submodule downloadPdfButton but switches.pdf is false')
+      }
+    }
+
+    return {
+      init: init,
+      onClick: onClick
+    }
+  })()
+
+  // When the APP is fully operational with the new UI/UX uncomment this
   // Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
   // Based on this npm package: https://www.npmjs.com/package/smart-app-banner
   /* function loadSmartBanner () {

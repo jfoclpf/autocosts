@@ -154,6 +154,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .medium {padding: 8px 30px!important;}
 
 .btn-blue {background-color: #2c49b9}
+.btn-blue-loader {background-image: url('/img/loader30x30.gif'); background-position: center; background-repeat: no-repeat;}
 .btn-blue:hover {color: white; background-color: #385be1}
 
 .btn-orange {background-color: #efa00b; padding: 8px 20px;}
