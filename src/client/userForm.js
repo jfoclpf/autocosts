@@ -36,7 +36,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     // hides all buttons "next"
     $('.next').hide()
 
-    setIcon($('.field_container').first(), 'active')
+    setIcon($('#form .field_container').first(), 'active')
 
     // hides form part head titles, except first
     // that is, it only shows Head Title "1. Standing costs"
@@ -406,8 +406,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     }
   }
 
-  // fades out or fades in all visible fields, except itself/$this, according to validity
-  // also updates icon list on the left panel
+  // hiddens or shows the left icons, except itself/$this, according to validity of the fields
   function updatesAllIcons ($this) {
     // console.log("updatesAllIcons($this)");
 
