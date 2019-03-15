@@ -190,7 +190,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
         $this.fadeTo('fast', 1, function () {
           inputHandler($this)
-          updatesFieldsAndIcons($this)
+          updatesAllIcons($this)
         })
       }
     })
@@ -281,7 +281,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
             // scrols the center of the page to the corresponding div
             scrollsPageTo($i, true)
 
-            updatesFieldsAndIcons($i)
+            updatesAllIcons($i)
 
             // returns to the callback the target .field_container, that is, $i
             if (typeof callback === 'function') {
@@ -408,8 +408,8 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
   // fades out or fades in all visible fields, except itself/$this, according to validity
   // also updates icon list on the left panel
-  function updatesFieldsAndIcons ($this) {
-    // console.log("updatesFieldsAndIcons($this)");
+  function updatesAllIcons ($this) {
+    // console.log("updatesAllIcons($this)");
 
     var $fieldHead = $this.closest('.field_container')
 
