@@ -45,7 +45,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
   }
 
   function mapUnit (concept, value) {
-    var val = !isNaN(value) ? parseInt(value) : value
+    var val = !isNaN(value) ? parseInt(value, 10) : value
     for (var key in dictionary[concept]) {
       if (key === val || dictionary[concept][key].indexOf(val) !== -1) {
         return key

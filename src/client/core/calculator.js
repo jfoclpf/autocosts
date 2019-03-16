@@ -263,7 +263,7 @@ autocosts.calculatorModule = (function (thisModule) {
     var numberOfMonthlyInstalments
 
     if (credit.creditBool === 'true' || credit.creditBool === true) { // if there was credit
-      numberOfMonthlyInstalments = parseInt(credit.yesCredit.numberInstallments)
+      numberOfMonthlyInstalments = parseInt(credit.yesCredit.numberInstallments, 10)
       var amountInstallment = parseFloat(credit.yesCredit.amountInstallment)
       var residualValue = parseFloat(credit.yesCredit.residualValue)
       var borrowedAmount = parseFloat(credit.yesCredit.borrowedAmount)
@@ -388,7 +388,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
           distanceBetweenHomeAndJob = parseFloat(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)
           distanceDuringWeekends = parseFloat(fuel.distanceBased.carToJob.distanceDuringWeekends)
-          daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek)
+          daysPerWeekUserDrivesToJob = parseInt(fuel.distanceBased.carToJob.daysPerWeek, 10)
 
           fuelEffL100km = conversionsModule
             .convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std)
@@ -619,7 +619,7 @@ autocosts.calculatorModule = (function (thisModule) {
     publicTransports.ratios.showFurtherPt = 0.6
 
     var costOfEachMonthlyPass = parseFloat(inputPublicTransports.monthlyPassCost)
-    var numberOfPeopleInFamily = parseInt(inputPublicTransports.numberOfPeopleInFamily)
+    var numberOfPeopleInFamily = parseInt(inputPublicTransports.numberOfPeopleInFamily, 10)
 
     if (!areAllNumbersGreaterThanZero(costOfEachMonthlyPass, numberOfPeopleInFamily)) {
       publicTransports.calculated = false
@@ -828,7 +828,7 @@ autocosts.calculatorModule = (function (thisModule) {
     // if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
     if (fuelTypeOfCalculation === 'money') {
       if (inputDistance.considerCarToJob === 'true') {
-        daysPerWeekUserDrivesToJob = parseInt(inputDistance.carToJob.daysPerWeek)
+        daysPerWeekUserDrivesToJob = parseInt(inputDistance.carToJob.daysPerWeek, 10)
         distanceBetweenHomeAndJob = parseFloat(inputDistance.carToJob.distanceBetweenHomeAndJob)
         distanceDuringEachWeekend = parseFloat(inputDistance.carToJob.distanceDuringWeekends)
 
@@ -938,7 +938,7 @@ autocosts.calculatorModule = (function (thisModule) {
     if (fuelTypeOfCalculation === 'distanceCarToJob' || inputDistance.considerCarToJob === 'true') {
       minutesBetweenHomeAndJob = parseFloat(inputTimeSpentInDriving.option1.minutesBetweenHomeAndJob)
       minutesInEachWeekend = parseFloat(inputTimeSpentInDriving.option1.minutesDuringWeekend)
-      daysPerWeekUserDrivesToJob = parseInt(details.numberOfDaysPerWeekUserDrivesToJob)
+      daysPerWeekUserDrivesToJob = parseInt(details.numberOfDaysPerWeekUserDrivesToJob, 10)
 
       if (areAllNumbersGreaterThanZero(minutesBetweenHomeAndJob, minutesInEachWeekend) &&
                isNumber(daysPerWeekUserDrivesToJob)) {
@@ -1283,7 +1283,7 @@ autocosts.calculatorModule = (function (thisModule) {
       'year': [5, 'yearly', 'anual', 'ano']
     }
 
-    var val = !isNaN(timePeriod) ? parseInt(timePeriod) : timePeriod
+    var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod
     for (var key in timePeriodsObj) {
       if (key === val || timePeriodsObj[key].indexOf(val) !== -1) {
         return key
