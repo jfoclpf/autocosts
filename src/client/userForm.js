@@ -170,7 +170,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
     // further handlers
 
-    // button "next"; function buttonNextHandler is on formFunctions.js
+    // when button "next" is clicked
     $('.button.btn-orange').on('click', function () {
       buttonNextHandler($(this))
       // this is necessary to avoid default behaviour
@@ -255,7 +255,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     $fieldHead.stop(true).fadeTo('slow', 0.1)
 
     // scrolls down till a field_container is: not valid OR not visible
-    $fieldHead.nextAll('.field_container, .form_part_head_title').each(function (index, value) {
+    $fieldHead.nextAll('.field_container, .form_part_head_title').each(function () {
       var $i = $(this) // the $(this) from the loop .each
 
       // these are the section titles
