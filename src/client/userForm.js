@@ -36,7 +36,9 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     // hides all buttons "next"
     $('.next').hide()
 
-    setIcon($('#form .field_container').first(), 'active')
+    var $firstField = $('#form .field_container').first() // field depreciation
+    setIcon($firstField, 'active')
+    updatesAllIcons($firstField)
 
     // hides form part head titles, except first
     // that is, it only shows Head Title "1. Standing costs"
@@ -422,20 +424,41 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     $fieldHead.siblings('.field_container').each(function () {
       var status = fieldStatus($(this))
 
-      if (status === 'fully_hidden') {
-        setIcon($(this), 'inactive')
-      } else if (status === 'hidden') {
-        setIcon($(this), 'hidden')
-      } else if (status === 'wrong') {
-        $(this).stop(true).fadeTo('fast', 1)
-        setIcon($(this), 'wrong')
-      } else if (status === 'fully_valid' || status === 'no_inputs') {
-        $(this).stop(true).fadeTo('slow', 0.1)
-        $(this).find('.next').stop(true).hide()
-        setIcon($(this), 'done')
-      } else if (status !== 'fully_hidden' || status === 'valid') {
-        setIcon($(this), 'wrong')
+      switch (status) {
+        case 'fully_hidden':
+        case 'hidden':
+          setIcon($(this), 'hidden')
+          break
+        case 'wrong':
+          $(this).stop(true).fadeTo('fast', 1)
+          setIcon($(this), 'wrong')
+          break
+        case 'fully_valid':
+        case 'no_inputs':
+          $(this).stop(true).fadeTo('slow', 0.1)
+          $(this).find('.next').stop(true).hide()
+          setIcon($(this), 'done')
+          break
+        case 'valid':
+          if (status !== 'fully_hidden') {
+            setIcon($(this), 'wrong')
+          }
+          break
       }
+
+      // updates the icon sections visibility (section: "Running Costs", "Additional Data")
+      $('#form .steps li.list').each(function (i) {
+        if (i === 0) {
+          return // first section (Standing Costs) always visible, thus don't touch
+        }
+        // .is() return true if at least one of these elements matches the given arguments
+        if ($(this).find('ul .icon').is(':visible')) {
+          // at least one icon is visible within the section (Running Costs, Additional Data)
+          $(this).show()
+        } else {
+          $(this).hide()
+        }
+      })
     })
   }
 
@@ -593,7 +616,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
   // $this is the current field with class "field_container"
   // status may be "inactive", "active", "done", "wrong" or "hidden"
   function setIcon ($this, status) {
-    // getFieldNum returns string "field1", "field2", "field3", etc. of field_container
+    // getFieldNum (with false) returns string "field1", "field2", "field3", etc. of field_container
     var fieldN = getFieldNum($this, false) // the field number will be taken from class name
 
     // icon from the left icon list
@@ -609,20 +632,28 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
       case 'active':
         $icon.addClass('active')
         $icon.closest('.list').addClass('active')
+        showIconSection()
         break
       case 'done':
         $icon.addClass('active done')
         $icon.closest('.list').addClass('active')
+        showIconSection()
         break
       case 'wrong':
         $icon.addClass('active wrong')
         $icon.find('span').addClass('wrong')// text
+        showIconSection()
         break
       case 'hidden':
         $icon.hide()
         break
       default:
         console.error("'status' parameter not correct in 'setIcon' function, using class .icon." + fieldN)
+    }
+
+    // if status not hidden show icon section (section: 'Running Costs', etc.)
+    function showIconSection () {
+      $icon.closest('li.list').show()
     }
   }
 
