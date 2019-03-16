@@ -179,7 +179,7 @@ function getSubTitleArr (position, words, statsData) {
   if (!checkSanityOfStr(subTitle1a, '[yearly_costs]')) { return '' }
 
   let totalCostsPerYear = statsData.costs_totalPerYear
-  if (!totalCostsPerYear || !isFinite(totalCostsPerYear) || parseInt(totalCostsPerYear) === 0) {
+  if (!totalCostsPerYear || !isFinite(totalCostsPerYear) || parseInt(totalCostsPerYear, 10) === 0) {
     return ''
   }
 
@@ -201,7 +201,7 @@ function getSubTitleArr (position, words, statsData) {
 
     let workingMonthsPerYearToAffordCar = statsData.financialEffort_workingMonthsPerYearToAffordCar
     let useFinancialEffortInfo = statsData.financialEffort_calculated && workingMonthsPerYearToAffordCar &&
-            typeof workingMonthsPerYearToAffordCar === 'number' && parseInt(workingMonthsPerYearToAffordCar) !== 0
+            typeof workingMonthsPerYearToAffordCar === 'number' && parseInt(workingMonthsPerYearToAffordCar, 10) !== 0
 
     if (useFinancialEffortInfo && !checkSanityOfStr(subTitle1b, '[nbrMonths]')) {
       return ''
