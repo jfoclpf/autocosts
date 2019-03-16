@@ -72,7 +72,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
     // inspection
     $('#numberInspections').val(0)
-    $('#InspectionCost_tr').hide()
+    $('#averageInspectionCost').parent().prev().addBack().hide()
 
     // PART 2
     // fuel
@@ -100,7 +100,6 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
     // On 'input' would fire every time the input changes, so when one pastes something
     // (even with right click), deletes and types anything. If one uses the 'change' handler,
     // this will only fire after the user deselects the input box, which is not what we want.
-    // inputHandler is defined in formFunctions.js
     $('input[type="number"]').on('input', function () { inputHandler($(this)) })
 
     // it calls the same functions inputHandler after the radio button is changed
@@ -820,13 +819,14 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
   // when number of inspections is zero in form part 1, hides field for cost of each inspection
   function nbrInspectOnChanged () {
-    if ($('#numberInspections').val() === 0) {
-      $('#averageInspectionCost').prop('disabled', true)
-      $('#averageInspectionCost').parent().prev().addClass('disabled')
+    var numberOfInspections = parseInt($('#numberInspections').val(), 10)
+    if (numberOfInspections === 0 || isNaN(numberOfInspections)) {
+      // addBack() forms a group of parent and prevOfParent
+      $('#averageInspectionCost').parent().prev().addBack().hide()
     } else {
-      $('#averageInspectionCost').prop('disabled', false)
-      $('#averageInspectionCost').parent().prev().removeClass('disabled')
+      $('#averageInspectionCost').parent().prev().addBack().show()
     }
+    inputHandler($('#numberInspections'))
   }
 
   // FUEL - Form Part 2
