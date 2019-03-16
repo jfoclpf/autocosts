@@ -8,9 +8,9 @@
 // USER FORM INTERFACE MODULE
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-/* global autocosts, $ */
+/* global autocosts, $, ga */
 
-autocosts.userFormModule = (function (thisModule, translatedStrings) {
+autocosts.userFormModule = (function (thisModule, translatedStrings, switches, servicesAvailabilityObj) {
   var validateFormModule, commonsModule
 
   function initialize () {
@@ -232,7 +232,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
   // When button "Next" is clicked, this function is called; var $thisButton makes reference to the "Next" button itself
   // It creates a loop which goes through all divs with class="field_container" or class="form_part_head_title"
-  // It scrolls down the page till a field_container is: NOT valid OR NOT visible
+  // It scrolls down the page till a field_container is: not valid (!fully_valid) AND with some visible inputs (!no_inputs)
   // Example: as it reaches for the 1st time "Credit" item (field3), function fieldStatus returns "fully_hidden"
   // since all items are hidden initially when the form is loaded (except the 1st item), and as such the loop breaks herein.
   // But since "Credit" cost item by default has radio button set at NO, this "Credit" field_container doesn't show any
@@ -246,6 +246,11 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
     if (fieldStatus($fieldHead) !== 'fully_valid' && fieldStatus($fieldHead) !== 'no_inputs') {
       console.error("'Next' button clicked, when field was not OK for showing 'next' button")
+    }
+
+    // Google Analytics, to track till which field container the user scrols
+    if (switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics) {
+      ga('send', 'event', 'form_part', getFieldNum($thisButton, false))
     }
 
     // hides own next button
@@ -1030,4 +1035,6 @@ autocosts.userFormModule = (function (thisModule, translatedStrings) {
 
   return thisModule
 })(autocosts.userFormModule || {},
-  autocosts.serverInfo.translatedStrings)
+  autocosts.serverInfo.translatedStrings,
+  autocosts.serverInfo.switches,
+  autocosts.servicesAvailabilityObj)
