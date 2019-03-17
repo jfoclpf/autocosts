@@ -58,6 +58,8 @@ if (release !== 'dev' && release !== 'prod' && release !== 'test') {
   release = 'dev'
 }
 
+const debug = require('debug')(release + ':build')
+
 console.log(("Release: '" + release + "'").mainOption)
 var RELEASE = release // set Global variable
 
@@ -157,8 +159,8 @@ async.series([
 
 // copy files from src/ to bin/
 function copy () {
-  console.log('\n' + ('# --' + optionDefinitions[0].name).mainOption)
-  console.log('\n', 'Making a clean copy from src/ to bin/'.mainOption, '\n')
+  debug('\n' + ('# --' + optionDefinitions[0].name).mainOption)
+  console.log('Making a clean copy from src/ to bin/')
 
   // deletes fully the directory and creates empty one
   fse.removeSync(directories.server.bin) // equivalent in Unix to "rm -rf"
@@ -166,9 +168,11 @@ function copy () {
 
   fse.copySync(directories.server.src, directories.server.bin)
 
-  console.log('Files from src/ to bin/ copied')
+  console.log('Files from src/ to bin/ copied successfully'.green)
 
-  console.log('\n' + ("## Copying npm packages' files to bin/").mainOptionStep + ' \n')
+  console.log('Copying npm packages files to bin/')
+
+  var copiedNpmPackages = []
 
   // copies one file, from an npm package, to the bin directory
   var copyFile = function (npmPackage, // oficial name of the npm package from which the file is to be copied from
@@ -184,7 +188,8 @@ function copy () {
     let consoleMsg = npmPackage + ': ' + (path.join(packageDirRelativepath, fileRelativePath)).verbose + ' -> ' +
             (path.join(path.relative(path.dirname(directories.server.bin), directories.server.bin), destFilePath)).verbose
 
-    console.log(consoleMsg)
+    debug(consoleMsg)
+    copiedNpmPackages.push(npmPackage)
   }
 
   // jquery
@@ -213,11 +218,21 @@ function copy () {
   // https://www.npmjs.com/package/smart-app-banner
   copyFile('smart-app-banner', path.join('dist', 'smart-app-banner.js'), path.join('client', 'smart-app-banner.js'))
   copyFile('smart-app-banner', path.join('dist', 'smart-app-banner.css'), path.join('css', 'smart-app-banner.css'))
+
+  // get array of unique elements
+  var npmPackages = Array.from(new Set(copiedNpmPackages))
+  process.stdout.write('Copied: '.green)
+  var len = npmPackages.length
+  for (let i = 0; i < len; i++) {
+    // prints '[a, b, c]'
+    process.stdout.write((i === 0 ? '[' : '') + npmPackages[i] + (i !== len - 1 ? ', ' : ']'))
+  }
+  process.stdout.write('\n\n')
 }
 
 // concatenate some CSS files
 function concatCSSFiles (mainCallback) {
-  console.log('\n' + ('## Concatenating CSS files').mainOptionStep + ' \n')
+  console.log('Concatenating CSS files')
 
   // CSS files to be concatenated,
   // the ones which are needed for initial main page loading
@@ -292,16 +307,16 @@ function concatCSSFiles (mainCallback) {
 
 // -i compress [i]mages, jpg and png files in bin/ | with ImageMagick
 function compressImgs () {
-  console.log('\n' + ('# --' + optionDefinitions[1].name).mainOption)
-  console.log('\n', 'Compress images in jpg and png files'.mainOption, '\n')
+  debug('\n' + ('# --' + optionDefinitions[1].name).mainOption)
+  console.log('Compress images in jpg and png files')
 
   commons.runNodeScriptSync(filenames.build.compressImages)
 }
 
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
 function minify () {
-  console.log('\n' + ('# --' + optionDefinitions[2].name).mainOption)
-  console.log('\n', 'Minify js, html/hbs, css and json files'.mainOption, '\n')
+  debug('\n' + ('# --' + optionDefinitions[2].name).mainOption)
+  console.log('Minify js, html/hbs, css and json files')
 
   commons.runNodeScriptSync(filenames.build.minifyFiles)
 }
@@ -310,25 +325,24 @@ function minify () {
 
 // -s  creates a Database with countries' [s]pecifcations  connection to a Database
 function specDB () {
-  console.log('\n' + ('# --' + optionDefinitions[4].name).mainOption)
-  console.log('\n', 'Creates database with countries specifcations'.mainOption, '\n')
+  debug('\n' + ('# --' + optionDefinitions[4].name).mainOption)
+  console.log('Creates database with countries specifcations')
 
   commons.runNodeScriptSync(filenames.build.setCountrySpecsDB, ['--dataBase'])
 }
 
 // -d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database
 function refreshDB () {
-  console.log('\n' + ('# --' + optionDefinitions[5].name).mainOption)
-  console.log('\n', 'Refreshes statistical costs database'.mainOption, '\n')
+  debug('\n' + ('# --' + optionDefinitions[5].name).mainOption)
+  console.log('Refreshes statistical costs database')
 
   commons.runNodeScriptSync(filenames.build.getAvgFromDB, ['--dataBase'])
 }
 
 // -t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database
 function genTables () {
-  console.log('\n' + ('# --' + optionDefinitions[6].name).mainOption)
-  console.log('\n', 'Generating statistical html and jpg tables'.mainOption, '\n')
-  console.log('\n    Extracts stat info and create html tables \n')
+  debug('\n' + ('# --' + optionDefinitions[6].name).mainOption)
+  console.log('Generating statistical html and jpg tables')
   commons.runNodeScriptSync(filenames.build.generateTables, ['--dataBase'])
 }
 

@@ -3,7 +3,6 @@
    fuel efficiency (l/100km, km/l, mpg(imp), etc.) */
 
 console.log("Populating the 'countries specs database' with information from the countries files")
-console.log('Running script ', __filename, '\n')
 
 // includes
 const fs = require('fs')
@@ -25,8 +24,10 @@ var availableCountries
 
 commons.init()
 // Main directories got from commons
-var directories = commons.getDirectories()
-var settings = commons.getSettings()
+const directories = commons.getDirectories()
+const settings = commons.getSettings()
+
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 var Bar = commons.getProgressBar(commons.getNumberOfCountries() + 4, debug.enabled)
 

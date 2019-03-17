@@ -1,7 +1,6 @@
 /* node script to compress and optimize all the images, namely JPG and PNG images, for the web page.
 Optimal compression settings were defined by Google from the Page Speed Insights documentation */
 
-console.log('Running script ', __filename)
 console.log('Compressing JPG and PNG images...')
 
 const fs = require('fs')
@@ -17,6 +16,8 @@ const debug = require('debug')('build:compressImages')
 const commons = require(path.join(__dirname, '..', 'commons'))
 
 var directories = commons.getDirectories()
+console.log('Running script ' + path.relative(directories.server.root, __filename))
+
 debug('bin/: ', directories.server.bin)
 
 // from require('colors');

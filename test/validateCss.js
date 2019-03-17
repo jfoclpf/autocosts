@@ -2,7 +2,6 @@
   script that runs a http server on localhost and then css-validates
   using W3 css validator all the css files served
 */
-console.log('Running script ', __filename)
 
 const path = require('path')
 const find = require('find')
@@ -19,6 +18,8 @@ commons.setRelease('test')
 
 const settings = commons.getSettings()
 const directories = commons.getDirectories()
+
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()

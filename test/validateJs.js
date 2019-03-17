@@ -2,7 +2,6 @@
   validate JS files syntax using both standardJS (https://standardjs.com/) and jshint (https://jshint.com/)
 */
 
-console.log('Running script ', __filename)
 console.log('Validating js files...')
 
 const fs = require('fs')
@@ -13,7 +12,6 @@ const async = require('async')
 const jshint = require('jshint').JSHINT
 const prettyjson = require('prettyjson')
 const standard = require('standard')
-const ProgressBar = require('progress')
 const debug = require('debug')('test:validateJs')
 
 // this should be here on the beginning to set global environments
@@ -21,15 +19,15 @@ const commons = require(path.join(__dirname, '..', 'commons'))
 commons.setRelease('test')
 const directories = commons.getDirectories()
 
+console.log('Running script ' + path.relative(directories.server.root, __filename))
+
 const DirectoriesToCheckJs = [
   directories.server.src,
   directories.server.build,
   directories.server.test
 ]
 
-var Bar = new ProgressBar('[:bar] :percent :file',
-  { total: getNumberOfTotalProgressBarTicks() + 1, width: 80 }
-)
+var Bar = commons.getProgressBar(getNumberOfTotalProgressBarTicks() + 1, debug.enabled)
 
 // main script
 async.parallel([
@@ -46,7 +44,7 @@ function (err, results) {
       process.exit(1) // exit test with error
     }
   }
-  Bar.tick({ file: '' })
+  Bar.tick({ info: '' })
   Bar.terminate()
   console.log('All js files validated correctly'.green)
   process.exit(0)
@@ -91,7 +89,7 @@ function checkJsCodeSyntax (callback) {
 
       if (jshint.errors.length === 0) { // no errors
         debug('jshint:', '  ', (path.relative(directories.server.root, filename)).verbose)
-        Bar.tick({ file: path.relative(directories.server.root, filename) })
+        Bar.tick({ info: path.relative(directories.server.root, filename) })
       } else {
         console.error('\njshint:')
         console.error((path.relative(directories.server.root, filename)).error)
@@ -168,7 +166,7 @@ function checkJsCodeStandard (callback) {
           numberOfTotalErrorsOrWanings += results.warningCount
         } else {
           debug('standard: ', (path.relative(directories.server.root, filename)).verbose)
-          Bar.tick({ file: path.relative(directories.server.root, filename) })
+          Bar.tick({ info: path.relative(directories.server.root, filename) })
         }
         next()
       })

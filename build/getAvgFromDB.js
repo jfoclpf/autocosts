@@ -1,18 +1,16 @@
 /* Node script which populates the costs statistical database tables for each country */
 
-console.log('Running script ', __filename)
-
 const path = require('path')
 const async = require('async') // module to allow to execute the queries in series
 const mysql = require('mysql') // module to get info from database
 const isOnline = require('is-online')
-const commons = require(path.join(__dirname, '..', 'commons'))
 const request = require('request') // to make HTTP requests
 const flatten = require('flat')
 const sqlFormatter = require('sql-formatter')
 const colors = require('colors') // eslint-disable-line
 const debug = require('debug')('build:getAvgFromDB')
 
+const commons = require(path.join(__dirname, '..', 'commons'))
 const release = commons.getRelease()
 const USE_MONEY_API = release !== 'test'
 var fx = USE_MONEY_API ? require('money') : null // currency conversion API; needs to be "var" because it will change
@@ -21,6 +19,9 @@ commons.init()
 
 const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
+const directories = commons.getDirectories()
+
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // own project modules
 const statsFunctions = require(fileNames.build.statsFunctions)

@@ -6,8 +6,6 @@
  permament JPG file accessible via tables/XX.jpg, and another permanent html file that is publicly accessible via tables/XX.html
 */
 
-console.log('Running script ', __filename)
-
 // includes
 const fs = require('fs')
 const path = require('path')
@@ -36,6 +34,8 @@ const directories = commons.getDirectories()
 const fileNames = commons.getFileNames()
 const rootDir = commons.getROOT_DIR() // eslint-disable-line
 var settings = commons.getSettings()
+
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // progress bar
 var Bar
