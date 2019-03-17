@@ -3,7 +3,6 @@
   using W3 html validator all the html pages served
 */
 
-console.log('Running script ', __filename)
 console.log('Validating html/hbs pages...')
 
 const fs = require('fs')
@@ -21,6 +20,8 @@ commons.setRelease('test')
 const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
+
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // ['/stats', '/list', '/PT', '/US', '/AU', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()

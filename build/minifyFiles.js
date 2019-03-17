@@ -4,8 +4,6 @@
   the server to the client. It also concatenates somes files, for better bandwith performance
 */
 
-console.log('Running script ', __filename)
-
 // node/npm includes
 const fs = require('fs')
 const path = require('path')
@@ -23,9 +21,9 @@ const jsonminify = require('jsonminify')
 
 // own module
 const commons = require(path.join(__dirname, '..', 'commons'))
+const directories = commons.getDirectories()
 
-// Main directories got from commons
-var directories = commons.getDirectories()
+console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
