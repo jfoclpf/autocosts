@@ -259,9 +259,31 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
     // fades own field
     $fieldHead.stop(true).fadeTo('slow', 0.1)
 
-    // scrolls down till a field_container is: not valid OR not visible
-    $fieldHead.nextAll('.field_container, .form_part_head_title').each(function () {
-      var $i = $(this) // the $(this) from the loop .each
+    // creates an array of sibling elements
+    var $fieldArray = $('#form .field_container, #form .form_part_head_title')
+
+    // creates an array of indexes, considering $fieldHead is index 0
+    // When the user clicks the button next, we want to "loop" through the form, that is,
+    // as we checked all the fields till the form's end, we should come back to the beginning
+    // of the form to see if any field is still left to be validated
+    var thisIndex = $fieldArray.index($fieldHead)
+    var lastIndex = $fieldArray.length - 1
+    var i, newIndex
+    var newIndexes = []
+    for (i = 0; i < lastIndex; i++) {
+      newIndex = thisIndex + 1 + i
+      if (newIndex <= lastIndex) {
+        newIndexes[i] = newIndex
+      } else {
+        newIndexes[i] = i - (lastIndex - thisIndex)
+      }
+    }
+    // therefore the above code converts index array from [0, 1, 2, 3, 4, 5, ... lastIndex] to
+    // newIndexes = [thisIndex+1 , thisIndex+2, ... lastIndex, 0, 1, 2, 3, ... thisIndex-1] (rotates the array)
+
+    // scrolls down (and around) the form till a field_container is: not valid OR not visible
+    for (i = 0; i < newIndexes.length; i++) {
+      var $i = $fieldArray.eq(newIndexes[i])
 
       // these are the section titles
       if ($i.hasClass('form_part_head_title')) {
@@ -294,16 +316,16 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
               callback($i)
             }
 
-            // breaks the .each loop
-            return false
+            // found our field_container, thus breaks the for loop
+            break
           }
         } else {
           $i.find('.next').stop(true).hide() // hides "next" button
         }
       } else {
-        console.error('Error in buttonNextHandler')
+        console.error('Error in buttonNextHandler; siblings must have class .field_container or .form_part_head_title')
       }
-    })
+    }
   }
 
   // This function fires every time the
