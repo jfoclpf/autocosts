@@ -164,7 +164,7 @@ if (SWITCHES.googleCaptcha) {
   })
 }
 
-if (SWITCHES.dataBase) {
+if (SWITCHES.database) {
   eventEmitter.on('statsColected', function (statsData) {
     serverData.statsData = statsData
     console.log('Statistical Data colected')

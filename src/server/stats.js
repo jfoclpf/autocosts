@@ -65,7 +65,7 @@ module.exports = {
     // get statsFunctions.js Object Constructors/Templates
     const calculator = require(fileNames.project['calculator.js'])
 
-    var dbInfo = serverData.settings.dataBase.credentials
+    var dbInfo = serverData.settings.database.credentials
     debug(' ===== dbInfo ===== \n', dbInfo)
 
     // get current date in a formated string

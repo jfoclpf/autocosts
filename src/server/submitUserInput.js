@@ -4,7 +4,7 @@ const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app:submitUserInput')
 
 module.exports = function (req, res, serverData) {
-  var DBInfo = serverData.settings.dataBase.credentials
+  var DBInfo = serverData.settings.database.credentials
 
   // object got from POST
   var databaseObj = req.body.databaseObj

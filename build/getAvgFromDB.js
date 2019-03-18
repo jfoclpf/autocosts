@@ -28,7 +28,7 @@ const statsFunctions = require(fileNames.build.statsFunctions)
 const calculator = require(fileNames.project['calculator.js'])
 
 var db // database Connection Object
-const DB_INFO = settings.dataBase.credentials
+const DB_INFO = settings.database.credentials
 
 // Average Costs table database template
 var AVG_DB_TEMPLATE, DB_TABLE_KEY
@@ -79,7 +79,7 @@ isOnline().then(function (online) {
 
   // detect for null or empty object
   if (!DB_INFO || Object.keys(DB_INFO).length === 0) {
-    throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
+    throw commons.getDataBaseErrMsg(__filename, settings.database)
   }
 
   var countries = [] // array of objects with countries information

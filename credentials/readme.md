@@ -5,7 +5,7 @@ The credentials JSON file must obey the following structure:
 
 ```
 {
-    "dataBase" : {
+    "database" : {
         "_comment"  : "SQL Database where to store all the Countries' specifications and users average costs",
         "host"      : "***********",
         "user"      : "***********",
@@ -20,7 +20,7 @@ The credentials JSON file must obey the following structure:
       }
     },
     "money" : {
-        "_comment"      : "Load money API for the currency conversion information (mandatory if dataBase is enabled)",
+        "_comment"      : "Load money API for the currency conversion information (mandatory if database is enabled)",
         "_getYourApiOn" : "https://openexchangerates.org/account/app-ids",
         "ApiId"         : "************************************"
     },

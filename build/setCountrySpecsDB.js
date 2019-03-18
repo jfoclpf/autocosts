@@ -38,10 +38,10 @@ isOnline().then(function (online) {
     process.exit(1) // exit with error
   }
 
-  DB_INFO = settings.dataBase.credentials
+  DB_INFO = settings.database.credentials
   // detect for null or empty object
   if (!DB_INFO || Object.keys(DB_INFO).length === 0) {
-    throw commons.getDataBaseErrMsg(__filename, settings.dataBase)
+    throw commons.getDataBaseErrMsg(__filename, settings.database)
   }
   debug(DB_INFO)
 

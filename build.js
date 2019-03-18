@@ -328,7 +328,7 @@ function specDB () {
   debug('\n' + ('# --' + optionDefinitions[4].name).mainOption)
   console.log('Creates database with countries specifcations')
 
-  commons.runNodeScriptSync(filenames.build.setCountrySpecsDB, ['--dataBase'])
+  commons.runNodeScriptSync(filenames.build.setCountrySpecsDB, ['--database'])
 }
 
 // -d refreshes the statistical costs [d]atabase | connection to the countries' specifcations Database
@@ -336,14 +336,14 @@ function refreshDB () {
   debug('\n' + ('# --' + optionDefinitions[5].name).mainOption)
   console.log('Refreshes statistical costs database')
 
-  commons.runNodeScriptSync(filenames.build.getAvgFromDB, ['--dataBase'])
+  commons.runNodeScriptSync(filenames.build.getAvgFromDB, ['--database'])
 }
 
 // -t generate html and jpeg stats [t]ables in bin/ | based on the statistical costs Database
 function genTables () {
   debug('\n' + ('# --' + optionDefinitions[6].name).mainOption)
   console.log('Generating statistical html and jpg tables')
-  commons.runNodeScriptSync(filenames.build.generateTables, ['--dataBase'])
+  commons.runNodeScriptSync(filenames.build.generateTables, ['--database'])
 }
 
 function getArgvHelpMsg () {
