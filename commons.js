@@ -610,20 +610,21 @@ function getArgvHelpMsg () {
 
 function getNoServiceErrMsg (serviceObj, fileName) {
   var messg = '\nConsidering you enabled the ' + serviceObj.name +
-                " services and you're using the release '" + RELEASE + "', " +
-                'you have to either:\n' +
-                '  - insert within the file ' + colors.green.bold(fileName) + ' a valid ' +
-                colors.green.bold(serviceObj.name + ' ' + serviceObj.propName) + ' (see readme.md), or\n' +
-                '  - disable the ' + serviceObj.name + ' service.\n'
+    " services and you're using the release '" + RELEASE + "', " +
+    'you have to either:\n' +
+    '  - insert within the file ' + colors.green.bold(fileName) + ' a valid ' +
+    colors.green.bold(serviceObj.name + ' ' + serviceObj.propName) + ' (see readme.md), or\n' +
+    '  - disable the ' + serviceObj.name + ' service.\n'
 
   return messg
 }
 
-function getDataBaseErrMsg (scriptName, serviceObj) {
-  var messg = '\nThis building script ' + scriptName + ' needs the Database credentials to run, therefore:\n' +
-                '- enable the Database option (--dataBase) and provide also its credentials on ' +
-                serviceObj.filePath + ', or\n' +
-                '- do not run this particular building script file while building.\n'
+function getDataBaseErrMsg (scriptFullPath, serviceObj) {
+  var messg = '\nThis building script ' + path.relative(ROOT_DIR, scriptFullPath) +
+    ' needs the Database credentials to run, therefore:\n' +
+    '- enable the Database option (--dataBase) and provide also its credentials on ' +
+    path.relative(ROOT_DIR, FILENAMES.server.credentialsFullPath[RELEASE]) + ', or\n' +
+    '- do not run this particular building script file while building.\n'
 
   return messg
 }

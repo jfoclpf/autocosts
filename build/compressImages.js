@@ -23,13 +23,15 @@ debug('bin/: ', directories.server.bin)
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
-var Bar = commons.getProgressBar(getNuberOfTotalFiles(), debug.enabled)
+var Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
 async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
     console.log(Error('An error was found: '.error + err.message))
     process.exit(1) // exit with error
   }
+  Bar.tick({ info: '' })
+  Bar.terminate()
   console.log('All images compressed successfully'.green)
   process.exit(0) // exit successfully
 })
