@@ -113,7 +113,7 @@ function _init () {
     'disableCharts': false, /* Disable Charts on result */
     'googleCaptcha': false, /* Google Captcha to avoid spam-bots */
     'googleAnalytics': false, /* Google Analytics */
-    'dataBase': false, /* Inserts user input data into a DataBase */
+    'database': false, /* Inserts user input data into a DataBase */
     'print': false, /* Print result option, at the end */
     'pdf': false /* Download PDF report option */
   }
@@ -218,9 +218,9 @@ function _init () {
       'propType': 'string',
       'trackingId': ''
     },
-    'dataBase': {
-      'enabled': SWITCHES.dataBase,
-      'name': 'dataBase',
+    'database': {
+      'enabled': SWITCHES.database,
+      'name': 'database',
       'propName': 'credentials',
       'propType': 'object',
       'credentials': {}
@@ -228,7 +228,7 @@ function _init () {
     'money': {
       // in test version we don't use the money API because test version credentials are public
       // and money API credentials must be private
-      'enabled': RELEASE === 'test' ? false : SWITCHES.dataBase,
+      'enabled': RELEASE === 'test' ? false : SWITCHES.database,
       'name': 'money',
       'propName': 'ApiId',
       'propType': 'string',
@@ -270,7 +270,7 @@ function _init () {
           throw getNoServiceErrMsg(serviceObj, credentialsFileName)
         }
         serviceObj[serviceObj.propName] = dataStr
-      } else if (serviceObj.propType === 'object') { // if service data is an object (normally applies to dataBase)
+      } else if (serviceObj.propType === 'object') { // if service data is an object (normally applies to database)
         var dataObj = credentialsData[serviceObj.name]
         if (!isValidCredentialString(dataObj)) {
           throw getNoServiceErrMsg(serviceObj, credentialsFileName)
@@ -478,7 +478,7 @@ function setCdnOrLocalFiles (isCDN) {
 // options are selected. These options require Internet and thus disables them
 function checkForInternet () {
   // bin/index.js services demanding Internet
-  var demandingInternet = ['uber', 'cdn', 'social', 'dataBase', 'googleCaptcha', 'googleAnalytics']
+  var demandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
 
   var isAny = false
   for (var i = 0; i < demandingInternet.length; i++) {
@@ -585,7 +585,7 @@ function getArgvHelpMsg () {
 
   var messg = '\n\n' +
         'Usage: node ' + filename + ' [options]\n' +
-        'Ex:    node ' + filename + ' -r prod --uber --dataBase\n' +
+        'Ex:    node ' + filename + ' -r prod --uber --database\n' +
         '\n' +
         'Options: \n' +
         '-r, --release              [dev]elopment, [test] or [prod]uction\n' +
@@ -602,7 +602,7 @@ function getArgvHelpMsg () {
         '    --uber                 Enables UBER API\n' +
         '    --googleCaptcha        Enables Google Captcha V2 anti-bot for calculation button\n' +
         '    --googleAnalytics      Enables Google Analytics\n' +
-        '    --dataBase             Enables a mysql Database\n' +
+        '    --database             Enables a mysql Database\n' +
         '\n'
 
   return messg
@@ -622,7 +622,7 @@ function getNoServiceErrMsg (serviceObj, fileName) {
 function getDataBaseErrMsg (scriptFullPath, serviceObj) {
   var messg = '\nThis building script ' + path.relative(ROOT_DIR, scriptFullPath) +
     ' needs the Database credentials to run, therefore:\n' +
-    '- enable the Database option (--dataBase) and provide also its credentials on ' +
+    '- enable the Database option (--database) and provide also its credentials on ' +
     path.relative(ROOT_DIR, FILENAMES.server.credentialsFullPath[RELEASE]) + ', or\n' +
     '- do not run this particular building script file while building.\n'
 
