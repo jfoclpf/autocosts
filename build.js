@@ -32,9 +32,15 @@ var optionDefinitions = [
 ]
 
 // get set options from command line arguments
-var options = commandLineArgs(optionDefinitions)
-// this "option" object is just filled with the options that were inserted in the command line
-// console.log(options);
+var options
+try {
+  options = commandLineArgs(optionDefinitions)
+  // this "option" object is just filled with the options that were inserted in the command line
+  // console.log(options);
+} catch (err) {
+  console.log('Unknown option: ' + err.optionName)
+  options = { help: true }
+}
 
 // check if --help was selected
 if (options.help) {
