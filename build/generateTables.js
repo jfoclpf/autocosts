@@ -65,15 +65,16 @@ isOnline().then(function (online) {
   delete availableCountries.XX
 
   var numberOfCountries = Object.keys(availableCountries).length
-  Bar = commons.getProgressBar(numberOfCountries * 3 + 2, debug.enabled)
+  Bar = commons.getProgressBar((numberOfCountries * 3 + 2) + 1, debug.enabled)
 
   async.series([dbConnect, createTables, dbEnd, rasterTables],
     function (err, results) {
-      console.log() // breaks a line
       if (err) {
         console.log(('There was an error: ' + err.message).error)
         process.exit(1)
       }
+      Bar.tick({ info: '' })
+      Bar.terminate()
       debug('Creation of html tables and rasterization of jpg tables successfully completed'.green)
       process.exit(0) // exit successfully
     }

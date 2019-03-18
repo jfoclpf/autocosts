@@ -29,7 +29,7 @@ const settings = commons.getSettings()
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
-var Bar = commons.getProgressBar(commons.getNumberOfCountries() + 4, debug.enabled)
+var Bar = commons.getProgressBar(commons.getNumberOfCountries() + 5, debug.enabled)
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -63,6 +63,8 @@ isOnline().then(function (online) {
         console.log(err.message)
         process.exit(1)
       }
+      Bar.tick({ info: '' })
+      Bar.terminate()
       console.log('Countries specifications and standards inserted successfully into respective database'.green)
       process.exit(0) // exit successfully
     }
