@@ -1,6 +1,6 @@
 {
     "country_name" : "Colombia",
-    "fuel_efficiency_std_option" : 6,
+    "fuel_efficiency_std_option" : 7,
     "distance_std_option" : 1,
     "fuel_price_volume_std" : 3,
     "curr_code" : "COP",
@@ -281,4 +281,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-
