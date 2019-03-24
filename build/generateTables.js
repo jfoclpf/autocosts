@@ -55,8 +55,8 @@ isOnline().then(function (online) {
   debug(DB_INFO)
 
   // getting country information from
-  debug('Get Countries info from: ' + fileNames.project.countriesListFile)
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
+  debug('Get Countries info from: ' + fileNames.project.countriesInfoFile)
+  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries // global
   domainsCountries = countriesInfo.domainsCountries
 

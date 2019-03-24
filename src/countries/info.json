@@ -1,4 +1,25 @@
 {
+  "standards": {
+    "distance": {
+      "1":	"kilometres",
+      "2":	"miles",
+      "3":	"nordic mile (10km)"
+    },
+    "fuelPrice": {
+      "1":	"litres",
+      "2":	"imperial(UK) gallons",
+      "3":	"US gallons"
+    },
+    "fuelEfficiency": {
+      "1": "ltr/100km",
+      "2": "km/ltr",
+      "3": "mpg(imp)",
+      "4": "mpg(US)",
+      "5": "ltr/mil(10km)",
+      "6": "mil(10km)/ltr",
+      "7": "km/gal(US)"
+    }
+  },
   "availableCountries" : {
     "XX" : "test",
     "PT" : "Portugal",

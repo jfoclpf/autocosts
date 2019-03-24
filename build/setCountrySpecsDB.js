@@ -49,8 +49,8 @@ isOnline().then(function (online) {
   const fileNames = commons.getFileNames()
 
   // getting country information from
-  debug('\nGet Countries info from: ' + fileNames.project.countriesListFile)
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
+  debug('\nGet Countries info from: ' + fileNames.project.countriesInfoFile)
+  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries
 
   // sorts array of countries

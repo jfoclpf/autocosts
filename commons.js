@@ -397,8 +397,7 @@ function setFILENAMES () {
       'statsFunctions': path.join(DIRECTORIES.server.build, 'statsFunctions.js')
     },
     'project': {
-      'countriesListFile': path.join(countriesDir, 'list.json'),
-      'countriesStandardsFile': path.join(countriesDir, 'standards.json'),
+      'countriesInfoFile': path.join(countriesDir, 'info.json'),
       'conversions.js': path.join(clientDir, 'core', 'conversions.js'),
       'calculator.js': path.join(clientDir, 'core', 'calculator.js'),
       'transferData.js': path.join(clientDir, 'transferData.js')
@@ -536,7 +535,7 @@ function getCountriesObj () {
     setFILENAMES()
   }
 
-  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
+  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
   var availableCountries = countriesInfo.availableCountries
   return availableCountries
 }
@@ -546,7 +545,7 @@ function getNumberOfCountries () {
     setFILENAMES()
   }
 
-  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
+  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
   var numberOfCountries = Object.keys(countriesInfo.availableCountries).length
   return numberOfCountries
 }
@@ -658,7 +657,7 @@ function getConsoleColors () {
 // returns an object with several different information about the domains
 function getDomainsObject (domainsCountries) {
   if (!domainsCountries) {
-    let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesListFile, 'utf8'))
+    let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
     domainsCountries = countriesInfo.domainsCountries
   }
 
