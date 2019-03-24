@@ -41,7 +41,7 @@ var fileNames = commons.getFileNames()
 var settings = commons.getSettings()
 
 // fixed unchangeable global data which is constant for all HTTP requests independently of the country
-var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
+var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
 var serverData = {
   'release': release, // Release: "dev" or "prod"
   'settings': settings, // Settings set in commons.js
@@ -49,6 +49,7 @@ var serverData = {
   'fileNames': fileNames, // Object with the fileNames, on the server and client
   'availableCountries': sortObj(countriesInfo.availableCountries), // Array of alphabetically sorted available Countries
   'languagesCountries': countriesInfo.languagesCountries, // Array of Language Codes
+  'standards': countriesInfo.standards, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
   'domains': commons.getDomainsObject(countriesInfo.domainsCountries), // Object with Domains Infomation
   'CClistOnString': commons.getCClistOnStr(countriesInfo.availableCountries), // a string with all the CC
   'isOnline': undefined // if the server has access to Internet connection (to use database, uber, etc.)

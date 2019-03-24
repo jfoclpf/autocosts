@@ -72,7 +72,7 @@ function startsHttpServer (callback) {
 
 // returns ['/stats', '/list', '/PT', '/US', '/AU', etc.]
 function getPathnamesToValidate () {
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesListFile, 'utf8'))
+  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   var availableCountries = countriesInfo.availableCountries
 
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
