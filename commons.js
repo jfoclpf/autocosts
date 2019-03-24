@@ -398,6 +398,7 @@ function setFILENAMES () {
     },
     'project': {
       'countriesListFile': path.join(countriesDir, 'list.json'),
+      'countriesStandardsFile': path.join(countriesDir, 'standards.json'),
       'conversions.js': path.join(clientDir, 'core', 'conversions.js'),
       'calculator.js': path.join(clientDir, 'core', 'calculator.js'),
       'transferData.js': path.join(clientDir, 'transferData.js')
