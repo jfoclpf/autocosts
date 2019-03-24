@@ -45,7 +45,7 @@
     "Country": "CO",
     "currency": "COP",
     "distance_std": "1",
-    "fuel_efficiency_std": "6",
+    "fuel_efficiency_std": "7",
     "fuel_price_volume_std": "3"
 }, {
     "Country": "CR",
@@ -81,7 +81,7 @@
     "Country": "DO",
     "currency": "DOP",
     "distance_std": "1",
-    "fuel_efficiency_std": "6",
+    "fuel_efficiency_std": "7",
     "fuel_price_volume_std": "3"
 }, {
     "Country": "EC",
@@ -117,7 +117,7 @@
     "Country": "GT",
     "currency": "GTQ",
     "distance_std": "1",
-    "fuel_efficiency_std": "6",
+    "fuel_efficiency_std": "7",
     "fuel_price_volume_std": "3"
 }, {
     "Country": "HU",
@@ -183,7 +183,7 @@
     "Country": "PE",
     "currency": "PEN",
     "distance_std": "1",
-    "fuel_efficiency_std": "6",
+    "fuel_efficiency_std": "7",
     "fuel_price_volume_std": "3"
 }, {
     "Country": "PL",
@@ -231,7 +231,7 @@
     "Country": "SV",
     "currency": "SVC",
     "distance_std": "1",
-    "fuel_efficiency_std": "6",
+    "fuel_efficiency_std": "7",
     "fuel_price_volume_std": "3"
 }, {
     "Country": "TR",
