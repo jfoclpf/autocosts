@@ -6,7 +6,7 @@
 ************************************************/
 
 // TRANSFER DATA MODULE
-// from user form or database to calculator
+// from user form or database to calculator core function
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 // This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
 
@@ -26,6 +26,8 @@ autocosts.transferDataModule = (function (thisModule) {
     commonsModule = autocosts.commonsModule
   }
 
+  // creates an Object from the html user form
+  // to be passed into the calculator core function
   function createUserFormObject (userForm) {
     var f = userForm // main user form document variable
 
@@ -80,6 +82,7 @@ autocosts.transferDataModule = (function (thisModule) {
             period: f.combustivel_period_km.value // month, two months,  trimester, semester, year
           },
           fuelEfficiency: f.fuel_efficiency.value, // fuel efficiency of the vehicle
+          fuelEfficiencyStandard: f.fuel_efficiency_standard.value, // l/100km, km/l, mpg(US), mpg(imp)
           fuelPrice: f.fuel_price.value // fuel price per unit volume
         }
       },
@@ -180,6 +183,8 @@ autocosts.transferDataModule = (function (thisModule) {
     return data
   }
 
+  // creates an Object from an entry of the database
+  // to be passed into the calculator core function
   function createUserDataObjectFromDB (dbObject) {
     var data = {
       depreciation: {
