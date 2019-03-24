@@ -40,7 +40,8 @@ autocosts.calculatorModule.conversionsModule = (function () {
       'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
       'mpg(US)': [4, 'US mpg'],
       'l/nordicMile': [5, 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
-      'km/gal(US)': [6, 'km/USGalon']
+      'nordicMile/l': [6, 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
+      'km/gal(US)': [7, 'km/USGalon']
     }
   }
 
