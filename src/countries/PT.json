@@ -46,7 +46,7 @@
     "greater_or_equal_to" : "maior ou igual a",
     "greater_than" : "maior que",
     "smaller_or_equal_to" : "menor ou igual a",
-    "smaller_than" : "menor que",    
+    "smaller_than" : "menor que",
     "visitors" : "Visitantes",
     "online" : "em linha",
     "this_month" : "neste mês",
@@ -147,7 +147,7 @@
     "fuel_price" : "Preço médio que paga pelo combustível",
     "fuel_price1" : "Preço médio do combustível",
     "you_drive_totally_avg" : "No total faz em média",
-    "you_drive" : "Faz",
+    "you_drive" : "Você conduz",
     "maintenance" : "Revisões",
     "maintenance_desc" : "Custo médio em revisões:<br><i>óleo, filtros, luzes, pneus, travões, alinhamento, ar condicionado, etc.</i>",
     "rep_improv" : "Reparações e Melhoramentos",
@@ -300,4 +300,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-
