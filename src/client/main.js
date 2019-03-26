@@ -44,6 +44,7 @@ var autocosts = (function () {
       switches: undefined, // GLOBAL switches Object, got from server configuration
       selectedCountry: undefined, // Current Country Code
       countryListObj: undefined, // List of countries in a Javascript Object
+      countriesStandards: undefined, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
       domainListObj: undefined, // List of domains in a Javascript Object
       language: undefined, // Current Language Code according to ISO_639-1 codes
       translatedStrings: undefined, // Object with country's language text strings
@@ -91,6 +92,7 @@ var autocosts = (function () {
     // information obtained from the server
     mainVariables.serverInfo.selectedCountry = globalVariables.dataset.country
     mainVariables.serverInfo.countryListObj = JSON.parse(decodeURI(globalVariables.dataset.country_list))
+    mainVariables.serverInfo.countriesStandards = JSON.parse(decodeURI(globalVariables.dataset.countries_standards))
     mainVariables.serverInfo.domainListObj = JSON.parse(decodeURI(globalVariables.dataset.domain_list))
     mainVariables.serverInfo.language = globalVariables.dataset.language
     mainVariables.serverInfo.translatedStrings = JSON.parse(decodeURI(globalVariables.dataset.words))
