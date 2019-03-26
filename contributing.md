@@ -33,7 +33,7 @@ km // kilometer
 mi // mile
 mil(10km) // nordic mile
 ```
-#### Fuel Price
+#### Fuel Price Volume
 ```
 ltr // metric litre
 gal(UK) // imperial gallon
