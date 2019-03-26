@@ -277,23 +277,23 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Insurance
-    switch (form.insurance.period) {
-      case 'mensal':
+    switch (commonsModule.getTimePeriod(form.insurance.period)) {
+      case 'month':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.month)
         break
-      case 'trimestral':
+      case 'trimester':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.trimester)
         break
-      case 'semestral':
+      case 'semester':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.semester)
         break
-      case 'anual':
+      case 'year':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.year)
@@ -344,28 +344,28 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     switch (form.fuel.typeOfCalculation) {
       case 'km':
         if (form.fuel.distanceBased.considerCarToJob === 'false') {
-          switch (form.fuel.distanceBased.noCarToJob.period) {
-            case '1':
+          switch (commonsModule.getTimePeriod(form.fuel.distanceBased.noCarToJob.period)) {
+            case 'month':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                                      translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.month)
               break
-            case '2':
+            case 'twoMonths':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                                      translatedStrings.dist_each_two_months)
               break
-            case '3':
+            case 'trimester':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                                      translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.trimester)
               break
-            case '4':
+            case 'semester':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                                      translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.semester)
               break
-            case '5':
+            case 'year':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                                      translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.year)
@@ -407,23 +407,23 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
         break
 
       case 'euros':
-        switch (form.fuel.currencyBased.period) {
-          case '1':
+        switch (commonsModule.getTimePeriod(form.fuel.currencyBased.period)) {
+          case 'month':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                  translatedStrings.word_per + ' ' + translatedStrings.month)
             break
-          case '2':
+          case 'twoMonths':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.dist_each_two_months)
             break
-          case '3':
+          case 'trimester':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                  translatedStrings.word_per + ' ' + translatedStrings.trimester)
             break
-          case '4':
+          case 'semester':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                  translatedStrings.word_per + ' ' + translatedStrings.semester)
             break
-          case '5':
+          case 'year':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                  translatedStrings.word_per + ' ' + translatedStrings.year)
             break
@@ -445,27 +445,27 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // Tolls
     if (form.tolls.calculationBasedOnDay === 'false') {
-      switch (form.tolls.noBasedOnDay.period) {
-        case '1':
+      switch (commonsModule.getTimePeriod(form.tolls.noBasedOnDay.period)) {
+        case 'month':
           addLiElm('tolls',
             form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                              translatedStrings.word_per + ' ' + translatedStrings.month)
           break
-        case '2':
+        case 'twoMonths':
           addLiElm('tolls', form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                       translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
           break
-        case '3':
+        case 'trimester':
           addLiElm('tolls',
             form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                              translatedStrings.word_per + ' ' + translatedStrings.trimester)
           break
-        case '4':
+        case 'semester':
           addLiElm('tolls',
             form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                              translatedStrings.word_per + ' ' + translatedStrings.semester)
           break
-        case '5':
+        case 'year':
           addLiElm('tolls',
             form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                              translatedStrings.word_per + ' ' + translatedStrings.year)
@@ -480,28 +480,28 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Fines
-    switch (form.fines.period) {
-      case '1':
+    switch (commonsModule.getTimePeriod(form.fines.period)) {
+      case 'month':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.month)
         break
-      case '2':
+      case 'twoMonths':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
         break
-      case '3':
+      case 'trimester':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.trimester)
         break
-      case '4':
+      case 'semester':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.semester)
         break
-      case '5':
+      case 'year':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.year)
@@ -511,28 +511,28 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Washing
-    switch (form.washing.period) {
-      case '1':
+    switch (commonsModule.getTimePeriod(form.washing.period)) {
+      case 'month':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.month)
         break
-      case '2':
+      case 'twoMonths':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
         break
-      case '3':
+      case 'trimester':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.trimester)
         break
-      case '4':
+      case 'semester':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.semester)
         break
-      case '5':
+      case 'year':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                          translatedStrings.word_per + ' ' + translatedStrings.year)
