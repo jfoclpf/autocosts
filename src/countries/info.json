@@ -1,14 +1,14 @@
 {
   "standards": {
     "distance": {
-      "1":	"kilometres",
-      "2":	"miles",
-      "3":	"nordic mile (10km)"
+      "1":	"km",
+      "2":	"mi",
+      "3":	"mil(10km)"
     },
     "fuelPrice": {
-      "1":	"litres",
-      "2":	"imperial(UK) gallons",
-      "3":	"US gallons"
+      "1":	"ltr",
+      "2":	"gal(UK)",
+      "3":	"gal(US)"
     },
     "fuelEfficiency": {
       "1": "ltr/100km",
