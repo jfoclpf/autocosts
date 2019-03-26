@@ -5,11 +5,13 @@
 **                                             **
 ************************************************/
 
-// TRANSFER DATA MODULE
-// from user form or database to calculator
+// COMMONS mainly on client/browser/front-end side
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
 
-/* global autocosts */
+// check for node
+if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
+  var autocosts = {}
+}
 
 autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) {
   function initialize () {
@@ -202,3 +204,8 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
 })(autocosts.commonsModule || {},
   autocosts.serverInfo,
   autocosts.serverInfo.translatedStrings)
+
+// check for node
+if (typeof window === 'undefined') {
+  module.exports = autocosts.commonsModule
+}
