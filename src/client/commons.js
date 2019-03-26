@@ -13,7 +13,7 @@ if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}
 }
 
-autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) {
+autocosts.commonsModule = (function (thisModule, serverInfo) {
   function initialize () {
     loadModuleDependencies()
   }
@@ -73,9 +73,10 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
     window.history.pushState('', document.title, window.location.pathname + window.location.search)
   }
 
-  // Get the applicable standard values
+  // Get the applicable standard units
   // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#standards
   function getStringFor (setting) {
+    var translatedStrings = serverInfo.translatedStrings
     var errMsg = 'Error on getSettingsStringFor'
 
     switch (setting) {
@@ -202,8 +203,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
 
   return thisModule
 })(autocosts.commonsModule || {},
-  autocosts.serverInfo,
-  autocosts.serverInfo.translatedStrings)
+  autocosts.serverInfo || {})
 
 // check for node
 if (typeof window === 'undefined') {
