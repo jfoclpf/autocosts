@@ -14,7 +14,7 @@ if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
 }
 
 autocosts.calculatorModule = (function (thisModule) {
-  var conversionsModule
+  var conversionsModule, commonsModule
 
   var inputData // input data object, for example obtained from user form
   var country // object containing information about the selected country
@@ -45,8 +45,10 @@ autocosts.calculatorModule = (function (thisModule) {
   function loadModuleDependencies () {
     if (typeof window === 'undefined') { // node
       conversionsModule = require('./conversions')
+      commonsModule = require('../commons')
     } else { // browser
       conversionsModule = autocosts.calculatorModule.conversionsModule
+      commonsModule = autocosts.commonsModule
     }
   }
 
@@ -237,7 +239,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
   function calculateInsuranceMonthlyValue (insurance) {
     var insuranceValue
-    switch (getTimePeriod(insurance.period)) {
+    switch (commonsModule.getTimePeriod(insurance.period)) {
       case 'month':
         insuranceValue = parseFloat(insurance.amountPerPeriod)
         break
@@ -358,7 +360,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
           distancePerPeriod = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod)
 
-          switch (getTimePeriod(fuel.distanceBased.noCarToJob.period)) {
+          switch (commonsModule.getTimePeriod(fuel.distanceBased.noCarToJob.period)) {
             case 'month':
               distancePerMonth = distancePerPeriod
               break
@@ -414,7 +416,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
         case 'money':
 
-          switch (getTimePeriod(fuel.currencyBased.period)) {
+          switch (commonsModule.getTimePeriod(fuel.currencyBased.period)) {
             case 'month':
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod)
               break
@@ -473,7 +475,7 @@ autocosts.calculatorModule = (function (thisModule) {
     var errMsg = 'Error calculating tolls'
 
     if (tolls.calculationBasedOnDay === 'false') { // calculation not done by day
-      switch (getTimePeriod(tolls.noBasedOnDay.period)) {
+      switch (commonsModule.getTimePeriod(tolls.noBasedOnDay.period)) {
         case 'month':
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod)
         case 'twoMonths':
@@ -495,7 +497,7 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyFines (fines) {
-    switch (getTimePeriod(fines.period)) {
+    switch (commonsModule.getTimePeriod(fines.period)) {
       case 'month':
         return parseFloat(fines.amountPerPeriod)
       case 'twoMonths':
@@ -507,12 +509,12 @@ autocosts.calculatorModule = (function (thisModule) {
       case 'year':
         return parseFloat(fines.amountPerPeriod) / 12
       default:
-        throw Error('Error calculating fines')
+        throw Error('Error calculating fines: ' + fines.period)
     }
   }
 
   function calculateMonthlyWashing (washing) {
-    switch (getTimePeriod(washing.period)) {
+    switch (commonsModule.getTimePeriod(washing.period)) {
       case 'month':
         return parseFloat(washing.amountPerPeriod)
       case 'twoMonths':
@@ -696,7 +698,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
     // Income and financial effort
     var incomePeriod = inputIncome.incomePeriod
-    switch (getTimePeriod(incomePeriod)) {
+    switch (commonsModule.getTimePeriod(incomePeriod)) {
       case 'year':
         financialEffort.income.perYear = parseFloat(inputIncome.year.amount) * 1
         break
@@ -846,7 +848,7 @@ autocosts.calculatorModule = (function (thisModule) {
         noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod)
 
         if (isNumber(noCarToJobDistancePerPeriod)) {
-          switch (getTimePeriod(inputDistance.noCarToJob.period)) {
+          switch (commonsModule.getTimePeriod(inputDistance.noCarToJob.period)) {
             case 'month':
               distancePerMonth = noCarToJobDistancePerPeriod
               break
@@ -1268,29 +1270,6 @@ autocosts.calculatorModule = (function (thisModule) {
       }
     }
     return true
-  }
-
-  // this function allows broader defintion inputs from user form and
-  // backward compatibility from user old inputs on database
-  function getTimePeriod (timePeriod) {
-    var timePeriodsObj = {
-      'hour': ['hourly'],
-      'week': ['weekly'],
-      'month': [1, 'monthly', 'mensal', 'mês'],
-      'twoMonths': [2, 'two months', '2 motnhs', 'bimestral', 'bimestre'],
-      'trimester': [3, 'trimesterly', 'quarterly', 'trimestral'],
-      'semester': [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
-      'year': [5, 'yearly', 'anual', 'ano']
-    }
-
-    var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod
-    for (var key in timePeriodsObj) {
-      if (key === val || timePeriodsObj[key].indexOf(val) !== -1) {
-        return key
-      }
-    }
-
-    return null
   }
 
   // detects if a variable is defined and different from zero
