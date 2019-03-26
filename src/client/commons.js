@@ -72,6 +72,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
   }
 
   // Get the applicable standard values
+  // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#standards
   function getStringFor (setting) {
     var errMsg = 'Error on getSettingsStringFor'
 
@@ -79,16 +80,18 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
       case 'fuelEfficiency':
         switch (translatedStrings.fuel_efficiency_std_option) {
           case 1:
-            return 'l/100km'
+            return 'ltr/100km'
           case 2:
-            return 'km/l'
+            return 'km/ltr'
           case 3:
             return 'mpg(imp)'
           case 4:
             return 'mpg(US)'
           case 5:
-            return 'l/mil'
+            return 'ltr/mil(10km)'
           case 6:
+            return 'mil(10km)/ltr'
+          case 7:
             return 'km/gal(US)'
           default:
             console.error(errMsg + ': fuelEfficiency')
@@ -98,37 +101,24 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
       case 'distance':
         switch (translatedStrings.distance_std_option) {
           case 1:
-            return 'kilometres'
-          case 2:
-            return 'miles'
-          case 3:
-            return 'mil'
-          default:
-            console.error(errMsg + ': distance')
-            return 'error'
-        }
-      /* falls through */
-      case 'distanceShort':
-        switch (translatedStrings.distance_std_option) {
-          case 1:
             return 'km'
           case 2:
             return 'mi'
           case 3:
-            return 'Mil'
+            return 'mil(10km)'
           default:
-            console.error(errMsg + ': distanceShort')
+            console.error(errMsg + ': distance')
             return 'error'
         }
       /* falls through */
       case 'fuelPriceVolume':
         switch (translatedStrings.fuel_price_volume_std) {
           case 1:
-            return 'litres'
+            return 'ltr'
           case 2:
-            return 'imperial gallons'
+            return 'gal(UK)'
           case 3:
-            return 'US gallons'
+            return 'gal(US)'
           default:
             console.error(errMsg + ': fuelPriceVolume')
             return 'error'
@@ -138,6 +128,29 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
       default:
         throw errMsg
     }
+  }
+
+  // this function allows broader defintion inputs from user form and
+  // backward compatibility from user old inputs on database for time periods
+  function getTimePeriod (timePeriod) {
+    var timePeriodsObj = {
+      'hour': ['hourly'],
+      'week': ['weekly'],
+      'month': [1, 'monthly', 'mensal', 'mês'],
+      'twoMonths': [2, 'two_months', 'two months', '2 months', 'bimestral', 'bimestre'],
+      'trimester': [3, 'trimesterly', 'quarterly', 'trimestral'],
+      'semester': [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
+      'year': [5, 'yearly', 'anual', 'ano']
+    }
+
+    var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod
+    for (var key in timePeriodsObj) {
+      if (key === val || timePeriodsObj[key].indexOf(val) !== -1) {
+        return key
+      }
+    }
+
+    return null
   }
 
   // function used to get from forms the selected option in radio buttons
@@ -181,6 +194,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo, translatedStrings) 
   thisModule.isMobile = isMobile
   thisModule.removeHashFromUrl = removeHashFromUrl
   thisModule.getStringFor = getStringFor
+  thisModule.getTimePeriod = getTimePeriod
   thisModule.getCheckedValue = getCheckedValue
   thisModule.isNumber = isNumber
 
