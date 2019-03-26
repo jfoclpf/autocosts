@@ -9,6 +9,7 @@ const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const request = require('request')
+const isOnline = require('is-online')
 const { fork } = require('child_process')
 const validator = require('html-validator')
 const debug = require('debug')('test:validateHtml')
@@ -28,7 +29,7 @@ var PathnamesToValidateArr = getPathnamesToValidate()
 
 var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 1, debug.enabled)
 
-async.series([startsHttpServer, validateHtmlOnAllPages],
+async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
     if (results[0] && results[0].httpLocalServer) {
@@ -47,6 +48,17 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
     }
   }
 )
+
+// checks for internet connection
+function checkForInternet (callback) {
+  isOnline().then(function (online) {
+    if (!online) {
+      callback('ERROR: no Internet connection'.red.bold)
+    } else {
+      callback()
+    }
+  })
+}
 
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
