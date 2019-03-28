@@ -135,6 +135,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
 
   // this function allows broader defintion inputs from user form and
   // backward compatibility from user old inputs on database for time periods
+  // for example if timePeriod is either 'month', 1, '1', 'monthly', 'mensal' or 'mês' => 'month'
   function getTimePeriod (timePeriod) {
     var timePeriodsObj = {
       'hour': ['hourly'],
