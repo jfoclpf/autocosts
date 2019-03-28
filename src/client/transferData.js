@@ -23,7 +23,11 @@ autocosts.transferDataModule = (function (thisModule) {
   }
 
   function loadModuleDependencies () {
-    commonsModule = autocosts.commonsModule
+    if (typeof window === 'undefined') { // node
+      commonsModule = require('./commons')
+    } else { // browser
+      commonsModule = autocosts.commonsModule
+    }
   }
 
   // creates an Object from the html user form
@@ -41,7 +45,7 @@ autocosts.transferDataModule = (function (thisModule) {
 
       insurance: {
         amountPerPeriod: f.insuranceValue.value,
-        period: commonsModule.getCheckedValue(f.insurancePaymentPeriod)
+        period: commonsModule.getTimePeriod(commonsModule.getCheckedValue(f.insurancePaymentPeriod))
       },
 
       credit: {
@@ -68,7 +72,7 @@ autocosts.transferDataModule = (function (thisModule) {
         typeOfCalculation: commonsModule.getCheckedValue(f.calc_combustiveis), // binary variable: "currency/euros" or "distance/km"
         currencyBased: {
           amountPerPeriod: f.combustiveis_euro.value,
-          period: f.combustiveis_periodo_euro.value // month, two months,  trimester, semester, year
+          period: commonsModule.getTimePeriod(f.combustiveis_periodo_euro.value) // month, two months, trimester, semester, year
         },
         distanceBased: {
           considerCarToJob: commonsModule.getCheckedValue(f.car_job_form2), // binary variable: true or false
@@ -79,10 +83,11 @@ autocosts.transferDataModule = (function (thisModule) {
           },
           noCarToJob: {
             distancePerPeriod: f.km_por_mes.value,
-            period: f.combustivel_period_km.value // month, two months,  trimester, semester, year
+            period: commonsModule.getTimePeriod(f.combustivel_period_km.value), // month, two months,  trimester, semester, year
+            distanceStandardUnit: f.distance_standard_onfuel.value // km, mile or mil(10km)
           },
           fuelEfficiency: f.fuel_efficiency.value, // fuel efficiency of the vehicle
-          fuelEfficiencyStandard: f.fuel_efficiency_standard.value, // l/100km, km/l, mpg(US), mpg(imp)
+          fuelEfficiencyStandard: f.fuel_efficiency_standard_onfuel.value, // l/100km, km/l, mpg(US), mpg(imp)
           fuelPrice: f.fuel_price.value // fuel price per unit volume
         }
       },
@@ -107,18 +112,18 @@ autocosts.transferDataModule = (function (thisModule) {
         },
         noBasedOnDay: {
           amountPerPeriod: f.no_daily_tolls_value.value,
-          period: f.tolls_period_select.value // month, two months,  trimester, semester, year
+          period: commonsModule.getTimePeriod(f.tolls_period_select.value) // month, two months,  trimester, semester, year
         }
       },
 
       fines: {
         amountPerPeriod: f.tickets_value.value,
-        period: f.tickets_period_select.value // month, two months,  trimester, semester, year
+        period: commonsModule.getTimePeriod(f.tickets_period_select.value) // month, two months,  trimester, semester, year
       },
 
       washing: {
         amountPerPeriod: f.washing_value.value,
-        period: f.washing_period_select.value // month, two months,  trimester, semester, year
+        period: commonsModule.getTimePeriod(f.washing_period_select.value) // month, two months,  trimester, semester, year
       },
 
       // Form Part 3
@@ -164,7 +169,8 @@ autocosts.transferDataModule = (function (thisModule) {
         },
         noCarToJob: {
           distancePerPeriod: f.km_per_month.value,
-          period: f.period_km.value
+          period: commonsModule.getTimePeriod(f.period_km.value),
+          distanceStandardUnit: f.distance_standard_ondistance.value
         }
       },
 
@@ -196,7 +202,7 @@ autocosts.transferDataModule = (function (thisModule) {
 
       insurance: {
         amountPerPeriod: dbObject.insurance_value,
-        period: dbObject.insure_type
+        period: commonsModule.getTimePeriod(dbObject.insure_type)
       },
 
       credit: {
@@ -223,7 +229,7 @@ autocosts.transferDataModule = (function (thisModule) {
         typeOfCalculation: dbObject.fuel_calculation, // binary variable: "currency/euros" or "distance/km"
         currencyBased: {
           amountPerPeriod: dbObject.fuel_currency_based_currency_value,
-          period: dbObject.fuel_currency_based_periodicity // month, two months,  trimester, semester, year
+          period: commonsModule.getTimePeriod(dbObject.fuel_currency_based_periodicity)
         },
         distanceBased: {
           considerCarToJob: dbObject.fuel_distance_based_car_to_work, // binary variable: true or false
@@ -234,7 +240,7 @@ autocosts.transferDataModule = (function (thisModule) {
           },
           noCarToJob: {
             distancePerPeriod: dbObject.fuel_distance_based_no_car_to_work_distance,
-            period: dbObject.fuel_distance_based_no_car_to_fuel_period_distance // month, two months, trimester, semester, year
+            period: commonsModule.getTimePeriod(dbObject.fuel_distance_based_no_car_to_fuel_period_distance)
           },
           fuelEfficiency: dbObject.fuel_distance_based_fuel_efficiency,
           fuelPrice: dbObject.fuel_distance_based_fuel_price
@@ -261,18 +267,18 @@ autocosts.transferDataModule = (function (thisModule) {
         },
         noBasedOnDay: {
           amountPerPeriod: dbObject.tolls_no_daily_value,
-          period: dbObject.tolls_no_daily_period // month, two months, trimester, semester, year
+          period: commonsModule.getTimePeriod(dbObject.tolls_no_daily_period)
         }
       },
 
       fines: {
         amountPerPeriod: dbObject.tickets_value,
-        period: dbObject.tickets_periodicity // month, two months, trimester, semester, year
+        period: commonsModule.getTimePeriod(dbObject.tickets_periodicity)
       },
 
       washing: {
         amountPerPeriod: dbObject.washing_value,
-        period: dbObject.washing_periodicity // month, two months, trimester, semester, year
+        period: commonsModule.getTimePeriod(dbObject.washing_periodicity)
       },
 
       // Form Part 3
@@ -318,7 +324,7 @@ autocosts.transferDataModule = (function (thisModule) {
         },
         noCarToJob: {
           distancePerPeriod: dbObject.distance_per_month,
-          period: dbObject.distance_period
+          period: commonsModule.getTimePeriod(dbObject.distance_period)
         }
       },
 

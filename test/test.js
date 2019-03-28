@@ -26,8 +26,14 @@ const directories = commons.getDirectories()
 const statsFunctions = require(fileNames.build.statsFunctions)
 const transferData = require(fileNames.project['transferData.js'])
 const calculator = require(fileNames.project['calculator.js'])
+transferData.initialize()
 
-testCalculatorFunction(function () {
+testCalculatorFunction(function (error) {
+  if (error) {
+    console.error(Error(error))
+    process.exit(1)
+  }
+
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
@@ -94,7 +100,7 @@ function testCalculatorFunction (callback) {
           }
         }
       } catch (error) {
-        console.error('\n\ni:' + i, '\n',
+        console.error('\n\nError on i:' + i, '\n',
           '\n\ncountryObject: ', countryObject,
           '\n\nusersInput: ', usersInput[i],
           '\n\nstructuredUserInput: ', JSON.stringify(structuredUserInput, undefined, 2),

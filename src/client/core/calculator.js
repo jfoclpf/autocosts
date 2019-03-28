@@ -14,7 +14,7 @@ if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
 }
 
 autocosts.calculatorModule = (function (thisModule) {
-  var conversionsModule, commonsModule
+  var conversionsModule
 
   var inputData // input data object, for example obtained from user form
   var country // object containing information about the selected country
@@ -45,10 +45,8 @@ autocosts.calculatorModule = (function (thisModule) {
   function loadModuleDependencies () {
     if (typeof window === 'undefined') { // node
       conversionsModule = require('./conversions')
-      commonsModule = require('../commons')
     } else { // browser
       conversionsModule = autocosts.calculatorModule.conversionsModule
-      commonsModule = autocosts.commonsModule
     }
   }
 
@@ -239,7 +237,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
   function calculateInsuranceMonthlyValue (insurance) {
     var insuranceValue
-    switch (commonsModule.getTimePeriod(insurance.period)) {
+    switch (insurance.period) {
       case 'month':
         insuranceValue = parseFloat(insurance.amountPerPeriod)
         break
@@ -360,7 +358,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
           distancePerPeriod = parseFloat(fuel.distanceBased.noCarToJob.distancePerPeriod)
 
-          switch (commonsModule.getTimePeriod(fuel.distanceBased.noCarToJob.period)) {
+          switch (fuel.distanceBased.noCarToJob.period) {
             case 'month':
               distancePerMonth = distancePerPeriod
               break
@@ -416,7 +414,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
         case 'money':
 
-          switch (commonsModule.getTimePeriod(fuel.currencyBased.period)) {
+          switch (fuel.currencyBased.period) {
             case 'month':
               monthlyCost = parseFloat(fuel.currencyBased.amountPerPeriod)
               break
@@ -475,7 +473,7 @@ autocosts.calculatorModule = (function (thisModule) {
     var errMsg = 'Error calculating tolls'
 
     if (tolls.calculationBasedOnDay === 'false') { // calculation not done by day
-      switch (commonsModule.getTimePeriod(tolls.noBasedOnDay.period)) {
+      switch (tolls.noBasedOnDay.period) {
         case 'month':
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod)
         case 'twoMonths':
@@ -497,7 +495,7 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyFines (fines) {
-    switch (commonsModule.getTimePeriod(fines.period)) {
+    switch (fines.period) {
       case 'month':
         return parseFloat(fines.amountPerPeriod)
       case 'twoMonths':
@@ -514,7 +512,7 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyWashing (washing) {
-    switch (commonsModule.getTimePeriod(washing.period)) {
+    switch (washing.period) {
       case 'month':
         return parseFloat(washing.amountPerPeriod)
       case 'twoMonths':
@@ -698,7 +696,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
     // Income and financial effort
     var incomePeriod = inputIncome.incomePeriod
-    switch (commonsModule.getTimePeriod(incomePeriod)) {
+    switch (incomePeriod) {
       case 'year':
         financialEffort.income.perYear = parseFloat(inputIncome.year.amount) * 1
         break
@@ -848,7 +846,7 @@ autocosts.calculatorModule = (function (thisModule) {
         noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod)
 
         if (isNumber(noCarToJobDistancePerPeriod)) {
-          switch (commonsModule.getTimePeriod(inputDistance.noCarToJob.period)) {
+          switch (inputDistance.noCarToJob.period) {
             case 'month':
               distancePerMonth = noCarToJobDistancePerPeriod
               break
