@@ -10,9 +10,11 @@ const path = require('path')
 const async = require('async')
 const request = require('request')
 const isOnline = require('is-online')
-const { fork } = require('child_process')
 const validator = require('html-validator')
 const debug = require('debug')('test:validateHtml')
+
+// http server that is run locally on localhost, to serve the website's files
+const testServer = require('./testServer')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
@@ -27,16 +29,13 @@ console.log('Running script ' + path.relative(directories.server.root, __filenam
 // ['/stats', '/list', '/PT', '/US', '/AU', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()
 
-var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 1, debug.enabled)
+var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
 async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
-    if (results[0] && results[0].httpLocalServer) {
-      debug('Closing http server')
-      // results[0] makes reference always to the first declared function: startsHttpServer
-      results[0].httpLocalServer.kill('SIGINT')
-    }
+    testServer.closeServer()
+
     if (err) {
       console.log(Error(err))
       process.exit(1)
@@ -62,24 +61,13 @@ function checkForInternet (callback) {
 
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
-  // the process where the http server will run
-  var httpLocalServer
-  try {
-    let index = path.join(directories.server.bin, 'index.js')
-    let parameters = ['-r', 'test']
-    let options = {
-      stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
-    }
-    httpLocalServer = fork(index, parameters, options)
-    httpLocalServer.on('message', message => {
-      debug('message from child:', message)
-      if (message.includes('SERVER_STARTED')) {
-        callback(null, { httpLocalServer: httpLocalServer })
-      }
-    })
-  } catch (err) {
-    callback(Error(err), { httpLocalServer: httpLocalServer })
-  }
+  Bar.tick({ info: 'starting local server' })
+  testServer.startsServer(function () {
+    Bar.tick({ info: 'server started' })
+    callback()
+  }, function (err) {
+    callback(Error(err))
+  })
 }
 
 // returns ['/stats', '/list', '/PT', '/US', '/AU', etc.]

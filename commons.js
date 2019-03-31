@@ -263,7 +263,7 @@ function _init () {
   // gets the information from the credentials JSON file
   for (service in SETTINGS) {
     var serviceObj = SETTINGS[service]
-    if (typeof serviceObj.enabled !== 'undefined' && serviceObj.enabled) {
+    if (serviceObj.enabled) {
       if (!fs.existsSync(credentialsFileName)) {
         throw getNoServiceErrMsg(serviceObj, credentialsFileName)
       }
@@ -618,7 +618,7 @@ function getNoServiceErrMsg (serviceObj, fileName) {
   var messg = '\nConsidering you enabled the ' + serviceObj.name +
     " services and you're using the release '" + RELEASE + "', " +
     'you have to either:\n' +
-    '  - insert within the file ' + colors.green.bold(fileName) + ' a valid ' +
+    '  - insert within the file ' + colors.green.bold(path.relative(ROOT_DIR, fileName)) + ' a valid ' +
     colors.green.bold(serviceObj.name + ' ' + serviceObj.propName) + ' (see readme.md), or\n' +
     '  - disable the ' + serviceObj.name + ' service.\n'
 

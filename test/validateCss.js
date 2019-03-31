@@ -7,10 +7,12 @@ const path = require('path')
 const find = require('find')
 const async = require('async')
 const request = require('request')
-const { fork } = require('child_process')
 const validator = require('w3c-css')
 const prettyjson = require('prettyjson')
 const debug = require('debug')('test:validateCss')
+
+// http server that is run locally on localhost, to serve the website's files
+const testServer = require('./testServer')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
@@ -29,13 +31,10 @@ var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enable
 async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
   // done after execution of above funcitons
   function (err, results) {
-    // results[1] makes reference always to the second declared function: startsHttpServer
-    if (results[1] && results[1].httpLocalServer) {
-      debug('Closing http server')
-      results[1].httpLocalServer.kill('SIGINT')
-    }
+    testServer.closeServer()
+
     if (err) {
-      console.log(Error(err))
+      console.log('Error : ', Error(err))
       process.exit(1)
     } else {
       Bar.tick({ info: '' })
@@ -56,26 +55,13 @@ function copyCssFilesToBin (callback) {
 function startsHttpServer (callback) {
   console.log('Validating CSS files...')
   Bar.tick({ info: 'starting local server' })
-  debug('Starting http server...')
-  // the process where the http server will run
-  var httpLocalServer
-  try {
-    let index = path.join(directories.server.bin, 'index.js')
-    let parameters = ['-r', 'test']
-    let options = {
-      stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
-    }
-    httpLocalServer = fork(index, parameters, options)
-    httpLocalServer.on('message', message => {
-      debug('message from child:', message)
-      if (message.includes('SERVER_STARTED')) {
-        Bar.tick({ info: 'server started' })
-        callback(null, { httpLocalServer: httpLocalServer })
-      }
-    })
-  } catch (err) {
-    callback(Error(err), { httpLocalServer: httpLocalServer })
-  }
+
+  testServer.startsServer(function () {
+    Bar.tick({ info: 'server started' })
+    callback()
+  }, function (err) {
+    callback(Error(err))
+  })
 }
 
 // returns ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
@@ -96,7 +82,7 @@ function getPathnamesToValidate () {
 function validateCssOnAllPaths (next) {
   async.eachSeries(PathnamesToValidateArr, validatePathname, function (err) {
     if (err) {
-      next(Error('Error validating css on pages: ' + err.message))
+      next(Error('Error validating css on pages: ' + err))
     } else {
       debug('All css pages validated successfully'.green)
       next()
@@ -112,7 +98,7 @@ function validatePathname (pathname, callback) {
 
   request({ uri: url }, function (err, response, body) {
     if (err) {
-      callback(Error(err))
+      callback(Error('Error on request from server:' + err))
       return
     }
 
@@ -144,7 +130,7 @@ function validatePathname (pathname, callback) {
         Bar.tick({ info: pathname })
         // since is a public service we should wait 1 s between requests
         // https://www.npmjs.com/package/w3c-css#public-css-validator
-        setTimeout(function () { callback() }, 1000)
+        setTimeout(function () { callback() }, 1100)
       })
   })
 }
