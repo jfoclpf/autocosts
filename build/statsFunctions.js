@@ -83,7 +83,7 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryObj
                        /* just checks if was enough time, on the first calculation from the same user */
                        ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
           ) {
-            let userData = transferData.createUserDataObjectFromDB(countryData[j])
+            let userData = transferData.createUserDataObjectFromDatabase(countryData[j])
             let calculatedData = calculator.calculateCosts(userData, countryObj)
             // console.log("(i,j)=("+i+","+j+")");console.log(countryObj);console.log(calculatedData);
 

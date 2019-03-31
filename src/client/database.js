@@ -43,7 +43,7 @@ autocosts.databaseModule = (function (thisModule, DOMform, serverInfo, userInfo)
   function createObjToDB () {
     var databaseObj = {}
 
-    var form = transferDataModule.createUserFormObject(DOMform)
+    var form = transferDataModule.createUserDataObjectFromForm(DOMform)
 
     // depreciation
     databaseObj.acquisition_month = form.depreciation.acquisitionMonth

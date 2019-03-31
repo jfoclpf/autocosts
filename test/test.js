@@ -95,7 +95,7 @@ function testCalculatorFunction (callback) {
           }
 
           if (statsFunctions.isUserDataEntryOk(usersInput[i], countryObject)) {
-            structuredUserInput = transferData.createUserDataObjectFromDB(usersInput[i])
+            structuredUserInput = transferData.createUserDataObjectFromDatabase(usersInput[i])
             calculatedData = calculator.calculateCosts(structuredUserInput, countryObject)
           }
         }
