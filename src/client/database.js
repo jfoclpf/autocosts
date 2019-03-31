@@ -145,6 +145,14 @@ autocosts.databaseModule = (function (thisModule, DOMform, serverInfo, userInfo)
 
   // function that is run by the previous submit_data function
   function sanityChecks (databaseObj) {
+    // converts all true to 'true' and false to 'false' to store in database,
+    // because those fields are strings in dabase (it was created like that initially)
+    for (var key in databaseObj) {
+      if (typeof databaseObj[key] === 'boolean') {
+        databaseObj[key] = JSON.stringify(databaseObj[key])
+      }
+    }
+
     if (databaseObj.credit === 'false' || !databaseObj.credit) {
       databaseObj.credit_borrowed_amount = null
       databaseObj.credit_number_installments = null
