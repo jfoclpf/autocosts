@@ -7,6 +7,7 @@ const transferData = require(fileNames.project['transferData.js'])
 const conversions = require(fileNames.project['conversions.js'])
 const calculator = require(fileNames.project['calculator.js'])
 calculator.initialize()
+transferData.initialize()
 
 // statistics outlier removal constants
 var statsConstants = {
