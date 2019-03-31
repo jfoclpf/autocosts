@@ -11,7 +11,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     loadModuleDependencies()
 
     oldIE() // detects old versions of Internet Explorer, and in that case warn the user to update browser
-    fillPeriodsInSelectBoxes() // fills periods (month, two months, etc.) in HTML select boxes
+    setFormSelectBoxes() // fills periods (month, two months, etc.) in HTML select boxes and sets other settings
     loadMainPageSettings()
     loadsPrefilledValues() // loads pre-filled values, for example for XX/
     initTimer()
@@ -37,22 +37,52 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
   }
 
   // function that sets and fills the the time periods (month, trimester, etc.) on the dropdown select boxes
-  function fillPeriodsInSelectBoxes () {
-    // language HTML select dropdowns
-    var SelectList = {
-      '1': translatedStrings.month,
-      '2': translatedStrings.two_months,
-      '3': translatedStrings.trimester,
-      '4': translatedStrings.semester,
-      '5': translatedStrings.year
+  function setFormSelectBoxes () {
+    // adjust the width of dropdown select according to content
+    var adjustWidthOfSelect = function () {
+      var text = $(this).find('option:selected').text()
+      var $aux = $('<select/>').append($('<option/>').text(text))
+      $(this).after($aux)
+      $(this).width($aux.width())
+      $aux.remove()
     }
 
+    // language HTML select dropdowns for Time Periods
+    var selectTimeList = ['month', 'two_months', 'trimester', 'semester', 'year']
     $('select.time_period').each(function () {
       var $dropdown = $(this)
-      $.each(SelectList, function (key, value) {
-        $dropdown.append($('<option/>').val(key).text(value))
+      for (var i = 0; i < selectTimeList.length; i++) {
+        var value = selectTimeList[i]
+        $dropdown.append($('<option/>').val(value).text(translatedStrings[value]))
+      }
+    })
+
+    // standard distance select boxes (km, mi, mil(10km))
+    $('select.distance_standard').each(function () {
+      var $dropdown = $(this)
+      $.each(serverInfo.countriesStandards.distance, function (key, value) {
+        var $option = $('<option/>').val(value).text(value)
+        if (parseInt(key) === translatedStrings.distance_std_option) {
+          $option.attr('selected', 'selected')
+        }
+        $dropdown.append($option)
       })
     })
+    $('select.distance_standard').change(adjustWidthOfSelect)
+
+    // fuel efficiency select boxes
+    $('select.fuel_efficiency_standard').each(function () {
+      var $dropdown = $(this)
+      $.each(serverInfo.countriesStandards.fuelEfficiency, function (key, value) {
+        var $option = $('<option/>').val(value).text(value)
+        if (parseInt(key) === translatedStrings.fuel_efficiency_std_option) {
+          $option.attr('selected', 'selected')
+        }
+        $dropdown.append($option)
+      })
+      $dropdown.width()
+    })
+    $('select.fuel_efficiency_standard').change(adjustWidthOfSelect)
   }
 
   // settings and handlers of the elements on the landing page
@@ -102,9 +132,9 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
           var value = statistics.statisticsObj[cc][key]
           value = key.includes('maintenance') ? value / 2 : value // it shows maintenance in both standing and running costs
           if (key === 'costs_perUnitDistance_runningCosts' || key === 'costs_perUnitDistance_totalCosts') {
-            $el.text(currencySymbol + round(value, 2) + '/' + commonsModule.getStringFor('distanceShort'))
+            $el.text(currencySymbol + round(value, 2) + '/' + commonsModule.getStringFor('distance'))
           } else if (key === 'speeds_averageKineticSpeed' || key === 'speeds_averageConsumerSpeed') {
-            $el.text(round(value, 0) + commonsModule.getStringFor('distanceShort') + '/h')
+            $el.text(round(value, 0) + commonsModule.getStringFor('distance') + '/h')
           } else {
             $el.text(currencySymbol + ' ' + round(value, 0))
           }
