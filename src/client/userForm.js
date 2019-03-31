@@ -61,7 +61,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
 
     $('.calculate_bottom_bar').hide()
 
-    $('#main_form select').val('1') // set all the selects to "month"
+    $('#main_form select').val('month') // set all the selects to "month"
 
     // PART 1
     // depreciation
@@ -83,13 +83,13 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
     calculateTollsOnDay(false)
 
     // fines
-    $('#tickets_period_select').val('5') // set fines period to year
+    $('#tickets_period_select').val('year') // set fines period to year
     // washing
-    $('#washing_period_select').val('3') // set washing period to trimester
+    $('#washing_period_select').val('trimester') // set washing period to trimester
 
     // PART 3
     // sets "Considering you drive to work?",  Distance section in Form Part 3, to No
-    driveToJob(false)
+    setDriveToJobOnDistance(true)
     // Income in Form Part 3 - set to year
     setIncomePeriod('year')
   }
@@ -129,7 +129,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
     })
 
     // insurance
-    setRadioButton('insurancePaymentPeriod', 'semestral') // insurance radio button set to half-yearly
+    setRadioButton('insurancePaymentPeriod', 'semester') // insurance radio button set to half-yearly
 
     // credit
     $('#cred_auto_true').on('click', function () { $('#sim_credDiv').show() })
@@ -143,8 +143,8 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
     // fuel
     $('#radio_fuel_km').on('click', function () { fuelCalculationMethodChange('distance') })
     $('#radio_fuel_euros').on('click', function () { fuelCalculationMethodChange('currency') })
-    $('#car_job_form2_yes').on('click', function () { carToJob(true) })
-    $('#car_job_form2_no').on('click', function () { carToJob(false) })
+    $('#car_job_form2_yes').on('click', function () { setDriveToJobOnFuel(true) })
+    $('#car_job_form2_no').on('click', function () { setDriveToJobOnFuel(false) })
     $('#radio_fuel_euros').prop('checked', true) // radio button of fuel set to "money"
     $('#car_job_form2_no').prop('checked', true) // radio button (considering you drive to work? => no)
 
@@ -157,8 +157,8 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
     $('#tolls_daily_false').prop('checked', true) // radio button (toll calculations based on day? => no)
 
     // PART 3
-    $('#drive_to_work_yes_form3').on('change', function () { driveToJob(true) })
-    $('#drive_to_work_no_form3').on('change', function () { driveToJob(false) })
+    $('#drive_to_work_yes_form3').on('change', function () { setDriveToJobOnDistance(true) })
+    $('#drive_to_work_no_form3').on('change', function () { setDriveToJobOnDistance(false) })
     $('#working_time_yes_form3').on('change', function () { workingTimeToggle(true) })
     $('#working_time_no_form3').on('change', function () { workingTimeToggle(false) })
     // income
@@ -452,6 +452,8 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
 
       switch (status) {
         case 'fully_hidden':
+          setIcon($(this), 'inactive')
+          break
         case 'hidden':
           setIcon($(this), 'hidden')
           break
@@ -866,12 +868,14 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
       $('#currency_div_form2').hide() // hide
       $('#distance_div_form2, .fuel_efficiency').show() // show
 
-      carToJob(false)
+      setDriveToJobOnFuel(false)
 
       // DISTANCE - Form Part 3
       // If user sets distance here, the calculator does not needs to further question about the distance
       $('#distance_form3').hide()
-      driveToJob(false)
+
+      // trigger change to adjust select box width (this needs to be last to run here)
+      $('#fuel_efficiency_standard_onfuel').change()
     } else if (fuelCalculationMethod === 'currency') {
       // selects actively radio button to which this function is associated
       $('#radio_fuel_euros').prop('checked', true)
@@ -886,7 +890,6 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
 
       $('#time_spent_part1_form3').hide()
       $('#time_spent_part2_form3').show()
-      $('#drive_to_work_no_form3').prop('checked', true)
     } else {
       console.error('Either is distance or currency')
     }
@@ -894,9 +897,9 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
 
   // FUEL - Form Part 2
   // "Considering you drive to work?" yes or no
-  function carToJob (carToJobFlag) {
+  function setDriveToJobOnFuel (flag) {
     // "Considering you drive to work?" YES
-    if (carToJobFlag) {
+    if (flag) {
       // selects actively radio button to which this function is associated
       $('#car_job_form2_yes').prop('checked', true)
 
@@ -922,12 +925,15 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
       $('#working_time_no_form3').prop('checked', true)
       $('#working_time_part1_form3').show()
       $('#working_time_part2_form3').hide()
+
+      // trigger change to adjust select box width (this needs to be last to run here)
+      $('#distance_standard_onfuel').change()
     }
   }
 
   // DISTANCE - Form Part 3
   // Drive to Job yes/no radio button
-  function driveToJob (flag) {
+  function setDriveToJobOnDistance (flag) {
     // Drive to Job - YES
     if (flag) {
       // selects actively radio button to which this function is associated
@@ -964,6 +970,9 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
       // Time spent in driving section
       $('#time_spent_part1_form3').hide()
       $('#time_spent_part2_form3').show()
+
+      // trigger change to adjust select box width (this needs to be last to run here)
+      $('#distance_standard_ondistance').change()
     }
   }
 

@@ -262,7 +262,11 @@ autocosts.calculatorModule = (function (thisModule) {
     var totalInterests
     var numberOfMonthlyInstalments
 
-    if (credit.creditBool === 'true' || credit.creditBool === true) { // if there was credit
+    if (typeof credit.creditBool !== 'boolean') {
+      throw (Error('Error calculating credit'))
+    }
+
+    if (credit.creditBool) { // if there was credit
       numberOfMonthlyInstalments = parseInt(credit.yesCredit.numberInstallments, 10)
       var amountInstallment = parseFloat(credit.yesCredit.amountInstallment)
       var residualValue = parseFloat(credit.yesCredit.residualValue)
@@ -279,10 +283,8 @@ autocosts.calculatorModule = (function (thisModule) {
       } else {
         monthlyCost = parseFloat(totalInterests / numberOfMonthlyInstalments)
       }
-    } else if (credit.creditBool === 'false' || credit.creditBool === false) {
-      monthlyCost = 0
     } else {
-      throw Error('Error calculating credit')
+      monthlyCost = 0
     }
 
     return {
@@ -472,7 +474,11 @@ autocosts.calculatorModule = (function (thisModule) {
   function calculateMonthlyTolls (tolls) {
     var errMsg = 'Error calculating tolls'
 
-    if (tolls.calculationBasedOnDay === 'false') { // calculation not done by day
+    if (typeof tolls.calculationBasedOnDay !== 'boolean') {
+      throw (Error(errMsg))
+    }
+
+    if (!tolls.calculationBasedOnDay) { // calculation not done by day
       switch (tolls.noBasedOnDay.period) {
         case 'month':
           return parseFloat(tolls.noBasedOnDay.amountPerPeriod)
@@ -487,10 +493,8 @@ autocosts.calculatorModule = (function (thisModule) {
         default:
           throw Error(errMsg)
       }
-    } else if (tolls.calculationBasedOnDay === 'true') {
-      return parseFloat(tolls.yesBasedOnDay.amountPerDay) * parseFloat(tolls.yesBasedOnDay.daysPerMonth)
     } else {
-      throw Error(errMsg)
+      return parseFloat(tolls.yesBasedOnDay.amountPerDay) * parseFloat(tolls.yesBasedOnDay.daysPerMonth)
     }
   }
 
@@ -755,7 +759,11 @@ autocosts.calculatorModule = (function (thisModule) {
     } else if (incomePeriod === 'week' || incomePeriod === 'month' || incomePeriod === 'year') {
       // uses input data section "working time"
 
-      if (inputWorkingTime.isActivated === 'true' || inputWorkingTime.isActivated === true) {
+      if (typeof inputWorkingTime.isActivated !== 'boolean') {
+        throw (Error(errMsg))
+      }
+
+      if (inputWorkingTime.isActivated) {
         financialEffort.workingTime.hoursPerWeek = parseFloat(inputWorkingTime.hoursPerWeek)
         financialEffort.workingTime.monthsPerYear = parseFloat(inputWorkingTime.monthsPerYear)
       } else {
@@ -827,7 +835,11 @@ autocosts.calculatorModule = (function (thisModule) {
 
     // if fuel calculation with distance was NOT chosen in form part 2, gets distance from form part 3
     if (fuelTypeOfCalculation === 'money') {
-      if (inputDistance.considerCarToJob === 'true') {
+      if (typeof inputDistance.considerCarToJob !== 'boolean') {
+        throw (Error(errMsg))
+      }
+
+      if (inputDistance.considerCarToJob) {
         daysPerWeekUserDrivesToJob = parseInt(inputDistance.carToJob.daysPerWeek, 10)
         distanceBetweenHomeAndJob = parseFloat(inputDistance.carToJob.distanceBetweenHomeAndJob)
         distanceDuringEachWeekend = parseFloat(inputDistance.carToJob.distanceDuringWeekends)
@@ -842,7 +854,7 @@ autocosts.calculatorModule = (function (thisModule) {
           drivingDistance.calculated = false
           return
         }
-      } else if (inputDistance.considerCarToJob === 'false') {
+      } else {
         noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod)
 
         if (isNumber(noCarToJobDistancePerPeriod)) {
@@ -872,8 +884,6 @@ autocosts.calculatorModule = (function (thisModule) {
           drivingDistance.calculated = false
           return
         }
-      } else {
-        throw Error(errMsg)
       }
     } else if (fuelTypeOfCalculation === 'distanceCarToJob' || fuelTypeOfCalculation === 'distanceNoCarToJob') {
       // gets distance information from form part 2, in fuel section
@@ -935,7 +945,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
     // When user refers that "takes car to job", either in Fuel section (form part 2) or in Distance section (part 3).
     // In this situation, the form displays "option 1" in "Time Spent in Driving" section
-    if (fuelTypeOfCalculation === 'distanceCarToJob' || inputDistance.considerCarToJob === 'true') {
+    if (fuelTypeOfCalculation === 'distanceCarToJob' || inputDistance.considerCarToJob) {
       minutesBetweenHomeAndJob = parseFloat(inputTimeSpentInDriving.option1.minutesBetweenHomeAndJob)
       minutesInEachWeekend = parseFloat(inputTimeSpentInDriving.option1.minutesDuringWeekend)
       daysPerWeekUserDrivesToJob = parseInt(details.numberOfDaysPerWeekUserDrivesToJob, 10)

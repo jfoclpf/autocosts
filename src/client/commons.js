@@ -157,9 +157,19 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     return null
   }
 
-  // function used to get from forms the selected option in radio buttons
-  function getCheckedValue (radioObj) {
+  // for Radio Buttons
+  function getSelectedValueOnRadioButton (radioObj) {
     var i
+
+    var processReturn = function (value) {
+      if (value === 'true') {
+        return true
+      } else if (value === 'false') {
+        return false
+      } else {
+        return value
+      }
+    }
 
     if (!radioObj) {
       return ''
@@ -168,14 +178,14 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     var radioLength = radioObj.length
     if (radioLength === undefined) {
       if (radioObj.checked) {
-        return radioObj.value
+        return processReturn(radioObj.value)
       }
       return ''
     }
 
     for (i = 0; i < radioLength; i++) {
       if (radioObj[i].checked) {
-        return radioObj[i].value
+        return processReturn(radioObj[i].value)
       }
     }
     return ''
@@ -199,7 +209,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
   thisModule.removeHashFromUrl = removeHashFromUrl
   thisModule.getStringFor = getStringFor
   thisModule.getTimePeriod = getTimePeriod
-  thisModule.getCheckedValue = getCheckedValue
+  thisModule.getSelectedValueOnRadioButton = getSelectedValueOnRadioButton
   thisModule.isNumber = isNumber
 
   return thisModule

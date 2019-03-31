@@ -112,27 +112,27 @@
                 </label>
                 <div class="radio_tabs">
                     <div class="radio_tab_container">
-                        <input type="radio" name="insurancePaymentPeriod" value="mensal" />
+                        <input type="radio" name="insurancePaymentPeriod" value="month" />
                         <label>
                             {{{monthly}}}
                         </label>
                      </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="insurancePaymentPeriod" value="trimestral" />
+                        <input type="radio" name="insurancePaymentPeriod" value="trimester" />
                         <label>
                             {{{trimesterly}}}
                         </label>
                     </div>
                     <div class="radio_tab_container">
-                        <input type="radio" name="insurancePaymentPeriod" value="semestral" />
+                        <input type="radio" name="insurancePaymentPeriod" value="semester" />
                         <label>
                             {{{semesterly}}}
                         </label>
                     </div>
 
                     <div class="radio_tab_container">
-                        <input type="radio" name="insurancePaymentPeriod" value="anual" />
+                        <input type="radio" name="insurancePaymentPeriod" value="year" />
                         <label>
                             {{{yearly}}}
                         </label>
@@ -316,22 +316,22 @@
                     </label>
                     <div class="radio_tabs small_tabs">
                         <div class="radio_tab_container">
-                            <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="euros" />
+                            <input type="radio" name="calc_combustiveis" id="radio_fuel_euros" value="money" />
                             <label>
                                 {{{curr_name_plural}}}
                             </label>
                          </div>
 
                         <div class="radio_tab_container">
-                            <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="km" />
+                            <input type="radio" name="calc_combustiveis" id="radio_fuel_km" value="distance" />
                             <label>
-                                {{{std_dist}}}
+                                {{{distance}}}
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <!-- /////// Option selected = Kms ///////
+                <!-- // Option selected = MONEY [], DISTANCE [X] //
                 Here start >>> CONSIDERING YOU DRIVE TO WORK? YES/NO-->
                 <div id="distance_div_form2" class="input_value small_input no_margin_bottom">
                     <label>
@@ -359,7 +359,7 @@
 
                 <!-- YES & NO options -->
 
-                <!-- /////// Option selected = YES /////// -->
+                <!-- // Option selected = YES - USER DRIVES TO WORK // -->
                 <div id="div_car_job_yes_form2">
                     <div class="input_value small_input">
                         <label>
@@ -395,17 +395,15 @@
                     </div>
                 </div>
 
-                <!-- /////// Option selected = NO /////// -->
+                <!-- // Option selected = NO - USER DOES NOT DRIVE TO WORK // -->
                 <div id="div_car_job_no_form2">
                     <div class="input_value small_input">
                         <label>
-                            {{{fuel_dist}}}
+                            {{{you_drive}}}
                         </label>
                         <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" name="km_por_mes"
                                id="no_car_to_work_distance" class="no_padding_left" />
-                        <span class="unit_kms">
-                            {{{std_dist}}}
-                        </span>
+                        <select class="distance_standard" id="distance_standard_onfuel"></select>
                         <span class="per">
                             {{{word_per}}}
                         </span>
@@ -421,9 +419,7 @@
                         <!-- fuel efficiency either in l/100km or mpg cannot be zero -->
                         <input type="number" min="0" data-valueGreaterThanMin="true" step="Any" class="no_padding_left"
                                id="fuel_efficiency" name="fuel_efficiency" />
-                        <span class="unit_litre_100kms">
-                            {{{std_fuel_calc}}}
-                        </span>
+                        <select class="fuel_efficiency_standard" id="fuel_efficiency_standard_onfuel"></select>
                     </div>
                     <label>
                         {{{fuel_price}}}
@@ -439,7 +435,7 @@
                 </div>
 
 
-                <!-- /////// Option selected = C$ /////// -->
+                <!-- // Option selected = MONEY [X], DISTANCE [] // -->
                 <div id="currency_div_form2" class="input_value">
                     <input type="number" min="0" step="Any" size="5" name="combustiveis_euro"
                            id="fuel_currency_value" class="currencyInput input_200 unit_left" />
@@ -954,9 +950,7 @@
                         </label>
                         <input type="number" min="0" step="Any"
                                id="dist_per_month" class="no_padding_left" name="km_per_month" />
-                        <span class="unit_kms">
-                            {{{std_dist}}}
-                        </span>
+                        <select class="distance_standard" id="distance_standard_ondistance"></select>
                         <span class="per">
                             {{{word_per}}}
                         </span>
