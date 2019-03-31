@@ -68,7 +68,7 @@ input[type='number'] {-moz-appearance:textfield;}
 
 /* Units on inputs */
 .unit { position: absolute; font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; display: block; top: 1px; z-index: 9; }
-.unit_kms, .unit_days-per-week, .unit_litre_100kms {font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; padding: 0 0 0 10px}
+.unit_kms, .unit_days-per-week {font-size: 30px; text-transform: capitalize; font-weight: 700; color: black; padding: 0 0 0 10px}
 
 .unit_left {padding-left: 48px}
 
@@ -94,9 +94,7 @@ input[type='number'] {-moz-appearance:textfield;}
 .small_input .unit,
 .small_input .per,
 .small_input .unit_kms,
-.small_input .unit_days-per-week,
-.small_input .unit_litre_100kms {font-size: 22px}
-
+.small_input .unit_days-per-week {font-size: 22px}
 
 /*---  Input help classes ---*/
 .no_padding_left {padding-left: 0!important}
@@ -135,6 +133,7 @@ input:disabled, span.disabled, label.disabled, input:disabled + .unit  {opacity:
 select {font-family: 'Nunito',Arial,sans-serif; text-transform: capitalize; margin: 0; background: transparent; padding: 5px 24px 0 0; font-size: 22px; border: 0px; border-bottom: 1px solid black; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; background: url('../img/dd_arrow.png') 100% 16px no-repeat transparent;}
 select:focus {outline: none;}
 select.big-dropdown {font-size: 30px; padding: 0px 30px 0 0;}
+select.fuel_efficiency_standard, select.distance_standard {text-transform: none;}
 
 /* CAUTION: IE hackery ahead */
 select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
