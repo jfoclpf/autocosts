@@ -316,24 +316,16 @@ autocosts.calculatorModule = (function (thisModule) {
     var typeOfCalculation = function () {
       switch (fuel.typeOfCalculation) {
         case 'distance':
-        case 'km':/* old version support */
-        case 'kms':
-        case 'mile':
-        case 'miles':
-          switch (fuel.distanceBased.considerCarToJob) {
-            case 'true':
-            case true:
-              return 'distanceCarToJob'
-            case 'false':
-            case false:
-              return 'distanceNoCarToJob'
-            default:
-              throw Error(errMsg + ' - Invalid fuel.distanceBased.considerCarToJob')
+          if (typeof fuel.distanceBased.considerCarToJob !== 'boolean') {
+            throw Error(errMsg + 'fuel.distanceBased.considerCarToJob is not a boolean')
+          }
+          if (fuel.distanceBased.considerCarToJob) {
+            return 'distanceCarToJob'
+          } else {
+            return 'distanceNoCarToJob'
           }
           break // eslint-disable-line no-unreachable
         case 'money':
-        case 'dollars':
-        case 'euros':
           return 'money'
         default:
           throw Error(errMsg + ' - Invalid fuel.typeOfCalculation: ' + fuel.typeOfCalculation)
