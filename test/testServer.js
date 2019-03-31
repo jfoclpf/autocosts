@@ -50,6 +50,10 @@ function startsServer (onStart, onError) {
 }
 
 function closeServer () {
-  debug('Closing http server')
-  httpLocalServer.kill('SIGINT')
+  if (httpLocalServer) {
+    debug('Closing http server')
+    httpLocalServer.kill('SIGINT')
+  } else {
+    debug('Nothing to close, server had not been opened')
+  }
 }
