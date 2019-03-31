@@ -32,7 +32,7 @@ autocosts.transferDataModule = (function (thisModule) {
 
   // creates an Object from the html user form
   // to be passed into the calculator core function
-  function createUserFormObject (userForm) {
+  function createUserDataObjectFromForm (userForm) {
     var f = userForm // main user form document variable
 
     var data = {
@@ -45,11 +45,11 @@ autocosts.transferDataModule = (function (thisModule) {
 
       insurance: {
         amountPerPeriod: f.insuranceValue.value,
-        period: commonsModule.getTimePeriod(commonsModule.getCheckedValue(f.insurancePaymentPeriod))
+        period: commonsModule.getTimePeriod(commonsModule.getSelectedValueOnRadioButton(f.insurancePaymentPeriod))
       },
 
       credit: {
-        creditBool: commonsModule.getCheckedValue(f.AutoCreditRadioBtn), // binary variable: "true" or "false"
+        creditBool: commonsModule.getSelectedValueOnRadioButton(f.AutoCreditRadioBtn),
         yesCredit: {
           borrowedAmount: f.borrowedAmount.value,
           numberInstallments: f.numberInstallments.value,
@@ -69,13 +69,13 @@ autocosts.transferDataModule = (function (thisModule) {
 
       // Form Part 2
       fuel: {
-        typeOfCalculation: commonsModule.getCheckedValue(f.calc_combustiveis), // binary variable: "currency/euros" or "distance/km"
+        typeOfCalculation: commonsModule.getSelectedValueOnRadioButton(f.calc_combustiveis), // binary variable: "currency/euros" or "distance/km"
         currencyBased: {
           amountPerPeriod: f.combustiveis_euro.value,
           period: commonsModule.getTimePeriod(f.combustiveis_periodo_euro.value) // month, two months, trimester, semester, year
         },
         distanceBased: {
-          considerCarToJob: commonsModule.getCheckedValue(f.car_job_form2), // binary variable: true or false
+          considerCarToJob: commonsModule.getSelectedValueOnRadioButton(f.car_job_form2), // binary variable: true or false
           carToJob: {
             daysPerWeek: f.dias_por_semana.value,
             distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
@@ -105,7 +105,7 @@ autocosts.transferDataModule = (function (thisModule) {
       },
 
       tolls: {
-        calculationBasedOnDay: commonsModule.getCheckedValue(f.tolls_daily_radioBtn), // binary variable: "true" or "false"
+        calculationBasedOnDay: commonsModule.getSelectedValueOnRadioButton(f.tolls_daily_radioBtn), // true or false
         yesBasedOnDay: {
           amountPerDay: f.daily_expense_tolls.value,
           daysPerMonth: f.number_days_tolls.value
@@ -135,7 +135,7 @@ autocosts.transferDataModule = (function (thisModule) {
 
       income: {
         isOk: autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), // boolean if this section is correctly filled in
-        incomePeriod: commonsModule.getCheckedValue(f.radio_income), // "year", "month", "week" or "hour"
+        incomePeriod: commonsModule.getSelectedValueOnRadioButton(f.radio_income), // "year", "month", "week" or "hour"
         year: {
           amount: f.income_per_year.value
         },
@@ -155,13 +155,13 @@ autocosts.transferDataModule = (function (thisModule) {
       },
 
       workingTime: {
-        isActivated: commonsModule.getCheckedValue(f.radio_work_time),
+        isActivated: commonsModule.getSelectedValueOnRadioButton(f.radio_work_time),
         monthsPerYear: f.time_month_per_year.value,
         hoursPerWeek: f.time_hours_per_week.value
       },
 
       distance: {
-        considerCarToJob: commonsModule.getCheckedValue(f.drive_to_work), // binary variable: "true" or "false"
+        considerCarToJob: commonsModule.getSelectedValueOnRadioButton(f.drive_to_work), // binary variable: true or false
         carToJob: {
           daysPerWeek: f.drive_to_work_days_per_week.value,
           distanceBetweenHomeAndJob: f.dist_home_job.value,
@@ -191,7 +191,7 @@ autocosts.transferDataModule = (function (thisModule) {
 
   // creates an Object from an entry of the database
   // to be passed into the calculator core function
-  function createUserDataObjectFromDB (dbObject) {
+  function createUserDataObjectFromDatabase (dbObject) {
     var data = {
       depreciation: {
         acquisitionMonth: dbObject.acquisition_month,
@@ -206,7 +206,7 @@ autocosts.transferDataModule = (function (thisModule) {
       },
 
       credit: {
-        creditBool: dbObject.credit, // binary variable: "true" or "false"
+        creditBool: getBoleanFromDatabase(dbObject.credit), // binary variable: "true" or "false"
         yesCredit: {
           borrowedAmount: dbObject.credit_borrowed_amount,
           numberInstallments: dbObject.credit_number_installments,
@@ -226,13 +226,13 @@ autocosts.transferDataModule = (function (thisModule) {
 
       // Form Part 2
       fuel: {
-        typeOfCalculation: dbObject.fuel_calculation, // binary variable: "currency/euros" or "distance/km"
+        typeOfCalculation: getFuelTypeOfCalculationFromDatabase(dbObject.fuel_calculation), // "money" or "distance"
         currencyBased: {
           amountPerPeriod: dbObject.fuel_currency_based_currency_value,
           period: commonsModule.getTimePeriod(dbObject.fuel_currency_based_periodicity)
         },
         distanceBased: {
-          considerCarToJob: dbObject.fuel_distance_based_car_to_work, // binary variable: true or false
+          considerCarToJob: getBoleanFromDatabase(dbObject.fuel_distance_based_car_to_work), // binary variable: true or false
           carToJob: {
             daysPerWeek: dbObject.fuel_distance_based_car_to_work_number_days_week,
             distanceBetweenHomeAndJob: dbObject.fuel_distance_based_car_to_work_distance_home_work,
@@ -260,7 +260,7 @@ autocosts.transferDataModule = (function (thisModule) {
       },
 
       tolls: {
-        calculationBasedOnDay: dbObject.tolls_daily, // binary variable: "true" or "false"
+        calculationBasedOnDay: getBoleanFromDatabase(dbObject.tolls_daily), // true or false
         yesBasedOnDay: {
           amountPerDay: dbObject.tolls_daily_expense,
           daysPerMonth: dbObject.tolls_daily_number_days
@@ -283,13 +283,13 @@ autocosts.transferDataModule = (function (thisModule) {
 
       // Form Part 3
       publicTransports: {
-        isOk: isPublicTransportsOk(dbObject), // boolean
+        isOk: isPublicTransportsOkInDatabase(dbObject), // boolean
         numberOfPeopleInFamily: dbObject.household_number_people,
         monthlyPassCost: dbObject.public_transportation_month_expense
       },
 
       income: {
-        isOk: isIncomeOk(dbObject), // boolean whether this section was correctly filled in
+        isOk: isIncomeOkInDatabase(dbObject), // boolean whether this section was correctly filled in
         incomePeriod: dbObject.income_type, // "year", "month", "week" or "hour"
         year: {
           amount: dbObject.income_per_year
@@ -310,13 +310,13 @@ autocosts.transferDataModule = (function (thisModule) {
       },
 
       workingTime: {
-        isActivated: dbObject.work_time,
+        isActivated: getBoleanFromDatabase(dbObject.work_time),
         monthsPerYear: dbObject.work_time_month_per_year,
         hoursPerWeek: dbObject.work_time_hours_per_week
       },
 
       distance: {
-        considerCarToJob: dbObject.distance_drive_to_work, // binary variable: "true" or "false"
+        considerCarToJob: getBoleanFromDatabase(dbObject.distance_drive_to_work), // true or false
         carToJob: {
           daysPerWeek: dbObject.distance_days_per_week,
           distanceBetweenHomeAndJob: dbObject.distance_home_job,
@@ -344,12 +344,12 @@ autocosts.transferDataModule = (function (thisModule) {
   }
 
   // Gets information from database whether database has or not Public Transport data
-  function isPublicTransportsOk (dbObject) {
+  function isPublicTransportsOkInDatabase (dbObject) {
     return (isDef(dbObject.household_number_people) && isDef(dbObject.public_transportation_month_expense))
   }
 
   // Gets information from database whether database has or not Financial Effort data
-  function isIncomeOk (dbObject) {
+  function isIncomeOkInDatabase (dbObject) {
     switch (dbObject.income_type) {
       case 'year':
         return (isDef(dbObject.income_per_year))
@@ -358,13 +358,35 @@ autocosts.transferDataModule = (function (thisModule) {
       case 'week':
         return (isDef(dbObject.income_per_week) && isDef(dbObject.income_weeks_per_year))
       case 'hour':
-        return (isDef(dbObject.income_per_hour) &&
-                        isDef(dbObject.income_hours_per_week) &&
-                        isDef(dbObject.income_hour_weeks_per_year))
+        return (isDef(dbObject.income_per_hour) && isDef(dbObject.income_hours_per_week) &&
+          isDef(dbObject.income_hour_weeks_per_year))
     }
 
-    // console.error("isIncomeOk() gives error, unknown income period: " + dbObject.income_type);
     return false
+  }
+
+  function getFuelTypeOfCalculationFromDatabase (typeOfCalculation) {
+    switch (typeOfCalculation) {
+      case 'distance':
+      case 'km': /* old version support */
+        return 'distance'
+      case 'money':
+      case 'euros': /* old version support */
+        return 'money'
+      default:
+        throw Error('Invalid typeOfCalculation: ' + typeOfCalculation)
+    }
+  }
+
+  // in the database the booleans were initially stored as strings
+  function getBoleanFromDatabase (bool) {
+    if (bool === 'true') {
+      return true
+    } else if (bool === 'false') {
+      return false
+    } else {
+      return undefined
+    }
   }
 
   // detects if a variable is defined and different from zero
@@ -376,8 +398,8 @@ autocosts.transferDataModule = (function (thisModule) {
 
   // own module, since it may have been defined erlier by children modules
   thisModule.initialize = initialize
-  thisModule.createUserFormObject = createUserFormObject
-  thisModule.createUserDataObjectFromDB = createUserDataObjectFromDB
+  thisModule.createUserDataObjectFromForm = createUserDataObjectFromForm
+  thisModule.createUserDataObjectFromDatabase = createUserDataObjectFromDatabase
 
   return thisModule
 })(autocosts.transferDataModule || {})
