@@ -12,20 +12,20 @@
 /* global autocosts, $ */
 
 autocosts.databaseModule = (function (thisModule, DOMform, serverInfo, userInfo) {
-  var transferDataModule
+  var convertDataModule
 
   function initialize () {
     loadModuleDependencies()
   }
 
   function loadModuleDependencies () {
-    transferDataModule = autocosts.transferDataModule
+    convertDataModule = autocosts.convertDataModule
   }
 
   // function that is run when the user clicks the Run/Calculate button
   // and which submits the inserted data into the Database
   function submitResultsToDatabase () {
-    var databaseObj = transferDataModule.createDatabaseObjectFromForm(DOMform)
+    var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMform)
 
     // get current time to know how much time the user took to fill the form
     databaseObj.time_to_fill_form = userInfo.timeCounter.getCurrentTimeInSeconds()

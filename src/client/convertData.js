@@ -15,7 +15,7 @@ if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}
 }
 
-autocosts.transferDataModule = (function (thisModule) {
+autocosts.convertDataModule = (function (thisModule) {
   var commonsModule
 
   // object with country code, currency, standard distance, etc.
@@ -592,9 +592,9 @@ autocosts.transferDataModule = (function (thisModule) {
   thisModule.createDatabaseObjectFromForm = createDatabaseObjectFromForm
 
   return thisModule
-})(autocosts.transferDataModule || {})
+})(autocosts.convertDataModule || {})
 
 // check for node
 if (typeof window === 'undefined') {
-  module.exports = autocosts.transferDataModule
+  module.exports = autocosts.convertDataModule
 }

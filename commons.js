@@ -400,7 +400,7 @@ function setFILENAMES () {
       'countriesInfoFile': path.join(countriesDir, 'info.json'),
       'conversions.js': path.join(clientDir, 'core', 'conversions.js'),
       'calculator.js': path.join(clientDir, 'core', 'calculator.js'),
-      'transferData.js': path.join(clientDir, 'transferData.js')
+      'convertData.js': path.join(clientDir, 'convertData.js')
     },
     'server': {
       'credentials': {
