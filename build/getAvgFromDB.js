@@ -261,7 +261,7 @@ isOnline().then(function (online) {
           }
         }
 
-        let countryObject = {
+        let countryInfo = {
           code: countryCode,
           currency: currency,
           distance_std: countries[i].distance_std,
@@ -272,7 +272,7 @@ isOnline().then(function (online) {
         let statisticsResults = statsFunctions.calculateStatisticsForADefinedCountry(
           countryUsers,
           countryData,
-          countryObject,
+          countryInfo,
           USE_MONEY_API ? fx : null)
         debug(JSON.stringify(statisticsResults, null, 4))
 
