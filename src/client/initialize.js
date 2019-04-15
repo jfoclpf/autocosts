@@ -132,9 +132,9 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
           var value = statistics.statisticsObj[cc][key]
           value = key.includes('maintenance') ? value / 2 : value // it shows maintenance in both standing and running costs
           if (key === 'costs_perUnitDistance_runningCosts' || key === 'costs_perUnitDistance_totalCosts') {
-            $el.text(currencySymbol + round(value, 2) + '/' + commonsModule.getStringFor('distance'))
+            $el.text(currencySymbol + round(value, 2) + '/' + commonsModule.getStandard('distance'))
           } else if (key === 'speeds_averageKineticSpeed' || key === 'speeds_averageConsumerSpeed') {
-            $el.text(round(value, 0) + commonsModule.getStringFor('distance') + '/h')
+            $el.text(round(value, 0) + commonsModule.getStandard('distance') + '/h')
           } else {
             $el.text(currencySymbol + ' ' + round(value, 0))
           }
