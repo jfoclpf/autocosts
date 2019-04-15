@@ -36,7 +36,7 @@ testCalculatorFunction(function (error) {
 
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
-  commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
+  // commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
 
   console.log('All tests ran successfully'.green)
@@ -79,14 +79,14 @@ function testCalculatorFunction (callback) {
     )
 
     for (let i = 0; i < numberofInputs; i++) {
-      let countryObject, structuredUserInput, calculatedData
+      let countryInfo, structuredUserInput, calculatedData
       Bar.tick()
 
       try {
         let CC = usersInput[i].country // ISO Country Code
 
         if (CC) {
-          countryObject = {
+          countryInfo = {
             code: CC,
             currency: countrySpecs[CC].currency,
             distance_std: countrySpecs[CC].distance_std,
@@ -94,14 +94,14 @@ function testCalculatorFunction (callback) {
             fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
           }
 
-          if (statsFunctions.isUserDataEntryOk(usersInput[i], countryObject)) {
-            structuredUserInput = transferData.createUserDataObjectFromDatabase(usersInput[i])
-            calculatedData = calculator.calculateCosts(structuredUserInput, countryObject)
+          if (statsFunctions.isUserDataEntryOk(usersInput[i], countryInfo)) {
+            structuredUserInput = transferData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
+            calculatedData = calculator.calculateCosts(structuredUserInput, countryInfo)
           }
         }
       } catch (error) {
         console.error('\n\nError on i:' + i, '\n',
-          '\n\ncountryObject: ', countryObject,
+          '\n\ncountryObject: ', countryInfo,
           '\n\nusersInput: ', usersInput[i],
           '\n\nstructuredUserInput: ', JSON.stringify(structuredUserInput, undefined, 2),
           '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))

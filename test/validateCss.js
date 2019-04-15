@@ -25,6 +25,7 @@ console.log('Running script ' + path.relative(directories.server.root, __filenam
 
 // ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()
+debug(PathnamesToValidateArr)
 
 var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
@@ -46,7 +47,7 @@ async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
 
 // copy from /src to /bin to be freshly loaded by the http server
 function copyCssFilesToBin (callback) {
-  debug('Copying files...')
+  debug('Copying files from /src to /bin')
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'pipe')
   callback()
 }
@@ -98,6 +99,7 @@ function validatePathname (pathname, callback) {
 
   request({ uri: url }, function (err, response, body) {
     if (err) {
+      debug('Error: ' + err)
       callback(Error('Error on request from server:' + err))
       return
     }
@@ -108,11 +110,14 @@ function validatePathname (pathname, callback) {
       text: body
     }
 
+    debug('validating...')
     validator.validate(options)
       .on('error', function (err) {
+        debug('Error: ' + err)
         callback(Error(err))
       })
       .on('validation-error', function (data) {
+        debug('on validation-error')
         console.log(`Error on ${url}\n`.error)
         console.log(addLinesToStr(body))
         console.log(`Error on ${url}\n`.error)
@@ -120,6 +125,7 @@ function validatePathname (pathname, callback) {
         callback(Error('Found css error'))
       })
       .on('validation-warning', function (data) {
+        debug('on validation-warning')
         console.log(`Warning on ${url}\n`.error)
         console.log(addLinesToStr(body))
         console.log(`Warning on ${url}\n`.error)
@@ -127,6 +133,7 @@ function validatePathname (pathname, callback) {
         callback(Error('Found css warning'))
       })
       .on('end', function () {
+        debug('on end')
         Bar.tick({ info: pathname })
         // since is a public service we should wait 1 s between requests
         // https://www.npmjs.com/package/w3c-css#public-css-validator
