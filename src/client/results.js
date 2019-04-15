@@ -148,7 +148,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
           } else if ($i.hasClass('hours')) {
             numToShow = amount + ' ' + translatedStrings.hour_abbr
           } else if ($i.hasClass('distance')) {
-            numToShow = amount + ' ' + commonsModule.getStringFor('distance')
+            numToShow = amount + ' ' + commonsModule.getStandard('distance')
           } else if ($i.hasClass('percentage')) {
             numToShow = amount + '&#37;' // percentage symbol
           } else {

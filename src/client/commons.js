@@ -75,13 +75,22 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
 
   // Get the applicable standard units
   // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#standards
-  function getStringFor (setting) {
-    var translatedStrings = serverInfo.translatedStrings
+  function getStandard (setting, countryInfo) {
+    var fuelEfficiencyStandardOption, distanceStandardOption, fuelPriceVolumeStandard
+    if (countryInfo) { /* used by statistical functions, such as statsFunctions.js (on back-end) */
+      fuelEfficiencyStandardOption = countryInfo.fuel_efficiency_std
+      distanceStandardOption = countryInfo.distance_std
+      fuelPriceVolumeStandard = countryInfo.fuel_price_volume_std
+    } else { /* used by the browser (on front-end) */
+      fuelEfficiencyStandardOption = serverInfo.translatedStrings.fuel_efficiency_std_option
+      distanceStandardOption = serverInfo.translatedStrings.distance_std_option
+      fuelPriceVolumeStandard = serverInfo.translatedStrings.fuel_price_volume_std
+    }
     var errMsg = 'Error on getSettingsStringFor'
 
     switch (setting) {
       case 'fuelEfficiency':
-        switch (translatedStrings.fuel_efficiency_std_option) {
+        switch (fuelEfficiencyStandardOption) {
           case 1:
             return 'ltr/100km'
           case 2:
@@ -102,7 +111,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
         }
       /* falls through */ // avoid jshint warnings, for respecting JS standard as a `break` here would be unreachable
       case 'distance':
-        switch (translatedStrings.distance_std_option) {
+        switch (distanceStandardOption) {
           case 1:
             return 'km'
           case 2:
@@ -115,7 +124,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
         }
       /* falls through */
       case 'fuelPriceVolume':
-        switch (translatedStrings.fuel_price_volume_std) {
+        switch (fuelPriceVolumeStandard) {
           case 1:
             return 'ltr'
           case 2:
@@ -207,7 +216,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
   thisModule.getMobileOperatingSystem = getMobileOperatingSystem
   thisModule.isMobile = isMobile
   thisModule.removeHashFromUrl = removeHashFromUrl
-  thisModule.getStringFor = getStringFor
+  thisModule.getStandard = getStandard
   thisModule.getTimePeriod = getTimePeriod
   thisModule.getSelectedValueOnRadioButton = getSelectedValueOnRadioButton
   thisModule.isNumber = isNumber
