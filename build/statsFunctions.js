@@ -53,10 +53,10 @@ var statsConstants = {
 
 //* **************************************************************************************
 // this functions calculates the avearge of the averages of the same user inputs for a corresponding country
-function calculateStatisticsForADefinedCountry (userIds, countryData, countryObj, fx) {
+function calculateStatisticsForADefinedCountry (userIds, countryData, countryInfo, fx) {
 //    userIds     => is a matrix with 2 columns, the 1st column has a unique user ID (uuid_client), the 2nd column has always the same country
 //    countryData => is a matrix with everything for the specific country
-//    countryObj  => is a country object whose average is being calculated
+//    countryInfo => object with country code, currency, standard distance, etc.
 //    fx          => is the currency conversion object
 // userIds.length is smaller than countryData.length, because some users fill in more than one time
 
@@ -75,20 +75,20 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryObj
           // checks if the entry is ok
           // and if it is an input spam/bot
           // (the time to fill the form for the first input mus be greater than a time value)
-          // console.log("(i,j)=("+i+","+j+")"); console.log(countryData[j]);console.log(countryObj);
+          // console.log("(i,j)=("+i+","+j+")"); console.log(countryData[j]);console.log(countryInfo);
 
           let wasEnoughTimeFillingTheForm = countryData[j].time_to_fill_form > statsConstants.MIN_TIME_TO_FILL_FORM
 
-          if (isUserDataEntryOk(countryData[j], countryObj) &&
+          if (isUserDataEntryOk(countryData[j], countryInfo) &&
                        /* just checks if was enough time, on the first calculation from the same user */
                        ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
           ) {
-            let userData = transferData.createUserDataObjectFromDatabase(countryData[j])
-            let calculatedData = calculator.calculateCosts(userData, countryObj)
-            // console.log("(i,j)=("+i+","+j+")");console.log(countryObj);console.log(calculatedData);
+            let userData = transferData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
+            let calculatedData = calculator.calculateCosts(userData, countryInfo)
+            // console.log("(i,j)=("+i+","+j+")");console.log(countryInfo);console.log(calculatedData);
 
             // checks if the calculatedData is an outlier
-            if (isCalculatedDataOk(calculatedData, countryObj, fx)) {
+            if (isCalculatedDataOk(calculatedData, countryInfo, fx)) {
               // console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);
               temp_j.push(calculatedData)
               n++
@@ -117,7 +117,7 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryObj
   }
 
   // console.log(output);
-  averageCalculatedData.countryCode = countryObj.code
+  averageCalculatedData.countryCode = countryInfo.code
   return averageCalculatedData
 }
 
