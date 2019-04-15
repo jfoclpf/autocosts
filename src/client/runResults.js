@@ -16,7 +16,7 @@ autocosts.resultsModule = autocosts.resultsModule || {}
 autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings, switches, selectedCountry, booleans, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
 
-  var resultsModule, calculatorModule, userFormModule, transferDataModule, chartsModule, pdfModule, databaseModule
+  var resultsModule, calculatorModule, userFormModule, convertDataModule, chartsModule, pdfModule, databaseModule
 
   var calculatedData, runButton
 
@@ -34,7 +34,7 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     resultsModule = autocosts.resultsModule
     calculatorModule = autocosts.calculatorModule
     userFormModule = autocosts.userFormModule
-    transferDataModule = autocosts.transferDataModule
+    convertDataModule = autocosts.convertDataModule
     chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {}
     pdfModule = (switches.pdf || switches.print) ? autocosts.resultsModule.pdfModule : {}
     databaseModule = switches.database ? autocosts.databaseModule : {}
@@ -222,7 +222,7 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     $('#form').hide()
 
     // for each form part gets object with content
-    form = transferDataModule.createUserDataObjectFromForm(DOMForm)
+    form = convertDataModule.createUserDataObjectFromForm(DOMForm)
     mainObjs.formData = form
 
     // country object with country specific variables

@@ -153,7 +153,7 @@ var autocosts = (function () {
       userForm: '/client/userForm.js',
       validateForm: '/client/validateForm.js',
       runResults: '/client/runResults.js',
-      transferData: '/client/transferData.js',
+      convertData: '/client/convertData.js',
       results: '/client/results.js',
       database: '/client/database.js',
 
@@ -283,7 +283,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
     var promisesArray = [$.getScript(jsFiles.calculator),
       $.getScript(jsFiles.conversions),
       $.getScript(jsFiles.smartAppBanner),
-      $.getScript(jsFiles.transferData),
+      $.getScript(jsFiles.convertData),
       $.getScript(jsFiles.results),
       $.getScript(jsFiles.runResults),
       $.getScript(jsFiles.userForm),
@@ -338,7 +338,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       console.log('All deferred JS files loaded OK')
 
       autocosts.calculatorModule.initialize()
-      autocosts.transferDataModule.initialize()
+      autocosts.convertDataModule.initialize()
 
       autocosts.resultsModule.initialize()
       autocosts.resultsModule.runResultsModule.initialize()

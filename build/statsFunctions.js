@@ -3,11 +3,11 @@ const path = require('path')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const fileNames = commons.getFileNames()
 
-const transferData = require(fileNames.project['transferData.js'])
+const convertData = require(fileNames.project['convertData.js'])
 const conversions = require(fileNames.project['conversions.js'])
 const calculator = require(fileNames.project['calculator.js'])
 calculator.initialize()
-transferData.initialize()
+convertData.initialize()
 
 // statistics outlier removal constants
 var statsConstants = {
@@ -83,7 +83,7 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
                        /* just checks if was enough time, on the first calculation from the same user */
                        ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
           ) {
-            let userData = transferData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
+            let userData = convertData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
             let calculatedData = calculator.calculateCosts(userData, countryInfo)
             // console.log("(i,j)=("+i+","+j+")");console.log(countryInfo);console.log(calculatedData);
 

@@ -24,9 +24,9 @@ const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
 const statsFunctions = require(fileNames.build.statsFunctions)
-const transferData = require(fileNames.project['transferData.js'])
+const convertData = require(fileNames.project['convertData.js'])
 const calculator = require(fileNames.project['calculator.js'])
-transferData.initialize()
+convertData.initialize()
 
 testCalculatorFunction(function (error) {
   if (error) {
@@ -95,7 +95,7 @@ function testCalculatorFunction (callback) {
           }
 
           if (statsFunctions.isUserDataEntryOk(usersInput[i], countryInfo)) {
-            structuredUserInput = transferData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
+            structuredUserInput = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
             calculatedData = calculator.calculateCosts(structuredUserInput, countryInfo)
           }
         }
