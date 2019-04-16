@@ -286,7 +286,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     }
 
     switch (fuelCalculationType) {
-      case 'km': /* fuel calculations made considering distance travelled by month */
+      case 'distance': /* fuel calculations made considering distance travelled by month */
 
         if (!isNumber(form.fuel_efficiency.value)) {
           return false
@@ -321,7 +321,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
 
         break
 
-      case 'euros': /* fuel costs based on data input money per period of time */
+      case 'money': /* fuel costs based on data input money per period of time */
 
         if (!isNumber(form.combustiveis_euro.value)) {
           return false
