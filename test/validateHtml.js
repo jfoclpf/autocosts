@@ -127,7 +127,7 @@ function validatePage (pathname, callback) {
         } else {
           debug(pathname)
           Bar.tick({ info: pathname })
-          setTimeout(function () { callback() }, 1100)
+          setTimeout(callback, 1100)
         }
       })
       .catch((err) => {
