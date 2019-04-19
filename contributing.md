@@ -58,6 +58,8 @@ km/gal(US) // kilometres per USA gallon
 
 ## Modules
 
+![Front-end client module architecture](docs/flowchart.jpg)
+
 <a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). 
 
 The name of a module, except the main module `autocosts`, should always end the wording `Module`.
