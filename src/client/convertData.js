@@ -192,6 +192,14 @@ autocosts.convertDataModule = (function (thisModule) {
     return data
   }
 
+  // public function
+  function createUserDataCleanObjectFromForm (userForm) {
+    var userCleanForm = createUserDataObjectFromForm(userForm)
+    // converts properties from string to number when applicale
+    sanitizeObject(userCleanForm)
+    return userCleanForm
+  }
+
   // creates an Object from an entry of the database
   // to be passed into the calculator core function
   // countryObj has country standards (currency, distance standard, etc.)
@@ -352,6 +360,9 @@ autocosts.convertDataModule = (function (thisModule) {
         }
       }
     }
+
+    // converts properties from string to number when applicale
+    sanitizeObject(data)
 
     return data
   }
@@ -578,6 +589,24 @@ autocosts.convertDataModule = (function (thisModule) {
     }
   }
 
+  // recursively loops through nested object and applys parse function
+  function parseObjectProperties (obj, parse) {
+    for (var k in obj) {
+      if (typeof obj[k] === 'object' && obj[k] !== null) {
+        parseObjectProperties(obj[k], parse)
+      } else if (obj.hasOwnProperty(k)) {
+        parse(obj, k)
+      }
+    }
+  }
+
+  // converts properties from string to number when applicale
+  function sanitizeObject (mainObj) {
+    parseObjectProperties(mainObj, function (obj, k) {
+      obj[k] = (!isNaN(obj[k]) && typeof obj[k] === 'string') ? parseFloat(obj[k]) : obj[k]
+    })
+  }
+
   // detects if a variable is defined and different from zero
   function isDef (num) {
     return isFinite(num) && num !== 0
@@ -587,7 +616,7 @@ autocosts.convertDataModule = (function (thisModule) {
 
   // own module, since it may have been defined erlier by children modules
   thisModule.initialize = initialize
-  thisModule.createUserDataObjectFromForm = createUserDataObjectFromForm
+  thisModule.createUserDataCleanObjectFromForm = createUserDataCleanObjectFromForm
   thisModule.createUserDataObjectFromDatabase = createUserDataObjectFromDatabase
   thisModule.createDatabaseObjectFromForm = createDatabaseObjectFromForm
 
