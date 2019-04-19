@@ -200,6 +200,46 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     return ''
   }
 
+  // flatten object, that is, from an Object composed by elements in a Object's tree, returns simple list Object
+  // i.e., from complex object with hierarchies, flattens to simple list Object
+  function flatten (target, opts) {
+    opts = opts || {}
+
+    var delimiter = opts.delimiter || '.'
+    var maxDepth = opts.maxDepth
+    var output = {}
+
+    function step (object, prev, currentDepth) {
+      currentDepth = currentDepth || 1
+      Object.keys(object).forEach(function (key) {
+        var value = object[key]
+        var isarray = opts.safe && Array.isArray(value)
+        var type = Object.prototype.toString.call(value)
+        var isbuffer = isBuffer(value)
+        var isobject = (type === '[object Object]' || type === '[object Array]')
+
+        var newKey = prev ? prev + delimiter + key : key
+
+        if (!isarray && !isbuffer && isobject && Object.keys(value).length &&
+                (!opts.maxDepth || currentDepth < maxDepth)) {
+          return step(value, newKey, currentDepth + 1)
+        }
+
+        output[newKey] = value
+      })
+    }
+
+    function isBuffer (obj) {
+      return obj != null && obj.constructor != null &&
+               typeof obj.constructor.isBuffer === 'function' &&
+               obj.constructor.isBuffer(obj)
+    }
+
+    step(target)
+
+    return output
+  }
+
   // this function is very important and checks if number is a finite valid number
   // no variable coercions, no bullshit, no string, no "1", no true, no NaN, no null, no 1/0,
   // and 0 returns true. n must be a finite valid number
@@ -219,6 +259,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
   thisModule.getStandard = getStandard
   thisModule.getTimePeriod = getTimePeriod
   thisModule.getSelectedValueOnRadioButton = getSelectedValueOnRadioButton
+  thisModule.flatten = flatten
   thisModule.isNumber = isNumber
 
   return thisModule
