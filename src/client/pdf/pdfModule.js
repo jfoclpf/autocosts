@@ -1,6 +1,6 @@
 
 // PDF REPORT GENERATION MODULE
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* globals autocosts, $, pdfMake, Image */
 

@@ -6,7 +6,7 @@
 /************************************************************************************************************/
 
 // USER FORM INTERFACE MODULE
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* global autocosts, $, ga */
 
