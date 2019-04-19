@@ -6,8 +6,6 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 // This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
 
-/* globals $ */
-
 // check for node.js
 if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}
@@ -1072,7 +1070,7 @@ autocosts.calculatorModule = (function (thisModule) {
     }
 
     // checks if uberObj is an object
-    if (!isObjDef(uberObj)) {
+    if (!isObjectDefined(uberObj)) {
       return uberNotCalculated
     }
 
@@ -1277,11 +1275,18 @@ autocosts.calculatorModule = (function (thisModule) {
     return typeof variable !== 'undefined' && variable !== 0
   }
 
-  function isObjDef (Obj) {
-    if (Obj === null || Obj === 'null' || typeof Obj !== 'object' || $.isEmptyObject(Obj)) {
+  // check if object exists, is defined and is different from {}
+  // https://stackoverflow.com/a/55765589/1243247
+  function isObjectDefined (Obj) {
+    if (Obj === null || typeof Obj !== 'object' || Object.prototype.toString.call(Obj) === '[object Array]') {
       return false
     } else {
-      return true
+      for (var prop in Obj) {
+        if (Obj.hasOwnProperty(prop)) {
+          return true
+        }
+      }
+      return JSON.stringify(Obj) !== JSON.stringify({})
     }
   }
 
