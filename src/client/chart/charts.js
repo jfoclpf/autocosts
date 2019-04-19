@@ -8,7 +8,7 @@
 /* File with Javascript Charts Functions */
 
 // DRAW CHARTS MODULE, IT IS A SUBMODULE OF SHOW RESULTS MODULE
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* global autocosts, $, Chart */
 

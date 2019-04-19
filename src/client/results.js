@@ -6,8 +6,8 @@
 ************************************************/
 
 /* SHOW CALCULATED RESULTS MODULE */
-/* Module with functions that are used to print the final result */
-/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
+/* Module with functions that are used to print the final result, deals with the HTML */
+/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 /* global autocosts, $ */
 

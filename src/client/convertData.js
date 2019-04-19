@@ -7,7 +7,7 @@
 
 // TRANSFER DATA MODULE
 // from user form or database to calculator core function
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 // This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
 
 // check for node

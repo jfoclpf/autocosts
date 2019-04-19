@@ -6,7 +6,7 @@
 ************************************************/
 
 // COMMONS mainly on client/browser/front-end side
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 // check for node
 if (!autocosts && typeof window === 'undefined') { // eslint-disable-line

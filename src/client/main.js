@@ -6,7 +6,7 @@
 ************************************************/
 
 /* MAIN MODULE */
-/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
+/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 /* global $, ga */
 
@@ -185,7 +185,7 @@ var autocosts = (function () {
 
 /* GET FILES MODULE */
 /* Module used to get extra files with JS or CSS code */
-/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
+/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 // module for getting JS, CSS or other files
 autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, translatedStrings, servicesAvailabilityObj, uberApiUrl) {

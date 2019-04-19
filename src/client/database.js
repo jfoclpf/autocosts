@@ -7,7 +7,7 @@
 
 /* DATABASE MODULE */
 /* Module with functions that are used to insert form user data into a database */
-/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules */
+/* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 /* global autocosts, $ */
 

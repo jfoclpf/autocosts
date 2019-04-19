@@ -3,7 +3,7 @@
 // see also: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function
 
 // UNITS CONVERSION MODULE
-// see our module template: https://github.com/jfoclpf/autocosts/blob/master/CONTRIBUTING.md#modules
+// see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 // This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
 
 // check for node
