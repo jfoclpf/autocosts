@@ -15,10 +15,9 @@
 autocosts.resultsModule = autocosts.resultsModule || {}
 autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings, switches, selectedCountry, booleans, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
-
-  var resultsModule, calculatorModule, userFormModule, convertDataModule, chartsModule, pdfModule, databaseModule
-
-  var calculatedData, runButton
+  var resultsModule, calculatorModule, userFormModule, convertDataModule, databaseModule
+  // subModule of this module
+  var runButton
 
   // ids in the HTML document
   var normalRunButtonId = 'calculate_costs_btn'
@@ -35,8 +34,6 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     calculatorModule = autocosts.calculatorModule
     userFormModule = autocosts.userFormModule
     convertDataModule = autocosts.convertDataModule
-    chartsModule = switches.charts ? autocosts.resultsModule.chartsModule : {}
-    pdfModule = (switches.pdf || switches.print) ? autocosts.resultsModule.pdfModule : {}
     databaseModule = switches.database ? autocosts.databaseModule : {}
   }
 
@@ -212,14 +209,12 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
 
   // function that is run when user clicks "run/calculate"
   function calculateCostsAndShowResults () {
-    var form, countryObj, flattenedData, chartsDrawnPromisesObj, promisesArray
+    var calculatedData, form, countryObj
 
     // test if the form user inputs are correct
     if (!userFormModule.isReadyToCalc()) {
       return false
     }
-
-    $('#form').hide()
 
     // for each form part gets object with content
     form = convertDataModule.createUserDataCleanObjectFromForm(DOMForm)
@@ -236,8 +231,9 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
       taxi_price: translatedStrings.taxi_price_per_dist
     }
 
-    // calculate costs, "costs" is a global variable/object defined in calculatorModule.js
     calculatedData = calculatorModule.calculateCosts(form, countryObj)
+    mainObjs.calculatedData = calculatedData // assigns to global variable
+    // console.log(JSON.stringify(calculatedData, null, 4));
 
     // get Uber data if applicable
     if (switches.uber && calculatedData.publicTransports.calculated) {
@@ -246,139 +242,7 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
       calculatedData.uber = { calculated: false }
     }
 
-    resultsModule.setCalculatedData(calculatedData)
-    mainObjs.calculatedData = calculatedData // assigns to global variable
-    // console.log(JSON.stringify(calculatedData, null, 4));
-
-    // from complex object with hierarchies, flattens to simple object
-    // see for more info: https://github.com/hughsk/flat
-    flattenedData = flatten(calculatedData, { delimiter: '_' })
-    // it needs to show also 1/2 of Maintenance Costs
-    flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2
-    // console.log(flattenedData);
-    resultsModule.setCalculatedDataToHTML(flattenedData)
-
-    chartsDrawnPromisesObj = chartsModule.initialize(calculatedData)
-
-    // The third of the three boxes on the top
-    // if financial effort was not calculated or not likely, does not show doughnut chart
-    // on the third box, and adapt the three boxes css classes
-    if (calculatedData.financialEffort.income.calculated && calculatedData.financialEffort.isLikelyToBeValid && switches.charts) {
-      chartsModule.drawDoughnutFinancialEffort(calculatedData)
-      // shows third box where the financial effort doughnut chart appears
-      $('#results #info-boxes .info-box.box-3').show()
-      $('#results #info-boxes .info-box').removeClass('two-boxes').addClass('three-boxes')
-    } else {
-      // hides third box where the financial effort doughnut chart appears
-      $('#results #info-boxes .info-box.box-3').hide()
-      $('#results #info-boxes .info-box').removeClass('three-boxes').addClass('two-boxes')
-    }
-
-    resultsModule.setPeriodicCosts(calculatedData, 'month')
-    resultsModule.setPeriodicCostsDetails(form, calculatedData) // the details on the dropdown boxes
-
-    // switches are frozen/const object in main.js, so no need to show elements when switches.charts is true
-    // since these elements are set tp be shown in css by default, just need to hide in case is false
-    if (switches.charts) {
-      chartsModule.drawCostsBars('month')
-      chartsModule.drawCostsDoughnut('month')
-    } else {
-      $('#results .costs-doughnut-chart, #results .costs-bars-chart-stats, #results .stats-references').hide()
-    }
-
-    // Financial Effort
-    if (calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid) {
-      resultsModule.setFinancialEffortDetails(form, calculatedData)
-
-      // shows financial effort section
-      $('#results #financial-effort').show()
-
-      if (switches.charts) {
-        chartsModule.drawFinancialEffort(calculatedData)
-      } else {
-        $('#financial-effort .graph').hide()
-        $('#financial-effort .values.box').css('width', '40%').css('float', 'none')
-      }
-    } else {
-      // hides financial effort section
-      $('#results #financial-effort').hide()
-    }
-
-    // Equivalent transport costs
-    if (calculatedData.publicTransports.calculated) {
-      resultsModule.setEquivTransportCostsDetails(form, calculatedData)
-
-      $('#results #equivalent-transport-costs').show()
-
-      if (switches.charts) {
-        chartsModule.drawAlternativesToCar()
-      } else {
-        $('#equivalent-transport-costs .graph').hide()
-        $('#equivalent-transport-costs .values.box').css('margin', 'auto 2%').css('float', 'none')
-      }
-    } else {
-      $('#results #equivalent-transport-costs').hide()
-    }
-
-    resultsModule.setClassAccordionHandler()
-
-    $('#results').show()
-
-    $('*').promise().done(function () {
-      // it needs these promises, since the pdfMake body can only be generated when the charts are already fully drawn
-      // such that, the pdf generation can extract the charts to base64 images
-      promisesArray = Object.keys(chartsDrawnPromisesObj).map(function (key) {
-        return chartsDrawnPromisesObj[key]
-      })
-      promisesArray.push($('*').promise())
-      $.when.apply($, promisesArray).done(function () {
-        if (pdfModule && !$.isEmptyObject(pdfModule)) {
-          pdfModule.generatePDF(calculatedData)
-        }
-      })
-    })
-
-    return true
-  }
-
-  // flatten object, that is, from an Object composed by elements in a Object's tree, returns simple list Object
-  // i.e., from complex object with hierarchies, flattens to simple list Object
-  function flatten (target, opts) {
-    opts = opts || {}
-
-    var delimiter = opts.delimiter || '.'
-    var maxDepth = opts.maxDepth
-    var output = {}
-
-    function step (object, prev, currentDepth) {
-      currentDepth = currentDepth || 1
-      Object.keys(object).forEach(function (key) {
-        var value = object[key]
-        var isarray = opts.safe && Array.isArray(value)
-        var type = Object.prototype.toString.call(value)
-        var isbuffer = isBuffer(value)
-        var isobject = (type === '[object Object]' || type === '[object Array]')
-
-        var newKey = prev ? prev + delimiter + key : key
-
-        if (!isarray && !isbuffer && isobject && Object.keys(value).length &&
-                (!opts.maxDepth || currentDepth < maxDepth)) {
-          return step(value, newKey, currentDepth + 1)
-        }
-
-        output[newKey] = value
-      })
-    }
-
-    function isBuffer (obj) {
-      return obj != null && obj.constructor != null &&
-               typeof obj.constructor.isBuffer === 'function' &&
-               obj.constructor.isBuffer(obj)
-    }
-
-    step(target)
-
-    return output
+    resultsModule.showResults(calculatedData, form)
   }
 
   return {
