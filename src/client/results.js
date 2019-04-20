@@ -376,48 +376,47 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
       case 'month':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.month)
+            translatedStrings.word_per + ' ' + translatedStrings.month)
         break
       case 'trimester':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.trimester)
+            translatedStrings.word_per + ' ' + translatedStrings.trimester)
         break
       case 'semester':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.semester)
+            translatedStrings.word_per + ' ' + translatedStrings.semester)
         break
       case 'year':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.year)
+            translatedStrings.word_per + ' ' + translatedStrings.year)
         break
       default:
-        throw errMsg
+        throw Error(errMsg)
     }
 
     // Credit interests
-    if (form.credit.creditBool === 'true') {
+    checkBoolean(form.credit.creditBool, errMsg)
+    if (form.credit.creditBool) {
       addLiElm('credit', translatedStrings.credit_loan2, currencyShow(form.credit.yesCredit.borrowedAmount))
 
-      addLiElm('credit', translatedStrings.credit_period,
-        form.credit.yesCredit.numberInstallments + ' ' + translatedStrings.months)
+      addLiElm('credit', translatedStrings.credit_period, form.credit.yesCredit.numberInstallments + ' ' + translatedStrings.months)
 
       addLiElm('credit', translatedStrings.credit_instalment, currencyShow(form.credit.yesCredit.amountInstallment))
       addLiElm('credit', translatedStrings.credit_residual_value1, currencyShow(form.credit.yesCredit.residualValue))
 
-      addLiElm('credit', translatedStrings.credit_total_interests,
-        currencyShow(calculatedData.details.credit.totalPaidInInterests))
+      addLiElm('credit', translatedStrings.credit_total_interests, currencyShow(calculatedData.details.credit.totalPaidInInterests))
 
       addLiElm('credit',
         '(' + calculatedData.details.credit.numberOfMonthlyInstalments + '*' +
-                        form.credit.yesCredit.amountInstallment + ')+' +
-                        form.credit_residual_value + '-' + form.credit.yesCredit.borrowedAmount)
+          form.credit.yesCredit.amountInstallment + ')+' +
+          form.credit_residual_value + '-' + form.credit.yesCredit.borrowedAmount)
 
       if (calculatedData.age_months >= calculatedData.details.credit.numberOfMonthlyInstalments) {
-        addLiElm('credit', translatedStrings.credit_interests_month + ': ' +
-                                   currencyShow(calculatedData.costs.perMonth.items.credit.toFixed(2)))
+        addLiElm('credit',
+          translatedStrings.credit_interests_month + ': ' + currencyShow(calculatedData.costs.perMonth.items.credit.toFixed(2)))
       }
     }
 
@@ -425,48 +424,54 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     if (form.inspection.numberOfInspections !== 0) {
       addLiElm('inspection',
         form.inspection.numberOfInspections + ' ' +
-                        translatedStrings.times_costing + ' ' + form.inspection.averageInspectionCost +
-                        ' ' + translatedStrings.curr_name_plural + ' ' + translatedStrings.each_one_during + ' ' +
-                        calculatedData.details.ageOfCarInMonths + ' ' + translatedStrings.months)
+          translatedStrings.times_costing + ' ' + form.inspection.averageInspectionCost +
+          ' ' + translatedStrings.curr_name_plural + ' ' + translatedStrings.each_one_during + ' ' +
+          calculatedData.details.ageOfCarInMonths + ' ' + translatedStrings.months)
     }
 
     // Taxes
     addLiElm('roadTaxes',
       form.roadTaxes.amountPerYear + ' ' + translatedStrings.curr_name_plural + ' ' +
-                 translatedStrings.word_per + ' ' + translatedStrings.year)
+        translatedStrings.word_per + ' ' + translatedStrings.year)
 
     // Fuel
     switch (form.fuel.typeOfCalculation) {
-      case 'km':
-        if (form.fuel.distanceBased.considerCarToJob === 'false') {
+      case 'distance':
+        checkBoolean(form.fuel.distanceBased.considerCarToJob, errMsg)
+        if (!form.fuel.distanceBased.considerCarToJob) {
           switch (commonsModule.getTimePeriod(form.fuel.distanceBased.noCarToJob.period)) {
             case 'month':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
-                                     translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.month)
+                  form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
+                  translatedStrings.word_per + ' ' + translatedStrings.month)
               break
             case 'twoMonths':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
-                                     translatedStrings.dist_each_two_months)
+                  form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
+                  translatedStrings.word_per + ' ' + translatedStrings.dist_each_two_months)
               break
             case 'trimester':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
-                                     translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.trimester)
+                  form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
+                  translatedStrings.word_per + ' ' + translatedStrings.trimester)
               break
             case 'semester':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
-                                     translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.semester)
+                  form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
+                  translatedStrings.word_per + ' ' + translatedStrings.semester)
               break
             case 'year':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
-                                     translatedStrings.std_dist + ' ' + translatedStrings.word_per + ' ' + translatedStrings.year)
+                  form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
+                  translatedStrings.word_per + ' ' + translatedStrings.year)
               break
             default:
-              throw errMsg
+              throw Error(errMsg)
           }
           addLiElm('fuel',
             translatedStrings.fuel_car_eff,
@@ -474,7 +479,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
           addLiElm('fuel',
             translatedStrings.fuel_price1,
             currencyShow(form.fuel.distanceBased.fuelPrice) + '/' + translatedStrings.std_volume_short)
-        } else {
+        } else { // form.fuel.distanceBased.considerCarToJob is true
           addLiElm('fuel',
             form.fuel.distanceBased.carToJob.daysPerWeek + ' ' + translatedStrings.fuel_job_calc1)
           addLiElm('fuel',
@@ -494,14 +499,14 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
           addLiElm('fuel',
             translatedStrings.fuel_car_eff,
-            form.fuel.distanceBased.fuelEfficiency + ' ' + translatedStrings.std_fuel_calc)
+            form.fuel.distanceBased.fuelEfficiency + ' ' + form.fuel.distanceBased.fuelEfficiencyStandard)
           addLiElm('fuel',
             translatedStrings.fuel_price,
             currencyShow(form.fuel.distanceBased.fuelPrice) + '/' + translatedStrings.std_volume_short)
         }
         break
 
-      case 'euros':
+      case 'money':
         switch (commonsModule.getTimePeriod(form.fuel.currencyBased.period)) {
           case 'month':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -523,9 +528,12 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
                                  translatedStrings.word_per + ' ' + translatedStrings.year)
             break
           default:
-            throw errMsg
+            throw Error(errMsg)
         }
         break
+
+      default:
+        throw Error(errMsg)
     }
 
     // Maintenance
@@ -539,7 +547,8 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
                  translatedStrings.word_per + ' ' + translatedStrings.year)
 
     // Tolls
-    if (form.tolls.calculationBasedOnDay === 'false') {
+    checkBoolean(form.tolls.calculationBasedOnDay, errMsg)
+    if (!form.tolls.calculationBasedOnDay) {
       switch (commonsModule.getTimePeriod(form.tolls.noBasedOnDay.period)) {
         case 'month':
           addLiElm('tolls',
@@ -566,9 +575,9 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
                              translatedStrings.word_per + ' ' + translatedStrings.year)
           break
         default:
-          throw errMsg
+          throw Error(errMsg)
       }
-    } else {
+    } else { // form.tolls.calculationBasedOnDay is true
       addLiElm('tolls', form.tolls.yesBasedOnDay.amountPerDay + ' ' + translatedStrings.curr_name_plural + ' ' +
                               translatedStrings.during + ' ' + form.tolls.yesBasedOnDay.daysPerMonth + ' ' +
                               translatedStrings.days + ' ' + translatedStrings.word_per + ' ' + translatedStrings.month)
@@ -602,7 +611,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
                          translatedStrings.word_per + ' ' + translatedStrings.year)
         break
       default:
-        throw errMsg
+        throw Error(errMsg)
     }
 
     // Washing
@@ -633,7 +642,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
                          translatedStrings.word_per + ' ' + translatedStrings.year)
         break
       default:
-        throw errMsg
+        throw Error(errMsg)
     }
   }
 
@@ -662,6 +671,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // income
     var income = calculatedData.financialEffort.income
+    checkBoolean(income.calculated, errMsg)
     if (income.calculated) {
       switch (form.income.incomePeriod) {
         case 'year':
@@ -721,15 +731,16 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
             currencyShow(income.perYear.toFixed(1)))
           break
         default:
-          throw errMsg
+          throw Error(errMsg)
       }
     }
 
     // working time
     var workingTime = calculatedData.financialEffort.workingTime
+    checkBoolean(workingTime.calculated, errMsg)
     if (workingTime.calculated) {
       if (form.income.incomePeriod !== 'hour') {
-        if (form.workingTime.isActivated === 'true') {
+        if (form.workingTime.isActivated) {
           addLiElm('working_time',
             translatedStrings.hours_per + ' ' + translatedStrings.week,
             workingTime.hoursPerWeek + ' ' + translatedStrings.hour_abbr)
@@ -758,6 +769,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // Driving Distance
     var drivingDistance = calculatedData.drivingDistance
+    checkBoolean(drivingDistance.calculated, errMsg)
     if (drivingDistance.calculated) {
       if (isNumber(drivingDistance.betweenHomeAndJob)) {
         addLiElm('distance',
@@ -791,8 +803,9 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // time spent in driving
     var timeSpentInDriving = calculatedData.timeSpentInDriving
+    checkBoolean(timeSpentInDriving.calculated, errMsg)
     if (timeSpentInDriving.calculated) {
-      if (form.distance.considerCarToJob === 'true' || form.fuel.distanceBased.considerCarToJob === 'true') {
+      if (form.distance.considerCarToJob || form.fuel.distanceBased.considerCarToJob) {
         addLiElm('time_spent_in_driving',
           translatedStrings.minutes_home_job,
           form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + ' ' + translatedStrings.min)
@@ -826,6 +839,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // financial effort
     var financialEffort = calculatedData.financialEffort
+    checkBoolean(financialEffort.calculated, errMsg)
     if (financialEffort.calculated) {
       addLiElm('financial_effort',
         translatedStrings.total_costs_per_year,
@@ -859,6 +873,8 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     // html element in which the costs details will be added
     var htmlEl = '#results #equivalent-transport-costs .values'
 
+    var errMsg = 'Error setting Equivalent Transport Costs on results'
+
     // remove existing <ul> if they exist, to add new ones
     $(htmlEl + ' ul').remove()
 
@@ -878,6 +894,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
 
     // Public transports more taxi
     var publicTransports = calculatedData.publicTransports
+    checkBoolean(publicTransports.toBeDisplayed, errMsg + ':publicTransports')
     if (publicTransports.toBeDisplayed) {
       addLiElm('public_transports',
         translatedStrings.fam_nbr,
@@ -900,6 +917,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     // UBER
     var calculatedUber = calculatedData.uber
 
+    checkBoolean(calculatedUber.calculated, errMsg + ':uber')
     if (switches.uber && calculatedUber && calculatedUber.calculated) {
       $('#equivalent-transport-costs .uber').show()
 
@@ -1079,6 +1097,12 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
       onClick: onClick
     }
   })()
+
+  function checkBoolean (varBool, errMsg) {
+    if (typeof varBool !== 'boolean') {
+      console.error('variable is a not a boolean. ' + errMsg)
+    }
+  }
 
   // When the APP is fully operational with the new UI/UX uncomment this
   // Banner that appears on the top of the page on mobile devices, and directs the user to Google Play App
