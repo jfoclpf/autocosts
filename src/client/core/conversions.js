@@ -26,7 +26,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     distance: {
       'km': [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
       'mile': [2, 'mi', 'miles'],
-      'nordicMile': [3, 'nordic mile', 'mil(10km)', 'scandinavian mile']
+      'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
     },
     fuelAmount: {
       'ltr': [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
@@ -114,7 +114,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
         return distance
       case 'mile':
         return distance * conversionConstants.KM_TO_MILES // miles to km
-      case 'nordicMile':
+      case 'mil(10km)':
         return distance * conversionConstants.KM_TO_MIL // mil(10km) to km
       default:
         throw Error('Error on convertDistanceToKm, distanceUnitOption ' + distanceUnitOption + ' unknown')
@@ -134,7 +134,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
         return distance
       case 'mile':
         return distance / conversionConstants.KM_TO_MILES // km to miles
-      case 'nordicMile':
+      case 'mil(10km)':
         return distance / conversionConstants.KM_TO_MIL // km to mil(10km)
       default:
         throw Error('Error on convertDistanceFromKm, distanceUnitOption ' + distanceUnitOption + ' unknown')
@@ -142,6 +142,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
   }
 
   return {
+    mapUnit: mapUnit,
     convertFuelEfficiencyToL100km: convertFuelEfficiencyToL100km,
     convertFuelPriceToLitre: convertFuelPriceToLitre,
     convertDistanceToKm: convertDistanceToKm,

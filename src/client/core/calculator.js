@@ -161,7 +161,8 @@ autocosts.calculatorModule = (function (thisModule) {
         perMonth: u, // total distance driven per month
         perYear: u, // total distance driven per year
         betweenHomeAndJob: u, // distance between home and job (one-way)
-        duringEachWeekend: u // distance the user drives during weekend
+        duringEachWeekend: u, // distance the user drives during weekend
+        standardUnit: u // km, mil or mil(10km)
       },
 
       timeSpentInDriving: {
@@ -334,6 +335,7 @@ autocosts.calculatorModule = (function (thisModule) {
       var fuelEffL100km,
         fuelPriceOnCurrPerLitre,
         distancePerPeriod,
+        selectedDistancePerMonth,
         distanceBetweenHomeAndJob,
         distanceDuringWeekends,
         daysPerWeekUserDrivesToJob
@@ -343,7 +345,7 @@ autocosts.calculatorModule = (function (thisModule) {
         case 'distanceNoCarToJob':
 
           fuelEffL100km = conversionsModule
-            .convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, country.fuel_efficiency_std)
+            .convertFuelEfficiencyToL100km(fuel.distanceBased.fuelEfficiency, fuel.distanceBased.fuelEfficiencyStandard)
 
           fuelPriceOnCurrPerLitre = conversionsModule
             .convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std)
@@ -352,27 +354,31 @@ autocosts.calculatorModule = (function (thisModule) {
 
           switch (fuel.distanceBased.noCarToJob.period) {
             case 'month':
-              distancePerMonth = distancePerPeriod
+              selectedDistancePerMonth = distancePerPeriod
               break
             case 'twoMonths':
-              distancePerMonth = distancePerPeriod / 2
+              selectedDistancePerMonth = distancePerPeriod / 2
               break
             case 'trimester':
-              distancePerMonth = distancePerPeriod / 3
+              selectedDistancePerMonth = distancePerPeriod / 3
               break
             case 'semester':
-              distancePerMonth = distancePerPeriod / 6
+              selectedDistancePerMonth = distancePerPeriod / 6
               break
             case 'year':
-              distancePerMonth = distancePerPeriod / 12
+              selectedDistancePerMonth = distancePerPeriod / 12
               break
             default:
               throw Error(errMsg + ' - fuel.distanceBased.noCarToJob.period: ' + fuel.distanceBased.noCarToJob.period)
           }
 
           // converts distance unit to kilometres
-          var distancePerMonthInKms = conversionsModule.convertDistanceToKm(distancePerMonth, country.distance_std)
+          var distancePerMonthInKms =
+            conversionsModule.convertDistanceToKm(selectedDistancePerMonth, fuel.distanceBased.noCarToJob.distanceStandardUnit)
           monthlyCost = fuelEffL100km * distancePerMonthInKms * fuelPriceOnCurrPerLitre / 100
+
+          // always set the "distance per month" in the standard default unit defined for the country standard
+          distancePerMonth = conversionsModule.convertDistanceFromKm(distancePerMonthInKms, country.distance_std)
 
           break
 
@@ -388,7 +394,7 @@ autocosts.calculatorModule = (function (thisModule) {
           fuelPriceOnCurrPerLitre = conversionsModule
             .convertFuelPriceToLitre(fuel.distanceBased.fuelPrice, country.fuel_price_volume_std)
 
-          // if miles were chosen must convert input to kilometres
+          // if for example miles were the default must convert input to kilometres
           var distanceHomeToJobInKms = conversionsModule.convertDistanceToKm(distanceBetweenHomeAndJob, country.distance_std)
           var distanceOnWeekendsInKms = conversionsModule.convertDistanceToKm(distanceDuringWeekends, country.distance_std)
 
@@ -397,6 +403,7 @@ autocosts.calculatorModule = (function (thisModule) {
 
           monthlyCost = fuelEffL100km * totalKmPerMonth * fuelPriceOnCurrPerLitre / 100
 
+          // always set the distance per month in the standard default unit defined for the country
           distancePerMonth = (2 * distanceBetweenHomeAndJob * daysPerWeekUserDrivesToJob + distanceDuringWeekends) *
                         consts.numberOfWeeksInAMonth
 
@@ -437,6 +444,7 @@ autocosts.calculatorModule = (function (thisModule) {
       return monthlyCost
     }
 
+    // always return the distance per month in the standard default unit defined for the country
     var getDistancePerMonth = function () {
       getMonthlyCost()
       return distancePerMonth
@@ -812,8 +820,10 @@ autocosts.calculatorModule = (function (thisModule) {
       throw Error(errMsg)
     }
 
+    // always set the distances in the standard default unit defined for the country
     var distancePerWeek, // distance driven per week
       distancePerMonth, // distance driven per month
+      distancePerMonthInKms, // distance driven per month in km
       distancePerYear, // distance driven per year
       distanceBetweenHomeAndJob, // distance between home and job (one-way)
       distanceDuringEachWeekend, // distance the user drives during weekend
@@ -844,7 +854,7 @@ autocosts.calculatorModule = (function (thisModule) {
           drivingDistance.calculated = false
           return
         }
-      } else {
+      } else { // considerCarToJob is false
         noCarToJobDistancePerPeriod = parseFloat(inputDistance.noCarToJob.distancePerPeriod)
 
         if (isNumber(noCarToJobDistancePerPeriod)) {
@@ -868,6 +878,12 @@ autocosts.calculatorModule = (function (thisModule) {
               throw Error(errMsg)
           }
 
+          // always set the "distance per month" in the standard default unit defined for the country standard
+          // converts to km and then to standard unit
+          distancePerMonthInKms =
+            conversionsModule.convertDistanceToKm(distancePerMonth, inputDistance.noCarToJob.distanceStandardUnit)
+          distancePerMonth = conversionsModule.convertDistanceFromKm(distancePerMonthInKms, country.distance_std)
+
           distancePerYear = distancePerMonth * 12
           distancePerWeek = distancePerMonth / consts.numberOfWeeksInAMonth
         } else {
@@ -878,6 +894,7 @@ autocosts.calculatorModule = (function (thisModule) {
     } else if (fuelTypeOfCalculation === 'distanceCarToJob' || fuelTypeOfCalculation === 'distanceNoCarToJob') {
       // gets distance information from form part 2, in fuel section
 
+      // return the distance in the standard default unit defined for the country
       distancePerMonth = calculateMonthlyFuel(inputFuel, country).getDistancePerMonth()
 
       if (isNumber(distancePerMonth)) {
@@ -893,11 +910,13 @@ autocosts.calculatorModule = (function (thisModule) {
 
     drivingDistance.calculated = true
 
+    // always in the standard default unit defined for the country standards
     drivingDistance.perWeek = distancePerWeek
     drivingDistance.perMonth = distancePerMonth
     drivingDistance.perYear = distancePerYear
     drivingDistance.betweenHomeAndJob = distanceBetweenHomeAndJob
     drivingDistance.duringEachWeekend = distanceDuringEachWeekend
+    drivingDistance.standardUnit = conversionsModule.mapUnit('distance', country.distance_std)
 
     // doesn't need to return because drivingDistance is a referece to calculatedData.drivingDistance
     // and calculatedData is global in this module
@@ -1080,19 +1099,9 @@ autocosts.calculatorModule = (function (thisModule) {
     }
 
     // checks if the uber distance unit is the same as the user's
-    var uberStandardDistanceUnit = (uberObj.distance_unit).toLowerCase()
-    if (country.distance_std === 1) { // according to countries' standards file, 1 means "km"
-      if (uberStandardDistanceUnit !== 'km') {
-        return uberNotCalculated
-      }
-    } else if (country.distance_std === 2) { // according to countries' standards file, 1 means "mile"
-      if (uberStandardDistanceUnit !== 'mile' &&
-                uberStandardDistanceUnit !== 'miles' &&
-                uberStandardDistanceUnit !== 'mi' &&
-                uberStandardDistanceUnit !== 'mi.') {
-        return uberNotCalculated
-      }
-    } else {
+    var uberStandardDistanceUnit = conversionsModule.mapUnit('distance', (uberObj.distance_unit).toLowerCase())
+    var countryStandardUnit = conversionsModule.mapUnit('distance', country.distance_std)
+    if (uberStandardDistanceUnit !== countryStandardUnit) {
       return uberNotCalculated
     }
     // from here uber strandards (currency and distance) are the same as the user country
