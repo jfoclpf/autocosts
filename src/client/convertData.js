@@ -224,7 +224,7 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       credit: {
-        creditBool: getBoleanFromDatabase(dbObject.credit), // binary variable: "true" or "false"
+        creditBool: getBoleanFromDatabase(dbObject.credit), // returns type boolean: true or false
         yesCredit: {
           borrowedAmount: dbObject.credit_borrowed_amount,
           numberInstallments: dbObject.credit_number_installments,
@@ -250,7 +250,7 @@ autocosts.convertDataModule = (function (thisModule) {
           period: commonsModule.getTimePeriod(dbObject.fuel_currency_based_periodicity)
         },
         distanceBased: {
-          considerCarToJob: getBoleanFromDatabase(dbObject.fuel_distance_based_car_to_work), // binary variable: true or false
+          considerCarToJob: getBoleanFromDatabase(dbObject.fuel_distance_based_car_to_work), // returns type boolean: true or false
           carToJob: {
             daysPerWeek: dbObject.fuel_distance_based_car_to_work_number_days_week,
             distanceBetweenHomeAndJob: dbObject.fuel_distance_based_car_to_work_distance_home_work,
@@ -280,7 +280,7 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       tolls: {
-        calculationBasedOnDay: getBoleanFromDatabase(dbObject.tolls_daily), // true or false
+        calculationBasedOnDay: getBoleanFromDatabase(dbObject.tolls_daily), // returns type boolean: true or false
         yesBasedOnDay: {
           amountPerDay: dbObject.tolls_daily_expense,
           daysPerMonth: dbObject.tolls_daily_number_days
@@ -303,7 +303,7 @@ autocosts.convertDataModule = (function (thisModule) {
 
       // Form Part 3
       publicTransports: {
-        isOk: isPublicTransportsOkInDatabase(dbObject), // boolean
+        isOk: isPublicTransportsOkInDatabase(dbObject), // returns type boolean: true or false
         numberOfPeopleInFamily: dbObject.household_number_people,
         monthlyPassCost: dbObject.public_transportation_month_expense
       },
