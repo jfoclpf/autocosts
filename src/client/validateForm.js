@@ -214,7 +214,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     /* insurance */
     var insurancePaymentPeriod = commonsModule.getSelectedValueOnRadioButton(form.insurancePaymentPeriod)
 
-    if (insurancePaymentPeriod === '') {
+    if (!insurancePaymentPeriod) {
       return false
     }
 
@@ -227,13 +227,13 @@ autocosts.userFormModule.validateFormModule = (function (form) {
 
   function isCarFinanceOk () {
     /* car finance */
-    var AutoCreditRadioBtn = commonsModule.getSelectedValueOnRadioButton(form.AutoCreditRadioBtn)
+    var autoCreditRadioBtn = commonsModule.getSelectedValueOnRadioButton(form.AutoCreditRadioBtn)
 
-    if (AutoCreditRadioBtn === '') {
+    if (autoCreditRadioBtn === '') {
       return false
     }
 
-    if (AutoCreditRadioBtn === 'true') {
+    if (autoCreditRadioBtn) {
       if (!isNumber(form.borrowedAmount.value)) {
         return false
       }
@@ -281,13 +281,12 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     /* fuel */
     var fuelCalculationType = commonsModule.getSelectedValueOnRadioButton(form.calc_combustiveis)
 
-    if (fuelCalculationType === '') {
+    if (!fuelCalculationType) {
       return false
     }
 
     switch (fuelCalculationType) {
       case 'distance': /* fuel calculations made considering distance travelled by month */
-
         if (!isNumber(form.fuel_efficiency.value)) {
           return false
         }
@@ -301,7 +300,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
           return false
         }
 
-        if (carToJob === 'false') {
+        if (!carToJob) {
           if (!isNumber(form.km_por_mes.value)) {
             return false
           }
@@ -318,18 +317,15 @@ autocosts.userFormModule.validateFormModule = (function (form) {
             return false
           }
         }
-
         break
 
       case 'money': /* fuel costs based on data input money per period of time */
-
         if (!isNumber(form.combustiveis_euro.value)) {
           return false
         }
         break
 
       default:
-
         return false
     }
 
@@ -368,7 +364,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     var tollsCalculationMethod = commonsModule.getSelectedValueOnRadioButton(form.tolls_daily_radioBtn)
 
     /* if tolls costs are calculated on a daily basis */
-    if (tollsCalculationMethod === 'false') { /* no daily basis */
+    if (!tollsCalculationMethod) { /* no daily basis */
       if (!isNumber(form.no_daily_tolls_value.value)) {
         return false
       }
@@ -476,7 +472,7 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     var isWorkingTime = commonsModule.getSelectedValueOnRadioButton(form.radio_work_time)
     var incomeType = commonsModule.getSelectedValueOnRadioButton(form.radio_income)
 
-    if (isWorkingTime === 'true' && incomeType !== 'hour') {
+    if (isWorkingTime && incomeType) {
       if (!isNumber(form.time_hours_per_week.value) ||
                 parseFloat(form.time_hours_per_week.value) < parseFloat(form.time_hours_per_week.min) ||
                 parseFloat(form.time_hours_per_week.value) > parseFloat(form.time_hours_per_week.max)) {
@@ -498,10 +494,10 @@ autocosts.userFormModule.validateFormModule = (function (form) {
 
     // If user sets "currency" on Fuel section on Form Part 2, the calculator needs anyway to know the distance traveled,
     // and thus it will ask the distance travelled by the user here on Form Part 3
-    if (fuelCalcMethodOnFormPart2 === 'euros') {
+    if (fuelCalcMethodOnFormPart2 === 'money') {
       var driveToWork = commonsModule.getSelectedValueOnRadioButton(form.drive_to_work)
 
-      if (driveToWork === 'true') {
+      if (driveToWork) {
         if (!isNumber(form.drive_to_work_days_per_week.value) || parseFloat(form.drive_to_work_days_per_week.value) > 7) {
           return false
         }
@@ -525,10 +521,10 @@ autocosts.userFormModule.validateFormModule = (function (form) {
     var distanceBasedOnDrivingToJob
 
     var fuelCalcMethodOnFormPart2 = commonsModule.getSelectedValueOnRadioButton(form.calc_combustiveis)
-    if (fuelCalcMethodOnFormPart2 === 'km') {
+    if (fuelCalcMethodOnFormPart2 === 'distance') {
       // check now Distance Section in Form Part 2
       distanceBasedOnDrivingToJob = commonsModule.getSelectedValueOnRadioButton(form.car_job_form2)
-    } else if (fuelCalcMethodOnFormPart2 === 'euros') {
+    } else if (fuelCalcMethodOnFormPart2 === 'money') {
       // check now Distance Section in Form Part 3
       distanceBasedOnDrivingToJob = commonsModule.getSelectedValueOnRadioButton(form.drive_to_work)
     } else {
