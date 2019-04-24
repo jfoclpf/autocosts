@@ -475,7 +475,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
           }
           addLiElm('fuel',
             translatedStrings.fuel_car_eff,
-            form.fuel.distanceBased.fuelEfficiency + ' ' + translatedStrings.std_fuel_calc)
+            form.fuel.distanceBased.fuelEfficiency + ' ' + form.fuel.distanceBased.fuelEfficiencyStandard)
           addLiElm('fuel',
             translatedStrings.fuel_price1,
             currencyShow(form.fuel.distanceBased.fuelPrice) + '/' + translatedStrings.std_volume_short)

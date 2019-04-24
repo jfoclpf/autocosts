@@ -332,8 +332,13 @@ function isUserDataEntryOk (dbEntry, countryObj) {
       }
 
       // remove outliers
-      if (conversions.convertFuelEfficiencyToL100km(dbEntry.fuel_distance_based_fuel_efficiency, countryObj.fuel_efficiency_std) >
-                statsConstants.MAX_FUEL_EFF_L100KM) {
+      var fuelEfficiency
+      if (dbEntry.fuel_distance_based_fuel_efficiency_standard) {
+        fuelEfficiency = dbEntry.fuel_distance_based_fuel_efficiency_standard
+      } else {
+        fuelEfficiency = countryObj.fuel_efficiency_std /* backward compatibility */
+      }
+      if (conversions.convertFuelEfficiencyToL100km(dbEntry.fuel_distance_based_fuel_efficiency, fuelEfficiency) > statsConstants.MAX_FUEL_EFF_L100KM) {
         return false
       }
 
