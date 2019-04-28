@@ -28,28 +28,33 @@ For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_
 These standards should be used (for example, for variable names or object properties)
 
 #### Distance
-```
-km // kilometer
-mi // mile
-mil(10km) // nordic mile
-```
-#### Fuel Price Volume
-```
-ltr // metric litre
-gal(UK) // imperial gallon
-gal(US) // USA gallon
-```
-#### Fuel Efficiency
-```
-ltr/100km // litres per 100 kilometres
-km/ltr // kilometre per litre
-mpg(imp) // miles per imperial gallon
-mpg(US) // miles per USA gallon
-ltr/mil(10km) // litres per nordic mile
-mil(10km)/ltr // nordic miles per litre
-km/gal(US) // kilometres per USA gallon
 
-```
+| Coding | meaning
+| ----------| ------------
+| **km**        | kilometer   
+| **mi**        | mile        
+| **mil(10km)** | [nordic mile](https://en.wikipedia.org/wiki/Scandinavian_mile) 
+
+#### Fuel Price Volume
+
+| Coding | meaning
+| ----------| ------------
+| **ltr** | metric litre
+| **gal(UK)** | imperial gallon
+| **gal(US)** | USA gallon
+
+#### Fuel Efficiency
+
+| Coding | meaning
+| ----------| ------------
+| **ltr/100km** | litres per 100 kilometres
+| **km/ltr** | kilometre per litre
+| **mpg(imp)** | miles per imperial gallon
+| **mpg(US)** | miles per USA gallon
+| **ltr/mil(10km)** | litres per nordic mile
+| **mil(10km)/ltr** | nordic miles per litre
+| **km/gal(US)** | kilometres per USA gallon
+
 
 ### JS Object Structure
 
