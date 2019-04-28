@@ -51,11 +51,11 @@ km/gal(US) // kilometres per USA gallon
 
 ```
 
-### Object Structure
+### JS Object Structure
 
-#### userData 
+#### userData 'class'
 
-The core function `calculateCosts` which receives the user data from either the user input HTML form or the database, obeys the following structure:
+The core function [`calculateCosts`](src/client/core/calculator.js) which receives the user data from either the user input [HTML form](src/views/main/form.hbs) or the database, obeys the following structure:
 
 ```javascript
 {
@@ -210,9 +210,9 @@ The core function `calculateCosts` which receives the user data from either the 
 }
 ```  
 
-#### calculatedData
+#### calculatedData 'class'
 
-The core function `calculateCosts` returns an object with the following structure:
+The core function [`calculateCosts`](src/client/core/calculator.js) returns an object with the following structure:
 
 
 ```javascript
