@@ -493,6 +493,10 @@ $.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(
 });
 ```
 
+## Flow Data structure
+
+![Flow Data structure](docs/flowData.jpg)
+
 ## URL parts terminology
 
 We follow Javascript on browsers variable:  `window.location`
