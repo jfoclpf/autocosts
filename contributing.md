@@ -311,9 +311,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) returns an o
         perYear,                   //total distance driven per year
         betweenHomeAndJob,         //distance between home and job (one-way)
         duringEachWeekend,         //distance the user drives during weekend
-        details: {
-            daysPerWeekUserDrivesToJob,
-        }    
+        standardUnit               //string with km, mi, mil(10km)   
     },
 
     timeSpentInDriving: {
