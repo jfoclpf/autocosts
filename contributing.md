@@ -73,11 +73,11 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
 
     insurance: {
         amountPerPeriod, 
-        period 
+        period
     },
 
     credit: {
-        creditBool, //binary variable: true or false
+        creditBool, // typeof boolean
         yesCredit: {
             borrowedAmount,
             numberInstallments,
@@ -97,13 +97,13 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
 
     //Form Part 2
     fuel: {
-        typeOfCalculation, //binary variable: "money" or "distance"
+        typeOfCalculation, // typeof string: "money" or "distance"
         currencyBased: {
             amountPerPeriod,
-            period         //month, two months,  trimester, semester, year
+            period         // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         },
         distanceBased: {
-            considerCarToJob,  //binary variable: true or false
+            considerCarToJob, // typeof boolean
             carToJob: {
                 daysPerWeek,
                 distanceBetweenHomeAndJob,
@@ -111,12 +111,12 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
             },
             noCarToJob : {
                 distancePerPeriod,
-                period,               //month, two months,  trimester, semester, year
-                distanceStandardUnit //km, mi, mil(10km)
+                period, // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+                distanceStandardUnit // typeof string: "km", "mi", "mil(10km)"
             },
-            fuelEfficiency,         //fuel efficiency of the vehicle
-            fuelEfficiencyStandard, ///fuel standard (km/l, l/100km, mpg(US), etc.)
-            fuelPrice               //fuel price per unit volume
+            fuelEfficiency,
+            fuelEfficiencyStandard, // typeof string
+            fuelPrice // typeof string: 'ltr', 'gal(UK)', 'gal(US)'
         }
     },
 
@@ -133,37 +133,37 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     },
 
     tolls: {
-        calculationBasedOnDay,   //binary variable: true or false
+        calculationBasedOnDay, // typeof boolean
         yesBasedOnDay: {
             amountPerDay,
             daysPerMonth
         },
         noBasedOnDay: {
             amountPerPeriod,
-            period               //month, two months,  trimester, semester, year
+            period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         }
     },
 
     fines: {
         amountPerPeriod,
-        period                   //month, two months,  trimester, semester, year
+        period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
     },
 
     washing: {
         amountPerPeriod,
-        period                   //month, two months,  trimester, semester, year
+        period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
     },
 
     //Form Part 3
     publicTransports: {
-        isOk,                    //boolean whether this section was correctly filled in
+        isOk, // typeof boolean; whether this section was correctly filled in
         numberOfPeopleInFamily,
         monthlyPassCost
     },
 
     income: {
-        isOk,           //boolean whether this section was correctly filled in
-        incomePeriod,   //"year", "month", "week" or "hour"
+        isOk, // typeof boolean; whether this section was correctly filled in
+        incomePeriod, // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         year: {
             amount
         },
@@ -189,7 +189,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     },
 
     distance: {
-        considerCarToJob,    //binary variable: true or false
+        considerCarToJob, // typeof boolean
         carToJob: {
             daysPerWeek,
             distanceBetweenHomeAndJob,
@@ -198,7 +198,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
         noCarToJob: {
             distancePerPeriod,
             period,
-            distanceStandardUnit //km, mi, mil (10km)
+            distanceStandardUnit // typeof string: "km", "mi", "mil(10km)"
         }
     },
 
