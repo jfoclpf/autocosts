@@ -77,7 +77,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     },
 
     credit: {
-        creditBool, //binary variable: "true" or "false"
+        creditBool, //binary variable: true or false
         yesCredit: {
             borrowedAmount,
             numberInstallments,
@@ -97,7 +97,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
 
     //Form Part 2
     fuel: {
-        typeOfCalculation, //binary variable: "currency" or "distance"
+        typeOfCalculation, //binary variable: "money" or "distance"
         currencyBased: {
             amountPerPeriod,
             period         //month, two months,  trimester, semester, year
@@ -133,7 +133,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     },
 
     tolls: {
-        calculationBasedOnDay,   //binary variable: "true" or "false"
+        calculationBasedOnDay,   //binary variable: true or false
         yesBasedOnDay: {
             amountPerDay,
             daysPerMonth
@@ -189,7 +189,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     },
 
     distance: {
-        considerCarToJob,    //binary variable: "true" or "false"
+        considerCarToJob,    //binary variable: true or false
         carToJob: {
             daysPerWeek,
             distanceBetweenHomeAndJob,
