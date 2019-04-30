@@ -100,7 +100,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
         typeOfCalculation, // typeof string: "money" or "distance"
         currencyBased: {
             amountPerPeriod,
-            period         // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+            period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         },
         distanceBased: {
             considerCarToJob, // typeof boolean
