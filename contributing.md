@@ -27,6 +27,18 @@ For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_
 
 These standards should be used (for example, for variable names or object properties)
 
+#### Time Periods
+
+```
+hour
+week
+month
+twoMonths
+trimester
+semester
+year
+```
+
 #### Distance
 
 | Coding | meaning
