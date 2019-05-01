@@ -372,7 +372,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Insurance
-    switch (commonsModule.getTimePeriod(form.insurance.period)) {
+    switch (form.insurance.period) {
       case 'month':
         addLiElm('insurance',
           form.insurance.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -439,7 +439,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
       case 'distance':
         checkBoolean(form.fuel.distanceBased.considerCarToJob, errMsg)
         if (!form.fuel.distanceBased.considerCarToJob) {
-          switch (commonsModule.getTimePeriod(form.fuel.distanceBased.noCarToJob.period)) {
+          switch (form.fuel.distanceBased.noCarToJob.period) {
             case 'month':
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
@@ -507,7 +507,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
         break
 
       case 'money':
-        switch (commonsModule.getTimePeriod(form.fuel.currencyBased.period)) {
+        switch (form.fuel.currencyBased.period) {
           case 'month':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
                                  translatedStrings.word_per + ' ' + translatedStrings.month)
@@ -549,7 +549,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     // Tolls
     checkBoolean(form.tolls.calculationBasedOnDay, errMsg)
     if (!form.tolls.calculationBasedOnDay) {
-      switch (commonsModule.getTimePeriod(form.tolls.noBasedOnDay.period)) {
+      switch (form.tolls.noBasedOnDay.period) {
         case 'month':
           addLiElm('tolls',
             form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -584,7 +584,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Fines
-    switch (commonsModule.getTimePeriod(form.fines.period)) {
+    switch (form.fines.period) {
       case 'month':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -615,7 +615,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     }
 
     // Washing
-    switch (commonsModule.getTimePeriod(form.washing.period)) {
+    switch (form.washing.period) {
       case 'month':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -808,23 +808,23 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
       if (form.distance.considerCarToJob || form.fuel.distanceBased.considerCarToJob) {
         addLiElm('time_spent_in_driving',
           translatedStrings.minutes_home_job,
-          form.timeSpentInDriving.option1.minutesBetweenHomeAndJob + ' ' + translatedStrings.min)
+          form.timeSpentInDriving.carToJob.minutesBetweenHomeAndJob + ' ' + translatedStrings.min)
         addLiElm('time_spent_in_driving',
           translatedStrings.days_drive_to_job,
           form.distance.carToJob.daysPerWeek + ' ' + translatedStrings.days)
         addLiElm('time_spent_in_driving',
           translatedStrings.time_drive_weekend,
-          form.timeSpentInDriving.option1.minutesDuringWeekend + ' ' + translatedStrings.min)
+          form.timeSpentInDriving.carToJob.minutesDuringWeekend + ' ' + translatedStrings.min)
         addLiElm('time_spent_in_driving',
           translatedStrings.minutes_drive_per + ' ' + translatedStrings.week,
           timeSpentInDriving.minutesPerWeek + ' ' + translatedStrings.min)
       } else {
         addLiElm('time_spent_in_driving',
           translatedStrings.minutes_drive_per + ' ' + translatedStrings.day,
-          form.timeSpentInDriving.option2.minutesPerDay + ' ' + translatedStrings.min)
+          form.timeSpentInDriving.noCarToJob.minutesPerDay + ' ' + translatedStrings.min)
         addLiElm('time_spent_in_driving',
           translatedStrings.days_drive_per_month,
-          form.timeSpentInDriving.option2.daysPerMonth + ' ' + translatedStrings.days)
+          form.timeSpentInDriving.noCarToJob.daysPerMonth + ' ' + translatedStrings.days)
       }
 
       // if timeSpentInDriving.calculated is true, the values hoursPerMonth and hoursPerYear must be valid numbers

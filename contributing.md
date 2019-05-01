@@ -1,7 +1,7 @@
 ## Coding rules
 ### Syntax
  - <a href="https://standardjs.com/">standardJS</a>
- 
+
  ### Costs items
  The car cost items' terminology should be, for programmatic and variable naming purposes:
 
@@ -60,7 +60,7 @@ km/gal(US) // kilometres per USA gallon
 
 ![Front-end client module architecture](docs/flowchart.jpg)
 
-<a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing). 
+<a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing).
 
 The name of a module, except the main module `autocosts`, should always end the wording `Module`.
 
@@ -83,7 +83,7 @@ autocosts
    |
    |--- userFormModule
    |        |
-   |        |--- validateFormModule
+   |        |--- validateDataModule
    |
    |--- resultsModule
    |        |
@@ -102,14 +102,14 @@ File: `myModuleA.js`:
 
 ```js
 root.myModuleA = (function (thisModule) {
-    
+
     //dependency
     var myModuleB;
-    
+
     function initialize() {
         loadModuleDependencies();
     }
-     
+
     function loadModuleDependencies(){
         myModuleB = root.myModuleB;
     }
@@ -121,7 +121,7 @@ root.myModuleA = (function (thisModule) {
     function B(){
         ...
     }
-  
+
     function C(){
         ...
     }  
@@ -131,9 +131,9 @@ root.myModuleA = (function (thisModule) {
     //own module, since it may have been defined erlier by children modules    
     thisModule.initialize = initialize;
     thisModule.C = C;
-    
+
     return thisModule;
-    
+
 })(root.myModuleA || {});
 
 ```
@@ -148,11 +148,11 @@ root.myModuleA.mySubmoduleA1 = (function() {
 
     //dependency
     var myModuleB;
-    
+
     function initialize() {
         loadModuleDependencies();
     }
-     
+
     function loadModuleDependencies(){
         myModuleB = root.myModuleB;
     }
@@ -161,11 +161,11 @@ root.myModuleA.mySubmoduleA1 = (function() {
         myModuleB.P();
         ...
     }
-    
+
     function F(){
         ...
     }
-    
+
     return {
         initialize: initialize,
         F: F

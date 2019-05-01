@@ -217,7 +217,7 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     }
 
     // for each form part gets object with content
-    form = convertDataModule.createUserDataCleanObjectFromForm(DOMForm)
+    form = convertDataModule.createUserDataObjectFromForm(DOMForm)
     mainObjs.formData = form
 
     // country object with country specific variables

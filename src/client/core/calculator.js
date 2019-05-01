@@ -62,7 +62,7 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   // Object Constructor for the Results, where the calculated averages are stored
-  // see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
+  // see: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#calculateddata-class
   // because it is a constructor, first letter is capital
   function CreateCalculatedDataObj () {
     var u; u = undefined
@@ -955,8 +955,8 @@ autocosts.calculatorModule = (function (thisModule) {
     // When user refers that "takes car to job", either in Fuel section (form part 2) or in Distance section (part 3).
     // In this situation, the form displays "option 1" in "Time Spent in Driving" section
     if (fuelTypeOfCalculation === 'distanceCarToJob' || inputDistance.considerCarToJob) {
-      minutesBetweenHomeAndJob = parseFloat(inputTimeSpentInDriving.option1.minutesBetweenHomeAndJob)
-      minutesInEachWeekend = parseFloat(inputTimeSpentInDriving.option1.minutesDuringWeekend)
+      minutesBetweenHomeAndJob = parseFloat(inputTimeSpentInDriving.carToJob.minutesBetweenHomeAndJob)
+      minutesInEachWeekend = parseFloat(inputTimeSpentInDriving.carToJob.minutesDuringWeekend)
       daysPerWeekUserDrivesToJob = parseInt(details.numberOfDaysPerWeekUserDrivesToJob, 10)
 
       if (areAllNumbersGreaterThanZero(minutesBetweenHomeAndJob, minutesInEachWeekend) &&
@@ -971,8 +971,8 @@ autocosts.calculatorModule = (function (thisModule) {
         return
       }
     } else {
-      minutesPerDay = parseFloat(inputTimeSpentInDriving.option2.minutesPerDay)
-      daysPerMonth = parseFloat(inputTimeSpentInDriving.option2.daysPerMonth)
+      minutesPerDay = parseFloat(inputTimeSpentInDriving.noCarToJob.minutesPerDay)
+      daysPerMonth = parseFloat(inputTimeSpentInDriving.noCarToJob.daysPerMonth)
 
       if (areAllNumbersGreaterThanZero(minutesPerDay, daysPerMonth)) {
         hoursPerMonth = minutesPerDay * daysPerMonth / 60

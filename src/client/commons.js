@@ -142,64 +142,6 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     }
   }
 
-  // this function allows broader defintion inputs from user form and
-  // backward compatibility from user old inputs on database for time periods
-  // for example if timePeriod is either 'month', 1, '1', 'monthly', 'mensal' or 'mês' => 'month'
-  function getTimePeriod (timePeriod) {
-    var timePeriodsObj = {
-      'hour': ['hourly'],
-      'week': ['weekly'],
-      'month': [1, 'monthly', 'mensal', 'mês'],
-      'twoMonths': [2, 'two_months', 'two months', '2 months', 'bimestral', 'bimestre'],
-      'trimester': [3, 'trimesterly', 'quarterly', 'trimestral'],
-      'semester': [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
-      'year': [5, 'yearly', 'anual', 'ano']
-    }
-
-    var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod
-    for (var key in timePeriodsObj) {
-      if (key === val || timePeriodsObj[key].indexOf(val) !== -1) {
-        return key
-      }
-    }
-
-    return null
-  }
-
-  // for Radio Buttons
-  function getSelectedValueOnRadioButton (radioObj) {
-    var i
-
-    var processReturn = function (value) {
-      if (value === 'true') {
-        return true
-      } else if (value === 'false') {
-        return false
-      } else {
-        return value
-      }
-    }
-
-    if (!radioObj) {
-      return ''
-    }
-
-    var radioLength = radioObj.length
-    if (radioLength === undefined) {
-      if (radioObj.checked) {
-        return processReturn(radioObj.value)
-      }
-      return ''
-    }
-
-    for (i = 0; i < radioLength; i++) {
-      if (radioObj[i].checked) {
-        return processReturn(radioObj[i].value)
-      }
-    }
-    return ''
-  }
-
   // flatten object, that is, from an Object composed by elements in a Object's tree, returns simple list Object
   // i.e., from complex object with hierarchies, flattens to simple list Object
   function flatten (target, opts) {
@@ -257,8 +199,6 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
   thisModule.isMobile = isMobile
   thisModule.removeHashFromUrl = removeHashFromUrl
   thisModule.getStandard = getStandard
-  thisModule.getTimePeriod = getTimePeriod
-  thisModule.getSelectedValueOnRadioButton = getSelectedValueOnRadioButton
   thisModule.flatten = flatten
   thisModule.isNumber = isNumber
 
