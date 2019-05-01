@@ -1,9 +1,15 @@
 ## Coding rules
 ### Syntax
  - <a href="https://standardjs.com/">standardJS</a>
+<<<<<<< HEAD
 
  ### Costs items
  The car cost items' terminology should be, for programmatic and variable naming purposes:
+=======
+ 
+### Costs items
+The car cost items' terminology should be, for programmatic and variable naming purposes:
+>>>>>>> 7ed112028232fc6ed9404328a8eababb1cf32597
 
 ```
 depreciation
@@ -27,27 +33,345 @@ For country codes, the [2-letter ISO country](https://en.wikipedia.org/wiki/ISO_
 
 These standards should be used (for example, for variable names or object properties)
 
+#### Time Periods
+
+```
+hour
+week
+month
+twoMonths
+trimester
+semester
+year
+```
+
 #### Distance
-```
-km // kilometer
-mi // mile
-mil(10km) // nordic mile
-```
+
+| Coding | meaning
+| ----------| ------------
+| **km**        | kilometer   
+| **mi**        | mile        
+| **mil(10km)** | [nordic mile](https://en.wikipedia.org/wiki/Scandinavian_mile) 
+
 #### Fuel Price Volume
-```
-ltr // metric litre
-gal(UK) // imperial gallon
-gal(US) // USA gallon
-```
+
+| Coding | meaning
+| ----------| ------------
+| **ltr** | metric litre
+| **gal(UK)** | imperial gallon
+| **gal(US)** | USA gallon
+
 #### Fuel Efficiency
-```
-ltr/100km // litres per 100 kilometres
-km/ltr // kilometre per litre
-mpg(imp) // miles per imperial gallon
-mpg(US) // miles per USA gallon
-ltr/mil(10km) // litres per nordic mile
-mil(10km)/ltr // nordic miles per litre
-km/gal(US) // kilometres per USA gallon
+
+| Coding | meaning
+| ----------| ------------
+| **ltr/100km** | litres per 100 kilometres
+| **km/ltr** | kilometre per litre
+| **mpg(imp)** | miles per imperial gallon
+| **mpg(US)** | miles per USA gallon
+| **ltr/mil(10km)** | litres per nordic mile
+| **mil(10km)/ltr** | nordic miles per litre
+| **km/gal(US)** | kilometres per USA gallon
+
+
+### JS Object Structure
+
+#### userData 'class'
+
+The core function [`calculateCosts`](src/client/core/calculator.js) which receives the user data from either the user input [HTML form](src/views/main/form.hbs) or the database, obeys the following structure:
+
+```javascript
+{
+    depreciation: {
+        acquisitionMonth,  
+        acquisitionYear,   
+        acquisitionCost,   
+        presentValue   
+    },
+
+    insurance: {
+        amountPerPeriod, 
+        period
+    },
+
+    credit: {
+        creditBool, // typeof boolean
+        yesCredit: {
+            borrowedAmount,
+            numberInstallments,
+            amountInstallment,
+            residualValue
+        }
+    },
+
+    inspection: {
+        averageInspectionCost,
+        numberOfInspections
+    },
+
+    roadTaxes: {
+        amountPerYear
+    },
+
+    //Form Part 2
+    fuel: {
+        typeOfCalculation, // typeof string: "money" or "distance"
+        currencyBased: {
+            amountPerPeriod,
+            period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+        },
+        distanceBased: {
+            considerCarToJob, // typeof boolean
+            carToJob: {
+                daysPerWeek,
+                distanceBetweenHomeAndJob,
+                distanceDuringWeekends
+            },
+            noCarToJob : {
+                distancePerPeriod,
+                period, // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+                distanceStandardUnit // typeof string: "km", "mi", "mil(10km)"
+            },
+            fuelEfficiency,
+            fuelEfficiencyStandard, // typeof string
+            fuelPrice // typeof string: 'ltr', 'gal(UK)', 'gal(US)'
+        }
+    },
+
+    maintenance:  {
+        amountPerYear
+    },
+
+    repairsImprovements:  {
+        amountPerYear
+    },
+
+    parking: {
+        amountPerMonth
+    },
+
+    tolls: {
+        calculationBasedOnDay, // typeof boolean
+        yesBasedOnDay: {
+            amountPerDay,
+            daysPerMonth
+        },
+        noBasedOnDay: {
+            amountPerPeriod,
+            period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+        }
+    },
+
+    fines: {
+        amountPerPeriod,
+        period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+    },
+
+    washing: {
+        amountPerPeriod,
+        period // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+    },
+
+    //Form Part 3
+    publicTransports: {
+        isOk, // typeof boolean; whether this section was correctly filled in
+        numberOfPeopleInFamily,
+        monthlyPassCost
+    },
+
+    income: {
+        isOk, // typeof boolean; whether this section was correctly filled in
+        incomePeriod, // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+        year: {
+            amount
+        },
+        month: {
+            amountPerMonth,
+            monthsPerYear
+        },
+        week: {
+            amountPerWeek,
+            weeksPerYear
+        },
+        hour: {
+            amountPerHour,
+            hoursPerWeek,
+            weeksPerYear
+        }
+    },
+
+    workingTime: {
+        isActivated,
+        monthsPerYear,
+        hoursPerWeek
+    },
+
+    distance: {
+        considerCarToJob, // typeof boolean
+        carToJob: {
+            daysPerWeek,
+            distanceBetweenHomeAndJob,
+            distanceDuringWeekends,
+        },
+        noCarToJob: {
+            distancePerPeriod,
+            period,
+            distanceStandardUnit // typeof string: "km", "mi", "mil(10km)"
+        }
+    },
+
+    timeSpentInDriving: {
+        option1: {
+            minutesBetweenHomeAndJob,
+            minutesDuringWeekend
+        },
+        option2: {
+            minutesPerDay,
+            daysPerMonth
+        }
+    }
+}
+```  
+
+#### calculatedData 'class'
+
+The core function [`calculateCosts`](src/client/core/calculator.js) returns an object with the following structure:
+
+
+```javascript
+{
+    costs: {
+        totalPerYear,
+        totalEver,
+
+        perMonth: {
+            items: {
+                depreciation,
+                insurance,
+                credit,
+                inspection,
+                roadTaxes,
+                fuel,
+                maintenance,
+                repairsImprovements,
+                parking,
+                tolls,
+                fines,
+                washing
+            },
+            standingCosts,
+            runningCosts,
+            total
+        },
+        
+        perUnitDistance: { //"km", "mile", etc.
+            runningCosts,
+            totalCosts
+        },
+    },
+
+    speeds: {
+        averageKineticSpeed,
+        averageConsumerSpeed       //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+    },
+
+    publicTransports: { 
+        calculated,                              //boolean whether the public transports info was calculated
+        toBeDisplayed:                           //boolean whether makes sense to display public transports
+        totalCostsOfStandardPublicTransports,    //total costs of public transports in the city with monthly pass              
+        furtherPublicTransports: {               //further alternative public transports (train, outside residence city, etc.),
+            display,                             //boolean for further alternative public transports
+            totalCosts,                          //costs set to these further public transports
+        },
+        taxi: {
+            totalCosts,                          //usage of taxi as an alternative to car
+            costPerUnitDistance,                 //average price of taxi per unit distance            
+            possibleDistanceDoneByTaxi,          //km/miles/etc. that could be done by taxi with amount of this.taxiCosts
+        },
+        totalAlternativeCostsWhenUserHasNoCar,   //total alternative costs by not having a car       
+        ratios: {
+            ptCostsOverCarCosts,                   //public transports over car costs ratio
+
+            //ratio (costs of public transports)/(car costs) under which it shows public transports as alternative         
+            ptCostsOverCarCostsThresholdForShowPt, 
+
+            //ratio (costs of public transports)/(car costs) under which shows other alternatives, with further public transports (intercity trains for example)                                                   
+            ptCostsOverCarCostsThresholdForShowFurtherPt, 
+        }
+    },
+
+    financialEffort: {
+        calculated,            //boolean whether the public transports info was calculated
+        income: {
+            averagePerHour,
+            averagePerWeek,
+            averagePerMonth,
+            perYear, 
+        },
+        workingTime: {
+            hoursPerWeek,      //hours of work per week
+            weeksPerYear,      //weeks of work per year
+            monthsPerYear,     //months of work per year
+            hoursPerMonth,     //average total working hours per month
+            hoursPerYear,      //average total working hours per year
+        },        
+        totalCarCostsPerYear,               //total costs per year
+        workingHoursPerYearToAffordCar,     //hours per year to afford the car
+        workingMonthsPerYearToAffordCar,    //months per year to afford the car
+        daysForCarToBePaid,                 //number of days till the car is paid
+        financialEffortPercentage           //percentage of income that car costs represent
+    },
+
+    drivingDistance: {
+        calculated,                //boolean
+        perWeek,                   //average distance driven per month
+        perMonth,                  //total distance driven per month
+        perYear,                   //total distance driven per year
+        betweenHomeAndJob,         //distance between home and job (one-way)
+        duringEachWeekend,         //distance the user drives during weekend
+        standardUnit               //string with km, mi, mil(10km)   
+    },
+
+    timeSpentInDriving: {
+        calculated,                //boolean
+        minutesBetweenHomeAndJob,  //time (in minutes) driven between home and job
+        minutesInEachWeekend,      //time (in minutes) driven during weekends
+        minutesPerWeek,            //time (in minutes) driven per week
+        minutesPerDay,             //time (in minutes) driven per day
+        daysPerMonth,              //number of days driven per month
+        hoursPerMonth,             //number of hours driven per month
+        hoursPerYear               //number of hours driven per year
+    },
+
+    externalCosts: {
+        calculated,                //boolean
+        handbookOfeExternalCostsURL,
+        pollution,
+        greenhouseGases,
+        noise,
+        fatalities,
+        congestion,
+        infrastructure,
+        total
+    },
+
+    details: {
+        numberOfDaysPerWeekUserDrivesToJob, //number of days per week, the user drives to job
+        ageOfCarInMonths,
+        credit:{
+            numberOfMonthlyInstalments,
+            totalPaidInInterests
+        }
+    },
+
+    unitsOfMeasurement: {
+        speed,              //km/h, mi/h
+        distance,           //km, mi, etc.
+        currency
+    },
+
+    countryCode
+}
 ```
 
 ## Filenames
@@ -186,6 +510,10 @@ $.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(
     root.myModuleA.C();
 });
 ```
+
+## Flow Data structure
+
+![Flow Data structure](docs/flowDataStructure.jpg)
 
 ## URL parts terminology
 
