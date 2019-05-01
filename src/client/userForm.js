@@ -10,8 +10,8 @@
 
 /* global autocosts, $, ga */
 
-autocosts.userFormModule = (function (thisModule, translatedStrings, switches, servicesAvailabilityObj) {
-  var validateFormModule, commonsModule
+autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, switches, servicesAvailabilityObj) {
+  var convertDataModule, validateDataModule, commonsModule
 
   function initialize () {
     loadModuleDependencies()
@@ -21,7 +21,8 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
   }
 
   function loadModuleDependencies () {
-    validateFormModule = autocosts.userFormModule.validateFormModule
+    convertDataModule = autocosts.convertDataModule
+    validateDataModule = autocosts.validateDataModule
     commonsModule = autocosts.commonsModule
   }
 
@@ -832,9 +833,12 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
       return false
     }
 
-    // double-check with validating functions from file validateForm.js
+    // double-check with validating functions from file validateData.js
     // Standing (part1) and Running (part2) Costs
-    if (!validateFormModule.isUserDataFormPart1_Ok() || !validateFormModule.isUserDataFormPart2_Ok()) {
+    var formUserDataObj = convertDataModule.createUserDataObjectFromForm(DOMForm)
+    autocosts.main.formData = formUserDataObj
+    validateDataModule.setUserData(formUserDataObj)
+    if (!validateDataModule.isUserDataFormPart1_Ok() || !validateDataModule.isUserDataFormPart2_Ok()) {
       return false
     }
 
@@ -1066,6 +1070,7 @@ autocosts.userFormModule = (function (thisModule, translatedStrings, switches, s
 
   return thisModule
 })(autocosts.userFormModule || {},
+  document.costs_form,
   autocosts.serverInfo.translatedStrings,
   autocosts.serverInfo.switches,
   autocosts.servicesAvailabilityObj)

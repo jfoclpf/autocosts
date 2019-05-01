@@ -151,7 +151,7 @@ var autocosts = (function () {
       initialize: '/client/initialize.js',
       commons: '/client/commons.js',
       userForm: '/client/userForm.js',
-      validateForm: '/client/validateForm.js',
+      validateData: '/client/validateData.js',
       runResults: '/client/runResults.js',
       convertData: '/client/convertData.js',
       results: '/client/results.js',
@@ -287,7 +287,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       $.getScript(jsFiles.results),
       $.getScript(jsFiles.runResults),
       $.getScript(jsFiles.userForm),
-      $.getScript(jsFiles.validateForm)]
+      $.getScript(jsFiles.validateData)]
 
     if (switches.charts) {
       promisesArray.push($.getScript(jsFiles.chartjs))
@@ -344,7 +344,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       autocosts.resultsModule.runResultsModule.initialize()
 
       autocosts.userFormModule.initialize()
-      autocosts.userFormModule.validateFormModule.initialize()
+      autocosts.validateDataModule.initialize()
 
       if (switches.pdf || switches.print) {
         autocosts.resultsModule.pdfModule.initialize()

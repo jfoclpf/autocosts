@@ -38,7 +38,8 @@ autocosts.convertDataModule = (function (thisModule) {
   function createUserDataObjectFromForm (userForm) {
     var f = userForm // main user form document variable
 
-    var data = {
+    // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#userdata-class
+    var userData = {
       depreciation: {
         acquisitionMonth: f.acquisitionMonth.value,
         acquisitionYear: f.acquisitionYear.value,
@@ -48,11 +49,11 @@ autocosts.convertDataModule = (function (thisModule) {
 
       insurance: {
         amountPerPeriod: f.insuranceValue.value,
-        period: commonsModule.getTimePeriod(commonsModule.getSelectedValueOnRadioButton(f.insurancePaymentPeriod))
+        period: getTimePeriod(getSelectedValueOnFormRadioButton(f.insurancePaymentPeriod))
       },
 
       credit: {
-        creditBool: commonsModule.getSelectedValueOnRadioButton(f.AutoCreditRadioBtn),
+        creditBool: getSelectedValueOnFormRadioButton(f.AutoCreditRadioBtn),
         yesCredit: {
           borrowedAmount: f.borrowedAmount.value,
           numberInstallments: f.numberInstallments.value,
@@ -72,13 +73,13 @@ autocosts.convertDataModule = (function (thisModule) {
 
       // Form Part 2
       fuel: {
-        typeOfCalculation: commonsModule.getSelectedValueOnRadioButton(f.calc_combustiveis), // binary variable: "currency/euros" or "distance/km"
+        typeOfCalculation: getSelectedValueOnFormRadioButton(f.calc_combustiveis), // typeof string: "money" or "distance"
         currencyBased: {
           amountPerPeriod: f.combustiveis_euro.value,
-          period: commonsModule.getTimePeriod(f.combustiveis_periodo_euro.value) // month, two months, trimester, semester, year
+          period: getTimePeriod(f.combustiveis_periodo_euro.value) // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         },
         distanceBased: {
-          considerCarToJob: commonsModule.getSelectedValueOnRadioButton(f.car_job_form2), // binary variable: true or false
+          considerCarToJob: getSelectedValueOnFormRadioButton(f.car_job_form2), // typeof boolean
           carToJob: {
             daysPerWeek: f.dias_por_semana.value,
             distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
@@ -86,11 +87,11 @@ autocosts.convertDataModule = (function (thisModule) {
           },
           noCarToJob: {
             distancePerPeriod: f.km_por_mes.value,
-            period: commonsModule.getTimePeriod(f.combustivel_period_km.value), // month, two months,  trimester, semester, year
-            distanceStandardUnit: f.distance_standard_onfuel.value // km, mile or mil(10km)
+            period: getTimePeriod(f.combustivel_period_km.value), // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
+            distanceStandardUnit: f.distance_standard_onfuel.value // typeof string: "km", "mil" or "mil(10km)"
           },
           fuelEfficiency: f.fuel_efficiency.value, // fuel efficiency of the vehicle
-          fuelEfficiencyStandard: f.fuel_efficiency_standard_onfuel.value, // l/100km, km/l, mpg(US), mpg(imp)
+          fuelEfficiencyStandard: f.fuel_efficiency_standard_onfuel.value,
           fuelPrice: f.fuel_price.value // fuel price per unit volume
         }
       },
@@ -108,37 +109,37 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       tolls: {
-        calculationBasedOnDay: commonsModule.getSelectedValueOnRadioButton(f.tolls_daily_radioBtn), // true or false
+        calculationBasedOnDay: getSelectedValueOnFormRadioButton(f.tolls_daily_radioBtn), // true or false
         yesBasedOnDay: {
           amountPerDay: f.daily_expense_tolls.value,
           daysPerMonth: f.number_days_tolls.value
         },
         noBasedOnDay: {
           amountPerPeriod: f.no_daily_tolls_value.value,
-          period: commonsModule.getTimePeriod(f.tolls_period_select.value) // month, two months,  trimester, semester, year
+          period: getTimePeriod(f.tolls_period_select.value) // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         }
       },
 
       fines: {
         amountPerPeriod: f.tickets_value.value,
-        period: commonsModule.getTimePeriod(f.tickets_period_select.value) // month, two months,  trimester, semester, year
+        period: getTimePeriod(f.tickets_period_select.value) // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
       },
 
       washing: {
         amountPerPeriod: f.washing_value.value,
-        period: commonsModule.getTimePeriod(f.washing_period_select.value) // month, two months,  trimester, semester, year
+        period: getTimePeriod(f.washing_period_select.value) // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
       },
 
       // Form Part 3
       publicTransports: {
-        isOk: autocosts.userFormModule.validateFormModule.isPublicTransportsAlternativeOk(), // boolean
+        isOk: false, // to be run in sanitizeData by isPublicTransportsAlternativeOk() typeof boolean
         numberOfPeopleInFamily: f.pessoas_agregado.value,
         monthlyPassCost: f.preco_passe.value
       },
 
       income: {
-        isOk: autocosts.userFormModule.validateFormModule.isFinancialEffortOk(), // boolean if this section is correctly filled in
-        incomePeriod: commonsModule.getSelectedValueOnRadioButton(f.radio_income), // "year", "month", "week" or "hour"
+        isOk: false, // to be run in sanitizeData by isFinancialEffortOk() typeof boolean
+        incomePeriod: getSelectedValueOnFormRadioButton(f.radio_income), // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
         year: {
           amount: f.income_per_year.value
         },
@@ -158,13 +159,13 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       workingTime: {
-        isActivated: commonsModule.getSelectedValueOnRadioButton(f.radio_work_time),
+        isActivated: getSelectedValueOnFormRadioButton(f.radio_work_time),
         monthsPerYear: f.time_month_per_year.value,
         hoursPerWeek: f.time_hours_per_week.value
       },
 
       distance: {
-        considerCarToJob: commonsModule.getSelectedValueOnRadioButton(f.drive_to_work), // binary variable: true or false
+        considerCarToJob: getSelectedValueOnFormRadioButton(f.drive_to_work), // typeof boolean
         carToJob: {
           daysPerWeek: f.drive_to_work_days_per_week.value,
           distanceBetweenHomeAndJob: f.dist_home_job.value,
@@ -172,32 +173,27 @@ autocosts.convertDataModule = (function (thisModule) {
         },
         noCarToJob: {
           distancePerPeriod: f.km_per_month.value,
-          period: commonsModule.getTimePeriod(f.period_km.value),
+          period: getTimePeriod(f.period_km.value), // typeof string: "month", "twoMonths",  "trimester", "semester", "year"
           distanceStandardUnit: f.distance_standard_ondistance.value
         }
       },
 
       timeSpentInDriving: {
-        option1: {
+        carToJob: {
           minutesBetweenHomeAndJob: f.time_home_job.value,
           minutesDuringWeekend: f.time_weekend.value
         },
-        option2: {
+        noCarToJob: {
           minutesPerDay: f.min_drive_per_day.value,
           daysPerMonth: f.days_drive_per_month.value
         }
       }
     }
 
-    return data
-  }
+    // converts properties from string to number or boolean when applicale
+    convertTypeofUserDataObject(userData)
 
-  // public function
-  function createUserDataCleanObjectFromForm (userForm) {
-    var userCleanForm = createUserDataObjectFromForm(userForm)
-    // converts properties from string to number when applicale
-    sanitizeObject(userCleanForm)
-    return userCleanForm
+    return userData
   }
 
   // creates an Object from an entry of the database
@@ -210,7 +206,8 @@ autocosts.convertDataModule = (function (thisModule) {
       countryInfo = countryInfoLoc
     }
 
-    var data = {
+    // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#userdata-class
+    var userData = {
       depreciation: {
         acquisitionMonth: dbObject.acquisition_month,
         acquisitionYear: dbObject.acquisition_year,
@@ -220,11 +217,11 @@ autocosts.convertDataModule = (function (thisModule) {
 
       insurance: {
         amountPerPeriod: dbObject.insurance_value,
-        period: commonsModule.getTimePeriod(dbObject.insure_type)
+        period: getTimePeriod(dbObject.insure_type)
       },
 
       credit: {
-        creditBool: getBoleanFromDatabase(dbObject.credit), // returns type boolean: true or false
+        creditBool: dbObject.credit,
         yesCredit: {
           borrowedAmount: dbObject.credit_borrowed_amount,
           numberInstallments: dbObject.credit_number_installments,
@@ -247,10 +244,10 @@ autocosts.convertDataModule = (function (thisModule) {
         typeOfCalculation: getFuelTypeOfCalculationFromDatabase(dbObject.fuel_calculation), // "money" or "distance"
         currencyBased: {
           amountPerPeriod: dbObject.fuel_currency_based_currency_value,
-          period: commonsModule.getTimePeriod(dbObject.fuel_currency_based_periodicity)
+          period: getTimePeriod(dbObject.fuel_currency_based_periodicity)
         },
         distanceBased: {
-          considerCarToJob: getBoleanFromDatabase(dbObject.fuel_distance_based_car_to_work), // returns type boolean: true or false
+          considerCarToJob: dbObject.fuel_distance_based_car_to_work,
           carToJob: {
             daysPerWeek: dbObject.fuel_distance_based_car_to_work_number_days_week,
             distanceBetweenHomeAndJob: dbObject.fuel_distance_based_car_to_work_distance_home_work,
@@ -258,7 +255,7 @@ autocosts.convertDataModule = (function (thisModule) {
           },
           noCarToJob: {
             distancePerPeriod: dbObject.fuel_distance_based_no_car_to_work_distance,
-            period: commonsModule.getTimePeriod(dbObject.fuel_distance_based_no_car_to_fuel_period_distance),
+            period: getTimePeriod(dbObject.fuel_distance_based_no_car_to_fuel_period_distance),
             distanceStandardUnit: distanceStandardUnitFromDatabase(dbObject.fuel_distance_based_no_car_to_distance_standard_unit)
           },
           fuelEfficiency: dbObject.fuel_distance_based_fuel_efficiency,
@@ -280,25 +277,25 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       tolls: {
-        calculationBasedOnDay: getBoleanFromDatabase(dbObject.tolls_daily), // returns type boolean: true or false
+        calculationBasedOnDay: dbObject.tolls_daily, // true or false
         yesBasedOnDay: {
           amountPerDay: dbObject.tolls_daily_expense,
           daysPerMonth: dbObject.tolls_daily_number_days
         },
         noBasedOnDay: {
           amountPerPeriod: dbObject.tolls_no_daily_value,
-          period: commonsModule.getTimePeriod(dbObject.tolls_no_daily_period)
+          period: getTimePeriod(dbObject.tolls_no_daily_period)
         }
       },
 
       fines: {
         amountPerPeriod: dbObject.tickets_value,
-        period: commonsModule.getTimePeriod(dbObject.tickets_periodicity)
+        period: getTimePeriod(dbObject.tickets_periodicity)
       },
 
       washing: {
         amountPerPeriod: dbObject.washing_value,
-        period: commonsModule.getTimePeriod(dbObject.washing_periodicity)
+        period: getTimePeriod(dbObject.washing_periodicity)
       },
 
       // Form Part 3
@@ -330,13 +327,13 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       workingTime: {
-        isActivated: getBoleanFromDatabase(dbObject.work_time),
+        isActivated: dbObject.work_time,
         monthsPerYear: dbObject.work_time_month_per_year,
         hoursPerWeek: dbObject.work_time_hours_per_week
       },
 
       distance: {
-        considerCarToJob: getBoleanFromDatabase(dbObject.distance_drive_to_work), // true or false
+        considerCarToJob: dbObject.distance_drive_to_work, // true or false
         carToJob: {
           daysPerWeek: dbObject.distance_days_per_week,
           distanceBetweenHomeAndJob: dbObject.distance_home_job,
@@ -344,27 +341,27 @@ autocosts.convertDataModule = (function (thisModule) {
         },
         noCarToJob: {
           distancePerPeriod: dbObject.distance_per_month,
-          period: commonsModule.getTimePeriod(dbObject.distance_period),
+          period: getTimePeriod(dbObject.distance_period),
           distanceStandardUnit: distanceStandardUnitFromDatabase(dbObject.distance_distance_standard_unit)
         }
       },
 
       timeSpentInDriving: {
-        option1: {
+        carToJob: {
           minutesBetweenHomeAndJob: dbObject.time_spent_home_job,
           minutesDuringWeekend: dbObject.time_spent_weekend
         },
-        option2: {
+        noCarToJob: {
           minutesPerDay: dbObject.time_spent_min_drive_per_day,
           daysPerMonth: dbObject.time_spent_days_drive_per_month
         }
       }
     }
 
-    // converts properties from string to number when applicale
-    sanitizeObject(data)
+    // converts properties from string to number or boolean when applicale
+    convertTypeofUserDataObject(userData)
 
-    return data
+    return userData
   }
 
   function createDatabaseObjectFromForm (DOMform) {
@@ -465,62 +462,105 @@ autocosts.convertDataModule = (function (thisModule) {
     databaseObj.distance_distance_standard_unit = form.distance.noCarToJob.distanceStandardUnit
 
     // time spent in driving
-    databaseObj.time_spent_home_job = form.timeSpentInDriving.option1.minutesBetweenHomeAndJob
-    databaseObj.time_spent_weekend = form.timeSpentInDriving.option1.minutesDuringWeekend
-    databaseObj.time_spent_min_drive_per_day = form.timeSpentInDriving.option2.minutesPerDay
-    databaseObj.time_spent_days_drive_per_month = form.timeSpentInDriving.option2.daysPerMonth
-
-    // *************
-    // sanity checks
+    databaseObj.time_spent_home_job = form.timeSpentInDriving.carToJob.minutesBetweenHomeAndJob
+    databaseObj.time_spent_weekend = form.timeSpentInDriving.carToJob.minutesDuringWeekend
+    databaseObj.time_spent_min_drive_per_day = form.timeSpentInDriving.noCarToJob.minutesPerDay
+    databaseObj.time_spent_days_drive_per_month = form.timeSpentInDriving.noCarToJob.daysPerMonth
 
     // converts all true to 'true' and false to 'false' to store in database,
-    // because those fields are strings in dabase (it was created like that initially)
+    // because database fields are strings in dabase (it was created like that initially)
     for (var key in databaseObj) {
-      if (typeof databaseObj[key] === 'boolean') {
+      if (typeof databaseObj[key] === 'boolean' || typeof databaseObj[key] === 'number') {
         databaseObj[key] = JSON.stringify(databaseObj[key])
       }
     }
 
-    if (databaseObj.credit === 'false' || !databaseObj.credit) {
-      databaseObj.credit_borrowed_amount = null
-      databaseObj.credit_number_installments = null
-      databaseObj.credit_amount_installment = null
-      databaseObj.credit_residual_value = null
-    }
+    return databaseObj
+  }
 
-    if (databaseObj.fuel_calculation === 'currency' || databaseObj.fuel_calculation === 'euros') {
-      databaseObj.fuel_distance_based_car_to_work = null
-      databaseObj.fuel_distance_based_car_to_work_number_days_week = null
-      databaseObj.fuel_distance_based_car_to_work_distance_home_work = null
-      databaseObj.fuel_distance_based_car_to_work_distance_weekend = null
-      databaseObj.fuel_distance_based_no_car_to_work_distance = null
-      databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null
-      databaseObj.fuel_distance_based_no_car_to_distance_standard_unit = null
-      databaseObj.fuel_distance_based_fuel_efficiency = null
-      databaseObj.fuel_distance_based_fuel_efficiency_standard = null
-      databaseObj.fuel_distance_based_fuel_price = null
-    } else {
-      databaseObj.fuel_currency_based_currency_value = null
-      databaseObj.fuel_currency_based_periodicity = null
-      if (databaseObj.fuel_distance_based_car_to_work === 'true') {
-        databaseObj.fuel_distance_based_no_car_to_work_distance = null
-        databaseObj.fuel_distance_based_no_car_to_fuel_period_distance = null
+  // converts properties of Object from string to number or to boolean when applicable
+  function convertTypeofUserDataObject (userData) {
+    // applies callback function to every property of object
+    parseObjectProperties(userData, function (obj, k) {
+      if (typeof obj[k] === 'string') {
+        if (!isNaN(obj[k]) && obj[k] !== '') {
+          obj[k] = parseFloat(obj[k])
+        } else if (obj[k] === 'true' || obj[k] === 'false') {
+          obj[k] = JSON.parse(obj[k]) // convert to boolean
+        } else if (obj[k] === '') {
+          obj[k] = undefined
+        }
+      }
+    })
+
+    // recursively loops through nested object and applys parse function
+    function parseObjectProperties (obj, parse) {
+      for (var k in obj) {
+        if (typeof obj[k] === 'object' && obj[k] !== null) {
+          parseObjectProperties(obj[k], parse)
+        } else if (obj.hasOwnProperty(k)) {
+          parse(obj, k)
+        }
+      }
+    }
+  }
+
+  // for Radio Buttons on the Form
+  function getSelectedValueOnFormRadioButton (radioObj) {
+    var i
+
+    var processReturn = function (value) {
+      if (value === 'true') {
+        return true
+      } else if (value === 'false') {
+        return false
       } else {
-        databaseObj.fuel_distance_based_car_to_work_number_days_week = null
-        databaseObj.fuel_distance_based_car_to_work_distance_home_work = null
-        databaseObj.fuel_distance_based_car_to_work_distance_weekend = null
+        return value
       }
     }
 
-    if (databaseObj.tolls_daily === 'true') {
-      databaseObj.tolls_no_daily_value = null
-      databaseObj.tolls_no_daily_period = null
-    } else {
-      databaseObj.tolls_daily_expense = null
-      databaseObj.tolls_daily_number_days = null
+    if (!radioObj) {
+      return ''
     }
 
-    return databaseObj
+    var radioLength = radioObj.length
+    if (radioLength === undefined) {
+      if (radioObj.checked) {
+        return processReturn(radioObj.value)
+      }
+      return ''
+    }
+
+    for (i = 0; i < radioLength; i++) {
+      if (radioObj[i].checked) {
+        return processReturn(radioObj[i].value)
+      }
+    }
+    return ''
+  }
+
+  // this function allows broader defintion inputs from user form and
+  // backward compatibility from user old inputs on database for time periods
+  // for example if timePeriod is either 'month', 1, '1', 'monthly', 'mensal' or 'mês' => 'month'
+  function getTimePeriod (timePeriod) {
+    var timePeriodsObj = {
+      'hour': ['hourly'],
+      'week': ['weekly'],
+      'month': [1, 'monthly', 'mensal', 'mês'],
+      'twoMonths': [2, 'two_months', 'two months', '2 months', 'bimestral', 'bimestre'],
+      'trimester': [3, 'trimesterly', 'quarterly', 'trimestral'],
+      'semester': [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
+      'year': [5, 'yearly', 'anual', 'ano']
+    }
+
+    var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod
+    for (var key in timePeriodsObj) {
+      if (key === val || timePeriodsObj[key].indexOf(val) !== -1) {
+        return key
+      }
+    }
+
+    return null
   }
 
   // Gets information from database whether database has or not Public Transport data
@@ -551,6 +591,7 @@ autocosts.convertDataModule = (function (thisModule) {
       case 'km': /* old version support */
         return 'distance'
       case 'money':
+      case 'currency': /* old version support */
       case 'euros': /* old version support */
         return 'money'
       default:
@@ -578,35 +619,6 @@ autocosts.convertDataModule = (function (thisModule) {
     }
   }
 
-  // in the database the booleans were initially stored as strings
-  function getBoleanFromDatabase (bool) {
-    if (bool === 'true') {
-      return true
-    } else if (bool === 'false') {
-      return false
-    } else {
-      return undefined
-    }
-  }
-
-  // recursively loops through nested object and applys parse function
-  function parseObjectProperties (obj, parse) {
-    for (var k in obj) {
-      if (typeof obj[k] === 'object' && obj[k] !== null) {
-        parseObjectProperties(obj[k], parse)
-      } else if (obj.hasOwnProperty(k)) {
-        parse(obj, k)
-      }
-    }
-  }
-
-  // converts properties from string to number when applicale
-  function sanitizeObject (mainObj) {
-    parseObjectProperties(mainObj, function (obj, k) {
-      obj[k] = (!isNaN(obj[k]) && typeof obj[k] === 'string') ? parseFloat(obj[k]) : obj[k]
-    })
-  }
-
   // detects if a variable is defined and different from zero
   function isDef (num) {
     return isFinite(num) && num !== 0
@@ -616,7 +628,7 @@ autocosts.convertDataModule = (function (thisModule) {
 
   // own module, since it may have been defined erlier by children modules
   thisModule.initialize = initialize
-  thisModule.createUserDataCleanObjectFromForm = createUserDataCleanObjectFromForm
+  thisModule.createUserDataObjectFromForm = createUserDataObjectFromForm
   thisModule.createUserDataObjectFromDatabase = createUserDataObjectFromDatabase
   thisModule.createDatabaseObjectFromForm = createDatabaseObjectFromForm
 
