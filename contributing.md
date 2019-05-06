@@ -408,19 +408,19 @@ autocosts
    |
    |--- initializeModule
    |
-   |--- calculatorModule
-   |        |
-   |        |--- conversionsModule
+   |--- userFormModule
    |
    |--- convertDataModule
    |
    |--- validateDataModule
    |
-   |--- userFormModule
+   |--- runResultsModule
    |
-   |--- resultsModule
-            |
-            |--- runResultsModule
+   |--- calculatorModule
+   |        |
+   |        |--- conversionsModule
+   |
+   |--- showResultsModule
             |--- chartsModule
             |--- pdfModule
 
