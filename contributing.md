@@ -417,7 +417,6 @@ autocosts
    |--- runResultsModule
    |
    |--- calculatorModule
-   |        |
    |        |--- conversionsModule
    |
    |--- showResultsModule
