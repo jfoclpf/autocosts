@@ -254,7 +254,8 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
       },
       error: function (error) {
         console.error(databaseObj)
-        console.error('There was an error submitting the values into the database', error.responseText)
+        var errObj = JSON.parse(error.responseText)
+        console.error('There was an error submitting the values into the database', errObj.code, errObj.sqlMessage)
       }
     })
   }

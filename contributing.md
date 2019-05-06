@@ -83,12 +83,12 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
     dateOfAcquisition: {
       month,
       year,
-      value
+      valueOfTheVehicle
     },
     dateOfUserInput: {
       month,
       year,
-      value
+      valueOfTheVehicle
     }
   },
 

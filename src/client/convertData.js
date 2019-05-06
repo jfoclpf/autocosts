@@ -51,12 +51,12 @@ autocosts.convertDataModule = (function (thisModule) {
         dateOfAcquisition: {
           month: f.acquisitionMonth.value,
           year: f.acquisitionYear.value,
-          value: f.commercialValueAtAcquisition.value
+          valueOfTheVehicle: f.commercialValueAtAcquisition.value
         },
         dateOfUserInput: {
           month: (new Date()).getMonth() + 1, // current month (from today 1-12)
           year: (new Date()).getFullYear(), // current year (today)
-          value: f.commercialValueAtNow.value
+          valueOfTheVehicle: f.commercialValueAtNow.value
         }
       },
 
@@ -232,12 +232,12 @@ autocosts.convertDataModule = (function (thisModule) {
         dateOfAcquisition: {
           month: dbObject.acquisition_month,
           year: dbObject.acquisition_year,
-          value: dbObject.commercial_value_at_acquisition
+          valueOfTheVehicle: dbObject.commercial_value_at_acquisition
         },
         dateOfUserInput: {
           month: (new Date(dbObject.insertion_date)).getMonth() + 1, // month when the user made calculation (from today 1-12)
           year: (new Date(dbObject.insertion_date)).getFullYear(), // year when the user made calculation
-          value: dbObject.commercial_value_at_now
+          valueOfTheVehicle: dbObject.commercial_value_at_now
         }
       },
 
@@ -424,16 +424,21 @@ autocosts.convertDataModule = (function (thisModule) {
 
     var form = createUserDataObjectFromForm(DOMform)
 
+    // Do not add or remove fields in databaseObj unless you change the fields in the database.
+    // The fields on both must map with each other exactly!
+
     // get current time to know how much time the user took to fill the form
     databaseObj.time_to_fill_form = autocosts.userInfo.timeCounter.getCurrentTimeInSeconds()
-    databaseObj.client_uuid = autocosts.userInfo.uniqueUserId // get a user unique generated ID
+    databaseObj.uuid_client = autocosts.userInfo.uniqueUserId // get a user unique generated ID
     databaseObj.country = commonsModule.getCountryCode()
+    // current date equivalent to mySql NOW() function
+    databaseObj.insertion_date = new Date().toISOString().slice(0, 19).replace('T', ' ')
 
     // depreciation
-    databaseObj.acquisition_month = form.depreciation.acquisitionMonth
-    databaseObj.acquisition_year = form.depreciation.acquisitionYear
-    databaseObj.commercial_value_at_acquisition = form.depreciation.acquisitionCost
-    databaseObj.commercial_value_at_now = form.depreciation.presentValue
+    databaseObj.acquisition_month = form.depreciation.dateOfAcquisition.month
+    databaseObj.acquisition_year = form.depreciation.dateOfAcquisition.year
+    databaseObj.commercial_value_at_acquisition = form.depreciation.dateOfAcquisition.valueOfTheVehicle
+    databaseObj.commercial_value_at_now = form.depreciation.dateOfUserInput.valueOfTheVehicle
 
     // insurance
     databaseObj.insure_type = form.insurance.period
@@ -528,10 +533,12 @@ autocosts.convertDataModule = (function (thisModule) {
     databaseObj.time_spent_days_drive_per_month = form.timeSpentInDriving.noCarToJob.daysPerMonth
 
     // converts all true to 'true' and false to 'false' to store in database,
-    // because database fields are strings in dabase (it was created like that initially)
+    // because database fields are strings (it was created like that initially)
     for (var key in databaseObj) {
       if (typeof databaseObj[key] === 'boolean' || typeof databaseObj[key] === 'number') {
         databaseObj[key] = JSON.stringify(databaseObj[key])
+      } else if (!databaseObj[key]) {
+        databaseObj[key] = ''
       }
     }
 

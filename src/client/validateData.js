@@ -190,10 +190,10 @@ autocosts.validateDataModule = (function () {
     if (!isInteger(acquisitionYear) || !isInteger(yearOfUserInput) || acquisitionYear < minCarYear) {
       return false
     }
-    if (!isNumber(userData.depreciation.dateOfAcquisition.value)) {
+    if (!isNumber(userData.depreciation.dateOfAcquisition.valueOfTheVehicle)) {
       return false
     }
-    if (!isNumber(userData.depreciation.dateOfUserInput.value)) {
+    if (!isNumber(userData.depreciation.dateOfUserInput.valueOfTheVehicle)) {
       return false
     }
 
