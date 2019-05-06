@@ -17,6 +17,8 @@ autocosts.calculatorModule = (function (thisModule) {
   var inputData // input data object, obtained from user HTML form or from database entry
   var calculatedData // output object
 
+  var consoleError
+
   var consts = {
     numberOfDaysInAYear: 365.25,
     numberOfDaysInAWeek: 7,
@@ -37,6 +39,11 @@ autocosts.calculatorModule = (function (thisModule) {
 
   function initialize () {
     loadModuleDependencies()
+    if (typeof window === 'undefined') { // nodeJS
+      consoleError = require('debug')('calculator')
+    } else { // browser
+      consoleError = console.error
+    }
   }
 
   function loadModuleDependencies () {
@@ -708,7 +715,7 @@ autocosts.calculatorModule = (function (thisModule) {
       // uses input data section "working time"
 
       if (typeof inputWorkingTime.isActivated !== 'boolean') {
-        console.error(Error(errMsg))
+        consoleError(Error(errMsg))
         return
       }
 
@@ -1264,15 +1271,15 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function consoleErrorPairs () {
-    console.error(''); console.error('')
+    consoleError(''); consoleError('')
     for (var i = 0; i < arguments.length; i = i + 2) {
       if (typeof arguments[i + 1] === 'object') {
-        console.error("'" + arguments[i] + "'" + ' Object is:')
-        console.error(arguments[i + 1])
+        consoleError("'" + arguments[i] + "'" + ' Object is:')
+        consoleError(arguments[i + 1])
       } else {
-        console.error(arguments[i] + ': ' + arguments[i + 1])
+        consoleError(arguments[i] + ': ' + arguments[i + 1])
       }
-      console.error('')
+      consoleError('')
     }
   }
 
