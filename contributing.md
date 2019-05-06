@@ -436,21 +436,17 @@ File: `myModuleA.js`:
 root.myModuleA = (function (thisModule) {
 
     //dependency
-    var myModuleB;
+    var myModuleB
 
     function initialize() {
-        loadModuleDependencies();
+        loadModuleDependencies()
     }
 
     function loadModuleDependencies(){
-        myModuleB = root.myModuleB;
+        myModuleB = root.myModuleB
     }
 
     function A(){
-        ...
-    }
-
-    function B(){
         ...
     }
 
@@ -459,14 +455,13 @@ root.myModuleA = (function (thisModule) {
     }  
 
     /* === Public methods to be returned ===*/
-
     //own module, since it may have been defined erlier by children modules    
-    thisModule.initialize = initialize;
-    thisModule.C = C;
+    thisModule.initialize = initialize
+    thisModule.C = C
 
-    return thisModule;
+    return thisModule
 
-})(root.myModuleA || {});
+})(root.myModuleA || {})
 
 ```
 
@@ -479,18 +474,18 @@ root.myModuleA = root.myModuleA || {};
 root.myModuleA.mySubmoduleA1 = (function() {
 
     //dependency
-    var myModuleB;
+    var myModuleB
 
     function initialize() {
-        loadModuleDependencies();
+        loadModuleDependencies()
     }
 
     function loadModuleDependencies(){
-        myModuleB = root.myModuleB;
+        myModuleB = root.myModuleB
     }
 
     function E(){
-        myModuleB.P();
+        myModuleB.P()
         ...
     }
 
@@ -503,20 +498,19 @@ root.myModuleA.mySubmoduleA1 = (function() {
         F: F
     };
 
-})();
+})()
 ```
 
 With this structure it is possible to load all files on a fully asynchronous way, without concern on dependencies nor order of loading, that is:
 
 ```js
-
 $.when($.getScript('myModuleA.js'), $.getScript('myModuleA1.js')).then(function(){
-    root.myModuleA.initialize();
-    root.myModuleA.mySubmoduleA1.initialize();
+    root.myModuleA.initialize()
+    root.myModuleA.mySubmoduleA1.initialize()
     //now all the methods are available
-    root.myModuleA.mySubmoduleA1.F();
-    root.myModuleA.C();
-});
+    root.myModuleA.mySubmoduleA1.F()
+    root.myModuleA.C()
+})
 ```
 
 ## Flow Data structure
