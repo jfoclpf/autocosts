@@ -284,7 +284,7 @@ function getAverageCosts (calculatedDataArray) {
 // *************************************************************************************************
 // analyses the database entry and the computed calculatedData to check if user represents an outlier
 function isCalculatedDataOk (calculatedData, userData, fx) {
-  // userData
+  // userData before calculation
   if (userData.fuel.typeOfCalculation === 'distance') {
     let fuelDistanceBased = userData.fuel.distanceBased
 
@@ -330,6 +330,11 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
     }
   }
 
+  // depreciation must be positive, because classic vehicles are outliers
+  if (monthlyCosts.depreciation < 0) {
+    return false
+  }
+
   // kinetic speed and virtual/consumer speed
   if (calculatedData.drivingDistance.calculated && calculatedData.timeSpentInDriving.calculated) {
     let kineticSpeed = calculatedData.speeds.averageKineticSpeed
@@ -373,15 +378,18 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
     }
   }
 
+  // maximum allowed monthly costs per type
   if (currency === 'EUR') {
     for (let monthlyItem in monthlyCosts) {
-      if (monthlyCosts[monthlyItem] > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
+      if (monthlyCosts[monthlyItem] < 0 || monthlyCosts[monthlyItem] > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
         return false
       }
     }
   } else if (fx) {
     for (let monthlyItem in monthlyCosts) {
-      if (fx(monthlyCosts[monthlyItem]).from(currency).to('EUR') > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
+      if (monthlyCosts[monthlyItem] < 0 ||
+        fx(monthlyCosts[monthlyItem]).from(currency).to('EUR') > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
+        /* if */
         return false
       }
     }

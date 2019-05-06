@@ -4,9 +4,9 @@
 
 /* globals autocosts, $, pdfMake, Image */
 
-autocosts.resultsModule = autocosts.resultsModule || {}
-autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, selectedCountry) {
-  var resultsModule, commonsModule,
+autocosts.showResultsModule = autocosts.showResultsModule || {}
+autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, selectedCountry) {
+  var showResultsModule, commonsModule,
     isNumber // is function that is imported from commons.js
 
   var calculatedData, pdfReport, chartsInfo
@@ -17,7 +17,7 @@ autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, sele
   }
 
   function loadModuleDependencies () {
-    resultsModule = autocosts.resultsModule
+    showResultsModule = autocosts.showResultsModule
     commonsModule = autocosts.commonsModule
     isNumber = commonsModule.isNumber // function
   }
@@ -26,7 +26,7 @@ autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, sele
     calculatedData = calculatedDataIn
 
     // see modules tree at https://github.com/jfoclpf/autocosts/wiki/Modules-tree
-    chartsInfo = resultsModule.chartsModule.getChartsInfo()
+    chartsInfo = showResultsModule.chartsModule.getChartsInfo()
 
     var header = {
       text: translatedStrings.main_title,
@@ -402,7 +402,7 @@ autocosts.resultsModule.pdfModule = (function (translatedStrings, switches, sele
   }
 
   function getChartsLegend () {
-    var cc = resultsModule.getCostsColors()
+    var cc = showResultsModule.getCostsColors()
     var fontSize = 8.5
 
     var body = [

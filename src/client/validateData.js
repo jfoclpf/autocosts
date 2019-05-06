@@ -219,7 +219,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.insurance.amountPerPeriod)) {
+    if (!isNonNegativeNumber(userData.insurance.amountPerPeriod)) {
       return false
     }
 
@@ -236,16 +236,16 @@ autocosts.validateDataModule = (function () {
     }
 
     if (userData.credit.creditBool) {
-      if (!isNumber(userData.credit.yesCredit.borrowedAmount)) {
+      if (!isNonNegativeNumber(userData.credit.yesCredit.borrowedAmount)) {
         return false
       }
-      if (!isNumber(userData.credit.yesCredit.numberInstallments)) {
+      if (!isInteger(userData.credit.yesCredit.numberInstallments) || userData.credit.yesCredit.numberInstallments < 0) {
         return false
       }
-      if (!isNumber(userData.credit.yesCredit.amountInstallment)) {
+      if (!isNonNegativeNumber(userData.credit.yesCredit.amountInstallment)) {
         return false
       }
-      if (!isNumber(userData.credit.yesCredit.residualValue)) {
+      if (!isNonNegativeNumber(userData.credit.yesCredit.residualValue)) {
         return false
       }
     }
@@ -264,7 +264,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (numberOfInspections !== 0 && !isNumber(userData.inspection.averageInspectionCost)) {
+    if (numberOfInspections !== 0 && !isNonNegativeNumber(userData.inspection.averageInspectionCost)) {
       return false
     }
 
@@ -276,7 +276,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.roadTaxes.amountPerYear)) {
+    if (!isNonNegativeNumber(userData.roadTaxes.amountPerYear)) {
       return false
     }
 
@@ -298,10 +298,10 @@ autocosts.validateDataModule = (function () {
 
     switch (fuel.typeOfCalculation) {
       case 'distance': /* fuel calculations made considering distance travelled by month */
-        if (!isNumber(fuel.distanceBased.fuelEfficiency)) {
+        if (!isNonNegativeNumber(fuel.distanceBased.fuelEfficiency)) {
           return false
         }
-        if (!isNumber(fuel.distanceBased.fuelPrice)) {
+        if (!isNumber(fuel.distanceBased.fuelPrice) || fuel.distanceBased.fuelPrice < 0) {
           return false
         }
         if (typeof fuel.distanceBased.fuelEfficiencyStandard !== 'string' || !fuel.distanceBased.fuelEfficiencyStandard) {
@@ -318,14 +318,16 @@ autocosts.validateDataModule = (function () {
           if (!isInteger(daysPerWeek) || daysPerWeek <= 0 || daysPerWeek > 7) {
             return false
           }
-          if (!isNumber(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)) {
+          isNonNegativeNumber()
+
+          if (!isNonNegativeNumber(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)) {
             return false
           }
-          if (!isNumber(fuel.distanceBased.carToJob.distanceDuringWeekends)) {
+          if (!isNonNegativeNumber(fuel.distanceBased.carToJob.distanceDuringWeekends)) {
             return false
           }
         } else {
-          if (!isNumber(fuel.distanceBased.noCarToJob.distancePerPeriod)) {
+          if (!isNonNegativeNumber(fuel.distanceBased.noCarToJob.distancePerPeriod)) {
             return false
           }
           if (!isTimePeriodOk(fuel.distanceBased.noCarToJob.period)) {
@@ -338,7 +340,7 @@ autocosts.validateDataModule = (function () {
         break
 
       case 'money': /* fuel costs based on data input money per period of time */
-        if (!isNumber(fuel.currencyBased.amountPerPeriod)) {
+        if (!isNonNegativeNumber(fuel.currencyBased.amountPerPeriod)) {
           return false
         }
         if (!isTimePeriodOk(fuel.currencyBased.period)) {
@@ -358,7 +360,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.maintenance.amountPerYear)) {
+    if (!isNonNegativeNumber(userData.maintenance.amountPerYear)) {
       return false
     }
 
@@ -370,7 +372,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.repairsImprovements.amountPerYear)) {
+    if (!isNonNegativeNumber(userData.repairsImprovements.amountPerYear)) {
       return false
     }
 
@@ -382,7 +384,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.parking.amountPerMonth)) {
+    if (!isNonNegativeNumber(userData.parking.amountPerMonth)) {
       return false
     }
 
@@ -402,7 +404,7 @@ autocosts.validateDataModule = (function () {
 
     /* if tolls costs are calculated on a daily basis */
     if (tolls.calculationBasedOnDay) {
-      if (!isNumber(tolls.yesBasedOnDay.amountPerDay)) {
+      if (!isNonNegativeNumber(tolls.yesBasedOnDay.amountPerDay)) {
         return false
       }
       var tollsDaysPerMonth = tolls.yesBasedOnDay.daysPerMonth
@@ -410,7 +412,7 @@ autocosts.validateDataModule = (function () {
         return false
       }
     } else {
-      if (!isNumber(tolls.noBasedOnDay.amountPerPeriod)) {
+      if (!isNonNegativeNumber(tolls.noBasedOnDay.amountPerPeriod)) {
         return false
       }
       if (!isTimePeriodOk(tolls.noBasedOnDay.period)) {
@@ -426,7 +428,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.fines.amountPerPeriod)) {
+    if (!isNonNegativeNumber(userData.fines.amountPerPeriod)) {
       return false
     }
     if (!isTimePeriodOk(userData.fines.period)) {
@@ -441,7 +443,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (!isNumber(userData.washing.amountPerPeriod)) {
+    if (!isNonNegativeNumber(userData.washing.amountPerPeriod)) {
       return false
     }
     if (!isTimePeriodOk(userData.washing.period)) {
@@ -461,11 +463,11 @@ autocosts.validateDataModule = (function () {
     var numberOfPeopleInFamily = userData.publicTransports.numberOfPeopleInFamily
     var monthlyPassCost = userData.publicTransports.monthlyPassCost
 
-    if (!isInteger(numberOfPeopleInFamily) || parseFloat(numberOfPeopleInFamily) <= 0) {
+    if (!isInteger(numberOfPeopleInFamily) || numberOfPeopleInFamily <= 0) {
       return false
     }
 
-    if (!isNumber(monthlyPassCost) || monthlyPassCost < 0) {
+    if (!isNonNegativeNumber(monthlyPassCost)) {
       return false
     }
 
@@ -587,15 +589,15 @@ autocosts.validateDataModule = (function () {
         if (!isNumber(distance.carToJob.daysPerWeek) || distance.carToJob.daysPerWeek <= 0 || distance.carToJob.daysPerWeek > 7) {
           return false
         }
-        if (!isNumber(distance.carToJob.distanceBetweenHomeAndJob) || distance.carToJob.distanceBetweenHomeAndJob < 0) {
+        if (!isNonNegativeNumber(distance.carToJob.distanceBetweenHomeAndJob)) {
           return false
         }
-        if (!isNumber(distance.carToJob.distanceDuringWeekends) || distance.carToJob.distanceDuringWeekends < 0) {
+        if (!isNonNegativeNumber(distance.carToJob.distanceDuringWeekends)) {
           return false
         }
       } else {
         /* noCarToJob */
-        if (!isNumber(distance.noCarToJob.distancePerPeriod) || distance.noCarToJob.distancePerPeriod < 0) {
+        if (!isNonNegativeNumber(distance.noCarToJob.distancePerPeriod)) {
           return false
         }
         if (!isTimePeriodOk(distance.noCarToJob.period)) {
@@ -635,14 +637,14 @@ autocosts.validateDataModule = (function () {
     }
 
     if (distanceBasedOnDrivingToJob) {
-      if (!isNumber(timeSpentInDriving.carToJob.minutesBetweenHomeAndJob)) {
+      if (!isNonNegativeNumber(timeSpentInDriving.carToJob.minutesBetweenHomeAndJob)) {
         return false
       }
-      if (!isNumber(timeSpentInDriving.carToJob.minutesDuringWeekend)) {
+      if (!isNonNegativeNumber(timeSpentInDriving.carToJob.minutesDuringWeekend)) {
         return false
       }
     } else {
-      if (!isNumber(timeSpentInDriving.noCarToJob.minutesPerDay)) {
+      if (!isNonNegativeNumber(timeSpentInDriving.noCarToJob.minutesPerDay)) {
         return false
       }
       var daysDrivePerMonth = timeSpentInDriving.noCarToJob.daysPerMonth
@@ -673,6 +675,11 @@ autocosts.validateDataModule = (function () {
   // check if number is integer
   function isInteger (n) {
     return isNumber(n) && (n === parseInt(n, 10))
+  }
+
+  // check if number is valid and greater or equal zero
+  function isNonNegativeNumber (n) {
+    return isNumber(n) && n >= 0
   }
 
   // this function is very important and checks if number is a FINITE VALID NUMBER
