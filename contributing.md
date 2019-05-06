@@ -391,7 +391,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) returns an o
 
 ## Modules
 
-![Front-end client module architecture](docs/flowchart.jpg)
+![Front-end client module architecture](docs/moduleArchitecture.jpg)
 
 <a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">Javscript modules should be used</a>. This approach lets us decide what variables/methods we want to keep private (e.g. myGrades) and what variables/methods we want to expose by putting them in the return statement (e.g. average & failing).
 
