@@ -12,9 +12,9 @@
 
 /* global autocosts, $, Chart */
 
-autocosts.resultsModule = autocosts.resultsModule || {}
-autocosts.resultsModule.chartsModule = (function (translatedStrings, switches) {
-  var resultsModule
+autocosts.showResultsModule = autocosts.showResultsModule || {}
+autocosts.showResultsModule.chartsModule = (function (translatedStrings, switches) {
+  var showResultsModule
 
   var calculatedData
   var chartsDrawnPromisesObj = {}
@@ -58,7 +58,7 @@ autocosts.resultsModule.chartsModule = (function (translatedStrings, switches) {
   }
 
   function loadModuleDependencies () {
-    resultsModule = autocosts.resultsModule
+    showResultsModule = autocosts.showResultsModule
   }
 
   function drawDoughnutFinancialEffort () {
@@ -164,7 +164,7 @@ autocosts.resultsModule.chartsModule = (function (translatedStrings, switches) {
       labels[i] = formatLabel(labels[i], 16)
     }
 
-    var cc = resultsModule.getCostsColors()
+    var cc = showResultsModule.getCostsColors()
 
     var dataset = [{
       data: [
@@ -306,7 +306,7 @@ autocosts.resultsModule.chartsModule = (function (translatedStrings, switches) {
       translatedStrings.washing
     ]
 
-    var cc = resultsModule.getCostsColors()
+    var cc = showResultsModule.getCostsColors()
 
     var dataset = [{
       data: [

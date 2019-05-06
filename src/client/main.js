@@ -41,6 +41,7 @@ var autocosts = (function () {
       statisticsJpgTablesDir: undefined // path of statistical jpg tables
     },
     serverInfo: {
+      release: undefined, // dev or prod
       switches: undefined, // GLOBAL switches Object, got from server configuration
       selectedCountry: undefined, // Current Country Code
       countryListObj: undefined, // List of countries in a Javascript Object
@@ -90,6 +91,7 @@ var autocosts = (function () {
     var globalVariables = document.getElementById('global_variables')
 
     // information obtained from the server
+    mainVariables.serverInfo.release = globalVariables.dataset.release
     mainVariables.serverInfo.selectedCountry = globalVariables.dataset.country
     mainVariables.serverInfo.countryListObj = JSON.parse(decodeURI(globalVariables.dataset.country_list))
     mainVariables.serverInfo.countriesStandards = JSON.parse(decodeURI(globalVariables.dataset.countries_standards))
@@ -134,7 +136,7 @@ var autocosts = (function () {
   (function () {
     var globalVariables = document.getElementById('global_variables')
     var jsfilesDefinedByServer = JSON.parse(decodeURI(globalVariables.dataset.js_files))
-    /* var recaptchaFunction = "autocosts.resultsModule.runResultsModule.recaptchaCallback"; */
+    /* var recaptchaFunction = "autocosts.showResultsModule.recaptchaCallback"; */
 
     mainVariables.paths.jsFiles = {
       google: {
@@ -154,7 +156,7 @@ var autocosts = (function () {
       validateData: '/client/validateData.js',
       runResults: '/client/runResults.js',
       convertData: '/client/convertData.js',
-      results: '/client/results.js',
+      showResults: '/client/showResults.js',
 
       jQuerySidebar: '/client/jquery/jquery.sidebar.min.js',
       jQueryColor: '/client/jquery/jquery.color.min.js',
@@ -283,7 +285,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       $.getScript(jsFiles.conversions),
       $.getScript(jsFiles.smartAppBanner),
       $.getScript(jsFiles.convertData),
-      $.getScript(jsFiles.results),
+      $.getScript(jsFiles.showResults),
       $.getScript(jsFiles.runResults),
       $.getScript(jsFiles.userForm),
       $.getScript(jsFiles.validateData)]
@@ -336,14 +338,14 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       autocosts.calculatorModule.initialize()
       autocosts.convertDataModule.initialize()
 
-      autocosts.resultsModule.initialize()
-      autocosts.resultsModule.runResultsModule.initialize()
+      autocosts.showResultsModule.initialize()
+      autocosts.runResultsModule.initialize()
 
       autocosts.userFormModule.initialize()
       autocosts.validateDataModule.initialize()
 
       if (switches.pdf || switches.print) {
-        autocosts.resultsModule.pdfModule.initialize()
+        autocosts.showResultsModule.pdfModule.initialize()
       }
 
       if (switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics) {
