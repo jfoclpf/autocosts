@@ -155,7 +155,6 @@ var autocosts = (function () {
       runResults: '/client/runResults.js',
       convertData: '/client/convertData.js',
       results: '/client/results.js',
-      database: '/client/database.js',
 
       jQuerySidebar: '/client/jquery/jquery.sidebar.min.js',
       jQueryColor: '/client/jquery/jquery.color.min.js',
@@ -293,9 +292,6 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       promisesArray.push($.getScript(jsFiles.chartjs))
       promisesArray.push($.getScript(jsFiles.charts))
     }
-    if (switches.database) {
-      promisesArray.push($.getScript(jsFiles.database))
-    }
     if (switches.pdf || switches.print) {
       promisesArray.push(getPdfJsFiles())
     }
@@ -348,10 +344,6 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
 
       if (switches.pdf || switches.print) {
         autocosts.resultsModule.pdfModule.initialize()
-      }
-
-      if (switches.database) {
-        autocosts.databaseModule.initialize()
       }
 
       if (switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics) {

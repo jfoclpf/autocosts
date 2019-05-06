@@ -202,13 +202,13 @@
                 <span>{{{costs}}}</span>
             </div>
             <div class="total-item">
-                <h5>{{{run_cp_dist}}}</h5>
-                <span class="costs_perUnitDistance_runningCosts currency toFixed2"></span>
+                <h5>{{{capitalizeFirstLetter running_costs}}} {{{word_per}}} {{{toLowerCase distance}}}</h5>
+                <span class="costs_perUnitDistance_runningCosts currency_per_distance toFixed2"></span>
             </div>
 
             <div class="total-item">
-                <h5>{{{total_cp_dist}}}</h5>
-                <span class="costs_perUnitDistance_totalCosts currency toFixed2"></span>
+                <h5>{{{capitalizeFirstLetter in_total}}} {{{word_per}}} {{{toLowerCase distance}}}</h5>
+                <span class="costs_perUnitDistance_totalCosts currency_per_distance toFixed2"></span>
             </div>
 
             <div class="total-item">
@@ -377,4 +377,3 @@
     </div>
 
 </section>
-

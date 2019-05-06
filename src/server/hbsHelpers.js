@@ -112,6 +112,14 @@ module.exports = {
     }
   },
 
+  toLowerCase: function (string) {
+    return string.toLowerCase()
+  },
+
+  capitalizeFirstLetter: function (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  },
+
   get2letterLangCode: function () {
     return this.pageData.languageCode.substr(0, 2)
   },

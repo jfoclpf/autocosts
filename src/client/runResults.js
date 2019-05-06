@@ -15,7 +15,7 @@
 autocosts.resultsModule = autocosts.resultsModule || {}
 autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings, switches, selectedCountry, booleans, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
-  var resultsModule, calculatorModule, userFormModule, convertDataModule, databaseModule
+  var resultsModule, calculatorModule, userFormModule, convertDataModule
   // subModule of this module
   var runButton
 
@@ -34,7 +34,6 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     calculatorModule = autocosts.calculatorModule
     userFormModule = autocosts.userFormModule
     convertDataModule = autocosts.convertDataModule
-    databaseModule = switches.database ? autocosts.databaseModule : {}
   }
 
   function loadRunButtonHandler () {
@@ -108,7 +107,8 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
               }
               // submits data to database if no XX version
               if (switches.database) {
-                databaseModule.submitResultsToDatabase()
+                var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
+                submitDataToDB(databaseObj)
               }
             }
           } else {
@@ -129,7 +129,8 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
            selectedCountry !== 'XX' &&
            switches.database &&
            booleans.notLocalhost) {
-        databaseModule.submitResultsToDatabase() // submits data to database if no test version nor localhost
+        var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
+        submitDataToDB(databaseObj)
       }
 
       runButton.set('show-normal')
@@ -243,6 +244,27 @@ autocosts.resultsModule.runResultsModule = (function (DOMForm, translatedStrings
     }
 
     resultsModule.showResults(calculatedData, form)
+  }
+
+  function submitDataToDB (databaseObj) {
+    if (!switches.database) {
+      return
+    }
+
+    $.ajax({
+      url: 'submitUserInput',
+      type: 'POST',
+      data: {
+        databaseObj: databaseObj
+      },
+      success: function (data) {
+        console.log('Values inserted into database with success. Returned: ', data)
+        console.log('User took' + ' ' + databaseObj.time_to_fill_form + ' ' + 'seconds to fill the form')
+      },
+      error: function (error) {
+        console.error('There was an error submitting the values into the database', error)
+      }
+    })
   }
 
   return {

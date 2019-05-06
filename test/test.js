@@ -23,10 +23,12 @@ commons.setRelease('test')
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
-const statsFunctions = require(fileNames.build.statsFunctions)
 const convertData = require(fileNames.project['convertData.js'])
+const validateData = require(fileNames.project['validateData.js'])
 const calculator = require(fileNames.project['calculator.js'])
 convertData.initialize()
+validateData.initialize()
+calculator.initialize()
 
 testCalculatorFunction(function (error) {
   if (error) {
@@ -79,7 +81,7 @@ function testCalculatorFunction (callback) {
     )
 
     for (let i = 0; i < numberofInputs; i++) {
-      let countryInfo, structuredUserInput, calculatedData
+      let countryInfo, userData, calculatedData
       Bar.tick()
 
       try {
@@ -94,16 +96,19 @@ function testCalculatorFunction (callback) {
             fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
           }
 
-          if (statsFunctions.isUserDataEntryOk(usersInput[i], countryInfo)) {
-            structuredUserInput = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
-            calculatedData = calculator.calculateCosts(structuredUserInput, countryInfo)
+          userData = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
+          validateData.setUserData(userData)
+          let isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
+
+          if (isUserDataEntryOk) {
+            calculatedData = calculator.calculateCosts(userData)
           }
         }
       } catch (error) {
         console.error('\n\nError on i:' + i, '\n',
           '\n\ncountryObject: ', countryInfo,
           '\n\nusersInput: ', usersInput[i],
-          '\n\nstructuredUserInput: ', JSON.stringify(structuredUserInput, undefined, 2),
+          '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
           '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
 
         callback(Error(error))
