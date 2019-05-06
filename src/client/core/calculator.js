@@ -279,7 +279,7 @@ autocosts.calculatorModule = (function (thisModule) {
   }
 
   function calculateMonthlyDepreciation (depreciation, ageInMonths) {
-    return (depreciation.dateOfAcquisition.value - depreciation.dateOfUserInput.value) / ageInMonths
+    return (depreciation.dateOfAcquisition.valueOfTheVehicle - depreciation.dateOfUserInput.valueOfTheVehicle) / ageInMonths
   }
 
   function calculateInsuranceMonthlyValue (insurance) {
