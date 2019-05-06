@@ -73,72 +73,80 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     window.history.pushState('', document.title, window.location.pathname + window.location.search)
   }
 
+  function getCurrency () {
+    return serverInfo.translatedStrings.curr_code
+  }
+
+  function getCountryCode () {
+    return serverInfo.selectedCountry
+  }
+
   // Get the applicable standard units
   // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#standards
-  function getStandard (setting, countryInfo) {
+  function getStandard (standard, databaseEntryInfo) {
     var fuelEfficiencyStandardOption, distanceStandardOption, fuelPriceVolumeStandard
-    if (countryInfo) { /* used by statistical functions, such as statsFunctions.js (on back-end) */
-      fuelEfficiencyStandardOption = countryInfo.fuel_efficiency_std
-      distanceStandardOption = countryInfo.distance_std
-      fuelPriceVolumeStandard = countryInfo.fuel_price_volume_std
-    } else { /* used by the browser (on front-end) */
+
+    if (databaseEntryInfo) { /* used by statistical functions with nodeJS, such as statsFunctions.js (on back-end) */
+      if (databaseEntryInfo.standard) {
+        /* if the specific standard is available in database */
+        return mapUnit(standard, databaseEntryInfo.standard)
+      } else {
+        /* use standards applicable for the country */
+        fuelEfficiencyStandardOption = databaseEntryInfo.countryInfo.fuel_efficiency_std
+        distanceStandardOption = databaseEntryInfo.countryInfo.distance_std
+        fuelPriceVolumeStandard = databaseEntryInfo.countryInfo.fuel_price_volume_std
+      }
+    } else {
+      /* used by the browser (on front-end) */
       fuelEfficiencyStandardOption = serverInfo.translatedStrings.fuel_efficiency_std_option
       distanceStandardOption = serverInfo.translatedStrings.distance_std_option
       fuelPriceVolumeStandard = serverInfo.translatedStrings.fuel_price_volume_std
     }
-    var errMsg = 'Error on getSettingsStringFor'
 
-    switch (setting) {
-      case 'fuelEfficiency':
-        switch (fuelEfficiencyStandardOption) {
-          case 1:
-            return 'ltr/100km'
-          case 2:
-            return 'km/ltr'
-          case 3:
-            return 'mpg(imp)'
-          case 4:
-            return 'mpg(US)'
-          case 5:
-            return 'ltr/mil(10km)'
-          case 6:
-            return 'mil(10km)/ltr'
-          case 7:
-            return 'km/gal(US)'
-          default:
-            console.error(errMsg + ': fuelEfficiency')
-            return 'error'
+    // this dictionary is not a language dictionary, it is merely for backward
+    // and broad function input compatibility and to encompass user old inputs in databases
+    var dictionary = {
+      distance: {
+        'km': [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
+        'mi': [2, 'mi', 'mile', 'miles'],
+        'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
+      },
+      fuelPriceVolume: {
+        'ltr': [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
+        'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
+        'gal(US)': [3, 'US gallon', 'US gal'],
+        'kWh': [4, 'KWH']
+      },
+      fuelEfficiency: {
+        'l/100km': [1, 'ltr/100km'],
+        'km/l': [2, 'km/ltr'],
+        'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
+        'mpg(US)': [4, 'US mpg'],
+        'ltr/mil(10km)': [5, 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
+        'mil(10km)/ltr': [6, 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
+        'km/gal(US)': [7, 'km/USGalon']
+      }
+    }
+
+    function mapUnit (concept, value) {
+      var val = !isNaN(value) ? parseInt(value, 10) : value
+      for (var key in dictionary[concept]) {
+        if (key === val || dictionary[concept][key].indexOf(val) !== -1) {
+          return key
         }
-      /* falls through */ // avoid jshint warnings, for respecting JS standard as a `break` here would be unreachable
+      }
+      throw Error('Uknown value "' + value + '" for concept "' + concept + '". Check the variable dictionary.\n')
+    }
+
+    switch (standard) {
       case 'distance':
-        switch (distanceStandardOption) {
-          case 1:
-            return 'km'
-          case 2:
-            return 'mi'
-          case 3:
-            return 'mil(10km)'
-          default:
-            console.error(errMsg + ': distance')
-            return 'error'
-        }
-      /* falls through */
+        return mapUnit('distance', distanceStandardOption)
       case 'fuelPriceVolume':
-        switch (fuelPriceVolumeStandard) {
-          case 1:
-            return 'ltr'
-          case 2:
-            return 'gal(UK)'
-          case 3:
-            return 'gal(US)'
-          default:
-            console.error(errMsg + ': fuelPriceVolume')
-            return 'error'
-            /* falls through */
-        }
-      /* falls through */
+        return mapUnit('fuelPriceVolume', fuelPriceVolumeStandard)
+      case 'fuelEfficiency':
+        return mapUnit('fuelEfficiency', fuelEfficiencyStandardOption)
       default:
-        throw errMsg
+        throw Error('Invalid standard:' + standard)
     }
   }
 
@@ -198,6 +206,8 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
   thisModule.getMobileOperatingSystem = getMobileOperatingSystem
   thisModule.isMobile = isMobile
   thisModule.removeHashFromUrl = removeHashFromUrl
+  thisModule.getCurrency = getCurrency
+  thisModule.getCountryCode = getCountryCode
   thisModule.getStandard = getStandard
   thisModule.flatten = flatten
   thisModule.isNumber = isNumber

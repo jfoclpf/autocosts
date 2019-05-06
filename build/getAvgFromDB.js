@@ -62,18 +62,23 @@ isOnline().then(function (online) {
     }
 
     let objectWithCalculatedAverages = flatten(calculator.CreateCalculatedDataObj(), { delimiter: '_' })
-    delete objectWithCalculatedAverages.countryCode
 
-    // the last properties named "calculated" in the object chain are booleans
     for (let averageItem of Object.keys(objectWithCalculatedAverages)) {
-      if (averageItem.endsWith('_calculated')) {
-        objectWithCalculatedAverages[averageItem] = 'boolean'
+      // if Template has already the property, use the one from template
+      if (AVG_DB_TEMPLATE.hasOwnProperty(averageItem)) {
+        objectWithCalculatedAverages[averageItem] = AVG_DB_TEMPLATE[averageItem]
       } else {
-        objectWithCalculatedAverages[averageItem] = 'float'
+        // the last properties named "calculated" in the object chain are booleans
+        if (averageItem.endsWith('_calculated')) {
+          objectWithCalculatedAverages[averageItem] = 'boolean'
+        } else {
+          objectWithCalculatedAverages[averageItem] = 'float'
+        }
       }
     }
 
-    AVG_DB_TEMPLATE = Object.assign(AVG_DB_TEMPLATE, objectWithCalculatedAverages) // concatenates objects
+    // concatenates objects
+    AVG_DB_TEMPLATE = Object.assign(AVG_DB_TEMPLATE, objectWithCalculatedAverages)
     debug(AVG_DB_TEMPLATE)
   }())
 
@@ -399,6 +404,7 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
 
   var flattenStatisticsResults = flatten(statisticsResults, { delimiter: '_' })
   delete flattenStatisticsResults.countryCode
+  delete flattenStatisticsResults.currency
   delete flattenStatisticsResults.validUsers
 
   // currency conversion to EUR
@@ -409,7 +415,8 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
   if (tableParameter === 'monthly_costs_normalized') {
     for (let costItem of Object.keys(flattenStatisticsResults)) {
       if (costItem.startsWith('costs_') && costItem in flattenStatisticsResults &&
-                      isFinite(flattenStatisticsResults[costItem])) {
+        isFinite(flattenStatisticsResults[costItem])) {
+        /* if */
         flattenStatisticsResults[costItem] = fx(flattenStatisticsResults[costItem]).from(currency).to('EUR')
       }
     }
@@ -490,7 +497,7 @@ function insertCalculatedDataIntoTable (query, table, callback) {
   db.query(query, function (err, results, fields) {
     if (err) {
       console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').error)
-      console.error(sqlFormatter.format(err.sql))
+      console.error(addLinesToStr(sqlFormatter.format(err.sql)))
       callback(Error(err))
     } else {
       debug('All new data successfully added into table: ', table)
@@ -551,4 +558,15 @@ function consoleLogTheFinalAverages (countries) {
             ' | ' + ('            ' + (countries[i].validUsers / countries[i].totalUsers * 100).toFixed(1) + '%').slice(-11) +
             ' | ' + ('               ' + (countries[i].validUsers / totalValidUsers * 100).toFixed(1) + '%').slice(-14))
   }
+}
+
+// for debug purposes. On a big string of code with many breaklines,
+// adds after a breakline, the correspondig line number
+// from "abc\ndef\nghi" => "1: abc\n 2: def\n 3: ghi"
+function addLinesToStr (str) {
+  var arr = str.split('\n')
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = (i + 1).toString().padStart(4, ' ') + ':  ' + arr[i] + '\n'
+  }
+  return arr.join('')
 }

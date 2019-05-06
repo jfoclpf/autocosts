@@ -25,10 +25,10 @@ autocosts.calculatorModule.conversionsModule = (function () {
   var dictionary = {
     distance: {
       'km': [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
-      'mile': [2, 'mi', 'miles'],
+      'mi': [2, 'mi', 'mile', 'miles'],
       'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
     },
-    fuelAmount: {
+    fuelPriceVolume: {
       'ltr': [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
       'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
       'gal(US)': [3, 'US gallon', 'US gal'],
@@ -91,7 +91,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
       throw Error('Error on convertFuelPriceToLitre, fuelPrice is not a number: ' + fuelPrice)
     }
 
-    switch (mapUnit('fuelAmount', fuelPriceVolumeUnit)) {
+    switch (mapUnit('fuelPriceVolume', fuelPriceVolumeUnit)) {
       case 'ltr':
         return fuelPrice // CURRENCY_unit/litre to CURRENCY_unit/litre
       case 'gal(imp)':
@@ -114,7 +114,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     switch (mapUnit('distance', distanceUnitOption)) {
       case 'km':
         return distance
-      case 'mile':
+      case 'mi':
         return distance * conversionConstants.KM_TO_MILES // miles to km
       case 'mil(10km)':
         return distance * conversionConstants.KM_TO_MIL // mil(10km) to km
@@ -134,7 +134,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     switch (mapUnit('distance', distanceUnitOption)) {
       case 'km':
         return distance
-      case 'mile':
+      case 'mi':
         return distance / conversionConstants.KM_TO_MILES // km to miles
       case 'mil(10km)':
         return distance / conversionConstants.KM_TO_MIL // km to mil(10km)
@@ -143,12 +143,19 @@ autocosts.calculatorModule.conversionsModule = (function () {
     }
   }
 
+  // convert distance from standard unitFrom to sandard unitTo
+  function convertDistanceFromTo (distance, unitFrom, unitTo) {
+    var distanceInKm = convertDistanceToKm(distance, unitFrom)
+    return convertDistanceFromKm(distanceInKm, unitTo)
+  }
+
   return {
     mapUnit: mapUnit,
     convertFuelEfficiencyToL100km: convertFuelEfficiencyToL100km,
     convertFuelPriceToLitre: convertFuelPriceToLitre,
     convertDistanceToKm: convertDistanceToKm,
-    convertDistanceFromKm: convertDistanceFromKm
+    convertDistanceFromKm: convertDistanceFromKm,
+    convertDistanceFromTo: convertDistanceFromTo
   }
 })()
 

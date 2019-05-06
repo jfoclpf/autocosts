@@ -4,10 +4,12 @@ const commons = require(path.join(__dirname, '..', 'commons'))
 const fileNames = commons.getFileNames()
 
 const convertData = require(fileNames.project['convertData.js'])
+const validateData = require(fileNames.project['validateData.js'])
 const conversions = require(fileNames.project['conversions.js'])
 const calculator = require(fileNames.project['calculator.js'])
-calculator.initialize()
 convertData.initialize()
+validateData.initialize()
+calculator.initialize()
 
 // statistics outlier removal constants
 var statsConstants = {
@@ -71,27 +73,34 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
 
     for (var i = 0; i < userIds.length; i++) {
       for (var j = 0, n = 0; j < countryData.length; j++) {
-        if (countryData[j].uuid_client === userIds[i].uuid_client) {
+        if (countryData[j].uuid_client && (countryData[j].uuid_client === userIds[i].uuid_client)) {
           // checks if the entry is ok
           // and if it is an input spam/bot
           // (the time to fill the form for the first input mus be greater than a time value)
           // console.log("(i,j)=("+i+","+j+")"); console.log(countryData[j]);console.log(countryInfo);
 
-          let wasEnoughTimeFillingTheForm = countryData[j].time_to_fill_form > statsConstants.MIN_TIME_TO_FILL_FORM
+          /* check if relevant information is on database user entry */
+          let isUserDataEntryOk = countryData[j].time_to_fill_form && countryData[j].country
 
-          if (isUserDataEntryOk(countryData[j], countryInfo) &&
-                       /* just checks if was enough time, on the first calculation from the same user */
-                       ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
-          ) {
+          /* checks if was enough time, on the first calculation from the same user */
+          let wasEnoughTimeFillingTheForm = parseFloat(countryData[j].time_to_fill_form) > statsConstants.MIN_TIME_TO_FILL_FORM
+          isUserDataEntryOk = isUserDataEntryOk && ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
+
+          if (isUserDataEntryOk) {
             let userData = convertData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
-            let calculatedData = calculator.calculateCosts(userData, countryInfo)
-            // console.log("(i,j)=("+i+","+j+")");console.log(countryInfo);console.log(calculatedData);
+            validateData.setUserData(userData)
+            isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
 
-            // checks if the calculatedData is an outlier
-            if (isCalculatedDataOk(calculatedData, countryInfo, fx)) {
-              // console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);
-              temp_j.push(calculatedData)
-              n++
+            if (isUserDataEntryOk) {
+              let calculatedData = calculator.calculateCosts(userData)
+              // console.log("(i,j)=("+i+","+j+")");console.log(countryInfo);console.log(calculatedData);
+
+              // checks if the calculatedData is an outlier
+              if (isCalculatedDataOk(calculatedData, userData, fx)) {
+                // console.log("i:"+i+"; j:"+j+"; n:"+n+"; time_to_fill_form:"+countryData[j].time_to_fill_form);
+                temp_j.push(calculatedData)
+                n++
+              }
             }
           }
         }
@@ -272,208 +281,48 @@ function getAverageCosts (calculatedDataArray) {
   return averageCalculatedData
 }
 
-//* *********************************************************************
-//* *********************************************************************
-// checks whether the database entry is valid
-function isUserDataEntryOk (dbEntry, countryObj) {
-  if (!dbEntry.time_to_fill_form || !dbEntry.uuid_client || !dbEntry.country) {
-    return false
-  }
+// *************************************************************************************************
+// analyses the database entry and the computed calculatedData to check if user represents an outlier
+function isCalculatedDataOk (calculatedData, userData, fx) {
+  // userData
+  if (userData.fuel.typeOfCalculation === 'distance') {
+    let fuelDistanceBased = userData.fuel.distanceBased
 
-  var today = new Date()
-  var acquisitionDate = new Date(dbEntry.acquisition_year, dbEntry.acquisition_month - 1)
-  var ageOfCarInMonths = calculator.differenceBetweenDates(acquisitionDate, today)
-
-  if (dbEntry.acquisition_year && dbEntry.acquisition_month) {
-    if (isNaN(ageOfCarInMonths) || ageOfCarInMonths <= 0 ||
-      ageOfCarInMonths > statsConstants.MAX_CAR_AGE_MONTHS) {
+    if (conversions.convertFuelEfficiencyToL100km(
+      fuelDistanceBased.fuelEfficiency,
+      fuelDistanceBased.fuelEfficiencyStandard) >
+      statsConstants.MAX_FUEL_EFF_L100KM) {
       return false
     }
-  } else {
-    return false
-  }
 
-  // depreciation must be positive
-  if ((isNaN(dbEntry.commercial_value_at_acquisition) || isNaN(dbEntry.commercial_value_at_now)) ||
-        (Number(dbEntry.commercial_value_at_acquisition) < Number(dbEntry.commercial_value_at_now))) {
-    return false
-  }
-
-  // insurance
-  if (!dbEntry.insure_type || isNaN(dbEntry.insurance_value)) {
-    return false
-  }
-
-  // credit
-  if (dbEntry.credit === 'true' && (isNaN(dbEntry.credit_number_installments) ||
-                                     isNaN(dbEntry.credit_amount_installment) ||
-                                     isNaN(dbEntry.credit_residual_value) ||
-                                     isNaN(dbEntry.credit_borrowed_amount))) {
-    return false
-  }
-
-  // inspection
-  if (isNaN(dbEntry.inspection_number_inspections) || isNaN(dbEntry.inspection_average_inspection_cost)) {
-    return false
-  }
-
-  // car taxes
-  if (isNaN(dbEntry.vehicle_excise_tax)) {
-    return false
-  }
-
-  // fuel & distance
-  switch (dbEntry.fuel_calculation) {
-    case 'km'/* old versions support */:
-    case 'distance':
-
-      if (isNaN(dbEntry.fuel_distance_based_fuel_efficiency) || isNaN(dbEntry.fuel_distance_based_fuel_price)) {
+    if (userData.fuel.distanceBased.considerCarToJob) {
+      if (conversions.convertDistanceToKm(
+        fuelDistanceBased.carToJob.distanceBetweenHomeAndJob,
+        fuelDistanceBased.carToJob.distanceStandardUnit) >
+        statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK) {
         return false
       }
 
-      // remove outliers
-      var fuelEfficiency
-      if (dbEntry.fuel_distance_based_fuel_efficiency_standard) {
-        fuelEfficiency = dbEntry.fuel_distance_based_fuel_efficiency_standard
-      } else {
-        fuelEfficiency = countryObj.fuel_efficiency_std /* backward compatibility */
-      }
-      if (conversions.convertFuelEfficiencyToL100km(dbEntry.fuel_distance_based_fuel_efficiency, fuelEfficiency) > statsConstants.MAX_FUEL_EFF_L100KM) {
+      if (conversions.convertDistanceToKm(
+        fuelDistanceBased.carToJob.distanceDuringWeekends,
+        fuelDistanceBased.carToJob.distanceStandardUnit) >
+          statsConstants.MAX_KM_DRIVEN_WEEKEND) {
         return false
       }
-
-      switch (dbEntry.fuel_distance_based_car_to_work) {
-        case 'true':
-
-          if (isNaN(dbEntry.fuel_distance_based_car_to_work_distance_home_work) ||
-                       isNaN(dbEntry.fuel_distance_based_car_to_work_distance_weekend) ||
-                       isNaN(dbEntry.fuel_distance_based_car_to_work_number_days_week)) {
-            return false
-          }
-
-          // remove outliers
-          if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_home_work, countryObj.distance_std) >
-                        statsConstants.MAX_KM_DRIVEN_BETWEEN_HOME_AND_WORK) {
-            return false
-          }
-
-          if (conversions.convertDistanceToKm(dbEntry.fuel_distance_based_car_to_work_distance_weekend, countryObj.distance_std) >
-                        statsConstants.MAX_KM_DRIVEN_WEEKEND) {
-            return false
-          }
-
-          break
-
-        case 'false':
-
-          if (isNaN(dbEntry.fuel_distance_based_no_car_to_work_distance)) {
-            return false
-          }
-
-          break
-
-        default:
-          return false
-      }
-
-      break
-
-    case 'money':
-    case 'euros'/* old versions support */:
-
-      if (isNaN(dbEntry.fuel_currency_based_currency_value)) {
-        return false
-      }
-
-      switch (dbEntry.distance_drive_to_work) {
-        case 'true':
-          if (isNaN(dbEntry.distance_days_per_week) || isNaN(dbEntry.distance_home_job) || isNaN(dbEntry.distance_journey_weekend)) {
-            return false
-          }
-
-          break
-
-        case 'false':
-          if (isNaN(dbEntry.distance_per_month)) {
-            return false
-          }
-
-          break
-
-        default:
-          return false
-      }
-
-      break
-
-    default:
-      return false
-  }
-
-  // maintenance
-  if (isNaN(dbEntry.maintenance)) {
-    return false
-  }
-
-  // repairs and improvements
-  if (isNaN(dbEntry.repairs)) {
-    return false
-  }
-
-  // parking
-  if (isNaN(dbEntry.parking)) {
-    return false
-  }
-
-  // tolls
-  switch (dbEntry.tolls_daily) {
-    case 'false':
-      if (isNaN(dbEntry.tolls_no_daily_value)) {
-        return false
-      }
-      break
-    case 'true':
-      if (isNaN(dbEntry.tolls_daily_expense) || isNaN(dbEntry.tolls_daily_number_days)) {
-        return false
-      }
-      break
-    default:
-      return false
-  }
-
-  // fines
-  if (isNaN(dbEntry.tickets_value)) {
-    return false
-  }
-
-  // washing
-  if (isNaN(dbEntry.washing_value)) {
-    return false
-  }
-
-  // hours
-  if (dbEntry.distance_drive_to_work === 'true' || dbEntry.fuel_distance_based_car_to_work === 'true') {
-    if (isNaN(dbEntry.time_spent_home_job) || isNaN(dbEntry.time_spent_weekend)) {
-      return false
-    }
-  } else {
-    if (isNaN(dbEntry.time_spent_min_drive_per_day) || isNaN(dbEntry.time_spent_days_drive_per_month)) {
-      return false
     }
   }
 
-  return true
-}
-
-// checks if the computed calculatedData was OK and is not an outlier
-// for the typeof "calculatedData" see: https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
-function isCalculatedDataOk (calculatedData, countryObj, fx) {
+  // calculatedData
   if (!calculatedData) {
     return false
   }
 
+  if (calculatedData.details.ageOfCarInMonths > statsConstants.MAX_CAR_AGE_MONTHS) {
+    return false
+  }
+
   var monthlyCosts = calculatedData.costs.perMonth.items
-  var currency = countryObj.currency
+  var currency = userData.currency
 
   for (let monthlyItem in monthlyCosts) {
     if (!isFinite(monthlyCosts[monthlyItem])) {
@@ -504,14 +353,16 @@ function isCalculatedDataOk (calculatedData, countryObj, fx) {
 
   // distance per month
   if (calculatedData.driving_distance_calculated) {
-    var distancePerMonthKm = conversions.convertDistanceToKm(calculatedData.distance_per_month, countryObj.distance_std)
+    var distancePerMonthKm = conversions.convertDistanceToKm(
+      calculatedData.distance_per_month,
+      calculatedData.drivingDistance.standardUnit)
     if (distancePerMonthKm > statsConstants.MAX_KM_DRIVEN_PER_MONTH) {
       return false
     }
   }
 
   if (calculatedData.drivingDistance.calculated && calculatedData.financialEffort.calculated) {
-    if (countryObj.currency === 'EUR' && calculatedData.financialEffort.income.averagePerHour > statsConstants.MAX_EUR_INCOME_PER_HOUR) {
+    if (currency === 'EUR' && calculatedData.financialEffort.income.averagePerHour > statsConstants.MAX_EUR_INCOME_PER_HOUR) {
       return false
     }
   }
@@ -542,6 +393,5 @@ function isCalculatedDataOk (calculatedData, countryObj, fx) {
 // node module exports
 module.exports = {
   calculateStatisticsForADefinedCountry: calculateStatisticsForADefinedCountry,
-  isUserDataEntryOk: isUserDataEntryOk,
   statsConstants: statsConstants
 }

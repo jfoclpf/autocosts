@@ -9,19 +9,31 @@
 // VALIDATE DATA MODULE
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
-/* global autocosts */
+// check for node
+if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
+  var autocosts = {}
+}
 
-autocosts.validateDataModule = (function (form) {
+autocosts.validateDataModule = (function () {
   var calculatorModule
 
-  var userData
+  var userData, consoleError
 
   function initialize () {
     loadModuleDependencies()
+    if (typeof window === 'undefined') { // nodeJS
+      consoleError = require('debug')('validateData')
+    } else { // browser
+      consoleError = console.error
+    }
   }
 
   function loadModuleDependencies () {
-    calculatorModule = autocosts.calculatorModule
+    if (typeof window === 'undefined') { // node
+      calculatorModule = require('./core/calculator')
+    } else { // browser
+      calculatorModule = autocosts.calculatorModule
+    }
   }
 
   function setUserData (userDataLocal) {
@@ -38,17 +50,17 @@ autocosts.validateDataModule = (function (form) {
     isUserData()
 
     if (!isUserDataFormPart1_Ok()) {
-      console.error('Form Part 1 not Ok')
+      consoleError('Form Part 1 not Ok')
       return false
     }
 
     if (!isUserDataFormPart2_Ok()) {
-      console.error('Form Part 2 not Ok')
+      consoleError('Form Part 2 not Ok')
       return false
     }
 
     if (!isUserDataFormPart3_Ok()) {
-      console.error('Form Part 3 not Ok')
+      consoleError('Form Part 3 not Ok')
       return false
     }
 
@@ -59,22 +71,22 @@ autocosts.validateDataModule = (function (form) {
     isUserData()
 
     if (!isDepreciationOk()) {
-      console.error('Depreciation not Ok')
+      consoleError('Depreciation not Ok')
       return false
     }
 
     if (!isInsuranceOk()) {
-      console.error('Insurance not Ok')
+      consoleError('Insurance not Ok')
       return false
     }
 
     if (!isCarFinanceOk()) {
-      console.error('CarFinance not Ok')
+      consoleError('CarFinance not Ok')
       return false
     }
 
     if (!isTaxesOk()) {
-      console.error('Taxes not Ok')
+      consoleError('Taxes not Ok')
       return false
     }
 
@@ -85,37 +97,37 @@ autocosts.validateDataModule = (function (form) {
     isUserData()
 
     if (!isFuelOk()) {
-      console.error('Fuel not Ok')
+      consoleError('Fuel not Ok')
       return false
     }
 
     if (!isMaintenanceOk()) {
-      console.error('Maintenance not Ok')
+      consoleError('Maintenance not Ok')
       return false
     }
 
     if (!isRepairsOk()) {
-      console.error('Repairs not Ok')
+      consoleError('Repairs not Ok')
       return false
     }
 
     if (!isParkingOk()) {
-      console.error('Parking not Ok')
+      consoleError('Parking not Ok')
       return false
     }
 
     if (!isTollsOk()) {
-      console.error('Tolls not Ok')
+      consoleError('Tolls not Ok')
       return false
     }
 
     if (!isFinesOk()) {
-      console.error('Fines not Ok')
+      consoleError('Fines not Ok')
       return false
     }
 
     if (!isWashingOk()) {
-      console.error('Washing not Ok')
+      consoleError('Washing not Ok')
       return false
     }
 
@@ -153,47 +165,6 @@ autocosts.validateDataModule = (function (form) {
     return true
   }
 
-  // the form part 3 is optional and when this function is OK,
-  // the calculator can present results for public transports
-  function isPublicTransportsAlternativeOk () {
-    isUserData()
-
-    if (!isPublicTransportOk()) {
-      console.warn('PublicTransport not Ok => isPublicTransportsAlternativeOk() returns false')
-      return false
-    }
-
-    if (!isDistanceOk()) {
-      console.warn('Distance not Ok => isPublicTransportsAlternativeOk() returns false')
-      return false
-    }
-
-    if (!isTimeSpentInDrivingOk()) {
-      console.warn('TimeSpentInDriving not Ok => isPublicTransportsAlternativeOk() returns false')
-      return false
-    }
-
-    return true
-  }
-
-  // the form part 3 is optional and when this function is OK,
-  // the calculator can present results for financial effort
-  function isFinancialEffortOk () {
-    isUserData()
-
-    if (!isIncomeOk()) {
-      console.warn('Income not Ok => isFinancialEffortOk() returns false')
-      return false
-    }
-
-    if (!isWorkingTimeOk()) {
-      console.warn('WorkingTime not Ok => isFinancialEffortOk() returns false')
-      return false
-    }
-
-    return true
-  }
-
   /* *** CHECK FORM PART 1 ***** */
   /* check if data from form 1 (standing costs) is correctly filled */
 
@@ -205,29 +176,34 @@ autocosts.validateDataModule = (function (form) {
     var minCarYear = 1910 /* the year of the first produced car */
 
     /* depreciation */
-    var acquisitionMonth = userData.depreciation.acquisitionMonth
-    var acquisitionYear = userData.depreciation.acquisitionYear
+    var acquisitionMonth = userData.depreciation.dateOfAcquisition.month
+    var acquisitionYear = userData.depreciation.dateOfAcquisition.year
+    var monthOfUserInput = userData.depreciation.dateOfUserInput.month
+    var yearOfUserInput = userData.depreciation.dateOfUserInput.year
 
-    if (!isNumber(acquisitionMonth) || !isInteger(acquisitionMonth) || acquisitionMonth > 12 || acquisitionMonth <= 0) {
+    if (!isInteger(acquisitionMonth) || acquisitionMonth > 12 || acquisitionMonth <= 0) {
       return false
     }
-    if (!isNumber(acquisitionYear) || !isInteger(acquisitionYear) || acquisitionYear < minCarYear) {
+    if (!isInteger(monthOfUserInput) || monthOfUserInput > 12 || monthOfUserInput <= 0) {
       return false
     }
-    if (!isNumber(userData.depreciation.acquisitionCost)) {
+    if (!isInteger(acquisitionYear) || !isInteger(yearOfUserInput) || acquisitionYear < minCarYear) {
       return false
     }
-    if (!isNumber(userData.depreciation.presentValue)) {
+    if (!isNumber(userData.depreciation.dateOfAcquisition.value)) {
+      return false
+    }
+    if (!isNumber(userData.depreciation.dateOfUserInput.value)) {
       return false
     }
 
-    var today = new Date()
     var carAcquisitionDate = new Date(acquisitionYear, acquisitionMonth - 1)
+    var dateOfUserInput = new Date(yearOfUserInput, monthOfUserInput - 1)
 
-    var carNumberOfMonths = calculatorModule.differenceBetweenDates(carAcquisitionDate, today)
+    var carNumberOfMonths = calculatorModule.differenceBetweenDates(carAcquisitionDate, dateOfUserInput)
 
     // carNumberOfMonths may be zero which is falsy, but acceptable
-    if (carNumberOfMonths === null || carNumberOfMonths < 0) {
+    if (carNumberOfMonths === null || carNumberOfMonths <= 0) {
       return false
     }
 
@@ -260,16 +236,16 @@ autocosts.validateDataModule = (function (form) {
     }
 
     if (userData.credit.creditBool) {
-      if (!isNumber(userData.credit.borrowedAmount)) {
+      if (!isNumber(userData.credit.yesCredit.borrowedAmount)) {
         return false
       }
-      if (!isNumber(userData.credit.numberInstallments)) {
+      if (!isNumber(userData.credit.yesCredit.numberInstallments)) {
         return false
       }
-      if (!isNumber(userData.credit.amountInstallment)) {
+      if (!isNumber(userData.credit.yesCredit.amountInstallment)) {
         return false
       }
-      if (!isNumber(userData.credit.residualValue)) {
+      if (!isNumber(userData.credit.yesCredit.residualValue)) {
         return false
       }
     }
@@ -724,10 +700,13 @@ autocosts.validateDataModule = (function (form) {
   return {
     initialize: initialize,
     setUserData: setUserData,
-    isPublicTransportsAlternativeOk: isPublicTransportsAlternativeOk,
-    isFinancialEffortOk: isFinancialEffortOk,
     isUserDataFormPart1_Ok: isUserDataFormPart1_Ok,
     isUserDataFormPart2_Ok: isUserDataFormPart2_Ok,
     isUserDataFormPart3_Ok: isUserDataFormPart3_Ok
   }
-})(document.costs_form)
+})()
+
+// check for node
+if (typeof window === 'undefined') {
+  module.exports = autocosts.validateDataModule
+}

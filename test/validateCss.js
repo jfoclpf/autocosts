@@ -135,9 +135,9 @@ function validatePathname (pathname, callback) {
       .on('end', function () {
         debug('on end')
         Bar.tick({ info: pathname })
-        // since is a public service we should wait 1 s between requests
+        // since is a public service we should wait 2 s between requests
         // https://www.npmjs.com/package/w3c-css#public-css-validator
-        setTimeout(function () { callback() }, 1100)
+        setTimeout(callback, 2000)
       })
   })
 }

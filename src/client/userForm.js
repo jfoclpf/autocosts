@@ -836,7 +836,6 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
     // double-check with validating functions from file validateData.js
     // Standing (part1) and Running (part2) Costs
     var formUserDataObj = convertDataModule.createUserDataObjectFromForm(DOMForm)
-    autocosts.main.formData = formUserDataObj
     validateDataModule.setUserData(formUserDataObj)
     if (!validateDataModule.isUserDataFormPart1_Ok() || !validateDataModule.isUserDataFormPart2_Ok()) {
       return false

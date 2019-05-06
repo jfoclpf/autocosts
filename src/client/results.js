@@ -45,7 +45,7 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
     flattenedData = commonsModule.flatten(calculatedData, { delimiter: '_' })
     // it needs to show also 1/2 of Maintenance Costs
     flattenedData.costs_perMonth_items_halfOfMaintenance = flattenedData.costs_perMonth_items_maintenance / 2
-    // console.log(flattenedData);
+    // console.log(flattenedData)
     setCalculatedDataToHTML(flattenedData)
 
     chartsDrawnPromisesObj = chartsModule.initialize(calculatedData)
@@ -243,7 +243,9 @@ autocosts.resultsModule = (function (thisModule, translatedStrings, switches, la
           } else if ($i.hasClass('hours')) {
             numToShow = amount + ' ' + translatedStrings.hour_abbr
           } else if ($i.hasClass('distance')) {
-            numToShow = amount + ' ' + commonsModule.getStandard('distance')
+            numToShow = amount + ' ' + flattenedData.standardUnits_distance
+          } else if ($i.hasClass('currency_per_distance')) {
+            numToShow = currencyShow(amount) + '/' + flattenedData.standardUnits_distance
           } else if ($i.hasClass('percentage')) {
             numToShow = amount + '&#37;' // percentage symbol
           } else {
