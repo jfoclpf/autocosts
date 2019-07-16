@@ -108,7 +108,7 @@ var makeUberRequest = async function (req, serverData) {
     debug('London')
     lat = 51.507351
     long = -0.127758
-  } else { // PROD or .work
+  } else { // PROD or .dev
     // tries to get IP from user
     var geo = geoIP.lookup(req.ip)
     lat = geo.ll[0]

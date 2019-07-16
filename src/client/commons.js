@@ -34,7 +34,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
     var posOfTld = hostNameArray.length - 1
     var tld = hostNameArray[posOfTld]
 
-    if (tld === 'work') {
+    if (tld === 'work' || tld === 'dev') {
       return true
     }
 
