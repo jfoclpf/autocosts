@@ -1,4 +1,4 @@
-/* This web site uses several domain names, all with a TLD extension of .info and a test version with a TLD extension of .work.
+/* This web site uses several domain names, all with a TLD extension of .info and a test version with a TLD extension of .dev.
 The server side code shall thus forward the page if the entry URL is not correctly typed
 according to the domain name vs. country code combinatorial rules.
 For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector */
@@ -154,8 +154,8 @@ function redirect302 (req, res, serverData) {
   var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
   var url2redirect
-  if (isWorkDomain(req)) {
-    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.work', pathname: geoCC })
+  if (isDevDomain(req)) {
+    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: geoCC })
   } else if (isThisLocalhost(req)) {
     url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: geoCC })
   } else {
@@ -257,8 +257,8 @@ function getValidURL (req, domainsCountries) {
   var URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
     URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: upCC })
-  } else if (isWorkDomain(req)) {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.work', pathname: upCC })
+  } else if (isDevDomain(req)) {
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: upCC })
   } else {
     URL = nodeUrl.format({ protocol: getProtocol(req), host: domainsCountries[upCC], pathname: upCC })
   }
@@ -315,19 +315,19 @@ function isThisATest (req) {
 
   var CC = req.params.CC
   if (CC) {
-    return isWorkDomain(req) || isThisLocalhost(req) || isCCXX(CC)
+    return isDevDomain(req) || isThisLocalhost(req) || isCCXX(CC)
   } else {
-    return isWorkDomain(req) || isThisLocalhost(req)
+    return isDevDomain(req) || isThisLocalhost(req)
   }
 }
 
-// tells of TLD of host is .work
-function isWorkDomain (req) {
+// tells of TLD of host is .dev or .work
+function isDevDomain (req) {
   var host = req.get('host')
   var hostSplit = host.split('.')
   var tld = hostSplit[hostSplit.length - 1] // top level domain, ex: ".info"
 
-  if (tld.toLowerCase() === 'work') {
+  if (tld.toLowerCase() === 'dev' || tld.toLowerCase() === 'work') {
     return true
   }
   return false
