@@ -20,10 +20,10 @@ function startsServer (onStart, onError) {
   debug('Starting http server...')
   // the process where the http server will run
   try {
-    let index = path.join(directories.server.bin, 'index.js')
-    let parameters = ['-r', 'test']
-    let options = {
-      stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
+    const index = path.join(directories.server.bin, 'index.js')
+    const parameters = ['-r', 'test']
+    const options = {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     }
     httpLocalServer = fork(index, parameters, options)
     httpLocalServer.on('exit', (code, signal) => {

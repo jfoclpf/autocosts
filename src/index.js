@@ -43,16 +43,16 @@ var settings = commons.getSettings()
 // fixed unchangeable global data which is constant for all HTTP requests independently of the country
 var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
 var serverData = {
-  'release': release, // Release: "dev" or "prod"
-  'settings': settings, // Settings set in commons.js
-  'directories': directories, // {ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
-  'fileNames': fileNames, // Object with the fileNames, on the server and client
-  'availableCountries': sortObj(countriesInfo.availableCountries), // Array of alphabetically sorted available Countries
-  'languagesCountries': countriesInfo.languagesCountries, // Array of Language Codes
-  'countriesStandards': countriesInfo.standards, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
-  'domains': commons.getDomainsObject(countriesInfo.domainsCountries), // Object with Domains Infomation
-  'CClistOnString': commons.getCClistOnStr(countriesInfo.availableCountries), // a string with all the CC
-  'isOnline': undefined // if the server has access to Internet connection (to use database, uber, etc.)
+  release: release, // Release: "dev" or "prod"
+  settings: settings, // Settings set in commons.js
+  directories: directories, // {ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
+  fileNames: fileNames, // Object with the fileNames, on the server and client
+  availableCountries: sortObj(countriesInfo.availableCountries), // Array of alphabetically sorted available Countries
+  languagesCountries: countriesInfo.languagesCountries, // Array of Language Codes
+  countriesStandards: countriesInfo.standards, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
+  domains: commons.getDomainsObject(countriesInfo.domainsCountries), // Object with Domains Infomation
+  CClistOnString: commons.getCClistOnStr(countriesInfo.availableCountries), // a string with all the CC
+  isOnline: undefined // if the server has access to Internet connection (to use database, uber, etc.)
 }
 debug(util.inspect(serverData, { showHidden: false, depth: null }))
 
@@ -119,25 +119,25 @@ app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
 // robots.txt for search engines
 app.get('/robots.txt', function (req, res) {
-  debug("\nRoute: app.get('/robots.txt')")
+  debug('\nRoute: app.get(\'/robots.txt\')')
   res.type('text/plain').render('robots.txt', { layout: false, isReleaseProd: release === 'prod' })
 })
 
 // lists all Countries information - /list or /lista or /liste
 app.get('/list[a,e]?$/', function (req, res) {
-  debug("\nRoute: app.get('/list')")
+  debug('\nRoute: app.get(\'/list\')')
   list(req, res, serverData, WORDS)
 })
 
 // lists all available domains
 app.get('/domains', function (req, res) {
-  debug("\nRoute: app.get('/domains')")
+  debug('\nRoute: app.get(\'/domains\')')
   domains(req, res, serverData, WORDS)
 })
 
 // sitemap.xml for Search Engines optimization
 app.get('/sitemap.xml', function (req, res) {
-  debug("\nRoute: app.get('/sitemap.xml')")
+  debug('\nRoute: app.get(\'/sitemap.xml\')')
   sitemap(req, res, serverData, WORDS)
 })
 
@@ -145,7 +145,7 @@ if (SWITCHES.uber) {
   const getUBER = require(path.join(__dirname, 'server', 'getUBER'))
   app.get('/getUBER/:CC', function (req, res, next) {
     if (serverData.isOnline) {
-      debug("\nRoute: app.get('/getUBER')")
+      debug('\nRoute: app.get(\'/getUBER\')')
       getUBER(req, res, serverData)
     } else {
       next()
@@ -157,7 +157,7 @@ if (SWITCHES.googleCaptcha) {
   const captchaValidate = require(path.join(__dirname, 'server', 'captchaValidate'))
   app.post('/captchaValidate', function (req, res, next) {
     if (serverData.isOnline && !url.isThisLocalhost(req)) {
-      debug("\nRoute: app.post('/captchaValidate')")
+      debug('\nRoute: app.post(\'/captchaValidate\')')
       captchaValidate(req, res, serverData)
     } else {
       next()
@@ -185,7 +185,7 @@ if (SWITCHES.database) {
 
   app.get('/stats', function (req, res, next) {
     if (serverData.isOnline) {
-      debug("\nRoute: app.get('/stats')")
+      debug('\nRoute: app.get(\'/stats\')')
       stats.req(req, res, serverData, WORDS.UK)
     } else {
       next()
@@ -197,7 +197,7 @@ if (SWITCHES.database) {
 
   app.post('/submitUserInput', function (req, res, next) {
     if (serverData.isOnline) {
-      debug("\nRoute: app.post('/submitUserInput')")
+      debug('\nRoute: app.post(\'/submitUserInput\')')
       submitUserInput(req, res, serverData)
     } else {
       next()
@@ -211,32 +211,32 @@ getCC.preGenerateCSPstring(serverData)
 
 // this middleware shall be the last before error
 // this is the entry Main Page
-app.get('/:CC', function (req, res, next) {
-  debug("\nRoute: app.get('/CC')")
+app.get('/:CC', function (req, res) {
+  debug('\nRoute: app.get(\'/CC\')')
 
   if (req.params.CC.length !== 2) {
     res.status(404)
     list(req, res, serverData, WORDS)
   } else {
     // wasRedirected is true if it was redirected to another URL
-    let wasRedirected = url.getCC(req, res, serverData)
+    const wasRedirected = url.getCC(req, res, serverData)
     if (wasRedirected) {
       return
     }
     // from here CC is acceptable and the page will be rendered
     // get words for chosen CC - Country Code
-    let WORDS_CC = WORDS[req.params.CC]
+    const WORDS_CC = WORDS[req.params.CC]
     getCC.render(req, res, serverData, WORDS_CC)
   }
 })
 
-app.get('/', function (req, res, next) {
-  debug("\nRoute: app.get('/')")
+app.get('/', function (req, res) {
+  debug('\nRoute: app.get(\'/\')')
   url.redirect(req, res, serverData)
 })
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   console.error(err.stack)
   res.status(500).send('Something broke!')
 })

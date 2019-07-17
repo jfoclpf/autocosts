@@ -26,7 +26,7 @@ module.exports = {
     // Object with all the expressions for each country
     data.words = wordsOfCountry
     data.words.word_per += '&#32;' // add non-breaking space
-    data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, `$1`) // removes excess of "&#32;"
+    data.words.word_per = data.words.word_per.replace(/(&#32;).*/g, '$1') // removes excess of "&#32;"
 
     // global constant data for every request, and that was already loaded when the server app was initialized
     data.serverData = serverData
@@ -59,9 +59,9 @@ module.exports = {
 
       // let nonce = crypto.randomBytes(16).toString('base64');
       // data.nonce = nonce;
-      let CSPstr = this.getCSPstr(/* nonce */)
+      const CSPstr = this.getCSPstr(/* nonce */)
 
-      debug(CSPstr.replace(/;/g, `;\n`))
+      debug(CSPstr.replace(/;/g, ';\n'))
       res.set('Content-Security-Policy', CSPstr)
     } else {
       data.nonce = ''
@@ -117,14 +117,14 @@ module.exports = {
     }
 
     // this is a global variable
-    CSPstr0 = "default-src 'self'" + ' ' + domainsStr + '; '
-    CSPstr0 += "script-src 'self'" + ' ' + domainsStr + ' ' + "'unsafe-eval' 'unsafe-inline'" + ' '
+    CSPstr0 = 'default-src \'self\'' + ' ' + domainsStr + '; '
+    CSPstr0 += 'script-src \'self\'' + ' ' + domainsStr + ' ' + '\'unsafe-eval\' \'unsafe-inline\'' + ' '
 
     // this is a global variable
-    CSPstr1 = "style-src 'self' 'unsafe-inline'; "
-    CSPstr1 += "img-src 'self' https://www.google-analytics.com data:; "
-    CSPstr1 += "object-src 'self' blob:; "
-    CSPstr1 += "base-uri 'self'; "
+    CSPstr1 = 'style-src \'self\' \'unsafe-inline\'; '
+    CSPstr1 += 'img-src \'self\' https://www.google-analytics.com data:; '
+    CSPstr1 += 'object-src \'self\' blob:; '
+    CSPstr1 += 'base-uri \'self\'; '
     CSPstr1 += frameStr
   },
 
@@ -134,7 +134,7 @@ module.exports = {
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
     var nonceStr
     if (nonce) {
-      nonceStr = "'nonce-" + nonce + "' 'strict-dynamic';"
+      nonceStr = '\'nonce-' + nonce + '\' \'strict-dynamic\';'
     } else {
       nonceStr = ';'
     }

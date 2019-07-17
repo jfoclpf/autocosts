@@ -59,7 +59,7 @@ function testCalculatorFunction (callback) {
 
   // build a more code friendly Object
   var countrySpecs = {}
-  for (let item of Object.keys(_countrySpecs)) {
+  for (const item of Object.keys(_countrySpecs)) {
     countrySpecs[_countrySpecs[item].Country] = _countrySpecs[item]
   }
   debug(countrySpecs)
@@ -85,7 +85,7 @@ function testCalculatorFunction (callback) {
       Bar.tick()
 
       try {
-        let CC = usersInput[i].country // ISO Country Code
+        const CC = usersInput[i].country // ISO Country Code
 
         if (CC) {
           countryInfo = {
@@ -98,7 +98,7 @@ function testCalculatorFunction (callback) {
 
           userData = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
           validateData.setUserData(userData)
-          let isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
+          const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
 
           if (isUserDataEntryOk) {
             calculatedData = calculator.calculateCosts(userData)

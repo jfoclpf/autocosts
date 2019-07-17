@@ -230,7 +230,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       $i = $('#results .' + key)
       // check that the element with that class exists in the html page
       // and that the element is valid in the array of calculated data
-      if (flattenedData.hasOwnProperty(key) && $i.length) {
+      if (flattenedData.hasOwnProperty(key) && $i.length) { // eslint-disable-line no-prototype-builtins
         if (typeof flattenedData[key] === 'number' && !isNaN(flattenedData[key])) {
           // organising text or adding extra text according to classes: toFixedN, currency, hours, distance, percentage
           toFixedN = getToFixedNumFromClasses($i)
@@ -338,7 +338,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
 
     // add Cost <ul> for each cost details, for example add <ul> to div with class "fuel_details"
     for (var cost in calculatedData.costs.perMonth.items) {
-      if (!calculatedData.costs.perMonth.items.hasOwnProperty(cost)) {
+      if (!calculatedData.costs.perMonth.items.hasOwnProperty(cost)) { // eslint-disable-line no-prototype-builtins
         continue
       }
 

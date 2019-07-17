@@ -216,7 +216,7 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
       })
 
       if (!fieldN) {
-        console.error("The field has no class with the expression 'field#' ")
+        console.error('The field has no class with the expression \'field#\' ')
         return
       }
 
@@ -246,7 +246,7 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
     var $fieldHead = $thisButton.closest('.field_container')
 
     if (fieldStatus($fieldHead) !== 'fully_valid' && fieldStatus($fieldHead) !== 'no_inputs') {
-      console.error("'Next' button clicked, when field was not OK for showing 'next' button")
+      console.error('\'Next\' button clicked, when field was not OK for showing \'next\' button')
     }
 
     // Google Analytics, to track till which field container the user scrols
@@ -506,7 +506,7 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
     // console.log("fieldStatus($this)");
 
     if ($this.length !== 1) {
-      console.error("'fieldStatus' function called for more than one element")
+      console.error('\'fieldStatus\' function called for more than one element')
       return
     }
 
@@ -677,7 +677,7 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
         $icon.hide()
         break
       default:
-        console.error("'status' parameter not correct in 'setIcon' function, using class .icon." + fieldN)
+        console.error('\'status\' parameter not correct in \'setIcon\' function, using class .icon.' + fieldN)
     }
 
     // if status not hidden show icon section (section: 'Running Costs', etc.)
@@ -702,7 +702,7 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
     })
 
     if (!fieldN) {
-      console.error("The field has no class with the expression 'field#' ")
+      console.error('The field has no class with the expression \'field#\' ')
     }
 
     if (numBool) {
@@ -756,8 +756,6 @@ autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, sw
 
         if (errorMessage) {
           return '<div class="error_msg" id="' + errId + '">' + strEnterAValue + ' ' + errorMessage + '</div>'
-        } else {
-
         }
       })
     } else if (status === 'hide') {

@@ -8,7 +8,7 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
   var directories = serverData.directories
 
   // creates Object of objects WORDS. An object with strings for each Country
-  for (let CC in serverData.availableCountries) {
+  for (const CC in serverData.availableCountries) {
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'))
     WORDS[CC].languageCode = serverData.languagesCountries[CC]
     WORDS[CC].domain = serverData.domains.countries[CC]
@@ -33,7 +33,7 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
   fillBlanks(serverData, WORDS)
 
   eventEmitter.on('statsColected', function (statsData) {
-    for (let CC in serverData.availableCountries) {
+    for (const CC in serverData.availableCountries) {
       WORDS[CC].sub_title_pos1 = getSubTitleArr(1, WORDS[CC], statsData[CC])
       WORDS[CC].sub_title_pos2 = getSubTitleArr(2, WORDS[CC], statsData[CC])
       WORDS[CC].socialmedia_description = getSocialMediaDescription(WORDS[CC], statsData[CC])
@@ -78,17 +78,17 @@ function getAdaptedTitle (words) {
 // if that is not either available, use English version
 function fillBlanks (serverData, WORDS) {
   for (var CC in serverData.availableCountries) {
-    let languageDefault = {
-      'es': 'ES',
-      'en': 'UK',
-      'pt': 'PT',
-      'fr': 'FR'
+    const languageDefault = {
+      es: 'ES',
+      en: 'UK',
+      pt: 'PT',
+      fr: 'FR'
     }
 
     // WORDS.UK is an Object with all the possible properties available
-    for (let word in WORDS.UK) {
+    for (const word in WORDS.UK) {
       if (!WORDS[CC][word]) {
-        let languageFounderCC = languageDefault[WORDS[CC].languageCode.substring(0, 2)]
+        const languageFounderCC = languageDefault[WORDS[CC].languageCode.substring(0, 2)]
         WORDS[CC][word] = languageFounderCC && WORDS[languageFounderCC][word] ? WORDS[languageFounderCC][word] : WORDS.UK[word]
       }
     }
@@ -136,7 +136,7 @@ function getKeywords (words) {
 // process the sentences, uppercasing the first letters of the words right after "<br>"
 // Ex: "This is text 1<br>this is text 2" ==> "This is text 1<br>This is text 2"
 function addUpperCaseAfterBr (words) {
-  for (let word in words) {
+  for (const word in words) {
     if (typeof words[word] === 'string') {
       words[word] = words[word].replace(/(<br><i>|<br>)(\w)/g,
         function (match, p1, p2) { return p1 + p2.toUpperCase() })
@@ -168,7 +168,7 @@ function getSubTitleArr (position, words, statsData) {
 
   var checkSanityOfStr = function (str, parseStr) {
     if (!str || !str.includes(parseStr)) {
-      debug(errMsg + "; '" + parseStr + "' undefined or does not contain " + parseStr)
+      debug(errMsg + '; \'' + parseStr + '\' undefined or does not contain ' + parseStr)
       return false
     }
     return true
@@ -178,7 +178,7 @@ function getSubTitleArr (position, words, statsData) {
 
   if (!checkSanityOfStr(subTitle1a, '[yearly_costs]')) { return '' }
 
-  let totalCostsPerYear = statsData.costs_totalPerYear
+  const totalCostsPerYear = statsData.costs_totalPerYear
   if (!totalCostsPerYear || !isFinite(totalCostsPerYear) || parseInt(totalCostsPerYear, 10) === 0) {
     return ''
   }
@@ -190,7 +190,7 @@ function getSubTitleArr (position, words, statsData) {
     // this tring shoud be: "is [yearly_costs] per year"
     let subTitle1aPart2 = subTitle1a.split('[country]')[1].trim()
 
-    let costsTotalPerYearString = getProcessedStatsDataEntry(
+    const costsTotalPerYearString = getProcessedStatsDataEntry(
       words,
       statsData,
       'costs_totalPerYear', // entry
@@ -199,15 +199,15 @@ function getSubTitleArr (position, words, statsData) {
 
     subTitle1aPart2 = subTitle1aPart2.replace('[yearly_costs]', costsTotalPerYearString)
 
-    let workingMonthsPerYearToAffordCar = statsData.financialEffort_workingMonthsPerYearToAffordCar
-    let useFinancialEffortInfo = statsData.financialEffort_calculated && workingMonthsPerYearToAffordCar &&
+    const workingMonthsPerYearToAffordCar = statsData.financialEffort_workingMonthsPerYearToAffordCar
+    const useFinancialEffortInfo = statsData.financialEffort_calculated && workingMonthsPerYearToAffordCar &&
             typeof workingMonthsPerYearToAffordCar === 'number' && parseInt(workingMonthsPerYearToAffordCar, 10) !== 0
 
     if (useFinancialEffortInfo && !checkSanityOfStr(subTitle1b, '[nbrMonths]')) {
       return ''
     }
 
-    let workingMonthsPerYearToAffordCarString = getProcessedStatsDataEntry(
+    const workingMonthsPerYearToAffordCarString = getProcessedStatsDataEntry(
       words,
       statsData,
       'financialEffort_workingMonthsPerYearToAffordCar', // entry
@@ -251,7 +251,7 @@ function getSocialMediaDescription (words, statsData) {
 function getProcessedStatsDataEntry (words, statsData, entry, toFixed, isBold = false, ignoreSmallNumbers = false) {
   var currencySymbol = words.curr_symbol
 
-  let val = statsData[entry]
+  const val = statsData[entry]
 
   if (typeof toFixed !== 'undefined' && typeof val === 'number') {
     if (ignoreSmallNumbers && Math.round(val) === 0) {
@@ -278,7 +278,7 @@ function getProcessedStatsDataEntry (words, statsData, entry, toFixed, isBold = 
 
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
 function normalizeNFC (words) {
-  for (let key in words) {
+  for (const key in words) {
     if (typeof words[key] === 'string') {
       words[key] = words[key].normalize('NFC')
     }

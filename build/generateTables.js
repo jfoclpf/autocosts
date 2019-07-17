@@ -123,10 +123,10 @@ function createTable (CC, callback) {
   var countryName = availableCountries[CC]
   var words = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
 
-  var dbQuery = 'SELECT * FROM ' + DB_INFO.db_tables.monthly_costs_statistics + " WHERE countryCode='" + CC + "'"
+  var dbQuery = 'SELECT * FROM ' + DB_INFO.db_tables.monthly_costs_statistics + ' WHERE countryCode=\'' + CC + '\''
   db.query(dbQuery, function (err, results, fields) {
     if (err) {
-      let errMsg = 'Error inserting query for ' + CC + '. ' + err.message
+      const errMsg = 'Error inserting query for ' + CC + '. ' + err.message
       callback(Error(errMsg))
       return // this MUST be here, see https://caolan.github.io/async/
     }
@@ -163,13 +163,13 @@ function createTable (CC, callback) {
     var hbsTemplate = handlebars.compile(templateRawData)
 
     var data = {
-      'countryCode': CC,
-      'countryName': countryName,
-      'availableCountries': availableCountries,
-      'fileNames': fileNames,
-      'statsData': statsData,
-      'words': words,
-      'domain': domainsCountries[CC]
+      countryCode: CC,
+      countryName: countryName,
+      availableCountries: availableCountries,
+      fileNames: fileNames,
+      statsData: statsData,
+      words: words,
+      domain: domainsCountries[CC]
     }
 
     var dataHtml = Object.assign({}, data) // clone object
@@ -190,10 +190,10 @@ function createTable (CC, callback) {
       function (fsWriteCallback) {
         fs.writeFile(htmlPermanentFilePath, resultForHtmlPage, 'utf8', function (err) {
           if (err) {
-            let errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
+            const errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            let filePathRelative = path.relative(rootDir, htmlPermanentFilePath)
+            const filePathRelative = path.relative(rootDir, htmlPermanentFilePath)
             Bar.tick({ info: filePathRelative }); debug(filePathRelative)
             fsWriteCallback()
           }
@@ -204,10 +204,10 @@ function createTable (CC, callback) {
       function (fsWriteCallback) {
         fs.writeFile(htmlFilePathToRenderInJpg, resultForJpgImage, 'utf8', function (err) {
           if (err) {
-            let errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
+            const errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
             fsWriteCallback(Error(errMsg))
           } else {
-            let filePathRelative = path.relative(rootDir, htmlFilePathToRenderInJpg)
+            const filePathRelative = path.relative(rootDir, htmlFilePathToRenderInJpg)
             Bar.tick({ info: filePathRelative }); debug(filePathRelative)
             fsWriteCallback()
           }
@@ -257,15 +257,15 @@ function rasterTables (next) {
 }
 
 function rasterTable (CC, callback) {
-  let htmlTempFilePath = path.join(directories.bin.tables, CC + 'jpg.htm')
-  let imageFilePath = path.join(directories.bin.tables, CC + '.jpg')
+  const htmlTempFilePath = path.join(directories.bin.tables, CC + 'jpg.htm')
+  const imageFilePath = path.join(directories.bin.tables, CC + '.jpg')
 
   if (!path.isAbsolute(htmlTempFilePath) || !path.isAbsolute(imageFilePath)) {
     console.log(htmlTempFilePath, imageFilePath, ':: either of these paths is not an absolute path')
     process.exit(1) // exit with error
   }
 
-  let childArgs = [
+  const childArgs = [
     path.join(__dirname, 'rasterTables.js'), // phantomJS script
     htmlTempFilePath,
     imageFilePath
@@ -286,7 +286,7 @@ function rasterTable (CC, callback) {
       if (err) {
         callback(Error('error deleting file ' + childArgs[1] + '. ' + err.message))
       } else {
-        let filePathRelative = path.relative(rootDir, imageFilePath)
+        const filePathRelative = path.relative(rootDir, imageFilePath)
         Bar.tick({ info: filePathRelative }); debug(filePathRelative)
         callback()
       }

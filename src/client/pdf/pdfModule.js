@@ -2,7 +2,7 @@
 // PDF REPORT GENERATION MODULE
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
-/* globals autocosts, $, pdfMake, Image */
+/* globals autocosts, $, pdfMake, Image */ // eslint-disable-line no-redeclare
 
 autocosts.showResultsModule = autocosts.showResultsModule || {}
 autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, selectedCountry) {
@@ -99,7 +99,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
             color: '#1C1C1C',
             table: {
               headerRows: 0,
-              widths: [ '*', '*', '*', '*' ],
+              widths: ['*', '*', '*', '*'],
               body: getMainTable()
             }
           }
@@ -125,7 +125,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
               margin: [0, 0, 0, 0], // [left, top, right, bottom]
               table: {
                 headerRows: 0,
-                widths: [ '*', '*', '*', '*', '*', '*' ],
+                widths: ['*', '*', '*', '*', '*', '*'],
                 body: getChartsLegend()
               },
               pageBreak: 'after'
@@ -138,7 +138,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
           {
             style: 'tableMarging',
             table: {
-              widths: [ 390, '*' ],
+              widths: [390, '*'],
               body: getStandingCostsTable()
             }
           },
@@ -146,7 +146,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
             style: 'tableMarging',
             table: {
               headerRows: 0,
-              widths: [ 390, '*' ],
+              widths: [390, '*'],
               body: getRunningCostsTable()
             }
           },
@@ -154,7 +154,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
             style: 'tableMarging',
             table: {
               headerRows: 0,
-              widths: [ 390, '*' ],
+              widths: [390, '*'],
               body: getTotalCostsTable()
             }
           }
@@ -197,7 +197,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
               style: 'tableMarging',
               table: {
                 headerRows: 1,
-                widths: [ 390, '*' ],
+                widths: [390, '*'],
                 body: getBodyFinEffort()
               }
             }
@@ -241,7 +241,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
                 style: 'tableMarging',
                 table: {
                   headerRows: 0,
-                  widths: [ 390, '*' ],
+                  widths: [390, '*'],
                   body: getPublicTransportsTable()
                 }
               }
@@ -255,7 +255,7 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
                 style: 'tableMarging',
                 table: {
                   headerRows: 0,
-                  widths: [ 390, '*' ],
+                  widths: [390, '*'],
                   body: getUberTable()
                 }
               }
@@ -367,20 +367,20 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
       ],
       [
         translatedStrings.word_per + translatedStrings.month + '\n' +
-                translatedStrings.curr_symbol + calculatedData.costs.perMonth.total.toFixed(),
+          translatedStrings.curr_symbol + calculatedData.costs.perMonth.total.toFixed(),
 
         translatedStrings.word_per + translatedStrings.trimester + '\n' +
-                translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
+          translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 3).toFixed(),
 
         translatedStrings.word_per + translatedStrings.semester + '\n' +
-                translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 6).toFixed(),
+          translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 6).toFixed(),
 
         translatedStrings.word_per + translatedStrings.year + '\n' +
-                translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 12).toFixed()
+          translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 12).toFixed()
       ],
       [
         { text: translatedStrings.with_this_level_of_costs + ' ' + calculatedData.details.ageOfCarInMonths + ' ' +
-                       translatedStrings.months_poss + ' ' + translatedStrings.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
+                  translatedStrings.months_poss + ' ' + translatedStrings.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
         colSpan: 4,
         alignment: 'center' },
         {}, {}, {}

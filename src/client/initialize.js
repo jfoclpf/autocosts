@@ -2,7 +2,7 @@
 /* MAIN MODULE'S INITIALIZATION MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
-/* global autocosts, $, alert, ga */
+/* global autocosts, $, ga */
 
 autocosts.initializeModule = (function (thisModule, serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths) {
   var getFilesModule, commonsModule
@@ -32,7 +32,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     var isIeLessThan9 = (div.getElementsByTagName('i').length === 1)
     if (isIeLessThan9) {
       document.getElementById('main_div').innerHTML = 'Please update your browser!'
-      alert('Please update your browser!')
+      window.alert('Please update your browser!')
     }
   }
 
@@ -157,7 +157,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       var text = $this.find('option:selected').text()
       var $test = $('<span>').html(text).css({
         'font-size': $this.css('font-size'), // ensures same size text
-        'visibility': 'hidden' // prevents FOUC
+        visibility: 'hidden' // prevents FOUC
       })
       // add to parent, get width, and get out
       $test.appendTo($this.parent())
@@ -312,49 +312,49 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     // the key the name of the variable in translatedStrings
     // the value is the name of the id in the form
     var mappingIDs = {
-      'std_acq_month': 'acquisitionMonth',
-      'std_acq_year': 'acquisitionYear',
-      'std_price_paid': 'commercialValueAtAcquisition',
-      'std_price_today': 'commercialValueAtNow',
-      'std_insurance_sem': 'insuranceValue',
-      'std_loan': 'borrowedAmount',
-      'std_period_of_credit': 'numberInstallments',
-      'std_monthly_pay': 'amountInstallment',
-      'std_residual_value': 'residualValue',
-      'std_nbr_inspection': 'numberInspections',
-      'std_inspection_price': 'averageInspectionCost',
-      'std_road_tax': 'roadTaxes',
-      'std_fuel_paid_per_month': 'fuel_currency_value',
-      'std_days_per_week': 'car_to_work_number_days_week',
-      'std_jorney_2work': 'car_to_work_distance_home_work',
-      'std_jorney_weekend': 'car_to_work_distance_weekend',
-      'std_km_per_month': 'no_car_to_work_distance',
-      'std_car_fuel_efficiency': 'fuel_efficiency',
-      'std_fuel_price': 'fuel_price',
-      'std_maintenance_per_year': 'maintenance',
-      'std_repairs': 'repairs',
-      'std_parking': 'parking',
-      'std_tolls': 'no_daily_tolls_value',
-      'std_tolls_day': 'daily_expense_tolls',
-      'std_tolls_days_per_month': 'number_days_tolls',
-      'std_fines': 'tickets_value',
-      'std_washing': 'washing_value',
-      'std_nr_ppl_family': 'household_number_people',
-      'std_pass_price': 'public_transportation_month_expense',
-      'std_income_year': 'income_per_year',
-      'std_income_month': 'income_per_month',
-      'std_income_week': 'income_per_week',
-      'std_income_hour': 'income_per_hour',
-      'std_months_year': 'income_months_per_year',
-      'std_hours_week': 'income_hours_per_week',
-      'std_weeks_year': 'income_hour_weeks_per_year',
-      'std_time_home_job': 'time_home_job',
-      'std_time_weekend': 'time_weekend',
-      'std_time_in_driving': 'min_drive_per_day',
-      'std_days_month': 'days_drive_per_month',
-      'std_time_month_per_year': 'time_month_per_year',
-      'std_time_hours_per_week': 'time_hours_per_week',
-      'std_dist_per_month': 'dist_per_month'
+      std_acq_month: 'acquisitionMonth',
+      std_acq_year: 'acquisitionYear',
+      std_price_paid: 'commercialValueAtAcquisition',
+      std_price_today: 'commercialValueAtNow',
+      std_insurance_sem: 'insuranceValue',
+      std_loan: 'borrowedAmount',
+      std_period_of_credit: 'numberInstallments',
+      std_monthly_pay: 'amountInstallment',
+      std_residual_value: 'residualValue',
+      std_nbr_inspection: 'numberInspections',
+      std_inspection_price: 'averageInspectionCost',
+      std_road_tax: 'roadTaxes',
+      std_fuel_paid_per_month: 'fuel_currency_value',
+      std_days_per_week: 'car_to_work_number_days_week',
+      std_jorney_2work: 'car_to_work_distance_home_work',
+      std_jorney_weekend: 'car_to_work_distance_weekend',
+      std_km_per_month: 'no_car_to_work_distance',
+      std_car_fuel_efficiency: 'fuel_efficiency',
+      std_fuel_price: 'fuel_price',
+      std_maintenance_per_year: 'maintenance',
+      std_repairs: 'repairs',
+      std_parking: 'parking',
+      std_tolls: 'no_daily_tolls_value',
+      std_tolls_day: 'daily_expense_tolls',
+      std_tolls_days_per_month: 'number_days_tolls',
+      std_fines: 'tickets_value',
+      std_washing: 'washing_value',
+      std_nr_ppl_family: 'household_number_people',
+      std_pass_price: 'public_transportation_month_expense',
+      std_income_year: 'income_per_year',
+      std_income_month: 'income_per_month',
+      std_income_week: 'income_per_week',
+      std_income_hour: 'income_per_hour',
+      std_months_year: 'income_months_per_year',
+      std_hours_week: 'income_hours_per_week',
+      std_weeks_year: 'income_hour_weeks_per_year',
+      std_time_home_job: 'time_home_job',
+      std_time_weekend: 'time_weekend',
+      std_time_in_driving: 'min_drive_per_day',
+      std_days_month: 'days_drive_per_month',
+      std_time_month_per_year: 'time_month_per_year',
+      std_time_hours_per_week: 'time_hours_per_week',
+      std_dist_per_month: 'dist_per_month'
     }
 
     $.each(mappingIDs, function (key, value) {

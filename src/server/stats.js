@@ -52,8 +52,8 @@ module.exports = {
     data.layout = false
 
     if (pageData.notLocalhost) {
-      let CSPstr = getCC.getCSPstr()
-      debug(CSPstr.replace(/;/g, `;\n`))
+      const CSPstr = getCC.getCSPstr()
+      debug(CSPstr.replace(/;/g, ';\n'))
       res.set('Content-Security-Policy', CSPstr)
     }
 
@@ -136,7 +136,7 @@ module.exports = {
             // fills array with the costs items names/strings
             var costsStrs = []
             var monthlyCosts = calculator.CreateCalculatedDataObj().costs.perMonth.items
-            for (let key of Object.keys(monthlyCosts)) {
+            for (const key of Object.keys(monthlyCosts)) {
               costsStrs.push(key)
             }
 
@@ -147,7 +147,7 @@ module.exports = {
               for (i = 0; i < normalizedStatistics.length; i++) {
                 cc = normalizedStatistics[i].countryCode
                 if (cc !== 'XX') {
-                  let yearlyCost = normalizedStatistics[i]['costs_perMonth_items_' + costsStrs[n]] * 12
+                  const yearlyCost = normalizedStatistics[i]['costs_perMonth_items_' + costsStrs[n]] * 12
                   // copies value from db (monthly) to object (yearly)
                   costs[costsStrs[n]].push(yearlyCost)
                   // fills labels, but just needs once

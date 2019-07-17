@@ -22,7 +22,7 @@ module.exports = function (req, res, serverData) {
   }
   queryInsert += ' ' + 'VALUES('
   for (let i = 0; i < databaseKeys.length; i++) {
-    queryInsert += "'" + databaseObj[databaseKeys[i]] + "'" + (i !== databaseKeys.length - 1 ? ', ' : ')')
+    queryInsert += '\'' + databaseObj[databaseKeys[i]] + '\'' + (i !== databaseKeys.length - 1 ? ', ' : ')')
   }
   debug(sqlFormatter.format(queryInsert))
 

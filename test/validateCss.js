@@ -104,7 +104,7 @@ function validatePathname (pathname, callback) {
       return
     }
 
-    let options = {
+    const options = {
       profile: 'css3svg',
       warning: 'no', // medium warnings
       text: body
