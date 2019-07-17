@@ -4,7 +4,7 @@
   "description": "Automobile Costs Calculator",
   "main": "bin/index.js",
   "scripts": {
-    "test": "node test/test.js",
+    "test": "standard && node test/test.js",
     "postinstall": "node build.js -cim -r prod && node bin/index.js --print --pdf -r prod"
   },
   "repository": {
@@ -30,6 +30,13 @@
     "/src",
     "/docs"
   ],
+  "standard": {
+    "ignore": [
+      "src/client/jquery/js_timer.js",
+      "**/vfs_fonts.js",
+      "bin/"
+    ]
+  },
   "dependencies": {
     "ajv": "6.10.2",
     "async": "2.6.3",
@@ -37,7 +44,6 @@
     "colors": "^1.3.3",
     "command-line-args": "5.1.1",
     "compression": "1.7.4",
-    "eslint": "6.0.1",
     "express": "4.17.1",
     "express-handlebars": "3.1.0",
     "find": "0.3.0",
