@@ -67,7 +67,7 @@ function processJSfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        let fileRelativePath = path.relative(directories.server.root, filename)
+        const fileRelativePath = path.relative(directories.server.root, filename)
         Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result.code, 'utf8')
       }
@@ -103,7 +103,7 @@ function processCSSFiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        let fileRelativePath = path.relative(directories.server.root, filename)
+        const fileRelativePath = path.relative(directories.server.root, filename)
         Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }
@@ -141,7 +141,7 @@ function processHTMLfiles (callback) {
       var result = minifyHTML(code, {
         ignoreCustomFragments: [/{{[{]?(.*?)[}]?}}/, // ignore fragments from handlebars
           /<%[\s\S]*?%>/, // ignore default fragments
-          /<\?[\s\S]*?\?>/ ], // ignore default fragments
+          /<\?[\s\S]*?\?>/], // ignore default fragments
         collapseWhitespace: true, // collapse white space that contributes to text nodes in a document tree
         removeComments: true, // strip HTML comments
         removeOptionalTags: true, // remove optional tags http://perfectionkills.com/experimenting-with-html-minifier/#remove_optional_tags
@@ -152,7 +152,7 @@ function processHTMLfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        let fileRelativePath = path.relative(directories.server.root, filename)
+        const fileRelativePath = path.relative(directories.server.root, filename)
         Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }
@@ -187,7 +187,7 @@ function processJSONfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        let fileRelativePath = path.relative(directories.server.root, filename)
+        const fileRelativePath = path.relative(directories.server.root, filename)
         Bar.tick({ info: fileRelativePath }); debug(fileRelativePath)
         fs.writeFileSync(filename, result, 'utf8')
       }

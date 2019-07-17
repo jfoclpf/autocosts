@@ -26,8 +26,8 @@ module.exports = function (req, res, serverData) {
       return
     }
 
-    let currencyCode = values[0].curr_code
-    let UBERproducts = values[1].products
+    const currencyCode = values[0].curr_code
+    const UBERproducts = values[1].products
 
     // creates a new array with UBER products that have the same currency
     var UBERprod = []; var i
@@ -54,10 +54,10 @@ module.exports = function (req, res, serverData) {
     }
 
     var objResult = {
-      'cost_per_distance': minProduct.price_details.cost_per_distance,
-      'cost_per_minute': minProduct.price_details.cost_per_minute,
-      'currency_code': minProduct.price_details.currency_code,
-      'distance_unit': minProduct.price_details.distance_unit
+      cost_per_distance: minProduct.price_details.cost_per_distance,
+      cost_per_minute: minProduct.price_details.cost_per_minute,
+      currency_code: minProduct.price_details.currency_code,
+      distance_unit: minProduct.price_details.distance_unit
     }
 
     res.send(JSON.stringify(objResult))

@@ -45,10 +45,10 @@ function compressJPG (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.jpg')) {
-      let filePathRelative = path.relative(directories.server.root, filename)
+      const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      var params = [ filename,
+      var params = [filename,
         '-sampling-factor', '4:2:0',
         '-strip', '-quality', '85',
         '-interlace', 'Plane',
@@ -86,10 +86,10 @@ function compressPNG (callback) {
     var filename = path.join(root, fileStats.name)
 
     if (filename.includes('.png')) {
-      let filePathRelative = path.relative(directories.server.root, filename)
+      const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      var params = [ filename,
+      var params = [filename,
         '-strip',
         filename + '.min']
 

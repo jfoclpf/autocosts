@@ -52,20 +52,20 @@ isOnline().then(function (online) {
   (function () {
     DB_TABLE_KEY = 'countryCode'
     AVG_DB_TEMPLATE = {
-      'countryCode': 'VARCHAR(2)', // this is the index/key of the database tables
-      'dateOfCalculation': 'date',
-      'currency': 'VARCHAR(3)',
-      'currencyConversionToEUR': 'float',
-      'totalUsers': 'int(11)',
-      'validUsers': 'int(11)',
-      'globalTotalUsers': 'int(11)'
+      countryCode: 'VARCHAR(2)', // this is the index/key of the database tables
+      dateOfCalculation: 'date',
+      currency: 'VARCHAR(3)',
+      currencyConversionToEUR: 'float',
+      totalUsers: 'int(11)',
+      validUsers: 'int(11)',
+      globalTotalUsers: 'int(11)'
     }
 
-    let objectWithCalculatedAverages = flatten(calculator.CreateCalculatedDataObj(), { delimiter: '_' })
+    const objectWithCalculatedAverages = flatten(calculator.CreateCalculatedDataObj(), { delimiter: '_' })
 
-    for (let averageItem of Object.keys(objectWithCalculatedAverages)) {
+    for (const averageItem of Object.keys(objectWithCalculatedAverages)) {
       // if Template has already the property, use the one from template
-      if (AVG_DB_TEMPLATE.hasOwnProperty(averageItem)) {
+      if (AVG_DB_TEMPLATE.hasOwnProperty(averageItem)) { // eslint-disable-line no-prototype-builtins
         objectWithCalculatedAverages[averageItem] = AVG_DB_TEMPLATE[averageItem]
       } else {
         // the last properties named "calculated" in the object chain are booleans
@@ -115,10 +115,10 @@ isOnline().then(function (online) {
 
       debug('\nLoad exchange rates via API on openexchangerates.org')
 
-      let MoneyApiId = settings.money.ApiId
-      let ApiUrl = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId
+      const MoneyApiId = settings.money.ApiId
+      const ApiUrl = 'https://openexchangerates.org/api/latest.json?app_id=' + MoneyApiId
       // HTTP Header request
-      let options = {
+      const options = {
         url: ApiUrl,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -127,7 +127,7 @@ isOnline().then(function (online) {
 
       request(options, function (err, response, body) {
         if (!err && typeof fx !== 'undefined' && fx.rates) {
-          let result = JSON.parse(body)
+          const result = JSON.parse(body)
           fx.rates = result.rates
           fx.base = result.base
 
@@ -244,13 +244,13 @@ isOnline().then(function (online) {
       // builds the query to insert all the vaules for each country
       // sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
       for (let i = 0; i < numberOfCountries; i++) {
-        let countryCode = countries[i].Country
-        let currency = countries[i].currency
+        const countryCode = countries[i].Country
+        const currency = countries[i].currency
 
         Bar.tick({ info: 'Calculating statistics for ' + countryCode })
 
-        let countryUsers = [] // array with unique users for selected countries[i]
-        let countryData = [] // array with everything for selected countries[i]
+        const countryUsers = [] // array with unique users for selected countries[i]
+        const countryData = [] // array with everything for selected countries[i]
 
         // creates an array of unique users for the selected country
         for (let j = 0; j < numberOfUniqueUsers; j++) {
@@ -266,7 +266,7 @@ isOnline().then(function (online) {
           }
         }
 
-        let countryInfo = {
+        const countryInfo = {
           code: countryCode,
           currency: currency,
           distance_std: countries[i].distance_std,
@@ -274,7 +274,7 @@ isOnline().then(function (online) {
           fuel_price_volume_std: countries[i].fuel_price_volume_std
         }
 
-        let statisticsResults = statsFunctions.calculateStatisticsForADefinedCountry(
+        const statisticsResults = statsFunctions.calculateStatisticsForADefinedCountry(
           countryUsers,
           countryData,
           countryInfo,
@@ -413,7 +413,7 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
   // converts all costs to EUR, the costs are in object costs,
   // which after being flattened every property starts with "costs_"
   if (tableParameter === 'monthly_costs_normalized') {
-    for (let costItem of Object.keys(flattenStatisticsResults)) {
+    for (const costItem of Object.keys(flattenStatisticsResults)) {
       if (costItem.startsWith('costs_') && costItem in flattenStatisticsResults &&
         isFinite(flattenStatisticsResults[costItem])) {
         /* if */
@@ -454,8 +454,8 @@ function createDatabaseTable (table, callback) {
 
   let createTableQuery = 'CREATE TABLE IF NOT EXISTS ' + table + ' '
 
-  let arrayOfEntries = []
-  for (let key of Object.keys(AVG_DB_TEMPLATE)) {
+  const arrayOfEntries = []
+  for (const key of Object.keys(AVG_DB_TEMPLATE)) {
     arrayOfEntries.push(key + ' ' + AVG_DB_TEMPLATE[key])
   }
 
@@ -473,7 +473,7 @@ function createDatabaseTable (table, callback) {
 }
 
 function createDatabaseTableKey (table, callback) {
-  debug("Creating key '" + DB_TABLE_KEY + "' on table: ", table)
+  debug('Creating key \'' + DB_TABLE_KEY + '\' on table: ', table)
 
   var querySetKey = 'CREATE UNIQUE INDEX `' + DB_TABLE_KEY +
     '` ON ' + table + '(`' + DB_TABLE_KEY + '`);'
@@ -484,7 +484,7 @@ function createDatabaseTableKey (table, callback) {
       // on the table and this query is executed
       debug('Key was already present')
     } else {
-      debug("Key '" + DB_TABLE_KEY + "' created on table: ", table)
+      debug('Key \'' + DB_TABLE_KEY + '\' created on table: ', table)
     }
     callback()
   })
@@ -523,7 +523,7 @@ function sqlStringFromArray (inputArray, addQuotesInStringsBool = true) {
       isStr = false
     }
 
-    str += (isStr ? "'" : '') + item + (isStr ? "'" : '')
+    str += (isStr ? '\'' : '') + item + (isStr ? '\'' : '')
     str += (i !== length - 1 ? ', ' : ') ')
   }
 
@@ -549,7 +549,7 @@ function consoleLogTheFinalAverages (countries) {
 
   console.log('\nCountry | Monthly costs | Valid users | Total users | Valid ratio | % of total valid users')
   for (let i = 0; i < countries.length; i++) {
-    let totalCostsStr = !isNaN(countries[i].totalCosts) ? countries[i].totalCosts.toFixed(0) : ''
+    const totalCostsStr = !isNaN(countries[i].totalCosts) ? countries[i].totalCosts.toFixed(0) : ''
 
     console.log('\n' + ('        ' + countries[i].Country).slice(-5) + '  ' +
             ' | ' + ('          ' + totalCostsStr).slice(-9) + ' ' + countries[i].currency +

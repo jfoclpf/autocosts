@@ -83,16 +83,16 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
           let isUserDataEntryOk = countryData[j].time_to_fill_form && countryData[j].country
 
           /* checks if was enough time, on the first calculation from the same user */
-          let wasEnoughTimeFillingTheForm = parseFloat(countryData[j].time_to_fill_form) > statsConstants.MIN_TIME_TO_FILL_FORM
+          const wasEnoughTimeFillingTheForm = parseFloat(countryData[j].time_to_fill_form) > statsConstants.MIN_TIME_TO_FILL_FORM
           isUserDataEntryOk = isUserDataEntryOk && ((n === 0 && wasEnoughTimeFillingTheForm) || n > 0)
 
           if (isUserDataEntryOk) {
-            let userData = convertData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
+            const userData = convertData.createUserDataObjectFromDatabase(countryData[j], countryInfo)
             validateData.setUserData(userData)
             isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
 
             if (isUserDataEntryOk) {
-              let calculatedData = calculator.calculateCosts(userData)
+              const calculatedData = calculator.calculateCosts(userData)
               // console.log("(i,j)=("+i+","+j+")");console.log(countryInfo);console.log(calculatedData);
 
               // checks if the calculatedData is an outlier
@@ -188,7 +188,7 @@ function getAverageCosts (calculatedDataArray) {
       }
 
       // filters out outliers by aver_income_per_hour, it should be a number x: 0<x<Inf
-      let averageIncomePerHour = calculatedDataArray[i].financialEffort.income.averagePerHour
+      const averageIncomePerHour = calculatedDataArray[i].financialEffort.income.averagePerHour
       if (!isNaN(averageIncomePerHour) && averageIncomePerHour > 0 && isFinite(averageIncomePerHour)) {
         for (key of Object.keys(calculatedDataArray[i].financialEffort.income)) {
           calculatedSum.financialEffort.income[key] += calculatedDataArray[i].financialEffort.income[key]
@@ -286,7 +286,7 @@ function getAverageCosts (calculatedDataArray) {
 function isCalculatedDataOk (calculatedData, userData, fx) {
   // userData before calculation
   if (userData.fuel.typeOfCalculation === 'distance') {
-    let fuelDistanceBased = userData.fuel.distanceBased
+    const fuelDistanceBased = userData.fuel.distanceBased
 
     if (conversions.convertFuelEfficiencyToL100km(
       fuelDistanceBased.fuelEfficiency,
@@ -324,7 +324,7 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
   var monthlyCosts = calculatedData.costs.perMonth.items
   var currency = userData.currency
 
-  for (let monthlyItem in monthlyCosts) {
+  for (const monthlyItem in monthlyCosts) {
     if (!isFinite(monthlyCosts[monthlyItem])) {
       return false
     }
@@ -337,7 +337,7 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
 
   // kinetic speed and virtual/consumer speed
   if (calculatedData.drivingDistance.calculated && calculatedData.timeSpentInDriving.calculated) {
-    let kineticSpeed = calculatedData.speeds.averageKineticSpeed
+    const kineticSpeed = calculatedData.speeds.averageKineticSpeed
 
     if (!isFinite(kineticSpeed)) {
       return false
@@ -348,7 +348,7 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
     }
 
     if (calculatedData.financialEffort.calculated) {
-      let consumerSpeed = calculatedData.speeds.averageConsumerSpeed
+      const consumerSpeed = calculatedData.speeds.averageConsumerSpeed
 
       if (!isFinite(consumerSpeed) || consumerSpeed <= 0) {
         return false
@@ -380,13 +380,13 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
 
   // maximum allowed monthly costs per type
   if (currency === 'EUR') {
-    for (let monthlyItem in monthlyCosts) {
+    for (const monthlyItem in monthlyCosts) {
       if (monthlyCosts[monthlyItem] < 0 || monthlyCosts[monthlyItem] > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
         return false
       }
     }
   } else if (fx) {
-    for (let monthlyItem in monthlyCosts) {
+    for (const monthlyItem in monthlyCosts) {
       if (monthlyCosts[monthlyItem] < 0 ||
         fx(monthlyCosts[monthlyItem]).from(currency).to('EUR') > statsConstants.MAX_EUR_MONTHLY[monthlyItem]) {
         /* if */

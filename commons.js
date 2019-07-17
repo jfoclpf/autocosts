@@ -107,15 +107,15 @@ function _init () {
   /* GLOBAL switches, false by default */
   /* these values are defined by the command line arguments */
   SWITCHES = {
-    'cdn': false, /* Content Delivery Network */
-    'uber': false, /* uses UBER API to give car user comparisions with UBER costs */
-    'social': false, /* Social media pulgins */
-    'disableCharts': false, /* Disable Charts on result */
-    'googleCaptcha': false, /* Google Captcha to avoid spam-bots */
-    'googleAnalytics': false, /* Google Analytics */
-    'database': false, /* Inserts user input data into a DataBase */
-    'print': false, /* Print result option, at the end */
-    'pdf': false /* Download PDF report option */
+    cdn: false, /* Content Delivery Network */
+    uber: false, /* uses UBER API to give car user comparisions with UBER costs */
+    social: false, /* Social media pulgins */
+    disableCharts: false, /* Disable Charts on result */
+    googleCaptcha: false, /* Google Captcha to avoid spam-bots */
+    googleAnalytics: false, /* Google Analytics */
+    database: false, /* Inserts user input data into a DataBase */
+    print: false, /* Print result option, at the end */
+    pdf: false /* Download PDF report option */
   }
 
   // basic command line settings
@@ -181,11 +181,11 @@ function _init () {
 
   // set SWITCHES according to commandLineArgs input options
   if (options.All) {
-    for (let opt in SWITCHES) {
+    for (const opt in SWITCHES) {
       SWITCHES[opt] = true
     }
   } else {
-    for (let opt in options) {
+    for (const opt in options) {
       if (opt !== 'release') {
         SWITCHES[opt] = options[opt]
       }
@@ -193,54 +193,54 @@ function _init () {
   }
 
   SETTINGS = {
-    'release': RELEASE,
-    'switches': SWITCHES,
-    'HTTPport': HTTPport,
-    'cdn': { // a CDN provider might be: https://app.keycdn.com/zones
-      'enabled': SWITCHES.cdn,
-      'name': 'cdn',
-      'propName': 'url',
-      'propType': 'string',
-      'url': ''
+    release: RELEASE,
+    switches: SWITCHES,
+    HTTPport: HTTPport,
+    cdn: { // a CDN provider might be: https://app.keycdn.com/zones
+      enabled: SWITCHES.cdn,
+      name: 'cdn',
+      propName: 'url',
+      propType: 'string',
+      url: ''
     },
-    'uber': {
-      'enabled': SWITCHES.uber,
-      'name': 'uber',
-      'propName': 'token',
-      'propType': 'string',
-      'token': ''
+    uber: {
+      enabled: SWITCHES.uber,
+      name: 'uber',
+      propName: 'token',
+      propType: 'string',
+      token: ''
     },
-    'googleCaptcha': {
-      'enabled': SWITCHES.googleCaptcha,
-      'name': 'googleCaptcha',
-      'propName': 'secretKey',
-      'propType': 'string',
-      'secretKey': ''
+    googleCaptcha: {
+      enabled: SWITCHES.googleCaptcha,
+      name: 'googleCaptcha',
+      propName: 'secretKey',
+      propType: 'string',
+      secretKey: ''
     },
-    'googleAnalytics': {
-      'enabled': SWITCHES.googleAnalytics,
-      'name': 'googleAnalytics',
-      'propName': 'trackingId',
-      'propType': 'string',
-      'trackingId': ''
+    googleAnalytics: {
+      enabled: SWITCHES.googleAnalytics,
+      name: 'googleAnalytics',
+      propName: 'trackingId',
+      propType: 'string',
+      trackingId: ''
     },
-    'database': {
-      'enabled': SWITCHES.database,
-      'name': 'database',
-      'propName': 'credentials',
-      'propType': 'object',
-      'credentials': {}
+    database: {
+      enabled: SWITCHES.database,
+      name: 'database',
+      propName: 'credentials',
+      propType: 'object',
+      credentials: {}
     },
-    'money': {
+    money: {
       // in test version we don't use the money API because test version credentials are public
       // and money API credentials must be private
-      'enabled': RELEASE === 'test' ? false : SWITCHES.database,
-      'name': 'money',
-      'propName': 'ApiId',
-      'propType': 'string',
-      'ApiId': ''
+      enabled: RELEASE === 'test' ? false : SWITCHES.database,
+      name: 'money',
+      propName: 'ApiId',
+      propType: 'string',
+      ApiId: ''
     },
-    'defaultCountry': defaultCountry
+    defaultCountry: defaultCountry
   }
 
   checkForInternet()
@@ -322,21 +322,21 @@ function setDIRECTORIES () {
   var credentialsDir = path.join(ROOT_DIR, 'credentials')
 
   var serverDirs = {
-    'root': ROOT_DIR,
-    'src': srcDir,
-    'bin': binDir,
-    'build': buildDir,
-    'test': testDir,
-    'credentials': credentialsDir
+    root: ROOT_DIR,
+    src: srcDir,
+    bin: binDir,
+    build: buildDir,
+    test: testDir,
+    credentials: credentialsDir
   }
 
   /* ################################# */
 
   // these paths are relative, and they refer to the paths which are seen by the browser
   var clientDirs = {
-    'client': 'client', // directory with respect to src/ dir, where the client JS browser files will be stored
-    'css': 'css', // directory with respect to src/ dir, where the CSS  files will be stored
-    'tables': 'tables' // where the JPG tables with car costs for each country
+    client: 'client', // directory with respect to src/ dir, where the client JS browser files will be stored
+    css: 'css', // directory with respect to src/ dir, where the CSS  files will be stored
+    tables: 'tables' // where the JPG tables with car costs for each country
   }
 
   /* ################################# */
@@ -344,14 +344,14 @@ function setDIRECTORIES () {
   // these paths are relative and refer to the project's code parent folder,
   // i.e., the parent directory of these paths is either src/ or bin/
   var projectDirs = {
-    'countries': 'countries',
-    'css': 'css',
-    'tables': 'tables',
-    'images': 'images',
-    'public': 'public',
-    'views': 'views',
-    'client': 'client',
-    'server': 'server'
+    countries: 'countries',
+    css: 'css',
+    tables: 'tables',
+    images: 'images',
+    public: 'public',
+    views: 'views',
+    client: 'client',
+    server: 'server'
   }
 
   var srcProjectDirs = {}
@@ -364,11 +364,11 @@ function setDIRECTORIES () {
 
   DIRECTORIES = {
     // these paths are absolute
-    'server': serverDirs, // these paths are absolute
-    'src': srcProjectDirs, // these paths are absolute
-    'bin': binProjectDirs, // these paths are absolute
-    'client': clientDirs, // these paths are relative (as seen by the browser)
-    'project': projectDirs // these paths are relative (as seen by either src/ or bin/)
+    server: serverDirs, // these paths are absolute
+    src: srcProjectDirs, // these paths are absolute
+    bin: binProjectDirs, // these paths are absolute
+    client: clientDirs, // these paths are relative (as seen by the browser)
+    project: projectDirs // these paths are relative (as seen by either src/ or bin/)
   }
 }
 
@@ -387,54 +387,54 @@ function setFILENAMES () {
   // Default file names for JSON files with credentials for each external service
   FILENAMES = {
     // these paths are ABSOLUTE
-    'build': {
-      'compressImages': path.join(DIRECTORIES.server.build, 'compressImages.js'),
-      'generateTables': path.join(DIRECTORIES.server.build, 'generateTables.js'),
-      'getAvgFromDB': path.join(DIRECTORIES.server.build, 'getAvgFromDB.js'),
-      'minifyFiles': path.join(DIRECTORIES.server.build, 'minifyFiles.js'),
-      'rasterTables': path.join(DIRECTORIES.server.build, 'rasterTables.js'),
-      'setCountrySpecsDB': path.join(DIRECTORIES.server.build, 'setCountrySpecsDB.js'),
-      'statsFunctions': path.join(DIRECTORIES.server.build, 'statsFunctions.js')
+    build: {
+      compressImages: path.join(DIRECTORIES.server.build, 'compressImages.js'),
+      generateTables: path.join(DIRECTORIES.server.build, 'generateTables.js'),
+      getAvgFromDB: path.join(DIRECTORIES.server.build, 'getAvgFromDB.js'),
+      minifyFiles: path.join(DIRECTORIES.server.build, 'minifyFiles.js'),
+      rasterTables: path.join(DIRECTORIES.server.build, 'rasterTables.js'),
+      setCountrySpecsDB: path.join(DIRECTORIES.server.build, 'setCountrySpecsDB.js'),
+      statsFunctions: path.join(DIRECTORIES.server.build, 'statsFunctions.js')
     },
-    'project': {
-      'countriesInfoFile': path.join(countriesDir, 'info.json'),
+    project: {
+      countriesInfoFile: path.join(countriesDir, 'info.json'),
       'conversions.js': path.join(clientDir, 'core', 'conversions.js'),
       'calculator.js': path.join(clientDir, 'core', 'calculator.js'),
       'convertData.js': path.join(clientDir, 'convertData.js'),
       'validateData.js': path.join(clientDir, 'validateData.js')
     },
-    'server': {
-      'credentials': {
-        'prod': 'prodCredentials.json',
-        'dev': 'devCredentials.json',
-        'test': 'testCredentials.json'
+    server: {
+      credentials: {
+        prod: 'prodCredentials.json',
+        dev: 'devCredentials.json',
+        test: 'testCredentials.json'
       },
-      'credentialsFullPath': {
-        'prod': '',
-        'dev': '',
-        'test': ''
+      credentialsFullPath: {
+        prod: '',
+        dev: '',
+        test: ''
       }
     },
     // the LOCAL paths are RELATIVE to the main host as seen by the BROWSER,
     // thus don't use node 'fs' nor 'path' functions, i.e., these are URI or part of URI
-    'client': {
-      'jquery': {
-        'local': DIRECTORIES.client.client + '/jquery/jquery.min.js',
-        'cdn': 'https://code.jquery.com/jquery-latest.min.js',
-        'uri': '' // it will be one of the above
+    client: {
+      jquery: {
+        local: DIRECTORIES.client.client + '/jquery/jquery.min.js',
+        cdn: 'https://code.jquery.com/jquery-latest.min.js',
+        uri: '' // it will be one of the above
       },
-      'chartjs': {
-        'local': DIRECTORIES.client.client + '/chart/chartjs.min.js',
-        'cdn': 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js',
-        'uri': '' // it will be one of the above
+      chartjs: {
+        local: DIRECTORIES.client.client + '/chart/chartjs.min.js',
+        cdn: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js',
+        uri: '' // it will be one of the above
       },
-      'GrecaptchaAPI': 'https://www.google.com/recaptcha/api.js',
-      'Ganalytics': 'https://www.google-analytics.com/analytics.js'
+      GrecaptchaAPI: 'https://www.google.com/recaptcha/api.js',
+      Ganalytics: 'https://www.google-analytics.com/analytics.js'
     }
   }
 
   // fills credentialsFullPath subObject
-  for (let file in FILENAMES.server.credentials) {
+  for (const file in FILENAMES.server.credentials) {
     FILENAMES.server.credentialsFullPath[file] =
             path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file])
   }
@@ -468,7 +468,7 @@ function setROOT_DIR () { // eslint-disable-line camelcase
 // if cdn option is enabled, select CDN version, otherwise local files
 // true for CDN; false for Local files
 function setCdnOrLocalFiles (isCDN) {
-  for (let key in FILENAMES.client) {
+  for (const key in FILENAMES.client) {
     var obj = FILENAMES.client[key]
     // it is a client filename with different values for cdn and local
     if (obj.local && obj.cdn) {
@@ -504,7 +504,7 @@ function checkForInternet () {
           setCdnOrLocalFiles(false) // set Local files with "false"
         }
 
-        let servicesDisabled = []
+        const servicesDisabled = []
         for (let i = 0; i < demandingInternet.length; i++) {
           if (SWITCHES[demandingInternet[i]]) {
             SWITCHES[demandingInternet[i]] = false
@@ -512,7 +512,7 @@ function checkForInternet () {
           }
         }
 
-        let len = servicesDisabled.length
+        const len = servicesDisabled.length
         if (len) {
           process.stdout.write('Services disabled: ')
           for (let i = 0; i < len; i++) {
@@ -576,7 +576,7 @@ function getKeyByValue (object, value) {
 // for example: "PT, BR, US, UK, etc."
 function getCClistOnStr (availableCT) {
   var str = ''
-  for (let CC in availableCT) {
+  for (const CC in availableCT) {
     str += CC + ', '
   }
   // strip the last two character of the string, the last ", "
@@ -658,7 +658,7 @@ function getConsoleColors () {
 // returns an object with several different information about the domains
 function getDomainsObject (domainsCountries) {
   if (!domainsCountries) {
-    let countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
+    const countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
     domainsCountries = countriesInfo.domainsCountries
   }
 
@@ -684,7 +684,9 @@ function isEmptyOrInvalidObj (obj) {
 // detects whether an Object is empty
 function isEmpty (obj) {
   for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) { return false }
+    if (obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
+      return false
+    }
   }
 
   return JSON.stringify(obj) === JSON.stringify({})
@@ -740,7 +742,7 @@ function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
   try {
     execSync('node ' + args.join(' '), { stdio: stdio })
   } catch (err) {
-    let errMsg = 'Error executing script: ' + path.relative(__dirname, scriptPath).error
+    const errMsg = 'Error executing script: ' + path.relative(__dirname, scriptPath).error
     console.log(Error(errMsg + '\n' + err))
     process.exit(1)
   }
@@ -749,7 +751,7 @@ function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
 function getProgressBar (totalNumberOfTicks, muted) {
   var Bar
   if (!muted) {
-    let ProgressBar = require('progress')
+    const ProgressBar = require('progress')
     Bar = new ProgressBar('[:bar] :percent :info', { total: totalNumberOfTicks, width: 80 })
   } else {
     Bar = { tick: function () {}, terminate: function () {} }

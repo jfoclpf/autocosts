@@ -2,7 +2,7 @@
    namely the standard distance (km, miles, etc.), fuel amount (ltr, gal, etc.) and
    fuel efficiency (l/100km, km/l, mpg(imp), etc.) */
 
-console.log("Populating the 'countries specs database' with information from the countries files")
+console.log('Populating the \'countries specs database\' with information from the countries files')
 
 // includes
 const fs = require('fs')

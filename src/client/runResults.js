@@ -61,8 +61,8 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
       runButton.set('show-g-recaptcha')
 
       grecaptcha.render(captchaRunButtonId, {
-        'sitekey': '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
-        'callback': recaptchaSolved
+        sitekey: '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
+        callback: recaptchaSolved
       })
     } else {
       runButton.set('show-normal')
@@ -168,7 +168,7 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
           }
           break
         default:
-          console.error("Bad paramter flag on runButton.set(flag), unknown 'flag': " + flag)
+          console.error('Bad paramter flag on runButton.set(flag), unknown \'flag\': ' + flag)
       }
     }
 

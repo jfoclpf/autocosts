@@ -42,9 +42,9 @@ module.exports = function (req, res, serverData, WORDS) {
       var urlHref = url.getValidURL(req, domainsCountries)
 
       var Obj = {
-        'country': country,
-        'first': first,
-        'urlHref': urlHref
+        country: country,
+        first: first,
+        urlHref: urlHref
       }
       domains[domain].countries[CC] = Obj
     }

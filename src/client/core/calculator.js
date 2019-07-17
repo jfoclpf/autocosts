@@ -677,7 +677,7 @@ autocosts.calculatorModule = (function (thisModule) {
         break
 
       default:
-        // if income period is not valid, return the function immediately
+      // if income period is not valid, return the function immediately
         financialEffort.calculated = financialEffort.income.calculated = false
         return
     }
@@ -1262,7 +1262,7 @@ autocosts.calculatorModule = (function (thisModule) {
       return false
     } else {
       for (var prop in Obj) {
-        if (Obj.hasOwnProperty(prop)) {
+        if (Obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
           return true
         }
       }
@@ -1274,7 +1274,7 @@ autocosts.calculatorModule = (function (thisModule) {
     consoleError(''); consoleError('')
     for (var i = 0; i < arguments.length; i = i + 2) {
       if (typeof arguments[i + 1] === 'object') {
-        consoleError("'" + arguments[i] + "'" + ' Object is:')
+        consoleError('\'' + arguments[i] + '\'' + ' Object is:')
         consoleError(arguments[i + 1])
       } else {
         consoleError(arguments[i] + ': ' + arguments[i + 1])

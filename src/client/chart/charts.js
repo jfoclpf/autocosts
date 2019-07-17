@@ -133,7 +133,7 @@ autocosts.showResultsModule.chartsModule = (function (translatedStrings, switche
     var periodicCosts = {}
     var monthlyCosts = calculatedData.costs.perMonth.items
     for (var key in monthlyCosts) {
-      if (monthlyCosts.hasOwnProperty(key)) {
+      if (monthlyCosts.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         periodicCosts[key] = monthlyCosts[key] * numMonths
       }
     }
@@ -277,7 +277,7 @@ autocosts.showResultsModule.chartsModule = (function (translatedStrings, switche
     var monthlyCosts = calculatedData.costs.perMonth.items
     var n = 0; var periodicCosts = [] // periodic costs according; used for showing in tooltips of chart
     for (var key in monthlyCosts) {
-      if (monthlyCosts.hasOwnProperty(key)) {
+      if (monthlyCosts.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         percentageCosts[key] = monthlyCosts[key] / calculatedData.costs.perMonth.total * 100
         periodicCosts[n] = monthlyCosts[key] * numMonths
         n++

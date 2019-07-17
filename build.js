@@ -186,12 +186,12 @@ function copy () {
     destFilePath) { // file's path to where it is copied, relative to the project bin/ directory
     // trick to get the npm module main directory
     // https://stackoverflow.com/a/49455609/1243247
-    let packageDirFullpath = path.dirname(require.resolve(path.join(npmPackage, 'package.json')))
+    const packageDirFullpath = path.dirname(require.resolve(path.join(npmPackage, 'package.json')))
 
     fse.copySync(path.join(packageDirFullpath, fileRelativePath), path.join(directories.server.bin, destFilePath))
 
-    let packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath)
-    let consoleMsg = npmPackage + ': ' + (path.join(packageDirRelativepath, fileRelativePath)).verbose + ' -> ' +
+    const packageDirRelativepath = path.relative(path.dirname(path.dirname(packageDirFullpath)), packageDirFullpath)
+    const consoleMsg = npmPackage + ': ' + (path.join(packageDirRelativepath, fileRelativePath)).verbose + ' -> ' +
             (path.join(path.relative(path.dirname(directories.server.bin), directories.server.bin), destFilePath)).verbose
 
     debug(consoleMsg)

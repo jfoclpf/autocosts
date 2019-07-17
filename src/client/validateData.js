@@ -313,7 +313,7 @@ autocosts.validateDataModule = (function () {
         }
 
         if (fuel.distanceBased.considerCarToJob) {
-          /* make calculation considering the user takes his car to job on a daily basis */
+        /* make calculation considering the user takes his car to job on a daily basis */
           var daysPerWeek = fuel.distanceBased.carToJob.daysPerWeek
           if (!isInteger(daysPerWeek) || daysPerWeek <= 0 || daysPerWeek > 7) {
             return false
@@ -696,7 +696,7 @@ autocosts.validateDataModule = (function () {
       return false
     } else {
       for (var prop in Obj) {
-        if (Obj.hasOwnProperty(prop)) {
+        if (Obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
           return true
         }
       }

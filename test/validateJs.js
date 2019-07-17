@@ -68,12 +68,12 @@ function checkJsCodeSyntax (callback) {
 
   var JShintOpt = {
     '-W041': true,
-    'multistr': true,
-    'asi': true,
-    'expr': true,
-    'evil': true,
-    'funcscope': false,
-    'esversion': 6
+    multistr: true,
+    asi: true,
+    expr: true,
+    evil: true,
+    funcscope: false,
+    esversion: 6
   }
 
   var walking = function (root, fileStats, next) {
@@ -116,7 +116,7 @@ function checkJsCodeSyntax (callback) {
 
       debug('\nAll .js files checked for jshint rules\n')
       if (numberOfTotalErrorsOrWanings !== 0) {
-        let pluralChar = numberOfTotalErrorsOrWanings > 1 ? 's' : ''
+        const pluralChar = numberOfTotalErrorsOrWanings > 1 ? 's' : ''
         console.log('\n',
           ('jshint found ' + numberOfTotalErrorsOrWanings + ' error' + pluralChar + ' or warning' + pluralChar + '\n').error
         )
@@ -154,22 +154,27 @@ function checkJsCodeStandard (callback) {
            !filename.includes('js_timer.js')) {
       var code = fs.readFileSync(filename, 'utf-8')
 
-      standard.lintText(code, { filename: filename }, function (err, results) {
-        if (err) {
-          callback(Error(err))
-          return
-        }
+      standard.lintText(code,
+        { filename: filename,
+          fix: false,
+          envs: { browser: true, node: true, es6: true }
+        },
+        function (err, results) {
+          if (err) {
+            callback(Error(err))
+            return
+          }
 
-        if (results.errorCount || results.warningCount) {
-          consoleStandardJsErrors(results)
-          numberOfTotalErrorsOrWanings += results.errorCount
-          numberOfTotalErrorsOrWanings += results.warningCount
-        } else {
-          debug('standard: ', (path.relative(directories.server.root, filename)).verbose)
-          Bar.tick({ info: path.relative(directories.server.root, filename) })
-        }
-        next()
-      })
+          if (results.errorCount || results.warningCount) {
+            consoleStandardJsErrors(results)
+            numberOfTotalErrorsOrWanings += results.errorCount
+            numberOfTotalErrorsOrWanings += results.warningCount
+          } else {
+            debug('standard: ', (path.relative(directories.server.root, filename)).verbose)
+            Bar.tick({ info: path.relative(directories.server.root, filename) })
+          }
+          next()
+        })
     } else {
       next()
     }
@@ -190,7 +195,7 @@ function checkJsCodeStandard (callback) {
 
       debug('\nAll .js files checked for standardJS rules\n')
       if (numberOfTotalErrorsOrWanings !== 0) {
-        let pluralChar = numberOfTotalErrorsOrWanings > 1 ? 's' : ''
+        const pluralChar = numberOfTotalErrorsOrWanings > 1 ? 's' : ''
         console.log('\n',
           ('standardJS found ' + numberOfTotalErrorsOrWanings + ' error' + pluralChar + ' or warning' + pluralChar + '\n').error
         )

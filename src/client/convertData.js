@@ -567,7 +567,7 @@ autocosts.convertDataModule = (function (thisModule) {
       for (var k in obj) {
         if (typeof obj[k] === 'object' && obj[k] !== null) {
           parseObjectProperties(obj[k], parse)
-        } else if (obj.hasOwnProperty(k)) {
+        } else if (obj.hasOwnProperty(k)) { // eslint-disable-line no-prototype-builtins
           parse(obj, k)
         }
       }
@@ -613,13 +613,13 @@ autocosts.convertDataModule = (function (thisModule) {
   // for example if timePeriod is either 'month', 1, '1', 'monthly', 'mensal' or 'mês' => 'month'
   function getTimePeriod (timePeriod) {
     var timePeriodsObj = {
-      'hour': ['hourly'],
-      'week': ['weekly'],
-      'month': [1, 'monthly', 'mensal', 'mês'],
-      'twoMonths': [2, 'two_months', 'two months', '2 months', 'bimestral', 'bimestre'],
-      'trimester': [3, 'trimesterly', 'quarterly', 'trimestral'],
-      'semester': [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
-      'year': [5, 'yearly', 'anual', 'ano']
+      hour: ['hourly'],
+      week: ['weekly'],
+      month: [1, 'monthly', 'mensal', 'mês'],
+      twoMonths: [2, 'two_months', 'two months', '2 months', 'bimestral', 'bimestre'],
+      trimester: [3, 'trimesterly', 'quarterly', 'trimestral'],
+      semester: [4, 'semesterly', 'semestral', 'half&#8209;yearly', 'halfyearly'],
+      year: [5, 'yearly', 'anual', 'ano']
     }
 
     var val = !isNaN(timePeriod) ? parseInt(timePeriod, 10) : timePeriod

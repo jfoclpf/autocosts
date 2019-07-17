@@ -107,7 +107,7 @@ function validatePage (pathname, callback) {
       return
     }
 
-    let options = {
+    const options = {
       format: 'text',
       data: body
     }
