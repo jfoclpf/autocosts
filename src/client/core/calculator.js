@@ -24,7 +24,7 @@ autocosts.calculatorModule = (function (thisModule) {
     numberOfDaysInAWeek: 7,
     numberOfMonthsInAYear: 12,
     numberOfWeeksInAYear: 365.25 / 7,
-    numberOfWeeksInAMonth: 365.25 / 7 / 12
+    numberOfWeeksInAMonth: 365.25 / 12 / 7
   }
 
   // says if some calculated results are likely to be valid
