@@ -1099,7 +1099,7 @@ autocosts.calculatorModule = (function (thisModule) {
       // where: timeInMinutes = distanceDoneWithUber/ averageSpeedInDistancePerMinutes
       distanceDoneWithUber = totalUberCosts / (uberCostPerUnitDistance + uberCostPerMinute / averageSpeedInDistancePerMinutes)
 
-      if (distanceDoneWithUber < 0) {
+      if (!isNumber(distanceDoneWithUber) || distanceDoneWithUber < 0) {
         return uberNotCalculated
       }
     }
