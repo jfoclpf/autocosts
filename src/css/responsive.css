@@ -126,7 +126,7 @@
 
 @media screen and (max-width:540px) {
 
-    h1 {font-size: 35px; line-height: 40px}
+    h1 {font-size: 33px; line-height: 40px}
     h2 {font-size: 16px}
     h3 {font-size: 22px}
     h4 {font-size: 18px}
@@ -184,9 +184,9 @@
 
     .input_300 {width: 76%!important; max-width: 62%; padding-left: 80px }
     .input_200 {width: 65%!important}
-    .input_70, select {width: 100%!important}
-    #hero select {width: 118px!important}
-    input.unit_n_month_left {padding-left: 90px}
+    .input_70, select {width: 100%}
+    #hero select {width: 118px}
+    input.unit_n_month_left {padding-left: 95px}
     input.unit_n_hour_left {padding-left: 80px}
     input.no_padding_left {width: 66%}
 

@@ -152,7 +152,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     // adjusts the size of select according to content
     var resizeSelectToContent = function (jqueryId) {
       var $this = $(jqueryId)
-      var arrowWidth = 10
+      var arrowWidth = 5
       // create test element
       var text = $this.find('option:selected').text()
       var $test = $('<span>').html(text).css({
@@ -220,6 +220,10 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
 
     // adjusts the size of select according to content
     resizeSelectToContent('#country_select')
+    // upon windows resize, resize the select
+    $(window).resize(function () {
+      resizeSelectToContent('#country_select')
+    })
 
     // load statistics table on sidebars.hbs
     updateStatsTable(serverInfo.selectedCountry)
