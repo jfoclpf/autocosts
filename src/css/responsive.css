@@ -170,7 +170,9 @@
 
     .container .form_part {width: 90%; margin: 0 5%;}
 
-    .container .form_part .form_part_head_title {margin: 3% 0 25px;}
+    /* see issue #124 https://github.com/jfoclpf/autocosts/issues/124
+    .container .form_part .form_part_head_title {margin: 3% 0 25px;} */
+
     .container .form_part h2.lang-fixed_costs_header_1 {font-size: 22px}
 
     .container .form_part .field_container {margin: 0 0 50px;}

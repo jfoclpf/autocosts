@@ -209,7 +209,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part h2.lang-fixed_costs_header_1 {font-size: 30px; line-height: 30px; margin: 0 }
 .container .form_part p.lang-fixed_costs_header_2 {color: #868790; margin: 0 }
 
-.container .form_part .form_part_head_title {margin: 8% 0 30px }
+/* see issue #124 https://github.com/jfoclpf/autocosts/issues/124
+.container .form_part .form_part_head_title {display none; margin: 8% 0 30px } */
 
 .container .form_part .field_container {display: block; margin-top: 60px;}
 
