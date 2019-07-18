@@ -18,7 +18,7 @@ container {display:block;}
 .wrapper {display:block; position:relative; width:100%; max-width:1170px; margin:0 auto;}
 
 main {display:block; position: relative; margin: 130px auto 0; text-align: center; min-height:400px;}
-main section {display:block; position:relative; }
+main section, main #form {display:block; position:relative; }
 main #form, #results {width: 1170px; max-width: 100%; margin: 0 auto;}
 main #form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
 
