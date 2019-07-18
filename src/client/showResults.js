@@ -588,27 +588,27 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       case 'month':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.month)
+            translatedStrings.word_per + ' ' + translatedStrings.month)
         break
       case 'twoMonths':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
+            translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
         break
       case 'trimester':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.trimester)
+            translatedStrings.word_per + ' ' + translatedStrings.trimester)
         break
       case 'semester':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.semester)
+            translatedStrings.word_per + ' ' + translatedStrings.semester)
         break
       case 'year':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.word_per + ' ' + translatedStrings.year)
+            translatedStrings.word_per + ' ' + translatedStrings.year)
         break
       default:
         throw Error(errMsg)
@@ -952,7 +952,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
         addLiElm('uber',
           translatedStrings.kinetic_speed_title,
           calculatedData.speeds.averageKineticSpeed.toFixed(2) + ' ' + translatedStrings.std_dist + '/' +
-                         translatedStrings.hour_abbr)
+            translatedStrings.hour_abbr)
         addLiElm('uber',
           'UBER - ' + translatedStrings.std_dist_full + ' ' + translatedStrings.word_per + ' ' + translatedStrings.month,
           calculatedUber.distanceDoneWithUber.toFixed(0) + ' ' + translatedStrings.std_dist_full)
@@ -961,8 +961,8 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
           currencyShow(calculatedUber.uberCosts.total.toFixed(0)))
 
         addLiElm('other_pub_trans_for_uber',
-          translatedStrings.fam_nbr, form.publicTransports.numberOfPeopleInFamily + ' ' +
-                         translatedStrings.person_or_people)
+          translatedStrings.fam_nbr,
+          form.publicTransports.numberOfPeopleInFamily + ' ' + translatedStrings.person_or_people)
         addLiElm('other_pub_trans_for_uber', translatedStrings.pass_month_avg,
           currencyShow(form.publicTransports.monthlyPassCost))
       }

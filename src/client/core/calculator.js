@@ -965,7 +965,7 @@ autocosts.calculatorModule = (function (thisModule) {
       // Virtual/Consumer Speed calculated if info of Financial Effort is available
       if (financialEffort.calculated) {
         averageConsumerSpeed =
-                    drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar)
+          drivingDistance.perYear / (timeSpentInDriving.hoursPerYear + financialEffort.workingHoursPerYearToAffordCar)
       }
     }
 
