@@ -18,7 +18,8 @@ container {display:block;}
 .wrapper {display:block; position:relative; width:100%; max-width:1170px; margin:0 auto;}
 
 main {display:block; position: relative; margin: 130px auto 0; text-align: center; min-height:400px;}
-main section, main #form {display:block; position:relative; }
+main section {display:block; position:relative; }
+main #form {display:none; position:relative; }
 main #form, #results {width: 1170px; max-width: 100%; margin: 0 auto;}
 main #form .container {margin-top: 115px; display: -webkit-box; display: -ms-flexbox; display: flex; height: 100vh; }
 
@@ -43,8 +44,6 @@ p {font-size: 16px; color: #42444a; line-height: 22px; margin: 10px 0}
 
 
 /* ------------------------------********* FORM ELEMENTS *********------------------------------ */
-
-#form {display: none}
 
 label {font-size: 18px; color: black; display: block; clear: both; margin-bottom: 15px}
 label > span, label > i  {font-size: 14px; font-style: normal; color: #42444a; display: block; clear: both; }
