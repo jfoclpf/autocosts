@@ -40,7 +40,7 @@ autocosts.convertDataModule = (function (thisModule) {
   // creates an Object from the html user form
   // to be passed into the calculator core function
   function createUserDataObjectFromForm (userForm) {
-    var f = userForm // main user form document variable
+    var f = userForm.elements // main user form document variable
 
     // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#userdata-class
     var userData = {
@@ -86,22 +86,22 @@ autocosts.convertDataModule = (function (thisModule) {
 
       // Form Part 2
       fuel: {
-        typeOfCalculation: getSelectedValueOnFormRadioButton(f.calc_combustiveis), // type string: "money" or "distance"
+        typeOfCalculation: getSelectedValueOnFormRadioButton(f.radio_fuel_euros), // type string: "money" or "distance"
         currencyBased: {
-          amountPerPeriod: f.combustiveis_euro.value,
-          period: getTimePeriod(f.combustiveis_periodo_euro.value) // type string: "month", "twoMonths",  "trimester", "semester", "year"
+          amountPerPeriod: f.fuel_currency_value.value,
+          period: getTimePeriod(f.fuel_currency_time_period.value) // type string: "month", "twoMonths",  "trimester", "semester", "year"
         },
         distanceBased: {
           considerCarToJob: getSelectedValueOnFormRadioButton(f.car_job_form2), // boolean
           carToJob: {
-            daysPerWeek: f.dias_por_semana.value,
-            distanceBetweenHomeAndJob: f.km_entre_casa_trabalho.value,
-            distanceDuringWeekends: f.km_fds.value,
+            daysPerWeek: f.car_to_work_number_days_week.value,
+            distanceBetweenHomeAndJob: f.car_to_work_distance_home_work.value,
+            distanceDuringWeekends: f.car_to_work_distance_weekend.value,
             distanceStandardUnit: commonsModule.getStandard('distance') // standard distance for current country: "km", "mil" or "mil(10km)"
           },
           noCarToJob: {
-            distancePerPeriod: f.km_por_mes.value,
-            period: getTimePeriod(f.combustivel_period_km.value), // type string: "month", "twoMonths",  "trimester", "semester", "year"
+            distancePerPeriod: f.no_car_to_work_distance.value,
+            period: getTimePeriod(f.no_car_to_work_time_period.value), // type string: "month", "twoMonths",  "trimester", "semester", "year"
             distanceStandardUnit: f.distance_standard_onfuel.value // type string: "km", "mil" or "mil(10km)"
           },
           fuelEfficiency: f.fuel_efficiency.value, // fuel efficiency of the vehicle
@@ -112,15 +112,15 @@ autocosts.convertDataModule = (function (thisModule) {
       },
 
       maintenance: {
-        amountPerYear: f.revisoes.value
+        amountPerYear: f.maintenance.value
       },
 
       repairsImprovements: {
-        amountPerYear: f.reparacoes.value
+        amountPerYear: f.repairsImprovements.value
       },
 
       parking: {
-        amountPerMonth: f.parqueamento.value
+        amountPerMonth: f.parking.value
       },
 
       tolls: {
@@ -147,8 +147,8 @@ autocosts.convertDataModule = (function (thisModule) {
 
       // Form Part 3
       publicTransports: {
-        numberOfPeopleInFamily: f.pessoas_agregado.value,
-        monthlyPassCost: f.preco_passe.value,
+        numberOfPeopleInFamily: f.household_number_people.value,
+        monthlyPassCost: f.public_transportation_month_expense.value,
         taxi: {
           costPerUnitDistance: autocosts.serverInfo.translatedStrings.taxi_price_per_dist, // type number, ex: 0.5, that is [currency]/km
           distanceStandardUnit: commonsModule.getStandard('distance') // type string: "km", "mi", "mil(10km)"
