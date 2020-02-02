@@ -125,7 +125,7 @@ function testCalculatorFunction (callback) {
 
       Bar.tick()
       // remove uziped file
-      fs.unlink(userInsertionsFile)
+      // fs.unlink(userInsertionsFile)
       Bar.terminate()
 
       callback(null, 0)
