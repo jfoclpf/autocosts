@@ -31,7 +31,12 @@ convertData.initialize()
 validateData.initialize()
 calculator.initialize()
 
+// file which is zip compressed on the repo, and it's used for testing the core calculator
+var userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
+var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
+
 testCalculatorFunction(function (error) {
+  fs.unlinkSync(userInsertionsFile)
   if (error) {
     console.error(Error(error))
     process.exit(1)
@@ -51,7 +56,7 @@ testCalculatorFunction(function (error) {
 function testCalculatorFunction (callback) {
   console.log('Testing core calculator function with thousands of inputs...')
   debug('Inserting thousands of user inputs from ' +
-    path.relative(directories.server.root, path.join(__dirname, 'users_insertions.json')) +
+    path.relative(directories.server.root, userInsertionsFile) +
     ' into the core calculator function. Progress bar...\n')
 
   var _countrySpecs = JSON.parse(
@@ -64,9 +69,6 @@ function testCalculatorFunction (callback) {
     countrySpecs[_countrySpecs[item].Country] = _countrySpecs[item]
   }
   debug(countrySpecs)
-
-  var userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
-  var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 
   extractZip(userInsertionsZipFile, { dir: __dirname }, function (errOnUnzip) {
     if (errOnUnzip) {
