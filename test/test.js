@@ -13,6 +13,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const extractZip = require('extract-zip')
 const ProgressBar = require('progress')
 // const { execSync } = require('child_process')
 const debug = require('debug')('test:test')
@@ -64,59 +65,71 @@ function testCalculatorFunction (callback) {
   }
   debug(countrySpecs)
 
+  var userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
   var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
-  fs.readFile(userInsertionsFile, 'utf8', function (err, data) {
-    if (err) {
-      // It is always good practice to return after callback(err, result)
-      // whenever a callback call is not the last statement of a function
-      callback(Error('Error reading file ' + userInsertionsFile + '. ' + err.message))
+
+  extractZip(userInsertionsZipFile, { dir: __dirname }, function (errOnUnzip) {
+    if (errOnUnzip) {
+      callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
       return
     }
 
-    var usersInput = JSON.parse(data, parseJsonProperty)
-    var numberofInputs = usersInput.length
-
-    var Bar = new ProgressBar('[:bar] :percent',
-      { total: numberofInputs, width: 80 }
-    )
-
-    for (let i = 0; i < numberofInputs; i++) {
-      let countryInfo, userData, calculatedData
-      Bar.tick()
-
-      try {
-        const CC = usersInput[i].country // ISO Country Code
-
-        if (CC) {
-          countryInfo = {
-            code: CC,
-            currency: countrySpecs[CC].currency,
-            distance_std: countrySpecs[CC].distance_std,
-            fuel_efficiency_std: countrySpecs[CC].fuel_efficiency_std,
-            fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
-          }
-
-          userData = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
-          validateData.setUserData(userData)
-          const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
-
-          if (isUserDataEntryOk) {
-            calculatedData = calculator.calculateCosts(userData)
-          }
-        }
-      } catch (error) {
-        console.error('\n\nError on i:' + i, '\n',
-          '\n\ncountryObject: ', countryInfo,
-          '\n\nusersInput: ', usersInput[i],
-          '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
-          '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
-
-        callback(Error(error))
+    // here the file was unzip successfully, the zip extractor removes the extension .zip
+    fs.readFile(userInsertionsFile, 'utf8', function (err, data) {
+      if (err) {
+        callback(Error('Error reading file ' + userInsertionsFile + '. ' + err.message))
+        return
       }
-    }
 
-    Bar.terminate()
-    callback(null, 0)
+      var usersInput = JSON.parse(data, parseJsonProperty)
+      var numberofInputs = usersInput.length
+
+      var Bar = new ProgressBar('[:bar] :percent',
+        { total: numberofInputs + 1, width: 80 }
+      )
+
+      for (let i = 0; i < numberofInputs; i++) {
+        let countryInfo, userData, calculatedData
+        Bar.tick()
+
+        try {
+          const CC = usersInput[i].country // ISO Country Code
+
+          if (CC) {
+            countryInfo = {
+              code: CC,
+              currency: countrySpecs[CC].currency,
+              distance_std: countrySpecs[CC].distance_std,
+              fuel_efficiency_std: countrySpecs[CC].fuel_efficiency_std,
+              fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
+            }
+
+            userData = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
+            validateData.setUserData(userData)
+            const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
+
+            if (isUserDataEntryOk) {
+              calculatedData = calculator.calculateCosts(userData)
+            }
+          }
+        } catch (error) {
+          console.error('\n\nError on i:' + i, '\n',
+            '\n\ncountryObject: ', countryInfo,
+            '\n\nusersInput: ', usersInput[i],
+            '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
+            '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
+
+          callback(Error(error))
+        }
+      }
+
+      Bar.tick()
+      // remove uziped file
+      fs.unlink(userInsertionsFile)
+      Bar.terminate()
+
+      callback(null, 0)
+    })
   })
 }
 

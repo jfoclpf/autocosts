@@ -65,6 +65,7 @@
     "concat-files": "^0.1.1",
     "csslint": "^1.0.5",
     "debug": "^4.1.1",
+    "extract-zip": "1.6.7",
     "html-minifier": "^4.0.0",
     "html-validator": "4.1.0",
     "imagemagick": "^0.1.3",
