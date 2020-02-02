@@ -1,0 +1,11 @@
+language: node_js
+
+# test on several node versions
+node_js:
+  - '10'
+  - '9'
+  - '8'
+
+env:
+- NODE_ENV=test
+
