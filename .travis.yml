@@ -2,11 +2,10 @@ language: node_js
 
 # test on several node versions
 node_js:
-  - '12'
-  - '11'
-  - '10'
-  - '9'
   - '8'
+  - '9'
+  - '10'
+  - 'node'
 
 env:
 - NODE_ENV=test
