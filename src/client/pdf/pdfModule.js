@@ -379,10 +379,12 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
           translatedStrings.curr_symbol + (calculatedData.costs.perMonth.total * 12).toFixed()
       ],
       [
-        { text: translatedStrings.with_this_level_of_costs + ' ' + calculatedData.details.ageOfCarInMonths + ' ' +
+        {
+          text: translatedStrings.with_this_level_of_costs + ' ' + calculatedData.details.ageOfCarInMonths + ' ' +
                   translatedStrings.months_poss + ' ' + translatedStrings.curr_symbol + calculatedData.costs.totalEver.toFixed(0),
-        colSpan: 4,
-        alignment: 'center' },
+          colSpan: 4,
+          alignment: 'center'
+        },
         {}, {}, {}
       ]
     ]
@@ -390,9 +392,11 @@ autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, 
     if (calculatedData.financialEffort.calculated && calculatedData.financialEffort.isLikelyToBeValid) {
       body.push(
         [
-          { text: translatedStrings.financial_effort + ': ' + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + '%',
+          {
+            text: translatedStrings.financial_effort + ': ' + calculatedData.financialEffort.financialEffortPercentage.toFixed(0) + '%',
             colSpan: 4,
-            alignment: 'center' },
+            alignment: 'center'
+          },
           {}, {}, {}
         ]
       )

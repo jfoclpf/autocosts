@@ -155,7 +155,8 @@ function checkJsCodeStandard (callback) {
       var code = fs.readFileSync(filename, 'utf-8')
 
       standard.lintText(code,
-        { filename: filename,
+        {
+          filename: filename,
           fix: false,
           envs: { browser: true, node: true, es6: true }
         },
