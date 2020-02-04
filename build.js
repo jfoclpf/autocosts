@@ -316,7 +316,10 @@ function compressImgs () {
   debug('\n' + ('# --' + optionDefinitions[1].name).mainOption)
   console.log('Compress images in jpg and png files')
 
-  commons.runNodeScriptSync(filenames.build.compressImages)
+  // this script does not work on windows
+  if (process.platform !== 'win32') {
+    commons.runNodeScriptSync(filenames.build.compressImages)
+  }
 }
 
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
