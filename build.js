@@ -313,13 +313,14 @@ function concatCSSFiles (mainCallback) {
 
 // -i compress [i]mages, jpg and png files in bin/ | with ImageMagick
 function compressImgs () {
+  // the compressImages script does not work on windows, due to imagemagick package
+  if (process.platform === 'win32') {
+    return
+  }
+
   debug('\n' + ('# --' + optionDefinitions[1].name).mainOption)
   console.log('Compress images in jpg and png files')
-
-  // this script does not work on windows
-  if (process.platform !== 'win32') {
-    commons.runNodeScriptSync(filenames.build.compressImages)
-  }
+  commons.runNodeScriptSync(filenames.build.compressImages)
 }
 
 // -m  [m]inify js, json, css and html files in bin/ | with npm: minifier, html-minifier, uglifycss and json-minify
