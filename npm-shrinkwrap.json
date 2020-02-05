@@ -2714,7 +2714,8 @@
     "imagemagick": {
       "version": "0.1.3",
       "resolved": "https://registry.npmjs.org/imagemagick/-/imagemagick-0.1.3.tgz",
-      "integrity": "sha1-dIPOoJO02fLi85aFetyIIbU3xWo="
+      "integrity": "sha1-dIPOoJO02fLi85aFetyIIbU3xWo=",
+      "dev": true
     },
     "import-fresh": {
       "version": "3.2.1",
