@@ -87,7 +87,7 @@ function getPathnamesToValidate () {
 
 // validates html code of pages using validator.w3.org/nu
 function validateHtmlOnAllPages (next) {
-  async.each(PathnamesToValidateArr, validatePage, function (err) {
+  async.eachOfSeries(PathnamesToValidateArr, validatePage, function (err) {
     if (err) {
       next(Error('Error validating html on pages: ' + err.message))
     } else {
@@ -99,7 +99,7 @@ function validateHtmlOnAllPages (next) {
 
 // pathname is for example '/PT' or '/stats'
 // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#url-parts-terminology
-function validatePage (pathname, callback) {
+function validatePage (pathname, key, callback) {
   var url = 'http://localhost:' + settings.HTTPport + pathname
   request({ uri: url }, function (err, response, body) {
     if (err) {
