@@ -3,6 +3,6 @@ credentials/prodCredentials.json
 credentials/devCredentials.json
 bin/*
 node_modules/
-rsync2work.sh
+rsync2server.sh
 pm2*.json
 src/public/google*.html
