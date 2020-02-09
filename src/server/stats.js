@@ -60,7 +60,8 @@ module.exports = {
     res.render('stats', data)
   },
 
-  // this method is executed right after the server starts, such that the statisitcal data may be pre-calculated and ready for the client
+  // this method is executed right after the server starts and before the previous fucntion "req",
+  // such that the statisitcal data may be pre-calculated and ready for the client
   prepareStats: function (serverData, WORDS, eventEmitter) {
     // get statsFunctions.js Object Constructors/Templates
     const calculator = require(fileNames.project['calculator.js'])
@@ -76,46 +77,45 @@ module.exports = {
     var labels = []
     var table = {} // table with useful information for each country stats (total users, valid users, etc.)
     var db
+    // to send to other scripts via eventEmitter.emit
+    var statisticsToEmit = {}
+    var normalizedStatisticsToEmit = {}
 
     async.series([
       // creates database connection and connects
-      function (callback) {
+      function (next) {
         db = mysql.createConnection(dbInfo)
         debug(dbInfo)
         console.log('\nGetting normalised costs from ' +
-                            'database table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized)
+          'database table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized)
 
         db.connect(function (err) {
           if (err) {
             console.error('error connecting: ' + err.stack)
-            return
+            throw err
           }
-          callback()
+          next()
         })
       },
 
       // Get the normalised costs
-      function (callback) {
+      function (next) {
         var i, n, cc
         db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized,
           function (err, normalizedStatistics, fields) {
+            debug('Got normalizedStatistics from DB, processing it...')
             // normalizedStatistics is a flattened object
-
-            // got normalized statistical results; convert array to object and send to index.js for sidebar statistics
-            (function () {
-              var resultsToSendToIndex = {}
-              for (i = 0; i < normalizedStatistics.length; i++) {
-                cc = normalizedStatistics[i].countryCode
-                resultsToSendToIndex[cc] = Object.assign({}, normalizedStatistics[i])// clone object
-                resultsToSendToIndex[cc].currencySymbol = WORDS[cc].curr_symbol
-              }
-
-              eventEmitter.emit('statsColected', resultsToSendToIndex)
-            })()
-
             if (err) {
               console.log('Cannot connect to Database')
               throw err
+            }
+
+            // got normalized statistical results;
+            // convert array to object to send to emitter
+            for (i = 0; i < normalizedStatistics.length; i++) {
+              cc = normalizedStatistics[i].countryCode
+              normalizedStatisticsToEmit[cc] = Object.assign({}, normalizedStatistics[i]) // clone object
+              normalizedStatisticsToEmit[cc].currencySymbol = WORDS[cc].curr_symbol
             }
 
             // removes entries with not enough valid users
@@ -133,23 +133,25 @@ module.exports = {
 
             // debug(normalizedStatistics);
 
-            // fills array with the costs items names/strings
-            var costsStrs = []
+            // generates an array with the the costs items strings. that is:
+            // ['depreciation', 'insurance', 'credit', 'inspection', etc. ]
+            var costsStrings = []
             var monthlyCosts = calculator.CreateCalculatedDataObj().costs.perMonth.items
             for (const key of Object.keys(monthlyCosts)) {
-              costsStrs.push(key)
+              costsStrings.push(key)
             }
+            debug('costsStrings: ', costsStrings)
 
             // on every cost item, builds an array of values for said cost item
             // to be used by the chartjs chart
-            for (n = 0; n < costsStrs.length; n++) {
-              costs[costsStrs[n]] = []// cost item array
+            for (n = 0; n < costsStrings.length; n++) {
+              costs[costsStrings[n]] = []// cost item array
               for (i = 0; i < normalizedStatistics.length; i++) {
                 cc = normalizedStatistics[i].countryCode
                 if (cc !== 'XX') {
-                  const yearlyCost = normalizedStatistics[i]['costs_perMonth_items_' + costsStrs[n]] * 12
+                  const yearlyCost = normalizedStatistics[i]['costs_perMonth_items_' + costsStrings[n]] * 12
                   // copies value from db (monthly) to object (yearly)
-                  costs[costsStrs[n]].push(yearlyCost)
+                  costs[costsStrings[n]].push(yearlyCost)
                   // fills labels, but just needs once
                   if (n === 0) {
                     labels.push(normalizedStatistics[i].countryCode)
@@ -157,9 +159,10 @@ module.exports = {
                 }
               }
             }
-            // debug(costs);
+            debug('costs: ', costs)
 
             // calculate values for the last table on web page
+            // i.e.: "Notes and sources of these averages"
             for (i = 0; i < normalizedStatistics.length; i++) {
               let v, t
 
@@ -187,8 +190,43 @@ module.exports = {
             statsLabels = labels // labels of the chart
 
             console.log('World statistical data calculated')
+            next()
           }
         )
+      },
+      function (next) {
+        db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_statistics,
+          function (err, statistics, fields) {
+            debug('Got common statistics from DB, processing it...')
+            // statistics is a flattened object
+            if (err) {
+              console.log('Cannot connect to Database')
+              throw err
+            }
+            // got normalized statistical results;
+            // convert array to object to send to emitter
+            for (var i = 0; i < statistics.length; i++) {
+              var cc = statistics[i].countryCode
+              statisticsToEmit[cc] = Object.assign({}, statistics[i]) // clone object
+              statisticsToEmit[cc].currencySymbol = WORDS[cc].curr_symbol
+            }
+
+            next()
+          }
+        )
+      },
+      function (next) {
+        eventEmitter.emit('statsColected', statisticsToEmit, normalizedStatisticsToEmit)
+        next()
+      },
+      function (next) {
+        db.end(function (err) {
+          if (err) {
+            throw err
+          }
+          debug('DB closed successfully')
+          next()
+        })
       }
     ])// async.series
   }// prepareStats

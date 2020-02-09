@@ -166,8 +166,9 @@ if (SWITCHES.googleCaptcha) {
 }
 
 if (SWITCHES.database) {
-  eventEmitter.on('statsColected', function (statsData) {
-    serverData.statsData = statsData
+  eventEmitter.on('statsColected', function (statistics, normalizedStatistics) {
+    serverData.statsData = statistics
+    serverData.normalizedStatistics = normalizedStatistics
     console.log('Statistical Data colected')
   })
 

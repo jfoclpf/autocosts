@@ -32,11 +32,11 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
 
   fillBlanks(serverData, WORDS)
 
-  eventEmitter.on('statsColected', function (statsData) {
+  eventEmitter.on('statsColected', function (statistics, normalizedStatistics) {
     for (const CC in serverData.availableCountries) {
-      WORDS[CC].sub_title_pos1 = getSubTitleArr(1, WORDS[CC], statsData[CC])
-      WORDS[CC].sub_title_pos2 = getSubTitleArr(2, WORDS[CC], statsData[CC])
-      WORDS[CC].socialmedia_description = getSocialMediaDescription(WORDS[CC], statsData[CC])
+      WORDS[CC].sub_title_pos1 = getSubTitleArr(1, WORDS[CC], statistics[CC])
+      WORDS[CC].sub_title_pos2 = getSubTitleArr(2, WORDS[CC], statistics[CC])
+      WORDS[CC].socialmedia_description = getSocialMediaDescription(WORDS[CC], statistics[CC])
     }
   })
 }
