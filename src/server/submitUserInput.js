@@ -3,6 +3,7 @@
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app:submitUserInput')
 const sqlFormatter = require('sql-formatter')
+const async = require('async')
 
 module.exports = function (req, res, serverData) {
   var DBInfo = serverData.settings.database.credentials
@@ -28,26 +29,55 @@ module.exports = function (req, res, serverData) {
 
   var db = mysql.createConnection(DBInfo)
 
-  db.connect(function (err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack)
-      throw err
+  async.series([
+    function (next) {
+      db.connect(function (err) {
+        if (err) {
+          debug('error connecting: ' + err.stack)
+          next(Error(err))
+        } else {
+          debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.query(queryInsert, function (err, results, fields) {
+        if (err) {
+          // error handling code goes here
+          debug('Error inserting user data into database: ', err)
+          res.status(501).send(JSON.stringify(err))
+          next(Error(err))
+        } else {
+          debug('User data successfully added into ' +
+            'database table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n')
+          debug('Result from db query is : ', results)
+          res.send(results)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.end(function (err) {
+        if (err) {
+          next(Error(err))
+        } else {
+          debug('DB closed with success')
+          next()
+        }
+      })
     }
-    debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
-  })
-
-  db.query(queryInsert, function (err, results, fields) {
+  ],
+  function (err, results) {
     if (err) {
-      // error handling code goes here
-      debug('Error inserting user data into database: ', err)
-      res.status(501).send(JSON.stringify(err))
+      // if any error occurs in the process, closes the database connection
+      db.end(function (errDbEnd) {
+        if (errDbEnd) {
+          debug(Error(errDbEnd))
+        }
+      })
     } else {
-      debug('User data successfully added into ' +
-                        'database table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions + '\n\n')
-      debug('Result from db query is : ', results)
-      res.send(results)
+      debug('end of script ok')
     }
   })
-
-  db.end()
 }
