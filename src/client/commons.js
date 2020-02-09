@@ -103,32 +103,32 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
       fuelPriceVolumeStandard = serverInfo.translatedStrings.fuel_price_volume_std
     }
 
-    // this dictionary is not a language dictionary, it is merely for backward
-    // and broad function input compatibility and to encompass user old inputs in databases
-    var dictionary = {
-      distance: {
-        km: [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
-        mi: [2, 'mi', 'mile', 'miles'],
-        'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
-      },
-      fuelPriceVolume: {
-        ltr: [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
-        'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
-        'gal(US)': [3, 'US gallon', 'US gal'],
-        kWh: [4, 'KWH']
-      },
-      fuelEfficiency: {
-        'l/100km': [1, 'ltr/100km'],
-        'km/l': [2, 'km/ltr'],
-        'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
-        'mpg(US)': [4, 'US mpg'],
-        'ltr/mil(10km)': [5, 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
-        'mil(10km)/ltr': [6, 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
-        'km/gal(US)': [7, 'km/USGalon']
-      }
-    }
-
     function mapUnit (concept, value) {
+      // this dictionary is not a language dictionary, it is merely for backward
+      // and broad function input compatibility and to encompass user old inputs in databases
+      var dictionary = {
+        distance: {
+          km: [1, 'kms', 'kilometre', 'kilometers', 'kilometres'],
+          mi: [2, 'mile', 'miles'],
+          'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
+        },
+        fuelPriceVolume: {
+          ltr: [1, 'l', 'ltr', 'litre', 'Litre', 'liter', 'Liter'],
+          'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
+          'gal(US)': [3, 'US gallon', 'US gal'],
+          kWh: [4, 'KWH']
+        },
+        fuelEfficiency: {
+          'l/100km': [1, 'ltr/100km'],
+          'km/l': [2, 'km/ltr'],
+          'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
+          'mpg(US)': [4, 'US mpg'],
+          'ltr/mil(10km)': [5, 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
+          'mil(10km)/ltr': [6, 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
+          'km/gal(US)': [7, 'km/USGalon']
+        }
+      }
+
       var val = !isNaN(value) ? parseInt(value, 10) : value
       for (var key in dictionary[concept]) {
         if (key === val || dictionary[concept][key].indexOf(val) !== -1) {
