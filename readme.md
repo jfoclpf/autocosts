@@ -1,7 +1,6 @@
 autocosts &ndash; car costs calculator
 =========
-[![Build Status][travis_img]][travis_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url] [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url] [![js-standard-style][js-standard-style_img]][js-standard-style_url] [![Dependency Status][dependency status_img]][dependency status_url]<br>
-[![https://nodei.co/npm/autocosts.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/autocosts.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/autocosts)
+[![Build Status][travis_img]][travis_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url] [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url] [![js-standard-style][js-standard-style_img]][js-standard-style_url] [![Dependency Status][dependency status_img]][dependency status_url]
 
 [travis_img]: https://travis-ci.org/jfoclpf/autocosts.svg?branch=master
 [travis_url]: https://travis-ci.org/jfoclpf/autocosts
