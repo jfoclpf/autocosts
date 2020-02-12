@@ -6,3 +6,5 @@ node_modules/
 rsync2server.sh
 pm2*.json
 src/public/google*.html
+.nyc_output/
+
