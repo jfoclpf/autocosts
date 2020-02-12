@@ -78,7 +78,7 @@ function getPathnamesToValidate () {
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
   var numberOfCountries = countryCodesArray.length
 
-  var pathnames = ['/stats', '/list']
+  var pathnames = ['/stats', '/list', '/domains']
   for (let i = 0; i < numberOfCountries; i++) {
     pathnames.push('/' + countryCodesArray[i])
   }
@@ -127,7 +127,7 @@ function validatePage (pathname, key, callback) {
         } else {
           debug(pathname)
           Bar.tick({ info: pathname })
-          setTimeout(callback, 1100)
+          setTimeout(callback, 2000)
         }
       })
       .catch((err) => {
