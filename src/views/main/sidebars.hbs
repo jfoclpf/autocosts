@@ -5,14 +5,14 @@
         <h3>Info</h3>
 
         {{{createParagraphs words.initial_text}}}
-        
-        <div class="worldStats">            
+
+        <div class="worldStats">
             <a href="/stats">
                 <div class="chartIcon"></div>
                 <span>World stats</span>
-            </a>            
+            </a>
         </div>
-        
+
         <div class="sidebar-contact">
             <h3><a href="https://www.npmjs.com/package/autocosts">@npm</a></h3>
             <h3><a href="https://github.com/jfoclpf/autocosts">@github</a></h3>
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="sidebar right">    
+<div class="sidebar right">
     <div class="sidebar-right-container">
         <a class="btn btn-danger cursor_pointer close" data-action="close" data-side="right"><span></span></a>
         <h3>Costs for
@@ -31,8 +31,8 @@
                 </option>
                 {{/each}}
             </select>
-        </h3>            
-        
+        </h3>
+
         <div class="headNote">
             <div class="worldStats">
                 <a href="/stats">World stats</a>
@@ -40,14 +40,14 @@
             <div class="downloadButton">
                 {{> svgIcons/download}}
             </div>
-        </div>             
-        
+        </div>
+
         {{#with words}}
         <h4>{{{average_costs_per_type}}}</h4>
         <table>
             <tr>
-                <th>{{{fixed_costs}}}</th>
-                <th></th>
+                <th scope="col">{{{fixed_costs}}}</th>
+                <th scope="col"></th>
             </tr>
             <tr>
                 <td>{{{depreciation}}}</td>
@@ -72,16 +72,16 @@
             <tr>
                 <td>50% {{{maintenance}}}</td>
                 <td><span class="stats_table-costs_perMonth_items_maintenance"></span></td>
-            </tr>    
+            </tr>
             <tr class="subtotal">
                 <td>{{{total_fixed}}}</td>
                 <td><span class="stats_table-costs_perMonth_standingCosts"></span></td>
-            </tr>     
+            </tr>
         </table>
         <table>
             <tr>
-                <th>{{{running_costs}}}</th>
-                <th></th>
+                <th scope="col">{{{running_costs}}}</th>
+                <th scope="col"></th>
             </tr>
             <tr>
                 <td>{{{fuel}}}</td>
@@ -110,16 +110,16 @@
             <tr>
                 <td>{{{washing}}}</td>
                 <td><span class="stats_table-costs_perMonth_items_washing"></span></td>
-            </tr>    
+            </tr>
             <tr class="subtotal">
                 <td>{{{total_variable}}}</td>
                 <td><span class="stats_table-costs_perMonth_runningCosts"></span></td>
-            </tr>     
+            </tr>
         </table>
         <table class="total blue-bg">
             <tr>
-                <th>{{{monthly_amount}}}</th>
-                <th><span class="stats_table-costs_perMonth_total"></span></th>
+                <th scope="col">{{{monthly_amount}}}</th>
+                <th scope="col"><span class="stats_table-costs_perMonth_total"></span></th>
             </tr>
         </table>
 
@@ -145,10 +145,10 @@
         </table>
         <table class="total yellow-bg">
             <tr>
-                <th>{{{total_costs_per_year}}}</th>
-                <th><span class="stats_table-costs_totalPerYear"></span></th>
+                <th scope="col">{{{total_costs_per_year}}}</th>
+                <th scope="col"><span class="stats_table-costs_totalPerYear"></span></th>
             </tr>
         </table>
         {{/with}}
-    </div>    
+    </div>
 </div>
