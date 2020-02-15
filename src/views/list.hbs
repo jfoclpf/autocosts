@@ -7,11 +7,11 @@
 
 <body id="listpage_body">
 
-    <h1 style="text-align:center; margin: 25px auto;">
+    <h1>
         {{{ title }}}
     </h1>
 
-    <div style="width:100%">
+    <div>
         <table class="list-table">
 
             <thead>
@@ -37,15 +37,15 @@
                     <td>{{@index}}</td>
                     <td>{{{Country.country_name}}}</td>
                     <td>{{{CC}}}</td>
-                    <td style="text-align:center"> {{{Country.languageCode}}} </td>
+                    <td class="tdAlignCenter"> {{{Country.languageCode}}} </td>
                     <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
-                    <td style="text-align:center">{{{Country.curr_code}}}</td>
+                    <td class="tdAlignCenter">{{{Country.curr_code}}}</td>
                     <td>{{{Country.curr_name}}}</td>
-                    <td style="text-align:center">{{{Country.curr_symbol}}}</td>
+                    <td class="tdAlignCenter">{{{Country.curr_symbol}}}</td>
                     <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
                     <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
                     <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
-                    <td style="text-align:center"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
+                    <td class="tdAlignCenter"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
                 </tr>
             {{/each}}
             </tbody>
