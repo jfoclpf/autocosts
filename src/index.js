@@ -178,14 +178,16 @@ if (SWITCHES.database) {
   isOnline().then(function (online) {
     if (online) {
       serverData.isOnline = true
-      stats.prepareStats(serverData, WORDS, eventEmitter)
+      if (release !== 'test') {
+        stats.prepareStats(serverData, WORDS, eventEmitter)
+      }
     } else {
       serverData.isOnline = false
     }
   })
 
   app.get('/stats', function (req, res, next) {
-    if (serverData.isOnline) {
+    if (serverData.isOnline || release === 'test') {
       debug('\nRoute: app.get(\'/stats\')')
       stats.req(req, res, serverData, WORDS.UK)
     } else {
@@ -197,7 +199,7 @@ if (SWITCHES.database) {
   const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'))
 
   app.post('/submitUserInput', function (req, res, next) {
-    if (serverData.isOnline) {
+    if (serverData.isOnline && release !== 'test') {
       debug('\nRoute: app.post(\'/submitUserInput\')')
       submitUserInput(req, res, serverData)
     } else {
@@ -242,6 +244,7 @@ app.use(function (err, req, res) {
   res.status(500).send('Something broke!')
 })
 
+// NODE_ENV is different from release; NODE_ENV is set to 'test' on Travis test module
 if (process.env.NODE_ENV === 'test') {
   console.log('Does not start http server, exiting...\n')
   process.exit(0)

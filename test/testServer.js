@@ -21,7 +21,7 @@ function startsServer (onStart, onError) {
   // the process where the http server will run
   try {
     const index = path.join(directories.server.bin, 'index.js')
-    const parameters = ['-r', 'test']
+    const parameters = ['-r', 'test', '--database']
     const options = {
       stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     }
