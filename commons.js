@@ -739,6 +739,8 @@ function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
   args = args || []
   args.unshift(scriptPath) // adds element at beginning
   args.push('-r', RELEASE)
+
+  debug('Running: node ' + args.join(' '))
   try {
     execSync('node ' + args.join(' '), { stdio: stdio })
   } catch (err) {
