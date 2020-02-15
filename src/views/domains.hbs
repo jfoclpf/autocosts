@@ -10,32 +10,39 @@
             }
             table {
                 border-collapse: collapse;
+                margin: 0 auto;
             }
             th, td {
                 border: 1px solid grey;
                 padding: 4px;
             }
+            .alignCenter {
+                text-align:center;
+            }
+            .width100 {
+              width:100%;
+            }
         </style>
     </head>
 
 <body>
-<div style="text-align:center">
+<div class="alignCenter">
     List of Domains for the Automobile Costs Calculator
 </div>
 
-<div style="width:100%">
-    <table style="margin: 0 auto">
+<div class="width100">
+    <table>
         <tr>
-            <th>
+            <th scope="col">
                 #
             </th>
-            <th>
+            <th scope="col">
                 Domain
             </th>
-            <th>
+            <th scope="col">
                 Countries
             </th>
-            <th>
+            <th scope="col">
                 CC
             </th>
         </tr>
