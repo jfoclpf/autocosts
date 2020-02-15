@@ -218,6 +218,8 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 .container .form_part .field_container .next {/*display: none;*/ margin: 17px 0 0;}
 .container .form_part .field_container .next > span + span {font-size: 12px; color: #868790; margin-left: 5px}
 
+.container .form_part #daily_tolls_false_div .no_daily_tolls_description {width: 450px;}
+
 .container .form_part .time_spent_part2_form3 {padding-bottom: 150px;}
 
 .container .form_part .bottom_spacer {padding-top:100px; display: block;}
