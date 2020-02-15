@@ -3,7 +3,7 @@
   using W3C html validator all the html pages served
 */
 
-console.log('Validating html/hbs pages using W3C server...')
+console.log('Validating html/hbs pages using official W3C server...')
 
 const fs = require('fs')
 const path = require('path')
@@ -11,7 +11,7 @@ const async = require('async')
 const request = require('request')
 const isOnline = require('is-online')
 const validator = require('html-validator')
-const debug = require('debug')('test:validateHtml')
+const debug = require('debug')('test:validateHtmlW3C')
 
 // http server that is run locally on localhost, to serve the website's files
 const testServer = require('./testServer')
@@ -61,6 +61,9 @@ function checkForInternet (callback) {
 
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
+  console.log('building a clean copy and minifying html')
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-cm'], 'ignore')
+
   Bar.tick({ info: 'starting local server' })
   testServer.startsServer(function () {
     Bar.tick({ info: 'server started' })
@@ -78,7 +81,7 @@ function getPathnamesToValidate () {
   var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
   var numberOfCountries = countryCodesArray.length
 
-  var pathnames = ['/stats', '/list']
+  var pathnames = ['/stats', '/list', '/domains']
   for (let i = 0; i < numberOfCountries; i++) {
     pathnames.push('/' + countryCodesArray[i])
   }

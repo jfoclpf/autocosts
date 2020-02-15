@@ -1,17 +1,33 @@
 /*
   script that runs a http server on localhost and then html-validates
-  using W3 html validator all the html pages served
+  using a LOCAL html validator for all the html pages served
 */
 
-console.log('Validating html/hbs pages...')
+console.log('Validating html/hbs pages using local html validator (html-validate)...')
 
 const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const request = require('request')
-const isOnline = require('is-online')
-const validator = require('html-validator')
+const colors = require('colors/safe')
+// const validator = require('html-validator')
+const util = require('util')
 const debug = require('debug')('test:validateHtml')
+
+const HTMLValidate = require('html-validate').HtmlValidate
+const htmlvalidate = new HTMLValidate({
+  extends: ['html-validate:recommended'],
+  rules: {
+    'no-trailing-whitespace': 'off',
+    'attr-case': 'off',
+    'long-title': 'off',
+    'wcag/h30': 'off',
+    'prefer-tbody': 'off',
+    'wcag/h32': 'off',
+    'prefer-button': 'off',
+    'prefer-native-element': 'off'
+  }
+})
 
 // http server that is run locally on localhost, to serve the website's files
 const testServer = require('./testServer')
@@ -31,7 +47,7 @@ var PathnamesToValidateArr = getPathnamesToValidate()
 
 var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
-async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
+async.series([startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
     testServer.closeServer()
@@ -48,19 +64,11 @@ async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   }
 )
 
-// checks for internet connection
-function checkForInternet (callback) {
-  isOnline().then(function (online) {
-    if (!online) {
-      callback('ERROR: no Internet connection'.red.bold)
-    } else {
-      callback()
-    }
-  })
-}
-
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
+  console.log('building a clean copy without minifying html')
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+
   Bar.tick({ info: 'starting local server' })
   testServer.startsServer(function () {
     Bar.tick({ info: 'server started' })
@@ -107,33 +115,17 @@ function validatePage (pathname, key, callback) {
       return
     }
 
-    const options = {
-      format: 'text',
-      data: body
+    const report = htmlvalidate.validateString(body)
+    if (!report.valid) {
+      console.log('\n\nERROR COUNT: ', report.results[0].errorCount)
+      console.log(util.inspect(report.results[0].messages, false, null, true /* enable colors */))
+      console.log(addLinesToStr(body))
+      callback(Error(colors.red.bold('Package html-validate found ' + report.results[0].errorCount + ' HTML errors on ' + pathname)))
+    } else {
+      debug(pathname)
+      Bar.tick({ info: pathname })
+      callback()
     }
-
-    validator(options)
-      .then((result) => {
-        if (result.toLowerCase().includes('error')) {
-          console.log(`Error on ${url}\n`.error, result)
-          console.log(addLinesToStr(body))
-          console.log(`Error on ${url}\n`.error, result)
-          callback(Error('Found html error'))
-        } else if (result.toLowerCase().includes('warning')) {
-          console.log(`Warning on ${url}\n`.error, result)
-          console.log(addLinesToStr(body))
-          console.log(`Warning on ${url}\n`.error, result)
-          callback(Error('Found html warning'))
-        } else {
-          debug(pathname)
-          Bar.tick({ info: pathname })
-          setTimeout(callback, 2000)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        callback(Error(err))
-      })
   })
 }
 
