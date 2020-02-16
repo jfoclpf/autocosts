@@ -67,6 +67,7 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
   console.log('building a clean copy without minifying html')
+  // no need here to set release to test because it was done with "commons.setRelease('test')"
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
 
   Bar.tick({ info: 'starting local server' })
