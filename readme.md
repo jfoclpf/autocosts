@@ -4,7 +4,6 @@ autocosts &ndash; car costs calculator
 [![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jfoclpf/autocosts?targetFile=package.json)
 [![Dependency Status][dependency status_img]][dependency status_url]
 [![js-standard-style][js-standard-style_img]][js-standard-style_url] 
-[![GitHub][github_img]][github_url] 
 [![npm][npm_img]][npm_url] 
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url] 
 
@@ -13,9 +12,6 @@ autocosts &ndash; car costs calculator
 
 [travis_img]: https://travis-ci.org/jfoclpf/autocosts.svg?branch=master
 [travis_url]: https://travis-ci.org/jfoclpf/autocosts
-
-[github_img]: https://img.shields.io/github/release/jfoclpf/autocosts.svg
-[github_url]: https://github.com/jfoclpf/autocosts
 
 [npm_img]: https://img.shields.io/npm/v/autocosts.svg?colorB=0E7FBF
 [npm_url]: https://www.npmjs.com/package/autocosts
@@ -33,7 +29,7 @@ This calculator allows users to find the true cost of owning a car. It will norm
 
 <img src="/src/img/screenshot.png">
 
-## Try it on your local machine
+## Try it on your machine
 Install it and run it with the single command<br>
 `npm i autocosts`
 
@@ -56,7 +52,7 @@ https://autocosts.info/stats
 
 
 ## How does it work?
-Autocosts uses `nodejs`, `expressjs` and `handlebars` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser.
+Autocosts uses `nodejs`, `expressjs` and `handlebarsjs` to supply a server application that renders a car costs calculator as a webpage loaded by any common browser.
 
 The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The 2 last letters on the URI stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country.
 
@@ -78,6 +74,8 @@ For more information regarding how the costs are calculated, you can check the [
   * Tolls
   * Fines
   * Car washes
+  
+For more information see [`contributing.md`](contributing.md)
 
 ### Aditional services
 Autocosts supports the following additional services, which can be enabled or disabled (default).
@@ -103,7 +101,7 @@ Autocosts also allows the final report to be printed into a PDF report. It makes
 
 The credentials for the above services are in the JSON files stored in [`credentials/`](/credentials/)
 
-## Android APP<br>
+## Android APP
 
 The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
 
