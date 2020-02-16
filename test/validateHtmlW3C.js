@@ -31,19 +31,29 @@ var PathnamesToValidateArr = getPathnamesToValidate()
 
 var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
+var wasAtLeastOnceCheckedByW3C = false
+var W3CServerAtLeastFailedOnce = false
+
 async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
     testServer.closeServer()
 
+    Bar.tick({ info: '' })
+    Bar.terminate()
+
     if (err) {
       console.log(Error(err))
-      process.exit(1)
-    } else {
-      Bar.tick({ info: '' })
-      Bar.terminate()
+      process.exitCode = 1
+    } else if (wasAtLeastOnceCheckedByW3C && !W3CServerAtLeastFailedOnce) {
       console.log('All html/hbs pages validated correctly'.green)
-      process.exit(0)
+      process.exitCode = 0
+    } else if (wasAtLeastOnceCheckedByW3C && W3CServerAtLeastFailedOnce) {
+      console.log('It was not possible to validate some files because the W3C server was unavailable, move on'.yellow)
+      process.exitCode = 0
+    } else {
+      console.log('It was not possible to validate any file because the W3C server was unavailable, move on'.yellow)
+      process.exitCode = 0
     }
   }
 )
@@ -117,6 +127,7 @@ function validatePage (pathname, key, callback) {
 
     validator(options)
       .then((result) => {
+        wasAtLeastOnceCheckedByW3C = true
         if (result.toLowerCase().includes('error')) {
           console.log(`Error on ${url}\n`.error, result)
           console.log(addLinesToStr(body))
@@ -135,8 +146,16 @@ function validatePage (pathname, key, callback) {
         }
       })
       .catch((err) => {
-        console.log(err)
-        callback(Error(err))
+        W3CServerAtLeastFailedOnce = true
+        // sometimes the W3C is unavailable, but we should not return an error in such conditions
+        // https://github.com/zrrrzzt/html-validator/issues/162
+        if (err.message.includes('503')) {
+          debug(pathname)
+          Bar.tick({ info: 'W3C server unavailable, skipping ' + pathname })
+          callback() // OK
+        } else {
+          callback(Error(err))
+        }
       })
   })
 }
