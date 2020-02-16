@@ -38,6 +38,20 @@
       "bin/"
     ]
   },
+  "nyc": {
+    "all": true,
+    "include": [
+      "bin/**/*.js"
+    ],
+    "exclude": [
+      "**/*vfs_fonts.js",
+      "bin/client/jquery/*",
+      "bin/server/captchaValidate.js",
+      "bin/client/chart/chartjs.min.js",
+      "bin/client/pdf/pdfmake.min.js",
+      "bin/client/smart-app-banner.js"
+    ]
+  },
   "dependencies": {
     "ajv": "6.11.0",
     "async": "3.1.1",
