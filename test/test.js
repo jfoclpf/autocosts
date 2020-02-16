@@ -33,6 +33,7 @@ validateData.initialize()
 calculator.initialize()
 
 testCalculatorFunction(function () {
+  // no need here to set release to test because it was done with "commons.setRelease('test')"
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
   commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtmlW3C.js'))
@@ -46,6 +47,10 @@ testCalculatorFunction(function () {
 // eof main script
 
 function testCalculatorFunction (mainCallback) {
+  console.log('building a clean copy from src/ to bin/ without minifying files')
+  // no need here to set release to test because it was done with "commons.setRelease('test')"
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+
   // file which is zip compressed on the repo, and it's used for testing the core calculator
   var userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
   var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
