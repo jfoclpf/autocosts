@@ -381,8 +381,9 @@ function setFILENAMES () {
     setDIRECTORIES()
   }
 
-  var countriesDir = RELEASE === 'prod' ? DIRECTORIES.bin.countries : DIRECTORIES.src.countries
-  var clientDir = RELEASE === 'prod' ? DIRECTORIES.bin.client : DIRECTORIES.src.client
+  // for release "prod" and "test" use /bin directories
+  var countriesDir = RELEASE === 'dev' ? DIRECTORIES.src.countries : DIRECTORIES.bin.countries
+  var clientDir = RELEASE === 'dev' ? DIRECTORIES.src.client : DIRECTORIES.bin.client
 
   // Default file names for JSON files with credentials for each external service
   FILENAMES = {
