@@ -82,9 +82,9 @@ colors.setTheme(commons.getConsoleColors())
 var runDir = process.cwd() // directory from where the script is called
 var diffDir = path.relative(runDir, directories.server.root)
 if (diffDir !== '' && diffDir !== '.') {
-  console.log('You must call this building script from within the directory where this file is located: ' + directories.server.root)
-  console.log('Do first ' + ('cd ' + path.relative(runDir, directories.server.root)).blue + ' and then call this script again.')
-  process.exit()
+  console.error('You must call this building script from within the directory where this file is located: ' + directories.server.root)
+  console.error('Do first ' + ('cd ' + path.relative(runDir, directories.server.root)).blue + ' and then call this script again.')
+  process.exit(1) // exit with error
 }
 
 // method that forces several methods to run synchronously
