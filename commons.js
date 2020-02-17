@@ -743,10 +743,10 @@ function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
 
   debug('Running: node ' + args.join(' '))
   try {
-    execSync('node ' + args.join(' '), { stdio: stdio })
+    execSync('node ' + args.join(' '), { stdio: [stdio, stdio, 'inherit'] })
   } catch (err) {
     const errMsg = 'Error executing script: ' + path.relative(__dirname, scriptPath).error
-    console.log(Error(errMsg + '\n' + err))
+    console.error(Error(errMsg + '\n' + err))
     process.exit(1)
   }
 }
