@@ -88,6 +88,7 @@
     "jquery": "3.4.1",
     "jquery-color": "^3.0.0-alpha.1",
     "jquery-sidebar": "^3.3.2",
+    "jsdom": "16.1.0",
     "jshint": "2.11.0",
     "jsonminify": "^0.4.1",
     "libxmljs": "0.19.7",
