@@ -54,13 +54,14 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
 
     if (err) {
       console.log(Error(err))
-      process.exit(1)
+      process.exitCode = 1
     } else {
       Bar.tick({ info: '' })
       Bar.terminate()
       console.log('All html/hbs pages validated correctly'.green)
-      process.exit(0)
+      process.exitCode = 0
     }
+    console.log('\n')
   }
 )
 

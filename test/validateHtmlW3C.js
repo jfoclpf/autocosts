@@ -55,6 +55,7 @@ async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
       console.log('It was not possible to validate any file because the W3C server was unavailable, move on'.yellow)
       process.exitCode = 0
     }
+    console.log('\n')
   }
 )
 

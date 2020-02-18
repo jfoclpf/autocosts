@@ -58,9 +58,10 @@ function endFunction (err, results) {
   testServer.closeServer()
   if (err) {
     console.log(Error(err))
-    process.exit(1)
+    process.exitCode = 1
   } else {
     console.log('All files validated correctly'.green)
-    process.exit(0)
+    process.exitCode = 0
   }
+  console.log('\n')
 }

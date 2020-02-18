@@ -37,17 +37,19 @@ async.parallel([
 function (err, results) {
   if (err) {
     console.error(err)
-    process.exit(1)
-  }
-  for (let i = 0; i < results.length; i++) {
-    if (results[i]) {
-      process.exit(1) // exit test with error
+    process.exitCode = 1
+  } else {
+    for (let i = 0; i < results.length; i++) {
+      if (results[i]) {
+        process.exit(1) // exit test with error
+      }
     }
+    Bar.tick({ info: '' })
+    Bar.terminate()
+    console.log('All js files validated correctly'.green)
+    process.exitCode = 0
   }
-  Bar.tick({ info: '' })
-  Bar.terminate()
-  console.log('All js files validated correctly'.green)
-  process.exit(0)
+  console.log('\n')
 })
 
 // check JS files for JS syntax errors (jshint) and for StandardJS syntax rules (standardJS)
