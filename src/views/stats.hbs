@@ -60,79 +60,79 @@
                     </div>
 
                     {{#each averageNormalizedCosts}}
-                    <div class='table_row'>
+                    <div class="table_row">
 
-                        <div class='table_small'>
-                            <div class='table_cell'>Country</div>
-                            <div class='table_cell'><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br/>{{{countryName}}}</a></div>
+                        <div class="table_small">
+                            <div class="table_cell">Country</div>
+                            <div class="table_cell"><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br>{{{countryName}}}</a></div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Depreciation</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Depreciation</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Insurance and Breakdown cover</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_insurance 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Insurance and Breakdown cover</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_insurance 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Car finance</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_credit 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Car finance</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_credit 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Inspection</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_inspection 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Inspection</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_inspection 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Car Tax</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Car Tax</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Fuel</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_fuel 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Fuel</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_fuel 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Maintenance</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Maintenance</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Repair and Improvs</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Repair and Improvs</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Parking</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_parking 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Parking</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_parking 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Tolls</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_tolls 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Tolls</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_tolls 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Traffic Fines</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_fines 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Traffic Fines</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_fines 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Washing and Cleaning</div>
-                            <div class='table_cell'>{{times12toFixed costs_perMonth_items_washing 0}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Washing and Cleaning</div>
+                            <div class="table_cell">{{times12toFixed costs_perMonth_items_washing 0}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Running costs per distance</div>
-                            <div class='table_cell'>{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Running costs per distance</div>
+                            <div class="table_cell">{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Total costs per distance</div>
-                            <div class='table_cell'>{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Total costs per distance</div>
+                            <div class="table_cell">{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Kinetic speed</div>
-                            <div class='table_cell'>{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                        <div class="table_small">
+                            <div class="table_cell">Kinetic speed</div>
+                            <div class="table_cell">{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Consumer speed</div>
-                            <div class='table_cell'>{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                        <div class="table_small">
+                            <div class="table_cell">Consumer speed</div>
+                            <div class="table_cell">{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Total costs per year</div>
-                            <div class='table_cell'>
+                        <div class="table_small">
+                            <div class="table_cell">Total costs per year</div>
+                            <div class="table_cell">
                               <a href="{{{../serverData.directories.client.tables}}}/{{countryCode}}.jpg" target="_blank">
                                     &euro;{{toFixed costs_totalPerYear 0}}
                               </a>
@@ -172,30 +172,30 @@
                     </div>
 
                     {{#each chartTable as |value key|}}
-                    <div class='table_row'>
-                        <div class='table_small'>
-                            <div class='table_cell'>Country code</div>
-                            <div class='table_cell'>{{key}}</div>
+                    <div class="table_row">
+                        <div class="table_small">
+                            <div class="table_cell">Country code</div>
+                            <div class="table_cell">{{key}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Country name</div>
-                            <div class='table_cell'>{{countryName}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Country name</div>
+                            <div class="table_cell">{{countryName}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Currency rate (1 EUR)</div>
-                            <div class='table_cell'>{{toFixed currencyConversionToEUR 2}} {{currency}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Currency rate (1 EUR)</div>
+                            <div class="table_cell">{{toFixed currencyConversionToEUR 2}} {{currency}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Surveyed users</div>
-                            <div class='table_cell'>{{totalUsers}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Surveyed users</div>
+                            <div class="table_cell">{{totalUsers}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>Valid users</div>
-                            <div class='table_cell'>{{validUsers}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">Valid users</div>
+                            <div class="table_cell">{{validUsers}}</div>
                         </div>
-                        <div class='table_small'>
-                            <div class='table_cell'>% of valid users</div>
-                            <div class='table_cell'>{{toFixed percentageOfValidUsers 1}}</div>
+                        <div class="table_small">
+                            <div class="table_cell">% of valid users</div>
+                            <div class="table_cell">{{toFixed percentageOfValidUsers 1}}</div>
                         </div>
                     </div><!--Ends table row-->
                     {{/each}}
