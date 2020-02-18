@@ -178,16 +178,14 @@ if (SWITCHES.database) {
   isOnline().then(function (online) {
     if (online) {
       serverData.isOnline = true
-      if (release !== 'test') {
-        stats.prepareStats(serverData, WORDS, eventEmitter)
-      }
+      stats.prepareStats(serverData, WORDS, eventEmitter)
     } else {
       serverData.isOnline = false
     }
   })
 
   app.get('/stats', function (req, res, next) {
-    if (serverData.isOnline || release === 'test') {
+    if (serverData.isOnline) {
       debug('\nRoute: app.get(\'/stats\')')
       stats.req(req, res, serverData, WORDS.UK)
     } else {
