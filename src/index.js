@@ -169,7 +169,10 @@ if (SWITCHES.database) {
   eventEmitter.on('statsColected', function (statistics, normalizedStatistics) {
     serverData.statsData = statistics
     serverData.normalizedStatistics = normalizedStatistics
-    console.log('Statistical Data colected')
+    console.log('Statistical Data collected')
+    if (process.send) {
+      process.send('STATSDATA_COLLECTED')
+    }
   })
 
   const stats = require(path.join(__dirname, 'server', 'stats'))

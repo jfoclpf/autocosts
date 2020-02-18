@@ -38,9 +38,23 @@ function startsServer (onStart, onError) {
     httpLocalServer.stderr.on('data', (data) => {
       console.error(`child stderr:\n${data}`)
     })
+
+    var SERVER_STARTED = false
+    var STATSDATA_COLLECTED = false
+    var isSetDatabase = args.includes('--database')
+
     httpLocalServer.on('message', message => {
       debug('message from child:', message)
       if (message.includes('SERVER_STARTED')) {
+        if (!isSetDatabase) {
+          onStart()
+          return
+        }
+        SERVER_STARTED = true
+      } else if (message.includes('STATSDATA_COLLECTED')) {
+        STATSDATA_COLLECTED = true
+      }
+      if (SERVER_STARTED && STATSDATA_COLLECTED) {
         onStart()
       }
     })
