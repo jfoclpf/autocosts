@@ -9,23 +9,39 @@ commons.setRelease('test')
 const directories = commons.getDirectories()
 
 module.exports = {
-  startsServer: startsServer,
+  startsServerForTests: startsServerForTests,
   closeServer: closeServer
 }
 
 var httpLocalServer
 
 // starts http server on localhost on test default port
-function startsServer (onStart, onError) {
+// arguments: CLI arguments for the node bin/index.js (optional), onStart, onError
+function startsServerForTests () {
   debug('Starting http server...')
-  // the process where the http server will run
+
+  var args, onStart, onError
+  if (arguments.length === 3) {
+    args = arguments[0]
+    onStart = arguments[1]
+    onError = arguments[2]
+  } else if (arguments.length === 2) {
+    onStart = arguments[0]
+    onError = arguments[1]
+  } else {
+    console.error('Arguments for startsServerForTests are:')
+    console.error('CLI arguments for the node bin/index.js (optional), onStart, onError')
+    process.exit(1) // exit with error
+  }
+
   try {
     const index = path.join(directories.server.bin, 'index.js')
-    const parameters = ['-r', 'test', '--database']
+    args = args || []
+    args.push('-r', 'test')
     const options = {
       stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     }
-    httpLocalServer = fork(index, parameters, options)
+    httpLocalServer = fork(index, args, options)
     httpLocalServer.on('exit', (code, signal) => {
       debug('Exited the fork for httpLocalServer')
       if (code === 1) { // error

@@ -71,12 +71,14 @@ function startsHttpServer (callback) {
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
 
   Bar.tick({ info: 'starting local server' })
-  testServer.startsServer(function () {
-    Bar.tick({ info: 'server started' })
-    callback()
-  }, function (err) {
-    callback(Error(err))
-  })
+  testServer.startsServerForTests(
+    ['--database'], // we need this option to test url /stats
+    function () {
+      Bar.tick({ info: 'server started' })
+      callback()
+    }, function (err) {
+      callback(Error(err))
+    })
 }
 
 // returns ['/stats', '/list', '/PT', '/US', '/AU', etc.]

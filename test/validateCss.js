@@ -57,7 +57,7 @@ function startsHttpServer (callback) {
   console.log('Validating CSS files...')
   Bar.tick({ info: 'starting local server' })
 
-  testServer.startsServer(function () {
+  testServer.startsServerForTests(function () {
     Bar.tick({ info: 'server started' })
     callback()
   }, function (err) {
