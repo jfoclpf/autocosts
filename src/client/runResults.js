@@ -55,9 +55,9 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
   // this function is called when the Google Captcha JS file is loaded and ready to be used
   function recaptchaCallback () {
     servicesAvailabilityObj.googleCaptcha = true
-    console.log('use Google ReCapctha!')
 
     if (useGreCapctha()) {
+      console.log('Using Google ReCapctha!')
       runButton.set('show-g-recaptcha')
 
       grecaptcha.render(captchaRunButtonId, {
