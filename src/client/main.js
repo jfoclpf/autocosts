@@ -320,9 +320,9 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       $.getScript(jsFiles.initialize),
       $.getScript(jsFiles.commons))
       .then(function () {
-        console.log('All initial JS files loaded OK')
         autocosts.initializeModule.initialize()
         autocosts.commonsModule.initialize()
+        console.log('All initial JS files/modules loaded and initialized OK')
       }, function () {
         console.error('Some of the files in loadInitialFiles() were not loaded')
       })
