@@ -323,9 +323,9 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
         autocosts.initializeModule.initialize()
         autocosts.commonsModule.initialize()
         // this function is defined in server side test/validateClient.js, to be used with JSDOM
-        if (typeof window.onEverythingLoaded === 'function') {
-          console.log('Run onEverythingLoaded')
-          window.onEverythingLoaded()
+        if (typeof window.onAllInitLoaded === 'function') {
+          console.log('Run onAllInitLoaded')
+          window.onAllInitLoaded()
         }
         console.log('All initial JS files/modules loaded and initialized OK')
       }, function () {
@@ -338,8 +338,6 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
     // loadCSSFiles(['css/colors.css', 'css/results.css', 'css/smart-app-banner.css']); //temporary debug line
 
     loadDeferredJSFiles(function () {
-      console.log('All deferred JS files loaded OK')
-
       autocosts.calculatorModule.initialize()
       autocosts.convertDataModule.initialize()
 
@@ -357,6 +355,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
         ga('send', 'event', 'form_part', 'form_loaded')
       }
 
+      console.log('All deferred JS files/modules loaded and initialized OK')
       callback()
     })
   }
