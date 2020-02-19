@@ -650,6 +650,7 @@ function getConsoleColors () {
     help: 'cyan',
     warn: 'yellow',
     debug: 'blue',
+    server: 'magenta',
     error: ['red', 'bold']
   }
 

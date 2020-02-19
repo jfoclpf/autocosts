@@ -7,7 +7,7 @@
 
 /* MAIN MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
-
+/* This is the first JS file to be loaded, right after jquery, see views/main.hbs */
 /* global $, ga */
 
 var autocosts = (function () {
@@ -322,6 +322,11 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       .then(function () {
         autocosts.initializeModule.initialize()
         autocosts.commonsModule.initialize()
+        // this function is defined in server side test/validateClient.js, to be used with JSDOM
+        if (typeof window.onEverythingLoaded === 'function') {
+          console.log('Run onEverythingLoaded')
+          window.onEverythingLoaded()
+        }
         console.log('All initial JS files/modules loaded and initialized OK')
       }, function () {
         console.error('Some of the files in loadInitialFiles() were not loaded')
