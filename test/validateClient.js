@@ -1,3 +1,8 @@
+/*
+  script that uses the JSDOM npm package to simulate the browser behaviour using merely nodeJS code,
+  such that the scripts used on the front-end/client, mainly on the directory client/, could be tested
+*/
+
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const path = require('path')
@@ -16,7 +21,8 @@ const settings = commons.getSettings()
 // const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
-console.log('Running script ' + path.relative(directories.server.root, __filename))
+const thisScriptPath = path.relative(directories.server.root, __filename)
+console.log('Running script ' + thisScriptPath)
 console.server = (text) => { console.log(text.server) }
 
 async.series([startsHttpServer, validateClientJSFiles], endFunction)
@@ -35,10 +41,24 @@ function startsHttpServer (callback) {
 }
 
 function validateClientJSFiles (callback) {
-  var url = 'http://localhost:' + settings.HTTPport + '/PT'
+  console.log('\nserver log'.server + ' and ' + 'client log:\n'.client)
+
+  var pathname = '/XX'
+  var url = 'http://localhost:' + settings.HTTPport + pathname
 
   const virtualConsole = new jsdom.VirtualConsole()
-  virtualConsole.sendTo(console)
+  // virtualConsole.sendTo(console)
+  virtualConsole.on('log', (text) => { console.log(text.client) })
+  virtualConsole.on('error', (err) => {
+    console.log(('Error on the client side on: ' + pathname).error)
+    console.log(err.error)
+    callback(err)
+  })
+  virtualConsole.on('jsdomError', (err) => {
+    console.log(('Error on the client side on: ' + pathname).error)
+    console.log(err.message.error)
+    callback(err)
+  })
 
   JSDOM.fromURL(url, {
     virtualConsole: virtualConsole,
@@ -56,18 +76,19 @@ function validateClientJSFiles (callback) {
 function onDomAvailable (dom, callback) {
   var window = dom.window
   var document = window.document
+
+  // when both async triggers are complete, move on
   async.parallel([
     function (asyncCallback) {
       // this funcion is triggered from client/main.js
-      window.onEverythingLoaded = () => {
-        console.server('triggered "onEverythingLoaded"')
+      window.onAllInitLoaded = () => {
+        console.server('Triggered "onAllInitLoaded"')
         asyncCallback()
       }
     },
     function (asyncCallback) {
       document.addEventListener('load', () => {
-        console.server('triggered "load" event')
-        console.server(document.querySelector('h1').textContent)
+        console.server('Triggered "load" event')
         asyncCallback()
       })
     }
@@ -77,19 +98,28 @@ function onDomAvailable (dom, callback) {
       console.log(Error(err))
       process.exit = 1
     } else {
-      console.server('Ready to roll!')
-      testClientFiles(dom, callback)
+      console.server('Full initial loading OK')
+      testClientForm(dom, callback)
     }
   })
 }
 
-function testClientFiles (dom, callback) {
+function testClientForm (dom, callback) {
   var window = dom.window
-  // var document = window.document
-  var autocosts = window.autocosts
-  console.log(autocosts)
-  window.close()
-  callback()
+  var document = window.document
+  // var autocosts = window.autocosts
+
+  // this funcion is triggered from client/initialize.js
+  window.onAllDeferredLoaded = () => {
+    console.server('Triggered "onAllDeferredLoaded"')
+    console.server('form accessible')
+
+    window.close()
+    callback()
+  }
+
+  console.server('Clicking button #calculateButton')
+  document.getElementById('calculateButton').click()
 }
 
 // done after execution of above funcitons
@@ -97,9 +127,10 @@ function endFunction (err, results) {
   testServer.closeServer()
   if (err) {
     console.log(Error(err))
+    console.log(('Exited ' + thisScriptPath + ' with error').error)
     process.exitCode = 1
   } else {
-    console.log('All files validated correctly'.green)
+    console.log('Validation correct'.green)
     process.exitCode = 0
   }
   console.log('\n')
