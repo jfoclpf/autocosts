@@ -239,10 +239,9 @@ app.get('/', function (req, res) {
   url.redirect(req, res, serverData)
 })
 
-// error handler
-app.use(function (err, req, res) {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
+// if nothing matches, redirect to root url
+app.use(function (req, res) {
+  res.redirect('/')
 })
 
 // NODE_ENV is different from release; NODE_ENV is set to 'test' on Travis test module
