@@ -18,12 +18,19 @@ commons.setRelease('test')
 colors.setTheme(commons.getConsoleColors())
 
 const settings = commons.getSettings()
-// const fileNames = commons.getFileNames()
+const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
 const thisScriptPath = path.relative(directories.server.root, __filename)
 console.log('Running script ' + thisScriptPath)
 console.server = (text) => { console.log(text.server) }
+
+const convertData = require(fileNames.project['convertData.js'])
+const validateData = require(fileNames.project['validateData.js'])
+const calculator = require(fileNames.project['calculator.js'])
+convertData.initialize()
+validateData.initialize()
+calculator.initialize()
 
 async.series([startsHttpServer, validateClientJSFiles], endFunction)
 
