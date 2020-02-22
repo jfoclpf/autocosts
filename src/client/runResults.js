@@ -131,7 +131,7 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
         (userInfo.isHumanConfirmed || bIsDev) &&
         (serverInfo.booleans.notLocalhost || bIsDev)
 
-      console.log(bWasCalculationOk, bSubmitToDatabase, bIsDev)
+      // console.log(bWasCalculationOk, bSubmitToDatabase, bIsDev)
       if (bWasCalculationOk && bSubmitToDatabase) {
         var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
         submitDataToDB(databaseObj)

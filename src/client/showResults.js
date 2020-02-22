@@ -114,9 +114,8 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
 
     setClassAccordionHandler()
 
-    $('#results').show()
-
     $('*').promise().done(function () {
+      console.log('Results shown')
       // it needs these promises, since the pdfMake body can only be generated when the charts are already fully drawn
       // such that, the pdf generation can extract the charts to base64 images
       promisesArray = Object.keys(chartsDrawnPromisesObj).map(function (key) {
