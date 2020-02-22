@@ -32,103 +32,108 @@ convertData.initialize()
 validateData.initialize()
 calculator.initialize()
 
-async.series([startsHttpServer, validateClientJSFiles], endFunction)
+var dom // from JSDOM
 
-// starts http server on localhost on test default port
-function startsHttpServer (callback) {
-  console.log('building a clean copy without minifying html')
-  // no need here to set release to test because it was done with "commons.setRelease('test')"
-  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+async.series([
+  // starts http server on localhost on test default port
+  function (next) {
+    console.log('building a clean copy without minifying html')
+    // no need here to set release to test because it was done with "commons.setRelease('test')"
+    commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
 
-  testServer.startsServerForTests(function () {
-    callback()
-  }, function (err) {
-    callback(Error(err))
-  })
-}
+    testServer.startsServerForTests(function () {
+      next()
+    }, function (err) {
+      next(Error(err))
+    })
+  },
+  // open JSDOM console
+  function (next) {
+    console.log('\nserver log'.server + ' and ' + 'client log:\n'.client)
 
-function validateClientJSFiles (callback) {
-  console.log('\nserver log'.server + ' and ' + 'client log:\n'.client)
+    var pathname = '/XX'
+    var url = 'http://localhost:' + settings.HTTPport + pathname
 
-  var pathname = '/XX'
-  var url = 'http://localhost:' + settings.HTTPport + pathname
+    const virtualConsole = new jsdom.VirtualConsole()
+    // virtualConsole.sendTo(console)
+    virtualConsole.on('log', (text) => { console.log(text.client) })
+    virtualConsole.on('error', (err) => {
+      console.log(('Error on the client side on: ' + pathname).error)
+      console.log(err.error)
+      next(err)
+    })
+    virtualConsole.on('jsdomError', (err) => {
+      console.log(('Error on the client side on: ' + pathname).error)
+      console.log(err.message.error)
+      next(err)
+    })
 
-  const virtualConsole = new jsdom.VirtualConsole()
-  // virtualConsole.sendTo(console)
-  virtualConsole.on('log', (text) => { console.log(text.client) })
-  virtualConsole.on('error', (err) => {
-    console.log(('Error on the client side on: ' + pathname).error)
-    console.log(err.error)
-    callback(err)
-  })
-  virtualConsole.on('jsdomError', (err) => {
-    console.log(('Error on the client side on: ' + pathname).error)
-    console.log(err.message.error)
-    callback(err)
-  })
+    JSDOM.fromURL(url, {
+      virtualConsole: virtualConsole,
+      userAgent: 'Node.js',
+      includeNodeLocations: true,
+      storageQuota: 100000000,
+      runScripts: 'dangerously', // the source is trusthworthy
+      resources: 'usable'
+    }).then((domLocal) => {
+      dom = domLocal
+      console.server('DOM available')
+      next()
+    })
+  },
+  // on DOM Available
+  function (next) {
+    var window = dom.window
+    var document = window.document
 
-  JSDOM.fromURL(url, {
-    virtualConsole: virtualConsole,
-    userAgent: 'Node.js',
-    includeNodeLocations: true,
-    storageQuota: 100000000,
-    runScripts: 'dangerously', // the source is trusthworthy
-    resources: 'usable'
-  }).then((dom) => {
-    console.server('DOM available')
-    onDomAvailable(dom, callback)
-  })
-}
-
-function onDomAvailable (dom, callback) {
-  var window = dom.window
-  var document = window.document
-
-  // when both async triggers are complete, move on
-  async.parallel([
-    function (asyncCallback) {
-      // this funcion is triggered from client/main.js
-      window.onAllInitLoaded = () => {
-        console.server('Triggered "onAllInitLoaded"')
-        asyncCallback()
+    // when both async triggers are complete, move on
+    async.parallel([
+      function (asyncCallback) {
+        // this funcion is triggered from client/main.js
+        window.onAllInitLoaded = () => {
+          console.server('Triggered "onAllInitLoaded"')
+          asyncCallback()
+        }
+      },
+      function (asyncCallback) {
+        document.addEventListener('load', () => {
+          console.server('Triggered "load" event')
+          asyncCallback()
+        })
       }
-    },
-    function (asyncCallback) {
-      document.addEventListener('load', () => {
-        console.server('Triggered "load" event')
-        asyncCallback()
-      })
+    ],
+    function (err, results) {
+      if (err) {
+        console.log(Error(err))
+        process.exit = 1
+      } else {
+        console.server('Full initial loading OK')
+        next()
+      }
+    })
+  },
+  // clicks button #calculateButton
+  function (next) {
+    var window = dom.window
+    var document = window.document
+    // var autocosts = window.autocosts
+
+    // this funcion is triggered from client/initialize.js
+    window.onAllDeferredLoaded = () => {
+      console.server('Triggered "onAllDeferredLoaded"')
+      console.server('form accessible')
+      next()
     }
-  ],
-  function (err, results) {
-    if (err) {
-      console.log(Error(err))
-      process.exit = 1
-    } else {
-      console.server('Full initial loading OK')
-      testClientForm(dom, callback)
-    }
-  })
-}
 
-function testClientForm (dom, callback) {
-  var window = dom.window
-  var document = window.document
-  // var autocosts = window.autocosts
-
-  // this funcion is triggered from client/initialize.js
-  window.onAllDeferredLoaded = () => {
-    console.server('Triggered "onAllDeferredLoaded"')
-    console.server('form accessible')
-
-    window.close()
-    callback()
+    console.server('Clicking button #calculateButton')
+    document.getElementById('calculateButton').click()
+  },
+  // closes JSDOM window
+  function (next) {
+    dom.window.close()
+    next()
   }
-
-  console.server('Clicking button #calculateButton')
-  document.getElementById('calculateButton').click()
-}
-
+],
 // done after execution of above funcitons
 function endFunction (err, results) {
   testServer.closeServer()
@@ -141,4 +146,4 @@ function endFunction (err, results) {
     process.exitCode = 0
   }
   console.log('\n')
-}
+})
