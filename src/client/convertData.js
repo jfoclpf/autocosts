@@ -421,110 +421,110 @@ autocosts.convertDataModule = (function (thisModule) {
 
   // to be used by test script test/validateClient.js, particularly by JSDOM object
   // to populate the web form (in jsdom) with user input data got from DB or a file
-  function createFormObjectFromDatabase (form, dbObject, countryInfo) {
+  function createFormObjectFromDatabase (dbObject, countryInfo) {
     var userData = createUserDataObjectFromDatabase(dbObject, countryInfo)
-    var f = form
+    var f = {}
 
     // Form Part 1
     // depreciation
-    f.acquisitionMonth.value = userData.depreciation.dateOfAcquisition.month
-    f.acquisitionYear.value = userData.depreciation.dateOfAcquisition.year
-    f.commercialValueAtAcquisition.value = userData.depreciation.dateOfAcquisition.valueOfTheVehicle
-    f.commercialValueAtNow.value = userData.depreciation.dateOfUserInput.valueOfTheVehicle
+    f.acquisitionMonth = userData.depreciation.dateOfAcquisition.month
+    f.acquisitionYear = userData.depreciation.dateOfAcquisition.year
+    f.commercialValueAtAcquisition = userData.depreciation.dateOfAcquisition.valueOfTheVehicle
+    f.commercialValueAtNow = userData.depreciation.dateOfUserInput.valueOfTheVehicle
 
     // insurance
-    f.insuranceValue.value = userData.insurance.period
-    f.insurancePaymentPeriod.value = userData.insurance.amountPerPeriod
+    f.insuranceValue = userData.insurance.period
+    f.insurancePaymentPeriod = userData.insurance.amountPerPeriod
 
     // credit
-    f.AutoCreditRadioBtn.value = userData.credit.creditBool
-    f.borrowedAmount.value = userData.credit.yesCredit.borrowedAmount
-    f.numberInstallments.value = userData.credit.yesCredit.numberInstallments
-    f.amountInstallment.value = userData.credit.yesCredit.amountInstallment
-    f.residualValue.value = userData.credit.yesCredit.residualValue
+    f.AutoCreditRadioBtn = userData.credit.creditBool
+    f.borrowedAmount = userData.credit.yesCredit.borrowedAmount
+    f.numberInstallments = userData.credit.yesCredit.numberInstallments
+    f.amountInstallment = userData.credit.yesCredit.amountInstallment
+    f.residualValue = userData.credit.yesCredit.residualValue
 
     // inspection
-    f.averageInspectionCost.value = userData.inspection.numberOfInspections
-    f.numberInspections.value = userData.inspection.averageInspectionCost
+    f.averageInspectionCost = userData.inspection.numberOfInspections
+    f.numberInspections = userData.inspection.averageInspectionCost
 
     // roadTaxes
-    f.roadTaxes.value = userData.roadTaxes.amountPerYear
+    f.roadTaxes = userData.roadTaxes.amountPerYear
 
     // Form Part 2
     // fuel
-    f.radio_fuel_euros.value = userData.fuel.typeOfCalculation
-    f.fuel_currency_value.value = userData.fuel.currencyBased.amountPerPeriod
-    f.fuel_currency_time_period.value = userData.fuel.currencyBased.period
-    f.car_job_form2.value = userData.fuel.distanceBased.considerCarToJob
-    f.car_to_work_number_days_week.value = userData.fuel.distanceBased.carToJob.daysPerWeek
-    f.car_to_work_distance_home_work.value = userData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob
-    f.car_to_work_distance_weekend.value = userData.fuel.distanceBased.carToJob.distanceDuringWeekends
-    f.no_car_to_work_distance.value = userData.fuel.distanceBased.noCarToJob.distancePerPeriod
-    f.no_car_to_work_time_period.value = userData.fuel.distanceBased.noCarToJob.period
-    f.distance_standard_onfuel.value = userData.fuel.distanceBased.noCarToJob.distanceStandardUnit
-    f.fuel_efficiency.value = userData.fuel.distanceBased.fuelEfficiency
-    f.fuel_efficiency_standard_onfuel.value = userData.fuel.distanceBased.fuelEfficiencyStandard
-    f.fuel_price.value = userData.fuel.distanceBased.fuelPrice
+    f.radio_fuel_euros = userData.fuel.typeOfCalculation
+    f.fuel_currency_value = userData.fuel.currencyBased.amountPerPeriod
+    f.fuel_currency_time_period = userData.fuel.currencyBased.period
+    f.car_job_form2 = userData.fuel.distanceBased.considerCarToJob
+    f.car_to_work_number_days_week = userData.fuel.distanceBased.carToJob.daysPerWeek
+    f.car_to_work_distance_home_work = userData.fuel.distanceBased.carToJob.distanceBetweenHomeAndJob
+    f.car_to_work_distance_weekend = userData.fuel.distanceBased.carToJob.distanceDuringWeekends
+    f.no_car_to_work_distance = userData.fuel.distanceBased.noCarToJob.distancePerPeriod
+    f.no_car_to_work_time_period = userData.fuel.distanceBased.noCarToJob.period
+    f.distance_standard_onfuel = userData.fuel.distanceBased.noCarToJob.distanceStandardUnit
+    f.fuel_efficiency = userData.fuel.distanceBased.fuelEfficiency
+    f.fuel_efficiency_standard_onfuel = userData.fuel.distanceBased.fuelEfficiencyStandard
+    f.fuel_price = userData.fuel.distanceBased.fuelPrice
 
     // maintenance
-    f.maintenance.value = userData.maintenance.amountPerYear
+    f.maintenance = userData.maintenance.amountPerYear
 
     // repairsImprovements
-    f.repairsImprovements.value = userData.repairsImprovements.amountPerYear
+    f.repairsImprovements = userData.repairsImprovements.amountPerYear
 
     // parking
-    f.parking.value = userData.parking.amountPerMonth
+    f.parking = userData.parking.amountPerMonth
 
     // tolls
-    f.tolls_daily_radioBtn.value = userData.tolls.calculationBasedOnDay
-    f.daily_expense_tolls.value = userData.tolls.noBasedOnDay.amountPerPeriod
-    f.number_days_tolls.value = userData.tolls.noBasedOnDay.period
-    f.no_daily_tolls_value.value = userData.tolls.yesBasedOnDay.amountPerDay
-    f.tolls_period_select.value = userData.tolls.yesBasedOnDay.daysPerMonth
+    f.tolls_daily_radioBtn = userData.tolls.calculationBasedOnDay
+    f.daily_expense_tolls = userData.tolls.noBasedOnDay.amountPerPeriod
+    f.number_days_tolls = userData.tolls.noBasedOnDay.period
+    f.no_daily_tolls_value = userData.tolls.yesBasedOnDay.amountPerDay
+    f.tolls_period_select = userData.tolls.yesBasedOnDay.daysPerMonth
 
     // fines
-    f.tickets_value.value = userData.fines.amountPerPeriod
-    f.tickets_period_select.value = userData.fines.period
+    f.tickets_value = userData.fines.amountPerPeriod
+    f.tickets_period_select = userData.fines.period
 
     // washing
-    f.washing_value.value = userData.washing.amountPerPeriod
-    f.washing_period_select.value = userData.washing.period
+    f.washing_value = userData.washing.amountPerPeriod
+    f.washing_period_select = userData.washing.period
 
     // Form Part 3
     // publicTransports
-    f.household_number_people.value = userData.publicTransports.numberOfPeopleInFamily
-    f.public_transportation_month_expense.value = userData.publicTransports.monthlyPassCost
+    f.household_number_people = userData.publicTransports.numberOfPeopleInFamily
+    f.public_transportation_month_expense = userData.publicTransports.monthlyPassCost
 
     // income
-    f.radio_income.value = userData.income.incomePeriod
-    f.income_per_year.value = userData.income.year.amount
-    f.income_per_month.value = userData.income.month.amountPerMonth
-    f.income_months_per_year.value = userData.income.month.monthsPerYear
-    f.income_per_week.value = userData.income.week.amountPerWeek
-    f.income_weeks_per_year.value = userData.income.week.weeksPerYear
-    f.income_per_hour.value = userData.income.hour.amountPerHour
-    f.income_hours_per_week.value = userData.income.hour.hoursPerWeek
-    f.income_hour_weeks_per_year.value = userData.income.hour.weeksPerYear
+    f.radio_income = userData.income.incomePeriod
+    f.income_per_year = userData.income.year.amount
+    f.income_per_month = userData.income.month.amountPerMonth
+    f.income_months_per_year = userData.income.month.monthsPerYear
+    f.income_per_week = userData.income.week.amountPerWeek
+    f.income_weeks_per_year = userData.income.week.weeksPerYear
+    f.income_per_hour = userData.income.hour.amountPerHour
+    f.income_hours_per_week = userData.income.hour.hoursPerWeek
+    f.income_hour_weeks_per_year = userData.income.hour.weeksPerYear
 
     // workingTime
-    f.radio_work_time.value = userData.workingTime.isActivated
-    f.time_month_per_year.value = userData.workingTime.monthsPerYear
-    f.time_hours_per_week.value = userData.workingTime.hoursPerWeek
+    f.radio_work_time = userData.workingTime.isActivated
+    f.time_month_per_year = userData.workingTime.monthsPerYear
+    f.time_hours_per_week = userData.workingTime.hoursPerWeek
 
     // distance
-    f.drive_to_work.value = userData.distance.considerCarToJob
-    f.drive_to_work_days_per_week.value = userData.distance.carToJob.daysPerWeek
-    f.dist_home_job.value = userData.distance.carToJob.distanceBetweenHomeAndJob
-    f.journey_weekend.value = userData.distance.carToJob.distanceDuringWeekends
-    f.km_per_month.value = userData.distance.noCarToJob.distancePerPeriod
-    f.period_km.value = userData.distance.noCarToJob.period
-    f.distance_standard_ondistance.value = userData.distance.noCarToJob.distanceStandardUnit
+    f.drive_to_work = userData.distance.considerCarToJob
+    f.drive_to_work_days_per_week = userData.distance.carToJob.daysPerWeek
+    f.dist_home_job = userData.distance.carToJob.distanceBetweenHomeAndJob
+    f.journey_weekend = userData.distance.carToJob.distanceDuringWeekends
+    f.km_per_month = userData.distance.noCarToJob.distancePerPeriod
+    f.period_km = userData.distance.noCarToJob.period
+    f.distance_standard_ondistance = userData.distance.noCarToJob.distanceStandardUnit
 
     // timeSpentInDriving:
-    f.time_home_job.value = userData.timeSpentInDriving.carToJob.minutesBetweenHomeAndJob
-    f.time_weekend.value = userData.timeSpentInDriving.carToJob.minutesDuringWeekend
-    f.min_drive_per_day.value = userData.timeSpentInDriving.noCarToJob.minutesPerDay
-    f.days_drive_per_month.value = userData.timeSpentInDriving.noCarToJob.daysPerMonth
+    f.time_home_job = userData.timeSpentInDriving.carToJob.minutesBetweenHomeAndJob
+    f.time_weekend = userData.timeSpentInDriving.carToJob.minutesDuringWeekend
+    f.min_drive_per_day = userData.timeSpentInDriving.noCarToJob.minutesPerDay
+    f.days_drive_per_month = userData.timeSpentInDriving.noCarToJob.daysPerMonth
 
     return f
   }
