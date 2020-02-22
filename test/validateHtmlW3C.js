@@ -152,7 +152,7 @@ function validatePage (pathname, key, callback) {
         W3CServerAtLeastFailedOnce = true
         // sometimes the W3C is unavailable, but we should not return an error in such conditions
         // https://github.com/zrrrzzt/html-validator/issues/162
-        if (err.message.includes('503')) {
+        if (err) {
           debug(pathname)
           Bar.tick({ info: 'W3C server unavailable, skipping ' + pathname })
           callback() // OK
