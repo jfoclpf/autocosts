@@ -80,7 +80,9 @@ module.exports = {
 
   getNumberOfCountries: getNumberOfCountries,
 
-  getProgressBar: getProgressBar
+  getProgressBar: getProgressBar,
+
+  parseJsonProperty: parseJsonProperty
 }
 
 /***************************************************************************************************/
@@ -762,4 +764,10 @@ function getProgressBar (totalNumberOfTicks, muted) {
     Bar = { tick: function () {}, terminate: function () {} }
   }
   return Bar
+}
+
+// to be used by JSON.parse
+// if json property is a number within a String (!isNaN) convert its type to Number
+function parseJsonProperty (key, value) {
+  return !isNaN(value) ? parseFloat(value) : value
 }

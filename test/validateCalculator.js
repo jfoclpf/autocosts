@@ -40,7 +40,7 @@ async.series([
   function (callback) {
     var _countrySpecs = JSON.parse(
       fs.readFileSync(path.join(__dirname, 'country_specs.json'), 'utf8'),
-      parseJsonProperty)
+      commons.parseJsonProperty)
 
     // build a more code friendly Object
     for (const item of Object.keys(_countrySpecs)) {
@@ -68,7 +68,7 @@ async.series([
         return
       }
 
-      var usersInput = JSON.parse(data, parseJsonProperty)
+      var usersInput = JSON.parse(data, commons.parseJsonProperty)
       var numberofInputs = usersInput.length
 
       var Bar = new ProgressBar('[:bar] :percent',
@@ -130,9 +130,3 @@ function (error) {
     process.exitCode = 0 // wxit with success
   }
 })
-
-// to be used by JSON.parse
-// if json property is a number within a String (!isNaN) convert its type to Number
-function parseJsonProperty (key, value) {
-  return !isNaN(value) ? parseFloat(value) : value
-}
