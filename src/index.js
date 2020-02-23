@@ -31,6 +31,7 @@ const hbsHelpers = require(path.join(__dirname, 'server', 'hbsHelpers'))
 const list = require(path.join(__dirname, 'server', 'list'))
 const domains = require(path.join(__dirname, 'server', 'domains'))
 const sitemap = require(path.join(__dirname, 'server', 'sitemap'))
+const manifest = require(path.join(__dirname, 'server', 'manifest'))
 const preprocess = require(path.join(__dirname, 'server', 'preprocess'))
 
 const release = commons.getRelease() // release shall be 'dev', 'test' or 'prod', it's 'dev' by default
@@ -139,6 +140,12 @@ app.get('/domains', function (req, res) {
 app.get('/sitemap.xml', function (req, res) {
   debug('\nRoute: app.get(\'/sitemap.xml\')')
   sitemap(req, res, serverData, WORDS)
+})
+
+// web-app-manifest https://developers.google.com/web/fundamentals/web-app-manifest/
+app.get('/manifest/:CC', function (req, res, next) {
+  debug("\nRoute: app.get('/manifest/" + req.params.CC + "')")
+  manifest(req, res, next, serverData, WORDS)
 })
 
 if (SWITCHES.uber) {

@@ -117,6 +117,14 @@ module.exports = {
     return getValidURL(req, domainsCountries)
   },
 
+  isCCinCountriesList: function (CC, availableCountries) {
+    return isCCinCountriesList(CC, availableCountries)
+  },
+
+  isCCXX: function (CC) {
+    return isCCXX(CC)
+  },
+
   getCanonicUrl: function (req, serverData, CC) {
     return nodeUrl.format({
       protocol: getProtocol(req),
