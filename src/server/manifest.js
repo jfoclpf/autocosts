@@ -5,7 +5,7 @@ const url = require(path.join(__dirname, 'url'))
 module.exports = function (req, res, next, serverData, WORDS) {
   var CC = req.params.CC.toUpperCase() // ISO 2 letter Country Code
 
-  if (url.isCCinCountriesList(CC, serverData.availableCountries) && !url.isCCXX(CC)) {
+  if (url.isCCinCountriesList(CC, serverData.availableCountries) || CC === 'XX') {
     var data = {}
     data.CC = CC
 
