@@ -322,11 +322,7 @@ autocosts.getFilesModule = (function (jsFiles, switches, country, notLocalhost, 
       .then(function () {
         autocosts.initializeModule.initialize()
         autocosts.commonsModule.initialize()
-        // this function is defined in server side test/validateClient.js, to be used with JSDOM
-        if (typeof window.onAllInitLoaded === 'function') {
-          console.log('Run onAllInitLoaded')
-          window.onAllInitLoaded()
-        }
+
         console.log('All initial JS files/modules loaded and initialized OK')
       }, function () {
         console.error('Some of the files in loadInitialFiles() were not loaded')

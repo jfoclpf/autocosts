@@ -104,12 +104,6 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
         }
 
         $('#form').show()
-
-        // this function is defined in server side test/validateClient.js, to be used with JSDOM
-        if (typeof window.onAllDeferredLoaded === 'function') {
-          console.log('Run onAllDeferredLoaded')
-          window.onAllDeferredLoaded()
-        }
       })
     }
 
