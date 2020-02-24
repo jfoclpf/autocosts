@@ -26,4 +26,4 @@ commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.j
 commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
 
 console.log('All tests ran successfully'.green)
-process.exitCode = 0 // wxit with success
+process.exitCode = 0 // exit with success

@@ -124,9 +124,9 @@ async.series([
 function (error) {
   if (error) {
     console.error(Error(error))
-    process.exitCode = 1 // wxit with error
+    process.exitCode = 1 // exit with error
   } else {
     console.log('Calculator core funciton tested OK\n'.green)
-    process.exitCode = 0 // wxit with success
+    process.exitCode = 0 // exit with success
   }
 })
