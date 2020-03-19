@@ -6,8 +6,6 @@ os:
 
 # test on several node versions
 node_js:
-  - '8'
-  - '9'
   - '10'
   - 'node'
 
