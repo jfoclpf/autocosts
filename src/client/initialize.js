@@ -18,6 +18,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     initGoogleAnalytics()
     getUniqueIdentifier()
     renderImages()
+    registerServiceWorker()
   }
 
   function loadModuleDependencies () {
@@ -309,6 +310,22 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     })
   }
   /* jshint ignore:end */
+
+  // register service worker script, which allows, f.ex. the webmanifest.json to be fetched
+  // to be able to add a "download" option on browsers on Android
+  // see https://github.com/jfoclpf/autocosts/issues/126
+  function registerServiceWorker () {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/serviceWorker.js')
+        .then(function (registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+        }).catch(function (err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err)
+        })
+    }
+  }
 
   // the standard values are used if we want the form to be pre-filled
   // because file XX has standard values filed, it shows pre-filled values for /XX
