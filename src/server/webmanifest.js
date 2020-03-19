@@ -17,7 +17,7 @@ module.exports = function (req, res, next, serverData, WORDS) {
     data.layout = false
 
     res.header('Content-Type', 'application/manifest+json')
-    res.render('manifest', data)
+    res.render('webmanifest', data)
   } else {
     next()
   }

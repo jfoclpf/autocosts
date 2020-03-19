@@ -31,7 +31,7 @@ const hbsHelpers = require(path.join(__dirname, 'server', 'hbsHelpers'))
 const list = require(path.join(__dirname, 'server', 'list'))
 const domains = require(path.join(__dirname, 'server', 'domains'))
 const sitemap = require(path.join(__dirname, 'server', 'sitemap'))
-const manifest = require(path.join(__dirname, 'server', 'manifest'))
+const webmanifest = require(path.join(__dirname, 'server', 'webmanifest'))
 const preprocess = require(path.join(__dirname, 'server', 'preprocess'))
 
 const release = commons.getRelease() // release shall be 'dev', 'test' or 'prod', it's 'dev' by default
@@ -142,10 +142,10 @@ app.get('/sitemap.xml', function (req, res) {
   sitemap(req, res, serverData, WORDS)
 })
 
-// web-app-manifest https://developers.google.com/web/fundamentals/web-app-manifest/
+// web-app-manifest; see https://github.com/jfoclpf/autocosts/issues/126
 app.get('/:CC.webmanifest', function (req, res, next) {
-  debug("\nRoute: app.get('/manifest/" + req.params.CC + "')")
-  manifest(req, res, next, serverData, WORDS)
+  debug(`\nRoute: app.get('/${req.params.CC}.webmanifest/')`)
+  webmanifest(req, res, next, serverData, WORDS)
 })
 
 if (SWITCHES.uber) {
