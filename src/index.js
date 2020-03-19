@@ -143,7 +143,7 @@ app.get('/sitemap.xml', function (req, res) {
 })
 
 // web-app-manifest https://developers.google.com/web/fundamentals/web-app-manifest/
-app.get('/manifest/:CC', function (req, res, next) {
+app.get('/:CC.webmanifest', function (req, res, next) {
   debug("\nRoute: app.get('/manifest/" + req.params.CC + "')")
   manifest(req, res, next, serverData, WORDS)
 })
