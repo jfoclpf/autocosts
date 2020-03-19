@@ -222,7 +222,7 @@ getCC.preGenerateCSPstring(serverData)
 
 // this middleware shall be the last before error
 // this is the entry Main Page
-app.get('/:CC', function (req, res) {
+app.get('/:CC', function (req, res, next) {
   debug('\nRoute: app.get(\'/CC\')')
 
   if (req.params.CC.length !== 2) {
