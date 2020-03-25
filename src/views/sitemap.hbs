@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml/">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+    http://www.w3.org/1999/xhtml
+    http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd">
 
 <!-- Domain Name Policy (DNP) in: https://github.com/jfoclpf/autocosts/wiki/Domain-name-policy -->
 
 {{#each WORDS as |Country CC|}}
     <url>
         <loc>{{{ ../HTTP_Protocol }}}//{{{Country.domain}}}/{{{CC}}}</loc>
-        <changefreq>weekly</changefreq>
-        <xhtml:link rel="alternate" hreflang="x-default"
-                    href="https://autocosts.info/" />
-
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />
         {{#each ../WORDS2 as |Country2 CC2|}}
-            <xhtml:link rel="alternate" hreflang="{{{get2letterLangCode2 Country2.languageCode}}}-{{{CC2}}}"
-                        href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{get2letterLangCode2 Country2.languageCode}}}-{{{CC2}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
         {{/each}}
-
         {{#each ../twoLetterLang as |Country2 CC2|}}
-            <xhtml:link rel="alternate"
-                        hreflang="{{{Country2.langCode}}}"
-                        href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
         {{/each}}
-
     </url>
 {{/each}}
-
     <url>
         <loc>{{{ HTTP_Protocol }}}//autocosts.info/</loc>
-        <changefreq>weekly</changefreq>
-        <xhtml:link rel="alternate"
-                    hreflang="x-default"
-                    href="https://autocosts.info/" />
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />
         {{#each WORDS2 as |Country2 CC2|}}
-            <xhtml:link rel="alternate"
-                        hreflang="{{{get2letterLangCode2 Country2.languageCode}}}-{{{CC2}}}"
-                        href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{get2letterLangCode2 Country2.languageCode}}}-{{{CC2}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
         {{/each}}
         {{#each twoLetterLang as |Country2 CC2|}}
-            <xhtml:link rel="alternate"
-                        hreflang="{{{Country2.langCode}}}"
-                        href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}/{{{CC2}}}" />
         {{/each}}
     </url>
     <url>
         <loc>{{{ HTTP_Protocol }}}//autocosts.info/stats</loc>
-        <changefreq>weekly</changefreq>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
-
 </urlset>
