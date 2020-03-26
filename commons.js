@@ -487,7 +487,7 @@ function setCdnOrLocalFiles (isCDN) {
 // checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics"
 // options are selected. These options require Internet and thus disables them
 function checkForInternet () {
-  // bin/index.js services demanding Internet
+  // bin/server.js services demanding Internet
   var demandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
 
   var isAny = false

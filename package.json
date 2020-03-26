@@ -2,11 +2,11 @@
   "name": "autocosts",
   "version": "6.1.10",
   "description": "Automobile Costs Calculator",
-  "main": "bin/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
-    "postinstall": "node build.js -cm -r prod && node bin/index.js --print --pdf -r prod"
+    "postinstall": "node build.js -cm -r prod && node bin/server.js --print --pdf -r prod"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "commons.js",
     "contributing.md",
     "/build",
-    "bin/index.js",
+    "bin/server.js",
     "/src",
     "/docs"
   ],

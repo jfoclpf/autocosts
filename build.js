@@ -89,7 +89,6 @@ if (diffDir !== '' && diffDir !== '.') {
 
 // method that forces several methods to run synchronously
 async.series([
-
   // copy new version from src/ to bin/
   function (callback) {
     if (options.copy) {
@@ -141,7 +140,7 @@ async.series([
   },
 
   function (callback) {
-    // only shows this final message if the bin/index.js is not run
+    // only shows this final message if the bin/server.js is not run
     if (!options.run) {
       console.log(getFinalRunMsg())
     }
@@ -385,7 +384,7 @@ function getArgvHelpMsg () {
 function getFinalRunMsg () {
   if (RELEASE !== 'test') {
     // built filename
-    var filename = path.join('bin', 'index.js')
+    var filename = path.join('bin', 'server.js')
 
     var messg = '\nRun ' + ('node ' + filename).green.bold + ' to start application with default options\n' +
       'or ' + ('node ' + filename + ' -h').green.bold + ' for more information\n'
@@ -398,7 +397,7 @@ function getFinalRunMsg () {
 
 function runApp () {
   // built filename
-  var filename = path.join('bin', 'index.js')
+  var filename = path.join('bin', 'server.js')
 
   console.log('Building complete with ' + ('--run').bold + ' option enabled, therefore')
   console.log('starting application with default options using command: ')

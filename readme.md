@@ -1,11 +1,11 @@
 autocosts &ndash; car costs calculator
 =========
-[![Build Status][travis_img]][travis_url] 
+[![Build Status][travis_img]][travis_url]
 [![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jfoclpf/autocosts?targetFile=package.json)
 [![Dependency Status][dependency status_img]][dependency status_url]
-[![js-standard-style][js-standard-style_img]][js-standard-style_url] 
-[![npm][npm_img]][npm_url] 
-[![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url] 
+[![js-standard-style][js-standard-style_img]][js-standard-style_url]
+[![npm][npm_img]][npm_url]
+[![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 
 
 
@@ -74,12 +74,12 @@ For more information regarding how the costs are calculated, you can check the [
   * Tolls
   * Fines
   * Car washes
-  
+
 For more information see [`contributing.md`](contributing.md)
 
 ### Aditional services
 Autocosts supports the following additional services, which can be enabled or disabled (default).
-After building with `node build.js`, run `node bin/index.js -h` for more information.
+After building with `node build.js`, run `node bin/server.js -h` for more information.
 
 ### Database
 

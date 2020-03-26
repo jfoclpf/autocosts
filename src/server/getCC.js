@@ -128,7 +128,7 @@ module.exports = {
     CSPstr1 += frameStr
   },
 
-  // get CSP string since pre-generation of CSP string was done initially as the index.js starts
+  // get CSP string since pre-generation of CSP string was done initially as the server.js starts
   getCSPstr: function (nonce = '') {
     // for 'strict-dynamic' read
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic

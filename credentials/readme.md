@@ -1,4 +1,4 @@
-This directory must have files whose names are `devCredentials.json`, `testCredentials.json` or `prodCredentials.json` according to the selected release. If you enable a service while running `node bin/index.js` the corresponding credential must be present in that JSON file. If you don't use the service the corresponding information in the JSON file will be ignored and therefore must not be present on the file. 
+This directory must have files whose names are `devCredentials.json`, `testCredentials.json` or `prodCredentials.json` according to the selected release. If you enable a service while running `node bin/server.js` the corresponding credential must be present in that JSON file. If you don't use the service the corresponding information in the JSON file will be ignored and therefore must not be present on the file. 
 
 The credentials JSON file must obey the following structure:
 

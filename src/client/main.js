@@ -26,7 +26,7 @@ var autocosts = (function () {
         protocol: undefined, // `http:` or `https:`
         canonicalUrl: undefined, // the correct url according to country, ex.,
         // if this is UK => 'http://autocosts.info/UK'
-        cdnUrl: undefined, // it's defined in the node server side index.js
+        cdnUrl: undefined, // it's defined in the node server side server.js
         uberApi: undefined // uber url to get UBER API information through AJAX
       },
       dirs: {

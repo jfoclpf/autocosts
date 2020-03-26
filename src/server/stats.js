@@ -2,7 +2,7 @@ const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
 const mysql = require('mysql') // module to get info from database
 const async = require('async') // module to allow to execute the queries in series
-const debug = require('debug')('app:stats') // run "DEBUG=app:stats node index.js"
+const debug = require('debug')('app:stats') // run "DEBUG=app:stats node server.js"
 
 const getCC = require(path.join(__dirname, 'getCC'))
 const commons = require(path.join(__dirname, '..', '..', 'commons'))

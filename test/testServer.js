@@ -16,7 +16,7 @@ module.exports = {
 var httpLocalServer
 
 // starts http server on localhost on test default port
-// arguments: CLI arguments for the node bin/index.js (optional), onStart, onError
+// arguments: CLI arguments for the node bin/server.js (optional), onStart, onError
 function startsServerForTests () {
   debug('Starting http server...')
 
@@ -30,12 +30,12 @@ function startsServerForTests () {
     onError = arguments[1]
   } else {
     console.error('Arguments for startsServerForTests are:')
-    console.error('CLI arguments for the node bin/index.js (optional), onStart, onError')
+    console.error('CLI arguments for the node bin/server.js (optional), onStart, onError')
     process.exit(1) // exit with error
   }
 
   try {
-    const index = path.join(directories.server.bin, 'index.js')
+    const index = path.join(directories.server.bin, 'server.js')
     args = args || []
     args.push('-r', 'test')
     const options = {
