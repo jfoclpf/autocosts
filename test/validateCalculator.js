@@ -51,13 +51,13 @@ async.series([
   },
   // unzip JSON file with user insertions
   function (callback) {
-    extractZip(userInsertionsZipFile, { dir: __dirname }, function (errOnUnzip) {
-      if (errOnUnzip) {
-        callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
-      } else {
-        callback()
-      }
-    })
+    try {
+      extractZip(userInsertionsZipFile, { dir: __dirname })
+        .then(() => { callback() })
+        .catch((errOnUnzip) => { callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message)) })
+    } catch (errOnUnzip) {
+      callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
+    }
   },
   // test main calculator function
   function (callback) {

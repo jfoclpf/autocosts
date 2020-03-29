@@ -80,7 +80,7 @@
     "concat-files": "^0.1.1",
     "csslint": "^1.0.5",
     "debug": "^4.1.1",
-    "extract-zip": "1.7.0",
+    "extract-zip": "2.0.0",
     "html-minifier": "^4.0.0",
     "html-validate": "2.x",
     "html-validator": "5.x",
