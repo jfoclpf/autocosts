@@ -220,7 +220,7 @@ console.log(results)
 
 The object `results` will be the following:
 
-```js
+```json
 {
   "countryCode": "US",
   "currency": "USD",
