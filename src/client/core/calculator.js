@@ -1140,25 +1140,33 @@ autocosts.calculatorModule = (function (thisModule) {
       return null
     }
 
-    calculatePublicTransports(calculatedData.publicTransports, // object passed by reference
-      inputData.publicTransports, // object passed by reference
-      calculatedData.costs.perMonth.total) // value
+    if (inputData.publicTransports) {
+      calculatePublicTransports(calculatedData.publicTransports, // object passed by reference
+        inputData.publicTransports, // object passed by reference
+        calculatedData.costs.perMonth.total) // value
+    }
 
-    calculateFinancialEffort(calculatedData.financialEffort, // object passed by reference (to be changed)
-      inputData.income, // object passed by reference (read-only)
-      inputData.workingTime, // object passed by reference (read-only)
-      calculatedData.costs.totalPerYear) // value
+    if (inputData.income && inputData.workingTime) {
+      calculateFinancialEffort(calculatedData.financialEffort, // object passed by reference (to be changed)
+        inputData.income, // object passed by reference (read-only)
+        inputData.workingTime, // object passed by reference (read-only)
+        calculatedData.costs.totalPerYear) // value
+    }
 
-    calculateDrivingDistance(calculatedData.drivingDistance, // object passed by reference (to be changed)
-      calculatedData.details, // object passed by reference (to be changed)
-      inputData.fuel, // object passed by reference (read-only)
-      inputData.distance) // object passed by reference (read-only)
+    if (inputData.distance) {
+      calculateDrivingDistance(calculatedData.drivingDistance, // object passed by reference (to be changed)
+        calculatedData.details, // object passed by reference (to be changed)
+        inputData.fuel, // object passed by reference (read-only)
+        inputData.distance) // object passed by reference (read-only)
+    }
 
-    calculateTimeSpentInDriving(calculatedData.timeSpentInDriving, // object passed by reference (to be changed)
-      calculatedData.details, // object passed by reference (to be changed)
-      inputData.fuel, // object passed by reference (read-only)
-      inputData.distance, // object passed by reference (read-only)
-      inputData.timeSpentInDriving) // object passed by reference (read-only)
+    if (inputData.distance) {
+      calculateTimeSpentInDriving(calculatedData.timeSpentInDriving, // object passed by reference (to be changed)
+        calculatedData.details, // object passed by reference (to be changed)
+        inputData.fuel, // object passed by reference (read-only)
+        inputData.distance, // object passed by reference (read-only)
+        inputData.timeSpentInDriving) // object passed by reference (read-only)
+    }
 
     calculateSpeeds(calculatedData.speeds, // object passed by reference (to be changed)
       calculatedData.financialEffort, // object passed by reference (read-only)
