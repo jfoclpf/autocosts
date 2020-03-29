@@ -89,10 +89,6 @@ Autocosts also supports code such that the user inputs might be stored into a `m
 
 Autocosts may use the UBER API, such that at the final repport, the user calculations can be compared with the equivalents costs if the user would use just UBER or combined with public transports.
 
-### Charts
-
-Autocosts uses <a href=http://www.chartjs.org/>chartjs.org</a> as it is free, open source and can be used offline.
-
 ### PDF
 
 Autocosts also allows the final report to be printed into a PDF report. It makes use of `pdfmake` npm package.
@@ -101,9 +97,173 @@ Autocosts also allows the final report to be printed into a PDF report. It makes
 
 The credentials for the above services are in the JSON files stored in [`credentials/`](/credentials/)
 
+## API
+
+Install the api with the following command, ensuring that no scripts are run
+
+`npm i autocosts --ignore-scripts`
+
+Now use the autocosts api
+
+```js
+const autocosts = require('autocosts')
+
+// see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#standards
+// for standard units and time periods
+
+var userData = {
+  countryCode: 'US',
+  currency: 'USD',
+
+  depreciation: {
+    dateOfAcquisition: {
+      month: 5,
+      year: 2001,
+      valueOfTheVehicle: 25000
+    },
+    dateOfUserInput: {
+      month: 2,
+      year: 2020,
+      valueOfTheVehicle: 5000
+    }
+  },
+
+  insurance: {
+    amountPerPeriod: 200,
+    period: 'month'
+  },
+
+  credit: {
+    creditBool: true,
+    yesCredit: {
+      borrowedAmount: 15000,
+      numberInstallments: 48,
+      amountInstallment: 350,
+      residualValue: 0
+    }
+  },
+
+  inspection: {
+    averageInspectionCost: 120,
+    numberOfInspections: 15
+  },
+
+  roadTaxes: {
+    amountPerYear: 120
+  },
+
+  // Form Part 2
+  fuel: {
+    typeOfCalculation: 'distance', // type string: "money" or "distance"
+    currencyBased: {
+      amountPerPeriod: null,
+      period: null // type string: "month", "twoMonths",  "trimester", "semester", "year"
+    },
+    distanceBased: {
+      considerCarToJob: true, // boolean
+      carToJob: {
+        daysPerWeek: 5,
+        distanceBetweenHomeAndJob: 15,
+        distanceDuringWeekends: 30,
+        distanceStandardUnit: 'mi' // standard distance for current country: "km", "mil" or "mil(10km)"
+      },
+      noCarToJob: {
+        distancePerPeriod: null,
+        period: null, // type string: "month", "twoMonths",  "trimester", "semester", "year"
+        distanceStandardUnit: null // type string: "km", "mil" or "mil(10km)"
+      },
+      fuelEfficiency: 25, // fuel efficiency of the vehicle
+      fuelEfficiencyStandard: 'mpg(US)', // type string; "ltr/100km", "mpg(US)", etc.
+      fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
+      fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
+    }
+  },
+
+  maintenance: {
+    amountPerYear: 700
+  },
+
+  repairsImprovements: {
+    amountPerYear: 200
+  },
+
+  parking: {
+    amountPerMonth: 14
+  },
+
+  tolls: {
+    calculationBasedOnDay: true, // true or false
+    yesBasedOnDay: {
+      amountPerDay: 2.5,
+      daysPerMonth: 22
+    },
+    noBasedOnDay: {
+      amountPerPeriod: null,
+      period: null // type string: "month", "twoMonths",  "trimester", "semester", "year"
+    }
+  },
+
+  fines: {
+    amountPerPeriod: 40,
+    period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
+  },
+
+  washing: {
+    amountPerPeriod: 110,
+    period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
+  },
+}
+
+var results = autocosts.calculate(userData)
+console.log(results)
+```
+
+The object `results` will be the following:
+
+```js
+{
+  "countryCode": "US",
+  "currency": "USD",
+  "costs": {
+    "totalPerYear": 6595.880952380952,
+    "totalEver": 123672.76785714286,
+    "perMonth": {
+      "items": {
+        "depreciation": 88.88888888888889,
+        "insurance": 200,
+        "credit": 8,
+        "inspection": 8,
+        "roadTaxes": 10,
+        "fuel": 78.26785714285715,
+        "maintenance": 58.333333333333336,
+        "repairsImprovements": 16.666666666666668,
+        "parking": 14,
+        "tolls": 55,
+        "fines": 3.3333333333333335,
+        "washing": 9.166666666666666
+      },
+      "standingCosts": 344.0555555555556,
+      "runningCosts": 205.60119047619048,
+      "total": 549.656746031746
+    },
+    "perUnitDistance": {}
+  },
+  "standardUnits": {
+    "speed": "mi/h",
+    "distance": "mi",
+    "fuelEfficiency": "mpg(US)",
+    "fuelPriceVolume": "gal(US)"
+  }
+}
+
+```
+
+The financial effort of the user and alternative costs considering public transports, uber and taxis included, are also optionally calculated. See [the standard `userData` object](/contributing.md#userdata-class) for more information.
+
+
 ## Android APP
 
-The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses <a href="https://cordova.apache.org/">Apache Cordova</a> to convert JavaScript built code into APP built files (for example APK files in Android)
+The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses Apache Cordova to convert JavaScript built code into APP built files (for example APK files in Android)
 
 ## License
 
