@@ -2,7 +2,7 @@
   "name": "autocosts",
   "version": "6.1.10",
   "description": "Automobile Costs Calculator",
-  "main": "src/index.js",
+  "main": "app.js",
   "scripts": {
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
@@ -24,6 +24,7 @@
   "homepage": "https://autocosts.info",
   "files": [
     "build.js",
+    "app.js",
     "commons.js",
     "contributing.md",
     "/build",
@@ -100,7 +101,7 @@
     "smart-app-banner": "^2.0.0",
     "sql-formatter": "2.3.3",
     "standard": "14.3.3",
-    "uglify-js": "3.8.0",
+    "uglify-js": "3.8.1",
     "uglifycss": "0.0.29",
     "util": "0.12.2",
     "w3c-css": "2.0.2",
