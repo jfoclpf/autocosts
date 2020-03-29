@@ -53,7 +53,7 @@ async.series([
   function (callback) {
     try {
       extractZip(userInsertionsZipFile, { dir: __dirname })
-        .then(() => { callback() })
+        .then(callback)
         .catch((errOnUnzip) => { callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message)) })
     } catch (errOnUnzip) {
       callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
