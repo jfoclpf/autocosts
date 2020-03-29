@@ -2,7 +2,7 @@
   "name": "autocosts",
   "version": "6.1.10",
   "description": "Automobile Costs Calculator",
-  "main": "app.js",
+  "main": "api.js",
   "scripts": {
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
@@ -24,7 +24,7 @@
   "homepage": "https://autocosts.info",
   "files": [
     "build.js",
-    "app.js",
+    "api.js",
     "commons.js",
     "contributing.md",
     "/build",
@@ -42,6 +42,8 @@
   "nyc": {
     "all": true,
     "include": [
+      "api.js",
+      "commons.js",
       "bin/**/*.js"
     ],
     "exclude": [
