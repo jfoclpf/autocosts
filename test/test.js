@@ -23,6 +23,7 @@ commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtmlW3C.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
+commons.runNodeScriptSync(path.join(directories.server.root, 'test/testApi.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
 
 console.log('All tests ran successfully'.green)

@@ -1,3 +1,5 @@
+// Local server used for tests
+
 const path = require('path')
 const { fork } = require('child_process')
 const debug = require('debug')('test:testServer')
