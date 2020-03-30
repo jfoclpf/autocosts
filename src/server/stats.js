@@ -84,18 +84,28 @@ module.exports = {
     async.series([
       // creates database connection and connects
       function (next) {
-        db = mysql.createConnection(dbInfo)
-        debug(dbInfo)
         console.log('\nGetting normalised costs from ' +
           'database table ' + dbInfo.database + '->' + dbInfo.db_tables.monthly_costs_normalized)
 
-        db.connect(function (err) {
-          if (err) {
-            console.error('error connecting: ' + err.stack)
-            throw err
-          }
-          next()
-        })
+        // tries to connect to DB every second till success
+        const attemptConnection = () => {
+          debug('Attempting to connect to db')
+          dbInfo.connectTimeout = 1000 // set same as Timeout to avoid overloading the server
+          db = mysql.createConnection(dbInfo)
+          db.connect(function (err) {
+            if (err) {
+              debug('Error connecting to database, try again in 1 sec...')
+              db.destroy() // destroy immediately failed instance of connection
+              setTimeout(attemptConnection, 1000)
+            } else {
+              debug(('User ' + dbInfo.user + ' connected successfully to database ' +
+                dbInfo.database + ' at ' + dbInfo.host).green)
+              debug(dbInfo)
+              next()
+            }
+          })
+        }
+        attemptConnection()
       },
 
       // Get the normalised costs
