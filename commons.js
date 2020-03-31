@@ -132,18 +132,18 @@ function _init () {
     optionDefinitions.push({ name: service, type: Boolean })
   }
 
-  // get set options from command line arguments
-  var options
+  // get set commandLineArgsObject from command line arguments
+  var commandLineArgsObject
   try {
-    options = commandLineArgs(optionDefinitions)
-    // this "option" object is just filled with the options that were inserted in the command line
-    // console.log(options);
+    commandLineArgsObject = commandLineArgs(optionDefinitions)
+    // this "commandLineArgsObject" is just filled with the options that were inserted in the command line
+    // console.log(commandLineArgsObject);
   } catch (err) {
     console.log('Unknown option: ' + err.optionName, '\n')
-    options = { help: true }
+    commandLineArgsObject = { help: true }
   }
 
-  RELEASE = RELEASE || options.release // set Global variable
+  RELEASE = RELEASE || commandLineArgsObject.release // set Global variable
   // check that release was correctly chosen
   if (RELEASE !== 'dev' && RELEASE !== 'test' && RELEASE !== 'prod') {
     RELEASE = 'dev'
@@ -160,15 +160,15 @@ function _init () {
   setFILENAMES()
 
   // check if --help was selected
-  if (options.help) {
+  if (commandLineArgsObject.help) {
     console.log(getArgvHelpMsg())
     process.exit()
   }
 
   // set HTTP port
   var HTTPport
-  if (options.port) {
-    HTTPport = options.port
+  if (commandLineArgsObject.port) {
+    HTTPport = commandLineArgsObject.port
   } else {
     if (RELEASE === 'prod') {
       HTTPport = defaultPortProd
@@ -182,14 +182,14 @@ function _init () {
   }
 
   // set SWITCHES according to commandLineArgs input options
-  if (options.All) {
+  if (commandLineArgsObject.All) {
     for (const opt in SWITCHES) {
       SWITCHES[opt] = true
     }
   } else {
-    for (const opt in options) {
+    for (const opt in commandLineArgsObject) {
       if (opt !== 'release') {
-        SWITCHES[opt] = options[opt]
+        SWITCHES[opt] = commandLineArgsObject[opt]
       }
     }
   }
@@ -484,54 +484,83 @@ function setCdnOrLocalFiles (isCDN) {
   }
 }
 
-// checks for internet connection in case of "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics"
-// options are selected. These options require Internet and thus disables them
+// checks for internet conn. in case of either options "uber", "cdn", "social", "googleCaptcha" or "googleAnalytics"
+// are selected. These options require Internet and thus enables/disables them according to Internet connection
 function checkForInternet () {
   // bin/server.js services demanding Internet
-  var demandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
+  var servicesDemandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
 
-  var isAny = false
-  for (var i = 0; i < demandingInternet.length; i++) {
-    isAny = isAny || SWITCHES[demandingInternet[i]]
+  var activatedServiceDemandingInternet = []
+  for (let i = 0; i < servicesDemandingInternet.length; i++) {
+    if (SWITCHES[servicesDemandingInternet[i]]) {
+      activatedServiceDemandingInternet.push(servicesDemandingInternet[i])
+    }
   }
 
-  if (isAny) {
-    // check for Internet connection
-    isOnline().then(function (online) {
-      if (!online) {
-        if (EVENTEMITTER) { EVENTEMITTER.emit('onlineStatus', false) }
+  const debugInternet = require('debug')('app:checkForInternet')
 
+  // if there are no services requiring internet, there is no need to check for internet
+  if (activatedServiceDemandingInternet.length === 0) {
+    debugInternet('No activated services requiring Internet, thus no need to check for Internet')
+    return
+  }
+
+  debugInternet('Activated services requiring Internet:', activatedServiceDemandingInternet)
+
+  // check for Internet connection every 3 seconds and updates if status changes
+  var internetStatus = 'offline'
+  const checkInternetConnection = () => {
+    isOnline({ timeout: 3000 }).then(function (online) {
+      debugInternet(online ? 'online' : 'offline')
+
+      if (!online && internetStatus === 'online') {
         console.log('There is no Internet connection'.warn)
+        internetStatus = 'offline'
 
         if (SWITCHES.cdn) {
-          setCdnOrLocalFiles(false) // set Local files with "false"
+          setCdnOrLocalFiles(false) // set Local files, with paramter "false"
         }
 
-        const servicesDisabled = []
-        for (let i = 0; i < demandingInternet.length; i++) {
-          if (SWITCHES[demandingInternet[i]]) {
-            SWITCHES[demandingInternet[i]] = false
-            servicesDisabled.push(demandingInternet[i])
-          }
+        // disable activated services that require internet
+        const len = activatedServiceDemandingInternet.length
+        for (let i = 0; i < len; i++) {
+          SWITCHES[activatedServiceDemandingInternet[i]] = false
         }
 
-        const len = servicesDisabled.length
-        if (len) {
-          process.stdout.write('Services disabled: ')
-          for (let i = 0; i < len; i++) {
-            process.stdout.write(servicesDisabled[i] + (i !== len - 1 ? ', ' : '.\n'))
-          }
-
-          if (EVENTEMITTER) { EVENTEMITTER.emit('settingsChanged') }
-        } else {
-          process.stdout.write('No services disabled\n')
+        process.stdout.write('Services disabled: ')
+        for (let i = 0; i < len; i++) {
+          process.stdout.write(activatedServiceDemandingInternet[i] + (i !== len - 1 ? ', ' : '.\n'))
         }
-      } else {
-        debug('The server is online')
-        if (EVENTEMITTER) { EVENTEMITTER.emit('onlineStatus', true) }
+
+        if (EVENTEMITTER) {
+          EVENTEMITTER.emit('settingsChanged')
+          EVENTEMITTER.emit('onlineStatus', false)
+        }
+      } else if (online && internetStatus === 'offline') {
+        console.log('The server is online'.green)
+        internetStatus = 'online'
+
+        // enabling services that were initially activated on startup and that require internet
+        const len = activatedServiceDemandingInternet.length
+        for (let i = 0; i < len; i++) {
+          SWITCHES[activatedServiceDemandingInternet[i]] = true
+        }
+
+        process.stdout.write('Services enabled: ')
+        for (let i = 0; i < len; i++) {
+          process.stdout.write(activatedServiceDemandingInternet[i] + (i !== len - 1 ? ', ' : '.\n'))
+        }
+
+        if (EVENTEMITTER) {
+          EVENTEMITTER.emit('onlineStatus', true)
+          EVENTEMITTER.emit('settingsChanged')
+        }
       }
+
+      setTimeout(checkInternetConnection, 3000)
     })
   }
+  checkInternetConnection()
 }
 
 function getCountriesObj () {

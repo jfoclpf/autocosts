@@ -21,7 +21,6 @@ const compression = require('compression')
 const sortObj = require('sort-object') // to sort JS objects
 const colors = require('colors') // does not alter string prototype
 const util = require('util')
-const isOnline = require('is-online')
 const debug = require('debug')('app:index')
 
 // personalised requires
@@ -184,15 +183,7 @@ if (SWITCHES.database) {
 
   const stats = require(path.join(__dirname, 'server', 'stats'))
 
-  // the /stats page shall only be rendered when there is internet, because it needs access to a database
-  isOnline().then(function (online) {
-    if (online) {
-      serverData.isOnline = true
-      stats.prepareStats(serverData, WORDS, eventEmitter)
-    } else {
-      serverData.isOnline = false
-    }
-  })
+  stats.prepareStats(serverData, WORDS, eventEmitter)
 
   app.get('/stats', function (req, res, next) {
     if (serverData.isOnline) {
