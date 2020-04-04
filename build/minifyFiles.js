@@ -34,7 +34,7 @@ var Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfiles],
   function (err, results) {
     if (err) {
-      console.log(Error(('Error minifying files.\n' + err.message).error))
+      console.log(Error(('\nError minifying file.\n' + err.message).error), err)
       process.exit(1) // exit with error
     }
     Bar.tick({ info: '' })
@@ -64,7 +64,7 @@ function processJSfiles (callback) {
       var result = UglifyJS.minify(code, options)
 
       if (result.error) {
-        callback(Error('Error minifying file: ' + filename + '.\n'))
+        callback(Error('Error minifying file: ' + filename + '.\n' + result.error))
         return
       } else {
         const fileRelativePath = path.relative(directories.server.root, filename)
