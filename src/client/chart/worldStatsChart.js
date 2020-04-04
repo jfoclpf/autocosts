@@ -156,14 +156,15 @@
 
   // this function sorts the countries in the world stats chart, according to the total costs
   // for each country, but only considering the selected, i.e., turned on, car cost items on the chart legend
-  const orderStatsData = function () {
+  var orderStatsData = function () {
+    var i, costIndex, mapped
     // get the total costs for each country considering only the visible cost items
     // selectable on the chart legend. On the chart legend the cost items can be turned on/off
-    var numberOfCostItems = dataset.length
     var totalCostsPerCountry = [] // total costs per country only considering selected cost items
-    for (var i = 0; i < nmbrOfCountries; i++) {
+    var numberOfCostItems = dataset.length
+    for (i = 0; i < nmbrOfCountries; i++) {
       var totalSelectedCostsPerCountry = 0
-      for (var costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
+      for (costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
         if (statsChart.isDatasetVisible(costIndex)) {
           totalSelectedCostsPerCountry += dataset[costIndex].data[i]
         }
@@ -173,7 +174,7 @@
 
     // now creates a map object and sorts it, keeping the old index of countries
     // to further sort the arrays of dataset
-    var mapped = totalCostsPerCountry.map(function (el, i) {
+    mapped = totalCostsPerCountry.map(function (el, i) {
       return { index: i, country: statsLabels[i], value: el }
     })
     mapped.sort(function (a, b) {
@@ -181,10 +182,13 @@
     })
 
     // now sorts the dataset, which have the costs items, based on the map
-    for (costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
-      dataset[costIndex].data = mapped.map(function (el) {
+    function getOrderedData (costIndex) {
+      return mapped.map(function (el) { // jshint ignore:line
         return dataset[costIndex].data[el.index]
       })
+    }
+    for (costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
+      dataset[costIndex].data = getOrderedData(costIndex)
     }
 
     statsLabels = mapped.map(function (el) {
