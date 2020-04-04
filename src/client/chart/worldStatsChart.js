@@ -13,6 +13,9 @@
   // get statistical data
   var statsDataEl = document.getElementById('chart')
   var statsData = JSON.parse(decodeURI(statsDataEl.dataset.stats_data))
+
+  // statsLabels is an array of country codes, ordered by highest total cost
+  // f.ex: ["DK", "SE", "FR", "IT", "FI", ... ]
   var statsLabels = JSON.parse(decodeURI(statsDataEl.dataset.stats_labels)) // the analyzed countries (2 letter Country Codes)
 
   // gives 50px of height for every  horizontal bar
@@ -36,8 +39,8 @@
 
   var dataset = [
     {
-      label: WORDS.depreciation_st,
-      data: statsData.depreciation,
+      label: WORDS.depreciation_st, // a string in English
+      data: statsData.depreciation, // an array of values
       backgroundColor: costsColors.depreciation
     }, {
       label: WORDS.insurance_short,
@@ -95,6 +98,10 @@
         usePointStyle: true,
         fontSize: 10,
         fontColor: '#868790'
+      },
+      onClick: function (evt, item) {
+        Chart.defaults.global.legend.onClick.call(this, evt, item)
+        orderStatsData()
       }
     },
     scales: {
@@ -110,7 +117,7 @@
         }
       }],
       yAxes: [{
-        stacked: true, // this also..
+        stacked: true, // this is also needed for the stacked bars
         ticks: {
           fontSize: 12
         }
@@ -145,5 +152,47 @@
     options: options
   }
 
-  new Chart('worldStatsChart', chartContent) // eslint-disable-line
+  var statsChart = new Chart('worldStatsChart', chartContent) // eslint-disable-line
+
+  // this function sorts the countries in the world stats chart, according to the total costs
+  // for each country, but only considering the selected, i.e., turned on, car cost items on the chart legend
+  const orderStatsData = function () {
+    // get the total costs for each country considering only the visible cost items
+    // selectable on the chart legend. On the chart legend the cost items can be turned on/off
+    var numberOfCostItems = dataset.length
+    var totalCostsPerCountry = [] // total costs per country only considering selected cost items
+    for (var i = 0; i < nmbrOfCountries; i++) {
+      var totalSelectedCostsPerCountry = 0
+      for (var costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
+        if (statsChart.isDatasetVisible(costIndex)) {
+          totalSelectedCostsPerCountry += dataset[costIndex].data[i]
+        }
+      }
+      totalCostsPerCountry[i] = totalSelectedCostsPerCountry
+    }
+
+    // now creates a map object and sorts it, keeping the old index of countries
+    // to further sort the arrays of dataset
+    var mapped = totalCostsPerCountry.map(function (el, i) {
+      return { index: i, country: statsLabels[i], value: el }
+    })
+    mapped.sort(function (a, b) {
+      return b.value - a.value
+    })
+
+    // now sorts the dataset, which have the costs items, based on the map
+    for (costIndex = 0; costIndex < numberOfCostItems; costIndex++) {
+      dataset[costIndex].data = mapped.map(function (el) {
+        return dataset[costIndex].data[el.index]
+      })
+    }
+
+    statsLabels = mapped.map(function (el) {
+      return statsLabels[el.index]
+    })
+
+    statsChart.data.labels = statsLabels
+    statsChart.data.datasets = dataset
+    statsChart.update()
+  }
 })()
