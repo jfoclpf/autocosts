@@ -2366,13 +2366,13 @@
       }
     },
     "express-handlebars": {
-      "version": "4.0.2",
-      "resolved": "https://registry.npmjs.org/express-handlebars/-/express-handlebars-4.0.2.tgz",
-      "integrity": "sha512-Ps3IPb24F9IbBEIOWfoWgJQonm5qeBN9pUslR7YViA5vkVjgVYnHsxlv4nNMDdYAsY/U+DjIQ78ZS8Q7QCnBbA==",
+      "version": "4.0.3",
+      "resolved": "https://registry.npmjs.org/express-handlebars/-/express-handlebars-4.0.3.tgz",
+      "integrity": "sha512-XSAQRreb0LzzSAQG7DRCaidqWYdtfOjgHF6VTaN7p6FaUVfFZq4Ki2d5q8WO3cdsEqbYBV69XzG+FRHzNukwiQ==",
       "requires": {
         "glob": "^7.1.6",
         "graceful-fs": "^4.2.3",
-        "handlebars": "^4.7.5",
+        "handlebars": "^4.7.6",
         "object.assign": "^4.1.0",
         "promise": "^8.1.0"
       },

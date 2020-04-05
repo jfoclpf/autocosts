@@ -63,7 +63,7 @@
     "command-line-args": "5.1.1",
     "compression": "1.7.4",
     "express": "4.x",
-    "express-handlebars": "^4.0.2",
+    "express-handlebars": "^4.0.3",
     "find": "0.3.0",
     "flat": "^5.0.0",
     "fs-extra": "^9.0.0",
