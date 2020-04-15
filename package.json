@@ -103,7 +103,7 @@
     "smart-app-banner": "^2.0.0",
     "sql-formatter": "2.3.3",
     "standard": "14.3.3",
-    "uglify-js": "3.9.0",
+    "uglify-js": "3.9.1",
     "uglifycss": "0.0.29",
     "util": "0.12.2",
     "w3c-css": "2.0.2",
