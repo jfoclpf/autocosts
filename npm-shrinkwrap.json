@@ -5131,9 +5131,9 @@
       "dev": true
     },
     "paragraph-builder": {
-      "version": "1.0.14",
-      "resolved": "https://registry.npmjs.org/paragraph-builder/-/paragraph-builder-1.0.14.tgz",
-      "integrity": "sha512-8OpD2X0c6HMHWqn7dqajBc7DFuN+Os/PcfKe2tzxsXbAKZmZqWZV1aWcHx7I01NXadvOoyv4+RMnYb/owoG/0w=="
+      "version": "1.0.15",
+      "resolved": "https://registry.npmjs.org/paragraph-builder/-/paragraph-builder-1.0.15.tgz",
+      "integrity": "sha512-t6IRKs2VVn3mnXBDffFopTVaCw/7xjWTyunMNvKkQCgbcWfcXTl7ydVj8YxE1vEVWudWeUJbHifrO7+4Ajycxg=="
     },
     "param-case": {
       "version": "2.1.1",
