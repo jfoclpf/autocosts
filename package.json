@@ -9,7 +9,8 @@
     "postinstall": "node build.js -cm -r prod && node bin/server.js --print --pdf -r prod",
     "updatePackages": "ncu -e 2 || (ncu -u && npm i --ignore-scripts && npm run commitAndUpload)",
     "commitAndUpload": "npm test && git commit -a -m 'update' && npm version patch && npm publish && git push",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
