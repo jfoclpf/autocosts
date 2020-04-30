@@ -10,7 +10,7 @@
     "updatePackages": "ncu -e 2 || (ncu -u && npm i --ignore-scripts && npm run commitAndUpload)",
     "commitAndUpload": "npm test && git commit -a -m 'update' && npm version patch && npm publish && git push",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublishOnly": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -80,8 +80,7 @@
     "progress": "2.0.3",
     "request": "2.88.2",
     "sort-object": "3.0.3",
-    "striptags": "^3.1.1",
-    "snyk": "^1.316.1"
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
     "chart.js": "2.9.3",
@@ -106,6 +105,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
     "smart-app-banner": "^2.0.0",
+    "snyk": "^1.316.1",
     "sql-formatter": "2.3.3",
     "standard": "14.3.3",
     "uglify-js": "3.9.1",
