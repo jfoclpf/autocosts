@@ -262,7 +262,7 @@ select::-ms-expand {display: none; /* remove default arrow on ie10 and ie11 */}
 
 .sidebar .sidebar-right-container .worldStats {margin-top: 10px; float:left;}
 .sidebar .sidebar-right-container .headNote {margin: 0 0 45px 20px;}
-.sidebar .sidebar-right-container .downloadButton {background-color: #2c49b9; border-radius: 5px; -webkit-border-radius: 5px; width:18px; height: 22px; padding: 6px 5px 1px 7px; float: right; margin: 10px 20px 0 0; cursor: pointer;}
+.sidebar .sidebar-right-container .sidebarButton {border-radius: 5px; -webkit-border-radius: 5px; width:18px; height: 22px; padding: 6px 5px 1px 7px; float: right; margin: 10px 20px 0 0; cursor: pointer;}
 
 .sidebar > .sidebar-left-container > .close {position: absolute;margin: -11px 0 0 33%;}
 .sidebar > .sidebar-right-container > .close {position: absolute;margin: 29px 0 0 -18%;}

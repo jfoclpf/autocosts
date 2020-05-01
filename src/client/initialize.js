@@ -142,11 +142,25 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
         }
       }
 
+      // assigns hanlder to show country costs tables as image
+      $('.sidebar-right-container')
+        .off('click', '.tableImgButton')
+        .on('click', '.tableImgButton', function (e) {
+          window.location.href = '/tables/' + cc + '.jpg'
+        })
+
       // assigns hanlder to show tables
       $('.sidebar-right-container')
-        .off('click', '.downloadButton')
-        .on('click', '.downloadButton', function () {
+        .off('click', '.tableHtmlButton')
+        .on('click', '.tableHtmlButton', function (e) {
           window.location.href = '/tables/' + cc + '.htm'
+        })
+
+      // assigns hanlder to show world stats
+      $('.sidebar-right-container')
+        .off('click', '.worldStatsButton')
+        .on('click', '.worldStatsButton', function (e) {
+          window.location.href = '/stats'
         })
     }
 
