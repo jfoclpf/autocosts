@@ -1,75 +1,63 @@
-<!DOCTYPE html>
-<html lang="{{{get2letterLangCode}}}">
+<main>
+    <div class="sidebars">
+        {{> sidebars }}
+    </div>
 
-<head>
-    {{> head }}
-</head>
+    <header>
+        <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
+        {{#if serverData.settings.switches.database}}
+            <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
+        {{/if}}
+        <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
+    </header>
 
-<body>
+    <section id="hero">
+        <div class="container">
+            <h1>{{{words.web_page_title}}}</h1>
 
-    <main>
-        <div class="sidebars">
-            {{> sidebars }}
+            <h2>
+                {{{words.sub_title_pos1}}}
+                <select name="country_select" id="country_select">
+                    {{~#each serverData.availableCountries~}}
+                    <option value="{{@key}}"{{{isSelected ../CC @key}}}>
+                        {{~this~}}
+                    </option>
+                    {{/each}}
+                </select>
+                {{{words.sub_title_pos2}}}
+            </h2>
+
+            <input type="button" id="calculateButton"
+                   class="button big btn-blue cursor_pointer" value="{{{getLandingPageMainButtonText}}}">
         </div>
+    </section>
 
-        <header>
-            <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
-            {{#if serverData.settings.switches.database}}
-                <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
-            {{/if}}
-            <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
-        </header>
+    <img class="img_loader" alt="loader" src="#" data-delayedsrc="/img/loader.gif">
 
-        <section id="hero">
-            <div class="container">
-                <h1>{{{words.web_page_title}}}</h1>
+    {{#with words}}
+    <div id="form">
+        <form name="costs_form" action="javascript:void(0);">
+        {{> form }}
+        </form>
+    </div>
 
-                <h2>
-                    {{{words.sub_title_pos1}}}
-                    <select name="country_select" id="country_select">
-                        {{~#each serverData.availableCountries~}}
-                        <option value="{{@key}}"{{{isSelected ../CC @key}}}>
-                            {{~this~}}
-                        </option>
-                        {{/each}}
-                    </select>
-                    {{{words.sub_title_pos2}}}
-                </h2>
-
-                <input type="button" id="calculateButton"
-                       class="button big btn-blue cursor_pointer" value="{{{getLandingPageMainButtonText}}}">
-            </div>
-        </section>
-
-        <img class="img_loader" alt="loader" src="#" data-delayedsrc="/img/loader.gif">
-
-        {{#with words}}
-        <div id="form">
-            <form name="costs_form" action="javascript:void(0);">
-            {{> form }}
-            </form>
+    <div id="results">
+        <div>
+            {{> results }}
         </div>
-
-        <div id="results">
-            <div>
-                {{> results }}
-            </div>
-            <div class="bottom-actions-bar">
-                {{> bottomActionsBar }}
-            </div>
+        <div class="bottom-actions-bar">
+            {{> bottomActionsBar }}
         </div>
-        {{/with}}
+    </div>
+    {{/with}}
 
-        <footer>
-            <div class="animation"></div>
-        </footer>
-    </main>
+    <footer>
+        <div class="animation"></div>
+    </footer>
+</main>
 
-    <!-- Data sent to JS code on browser -->
-    {{> globalData }}
+<!-- Data sent to JS code on browser -->
+{{> globalData }}
 
-    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/jquery/jquery.min.js"></script>
-    <script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/main.js"></script>
-
-</body>
-</html>
+<script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/jquery/jquery.min.js"></script>
+<script {{#if nonce}}nonce="{{{nonce}}}"{{/if}} src="/client/main.js"></script>

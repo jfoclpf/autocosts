@@ -50,7 +50,7 @@ module.exports = {
     data.CC = data.words.CC = data.pageData.CC = CC
 
     data.emptyChar = '' // empty character to be used in handlebars for whitespace trimming
-    data.layout = false // doesn't use handlebars default template
+    data.layout = 'main'
 
     if (pageData.notLocalhost) {
       // nonce is giving several problems with jQuery and backward compatibility

@@ -1,217 +1,203 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {{> head }}
+<main id="statspage">
+    <div class="sidebars">
+        {{> sidebars }}
+    </div>
 
-    <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi">
+    <header>
+        <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
+        {{#if serverData.settings.switches.database}}
+            <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
+        {{/if}}
+        <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
+    </header>
 
-</head>
+    <!-- World stats car cost -->
+    <section class="worldStats-car-costs">
+        <div class="section-wrapper">
+            <h1 class="">World statistics of car costs</h1>
+            <p><b>Yearly</b> average costs per country (all values in <b>Euros</b>)</p>
 
-<body id="statspage_body">
+            <div class="worldStats-car-costs-chart">
+                <canvas id="worldStatsChart"></canvas>
+            </div>
 
-    <main>
-        <div class="sidebars">
-            {{> sidebars }}
-        </div>
+            <!-- stats reference -->
+            <div class="stats-references">
+            </div><!-- end stats reference -->
 
-        <header>
-            <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
-            {{#if serverData.settings.switches.database}}
-                <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
-            {{/if}}
-            <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
-        </header>
-
-        <!-- World stats car cost -->
-        <section class="worldStats-car-costs">
-            <div class="section-wrapper">
-                <h1 class="">World statistics of car costs</h1>
-                <p><b>Yearly</b> average costs per country (all values in <b>Euros</b>)</p>
-
-                <div class="worldStats-car-costs-chart">
-                    <canvas id="worldStatsChart"></canvas>
+            <!--stats data table-->
+            <div class="table stats-table">
+                <div class="theader">
+                    <div class="table_header">Country</div>
+                    <div class="table_header depreciation_color">Depreciation</div>
+                    <div class="table_header insurance_color">Insurance and Breakdown cover</div>
+                    <div class="table_header credit_color">Car finance</div>
+                    <div class="table_header inspection_color">Inspection</div>
+                    <div class="table_header roadTaxes_color">Car tax</div>
+                    <div class="table_header fuel_color">Fuel</div>
+                    <div class="table_header maintenance_color">Maintenance</div>
+                    <div class="table_header repairsImprovements_color">Repairs and Improvs</div>
+                    <div class="table_header parking_color">Parking</div>
+                    <div class="table_header tolls_color">Tolls</div>
+                    <div class="table_header fines_color">Traffic fines</div>
+                    <div class="table_header washing_color">Washing and cleaning</div>
+                    <div class="table_header">Running costs per distance</div>
+                    <div class="table_header">Total costs per distance</div>
+                    <div class="table_header">Kinetic speed</div>
+                    <div class="table_header">Consumer speed</div>
+                    <div class="table_header">Total costs per year</div>
                 </div>
 
-                <!-- stats reference -->
-                <div class="stats-references">
-                </div><!-- end stats reference -->
+                {{#each averageNormalizedCosts}}
+                <div class="table_row">
 
-                <!--stats data table-->
-                <div class="table stats-table">
-                    <div class="theader">
-                        <div class="table_header">Country</div>
-                        <div class="table_header depreciation_color">Depreciation</div>
-                        <div class="table_header insurance_color">Insurance and Breakdown cover</div>
-                        <div class="table_header credit_color">Car finance</div>
-                        <div class="table_header inspection_color">Inspection</div>
-                        <div class="table_header roadTaxes_color">Car tax</div>
-                        <div class="table_header fuel_color">Fuel</div>
-                        <div class="table_header maintenance_color">Maintenance</div>
-                        <div class="table_header repairsImprovements_color">Repairs and Improvs</div>
-                        <div class="table_header parking_color">Parking</div>
-                        <div class="table_header tolls_color">Tolls</div>
-                        <div class="table_header fines_color">Traffic fines</div>
-                        <div class="table_header washing_color">Washing and cleaning</div>
-                        <div class="table_header">Running costs per distance</div>
-                        <div class="table_header">Total costs per distance</div>
-                        <div class="table_header">Kinetic speed</div>
-                        <div class="table_header">Consumer speed</div>
-                        <div class="table_header">Total costs per year</div>
+                    <div class="table_small">
+                        <div class="table_cell">Country</div>
+                        <div class="table_cell"><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br>{{{countryName}}}</a></div>
                     </div>
-
-                    {{#each averageNormalizedCosts}}
-                    <div class="table_row">
-
-                        <div class="table_small">
-                            <div class="table_cell">Country</div>
-                            <div class="table_cell"><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br>{{{countryName}}}</a></div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Depreciation</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Insurance and Breakdown cover</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_insurance 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Car finance</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_credit 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Inspection</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_inspection 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Car Tax</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Fuel</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_fuel 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Maintenance</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Repair and Improvs</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Parking</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_parking 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Tolls</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_tolls 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Traffic Fines</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_fines 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Washing and Cleaning</div>
-                            <div class="table_cell">{{times12toFixed costs_perMonth_items_washing 0}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Running costs per distance</div>
-                            <div class="table_cell">{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Total costs per distance</div>
-                            <div class="table_cell">{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Kinetic speed</div>
-                            <div class="table_cell">{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Consumer speed</div>
-                            <div class="table_cell">{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Total costs per year</div>
-                            <div class="table_cell">
-                              <a href="{{{../serverData.directories.client.tables}}}/{{countryCode}}.jpg" target="_blank">
-                                    &euro;{{toFixed costs_totalPerYear 0}}
-                              </a>
-                            </div>
-                        </div>
-                    </div><!--en table row-->
-                    {{/each}}
-                </div><!--end table-->
-
-            </div><!--end section wrapper-->
-        </section><!-- end World stats car cost -->
-
-        <!-- Notes and sources of these averages -->
-        <section class="notes-sources">
-            <div class="section-wrapper">
-                <h2>Notes and sources of these averages</h2>
-
-                <ul>
-                    <li>These averages are based on a statistical roboust and restrictive analysis on the inputs from the users who run the automobile costs calculator at <b>autocosts.info</b></li>
-                    <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both a priori and a posteiori analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive.</li>
-                    <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the database from where these values are obtained and calculated.</li>
-                    <li>Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org</li>
-                    <li>The dates of the users insertions vary from 22/02/2014 till {{{dateOfCalculation}}}. These averages were calculated on {{{dateOfCalculation}}}.</li>
-                    <li>The calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information, since the outlier removal technique uses already mathematical statistical filters and a priori filtering considerations.</li>
-                    <li>The user insertion statistical information is based therefore on the following user survey data:</li>
-                </ul>
-
-                <!--User survey table-->
-                <div class="table stats-table">
-                    <div class="theader">
-                        <div class="table_header">Country code</div>
-                        <div class="table_header">Country name</div>
-                        <div class="table_header">Currency rate (1 EUR)</div>
-                        <div class="table_header">Surveyed users</div>
-                        <div class="table_header">Valid users</div>
-                        <div class="table_header">% of valid users</div>
+                    <div class="table_small">
+                        <div class="table_cell">Depreciation</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_depreciation 0}}</div>
                     </div>
+                    <div class="table_small">
+                        <div class="table_cell">Insurance and Breakdown cover</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_insurance 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Car finance</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_credit 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Inspection</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_inspection 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Car Tax</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_roadTaxes 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Fuel</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_fuel 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Maintenance</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_maintenance 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Repair and Improvs</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_repairsImprovements 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Parking</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_parking 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Tolls</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_tolls 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Traffic Fines</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_fines 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Washing and Cleaning</div>
+                        <div class="table_cell">{{times12toFixed costs_perMonth_items_washing 0}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Running costs per distance</div>
+                        <div class="table_cell">{{toFixed costs_perUnitDistance_runningCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Total costs per distance</div>
+                        <div class="table_cell">{{toFixed costs_perUnitDistance_totalCosts 2}}/{{{getDistanceOptStrShort}}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Kinetic speed</div>
+                        <div class="table_cell">{{toFixed speeds_averageKineticSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Consumer speed</div>
+                        <div class="table_cell">{{toFixed speeds_averageConsumerSpeed 0}}{{{getDistanceOptStrShort}}}/h</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Total costs per year</div>
+                        <div class="table_cell">
+                          <a href="{{{../serverData.directories.client.tables}}}/{{countryCode}}.jpg" target="_blank">
+                                &euro;{{toFixed costs_totalPerYear 0}}
+                          </a>
+                        </div>
+                    </div>
+                </div><!--en table row-->
+                {{/each}}
+            </div><!--end table-->
 
-                    {{#each chartTable as |value key|}}
-                    <div class="table_row">
-                        <div class="table_small">
-                            <div class="table_cell">Country code</div>
-                            <div class="table_cell">{{key}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Country name</div>
-                            <div class="table_cell">{{countryName}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Currency rate (1 EUR)</div>
-                            <div class="table_cell">{{toFixed currencyConversionToEUR 2}} {{currency}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Surveyed users</div>
-                            <div class="table_cell">{{totalUsers}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">Valid users</div>
-                            <div class="table_cell">{{validUsers}}</div>
-                        </div>
-                        <div class="table_small">
-                            <div class="table_cell">% of valid users</div>
-                            <div class="table_cell">{{toFixed percentageOfValidUsers 1}}</div>
-                        </div>
-                    </div><!--Ends table row-->
-                    {{/each}}
-                </div><!--Ends user survey table-->
-            </div><!--Ends section wrapper-->
-        </section><!--Ends notes and sources-->
+        </div><!--end section wrapper-->
+    </section><!-- end World stats car cost -->
 
-    </main>
+    <!-- Notes and sources of these averages -->
+    <section class="notes-sources">
+        <div class="section-wrapper">
+            <h2>Notes and sources of these averages</h2>
 
-    <!-- Data sent to JS code on browser -->
-    {{> globalData }}
+            <ul>
+                <li>These averages are based on a statistical roboust and restrictive analysis on the inputs from the users who run the automobile costs calculator at <b>autocosts.info</b></li>
+                <li>It is used for these costs calculations a restrictive statistical outlier removal technique, that filters out user insertions which are irregular or away from the normal patterns of automobile costs, considering both a priori and a posteiori analysis, that is, considering beforehand some patterns which remove the user insertions (for example a very unusual high particular item cost), and considering further user insertions totally away from what several previous users had inserted before. Therefore not all user insertions are taken into account for these average calculations, and as can be seen from the following table the outlier filter is quite restrictive.</li>
+                <li>It is also used Google Recaptcha V2 to avoid spam bots from eventually running the calculator and polluting the database from where these values are obtained and calculated.</li>
+                <li>Euro was chosen as a comparison currency amongst the countries, since it is the currency more common within these countries. The currency conversion rates were obtained from openexchangerates.org</li>
+                <li>The dates of the users insertions vary from 22/02/2014 till {{{dateOfCalculation}}}. These averages were calculated on {{{dateOfCalculation}}}.</li>
+                <li>The calculator is completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information, since the outlier removal technique uses already mathematical statistical filters and a priori filtering considerations.</li>
+                <li>The user insertion statistical information is based therefore on the following user survey data:</li>
+            </ul>
 
-    <script src="/client/jquery/jquery.min.js"></script>
-    <script src="/client/chart/chartjs.min.js"></script>
-    <script src="/client/chart/worldStatsChart.js"></script>
-    <script src="/client/main.js"></script>
+            <!--User survey table-->
+            <div class="table stats-table">
+                <div class="theader">
+                    <div class="table_header">Country code</div>
+                    <div class="table_header">Country name</div>
+                    <div class="table_header">Currency rate (1 EUR)</div>
+                    <div class="table_header">Surveyed users</div>
+                    <div class="table_header">Valid users</div>
+                    <div class="table_header">% of valid users</div>
+                </div>
 
-</body>
-</html>
+                {{#each chartTable as |value key|}}
+                <div class="table_row">
+                    <div class="table_small">
+                        <div class="table_cell">Country code</div>
+                        <div class="table_cell">{{key}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Country name</div>
+                        <div class="table_cell">{{countryName}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Currency rate (1 EUR)</div>
+                        <div class="table_cell">{{toFixed currencyConversionToEUR 2}} {{currency}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Surveyed users</div>
+                        <div class="table_cell">{{totalUsers}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">Valid users</div>
+                        <div class="table_cell">{{validUsers}}</div>
+                    </div>
+                    <div class="table_small">
+                        <div class="table_cell">% of valid users</div>
+                        <div class="table_cell">{{toFixed percentageOfValidUsers 1}}</div>
+                    </div>
+                </div><!--Ends table row-->
+                {{/each}}
+            </div><!--Ends user survey table-->
+        </div><!--Ends section wrapper-->
+    </section><!--Ends notes and sources-->
+
+</main>
+
+<!-- Data sent to JS code on browser -->
+{{> globalData }}
+
+<script src="/client/jquery/jquery.min.js"></script>
+<script src="/client/chart/chartjs.min.js"></script>
+<script src="/client/chart/worldStatsChart.js"></script>
+<script src="/client/main.js"></script>

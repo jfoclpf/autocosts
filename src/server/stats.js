@@ -25,6 +25,7 @@ module.exports = {
     data.isGetCC = false
 
     data.words = wordsOfUK
+    data.CC = 'UK'
     data.serverData = serverData
     delete data.serverData.availableCountries.XX
 
@@ -49,7 +50,7 @@ module.exports = {
     }
     data.pageData = pageData
 
-    data.layout = false
+    data.layout = 'main'
 
     if (pageData.notLocalhost) {
       const CSPstr = getCC.getCSPstr()

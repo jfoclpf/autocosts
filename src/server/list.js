@@ -11,6 +11,11 @@ module.exports = function (req, res, serverData, words) {
 
   data.words = data.wordsMatrix.UK
 
+  data.serverData = serverData
+  delete data.serverData.availableCountries.XX
+
+  data.CC = 'UK'
+
   // information depending on this request from the client
   var pageData = {
     /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
@@ -32,7 +37,7 @@ module.exports = function (req, res, serverData, words) {
     data.title = 'List of Countries for the Car Costs Calculator'
   }
 
-  data.layout = false
+  data.layout = 'main'
 
   res.render('list', data)
 }

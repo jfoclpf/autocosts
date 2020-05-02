@@ -1,59 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="sidebars">
+    {{> sidebars }}
+</div>
 
-<head>
-    {{> head }}
-</head>
+<header>
+    <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
+    {{#if serverData.settings.switches.database}}
+        <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
+    {{/if}}
+    <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
+</header>
 
-<body id="listpage_body">
+<div class="div-list-table">
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Country</th>
+                <th scope="col">CC</th>
+                <th scope="col">Language</th>
+                <th scope="col">Main domain</th>
+                <th scope="col">Curr. code</th>
+                <th scope="col">Currency name</th>
+                <th scope="col">Curr. symbol</th>
+                <th scope="col">Fuel efficiency</th>
+                <th scope="col">Standard distance</th>
+                <th scope="col">Fuel volume</th>
+                <th scope="col">Costs</th>
+            </tr>
+        </thead>
 
-    <h1>
-        {{{ title }}}
-    </h1>
+        <tbody>
+        {{#each wordsMatrix as |Country CC|}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{{Country.country_name}}}</td>
+                <td>{{{CC}}}</td>
+                <td class="tdAlignCenter"> {{{Country.languageCode}}} </td>
+                <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
+                <td class="tdAlignCenter">{{{Country.curr_code}}}</td>
+                <td>{{{Country.curr_name}}}</td>
+                <td class="tdAlignCenter">{{{Country.curr_symbol}}}</td>
+                <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
+                <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
+                <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
+                <td class="tdAlignCenter"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
 
-    <div>
-        <table class="list-table">
+    </table>
+</div>
 
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">CC</th>
-                    <th scope="col">Language</th>
-                    <th scope="col">Main domain</th>
-                    <th scope="col">Curr. code</th>
-                    <th scope="col">Currency name</th>
-                    <th scope="col">Curr. symbol</th>
-                    <th scope="col">Fuel efficiency</th>
-                    <th scope="col">Standard distance</th>
-                    <th scope="col">Fuel volume</th>
-                    <th scope="col">Costs</th>
-                </tr>
-            </thead>
+<br><br>
 
-            <tbody>
-            {{#each wordsMatrix as |Country CC|}}
-                <tr>
-                    <td>{{@index}}</td>
-                    <td>{{{Country.country_name}}}</td>
-                    <td>{{{CC}}}</td>
-                    <td class="tdAlignCenter"> {{{Country.languageCode}}} </td>
-                    <td><a href="http://{{{Country.domain}}}/{{{CC}}}">{{{Country.domain}}}</a></td>
-                    <td class="tdAlignCenter">{{{Country.curr_code}}}</td>
-                    <td>{{{Country.curr_name}}}</td>
-                    <td class="tdAlignCenter">{{{Country.curr_symbol}}}</td>
-                    <td>{{{ getFuelEfficiencyOptStr Country.fuel_efficiency_std_option}}}</td>
-                    <td>{{{ getDistanceOptStr Country.distance_std_option}}}</td>
-                    <td>{{{ getFuelPriceVolumeOptStr Country.fuel_price_volume_std}}}</td>
-                    <td class="tdAlignCenter"><a target="_blank" href="tables/{{{CC}}}.jpg">*</a></td>
-                </tr>
-            {{/each}}
-            </tbody>
+<!-- Data sent to JS code on browser -->
+{{> globalData }}
 
-        </table>
-    </div>
-
-    <br><br>
-
-</body>
-</html>
+<script src="/client/jquery/jquery.min.js"></script>
+<script src="/client/main.js"></script>

@@ -1,5 +1,6 @@
-#listpage_body h1 {text-align:center; margin: 25px auto;}
-#listpage_body > div {width:100%}
+h1 {text-align:center; margin: 25px auto;}
+
+.div-list-table {margin-top: 6em;}
 
 table.list-table {border-collapse: collapse; border-radius: 5px; width: 100%; color: #000000; font-size: 14px; line-height: 16px; margin: 0; background: white; -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
 table.list-table tr {display: table-row; border-bottom: 1px solid #d2d4de }
@@ -17,19 +18,17 @@ table.list-table tr td.tdAlignCenter {text-align:center}
 
   .worldStats-car-costs {width: 94%; margin: 0 auto;}
 
-  #listpage_body table.stats-table {border: 0; background: none; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
-  #listpage_body table thead {border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px;}
-  #listpage_body table tr { border-bottom: none; display: block; margin-bottom: 15px; background: white; box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
-  #listpage_body table td { border-bottom: 1px solid #ddd; display: block; font-size: 14px; text-align: right;}
-  #listpage_body table td::before {content: attr(data-label); float: left; color: #797b82; font-size: 14px; text-transform: uppercase;}
-  #listpage_body table td:last-child {border-bottom: 0;}
-  #listpage_body table.stats-table tr th:first-child, #listpage_body table.stats-table tr td:first-child {text-align: right}
-  #listpage_body table.stats-table tr td:first-child a br{display: none}
+  table.stats-table {border: 0; background: none; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
+  table thead {border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px;}
+  table tr { border-bottom: none; display: block; margin-bottom: 15px; background: white; box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);}
+  table td { border-bottom: 1px solid #ddd; display: block; font-size: 14px; text-align: right;}
+  table td::before {content: attr(data-label); float: left; color: #797b82; font-size: 14px; text-transform: uppercase;}
+  table td:last-child {border-bottom: 0;}
+  table.stats-table tr th:first-child, #listpage_body table.stats-table tr td:first-child {text-align: right}
+  table.stats-table tr td:first-child a br{display: none}
 
 }
 
 @media screen and (max-width: 600px) {
-
-    #listpage_body table td::before {font-size: 12px;}
-
+  table td::before {font-size: 12px;}
 }

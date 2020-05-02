@@ -27,16 +27,16 @@
   width: 100%;
   margin: 0 auto;
   border-collapse: separate;
-  border-radius: 5px; 
-  color: #000000; 
-  font-size: 14px; 
-  line-height: 16px; 
-  background: white; 
-  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); 
-  -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); 
+  border-radius: 5px;
+  color: #000000;
+  font-size: 14px;
+  line-height: 16px;
+  background: white;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
+  -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05);
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
 }
-  
+
 .table_row {display: table-row;}
 
 .theader {display: table-row;}
@@ -51,7 +51,7 @@
   padding: 8px 4px;
   text-align: right;
   text-transform: uppercase;
-}  
+}
 .table_header:first-child {text-align: left;padding-left: 10px;}
 
 .table_small {display: table-cell; padding: 0 8px; border-bottom: #d2d4de 1px solid;}
@@ -62,7 +62,7 @@
 .table_row > .table_small:first-child > .table_cell {text-align: left; padding: 0px 0 5px 10px}
 .table_row:last-child > .table_small:last-child > .table_cell:last-child {border-bottom-right-radius: 5px;}
 .table_row:last-child > .table_small:first-child > .table_cell:last-child {border-bottom-left-radius: 5px;}
-  
+
 
   /*----- Responsive -----*/
   @media screen and (max-width: 1024px) {
@@ -82,8 +82,8 @@
       margin: 20px auto 0;
       text-align: right;
       background: white;
-       -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); 
-      -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05); 
+       -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
+      -moz-box-shadow:0px 0px 15px 0px rgba(0,0,0,0.05);
       box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
       border-radius: 5px;
     }
@@ -98,25 +98,20 @@
     .table_row > .table_small:last-child > .table_cell:last-child {border: none; }
 
      .notes-sources .section-wrapper .stats-table .table_row > .table_small:nth-child(2) > .table_cell:nth-child(2) {text-align: right;}
-  
+
 
 }
 
 
 @media screen and (max-width: 700px) {
-    
-    #statspage_body table td::before {font-size: 12px;}
+
+    #statspage table td::before {font-size: 12px;}
 
     .notes-sources {margin: 50px 0 0; padding: 50px 0}
 
-    #statspage_body .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 15px; margin-bottom: 5px}
-    #statspage_body .stats-references ul li:before {margin: 0px 0 0 -15px; }
+    #statspage .stats-references ul li {display: block; padding: 3px 10px 0 15px; line-height: 15px; margin-bottom: 5px}
+    #statspage .stats-references ul li:before {margin: 0px 0 0 -15px; }
 
     .table_row > .table_small > .table_cell {padding: 13px 0 21px}
 
 }
-
-
-
-
-
