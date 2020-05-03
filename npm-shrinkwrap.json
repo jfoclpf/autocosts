@@ -4682,10 +4682,13 @@
       "dev": true
     },
     "is-wsl": {
-      "version": "2.1.1",
-      "resolved": "https://registry.npmjs.org/is-wsl/-/is-wsl-2.1.1.tgz",
-      "integrity": "sha512-umZHcSrwlDHo2TGMXv0DZ8dIUGunZ2Iv68YZnrmCiBPkZ4aaOhtv7pXJKeki9k3qJ3RJr0cDyitcl5wEH3AYog==",
-      "dev": true
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/is-wsl/-/is-wsl-2.2.0.tgz",
+      "integrity": "sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==",
+      "dev": true,
+      "requires": {
+        "is-docker": "^2.0.0"
+      }
     },
     "isarray": {
       "version": "0.0.1",
@@ -7657,9 +7660,9 @@
       "dev": true
     },
     "snyk": {
-      "version": "1.316.1",
-      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.316.1.tgz",
-      "integrity": "sha512-z+LWT14QoOyOsqCcWGkTNlIBpCQmv7E+kMX3r43/vZeU1F9E6Ll+KVcu1simXZixZaOb97IHHIf4rxxYGw65MA==",
+      "version": "1.317.0",
+      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.317.0.tgz",
+      "integrity": "sha512-zNUvvT50Ii5TpHEo9YmDo+j5tqO1b8jXQK9XygfgiuXPRUwxf6PMSqDM5hKkfzuBhaBYZ4IbZWQFQPbMkprj0w==",
       "dev": true,
       "requires": {
         "@snyk/cli-interface": "2.6.0",
@@ -9155,9 +9158,9 @@
       "dev": true
     },
     "uglify-js": {
-      "version": "3.9.1",
-      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.9.1.tgz",
-      "integrity": "sha512-JUPoL1jHsc9fOjVFHdQIhqEEJsQvfKDjlubcCilu8U26uZ73qOg8VsN8O1jbuei44ZPlwL7kmbAdM4tzaUvqnA==",
+      "version": "3.9.2",
+      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.9.2.tgz",
+      "integrity": "sha512-zGVwKslUAD/EeqOrD1nQaBmXIHl1Vw371we8cvS8I6mYK9rmgX5tv8AAeJdfsQ3Kk5mGax2SVV/AizxdNGhl7Q==",
       "requires": {
         "commander": "~2.20.3"
       },
