@@ -159,13 +159,6 @@ function getSubTitleArr (position, words, statsData) {
   var subTitle1a = words.sub_title1a ? words.sub_title1a.trim() : ''
   var subTitle1b = words.sub_title1b ? words.sub_title1b.trim() : ''
 
-  var addPeriodIfInexistent = function (str) {
-    if (str && str.slice(-1) !== '.' && str.slice(-1) !== '!') {
-      str += '.'
-    }
-    return str
-  }
-
   var checkSanityOfStr = function (str, parseStr) {
     if (!str || !str.includes(parseStr)) {
       debug(errMsg + '; \'' + parseStr + '\' undefined or does not contain ' + parseStr)
@@ -218,8 +211,6 @@ function getSubTitleArr (position, words, statsData) {
     debug('workingMonthsPerYearToAffordCarString', workingMonthsPerYearToAffordCarString)
 
     if (!useFinancialEffortInfo || !workingMonthsPerYearToAffordCarString) {
-      subTitle1aPart2 = addPeriodIfInexistent(subTitle1aPart2)
-
       // this returns "is [yearly_costs] per year. Find the true cost of owning a car in your country."
       return subTitle1aPart2
     } else {
@@ -230,8 +221,6 @@ function getSubTitleArr (position, words, statsData) {
       subTitle1aPart2 += ', '
 
       subTitle1b = subTitle1b.replace('[nbrMonths]', workingMonthsPerYearToAffordCarString)
-
-      subTitle1b = addPeriodIfInexistent(subTitle1b)
 
       // this returns "is [yearly_costs] per year, representing [nbrMonths] months of average salary.
       // Find the true cost of owning a car in your country."
