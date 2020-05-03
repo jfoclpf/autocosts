@@ -14,6 +14,7 @@ module.exports = function (req, res, serverData, words) {
   data.statsData = serverData.statsData[CC]
 
   data.CC = data.words.CC = req.params.CC
+  data.countryName = serverData.availableCountries[CC]
 
   data.domain = serverData.domains.countries[CC]
   data.availableCountries = serverData.availableCountries
