@@ -172,6 +172,11 @@ if (SWITCHES.googleCaptcha) {
 }
 
 if (SWITCHES.database) {
+  const stats = require(path.join(__dirname, 'server', 'stats'))
+  const statsCC = require(path.join(__dirname, 'server', 'statsCC'))
+  // process the users input to be sent to database
+  const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'))
+
   eventEmitter.on('statsColected', function (statistics, normalizedStatistics) {
     serverData.statsData = statistics
     serverData.normalizedStatistics = normalizedStatistics
@@ -180,8 +185,6 @@ if (SWITCHES.database) {
       process.send('STATSDATA_COLLECTED')
     }
   })
-
-  const stats = require(path.join(__dirname, 'server', 'stats'))
 
   stats.prepareStats(serverData, WORDS, eventEmitter)
 
@@ -194,15 +197,25 @@ if (SWITCHES.database) {
     }
   })
 
-  // process the users input to be sent to database
-  const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'))
-
   app.post('/submitUserInput', function (req, res, next) {
     if (serverData.isOnline && release !== 'test') {
       debug('\nRoute: app.post(\'/submitUserInput\')')
       submitUserInput(req, res, serverData)
     } else {
       next()
+    }
+  })
+
+  // tables with costs for each country
+  app.get('/stats/:CC', function (req, res, next) {
+    debug('\nRoute: app.get(\'/stats/CC\')')
+
+    var CC = req.params.CC
+    if (!url.isCCinCountriesList(CC, serverData.availableCountries) || CC !== CC.toUpperCase()) {
+      next()
+    } else {
+      const WORDS_CC = WORDS[CC]
+      statsCC(req, res, serverData, WORDS_CC)
     }
   })
 }

@@ -1,0 +1,230 @@
+<div class="sidebars">
+    {{> sidebars }}
+</div>
+
+<header>
+    <a class="btn btn-left-sidebar cursor_pointer" data-action="open" data-side="left"></a>
+    {{#if serverData.settings.switches.database}}
+        <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
+    {{/if}}
+    <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
+</header>
+
+<div class="statistics">
+    <div class="header">
+        <div class="main-title">
+          <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
+        </div>
+
+        <div class="divSelect">
+            <select class="countrySelectStats">
+                {{~#each availableCountries~}}
+                <option value="{{@key}}"{{{isSelected ../CC @key}}}>
+                {{~this~}}
+                </option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <!--Standing Costs-->
+    <div class="section-title">
+        <h4>{{{words.fixed_costs}}}</h4>
+    </div>
+
+    <table class="tbl_statistics">
+
+        <tr>
+            <td><span>{{{words.depreciation}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_depreciation value-field">{{{toFixed statsData.costs_perMonth_items_depreciation 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.insurance}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_insurance value-field">{{{toFixed statsData.costs_perMonth_items_insurance 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.credit_interests}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_credit value-field">{{{toFixed statsData.costs_perMonth_items_credit 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.inspection}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_inspection value-field">{{{toFixed statsData.costs_perMonth_items_inspection 0}}}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.road_taxes}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_roadTaxes value-field">{{{toFixed statsData.costs_perMonth_items_roadTaxes 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>50% {{{words.maintenance}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_maintenance value-field">{{{toFixed statsData.costs_perMonth_items_maintenance 0}}}</span>
+            </td>
+        </tr>
+        <tr class="tr-result">
+            <td><span>{{{words.total_fixed}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_standing_costs value-field">{{{toFixed statsData.costs_perMonth_standingCosts 0}}}</span>
+            </td>
+        </tr>
+    </table>
+    <!--End Standing Costs-->
+
+
+    <!--Running Costs-->
+    <div class="section-title">
+        <h4>{{{words.running_costs}}}</h4>
+    </div>
+
+    <table class="tbl_statistics">
+        <tr>
+            <td><span>{{{words.fuel}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_fuel value-field">{{{toFixed statsData.costs_perMonth_items_fuel 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>50% {{{words.maintenance}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_maintenance value-field">{{{toFixed statsData.costs_perMonth_items_maintenance 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.rep_improv}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_repairsImprovements value-field">{{{toFixed statsData.costs_perMonth_items_repairsImprovements 0}}}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.parking}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_parking value-field">{{{toFixed statsData.costs_perMonth_items_parking 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.tolls}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_tolls value-field">{{{toFixed statsData.costs_perMonth_items_tolls 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.fines}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_fines value-field">{{{toFixed statsData.costs_perMonth_items_fines 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.washing}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_washing value-field">{{{toFixed statsData.costs_perMonth_items_washing 0}}}</span>
+            </td>
+        </tr>
+        <tr class="tr-result">
+            <td><span>{{{words.total_variable}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_running_costs value-field">{{{toFixed statsData.costs_perMonth_runningCosts 0}}}</span>
+            </td>
+        </tr>
+
+    </table><!--End Running Costs-->
+
+
+    <!--Total-->
+    <div class="section-title total">
+        <h4>{{{words.word_total_cap}}}</h4>
+    </div>
+
+    <table class="tbl_statistics stats_total">
+        <tr class="main_total">
+            <td><span>{{{words.word_total_cap}}}</span></td>
+            <td>
+                <span>{{{words.curr_symbol}}} </span>
+                <span class="text_total_overal value-field">{{{toFixed statsData.costs_perMonth_total 0}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>{{{words.run_cp_dist}}}</span>
+            </td>
+            <td>
+                <span>{{{words.curr_symbol}}}</span>
+                <span class="text_running_costs_dist value-field">{{{toFixed statsData.costs_perUnitDistance_runningCosts 2}}}</span>
+                <span>/{{{words.std_dist}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>{{{words.total_cp_dist}}}</span>
+            </td>
+            <td>
+                <span>{{{words.curr_symbol}}}</span>
+                <span class="text_total_costs_p_unit value-field">{{{toFixed statsData.costs_perUnitDistance_totalCosts 2}}}</span>
+                <span>/{{{words.std_dist}}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><span>{{{words.kinetic_speed}}}</span></td>
+            <td><span class="text_kinetic_speed value-field">{{{toFixed statsData.speeds_averageKineticSpeed 0}}}</span>
+                <span>{{{words.std_dist}}}/h</span></td>
+        </tr>
+        <tr>
+            <td>
+                <span>{{{words.virtual_speed}}}</span>
+                <a target="_blank"
+                       href="//en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
+                *
+                </a>
+            </td>
+            <td>
+                <span class="text_virtual_speed value-field">{{{toFixed statsData.speeds_averageConsumerSpeed 0}}}</span>
+                <span>{{{words.std_dist}}}/h</span>
+            </td>
+        </tr>
+        <tr>
+            <td id="table-td-bottom-left"><span>{{{words.total_costs_per_year}}}</span></td>
+            <td id="table-td-bottom-right">
+                <span>{{{words.curr_symbol}}}</span>
+                <span class="text_total_costs_year value-field">{{{toFixed statsData.costs_totalPerYear 0}}}</span>
+            </td>
+        </tr>
+    </table>
+
+    <div class="footnote">
+        Based on the inputs of {{{statsData.validUsers}}} validated users, who filled the Car Costs Calculator at
+        <a target="_blank" href="//{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
+    </div>
+</div>
+
+
+<!-- Data sent to JS code on browser -->
+{{> globalData }}
+
+<script src="/client/jquery/jquery.min.js"></script>
+<script src="/client/statsCC.js"></script>
+<script src="/client/main.js"></script>

@@ -1,0 +1,26 @@
+div.statistics {max-width: 1000px; margin: 7em auto 2em auto;}
+div.header {display: flex; justify-content: center;}
+div.statistics .main-title {margin: 0 15px; font-weight: 700; color: #2c49b9; text-decoration:none; padding-top: 4px;}
+
+div.statistics .header select.countrySelectStats {font-weight: 700; color: #2c49b9; padding: 5px 20px 0 0; margin-left: -0.3em;}
+
+div.statistics a {display: inline; font-size: 16px; font-weight: 700; color: #2c49b9; text-decoration: none;}
+
+div.statistics .main-title h2 {margin: 0}
+div.statistics .main-title > span {color: #42444a; font-size: 16px;}
+div.statistics .section-title {margin: 10px 0 0}
+div.statistics .section-title h4{margin: 10px 0; font-size: 18px; font-weight: 700}
+div.statistics .section-title h4:before{content: " -"; background-color: #2c49b9; color: #2c49b9; margin-right: 10px;}
+div.statistics .total h4:before{background-color: #efa00b; color: #efa00b;}
+div.stats_total tr:last-child {background: #fdf5e6!important}
+
+div.statistics table.tbl_statistics {font-size: 1.2em; line-height: 1.3em;}
+table.tbl_statistics {width: 90%; padding: 0px 14px; margin: auto; border-spacing:0;}
+table.tbl_statistics .tr-result td {font-weight: bold; color: #000;}
+table.tbl_statistics .tr-sub-title td {background: #ffec8b; color: #000; font-weight: bold; text-align: center;}
+table.tbl_statistics .main_total {font-weight: bold; color: #000; background: #fdf5e6;}
+table.tbl_statistics td:nth-child(2) {text-align: right; min-width: 100px;}
+table.tbl_statistics tr:nth-child(1n+21) td{font-size:90%;}
+table.tbl_statistics tr:last-child td{font-weight: bold; color: #000}
+
+div.statistics .footnote {margin: 15px 20px 0 20px; font-style: italic;}

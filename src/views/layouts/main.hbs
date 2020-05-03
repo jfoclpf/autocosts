@@ -56,7 +56,11 @@
           <meta name="description" content="{{{ title }}}">
           <link rel="canonical" href="{{{ pageData.url.origin }}}/list">
       {{/if}}
-      <link rel="stylesheet" href="/css/list/main.css" type="text/css">
+      <link rel="stylesheet" href="/css/list.css" type="text/css">
+
+  <!-- /tables/:CC -->
+  {{else if isCostsTable}}
+    <link rel="stylesheet" href="/css/statsCC.css" type="text/css">
   {{/if}}
 
   <!-- see https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content -->
