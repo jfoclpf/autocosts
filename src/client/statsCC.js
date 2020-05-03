@@ -17,4 +17,6 @@ $(document).ready(function () {
   $countrySelect.on('change', function () {
     window.location.href = window.location.origin + '/stats/' + this.value
   })
+
+  $('.sidebar.right').remove()
 })

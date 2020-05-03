@@ -53,7 +53,7 @@
 
                     <div class="table_small">
                         <div class="table_cell">Country</div>
-                        <div class="table_cell"><a href="/{{countryCode}}" target="_blank">({{{countryCode}}}) <br>{{{countryName}}}</a></div>
+                        <div class="table_cell"><a href="/stats/{{countryCode}}">({{{countryCode}}}) <br>{{{countryName}}}</a></div>
                     </div>
                     <div class="table_small">
                         <div class="table_cell">Depreciation</div>
@@ -122,9 +122,7 @@
                     <div class="table_small">
                         <div class="table_cell">Total costs per year</div>
                         <div class="table_cell">
-                          <a href="{{{../serverData.directories.client.tables}}}/{{countryCode}}.jpg" target="_blank">
-                                &euro;{{toFixed costs_totalPerYear 0}}
-                          </a>
+                          <a href="/stats/{{countryCode}}">&euro;{{toFixed costs_totalPerYear 0}}</a>
                         </div>
                     </div>
                 </div><!--en table row-->

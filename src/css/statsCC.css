@@ -1,3 +1,5 @@
+header .btn.btn-right-sidebar {background: url('/img/globe.png') 0 0; border: none; width: 48px; height: 48px; margin-top: 2px;}
+
 div.statistics {max-width: 1000px; margin: 7em auto 2em auto;}
 div.header {display: flex; justify-content: center;}
 div.statistics .main-title {margin: 0 15px; font-weight: 700; color: #2c49b9; text-decoration:none; padding-top: 4px;}
