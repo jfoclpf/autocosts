@@ -27,8 +27,8 @@
     "help_project" : "Questo servizio è gratuito, senza pubblicità!",
     "ac_mobile" : "COSTI AUTO<br>per dispositivi mobili",
     "ac_sub_header" : "CALCOLATRICE DEI COSTI DI AUTO",
-    "sub_title1a" : "I costi totali medi in [country] sono [yearly_costs] all'anno",
-    "sub_title1b" : "rappresenta [nbrMonths] mesi di stipendio medio",
+    "sub_title1a" : "Il costo medio totale in [country] è di [yearly_costs] all'anno",
+    "sub_title1b" : "che rappresenta un onere finanziario medio equivalente a [nbrMonths] mesi di stipendio",
     "sub_title2" : "Trova il vero costo della tua macchina!",
     "press_enter_or_tab": "fai clic su <b> Invio </b> o <b> Tab </b>",
     "calculate_car_costs": "Calcola costi auto",
@@ -292,4 +292,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-

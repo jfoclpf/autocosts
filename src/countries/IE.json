@@ -28,8 +28,8 @@
     "help_project" : "This is a free service with no advertisements!",
     "ac_mobile" : "AUTOCOSTS<br>for mobile devices",
     "ac_sub_header" : "CAR COSTS CALCULATOR",
-    "sub_title1a" : "The average total costs in [country] is [yearly_costs] per year",
-    "sub_title1b" : "representing [nbrMonths] months of average salary",
+    "sub_title1a" : "The average total cost in [country] is [yearly_costs] per year",
+    "sub_title1b" : "representing an average financial burden equivalent to [nbrMonths] months of salary",
     "sub_title2" : "Find the True Cost of your Car",
     "visitors" : "Visitors",
     "online" : "online",
@@ -284,4 +284,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-

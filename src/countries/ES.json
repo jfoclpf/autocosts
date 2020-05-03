@@ -27,9 +27,9 @@
     "disclaimer" : "Esta calculadora es <b>completamente anónima</b> y no solicita ni almacena, ningún nombre, correo electrónico, <i>cookies</i>, dirección IP, ni ninguna otra información personal.",
     "help_project" : "Este servicio es gratuito, sin publicidad",
     "ac_mobile" : "GASTO DEL COCHE<br>para móviles",
-    "ac_sub_header" : "CALCULADORA DE GASTOS DE COCHE",    
-    "sub_title1a" : "El coste total medio en [country] es de [yearly_costs] al año.",
-    "sub_title1b" : "representando [nbrMonths] meses de salario promedio.",
+    "ac_sub_header" : "CALCULADORA DE GASTOS DE COCHE",
+    "sub_title1a" : "El coste total medio en [country] es de [yearly_costs] al año",
+    "sub_title1b" : "lo que representa una carga financiera media equivalente a [nbrMonths] meses de salario",
     "sub_title2" : "¡Descubre el verdadero coste de tu coche!",
     "press_enter_or_tab": "presiona <b>Enter</b> o <b>Tab</b>",
     "calculate_car_costs": "Calcular los costos del coche",
@@ -38,7 +38,7 @@
     "next": "Siguiente",
     "edit_form": "Editar formulario",
     "share" : "Compartir",
-    "close": "Cerrar",  
+    "close": "Cerrar",
     "enter_an_integer" : "Inserte un número entero",
     "enter_an_amount" : "Inserte una cantidad",
     "between" : "entre",
@@ -46,7 +46,7 @@
     "greater_or_equal_to" : "mayor o igual que",
     "greater_than" : "mas grande que",
     "smaller_or_equal_to" : "menor o igual que",
-    "smaller_than" : "menor que",     
+    "smaller_than" : "menor que",
     "visitors" : "Visitantes",
     "online" : "en línea",
     "this_month" : "en este mes",
@@ -300,4 +300,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-
