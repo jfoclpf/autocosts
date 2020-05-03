@@ -95,6 +95,10 @@ function getPathnamesToValidate () {
   for (let i = 0; i < numberOfCountries; i++) {
     pathnames.push('/' + countryCodesArray[i])
   }
+  for (let i = 0; i < numberOfCountries; i++) {
+    pathnames.push('/stats/' + countryCodesArray[i])
+  }
+
   return pathnames
 }
 
