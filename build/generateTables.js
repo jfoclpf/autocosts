@@ -65,7 +65,7 @@ isOnline().then(function (online) {
   delete availableCountries.XX
 
   var numberOfCountries = Object.keys(availableCountries).length
-  Bar = commons.getProgressBar((numberOfCountries * 3 + 2) + 1, debug.enabled)
+  Bar = commons.getProgressBar((numberOfCountries * 2 + 2) + 1, debug.enabled)
 
   async.series([dbConnect, createTables, dbEnd, rasterTables],
     function (err, results) {
@@ -172,55 +172,25 @@ function createTable (CC, callback) {
       domain: domainsCountries[CC]
     }
 
-    var dataHtml = Object.assign({}, data) // clone object
     var dataJpg = Object.assign({}, data) // clone object
 
     // check tables/template.hbs
-    dataHtml.isHtmlPage = true
     dataJpg.isJpgImage = true
 
-    var resultForHtmlPage = hbsTemplate(dataHtml)
     var resultForJpgImage = hbsTemplate(dataJpg)
 
-    var htmlPermanentFilePath = path.join(directories.bin.tables, CC + '.htm')
     var htmlFilePathToRenderInJpg = path.join(directories.bin.tables, CC + 'jpg.htm')
 
-    async.parallel([
-      // writes html file
-      function (fsWriteCallback) {
-        fs.writeFile(htmlPermanentFilePath, resultForHtmlPage, 'utf8', function (err) {
-          if (err) {
-            const errMsg = 'Error creating html permanent file ' + htmlPermanentFilePath + '. ' + err.message
-            fsWriteCallback(Error(errMsg))
-          } else {
-            const filePathRelative = path.relative(rootDir, htmlPermanentFilePath)
-            Bar.tick({ info: filePathRelative }); debug(filePathRelative)
-            fsWriteCallback()
-          }
-        })// fs.writeFile
-      },
-
-      // writes temporary html file to render jpg
-      function (fsWriteCallback) {
-        fs.writeFile(htmlFilePathToRenderInJpg, resultForJpgImage, 'utf8', function (err) {
-          if (err) {
-            const errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
-            fsWriteCallback(Error(errMsg))
-          } else {
-            const filePathRelative = path.relative(rootDir, htmlFilePathToRenderInJpg)
-            Bar.tick({ info: filePathRelative }); debug(filePathRelative)
-            fsWriteCallback()
-          }
-        })// fs.writeFile
-      }
-    ],
-    function (err, results) {
+    fs.writeFile(htmlFilePathToRenderInJpg, resultForJpgImage, 'utf8', function (err) {
       if (err) {
-        callback(Error(err.message))
+        const errMsg = 'Error creating temporary html (for jpg) file ' + htmlFilePathToRenderInJpg + '. ' + err.message
+        callback(Error(errMsg))
       } else {
+        const filePathRelative = path.relative(rootDir, htmlFilePathToRenderInJpg)
+        Bar.tick({ info: filePathRelative }); debug(filePathRelative)
         callback()
       }
-    })
+    })// fs.writeFile
   }) // db.query
 }
 // eof createTable

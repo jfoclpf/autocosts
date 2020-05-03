@@ -13,28 +13,13 @@
 
         body {
             font-family: "Nunito", Helvetica, Arial, sans-serif;
-
-            {{#if isHtmlPage}}
-            font-size: 20px;
-            margin: 20px;
-            {{/if}}
-
-            {{#if isJpgImage}}
             font-size: 20px;
             background: white;
             margin: 0;
-            {{/if}}
         }
 
         .statistics {
-            {{#if isJpgImage}}
             width: 700px;
-            {{/if}}
-
-            {{#if isHtmlPage}}
-            max-width: 1000px;
-            {{/if}}
-
             border-radius: 3px;
             border-collapse: separate;
             -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
@@ -44,51 +29,10 @@
             padding: 20px 0;
         }
 
-        {{#if isHtmlPage}}
-        .header {display: flex; justify-content: space-between;}
-        {{/if}}
-
         .statistics .main-title {
             margin: 0 15px;
-            {{#if isJpgImage}}
             text-align: center;
-            {{/if}}
         }
-
-        {{#if isHtmlPage}}
-        .divSelect {}
-        .downloadButton {
-            background-color: #2c49b9;
-            width: 18px;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            padding: 5px 10px !important;
-            margin: 15px 15px 0 0;
-            float: right;
-            width: 18px;
-            height: 22px;
-            cursor: pointer;
-        }
-        body select {
-            font-family: 'Nunito', Arial,sans-serif;
-            text-transform: capitalize;
-            margin: 0;
-            background: transparent;
-            margin: 0 15px 0 0;
-            padding: 5px 24px 0 0;
-            font-size: 22px;
-            border: 0;
-            border-bottom: 1px solid black;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border-radius: 0;
-            background: url('/img/dd_arrow.png') 100% 16px no-repeat transparent;
-        }
-        .worldStats {float: left; margin-top: 15px;}
-        body a {display: block; font-size: 16px; font-weight: 700; color: #2c49b9; text-decoration: none;}
-
-        {{/if}}
 
         .statistics .main-title h2 {margin: 0}
         .statistics .main-title > span {color: #42444a; font-size: 16px;}
@@ -115,34 +59,9 @@
     <div class="statistics">
         <div class="header">
             <div class="main-title">
-                {{#if isHtmlPage}}<a href="">{{/if}}
-                    <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
-                {{#if isHtmlPage}}</a>{{/if}}
+                <h2>{{{words.statistic_title}}} <span class="stat_title">{{{countryName}}}</span></h2>
                 <span>{{{words.average_costs_per_type}}}</span>
             </div>
-
-            {{#if isHtmlPage}}
-            <div class="divSelect">
-                <div>
-                    <select id="countrySelectStats">
-                        {{~#each availableCountries~}}
-                        <option value="{{@key}}">
-                        {{~this~}}
-                        </option>
-                        {{/each}}
-                    </select>
-                </div>
-                <div>
-                    <div class="worldStats">
-                        <a href="/stats">World stats</a>
-                    </div>
-                    <div class="downloadButton">
-                        {{> download}}
-                    </div>
-                </div>
-            </div>
-            {{/if}}
-
         </div>
 
         <!--Standing Costs-->
@@ -314,12 +233,6 @@
             <tr>
                 <td>
                     <span>{{{words.virtual_speed}}}</span>
-                    {{#if isHtmlPage}}
-                        <a target="_blank"
-                               href="//en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Kinetic_speed_vs._consumer_speed">
-                        *
-                        </a>
-                    {{/if}}
                 </td>
                 <td>
                     <span class="text_virtual_speed value-field">{{{toFixed statsData.speeds_averageConsumerSpeed 0}}}</span>
@@ -340,18 +253,5 @@
                 <a target="_blank" href="//{{{domain}}}/{{{statsData.countryCode}}}">{{{domain}}}/{{{statsData.countryCode}}}</a>
         </div>
     </div>
-
-
-    {{#if isHtmlPage}}
-    <data
-        id =                    "global_variables"
-        value =                 "global_variables"
-        data-country_code =      "{{{ countryCode }}}"/>
-
-
-    <script src="/client/jquery/jquery.min.js"></script>
-    <script src="/client/tables/main.js"></script>
-    {{/if}}
-
 </body>
 </html>
