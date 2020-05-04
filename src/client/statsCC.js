@@ -8,11 +8,25 @@ $(document).ready(function () {
   var $countrySelect = $('div.statistics .header select.countrySelectStats')
 
   // adapt the width of the select box to its content
-  var text = $countrySelect.find('option:selected').text()
-  var $aux = $('<select/>').append($('<option/>').text(text))
-  $countrySelect.after($aux)
-  $countrySelect.width($aux.width() + 10)
-  $aux.remove()
+  // adjusts the size of select according to content
+  var resizeSelectToContent = function ($this) {
+    var arrowWidth = 5
+    // create test element
+    var text = $this.find('option:selected').text()
+    var $test = $('<span>').html(text).css({
+      'font-size': $this.css('font-size'), // ensures same size text
+      visibility: 'hidden', // prevents FOUC */
+      'white-space': 'nowrap'
+    })
+    // add to parent, get width, and get out
+    $test.appendTo($this.parent())
+    var width = $test.width()
+    $test.remove()
+    // set select width
+    $this.width(width + arrowWidth)
+  }
+
+  resizeSelectToContent($countrySelect)
 
   $countrySelect.on('change', function () {
     window.location.href = window.location.origin + '/stats/' + this.value

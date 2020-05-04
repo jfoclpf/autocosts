@@ -26,3 +26,9 @@ table.tbl_statistics tr:nth-child(1n+21) td{font-size:90%;}
 table.tbl_statistics tr:last-child td{font-weight: bold; color: #000}
 
 div.statistics .footnote {margin: 15px 20px 0 20px; font-style: italic;}
+
+@media screen and (max-width: 540px) {
+    header .btn.btn-right-sidebar {width: 30px; height: 30px; top: 10px; right: 10px;}
+    div.statistics .main-title h2 {font-size: 22px; text-align: right;}
+    div.statistics .header div.divSelect {display: flex; align-items: center; margin-right: 1em;}
+}
