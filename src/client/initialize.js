@@ -172,7 +172,8 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       var text = $this.find('option:selected').text()
       var $test = $('<span>').html(text).css({
         'font-size': $this.css('font-size'), // ensures same size text
-        visibility: 'hidden' // prevents FOUC
+        visibility: 'hidden', // prevents FOUC */
+        'white-space': 'nowrap'
       })
       // add to parent, get width, and get out
       $test.appendTo($this.parent())
