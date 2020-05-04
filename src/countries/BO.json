@@ -158,7 +158,7 @@
     "extra_data_income" : "Ingresos",
     "extra_data_income_question" : "¿Cuáles son tus ingresos netos?",
     "extra_data_working_time" : "Tiempo de trabajo",
-    "extra_data_working_time_question" : "¿Tienes un trabajo o una ocupación digna?",
+    "extra_data_working_time_question" : "¿Tienes un trabajo o una ocupación remunerada?",
     "extra_data_time_spent_in_driving" : "Tiempo empleado en la conducción",
     "extra_data_time_question1" : "¿Cuántos minutos conduces desde tu casa al trabajo? (solo ida)",
     "extra_data_time_question2" : "¿Cuántos minutos conduces los días que no vas a trabajar en tu  vehículo?",
