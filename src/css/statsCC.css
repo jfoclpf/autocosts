@@ -1,4 +1,4 @@
-header .btn.btn-right-sidebar {background: url('/img/globe.png') 0 0; border: none; width: 48px; height: 48px; margin-top: 2px;}
+header .btn.btn-right-sidebar {background: url('/img/globe.svg') 0 0; border: none; width: 45px; height: 45px; margin-top: 2px;}
 
 div.statistics {max-width: 1000px; margin: 7em auto 2em auto;}
 div.header {display: flex; justify-content: center;}
