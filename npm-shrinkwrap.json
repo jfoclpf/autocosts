@@ -4850,9 +4850,9 @@
       }
     },
     "jquery": {
-      "version": "3.5.0",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.5.0.tgz",
-      "integrity": "sha512-Xb7SVYMvygPxbFMpTFQiHh1J7HClEaThguL15N/Gg37Lri/qKyhRGZYzHRyLH8Stq3Aow0LsHO2O2ci86fCrNQ==",
+      "version": "3.5.1",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.5.1.tgz",
+      "integrity": "sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==",
       "dev": true
     },
     "jquery-color": {
@@ -7660,9 +7660,9 @@
       "dev": true
     },
     "snyk": {
-      "version": "1.317.0",
-      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.317.0.tgz",
-      "integrity": "sha512-zNUvvT50Ii5TpHEo9YmDo+j5tqO1b8jXQK9XygfgiuXPRUwxf6PMSqDM5hKkfzuBhaBYZ4IbZWQFQPbMkprj0w==",
+      "version": "1.319.0",
+      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.319.0.tgz",
+      "integrity": "sha512-tOFkZuJYPxzT50joiHd/bxdfsWd/cqFZcfEj6VxRJ28wYBC7imzodp4m8cC6Rcox4++2WEm6ZHNlPLyYjmfPOg==",
       "dev": true,
       "requires": {
         "@snyk/cli-interface": "2.6.0",
