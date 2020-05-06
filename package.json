@@ -104,7 +104,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
     "smart-app-banner": "^2.0.0",
-    "snyk": "^1.319.0",
+    "snyk": "^1.319.1",
     "sql-formatter": "2.3.3",
     "standard": "14.3.3",
     "uglify-js": "3.9.2",
