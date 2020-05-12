@@ -1,20 +1,31 @@
 const path = require('path')
 const url = require(path.join(__dirname, 'url'))
 const commons = require(path.join(__dirname, '..', '..', 'commons'))
+const debug = require('debug')('app:sitemap') // run "DEBUG=app:sitemap node server.js"
 
-module.exports = function (req, res, serverData, WORDS) {
+module.exports = function (req, res, serverData) {
   var data = {}
 
-  data.WORDS = JSON.parse(JSON.stringify(WORDS)) // clone object
-  delete data.WORDS.XX
+  var domains = serverData.domains
+  var languagesCountries = serverData.languagesCountries
 
-  // create another object for double looping inside handlebars template
-  data.WORDS2 = JSON.parse(JSON.stringify(WORDS)) // clone object
-  delete data.WORDS2.XX
+  var sitemapData = {}
+  for (const CC in domains.countries) {
+    sitemapData[CC] = {}
+    sitemapData[CC].host = domains.countries[CC]
+    sitemapData[CC].urlPath = domains.urlPath[CC]
+    sitemapData[CC].lang = languagesCountries[CC].substr(0, 2)
+  }
+  delete sitemapData.XX
+  debug('\n\nsitemapData:'); debug(sitemapData)
+
+  data.sitemapData = sitemapData
+  data.sitemapData2 = JSON.parse(JSON.stringify(sitemapData)) // clone object
 
   // function that gets an Object associating a language with a country/domain
   var twoLetterLang = getUniqueLangObj(serverData)
   data.twoLetterLang = twoLetterLang
+  debug('\n\ntwoLetterLang:'); debug(twoLetterLang)
 
   data.HTTP_Protocol = url.getProtocol(req)
 
@@ -53,12 +64,14 @@ function getUniqueLangObj (serverData) {
       twoLetterLang.UK = {}
       twoLetterLang.UK.langCode = langCode
       twoLetterLang.UK.domain = serverData.domains.countries.UK
+      twoLetterLang.UK.urlPath = serverData.domains.urlPath.UK
     } else {
       var CC = commons.getKeyByValue(languagesCountries, langCode)
       if (CC) {
         twoLetterLang[CC] = {}
         twoLetterLang[CC].langCode = langCode
         twoLetterLang[CC].domain = serverData.domains.countries[CC]
+        twoLetterLang[CC].urlPath = serverData.domains.urlPath[CC]
       }
     }
   }

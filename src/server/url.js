@@ -16,18 +16,17 @@ module.exports = {
   // ELSE, uses the locale and HTTP info to redirect
   // for example, if the user is in Portugal, redirects to autocustos.info/PT
   // because autocustos.info is associated with both PT and BR
-  redirect: function (req, res, serverData) {
+  root: function (req, res, serverData) {
     // does this domain/host is associated with only one country?
     // if yes, set such country to CC
     var CC = isSingleDomain(req.get('host'), serverData.domains)
     if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
       debug('isSingleDomain', CC)
-      req.params.CC = CC.toUpperCase()
-      const url2redirect = getValidURL(req, serverData.domains.countries)
-      redirect301(res, url2redirect)
+      return { wasRedirected: false, CC: CC } // it does not redirect, thus wasRedirected is false
     } else {
       // redirects according to locale and/or browser settings
       redirect302(req, res, serverData) // temporary
+      return { wasRedirected: true, CC: undefined } // it redirects, thus wasRedirected is true
     }
   },
 
@@ -37,68 +36,62 @@ module.exports = {
     var urlHref = getProtocol(req) + '//' + req.get('host') + req.originalUrl
     debug('Entry URL: ' + urlHref)
 
-    var CC = req.params.CC
     var url2redirect
 
-    // if no country is defined or the country isn't in the list
-    // i.e, if the CC characters in domain.info/CC are not recognized
-    // get the Country from locale or HTTP Accept-Language Info
-    if (!isCCinCountriesList(CC, serverData.availableCountries) && !isCCXX(CC)) {
+    if (!isCCinCountriesList(req.params.CC, serverData.availableCountries) && !isCCXX(req.params.CC)) {
+      // If the CC characters in the domain.ext/CC are not recognized
       debug('if (!isCCinCountriesList)')
 
-      // does this domain/host is associated with only one country?
-      // if yes, set such country to CC
-      CC = isSingleDomain(req.get('host'), serverData.domains)
+      // Does this domain/host (ex: autocosts.info) is associated with only one country?
+      // if yes, redirect to valid url of said CC, ex: from autocustos.pt/AP => autocustos.pt
+      // if no, redirects according to locale and/or browser settings
+      const CC = isSingleDomain(req.get('host'), serverData.domains)
       if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
         debug('isSingleDomain', CC)
         req.params.CC = CC.toUpperCase()
-        url2redirect = getValidURL(req, serverData.domains.countries)
-        redirect301(res, url2redirect)
+        url2redirect = getValidURL(req, serverData.domains)
+        redirect301(res, url2redirect) // 301 redirects are permanent
       } else {
         debug('isSingleDomain == false', CC)
-        // redirects according to locale and/or browser settings
-        redirect302(req, res, serverData)
+        // redirects according to locale and/or browser HTTP Accept-Language settings
+        redirect302(req, res, serverData) // 302 redirects are temporary
       }
       return true
-    }
+      // from here the CC, independently of the case (upper or lower) is in the list or is xx or XX
+      // and thus from here, the CC has always two letters since it is in the list
+    } else if (!isCC2letterUpperCase(req.params.CC)) {
+      // if the CC characters after domain.info/cc ARE recognized as being in the list
+      // But if the two-letter code are NOT all in upper case domain.info/CC
 
-    // from here the CC, independently of the case (upper or lower) is in the list or is xx or XX
-    // and thus from here, the CC has always two letters since it is in the list
-
-    // if the CC characters after domain.info/cc ARE recognized as being in the list
-    // But if the two-letter code are NOT all in upper case domain.info/CC
-    if (!isCC2letterUpperCase(CC)) {
       debug('if (!isCC2letterUpperCase)')
-      url2redirect = getValidURL(req, serverData.domains.countries)
-      redirect301(res, url2redirect)
+      url2redirect = getValidURL(req, serverData.domains)
+      redirect301(res, url2redirect) // 301 redirects are permanent
       return true
-    }
+      // from here the CC is reconginzed and it's in uppercase
+    } else if (isSubdomain(req)) {
+      // check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
 
-    // from here the CC is reconginzed and it's in uppercase
-
-    // check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
-    if (isSubdomain(req)) {
       debug('if(isSubdomain)')
-      url2redirect = getValidURL(req, serverData.domains.countries)
-      redirect301(res, url2redirect)
+      url2redirect = getValidURL(req, serverData.domains)
+      redirect301(res, url2redirect) // 301 redirects are permanent
       return true
-    }
-
-    if (isThisATest(req)) {
+    } else if (isThisATest(req)) {
+      // on test mode, if the CC is reconginzed and it's in uppercase, do not redirect url
       debug('if(isThisATest)')
+      return false // leave now, do not redirect
+    } if (!isDomainCCcombValid(req.get('host'), req.params.CC, serverData.domains)) {
+      // if the URL is not the valid URL, i.e. the combination domain/CC is not valid
+      // example: autocosts.info/PT (not valid) shall forward to autocustos.pt (valid)
+      // example: autocosts.info/AR (not valid) shall forward to autocostos.info/AR (valid)
+
+      debug('if (!isDomainCCcombValid)')
+      url2redirect = getValidURL(req, serverData.domains)
+      redirect301(res, url2redirect) // 301 redirects are permanent
+      return true
+    } else {
+      // do not redirect, everything is ok
       return false
     }
-
-    // if the URL is not the valid URL, i.e. the combination domain/CC is not valid
-    // example: autocosts.info/PT (is not valid) shall forward to autocustos.info/PT (valid)
-    if (!isDomainCCcombValid(req, serverData.availableCountries, serverData.domains.countries)) {
-      debug('if (!isDomainCCcombValid)')
-      url2redirect = getValidURL(req, serverData.domains.countries)
-      redirect301(res, url2redirect)
-      return true
-    }
-
-    return false
   },
 
   isThisATest: function (req) {
@@ -161,19 +154,8 @@ function redirect302 (req, res, serverData) {
   // get country by locale or HTTP header from browser
   var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
-  var url2redirect
-  if (isDevDomain(req)) {
-    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: geoCC })
-  } else if (isThisLocalhost(req)) {
-    url2redirect = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: geoCC })
-  } else {
-    // production
-    url2redirect = nodeUrl.format({
-      protocol: getProtocol(req),
-      host: serverData.domains.countries[geoCC],
-      pathname: geoCC
-    })
-  }
+  req.params.CC = geoCC
+  var url2redirect = getValidURL(req, serverData.domains)
 
   res.redirect(302, url2redirect)
   debug('redirecting 302 to ' + url2redirect)
@@ -243,35 +225,32 @@ function getGeoCC (req, availableCountries, defaultCountry) {
   return defaultCountry
 }
 
-// is Domain/CC Combination valid?
-function isDomainCCcombValid (req, availableCountries, domainsCountries) {
-  var CC = req.params.CC
-  var host = req.get('host')
-
-  if (!isCCinCountriesList(CC, availableCountries)) {
-    return false
-  }
-
-  return host.toLowerCase() === domainsCountries[CC]
+// Check if the domain/CC combination is valid. For a specific CC only one combination is valid.
+// example: autocustos.info/PT is not valid because for PT autocustos.pt is valid
+// example: autocosts.info/AR is not valid because for AR only autocostos.info/AR is valid
+function isDomainCCcombValid (host, CC, domains) {
+  // host is string with domain, exemple: 'autocosts.info'
+  return host.toLowerCase() + '/' + CC.toUpperCase() === domains.countries[CC] + domains.urlPath[CC]
 }
 
-// full URL, ex: for PT https://autocustos.info/PT
-function getValidURL (req, domainsCountries) {
+// full valid URL, examples:
+// PT: https://autocustos.pt (because there's only one domain associated with thus country code)
+// IT: https://autocosti.it (because there's only one domain associated with thus country code)
+// AR: https://autocostos.info/AR (because there's several countries associated with this domain)
+function getValidURL (req, domains) {
   debug('getValidURL')
 
-  var CC = req.params.CC
-  var upCC = CC.toUpperCase()
+  var CC = req.params.CC.toUpperCase()
 
   var URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: upCC })
-  } else if (isDevDomain(req)) {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: upCC })
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: CC })
+  } else if (isDevDomain(req)) { // autocosts.dev
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: CC })
   } else {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: domainsCountries[upCC], pathname: upCC })
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: domains.countries[CC], pathname: domains.urlPath[CC] })
   }
 
-  debug('Canonical URL: ' + nodeUrl.format({ protocol: getProtocol(req), host: domainsCountries[upCC], pathname: upCC }))
   debug('Valid URL: ' + URL)
   return URL
 }

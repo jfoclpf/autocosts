@@ -697,15 +697,32 @@ function getDomainsObject (domainsCountries) {
   }
 
   var domainsObj = {}
+  domainsObj.__url_selector = 'https://github.com/jfoclpf/autocosts/wiki/URL-selector'
+  domainsObj.__domainName_policy = 'https://github.com/jfoclpf/autocosts/wiki/Domain-name-policy'
+
   domainsObj.countries = domainsCountries // Object that associates a Country Code (CC) with a domain
   domainsObj.uniqueArr = getUniqueArray(domainsCountries) // Array with unique domain names
 
+  // for every domain, count how many domain names
+  // ex: 'autocustos.pt': 1, 'autocosts.info': 19
   var counts = {}
   var arr = Object.values(domainsCountries)
   for (var i = 0; i < arr.length; i++) {
     counts[arr[i]] = 1 + (counts[arr[i]] || 0)
   }
-  domainsObj.counts = counts // for every domain, count how many domain names
+  domainsObj.counts = counts
+
+  // object with the url path after host/domain '/AR' for AR or '' for PT
+  // because the url for PT is merely autocustos.pt without path
+  var urlPath = {}
+  for (const CC in domainsCountries) {
+    if (counts[domainsCountries[CC]] === 1) {
+      urlPath[CC] = ''
+    } else {
+      urlPath[CC] = '/' + CC
+    }
+  }
+  domainsObj.urlPath = urlPath
 
   return domainsObj
 }

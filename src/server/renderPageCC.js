@@ -1,9 +1,8 @@
-
 const path = require('path')
 
 const url = require(path.join(__dirname, 'url'))
 const crypto = require('crypto') // eslint-disable-line
-const debug = require('debug')('app:getCC')
+const debug = require('debug')('app:renderPageCC')
 
 const commons = require(path.join(__dirname, '..', '..', 'commons'))
 
@@ -13,7 +12,8 @@ var CSPstr0, CSPstr1
 
 module.exports = {
 
-  render: function (req, res, serverData, wordsOfCountry) {
+  // isUrlRoot is true when url path is empty / and false when is /CC
+  render: function (req, res, serverData, wordsOfCountry, isUrlRoot) {
     var CC = req.params.CC // ISO 2 letter Country Code
     debug('Country code: ' + CC)
 
@@ -39,7 +39,7 @@ module.exports = {
         href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"
         origin: url.getOrigin(req), // basic url, ex: "https://autocosts.info"
         protocol: url.getProtocol(req), // `http:` or `https:`
-        canonical: url.getCanonicUrl(req, serverData, CC)
+        canonical: url.getCanonicUrl(req, serverData, isUrlRoot ? '' : CC)
       },
       languageCode: serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test

@@ -4,7 +4,7 @@ const mysql = require('mysql') // module to get info from database
 const async = require('async') // module to allow to execute the queries in series
 const debug = require('debug')('app:stats') // run "DEBUG=app:stats node server.js"
 
-const getCC = require(path.join(__dirname, 'getCC'))
+const renderPageCC = require(path.join(__dirname, 'renderPageCC'))
 const commons = require(path.join(__dirname, '..', '..', 'commons'))
 const fileNames = commons.getFileNames()
 
@@ -53,7 +53,7 @@ module.exports = {
     data.layout = 'main'
 
     if (pageData.notLocalhost) {
-      const CSPstr = getCC.getCSPstr()
+      const CSPstr = renderPageCC.getCSPstr()
       debug(CSPstr.replace(/;/g, ';\n'))
       res.set('Content-Security-Policy', CSPstr)
     }

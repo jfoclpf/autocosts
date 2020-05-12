@@ -1,3 +1,5 @@
+// server side code to render url /domains
+
 const path = require('path')
 const url = require(path.join(__dirname, 'url'))
 const debug = require('debug')('app:domains')
@@ -7,7 +9,8 @@ module.exports = function (req, res, serverData, WORDS) {
   data.WORDS = JSON.parse(JSON.stringify(WORDS)) // clone object
   delete data.WORDS.XX
 
-  var domainsCountries = JSON.parse(JSON.stringify(serverData.domains.countries)) // clone object
+  var storedDomains = JSON.parse(JSON.stringify(serverData.domains)) // clone object
+  var domainsCountries = storedDomains.countries
   delete domainsCountries.XX
   debug(domainsCountries)
 
@@ -39,7 +42,7 @@ module.exports = function (req, res, serverData, WORDS) {
       var first = (j === 0)
 
       req.params.CC = CC
-      var urlHref = url.getValidURL(req, domainsCountries)
+      var urlHref = url.getValidURL(req, storedDomains)
 
       var Obj = {
         country: country,

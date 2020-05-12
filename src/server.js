@@ -25,7 +25,7 @@ const debug = require('debug')('app:index')
 
 // personalised requires
 const url = require(path.join(__dirname, 'server', 'url')) // to deal with the full URL rules and redirect accordingly
-const getCC = require(path.join(__dirname, 'server', 'getCC'))
+const renderPageCC = require(path.join(__dirname, 'server', 'renderPageCC'))
 const hbsHelpers = require(path.join(__dirname, 'server', 'hbsHelpers'))
 const list = require(path.join(__dirname, 'server', 'list'))
 const domains = require(path.join(__dirname, 'server', 'domains'))
@@ -138,7 +138,7 @@ app.get('/domains', function (req, res) {
 // sitemap.xml for Search Engines optimization
 app.get('/sitemap.xml', function (req, res) {
   debug('\nRoute: app.get(\'/sitemap.xml\')')
-  sitemap(req, res, serverData, WORDS)
+  sitemap(req, res, serverData)
 })
 
 // web-app-manifest; see https://github.com/jfoclpf/autocosts/issues/126
@@ -222,7 +222,7 @@ if (SWITCHES.database) {
 
 // before processing the request generate a pre CSP string
 // for fast web delivery
-getCC.preGenerateCSPstring(serverData)
+renderPageCC.preGenerateCSPstring(serverData)
 
 // this middleware shall be the last before error
 // this is the entry Main Page
@@ -233,21 +233,30 @@ app.get('/:CC', function (req, res, next) {
     res.status(404)
     list(req, res, serverData, WORDS)
   } else {
-    // wasRedirected is true if it was redirected to another URL
+    // wasRedirected is true if the session was redirected to another URL by the function url.getCC
+    // if it was redirected by expressJS via res.redirect() there's no need to continue this session
     const wasRedirected = url.getCC(req, res, serverData)
-    if (wasRedirected) {
-      return
+    if (!wasRedirected) {
+      // from here CC is acceptable and the page will be rendered
+      // get words for chosen CC - Country Code
+      const WORDS_CC = WORDS[req.params.CC]
+      renderPageCC.render(req, res, serverData, WORDS_CC, false)
     }
-    // from here CC is acceptable and the page will be rendered
-    // get words for chosen CC - Country Code
-    const WORDS_CC = WORDS[req.params.CC]
-    getCC.render(req, res, serverData, WORDS_CC)
   }
 })
 
 app.get('/', function (req, res) {
   debug('\nRoute: app.get(\'/\')')
-  url.redirect(req, res, serverData)
+  // wasRedirected is true if the session was redirected to another URL by the function url.root
+  // it it was redirected by expressJS via res.redirect() there's no need to continue this session
+  const returnedObj = url.root(req, res, serverData)
+  if (!returnedObj.wasRedirected) {
+    // from here the domain/host is associated with only one country?
+    // for example autocosti.it is associated only with Italy
+    req.params.CC = returnedObj.CC
+    const WORDS_CC = WORDS[req.params.CC]
+    renderPageCC.render(req, res, serverData, WORDS_CC, true)
+  }
 })
 
 // if nothing matches, redirect to root url
