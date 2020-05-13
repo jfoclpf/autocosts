@@ -1,7 +1,7 @@
-/* This web site uses several domain names, all with a TLD extension of .info and a test version with a TLD extension of .dev.
+/* This web site uses several domain names and different domain names extensions.
 The server side code shall thus forward the page if the entry URL is not correctly typed
 according to the domain name vs. country code combinatorial rules.
-For the flowchart check https://github.com/jfoclpf/autocosts/wiki/URL-selector */
+Check the actual policy: https://github.com/jfoclpf/autocosts/wiki/URL-selector */
 
 const GEO_IP = require('geoip-lite')
 const debug = require('debug')('app:url')
@@ -9,13 +9,7 @@ const nodeUrl = require('url')
 
 module.exports = {
 
-  // to be used from app.get('/')
-  // when no country code is provided, example autocosts.info/
-  // IF, for example, the user types autocosti.info redirects to autocosti.info/IT
-  // because autocosti.info is associated only with Italy
-  // ELSE, uses the locale and HTTP info to redirect
-  // for example, if the user is in Portugal, redirects to autocustos.info/PT
-  // because autocustos.info is associated with both PT and BR
+  // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
     // does this domain/host is associated with only one country?
     // if yes, set such country to CC
@@ -81,8 +75,8 @@ module.exports = {
       return false // leave now, do not redirect
     } if (!isDomainCCcombValid(req.get('host'), req.params.CC, serverData.domains)) {
       // if the URL is not the valid URL, i.e. the combination domain/CC is not valid
-      // example: autocosts.info/PT (not valid) shall forward to autocustos.pt (valid)
-      // example: autocosts.info/AR (not valid) shall forward to autocostos.info/AR (valid)
+      // example: autocosts.info/pt (not valid) shall forward to autocustos.pt (valid)
+      // example: autocosts.info/ar (not valid) shall forward to autocostos.info/ar (valid)
 
       debug('if (!isDomainCCcombValid)')
       url2redirect = getValidURL(req, serverData.domains)
@@ -167,7 +161,7 @@ function redirect301 (res, url2redirect) {
   debug('redirecting 301 to ' + url2redirect)
 }
 
-// CC must be in the format PT, XX, UK, i.e. the letters uppercase
+// CC must be in the format pt, xx, uk, i.e. the letters in lower case
 function isCC2letterUpperCase (CC) {
   return CC === CC.toUpperCase()
 }
@@ -226,8 +220,8 @@ function getGeoCC (req, availableCountries, defaultCountry) {
 }
 
 // Check if the domain/CC combination is valid. For a specific CC only one combination is valid.
-// example: autocustos.info/PT is not valid because for PT autocustos.pt is valid
-// example: autocosts.info/AR is not valid because for AR only autocostos.info/AR is valid
+// example: autocustos.info/pt is not valid because for PT autocustos.pt is valid
+// example: autocosts.info/ar is not valid because for AR only autocostos.info/AR is valid
 function isDomainCCcombValid (host, CC, domains) {
   // host is string with domain, exemple: 'autocosts.info'
   return host.toLowerCase() + '/' + CC.toUpperCase() === domains.countries[CC] + domains.urlPath[CC]
