@@ -73,7 +73,7 @@ module.exports = {
       // on test mode, if the CC is reconginzed and it's in uppercase, do not redirect url
       debug('if(isThisATest)')
       return false // leave now, do not redirect
-    } if (!isDomainCCcombValid(req.get('host'), req.params.CC, serverData.domains)) {
+    } if (!isDomainCCcombValid(req.get('host'), req.params.cc, serverData.domains)) {
       // if the URL is not the valid URL, i.e. the combination domain/CC is not valid
       // example: autocosts.info/pt (not valid) shall forward to autocustos.pt (valid)
       // example: autocosts.info/ar (not valid) shall forward to autocostos.info/ar (valid)
@@ -145,7 +145,7 @@ function redirect302 (req, res, serverData) {
   // get country by locale or HTTP header from browser
   var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
-  req.params.CC = geoCC
+  req.params.cc = geoCC
   var url2redirect = getValidURL(req, serverData.domains)
 
   res.redirect(302, url2redirect)
@@ -159,8 +159,8 @@ function redirect301 (res, url2redirect) {
 }
 
 // CC must be in the format pt, xx, uk, i.e. the letters in lower case
-function isCC2letterUpperCase (CC) {
-  return CC === CC.toUpperCase()
+function isCC2letterLowerCase (CC) {
+  return CC === CC.toLowerCase()
 }
 
 function isCCinCountriesList (CC, availableCountries) {
@@ -231,15 +231,20 @@ function isDomainCCcombValid (host, CC, domains) {
 function getValidURL (req, domains) {
   debug('getValidURL')
 
-  var CC = req.params.CC.toUpperCase()
+  var CC = req.params.cc.toUpperCase()
+  var cc = req.params.cc.toLowerCase()
 
   var URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: CC })
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: cc })
   } else if (isDevDomain(req)) { // autocosts.dev
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: CC })
+    URL = nodeUrl.format({ protocol: getProtocol(req), host: 'autocosts.dev', pathname: cc })
   } else {
-    URL = nodeUrl.format({ protocol: getProtocol(req), host: domains.countries[CC], pathname: domains.urlPath[CC] })
+    URL = nodeUrl.format({
+      protocol: getProtocol(req),
+      host: domains.countries[CC],
+      pathname: domains.urlPath[CC]
+    })
   }
 
   debug('Valid URL: ' + URL)
@@ -287,13 +292,25 @@ function isSingleDomain (host, domains) {
   return false
 }
 
+// check if domain is a country code top level domain (ccTLD)
+// for exemple autocustos.pt returns 'PT' and for autocustos.info returns false
+function isDomainAccTLD (host) {
+  var extension = host.split('.').pop() // ex: 'pt'
+  extension = extension.toUpperCase() // ex: 'PT'
+  if (isoCountries.hasOwnProperty(extension)) { // eslint-disable-line no-prototype-builtins
+    return extension
+  } else {
+    return false
+  }
+}
+
 // Functions to check if it is a test
 function isThisATest (req) {
   debug('isThisATest')
 
-  var CC = req.params.CC
-  if (CC) {
-    return isDevDomain(req) || isThisLocalhost(req) || isCCXX(CC)
+  var cc = req.params.cc
+  if (cc) {
+    return isDevDomain(req) || isThisLocalhost(req) || isCCXX(cc)
   } else {
     return isDevDomain(req) || isThisLocalhost(req)
   }
