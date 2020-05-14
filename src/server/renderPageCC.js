@@ -13,8 +13,9 @@ var CSPstr0, CSPstr1
 module.exports = {
 
   // isUrlRoot is true when url path is empty / and false when is /CC
-  render: function (req, res, serverData, wordsOfCountry, isUrlRoot) {
-    var CC = req.params.CC // ISO 2 letter Country Code
+  render: function (req, res, serverData, wordsOfCountry) {
+    // ISO 2 letter Country Code
+    const CC = req.params.cc.toUpperCase()
     debug('Country code: ' + CC)
 
     // data to be rendered embedded in the HTML file

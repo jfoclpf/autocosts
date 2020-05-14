@@ -41,7 +41,7 @@ module.exports = function (req, res, serverData, WORDS) {
       // regarding the first line <td rowspan="x">
       var first = (j === 0)
 
-      req.params.CC = CC
+      req.params.cc = CC
       var urlHref = url.getValidURL(req, storedDomains)
 
       var Obj = {

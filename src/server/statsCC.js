@@ -2,7 +2,7 @@ const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
 
 module.exports = function (req, res, serverData, words) {
-  var CC = req.params.CC
+  var CC = req.params.cc.toUpperCase()
   var data = {}
 
   data.isCostsTable = true
@@ -13,7 +13,7 @@ module.exports = function (req, res, serverData, words) {
   data.words = words
   data.statsData = serverData.statsData[CC]
 
-  data.CC = data.words.CC = req.params.CC
+  data.CC = data.words.CC = CC
   data.countryName = serverData.availableCountries[CC]
 
   data.domain = serverData.domains.countries[CC]
@@ -32,7 +32,7 @@ module.exports = function (req, res, serverData, words) {
     notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
   }
   data.pageData = pageData
-  data.pageData.CC = req.params.CC
+  data.pageData.CC = CC
 
   data.layout = 'main'
 

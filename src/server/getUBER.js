@@ -12,7 +12,7 @@ const url = require(path.join(__dirname, 'url'))
 const debug = require('debug')('app:uber')
 
 module.exports = function (req, res, serverData) {
-  var CC = req.params.CC
+  var CC = req.params.cc.toUpperCase()
 
   var p1 = readCCFileAsync(path.join(serverData.directories.index, serverData.directories.project.countries, CC + '.json'))
   var p2 = makeUberRequest(req, serverData)

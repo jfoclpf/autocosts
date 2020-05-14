@@ -142,14 +142,14 @@ app.get('/sitemap.xml', function (req, res) {
 })
 
 // web-app-manifest; see https://github.com/jfoclpf/autocosts/issues/126
-app.get('/:CC.webmanifest', function (req, res, next) {
-  debug(`\nRoute: app.get('/${req.params.CC}.webmanifest/')`)
+app.get('/:cc.webmanifest', function (req, res, next) {
+  debug(`\nRoute: app.get('/${req.params.cc}.webmanifest/')`)
   webmanifest(req, res, next, serverData, WORDS)
 })
 
 if (SWITCHES.uber) {
   const getUBER = require(path.join(__dirname, 'server', 'getUBER'))
-  app.get('/getUBER/:CC', function (req, res, next) {
+  app.get('/getUBER/:cc', function (req, res, next) {
     if (serverData.isOnline) {
       debug('\nRoute: app.get(\'/getUBER\')')
       getUBER(req, res, serverData)
@@ -207,14 +207,14 @@ if (SWITCHES.database) {
   })
 
   // tables with costs for each country
-  app.get('/stats/:CC', function (req, res, next) {
-    debug('\nRoute: app.get(\'/stats/CC\')')
+  app.get('/stats/:cc', function (req, res, next) {
+    debug('\nRoute: app.get(\'/stats/cc\')')
 
-    var CC = req.params.CC
-    if (!url.isCCinCountriesList(CC, serverData.availableCountries) || CC !== CC.toUpperCase()) {
+    var cc = req.params.cc
+    if (!url.isCCinCountriesList(cc.toUpperCase(), serverData.availableCountries) || cc !== cc.toLowerCase()) {
       next()
     } else {
-      const WORDS_CC = WORDS[CC]
+      const WORDS_CC = WORDS[cc.toUpperCase()]
       statsCC(req, res, serverData, WORDS_CC)
     }
   })
@@ -226,10 +226,10 @@ renderPageCC.preGenerateCSPstring(serverData)
 
 // this middleware shall be the last before error
 // this is the entry Main Page
-app.get('/:CC', function (req, res, next) {
-  debug('\nRoute: app.get(\'/CC\')')
+app.get('/:cc', function (req, res, next) {
+  debug('\nRoute: app.get(\'/cc\')')
 
-  if (req.params.CC.length !== 2) {
+  if (req.params.cc.length !== 2) {
     res.status(404)
     list(req, res, serverData, WORDS)
   } else {
@@ -239,8 +239,8 @@ app.get('/:CC', function (req, res, next) {
     if (!wasRedirected) {
       // from here CC is acceptable and the page will be rendered
       // get words for chosen CC - Country Code
-      const WORDS_CC = WORDS[req.params.CC]
-      renderPageCC.render(req, res, serverData, WORDS_CC, false)
+      const WORDS_CC = WORDS[req.params.cc.toUpperCase()]
+      renderPageCC.render(req, res, serverData, WORDS_CC)
     }
   }
 })
@@ -253,9 +253,9 @@ app.get('/', function (req, res) {
   if (!returnedObj.wasRedirected) {
     // from here the domain/host is associated with only one country?
     // for example autocosti.it is associated only with Italy
-    req.params.CC = returnedObj.CC
-    const WORDS_CC = WORDS[req.params.CC]
-    renderPageCC.render(req, res, serverData, WORDS_CC, true)
+    req.params.cc = returnedObj.CC
+    const WORDS_CC = WORDS[req.params.cc.toUpperCase()]
+    renderPageCC.render(req, res, serverData, WORDS_CC)
   }
 })
 

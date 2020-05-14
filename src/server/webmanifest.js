@@ -3,7 +3,7 @@ const url = require(path.join(__dirname, 'url'))
 // const commons = require(path.join(__dirname, '..', '..', 'commons'))
 
 module.exports = function (req, res, next, serverData, WORDS) {
-  var CC = req.params.CC.toUpperCase() // ISO 2 letter Country Code
+  var CC = req.params.cc.toUpperCase() // ISO 2 letter Country Code
 
   if (url.isCCinCountriesList(CC, serverData.availableCountries) || CC === 'XX') {
     var data = {}
