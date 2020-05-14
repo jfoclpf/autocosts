@@ -387,7 +387,7 @@ function getKeyByValue (object, value) {
 }
 
 // 2-letter ISO Country Codes
-var isoCountries = {
+const isoCountries = {
   AF: 'Afghanistan',
   AX: 'Aland Islands',
   AL: 'Albania',
