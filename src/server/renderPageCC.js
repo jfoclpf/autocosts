@@ -40,7 +40,7 @@ module.exports = {
         href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"
         origin: url.getOrigin(req), // basic url, ex: "https://autocosts.info"
         protocol: url.getProtocol(req), // `http:` or `https:`
-        canonical: url.getCanonicUrl(req, serverData, isUrlRoot ? '' : CC)
+        canonical: url.getCurrentUrl(req)
       },
       languageCode: serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test

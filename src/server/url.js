@@ -112,12 +112,9 @@ module.exports = {
     return isCCXX(CC)
   },
 
-  getCanonicUrl: function (req, serverData, CC) {
-    return nodeUrl.format({
-      protocol: getProtocol(req),
-      host: serverData.domains.countries[CC],
-      pathname: CC
-    })
+  // full current url
+  getCurrentUrl: function (req) {
+    return req.protocol + '://' + req.get('host') + req.originalUrl
   },
 
   // for example: "https://autocosts.info/stats"
