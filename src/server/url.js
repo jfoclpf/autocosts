@@ -304,13 +304,16 @@ function isSingleDomain (host, domains) {
 // check if domain is a country code top level domain (ccTLD)
 // for exemple autocustos.pt returns 'PT' and for autocustos.info returns false
 function isDomainAccTLD (host) {
-  var extension = host.split('.').pop() // ex: 'pt'
-  extension = extension.toUpperCase() // ex: 'PT'
-  if (isoCountries.hasOwnProperty(extension)) { // eslint-disable-line no-prototype-builtins
-    return extension
+  var upperExtension = getDomainExtension(host).toUpperCase() // ex: 'PT'
+  if (isoCountries.hasOwnProperty(upperExtension)) { // eslint-disable-line no-prototype-builtins
+    return upperExtension
   } else {
     return false
   }
+}
+
+function getDomainExtension (host) {
+  return host.split('.').pop() // ex: 'pt'
 }
 
 // Functions to check if it is a test
