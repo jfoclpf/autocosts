@@ -219,9 +219,11 @@ function getGeoCC (req, availableCountries, defaultCountry) {
 // Check if the domain/CC combination is valid. For a specific CC only one combination is valid.
 // example: autocustos.info/pt is not valid because for PT autocustos.pt is valid
 // example: autocosts.info/ar is not valid because for AR only autocostos.info/AR is valid
-function isDomainCCcombValid (host, CC, domains) {
+function isDomainCCcombValid (host, _cc, domains) {
+  var CC = _cc.toUpperCase()
+  var cc = _cc.toLowerCase()
   // host is string with domain, exemple: 'autocosts.info'
-  return host.toLowerCase() + '/' + CC.toUpperCase() === domains.countries[CC] + domains.urlPath[CC]
+  return host.toLowerCase() + '/' + cc === domains.countries[CC] + domains.urlPath[CC]
 }
 
 // full valid URL, examples:
