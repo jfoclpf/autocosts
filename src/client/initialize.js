@@ -153,7 +153,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       $('.sidebar-right-container')
         .off('click', '.tableHtmlButton')
         .on('click', '.tableHtmlButton', function (e) {
-          window.location.href = '/stats/' + cc
+          window.location.href = '/stats/' + cc.toLowerCase()
         })
 
       // assigns hanlder to show world stats
