@@ -253,6 +253,13 @@ function getValidURL (req, domains) {
   return URL
 }
 
+// get name (ex: autocosti) of domain (ex: autocosti,info) without extension,
+// e.x.: 'autocosti' in 'www.it.autocosti.it' or 'autocosti.info'
+// for url part terminology: https://github.com/jfoclpf/autocosts/wiki/URL-selector
+function getNameOfDomain (host) {
+  return host.split('.').slice(-2, -1)[0]
+}
+
 // check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
 // the `:` is part of the protocol
 function getProtocol (req) {
