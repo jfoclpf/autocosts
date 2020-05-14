@@ -36,9 +36,7 @@ var autocosts = (function () {
       }
     },
     statistics: {
-      statisticsObj: undefined, // Object with countrys' users costs statistics
-      statisticsHtmlTablesDir: undefined, // path of statistical html tables
-      statisticsJpgTablesDir: undefined // path of statistical jpg tables
+      statisticsObj: undefined // Object with countrys' users costs statistics
     },
     serverInfo: {
       release: undefined, // dev or prod
@@ -128,8 +126,6 @@ var autocosts = (function () {
       mainVariables.serverInfo.domainListObj[selectedCountry] + '/' + selectedCountry
 
     mainVariables.paths.dirs.translationsDir = '/countries/' // path JSON Translation files
-    mainVariables.statistics.statisticsHtmlTablesDir = '/tables/' // path of statistical html tables
-    mainVariables.statistics.statisticsJpgTablesDir = '/tables/' // path of statistical jpg tables
   })();
 
   // Sets location of Javascript Files (some defined in /commons.js)
