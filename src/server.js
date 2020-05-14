@@ -251,8 +251,7 @@ app.get('/', function (req, res) {
   // it it was redirected by expressJS via res.redirect() there's no need to continue this session
   const returnedObj = url.root(req, res, serverData)
   if (!returnedObj.wasRedirected) {
-    // from here the domain/host is associated with only one country?
-    // for example autocosti.it is associated only with Italy
+    // from here the domain/cc combination is correct
     req.params.cc = returnedObj.CC
     const WORDS_CC = WORDS[req.params.cc.toUpperCase()]
     renderPageCC.render(req, res, serverData, WORDS_CC)
