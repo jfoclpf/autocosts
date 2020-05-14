@@ -158,9 +158,9 @@ function redirect301 (res, url2redirect) {
   debug('redirecting 301 to ' + url2redirect)
 }
 
-// CC must be in the format pt, xx, uk, i.e. the letters in lower case
-function isCC2letterLowerCase (CC) {
-  return CC === CC.toLowerCase()
+// cc must be in the format pt, xx, uk, i.e. the letters in lower case
+function isCC2letterLowerCase (cc) {
+  return cc === cc.toLowerCase()
 }
 
 function isCCinCountriesList (CC, availableCountries) {
