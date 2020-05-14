@@ -320,9 +320,9 @@ function isThisATest (req) {
 function isDevDomain (req) {
   var host = req.get('host')
   var hostSplit = host.split('.')
-  var tld = hostSplit[hostSplit.length - 1] // top level domain, ex: ".info"
+  var tlde = hostSplit[hostSplit.length - 1] // top level domain extension, ex: ".info"
 
-  if (tld.toLowerCase() === 'dev' || tld.toLowerCase() === 'work') {
+  if (tlde.toLowerCase() === 'dev' || tlde.toLowerCase() === 'work') {
     return true
   }
   return false
