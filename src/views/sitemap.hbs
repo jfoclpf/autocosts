@@ -42,7 +42,7 @@
     </url>
     {{#each sitemapData as |Country CC|}}
     <url>
-        <loc>{{{ ../HTTP_Protocol }}}//{{{Country.host}}}/stats/{{{CC}}}</loc>
+        <loc>{{{ ../HTTP_Protocol }}}//{{{Country.host}}}/stats/{{{toLowerCase CC}}}</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
