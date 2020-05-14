@@ -21,7 +21,7 @@ const compression = require('compression')
 const sortObj = require('sort-object') // to sort JS objects
 const colors = require('colors') // does not alter string prototype
 const util = require('util')
-const debug = require('debug')('app:index')
+const debug = require('debug')('app:server')
 
 // personalised requires
 const url = require(path.join(__dirname, 'server', 'url')) // to deal with the full URL rules and redirect accordingly
