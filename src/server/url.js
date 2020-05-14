@@ -32,17 +32,17 @@ module.exports = {
 
     var url2redirect
 
-    if (!isCCinCountriesList(req.params.CC, serverData.availableCountries) && !isCCXX(req.params.CC)) {
-      // If the CC characters in the domain.ext/CC are not recognized
+    if (!isCCinCountriesList(req.params.cc, serverData.availableCountries) && !isCCXX(req.params.cc)) {
+      // If the cc characters in the domain.ext/cc are NOT recognized
       debug('if (!isCCinCountriesList)')
 
-      // Does this domain/host (ex: autocosts.info) is associated with only one country?
-      // if yes, redirect to valid url of said CC, ex: from autocustos.pt/AP => autocustos.pt
+      // Does this domain/host is associated with only one country code (cc)?
+      // if yes, redirect to valid url of said cc, ex: from autocustos.pt/ap => autocustos.pt
       // if no, redirects according to locale and/or browser settings
       const CC = isSingleDomain(req.get('host'), serverData.domains)
       if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
         debug('isSingleDomain', CC)
-        req.params.CC = CC.toUpperCase()
+        req.params.cc = CC.toUpperCase()
         url2redirect = getValidURL(req, serverData.domains)
         redirect301(res, url2redirect) // 301 redirects are permanent
       } else {
@@ -51,13 +51,13 @@ module.exports = {
         redirect302(req, res, serverData) // 302 redirects are temporary
       }
       return true
-      // from here the CC, independently of the case (upper or lower) is in the list or is xx or XX
-      // and thus from here, the CC has always two letters since it is in the list
-    } else if (!isCC2letterUpperCase(req.params.CC)) {
+      // from here the cc, independently of the case (upper or lower) is in the list or is xx or XX
+      // and thus from here, the cc has always two letters since it is in the list
+    } else if (!isCC2letterLowerCase(req.params.cc)) {
       // if the CC characters after domain.info/cc ARE recognized as being in the list
-      // But if the two-letter code are NOT all in upper case domain.info/CC
+      // But if the two-letter code are NOT all in lower case domain.info/cc
 
-      debug('if (!isCC2letterUpperCase)')
+      debug('if (!isCC2letterLowerCase)')
       url2redirect = getValidURL(req, serverData.domains)
       redirect301(res, url2redirect) // 301 redirects are permanent
       return true
