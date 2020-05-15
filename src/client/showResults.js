@@ -11,7 +11,7 @@
 
 /* global autocosts, $ */
 
-autocosts.showResultsModule = (function (thisModule, translatedStrings, switches, language, uberApiObj, canonicalUrl) {
+autocosts.showResultsModule = (function (thisModule, translatedStrings, switches, language, uberApiObj, currentFullUrl) {
   // modules dependencies
   var chartsModule, pdfModule, commonsModule,
     isNumber // is function that is imported from commons.js
@@ -179,25 +179,25 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       $('#results').hide()
     })
 
-    // canonicalUrl has the current complete URL, ex: "https://autocosts.info/FR"
+    // currentFullUrl has the current complete URL, ex: "https://autocosts.info/FR"
     if (switches.social /* && !commonsModule.isThisAtest() */) {
       var descriptionText = translatedStrings.initial_text
         .split('.').slice(0, 2).join('.') // gets only the first 2 sentences of the text
         .replace(/<(?:.|\n)*?>/gm, '') // removes html tags such as <b></b>
 
       $('.share-buttons .facebook a')
-        .attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(canonicalUrl))
+        .attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(currentFullUrl))
         .attr('target', '_blank')
 
       $('.share-buttons .twitter a')
         .attr('href',
           'https://twitter.com/share?text=' + encodeURI(descriptionText) +
-                     '&url=' + encodeURI(canonicalUrl) +
+                     '&url=' + encodeURI(currentFullUrl) +
                      '&title=' + encodeURI(translatedStrings.web_page_title))
         .attr('target', '_blank')
 
       $('.share-buttons .linkedin a')
-        .attr('href', 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURI(canonicalUrl) +
+        .attr('href', 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURI(currentFullUrl) +
                      '&summary= ' + encodeURI(descriptionText))
         .attr('target', '_blank')
 
@@ -206,7 +206,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
         $('.share-buttons .whatsapp a').show()
 
         $('.share-buttons .whatsapp a')
-          .attr('href', 'https://wa.me/?text=' + encodeURI(descriptionText + ' - ' + canonicalUrl))
+          .attr('href', 'https://wa.me/?text=' + encodeURI(descriptionText + ' - ' + currentFullUrl))
       } else {
         $('.share-buttons .whatsapp a').hide()
       }
@@ -1142,4 +1142,4 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
   autocosts.serverInfo.switches,
   autocosts.serverInfo.language,
   autocosts.main.uberApiObj,
-  autocosts.paths.url.canonicalUrl)
+  autocosts.paths.url.href)

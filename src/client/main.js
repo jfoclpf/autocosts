@@ -22,9 +22,8 @@ var autocosts = (function () {
       jsFiles: undefined, // Object with locations of Javascript Files
       url: {
         origin: undefined, // origin from URL, example 'http://autocosts.info'
-        href: undefined, // the true current URL of the page, example 'http://autocosts.info/XX'
+        href: undefined, // the true current full URL of the page, example 'http://autocosts.info/XX'
         protocol: undefined, // `http:` or `https:`
-        canonicalUrl: undefined, // the correct url according to country, ex.,
         // if this is UK => 'http://autocosts.info/UK'
         cdnUrl: undefined, // it's defined in the node server side server.js
         uberApi: undefined // uber url to get UBER API information through AJAX
@@ -119,11 +118,7 @@ var autocosts = (function () {
     mainVariables.paths.url.uberApi = 'getUBER/' + selectedCountry
 
     mainVariables.paths.url.origin = window.location.origin
-    mainVariables.paths.url.href = window.location.href
-
-    /* forms present page full canonical url, example 'http://autocosts.info/UK' */
-    mainVariables.paths.url.canonicalUrl = mainVariables.paths.url.protocol + '//' +
-      mainVariables.serverInfo.domainListObj[selectedCountry] + '/' + selectedCountry
+    mainVariables.paths.url.href = window.location.href // current full url
 
     mainVariables.paths.dirs.translationsDir = '/countries/' // path JSON Translation files
   })();
