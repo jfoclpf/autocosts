@@ -11,15 +11,45 @@ module.exports = {
 
   // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
-    // does this domain/host is associated with only one country?
-    // if yes, set such country to CC
-    var CC = isSingleDomain(req.get('host'), serverData.domains)
+    // Is this domain/host a ccTLD? For ex. autocustos.pt?
+    // If yes, do not forward (render the page)
+    var CC = isDomainAccTLD(req.get('host')) // returns CC or false
     if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
       debug('isSingleDomain', CC)
       return { wasRedirected: false, CC: CC } // it does not redirect, thus wasRedirected is false
     } else {
-      // redirects according to locale and/or browser settings
-      redirect302(req, res, serverData) // temporary
+      // see: https://github.com/jfoclpf/autocosts/wiki/URL-selector#procedure
+      // A) If name (ex: autocosti) of domain (ex: autocosti.info) is recognized (belongs to a known host)
+      // and associated with only one host (IT:autocosti.it) forward to said host.
+      // Thus forward autocosti.info => autocosti.it
+      // B) If name (ex:autocustos) of domain (ex:autocustos.info) is recognized but associated with more
+      // than one country (ex: PT:autocustos.pt and BR:autocustos.info) forward according to locale
+      // Thus autocustos.info forwards according to locale
+      // C) Forwards according to locale in any other situation
+
+      // get name of domain without extension, e.x.: 'autocosti' in 'www.autocosti.info'
+      const domains = serverData.domains
+      const nameOfDomainReq = getNameOfDomain(req.get('host')) // ex: 'autocosti' or 'autocustos'
+      // check if nameReq exists and associated with only one country
+      let countNameOfDomain = 0 // ex: the number of times the name of domain 'autocustos' appears
+      let hostToForward
+      // domain.counts has the number of times each host appears (ex: autocustos.pt appears only 1)
+      for (const host in domains.counts) {
+        const nameOfDomainCountry = getNameOfDomain(host)
+        if (nameOfDomainReq === nameOfDomainCountry && domains.counts[host] === 1) {
+          countNameOfDomain++
+          hostToForward = host
+        }
+      }
+      if (countNameOfDomain === 1) {
+        req.params.cc = getDomainExtension(hostToForward)
+        const url2redirect = getValidURL(req, domains)
+        redirect301(res, url2redirect) // 301 redirects are permanent
+      } else {
+        // redirects according to locale and/or browser settings
+        redirect302(req, res, serverData) // temporary
+      }
+
       return { wasRedirected: true, CC: undefined } // it redirects, thus wasRedirected is true
     }
   },
