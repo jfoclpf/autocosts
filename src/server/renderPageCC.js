@@ -69,6 +69,7 @@ module.exports = {
       data.nonce = ''
     }
 
+    res.type('text/html')
     res.render('main', data)
   },
 
