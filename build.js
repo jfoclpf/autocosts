@@ -372,7 +372,7 @@ function getArgvHelpMsg () {
                 '-r  --release       selects Database [r]elease ("dev", "test" or "prod")  Database credentials in directory credentials/\n' +
                 "-s  --specDB        creates a Database with countries' [s]pecifications   connection to a Database\n" +
                 "-d  --refreshDB     refreshes the statistical costs [d]atabase            connection to the countries' specifcations Database \n" +
-                '-t  --genTables     generate html and jpeg stats [t]ables in bin/         based on the statistical costs Database \n' +
+                '-t  --genTables     generate jpeg stats [t]ables in bin/                  based on the statistical costs Database \n' +
                 '\n' +
                 '-A  --All           enables [a]ll previous options\n' +
                 '    --run           runs built with default options, after building is complete\n' +

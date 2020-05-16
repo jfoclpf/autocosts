@@ -17,6 +17,7 @@ module.exports = function (req, res, serverData, words) {
   data.countryName = serverData.availableCountries[CC]
 
   data.domain = serverData.domains.countries[CC]
+  data.canonicalUrlForCountry = data.domain + serverData.domains.urlPath[CC]
   data.availableCountries = serverData.availableCountries
 
   // information depending on this request from the client
