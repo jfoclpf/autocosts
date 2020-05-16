@@ -44,7 +44,8 @@ module.exports = {
       },
       languageCode: serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
-      notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
+      notLocalhost: !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
+      mainLogoFilename: url.getNameOfDomain(serverData.domains.countries[CC]) + '.svg' // ex: 'autocosti.svg'
     }
     data.pageData = pageData
     // ISO 2 letter Country Code

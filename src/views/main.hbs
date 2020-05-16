@@ -8,7 +8,9 @@
         {{#if serverData.settings.switches.database}}
             <a class="btn btn-right-sidebar cursor_pointer" data-action="open" data-side="right"></a>
         {{/if}}
-        <div class="logo"><a href="/" title="Home"><img src="/img/logo/logo.svg" alt="Auto Costs"></a></div>
+        <div class="logo">
+          <a href="/" title="Home"><img src="/img/logo/{{{pageData.mainLogoFilename}}}" alt="Main Logo"></a>
+        </div>
     </header>
 
     <section id="hero">
