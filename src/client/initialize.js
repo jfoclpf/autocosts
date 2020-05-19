@@ -146,7 +146,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       $('.sidebar-right-container')
         .off('click', '.tableImgButton')
         .on('click', '.tableImgButton', function (e) {
-          window.location.href = '/tables/' + cc + '.jpg'
+          window.location.href = '/tables/' + cc.toUpperCase() + '.jpg'
         })
 
       // assigns hanlder to show tables
