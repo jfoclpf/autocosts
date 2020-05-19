@@ -296,4 +296,4 @@ table.total tr th + th {text-align: right; width: 25%}
 
 /* ---------- Home Footer Animation ---------- */
 footer {display:block; background: transparent url('/img/animation-bg.jpg') repeat-x left 134px; height: 280px}
-footer .animation {display:block; background: transparent url('/img/animation.gif') repeat-x center top; width: 100%; height: 313px}
+footer .animation {display:block; width: 100%;}
