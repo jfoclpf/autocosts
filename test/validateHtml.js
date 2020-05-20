@@ -25,7 +25,8 @@ const htmlvalidate = new HTMLValidate({
     'prefer-tbody': 'off',
     'wcag/h32': 'off',
     'prefer-button': 'off',
-    'prefer-native-element': 'off'
+    'prefer-native-element': 'off',
+    'no-autoplay': 'off'
   }
 })
 
