@@ -78,6 +78,7 @@
     "jquery": "^3.5.1",
     "jquery-color": "^3.0.0-alpha.2",
     "jquery-sidebar": "^3.3.2",
+    "mobile-detect": "^1.4.4",
     "mysql": "2.18.1",
     "paragraph-builder": "1.0.15",
     "path": "^0.12.7",
