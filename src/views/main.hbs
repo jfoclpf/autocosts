@@ -53,9 +53,16 @@
     </div>
     {{/with}}
 
-    <footer>
-        <video class="animation" autoplay loop muted playsinline src="/img/animation.mp4"></video>
+
+    {{#if pageData.isMobile}}
+    <footer class="footer-mobile">
     </footer>
+    {{else}}
+    <footer class="footer-desktop">
+        <video class="animation-desktop" autoplay loop muted playsinline src="/img/animation.mp4"></video>
+    </footer>
+    {{/if}}
+
 </main>
 
 <!-- Data sent to JS code on browser -->

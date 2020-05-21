@@ -260,14 +260,14 @@
 
     /* ------ Footer Animation ------*/
 
-    footer .animation {width: 100%; background-size: 160%;}
-    footer, footer .animation {height: 250px}
+    footer .animation-desktop {width: 100%; background-size: 160%;}
+    footer.footer-desktop {height: 290px}
+    footer .animation-desktop {height: 250px}
 }
 
 
 @media screen and (max-width:460px) {
     #results #avg-monthly-cost h2, #results .results-section h2 {font-size: 22px; line-height: 25px;}
-    footer {background-position: left 90px;}
 }
 
 @media screen and (max-width:340px) {

@@ -1,4 +1,5 @@
 const path = require('path')
+const MobileDetect = require('mobile-detect')
 
 const url = require(path.join(__dirname, 'url'))
 const crypto = require('crypto') // eslint-disable-line
@@ -17,6 +18,8 @@ module.exports = {
     // ISO 2 letter Country Code
     const CC = req.params.cc.toUpperCase()
     debug('Country code: ' + CC)
+
+    var md = new MobileDetect(req.headers['user-agent'])
 
     // data to be rendered embedded in the HTML file
     var data = {}
@@ -45,7 +48,8 @@ module.exports = {
       languageCode: serverData.languagesCountries[CC], // ISO language code (ex: pt-PT)
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
       notLocalhost: !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
-      mainLogoFilename: url.getNameOfDomain(serverData.domains.countries[CC]) + '.svg' // ex: 'autocosti.svg'
+      mainLogoFilename: url.getNameOfDomain(serverData.domains.countries[CC]) + '.svg', // ex: 'autocosti.svg'
+      isMobile: Boolean(md.mobile()) // true or false whether it is a mobile device
     }
     data.pageData = pageData
     // ISO 2 letter Country Code

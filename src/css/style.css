@@ -295,5 +295,8 @@ table.total tr th + th {text-align: right; width: 25%}
 
 
 /* ---------- Home Footer Animation ---------- */
-footer {display:block; background: transparent url('/img/animation-bg.jpg') repeat-x left 134px; height: 280px}
-footer .animation {display:block; width: 100%;}
+footer {display:block;}
+footer.footer-desktop {height: 280px; background: transparent url('/img/animation-bg.jpg') repeat-x left 134px; background-position-y: bottom;}
+footer.footer-mobile {height: 200px; background: transparent url('/img/mobile.png') repeat-x left 134px; background-size: contain; background-position-y: top;}
+
+footer .animation-desktop {display:block; width: 100%;}
