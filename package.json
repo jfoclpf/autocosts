@@ -105,7 +105,7 @@
     "nyc": "15.0.1",
     "phantomjs-prebuilt": "^2.1.16",
     "prettyjson": "^1.2.1",
-    "snyk": "^1.323.1",
+    "snyk": "^1.323.2",
     "sql-formatter": "2.3.3",
     "standard": "14.3.4",
     "uglify-js": "3.9.3",
