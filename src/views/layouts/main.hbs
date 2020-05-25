@@ -25,14 +25,14 @@
 
       <link rel="canonical" href="{{{ pageData.url.canonical }}}">
 
-      <link rel="manifest" href="/{{CC}}.webmanifest" crossorigin="use-credentials">
+      <link rel="manifest" href="/{{toLowerCase CC}}/webmanifest" crossorigin="use-credentials">
 
       <!-- Banner to link to the APP, uncomment when APP is also upgraded to new UI
       <meta name="google-play-app" content="app-id=info.autocosts">
       <link href="/css/smart-app-banner.css" rel="stylesheet" media="screen" />
       -->
 
-  <!-- /stats page -->
+  <!-- /worldstats page -->
   {{else if isStats}}
       <title>World statistics of the Car Costs</title>
 
@@ -40,9 +40,9 @@
       <meta property="og:description" content="World statistics of the Car Costs for different countries">
       <meta name="description" content="World statistics of the Car Costs for different countries">
 
-      <link rel="canonical" href="{{{ pageData.url.origin }}}/stats">
+      <link rel="canonical" href="{{{ pageData.url.origin }}}/worldstats">
 
-      <link rel="stylesheet" href="/css/stats/main.css" type="text/css">
+      <link rel="stylesheet" href="/css/worldStats.css" type="text/css">
 
   <!-- /list page -->
   {{else if isList}}

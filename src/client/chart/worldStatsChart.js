@@ -1,5 +1,5 @@
 // the majortiy of the code is run server side, to improve page loading speed
-// see node file server/stats.js
+// see node file server/worldStats.js
 
 /* globals $, Chart */
 

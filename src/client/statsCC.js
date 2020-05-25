@@ -29,7 +29,7 @@ $(document).ready(function () {
   resizeSelectToContent($countrySelect)
 
   $countrySelect.on('change', function () {
-    window.location.href = window.location.origin + '/stats/' + this.value.toLowerCase()
+    window.location.href = window.location.origin + '/' + this.value.toLowerCase() + '/stats'
   })
 
   $('.sidebar.right').remove()

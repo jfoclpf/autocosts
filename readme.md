@@ -48,7 +48,7 @@ The translations are in corresponding `json` files, namely in the folder `src/co
 The list of available countries is from the file `src/countries/list.json`
 
 ### World statistics of Car Costs
-https://autocosts.info/stats
+https://autocosts.info/worldstats
 
 
 ## How does it work?

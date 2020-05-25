@@ -151,7 +151,7 @@ module.exports = {
     return getNameOfDomain(host)
   },
 
-  // for example: "https://autocosts.info/stats"
+  // for example: "https://autocosts.info/worldstats"
   // see https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology
   getHref: function (req) {
     return nodeUrl.format({

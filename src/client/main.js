@@ -115,7 +115,7 @@ var autocosts = (function () {
     var selectedCountry = mainVariables.serverInfo.selectedCountry
 
     mainVariables.main.uberApiObj = {}
-    mainVariables.paths.url.uberApi = 'getUBER/' + selectedCountry
+    mainVariables.paths.url.uberApi = '/' + selectedCountry.toLowerCase() + '/getUBER'
 
     mainVariables.paths.url.origin = window.location.origin
     mainVariables.paths.url.href = window.location.href // current full url

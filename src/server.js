@@ -107,7 +107,6 @@ app.set('views', path.join(__dirname, 'views'))
 
 // static content
 app.use(express.static(path.join(__dirname, 'public'))) // root public folder of the site /
-app.use('/tables', express.static(path.join(__dirname, 'tables')))
 app.use('/css', express.static(path.join(__dirname, 'css')))
 app.use('/img', express.static(path.join(__dirname, 'img')))
 app.use('/client', express.static(path.join(__dirname, 'client')))
@@ -142,16 +141,16 @@ app.get('/sitemap.xml', function (req, res) {
 })
 
 // web-app-manifest; see https://github.com/jfoclpf/autocosts/issues/126
-app.get('/:cc.webmanifest', function (req, res, next) {
-  debug(`\nRoute: app.get('/${req.params.cc}.webmanifest/')`)
+app.get('/:cc/webmanifest', function (req, res, next) {
+  debug(`\nRoute: app.get('/${req.params.cc}/webmanifest')`)
   webmanifest(req, res, next, serverData, WORDS)
 })
 
 if (SWITCHES.uber) {
   const getUBER = require(path.join(__dirname, 'server', 'getUBER'))
-  app.get('/getUBER/:cc', function (req, res, next) {
+  app.get('/:cc/getUBER', function (req, res, next) {
     if (serverData.isOnline) {
-      debug('\nRoute: app.get(\'/getUBER\')')
+      debug(`\nRoute: app.get('/${req.params.cc}/getUBER')`)
       getUBER(req, res, serverData)
     } else {
       next()
@@ -172,7 +171,7 @@ if (SWITCHES.googleCaptcha) {
 }
 
 if (SWITCHES.database) {
-  const stats = require(path.join(__dirname, 'server', 'stats'))
+  const worldStats = require(path.join(__dirname, 'server', 'worldStats'))
   const statsCC = require(path.join(__dirname, 'server', 'statsCC'))
   // process the users input to be sent to database
   const submitUserInput = require(path.join(__dirname, 'server', 'submitUserInput'))
@@ -186,12 +185,12 @@ if (SWITCHES.database) {
     }
   })
 
-  stats.prepareStats(serverData, WORDS, eventEmitter)
+  worldStats.prepareStats(serverData, WORDS, eventEmitter)
 
-  app.get('/stats', function (req, res, next) {
+  app.get('/worldstats', function (req, res, next) {
     if (serverData.isOnline) {
-      debug('\nRoute: app.get(\'/stats\')')
-      stats.req(req, res, serverData, WORDS.UK)
+      debug('\nRoute: app.get(\'/worldstats\')')
+      worldStats.req(req, res, serverData, WORDS.UK)
     } else {
       next()
     }
@@ -207,8 +206,8 @@ if (SWITCHES.database) {
   })
 
   // tables with costs for each country
-  app.get('/stats/:cc', function (req, res, next) {
-    debug('\nRoute: app.get(\'/stats/cc\')')
+  app.get('/:cc/stats', function (req, res, next) {
+    debug(`Route: app.get('/${req.params.cc}/stats')`)
 
     var cc = req.params.cc
     if (!url.isCCinCountriesList(cc.toUpperCase(), serverData.availableCountries) || cc !== cc.toLowerCase()) {
@@ -217,6 +216,11 @@ if (SWITCHES.database) {
       const WORDS_CC = WORDS[cc.toUpperCase()]
       statsCC(req, res, serverData, WORDS_CC)
     }
+  })
+
+  // tables with costs for each country
+  app.get('/:cc/stats.jpg', function (req, res, next) {
+    res.sendFile(path.join(__dirname, 'tables', req.params.cc.toUpperCase() + '.jpg'))
   })
 }
 

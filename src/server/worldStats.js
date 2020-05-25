@@ -2,7 +2,7 @@ const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
 const mysql = require('mysql') // module to get info from database
 const async = require('async') // module to allow to execute the queries in series
-const debug = require('debug')('app:stats') // run "DEBUG=app:stats node server.js"
+const debug = require('debug')('app:worldStats') // run "DEBUG=app:stats node server.js"
 
 const renderPageCC = require(path.join(__dirname, 'renderPageCC'))
 const commons = require(path.join(__dirname, '..', '..', 'commons'))
@@ -58,7 +58,7 @@ module.exports = {
       res.set('Content-Security-Policy', CSPstr)
     }
 
-    res.render('stats', data)
+    res.render('worldStats', data)
   },
 
   // this method is executed right after the server starts and before the previous fucntion "req",

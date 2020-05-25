@@ -44,7 +44,7 @@ const directories = commons.getDirectories()
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
-// ['/stats', '/list', '/PT', '/US', '/AU', etc.]
+// ['/worldstats', '/list', '/pt', '/us', '/au', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()
 
 var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
@@ -75,7 +75,7 @@ function startsHttpServer (callback) {
 
   Bar.tick({ info: 'starting local server' })
   testServer.startsServerForTests(
-    ['--database'], // we need this option to test url /stats
+    ['--database'], // we need this option to test url /worldstats
     function () {
       Bar.tick({ info: 'server started' })
       callback()
@@ -84,20 +84,20 @@ function startsHttpServer (callback) {
     })
 }
 
-// returns ['/stats', '/list', '/PT', '/US', '/AU', etc.]
+// returns ['/worldstats', '/list', '/pt', '/us', '/au', etc.]
 function getPathnamesToValidate () {
   var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   var availableCountries = countriesInfo.availableCountries
 
-  var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
+  var countryCodesArray = Object.keys(availableCountries) // ['pt', 'us', 'au', etc.]
   var numberOfCountries = countryCodesArray.length
 
-  var pathnames = ['/stats', '/list', '/domains']
+  var pathnames = ['/worldstats', '/list', '/domains']
   for (let i = 0; i < numberOfCountries; i++) {
-    pathnames.push('/' + countryCodesArray[i])
+    pathnames.push('/' + countryCodesArray[i].toLowerCase())
   }
   for (let i = 0; i < numberOfCountries; i++) {
-    pathnames.push('/stats/' + countryCodesArray[i])
+    pathnames.push('/' + countryCodesArray[i].toLowerCase() + '/stats')
   }
 
   return pathnames
@@ -107,7 +107,7 @@ function getPathnamesToValidate () {
 function validateHtmlOnAllPages (next) {
   async.eachOfSeries(PathnamesToValidateArr, validatePage, function (err) {
     if (err) {
-      next(Error('Error validating html on pages: ' + err.message))
+      next(Error('\nError validating html on pages: ' + err.message))
     } else {
       debug('All html pages validated')
       next()
@@ -115,13 +115,13 @@ function validateHtmlOnAllPages (next) {
   })
 }
 
-// pathname is for example '/PT' or '/stats'
+// pathname is for example '/pt' or '/worldstats'
 // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#url-parts-terminology
 function validatePage (pathname, key, callback) {
   var url = 'http://localhost:' + settings.HTTPport + pathname
   request({ uri: url }, function (err, response, body) {
     if (err) {
-      callback(Error(err))
+      callback(Error(err.message + ', error on url: ' + url))
       return
     }
 

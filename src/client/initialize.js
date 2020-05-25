@@ -146,21 +146,21 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       $('.sidebar-right-container')
         .off('click', '.tableImgButton')
         .on('click', '.tableImgButton', function (e) {
-          window.location.href = '/tables/' + cc.toUpperCase() + '.jpg'
+          window.location.href = '/' + cc.toLowerCase() + '/stats.jpg'
         })
 
       // assigns hanlder to show tables
       $('.sidebar-right-container')
         .off('click', '.tableHtmlButton')
         .on('click', '.tableHtmlButton', function (e) {
-          window.location.href = '/stats/' + cc.toLowerCase()
+          window.location.href = '/' + cc.toLowerCase() + '/stats'
         })
 
       // assigns hanlder to show world stats
       $('.sidebar-right-container')
         .off('click', '.worldStatsButton')
         .on('click', '.worldStatsButton', function (e) {
-          window.location.href = '/stats'
+          window.location.href = '/worldstats'
         })
     }
 
