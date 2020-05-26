@@ -163,5 +163,13 @@
     "IN" : "autocosts.info",
     "JP" : "autocosts.info",
     "CN" : "autocosts.info"
-  }
+  },
+  devDomain: "autocosts.dev",
+  legacyDomains: [
+    "autokoszty.info",
+    "autocosti.info",
+    "autocostes.info",
+    "autocosturi.info",
+    "autocustos.info"
+  ]
 }
