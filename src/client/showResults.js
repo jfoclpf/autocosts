@@ -179,7 +179,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       $('#results').hide()
     })
 
-    // currentFullUrl has the current complete URL, ex: "https://autocosts.info/FR"
+    // currentFullUrl has the current complete URL, ex: "https://autocosts.info/au"
     if (switches.social /* && !commonsModule.isThisAtest() */) {
       var descriptionText = translatedStrings.initial_text
         .split('.').slice(0, 2).join('.') // gets only the first 2 sentences of the text
