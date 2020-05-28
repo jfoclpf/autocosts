@@ -690,11 +690,12 @@ function getConsoleColors () {
 }
 
 // returns an object with several different information about the domains
-function getDomainsObject (domainsCountries) {
-  if (!domainsCountries) {
-    const countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
-    domainsCountries = countriesInfo.domainsCountries
+function getUrlsObject (countriesInfo) {
+  if (!countriesInfo) {
+    countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
   }
+
+  var domainsCountries = countriesInfo.domainsCountries
 
   var domainsObj = {}
   domainsObj.__url_selector = 'https://github.com/jfoclpf/autocosts/wiki/URL-selector'
@@ -702,6 +703,8 @@ function getDomainsObject (domainsCountries) {
 
   domainsObj.canonicalHostname = domainsCountries // Object that associates a Country Code (CC) with a domain
   domainsObj.uniqueArrayOfCanonicalHostname = getUniqueArray(domainsCountries) // Array with unique domain names
+  domainsObj.devDomain = countriesInfo.devDomain
+  domainsObj.legacyDomains = countriesInfo.legacyDomains
 
   // for every domain, count how many domain names
   // ex: 'autocustos.pt': 1, 'autocosts.info': 19
@@ -725,6 +728,12 @@ function getDomainsObject (domainsCountries) {
     }
   }
   domainsObj.canonicalPathname = canonicalPathname
+
+  var canonicalStatsUrl = {}
+  for (const CC in domainsCountries) { // PT: autocustos.pt, CA: autocosts.info, etc.
+    canonicalStatsUrl[CC] = domainsCountries[CC] + canonicalPathname[CC] + '/stats'
+  }
+  domainsObj.canonicalStatsUrl = canonicalStatsUrl
 
   return domainsObj
 }
