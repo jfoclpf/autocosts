@@ -11,15 +11,15 @@
 
 {{#each sitemapData as |Country CC|}}
     <url>
-        <loc>{{{ ../HTTP_Protocol }}}//{{{Country.host}}}{{{Country.urlPath}}}</loc>
+        <loc>{{{ ../HTTP_Protocol }}}//{{{Country.host}}}{{{Country.canonicalPathname}}}</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />
         {{#each ../sitemapData2 as |Country2 CC2|}}
-        <xhtml:link rel="alternate" hreflang="{{{Country2.lang}}}-{{{CC2}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.host}}}{{{Country2.urlPath}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{Country2.lang}}}-{{{CC2}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.host}}}{{{Country2.canonicalPathname}}}" />
         {{/each}}
         {{#each ../twoLetterLang as |Country2 CC2|}}
-        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}{{{Country2.urlPath}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../../HTTP_Protocol}}}//{{{Country2.domain}}}{{{Country2.canonicalPathname}}}" />
         {{/each}}
     </url>
 {{/each}}
@@ -29,10 +29,10 @@
         <priority>1</priority>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://autocosts.info/" />
         {{#each sitemapData2 as |Country2 CC2|}}
-        <xhtml:link rel="alternate" hreflang="{{{sitemapData2.lang}}}-{{{CC2}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.host}}}{{{Country2.urlPath}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{sitemapData2.lang}}}-{{{CC2}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.host}}}{{{Country2.canonicalPathname}}}" />
         {{/each}}
         {{#each twoLetterLang as |Country2 CC2|}}
-        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}{{{Country2.urlPath}}}" />
+        <xhtml:link rel="alternate" hreflang="{{{Country2.langCode}}}" href="{{{../HTTP_Protocol}}}//{{{Country2.domain}}}{{{Country2.canonicalPathname}}}" />
         {{/each}}
     </url>
     <url>

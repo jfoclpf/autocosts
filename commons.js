@@ -714,14 +714,14 @@ function getDomainsObject (domainsCountries) {
 
   // object with the url path after host/domain '/ar' for AR or '' for PT
   // because the url for PT is merely autocustos.pt without path
-  var urlPath = {}
+  var canonicalPathname = {}
   for (const CC in domainsCountries) {
     // check if domain is a ccTLD, ex: autocustos.pt is and autocustos.info is not
     const uppperExtension = domainsCountries[CC].split('.').pop().toUpperCase() // 'PT' in autocustos.pt
     if (isoCountries.hasOwnProperty(uppperExtension)) { // eslint-disable-line no-prototype-builtins
-      urlPath[CC] = ''
+      canonicalPathname[CC] = ''
     } else {
-      urlPath[CC] = '/' + CC.toLowerCase()
+      canonicalPathname[CC] = '/' + CC.toLowerCase()
     }
   }
   domainsObj.urlPath = urlPath

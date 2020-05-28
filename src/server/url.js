@@ -257,7 +257,7 @@ function isDomainCCcombValid (host, _cc, domains) {
   var CC = _cc.toUpperCase()
   var cc = _cc.toLowerCase()
   // host is string with domain, exemple: 'autocosts.info'
-  return host.toLowerCase() + '/' + cc === domains.countries[CC] + domains.urlPath[CC]
+  return host.toLowerCase() + '/' + cc === domains.countries[CC] + domains.canonicalPathname[CC]
 }
 
 // full valid URL, examples:
@@ -279,7 +279,7 @@ function getValidURL (req, domains) {
     URL = nodeUrl.format({
       protocol: getProtocol(req),
       host: domains.countries[CC],
-      pathname: domains.urlPath[CC]
+      pathname: domains.canonicalPathname[CC]
     })
   }
 

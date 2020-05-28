@@ -13,7 +13,7 @@ module.exports = function (req, res, serverData) {
   for (const CC in domains.countries) {
     sitemapData[CC] = {}
     sitemapData[CC].host = domains.countries[CC]
-    sitemapData[CC].urlPath = domains.urlPath[CC]
+    sitemapData[CC].canonicalPathname = domains.canonicalPathname[CC]
     sitemapData[CC].lang = languagesCountries[CC].substr(0, 2)
   }
   delete sitemapData.XX
@@ -64,14 +64,14 @@ function getUniqueLangObj (serverData) {
       twoLetterLang.UK = {}
       twoLetterLang.UK.langCode = langCode
       twoLetterLang.UK.domain = serverData.domains.countries.UK
-      twoLetterLang.UK.urlPath = serverData.domains.urlPath.UK
+      twoLetterLang.UK.canonicalPathname = serverData.domains.canonicalPathname.UK
     } else {
       var CC = commons.getKeyByValue(languagesCountries, langCode)
       if (CC) {
         twoLetterLang[CC] = {}
         twoLetterLang[CC].langCode = langCode
         twoLetterLang[CC].domain = serverData.domains.countries[CC]
-        twoLetterLang[CC].urlPath = serverData.domains.urlPath[CC]
+        twoLetterLang[CC].canonicalPathname = serverData.domains.canonicalPathname[CC]
       }
     }
   }
