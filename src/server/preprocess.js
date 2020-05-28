@@ -11,7 +11,7 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
   for (const CC in serverData.availableCountries) {
     WORDS[CC] = JSON.parse(fs.readFileSync(path.join(directories.index, directories.project.countries, CC + '.json'), 'utf8'))
     WORDS[CC].languageCode = serverData.languagesCountries[CC]
-    WORDS[CC].domain = serverData.domains.countries[CC]
+    WORDS[CC].domain = serverData.urls.canonicalHostname[CC]
 
     WORDS[CC].web_page_adapted_title = getAdaptedTitle(WORDS[CC])
     WORDS[CC].meta_description = getMetaDescription(WORDS[CC].initial_text)

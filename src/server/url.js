@@ -13,10 +13,10 @@ module.exports = {
   root: function (req, res, serverData) {
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
     // If yes, do not forward (render the page)
-    var CC = isDomainAccTLD(req.get('host')) // returns CC or false
-    if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
-      debug('isSingleDomain', CC)
-      return { wasRedirected: false, CC: CC } // it does not redirect, thus wasRedirected is false
+    var cc = isDomainAccTLD(req.get('host')) // returns cc or false
+    if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
+      debug('isSingleDomain', cc)
+      return { wasRedirected: false, cc: cc } // it does not redirect, thus wasRedirected is false
     } else {
       // see: https://github.com/jfoclpf/autocosts/wiki/URL-selector#procedure
       // A) If name (ex: autocosti) of domain (ex: autocosti.info) is recognized (belongs to a known host)
@@ -28,22 +28,22 @@ module.exports = {
       // C) Forwards according to locale in any other situation
 
       // get name of domain without extension, e.x.: 'autocosti' in 'www.autocosti.info'
-      const domains = serverData.domains
+      const urls = serverData.urls
       const nameOfDomainReq = getNameOfDomain(req.get('host')) // ex: 'autocosti' or 'autocustos'
       // check if nameReq exists and associated with only one country
       let countNameOfDomain = 0 // ex: the number of times the name of domain 'autocustos' appears
       let hostToForward
-      // domain.counts has the number of times each host appears (ex: autocustos.pt appears only 1)
-      for (const host in domains.counts) {
+      // domain.countsOfCanonicalHostname has the number of times each host appears (ex: autocustos.pt appears only 1)
+      for (const host in urls.countsOfCanonicalHostname) {
         const nameOfDomainCountry = getNameOfDomain(host)
-        if (nameOfDomainReq === nameOfDomainCountry && domains.counts[host] === 1) {
+        if (nameOfDomainReq === nameOfDomainCountry && urls.countsOfCanonicalHostname[host] === 1) {
           countNameOfDomain++
           hostToForward = host
         }
       }
       if (countNameOfDomain === 1) {
         req.params.cc = getDomainExtension(hostToForward)
-        const url2redirect = getValidURL(req, domains)
+        const url2redirect = getValidURL(req, urls)
         redirect301(res, url2redirect) // 301 redirects are permanent
       } else {
         // redirects according to locale and/or browser settings
@@ -69,14 +69,14 @@ module.exports = {
       // Does this domain/host is associated with only one country code (cc)?
       // if yes, redirect to valid url of said cc, ex: from autocustos.pt/ap => autocustos.pt
       // if no, redirects according to locale and/or browser settings
-      const CC = isSingleDomain(req.get('host'), serverData.domains)
-      if (CC && isCCinCountriesList(CC, serverData.availableCountries)) {
-        debug('isSingleDomain', CC)
-        req.params.cc = CC.toUpperCase()
-        url2redirect = getValidURL(req, serverData.domains)
+      const cc = isSingleDomain(req.get('host'), serverData.urls)
+      if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
+        debug('isSingleDomain', cc)
+        req.params.cc = cc.toUpperCase()
+        url2redirect = getValidURL(req, serverData.urls)
         redirect301(res, url2redirect) // 301 redirects are permanent
       } else {
-        debug('isSingleDomain == false', CC)
+        debug('isSingleDomain == false', cc)
         // redirects according to locale and/or browser HTTP Accept-Language settings
         redirect302(req, res, serverData) // 302 redirects are temporary
       }
@@ -84,32 +84,33 @@ module.exports = {
       // from here the cc, independently of the case (upper or lower) is in the list or is xx or XX
       // and thus from here, the cc has always two letters since it is in the list
     } else if (!isCC2letterLowerCase(req.params.cc)) {
-      // if the CC characters after domain.info/cc ARE recognized as being in the list
+      // if the cc characters after domain.info/cc ARE recognized as being in the list
       // But if the two-letter code are NOT all in lower case domain.info/cc
 
       debug('if (!isCC2letterLowerCase)')
-      url2redirect = getValidURL(req, serverData.domains)
+      url2redirect = getValidURL(req, serverData.urls)
       redirect301(res, url2redirect) // 301 redirects are permanent
       return true
-      // from here the CC is reconginzed and it's in uppercase
+      // from here the cc is reconginzed and it's in uppercase
     } else if (isSubdomain(req)) {
       // check if has subdomains such as www.autocosts.info. It shall forward to autocosts.info
 
       debug('if(isSubdomain)')
-      url2redirect = getValidURL(req, serverData.domains)
+      url2redirect = getValidURL(req, serverData.urls)
       redirect301(res, url2redirect) // 301 redirects are permanent
       return true
-    } else if (isThisATest(req)) {
-      // on test mode, if the CC is reconginzed and it's in uppercase, do not redirect url
+    } else if (isThisATest(req) || !isThisARecognizedHost(req.get('host'), serverData.urls)) {
+      // on test mode or if domain/host is not recognized (ex: autoxxx.info or 299.199.199.199);
+      // since the cc here is recongnized and it's already in lower case, do not redirect url
       debug('if(isThisATest)')
       return false // leave now, do not redirect
-    } if (!isDomainCCcombValid(req.get('host'), req.params.cc, serverData.domains)) {
+    } if (!isDomainCCcombValid(req.get('host'), req.params.cc, serverData.urls)) {
       // if the URL is not the valid URL, i.e. the combination domain/CC is not valid
       // example: autocosts.info/pt (not valid) shall forward to autocustos.pt (valid)
       // example: autocosts.info/ar (not valid) shall forward to autocostos.info/ar (valid)
 
       debug('if (!isDomainCCcombValid)')
-      url2redirect = getValidURL(req, serverData.domains)
+      url2redirect = getValidURL(req, serverData.urls)
       redirect301(res, url2redirect) // 301 redirects are permanent
       return true
     } else {
@@ -120,6 +121,10 @@ module.exports = {
 
   isThisATest: function (req) {
     return isThisATest(req)
+  },
+
+  isThisARecognizedHost: function (host, urls) {
+    return isThisARecognizedHost(host, urls)
   },
 
   getProtocol: function (req) {
@@ -134,12 +139,12 @@ module.exports = {
     return getValidURL(req, domainsCountries)
   },
 
-  isCCinCountriesList: function (CC, availableCountries) {
-    return isCCinCountriesList(CC, availableCountries)
+  isCCinCountriesList: function (cc, availableCountries) {
+    return isCCinCountriesList(cc, availableCountries)
   },
 
-  isCCXX: function (CC) {
-    return isCCXX(CC)
+  isCCXX: function (cc) {
+    return isCCXX(cc)
   },
 
   // full current url
@@ -149,6 +154,10 @@ module.exports = {
 
   getNameOfDomain: function (host) {
     return getNameOfDomain(host)
+  },
+
+  isDomainAccTLD: function (host) {
+    return isDomainAccTLD(host)
   },
 
   // for example: "https://autocosts.info/worldstats"
@@ -180,7 +189,7 @@ function redirect302 (req, res, serverData) {
   var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
   req.params.cc = geoCC
-  var url2redirect = getValidURL(req, serverData.domains)
+  var url2redirect = getValidURL(req, serverData.urls)
 
   res.redirect(302, url2redirect)
   debug('redirecting 302 to ' + url2redirect)
@@ -253,18 +262,18 @@ function getGeoCC (req, availableCountries, defaultCountry) {
 // Check if the domain/CC combination is valid. For a specific CC only one combination is valid.
 // example: autocustos.info/pt is not valid because for PT autocustos.pt is valid
 // example: autocosts.info/ar is not valid because for AR only autocostos.info/AR is valid
-function isDomainCCcombValid (host, _cc, domains) {
+function isDomainCCcombValid (host, _cc, urls) {
   var CC = _cc.toUpperCase()
   var cc = _cc.toLowerCase()
   // host is string with domain, exemple: 'autocosts.info'
-  return host.toLowerCase() + '/' + cc === domains.countries[CC] + domains.canonicalPathname[CC]
+  return host.toLowerCase() + '/' + cc === urls.canonicalHostname[CC] + urls.canonicalPathname[CC]
 }
 
 // full valid URL, examples:
 // PT: https://autocustos.pt (because there's only one domain associated with thus country code)
 // IT: https://autocosti.it (because there's only one domain associated with thus country code)
 // AR: https://autocostos.info/AR (because there's several countries associated with this domain)
-function getValidURL (req, domains) {
+function getValidURL (req, urls) {
   debug('getValidURL')
 
   var CC = req.params.cc.toUpperCase()
@@ -278,8 +287,8 @@ function getValidURL (req, domains) {
   } else {
     URL = nodeUrl.format({
       protocol: getProtocol(req),
-      host: domains.countries[CC],
-      pathname: domains.canonicalPathname[CC]
+      host: urls.canonicalHostname[CC],
+      pathname: urls.canonicalPathname[CC]
     })
   }
 
@@ -307,6 +316,44 @@ function _getProtocol (req) {
   return getProtocol(req)
 }
 
+// Everything which is not run on full production (using accepted domains, ex: autocosts.info) is a test
+// Returns true if the sever is using TLD .work or .dev or if it run by localhost
+// Returns true also when domain of req is not in the list of recognized/canonical domains on src/countries/info.json
+function isThisATest (req) {
+  debug('isThisATest')
+
+  var cc = req.params.cc
+  if (cc) {
+    return isDevDomain(req) || isThisLocalhost(req) || isCCXX(cc)
+  } else {
+    return isDevDomain(req) || isThisLocalhost(req)
+  }
+}
+
+/* Domain/host related functions */
+
+// for example autoxxx.info returns false, recognized domains on src/countries/info.json
+function isThisARecognizedHost (host, urls) {
+  return isThisCanonicalDomain(host, urls) || isThisLegacyDomain(host, urls)
+}
+
+// Returns true when domain/host is in the list of canonical domains on src/countries/info.json
+function isThisCanonicalDomain (host, urls) {
+  if (host) {
+    return Object.values(urls.canonicalHostname).includes(host)
+  } else {
+    return false
+  }
+}
+
+function isThisLegacyDomain (host, urls) {
+  if (host) {
+    return urls.legacyDomains.includes(host)
+  } else {
+    return false
+  }
+}
+
 // www.example.com returns true and example.com returns false
 function isSubdomain (req) {
   var host = req.get('host')
@@ -321,14 +368,14 @@ function isSubdomain (req) {
 }
 
 // function that says whether a domain is associated with only One country
-// for example autokoszty.info is associated only with PL,
+// for example autokoszty.info is associated only with pl,
 // whilst autocosts.info has several CCs associated
 // returns the associated Country Code (CC) or false
-function isSingleDomain (host, domains) {
+function isSingleDomain (host, urls) {
   if (host) {
-    for (var domain in domains.counts) {
-      if (host.indexOf(domain) > -1 && domains.counts[domain] === 1) {
-        return getKeyByValue(domains.countries, domain)
+    for (var canonicalHost in urls.countsOfCanonicalHostname) {
+      if (host.indexOf(canonicalHost) > -1 && urls.countsOfCanonicalHostname[canonicalHost] === 1) {
+        return getKeyByValue(urls.canonicalHostname, canonicalHost).toLowerCase()
       }
     }
   }
@@ -336,11 +383,11 @@ function isSingleDomain (host, domains) {
 }
 
 // check if domain is a country code top level domain (ccTLD)
-// for exemple autocustos.pt returns 'PT' and for autocustos.info returns false
+// for exemple autocustos.pt returns 'pt' and for autocustos.info returns false
 function isDomainAccTLD (host) {
   var upperExtension = getDomainExtension(host).toUpperCase() // ex: 'PT'
   if (isoCountries.hasOwnProperty(upperExtension)) { // eslint-disable-line no-prototype-builtins
-    return upperExtension
+    return upperExtension.toLowerCase()
   } else {
     return false
   }
@@ -348,18 +395,6 @@ function isDomainAccTLD (host) {
 
 function getDomainExtension (host) {
   return host.split('.').pop() // ex: 'pt'
-}
-
-// Functions to check if it is a test
-function isThisATest (req) {
-  debug('isThisATest')
-
-  var cc = req.params.cc
-  if (cc) {
-    return isDevDomain(req) || isThisLocalhost(req) || isCCXX(cc)
-  } else {
-    return isDevDomain(req) || isThisLocalhost(req)
-  }
 }
 
 // tells of TLD of host is .dev or .work

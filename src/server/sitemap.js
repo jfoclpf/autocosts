@@ -6,14 +6,14 @@ const debug = require('debug')('app:sitemap') // run "DEBUG=app:sitemap node ser
 module.exports = function (req, res, serverData) {
   var data = {}
 
-  var domains = serverData.domains
+  var urls = serverData.urls
   var languagesCountries = serverData.languagesCountries
 
   var sitemapData = {}
-  for (const CC in domains.countries) {
+  for (const CC in urls.canonicalHostname) {
     sitemapData[CC] = {}
-    sitemapData[CC].host = domains.countries[CC]
-    sitemapData[CC].canonicalPathname = domains.canonicalPathname[CC]
+    sitemapData[CC].host = urls.canonicalHostname[CC]
+    sitemapData[CC].canonicalPathname = urls.canonicalPathname[CC]
     sitemapData[CC].lang = languagesCountries[CC].substr(0, 2)
   }
   delete sitemapData.XX
@@ -63,15 +63,15 @@ function getUniqueLangObj (serverData) {
     if (langCode === 'en') {
       twoLetterLang.UK = {}
       twoLetterLang.UK.langCode = langCode
-      twoLetterLang.UK.domain = serverData.domains.countries.UK
-      twoLetterLang.UK.canonicalPathname = serverData.domains.canonicalPathname.UK
+      twoLetterLang.UK.domain = serverData.urls.canonicalHostname.UK
+      twoLetterLang.UK.canonicalPathname = serverData.urls.canonicalPathname.UK
     } else {
       var CC = commons.getKeyByValue(languagesCountries, langCode)
       if (CC) {
         twoLetterLang[CC] = {}
         twoLetterLang[CC].langCode = langCode
-        twoLetterLang[CC].domain = serverData.domains.countries[CC]
-        twoLetterLang[CC].canonicalPathname = serverData.domains.canonicalPathname[CC]
+        twoLetterLang[CC].domain = serverData.urls.canonicalHostname[CC]
+        twoLetterLang[CC].canonicalPathname = serverData.urls.canonicalPathname[CC]
       }
     }
   }

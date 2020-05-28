@@ -9,15 +9,15 @@ module.exports = function (req, res, serverData, WORDS) {
   data.WORDS = JSON.parse(JSON.stringify(WORDS)) // clone object
   delete data.WORDS.XX
 
-  var storedDomains = JSON.parse(JSON.stringify(serverData.domains)) // clone object
+  var storedDomains = JSON.parse(JSON.stringify(serverData.urls)) // clone object
   var domainsCountries = storedDomains.countries
   delete domainsCountries.XX
   debug(domainsCountries)
 
   var domains = {}
-  // array serverData.domains.uniqueArr has unique elements, i.e. an array without repeated elements
-  for (var i = 0; i < serverData.domains.uniqueArr.length; i++) {
-    var domain = serverData.domains.uniqueArr[i]
+  // array serverData.urls.uniqueArrayOfCanonicalHostname has unique elements, i.e. an array without repeated elements
+  for (var i = 0; i < serverData.urls.uniqueArrayOfCanonicalHostname.length; i++) {
+    var domain = serverData.urls.uniqueArrayOfCanonicalHostname[i]
     domains[domain] = {} // creates an empty entry
 
     // get the domains that exist for a particular domain

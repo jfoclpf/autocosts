@@ -58,7 +58,7 @@ module.exports = {
     return FILENAMES
   },
 
-  getDomainsObject: getDomainsObject,
+  getUrlsObject: getUrlsObject,
 
   getUniqueArray: getUniqueArray,
 
@@ -700,17 +700,17 @@ function getDomainsObject (domainsCountries) {
   domainsObj.__url_selector = 'https://github.com/jfoclpf/autocosts/wiki/URL-selector'
   domainsObj.__domainName_policy = 'https://github.com/jfoclpf/autocosts/wiki/Domain-name-policy'
 
-  domainsObj.countries = domainsCountries // Object that associates a Country Code (CC) with a domain
-  domainsObj.uniqueArr = getUniqueArray(domainsCountries) // Array with unique domain names
+  domainsObj.canonicalHostname = domainsCountries // Object that associates a Country Code (CC) with a domain
+  domainsObj.uniqueArrayOfCanonicalHostname = getUniqueArray(domainsCountries) // Array with unique domain names
 
   // for every domain, count how many domain names
   // ex: 'autocustos.pt': 1, 'autocosts.info': 19
-  var counts = {}
+  var countsOfCanonicalHostname = {}
   var arr = Object.values(domainsCountries)
   for (var i = 0; i < arr.length; i++) {
-    counts[arr[i]] = 1 + (counts[arr[i]] || 0)
+    countsOfCanonicalHostname[arr[i]] = 1 + (countsOfCanonicalHostname[arr[i]] || 0)
   }
-  domainsObj.counts = counts
+  domainsObj.countsOfCanonicalHostname = countsOfCanonicalHostname
 
   // object with the url path after host/domain '/ar' for AR or '' for PT
   // because the url for PT is merely autocustos.pt without path
@@ -724,7 +724,7 @@ function getDomainsObject (domainsCountries) {
       canonicalPathname[CC] = '/' + CC.toLowerCase()
     }
   }
-  domainsObj.urlPath = urlPath
+  domainsObj.canonicalPathname = canonicalPathname
 
   return domainsObj
 }

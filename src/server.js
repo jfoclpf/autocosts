@@ -50,7 +50,7 @@ var serverData = {
   availableCountries: sortObj(countriesInfo.availableCountries), // Array of alphabetically sorted available Countries
   languagesCountries: countriesInfo.languagesCountries, // Array of Language Codes
   countriesStandards: countriesInfo.standards, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
-  domains: commons.getDomainsObject(countriesInfo.domainsCountries), // Object with Domains Infomation
+  urls: commons.getUrlsObject(countriesInfo), // Object with Domains Infomation
   CClistOnString: commons.getCClistOnStr(countriesInfo.availableCountries), // a string with all the CC
   isOnline: undefined // if the server has access to Internet connection (to use database, uber, etc.)
 }
