@@ -54,6 +54,10 @@ module.exports = {
     return this.words.sub_title2 ? this.words.sub_title2 : this.words.calculate_car_costs
   },
 
+  getPropertyFromObject (obj, key) {
+    return obj[key]
+  },
+
   getFuelEfficiencyOptStr: function () {
     switch (this.fuel_efficiency_std_option) {
       case 1:

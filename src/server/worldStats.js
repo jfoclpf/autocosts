@@ -36,6 +36,8 @@ module.exports = {
     data.averageNormalizedCosts = averageNormalizedCosts
     data.isThisStatsPage = true
 
+    const isThisARecognizedHost = url.isThisARecognizedHost(req.get('host'), serverData.urls)
+
     // information depending on this request from the client
     var pageData = {
       /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
@@ -46,9 +48,21 @@ module.exports = {
       },
       languageCode: 'en', // this page of World Statistics of car, renders only in English
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
-      notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
+      notLocalhost: !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
+      isThisARecognizedHost: isThisARecognizedHost
     }
     data.pageData = pageData
+
+    // creates urls for statistics for each country, ex: autocustos.pt/stats or autocustos.info/br/stats
+    var statsUrls = {}
+    if (isThisARecognizedHost) {
+      statsUrls = serverData.urls.canonicalStatsUrl
+    } else { // for example dev or localhost
+      for (const CC in serverData.urls.canonicalHostname) {
+        statsUrls[CC] = req.get('host') + '/' + CC.toLowerCase() + '/stats'
+      }
+    }
+    data.statsUrls = statsUrls
 
     data.layout = 'main'
 

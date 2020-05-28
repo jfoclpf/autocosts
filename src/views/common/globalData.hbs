@@ -16,24 +16,26 @@ see: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attribut
 </data>
 
 <data
-    id =                       "global_variables"
-    value =                    "global_variables"
-    data-release =             "{{{ serverData.settings.release }}}"
-    data-country =             "{{{ CC }}}"
-    data-language =            "{{{ pageData.languageCode }}}"
-    data-js_files =            "{{{ jsonObj serverData.fileNames.client }}}"
-    data-country_list =        "{{{ jsonObj serverData.availableCountries }}}"
-    data-countries_standards = "{{{ jsonObj serverData.countriesStandards }}}"
-    data-domain_list =         "{{{ jsonObj serverData.domains.countries }}}"
-    data-cdn_url =             "{{{ serverData.settings.cdn.url }}}"
-    data-url_protocol =        "{{{ pageData.url.protocol }}}"
-    data-client_dir =          "{{{ serverData.directories.client.client }}}"
-    data-words =               "{{{ jsonObj words }}}"
-    data-stats =               "{{{ jsonObj serverData.statsData }}}"
-    data-ga_tracking_id =      "{{{ serverData.settings.googleAnalytics.trackingId }}}"
-    data-not_localhost =       "{{{ pageData.notLocalhost }}}"
-    data-is_this_a_test =      "{{{ pageData.isThisATest }}}"
-    data-nonce =               "{{{ nonce }}}">
+    id =                           "global_variables"
+    value =                        "global_variables"
+    data-release =                 "{{{ serverData.settings.release }}}"
+    data-country =                 "{{{ CC }}}"
+    data-language =                "{{{ pageData.languageCode }}}"
+    data-js_files =                "{{{ jsonObj serverData.fileNames.client }}}"
+    data-country_list =            "{{{ jsonObj serverData.availableCountries }}}"
+    data-countries_standards =     "{{{ jsonObj serverData.countriesStandards }}}"
+    data-domain_list =             "{{{ jsonObj serverData.urls.canonicalHostname }}}"
+    data-canonical_url_path =      "{{{ jsonObj serverData.urls.canonicalPathname }}}"
+    data-cdn_url =                 "{{{ serverData.settings.cdn.url }}}"
+    data-url_protocol =            "{{{ pageData.url.protocol }}}"
+    data-client_dir =              "{{{ serverData.directories.client.client }}}"
+    data-words =                   "{{{ jsonObj words }}}"
+    data-stats =                   "{{{ jsonObj serverData.statsData }}}"
+    data-ga_tracking_id =          "{{{ serverData.settings.googleAnalytics.trackingId }}}"
+    data-not_localhost =           "{{{ pageData.notLocalhost }}}"
+    data-is_this_a_test =          "{{{ pageData.isThisATest }}}"
+    data-is_this_recognized_host = "{{{ pageData.isThisARecognizedHost }}}"
+    data-nonce =                   "{{{ nonce }}}">
 </data>
 
 {{#if isThisStatsPage}}

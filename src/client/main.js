@@ -26,7 +26,9 @@ var autocosts = (function () {
         protocol: undefined, // `http:` or `https:`
         // if this is UK => 'http://autocosts.info/UK'
         cdnUrl: undefined, // it's defined in the node server side server.js
-        uberApi: undefined // uber url to get UBER API information through AJAX
+        uberApi: undefined, // uber url to get UBER API information through AJAX
+        canonicalPathname: undefined, // object with pathname of url, ex: '/pt' for each country
+        canonicalHostname: undefined // object with canonical hosts for each country
       },
       dirs: {
         clientDir: undefined, // client directory seen by the browser
@@ -50,7 +52,8 @@ var autocosts = (function () {
       googleAnalyticsTrackingId: undefined, // Google analytics Tracking ID
       booleans: {
         isATest: undefined, // server refers that this session is a test
-        notLocalhost: undefined // true when this session does not come from localhost
+        notLocalhost: undefined, // true when this session does not come from localhost
+        isThisARecognizedHost: undefined // autocustos.info or autocustos.pt are for ex. recognized hosts
       }
     },
     servicesAvailabilityObj: {
@@ -101,10 +104,13 @@ var autocosts = (function () {
     // booleans, server refers whether this session is a test
     mainVariables.serverInfo.booleans.isATest = JSON.parse(globalVariables.dataset.is_this_a_test)
     mainVariables.serverInfo.booleans.notLocalhost = JSON.parse(globalVariables.dataset.not_localhost)
+    mainVariables.serverInfo.booleans.isThisARecognizedHost = JSON.parse(globalVariables.dataset.is_this_recognized_host)
 
     // paths
     mainVariables.paths.url.protocol = globalVariables.dataset.url_protocol
     mainVariables.paths.url.cdnUrl = globalVariables.dataset.cdn_url
+    mainVariables.paths.url.canonicalPathname = JSON.parse(decodeURI(globalVariables.dataset.canonical_url_path))
+    mainVariables.paths.url.canonicalHostname = mainVariables.serverInfo.domainListObj
     mainVariables.paths.dirs.clientDir = globalVariables.dataset.client_dir
 
     mainVariables.statistics.statisticsObj = JSON.parse(decodeURI(globalVariables.dataset.stats))

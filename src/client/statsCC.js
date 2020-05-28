@@ -1,4 +1,4 @@
-/* globals $ */
+/* globals $ autocosts */
 
 $(document).ready(function () {
   var globalVariables = document.getElementById('global_variables')
@@ -29,7 +29,16 @@ $(document).ready(function () {
   resizeSelectToContent($countrySelect)
 
   $countrySelect.on('change', function () {
-    window.location.href = window.location.origin + '/' + this.value.toLowerCase() + '/stats'
+    var cc = this.value.toLowerCase()
+
+    if (autocosts.serverInfo.booleans.isThisARecognizedHost) {
+      window.location.href = window.location.protocol + '//' +
+        autocosts.paths.url.canonicalHostname[cc.toUpperCase()] +
+        autocosts.paths.url.canonicalPathname[cc.toUpperCase()] +
+        '/stats'
+    } else {
+      window.location.href = window.location.origin + '/' + cc.toLowerCase() + '/stats'
+    }
   })
 
   $('.sidebar.right').remove()

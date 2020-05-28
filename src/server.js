@@ -206,21 +206,47 @@ if (SWITCHES.database) {
   })
 
   // tables with costs for each country
-  app.get('/:cc/stats', function (req, res, next) {
+  app.get(['/:cc/stats', '/stats'], function (req, res, next) {
     debug(`Route: app.get('/${req.params.cc}/stats')`)
 
-    var cc = req.params.cc
-    if (!url.isCCinCountriesList(cc.toUpperCase(), serverData.availableCountries) || cc !== cc.toLowerCase()) {
+    const ccParams = req.params.cc
+    const ccHost = url.isDomainAccTLD(req.get('host'))
+    var cc
+
+    if (!ccParams && ccHost) { // for example autocustos.pt/stats
+      cc = ccHost
+    } else if (ccParams && !ccHost) { // for example autocustos.info/br/stats
+      cc = ccParams
+    } else {
+      next()
+      return
+    }
+
+    if (!url.isCCinCountriesList(cc, serverData.availableCountries) || cc.toLowerCase() !== cc) {
       next()
     } else {
       const WORDS_CC = WORDS[cc.toUpperCase()]
+      req.params.cc = cc
       statsCC(req, res, serverData, WORDS_CC)
     }
   })
 
   // tables with costs for each country
-  app.get('/:cc/stats.jpg', function (req, res, next) {
-    res.sendFile(path.join(__dirname, 'tables', req.params.cc.toUpperCase() + '.jpg'))
+  app.get(['/:cc/stats.jpg', '/stats.jpg'], function (req, res, next) {
+    const ccParams = req.params.cc
+    const ccHost = url.isDomainAccTLD(req.get('host'))
+    var cc
+
+    if (!ccParams && ccHost) { // for example autocustos.pt/stats
+      cc = ccHost
+    } else if (ccParams && !ccHost) { // for example autocustos.info/br/stats
+      cc = ccParams
+    } else {
+      next()
+      return
+    }
+
+    res.sendFile(path.join(__dirname, 'tables', cc.toUpperCase() + '.jpg'))
   })
 }
 
@@ -241,8 +267,8 @@ app.get('/:cc', function (req, res, next) {
     // if it was redirected by expressJS via res.redirect() there's no need to continue this session
     const wasRedirected = url.getCC(req, res, serverData)
     if (!wasRedirected) {
-      // from here CC is acceptable and the page will be rendered
-      // get words for chosen CC - Country Code
+      // from here cc is acceptable and the page will be rendered
+      // get words for chosen cc - Country Code
       const WORDS_CC = WORDS[req.params.cc.toUpperCase()]
       renderPageCC.render(req, res, serverData, WORDS_CC)
     }
@@ -256,7 +282,7 @@ app.get('/', function (req, res) {
   const returnedObj = url.root(req, res, serverData)
   if (!returnedObj.wasRedirected) {
     // from here the domain/cc combination is correct
-    req.params.cc = returnedObj.CC
+    req.params.cc = returnedObj.cc
     const WORDS_CC = WORDS[req.params.cc.toUpperCase()]
     renderPageCC.render(req, res, serverData, WORDS_CC)
   }

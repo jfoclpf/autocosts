@@ -146,14 +146,28 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       $('.sidebar-right-container')
         .off('click', '.tableImgButton')
         .on('click', '.tableImgButton', function (e) {
-          window.location.href = '/' + cc.toLowerCase() + '/stats.jpg'
+          if (serverInfo.booleans.isThisARecognizedHost) {
+            window.location.href = window.location.protocol + '//' +
+              paths.url.canonicalHostname[cc.toUpperCase()] +
+              paths.url.canonicalPathname[cc.toUpperCase()] +
+              '/stats.jpg'
+          } else {
+            window.location.href = window.location.origin + '/' + cc.toLowerCase() + '/stats.jpg'
+          }
         })
 
       // assigns hanlder to show tables
       $('.sidebar-right-container')
         .off('click', '.tableHtmlButton')
         .on('click', '.tableHtmlButton', function (e) {
-          window.location.href = '/' + cc.toLowerCase() + '/stats'
+          if (serverInfo.booleans.isThisARecognizedHost) {
+            window.location.href = window.location.protocol + '//' +
+              paths.url.canonicalHostname[cc.toUpperCase()] +
+              paths.url.canonicalPathname[cc.toUpperCase()] +
+              '/stats'
+          } else {
+            window.location.href = window.location.origin + '/' + cc.toLowerCase() + '/stats'
+          }
         })
 
       // assigns hanlder to show world stats

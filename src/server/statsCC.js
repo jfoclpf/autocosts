@@ -30,7 +30,8 @@ module.exports = function (req, res, serverData, words) {
     },
     languageCode: 'en', // this page of World Statistics of car, renders only in English
     isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
-    notLocalhost: !url.isThisLocalhost(req) // boolean variable regarding if present request is from localhost
+    notLocalhost: !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
+    isThisARecognizedHost: url.isThisARecognizedHost(req.get('host'), serverData.urls)
   }
   data.pageData = pageData
   data.pageData.CC = CC
