@@ -10,7 +10,7 @@ module.exports = function (req, res, serverData, WORDS) {
   delete data.WORDS.XX
 
   var storedDomains = JSON.parse(JSON.stringify(serverData.urls)) // clone object
-  var domainsCountries = storedDomains.countries
+  var domainsCountries = storedDomains.canonicalHostname
   delete domainsCountries.XX
   debug(domainsCountries)
 
