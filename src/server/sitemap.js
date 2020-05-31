@@ -27,6 +27,10 @@ module.exports = function (req, res, serverData) {
   data.twoLetterLang = twoLetterLang
   debug('\n\ntwoLetterLang:'); debug(twoLetterLang)
 
+  // stats web pages
+  data.canonicalStatsUrl = serverData.urls.canonicalStatsUrl
+  delete data.canonicalStatsUrl.XX
+
   data.HTTP_Protocol = url.getProtocol(req)
 
   data.layout = false

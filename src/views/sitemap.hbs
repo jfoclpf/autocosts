@@ -40,9 +40,9 @@
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
-    {{#each sitemapData as |Country CC|}}
+    {{#each canonicalStatsUrl as |url CC|}}
     <url>
-        <loc>{{{ ../HTTP_Protocol }}}//{{{Country.host}}}/stats/{{{toLowerCase CC}}}</loc>
+        <loc>{{{ ../HTTP_Protocol }}}//{{{url}}}</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
