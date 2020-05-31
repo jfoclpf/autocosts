@@ -55,6 +55,7 @@ module.exports = {
 
     // creates urls for statistics for each country, ex: autocustos.pt/stats or autocustos.info/br/stats
     var statsUrls = {}
+    delete serverData.urls.canonicalStatsUrl.XX
     if (isThisARecognizedHost) {
       statsUrls = serverData.urls.canonicalStatsUrl
     } else { // for example dev or localhost
