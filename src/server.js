@@ -119,7 +119,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 // robots.txt for search engines
 app.get('/robots.txt', function (req, res) {
   debug('\nRoute: app.get(\'/robots.txt\')')
-  res.type('text/plain').render('robots.txt', { layout: false, isReleaseProd: release === 'prod' })
+  res.type('text/plain').render('robots', { layout: false, isReleaseProd: release === 'prod' })
 })
 
 // lists all Countries information - /list or /lista or /liste
