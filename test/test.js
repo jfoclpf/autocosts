@@ -24,6 +24,7 @@ commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtmlW3C.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/testApi.js'))
+commons.runNodeScriptSync(path.join(directories.server.root, 'test/googleLighthouse.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
 
 console.log('All tests ran successfully'.green)
