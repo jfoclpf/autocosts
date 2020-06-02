@@ -22,6 +22,7 @@ const settings = commons.getSettings()
 const directories = commons.getDirectories()
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
+console.log('Validating CSS files using W3 css online validator...')
 
 // ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
 var PathnamesToValidateArr = getPathnamesToValidate()
@@ -54,7 +55,6 @@ function copyCssFilesToBin (callback) {
 
 // starts http server on localhost on test default port
 function startsHttpServer (callback) {
-  console.log('Validating CSS files...')
   Bar.tick({ info: 'starting local server' })
 
   testServer.startsServerForTests(function () {
