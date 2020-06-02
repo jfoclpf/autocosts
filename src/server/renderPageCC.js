@@ -74,6 +74,7 @@ module.exports = {
       data.nonce = ''
     }
 
+    res.set('Cache-Control', 'public, max-age=31536000')
     res.type('text/html')
     res.render('main', data)
   },
