@@ -30,7 +30,7 @@ async.series([checkForInternet, startsHttpServer, checkPagePerformance],
       console.error(Error(err))
       process.exitCode = 1
     } else {
-      console.log('Google Lighthouse ran successfully')
+      console.log('Google Lighthouse ran successfully'.green)
       process.exitCode = 0
     }
     console.log('\n')
