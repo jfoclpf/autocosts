@@ -290,6 +290,11 @@ function _init () {
     }
   }
 
+  // downloads/copy google analytics file from Google Server
+  if (SWITCHES.googleAnalytics) {
+    downloadGoogleAnalyticsJSFIle()
+  }
+
   // set FILENAMES URIs for JS known files according to Local files or CDN
   // if cdn option is enabled, select CDN version, otherwise Local files
   setCdnOrLocalFiles(SWITCHES.cdn)
@@ -397,7 +402,8 @@ function setFILENAMES () {
       minifyFiles: path.join(DIRECTORIES.server.build, 'minifyFiles.js'),
       rasterTables: path.join(DIRECTORIES.server.build, 'rasterTables.js'),
       setCountrySpecsDB: path.join(DIRECTORIES.server.build, 'setCountrySpecsDB.js'),
-      statsFunctions: path.join(DIRECTORIES.server.build, 'statsFunctions.js')
+      statsFunctions: path.join(DIRECTORIES.server.build, 'statsFunctions.js'),
+      gAnalytics: path.join(DIRECTORIES.server.build, 'gAnalytics.js')
     },
     project: {
       countriesInfoFile: path.join(countriesDir, 'info.json'),
@@ -581,6 +587,28 @@ function getNumberOfCountries () {
   var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
   var numberOfCountries = Object.keys(countriesInfo.availableCountries).length
   return numberOfCountries
+}
+
+function downloadGoogleAnalyticsJSFIle () {
+  if (isEmptyOrInvalidObj(FILENAMES)) {
+    setFILENAMES()
+  }
+
+  const https = require('https')
+
+  const dir = path.join(DIRECTORIES.bin.client, 'google')
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+
+  const gAnalyticsJSFile = path.join(dir, 'analytics.js')
+
+  // download and save file
+  const file = fs.createWriteStream(gAnalyticsJSFile)
+  https.get(FILENAMES.client.Ganalytics, function (response) {
+    response.pipe(file)
+    console.log(`Downloaded Google Analytics Javascript file from ${FILENAMES.client.Ganalytics} to ${gAnalyticsJSFile}`)
+  })
 }
 
 // gets Array with unique non-repeated values
