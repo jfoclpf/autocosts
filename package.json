@@ -1,6 +1,6 @@
 {
   "name": "autocosts",
-  "version": "6.3.21",
+  "version": "6.3.22",
   "description": "Automobile Costs Calculator",
   "main": "api.js",
   "scripts": {
