@@ -2837,9 +2837,9 @@
       "dev": true
     },
     "escodegen": {
-      "version": "1.14.1",
-      "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.14.1.tgz",
-      "integrity": "sha512-Bmt7NcRySdIfNPfU2ZoXDrrXsG9ZjvDxcAlMfDUgRBjLOWTuIACXPBFJH7Z+cLb40JeQco5toikyc9t9P8E9SQ==",
+      "version": "1.14.2",
+      "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.14.2.tgz",
+      "integrity": "sha512-InuOIiKk8wwuOFg6x9BQXbzjrQhtyXh46K9bqVTPzSo2FnyMBaYGBMC6PhQy7yxxil9vIedFBweQBMK74/7o8A==",
       "dev": true,
       "requires": {
         "esprima": "^4.0.1",
@@ -4723,9 +4723,9 @@
       "dev": true
     },
     "is-online": {
-      "version": "8.3.1",
-      "resolved": "https://registry.npmjs.org/is-online/-/is-online-8.3.1.tgz",
-      "integrity": "sha512-SOyioWVyX4xp6EpQT1P7PCiTC1YZmqShZqVSFmq1gEVuIuc+lzTzVMZSYiyR6Chna+U7EKqwtlBBk8nnmPHCsQ==",
+      "version": "8.4.0",
+      "resolved": "https://registry.npmjs.org/is-online/-/is-online-8.4.0.tgz",
+      "integrity": "sha512-i0qGRbtUaQEU5Z7O3LmOnH3yorhG1lnygqY2cv3InlQKKm3nx6XiGXZk49lATR3N7hyxoiuHMR0pKwRuB+s5lg==",
       "requires": {
         "got": "^9.6.0",
         "p-any": "^2.0.0",
@@ -8720,9 +8720,9 @@
       "dev": true
     },
     "snyk": {
-      "version": "1.334.0",
-      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.334.0.tgz",
-      "integrity": "sha512-a/kcP7AwAOsAuPd57TCBfmepW04aTc/36U3gEX37iczTN3EuGMx9d+dPvY3jsiHtFi1iTMMo7c/rgFGmzMyLsw==",
+      "version": "1.335.0",
+      "resolved": "https://registry.npmjs.org/snyk/-/snyk-1.335.0.tgz",
+      "integrity": "sha512-46Ycj4qsxyLoyz0XnCktyimkLfVpaU1UEe0p7EKpECq3+ZftP8QYEy4NFuBcU8PzhjZ0wG/dcW0OKIf296Uo7A==",
       "dev": true,
       "requires": {
         "@snyk/cli-interface": "2.6.0",
