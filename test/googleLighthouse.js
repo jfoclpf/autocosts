@@ -8,6 +8,7 @@ const isOnline = require('is-online')
 const prettyjson = require('prettyjson')
 const lighthouse = require('lighthouse')
 const chromeLauncher = require('chrome-launcher')
+const debug = require('debug')('test:googleLighthouse')
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
@@ -39,8 +40,10 @@ async.series([checkForInternet, startsHttpServer, checkPagePerformance],
 
 function checkPagePerformance (callback) {
   function launchChromeAndRunLighthouse (url, opts, config = null) {
+    console.log('Lunching Chrome Launcher, please wait...')
     return chromeLauncher.launch({ chromeFlags: opts.chromeFlags }).then(chrome => {
       opts.port = chrome.port
+      console.log('Lunching and running Light House, please wait...')
       return lighthouse(url, opts, config).then(results => {
         // use results.lhr for the JS-consumable output
         // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
@@ -70,6 +73,14 @@ function checkPagePerformance (callback) {
     console.log(`\nThe average score is ${averageScore.toFixed(2)}`)
 
     if (averageScore > THRESHOLD_AVG_SCORE) {
+      for (const key in audits) {
+        if (audits[key].score && audits[key].score < 1) {
+          debug(prettyjson.render(audits[key]))
+          debug('\n\n')
+          debug('==========================================================================')
+          debug('\n\n')
+        }
+      }
       callback()
     } else {
       for (const key in audits) {
@@ -89,7 +100,8 @@ function checkPagePerformance (callback) {
   }
 
   const opts = {
-    chromeFlags: ['--headless']
+    chromeFlags: ['--headless'],
+    quiet: true
   }
 
   const url = 'http://localhost:' + settings.HTTPport + PATH_TO_BE_TESTED
