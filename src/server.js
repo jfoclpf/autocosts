@@ -112,9 +112,10 @@ app.use('/img', express.static(path.join(__dirname, 'img')))
 app.use('/client', express.static(path.join(__dirname, 'client')))
 app.use('/countries', express.static(path.join(__dirname, 'countries')))
 
-app.use(compression({ level: 1 })) // level 1 is for fastest compression
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
+
+app.use(compression({ level: 1 })) // level 1 is for fastest compression
 
 // robots.txt for search engines
 app.get('/robots.txt', function (req, res) {
