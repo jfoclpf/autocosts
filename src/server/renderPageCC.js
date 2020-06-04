@@ -60,13 +60,9 @@ module.exports = {
     data.layout = 'main'
 
     if (pageData.notLocalhost) {
-      // nonce is giving several problems with jQuery and backward compatibility
-      // when jQuery deals with it fully correctly, in theory in v 3.4.0, nonce should be added again
-      // https://github.com/jquery/jquery/milestone/18
-
-      // let nonce = crypto.randomBytes(16).toString('base64');
-      // data.nonce = nonce;
-      const CSPstr = this.getCSPstr(/* nonce */)
+      const nonce = crypto.randomBytes(16).toString('base64')
+      data.nonce = nonce
+      const CSPstr = this.getCSPstr(nonce)
 
       debug(CSPstr.replace(/;/g, ';\n'))
       res.set('Content-Security-Policy', CSPstr)
@@ -126,8 +122,10 @@ module.exports = {
     }
 
     // this is a global variable
-    CSPstr0 = 'default-src \'self\'' + ' ' + domainsStr + '; '
-    CSPstr0 += 'script-src \'self\'' + ' ' + domainsStr + ' ' + '\'unsafe-eval\' \'unsafe-inline\'' + ' '
+    CSPstr0 = `default-src 'self' ${domainsStr} ; `
+    CSPstr0 += `script-src 'self' ${domainsStr} 'unsafe-eval' 'unsafe-inline' `
+
+    // nonce info will be here inbetween, see function getCSPstr
 
     // this is a global variable
     CSPstr1 = 'style-src \'self\' \'unsafe-inline\'; '
@@ -143,7 +141,7 @@ module.exports = {
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
     var nonceStr
     if (nonce) {
-      nonceStr = '\'nonce-' + nonce + '\' \'strict-dynamic\';'
+      nonceStr = `'nonce-${nonce}' 'strict-dynamic';`
     } else {
       nonceStr = ';'
     }
