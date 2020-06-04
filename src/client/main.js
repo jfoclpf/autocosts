@@ -140,7 +140,7 @@ var autocosts = (function () {
         recaptchaAPI: jsfilesDefinedByServer.GrecaptchaAPI +
                     /* "?onload=" + recaptchaFunction + */
                     '?render=explicit&hl=' + mainVariables.serverInfo.language,
-        analytics: '/client/google/analytics.js'
+        analytics: '/client/analytics.js'
       },
 
       // core functions

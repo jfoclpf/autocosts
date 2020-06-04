@@ -105,9 +105,6 @@ app.engine('.hbs', hbs.engine)
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// compress files to be served
-app.use(compression())
-
 // static content, on root public directory of the site /
 app.use(express.static(path.join(__dirname, 'public'), { etag: true, maxAge: '1y' }))
 app.use('/css', express.static(path.join(__dirname, 'css')))
@@ -115,6 +112,7 @@ app.use('/img', express.static(path.join(__dirname, 'img')))
 app.use('/client', express.static(path.join(__dirname, 'client')))
 app.use('/countries', express.static(path.join(__dirname, 'countries')))
 
+app.use(compression({ level: 1 })) // level 1 is for fastest compression
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
