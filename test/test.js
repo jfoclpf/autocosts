@@ -25,7 +25,7 @@ commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtmlW
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCss.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/testApi.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/googleLighthouse.js'))
-commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-A'])
+commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-cimst'])
 
 console.log('All tests ran successfully'.green)
 process.exitCode = 0 // exit with success
