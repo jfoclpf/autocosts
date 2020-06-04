@@ -589,7 +589,7 @@ function getNumberOfCountries () {
   return numberOfCountries
 }
 
-function downloadGoogleAnalyticsJSFIle (callback) {
+function downloadGoogleAnalyticsJSFIle () {
   if (isEmptyOrInvalidObj(FILENAMES)) {
     setFILENAMES()
   }
@@ -603,14 +603,11 @@ function downloadGoogleAnalyticsJSFIle (callback) {
   https.get(FILENAMES.client.Ganalytics, function (response) {
     response.pipe(file)
     console.log(`Downloaded Google Analytics Javascript file from ${FILENAMES.client.Ganalytics} to ${gAnalyticsJSFile}`)
-    fs.chmod(file, 0o766, (err) => {
+    fs.chmod(gAnalyticsJSFile, 0o766, (err) => {
       if (err) {
-        const errMsg = `Can't change the permissions of file ${file}`
-        console.error(errMsg)
-        callback(Error(errMsg))
+        console.error(`Can't change the permissions of file ${file}`)
       } else {
-        console.log(`The permissions for file ${file} have been changed!`)
-        callback()
+        debug(`The permissions for file ${gAnalyticsJSFile} have been changed!`)
       }
     })
   })
