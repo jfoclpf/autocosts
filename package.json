@@ -19,7 +19,8 @@
     "car-costs",
     "calculator"
   ],
-  "author": "Ferreira et al <joao.pimentel.ferreira@gmail.com> (https://autocosts.info)",
+  "author": "João Ferreira <joao.pimentel.ferreira@gmail.com>",
+  "contributors": ["Martín Cristaldo <martinuxui@gmail.com>"],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/jfoclpf/autocosts/issues"
