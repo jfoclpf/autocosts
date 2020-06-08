@@ -1,6 +1,6 @@
 {
   "name": "autocosts",
-  "version": "6.3.24",
+  "version": "6.3.25",
   "description": "Automobile Costs Calculator",
   "main": "api.js",
   "scripts": {
@@ -20,7 +20,9 @@
     "calculator"
   ],
   "author": "João Ferreira <joao.pimentel.ferreira@gmail.com>",
-  "contributors": ["Martín Cristaldo <martinuxui@gmail.com>"],
+  "contributors": [
+    "Martín Cristaldo <martinuxui@gmail.com>"
+  ],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/jfoclpf/autocosts/issues"
