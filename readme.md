@@ -30,8 +30,10 @@ This calculator allows users to find the true cost of owning a car. It will norm
 <img src="/src/img/screenshot.png">
 
 ## Try it on your machine
-Install it and run it with the single command<br>
-`npm i autocosts --production`
+Install it<br>
+`npm i autocosts --production`<br>
+and run it<br>
+`node bin/server.js --print --pdf -r prod`
 
 it will open a http local server which you can access through `http://localhost:3028`
 
@@ -99,9 +101,9 @@ The credentials for the above services are in the JSON files stored in [`credent
 
 ## API
 
-Install the api with the following command, ensuring that no scripts are run
+Install the api
 
-`npm i autocosts --ignore-scripts`
+`npm i autocosts`
 
 Now use the autocosts api
 

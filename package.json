@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
-    "postinstall": "node build.js -c -r prod && node bin/server.js --print --pdf -r prod",
+    "postinstall": "node build.js -c -r prod",
     "updatePackages": "ncu -e 2 || (ncu -u && npm i --ignore-scripts && npm update && snyk protect && npm run commitAndUpload)",
     "commitAndUpload": "npm test && git commit -a -m 'update' && npm version patch && npm publish && git push",
     "snyk-protect": "snyk protect"
