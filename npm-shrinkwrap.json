@@ -4467,12 +4467,6 @@
           "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
           "dev": true
         },
-        "lodash": {
-          "version": "4.17.15",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz",
-          "integrity": "sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
-          "dev": true
-        },
         "string-width": {
           "version": "4.2.0",
           "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.0.tgz",
@@ -4543,11 +4537,6 @@
         "sprintf-js": "1.1.2"
       },
       "dependencies": {
-        "lodash": {
-          "version": "4.17.15",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz",
-          "integrity": "sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A=="
-        },
         "sprintf-js": {
           "version": "1.1.2",
           "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.2.tgz",
@@ -6175,9 +6164,9 @@
       }
     },
     "lodash": {
-      "version": "4.17.14",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.14.tgz",
-      "integrity": "sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw=="
+      "version": "4.17.19",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.19.tgz",
+      "integrity": "sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ=="
     },
     "lodash.assign": {
       "version": "4.2.0",
@@ -10198,7 +10187,7 @@
         },
         "string_decoder": {
           "version": "1.1.1",
-          "resolved": "http://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
+          "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
           "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
           "requires": {
             "safe-buffer": "~5.1.0"
@@ -11061,12 +11050,6 @@
           "requires": {
             "is-buffer": "~2.0.3"
           }
-        },
-        "lodash": {
-          "version": "4.17.15",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz",
-          "integrity": "sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
-          "dev": true
         }
       }
     },
