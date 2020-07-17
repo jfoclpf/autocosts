@@ -32,8 +32,8 @@ This calculator allows users to find the true cost of owning a car. It will norm
 ## Try it on your machine
 Install it<br>
 `npm i autocosts --production`<br>
-and run it<br>
-`node bin/server.js --print --pdf -r prod`
+and start the server<br>
+`npm start`
 
 it will open a http local server which you can access through `http://localhost:3028`
 

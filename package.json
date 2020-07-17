@@ -4,6 +4,7 @@
   "description": "Automobile Costs Calculator",
   "main": "api.js",
   "scripts": {
+    "start": "node bin/server.js --print --pdf -r prod",
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
     "postinstall": "node build.js -c -r prod",
