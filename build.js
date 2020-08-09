@@ -192,7 +192,9 @@ function copy () {
   // https://www.npmjs.com/package/pdfmake
   copyFile('pdfmake', path.join('build', 'pdfmake.min.js'), path.join('client', 'pdf', 'pdfmake.min.js'))
   copyFile('pdfmake', path.join('build', 'vfs_fonts.js'), path.join('client', 'pdf', 'vfs_fonts.js'))
+  // these two need to be here, sometimes devTools fetches sourcemaps directly from the root of the url path
   copyFile('pdfmake', path.join('build', 'pdfmake.min.js.map'), path.join('client', 'pdf', 'pdfmake.min.js.map'))
+  copyFile('pdfmake', path.join('build', 'pdfmake.min.js.map'), path.join('public', 'pdfmake.min.js.map'))
 
   // chart.js
   // https://www.npmjs.com/package/chart.js
