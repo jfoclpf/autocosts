@@ -16,6 +16,7 @@ commons.init(eventEmitter)
 
 const express = require('express')
 const exphbs = require('express-handlebars')
+const useragent = require('express-useragent')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const sortObj = require('sort-object') // to sort JS objects
@@ -116,6 +117,7 @@ app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
 app.use(compression({ level: 1 })) // level 1 is for fastest compression
+app.use(useragent.express()) // to detect type of browser and if it is a mobile device
 
 // robots.txt for search engines
 app.get('/robots.txt', function (req, res) {
