@@ -104,8 +104,9 @@ module.exports = {
       frameStr = 'frame-src https://www.google.com/recaptcha/;' + ' '
     }
 
+    var gaUrl = 'https://www.google-analytics.com'
     if (switches.googleAnalytics) {
-      reliableDomains.push('https://www.google-analytics.com')
+      reliableDomains.push(gaUrl)
     }
 
     if (switches.uber) {
@@ -116,7 +117,7 @@ module.exports = {
     var uniqueReliableDomains = reliableDomains.filter(function (item, pos) {
       return reliableDomains.indexOf(item) === pos
     })
-    debug(uniqueReliableDomains)
+    debug('The reliable domains for CSP: '); debug(uniqueReliableDomains)
 
     // adds string with reliable domains/urls
     var domainsStr = ''
@@ -125,23 +126,24 @@ module.exports = {
     }
 
     // this is a global variable
-    CSPstr0 = `default-src 'self' ${domainsStr} ; `
-    CSPstr0 += `script-src 'self' ${domainsStr} 'unsafe-eval' 'unsafe-inline' `
+    CSPstr0 = `default-src 'self' ${domainsStr} ; ` +
+              `script-src 'self' ${domainsStr} 'unsafe-eval' 'unsafe-inline' `
 
     // nonce info will be here inbetween, see function getCSPstr
 
     // this is a global variable
-    CSPstr1 = 'style-src \'self\' \'unsafe-inline\'; '
-    CSPstr1 += 'img-src \'self\' https://www.google-analytics.com data:; '
-    CSPstr1 += 'object-src \'self\' blob:; '
-    CSPstr1 += 'base-uri \'self\'; '
-    CSPstr1 += frameStr
+    CSPstr1 = "style-src 'self' 'unsafe-inline'; " +
+              `img-src 'self' ${switches.googleAnalytics ? gaUrl : ''} data:; ` +
+              "object-src 'self' blob:; " +
+              "base-uri 'self'; " +
+              frameStr
   },
 
   // get CSP string since pre-generation of CSP string was done initially as the server.js starts
   getCSPstr: function (nonce = '') {
-    // for 'strict-dynamic' read
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src#strict-dynamic
+    // 'strict-dynamic' (from CSP version 3) allows nonces, but still allows only the initial scripts
+    // to be obliged to have nonces. Therefore the further scripts loaded by the initial scripts do not need nonces
+    // Thus, if CSP is to be used, only CSP version 3 is supported due to 'strict-dynamic'
     var nonceStr
     if (nonce) {
       nonceStr = `'nonce-${nonce}' 'strict-dynamic';`
