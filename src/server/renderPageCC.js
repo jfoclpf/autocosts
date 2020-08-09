@@ -59,7 +59,10 @@ module.exports = {
     data.emptyChar = '' // empty character to be used in handlebars for whitespace trimming
     data.layout = 'main'
 
-    if (pageData.notLocalhost) {
+    // If CSP is to be used, CSP version 3 is needed due to 'strict-dynamic', as this both
+    // allows nonces and still allows only the initial scripts to be obliged to have nonces.
+    // Only Chrome, Firefox and Edge were tested to work with CSP v3 for this project
+    if (pageData.notLocalhost && (ua.isFirefox || ua.isChrome || ua.isEdge)) {
       const nonce = crypto.randomBytes(16).toString('base64')
       data.nonce = nonce
       const CSPstr = this.getCSPstr(nonce)
