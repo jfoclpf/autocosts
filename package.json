@@ -71,6 +71,7 @@
     "command-line-args": "5.1.1",
     "compression": "^1.7.4",
     "concat-files": "^0.1.1",
+    "debug": "^4.1.1",
     "express": "4.x",
     "express-handlebars": "^5.1.0",
     "express-useragent": "^1.0.15",
@@ -95,7 +96,6 @@
   },
   "devDependencies": {
     "csslint": "^1.0.5",
-    "debug": "^4.1.1",
     "extract-zip": "2.0.1",
     "html-minifier": "^4.0.0",
     "html-validate": "^3.0.0",
