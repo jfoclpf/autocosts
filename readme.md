@@ -30,10 +30,12 @@ This calculator allows users to find the true cost of owning a car. It will norm
 <img src="/src/img/screenshot.png">
 
 ## Try it on your machine
-Install it<br>
-`npm i autocosts --production`<br>
-and start the server<br>
-`cd node_modules/autocosts && npm start`
+1. Clone the project<br>
+`git clone https://github.com/jfoclpf/autocosts.git`
+2. Enter the newly created directory and install dependencies
+`cd autocosts/ && npm i --production`<br>
+3. Start the server<br>
+`npm start`
 
 it will open a http local server which you can access through `http://localhost:3028`
 
