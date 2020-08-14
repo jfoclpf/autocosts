@@ -18,8 +18,7 @@ module.exports = {
     const CC = req.params.cc.toUpperCase()
     debug('Country code: ' + CC)
 
-    var ua = req.useragent
-    debug(ua)
+    debug(req.useragent)
 
     // data to be rendered embedded in the HTML file
     var data = {}
@@ -49,7 +48,7 @@ module.exports = {
       isThisATest: url.isThisATest(req), // boolean variable regarding if present request is a test
       notLocalhost: !url.isThisLocalhost(req), // boolean variable regarding if present request is from localhost
       mainLogoFilename: url.getNameOfDomain(serverData.urls.canonicalHostname[CC]) + '.svg', // ex: 'autocosti.svg'
-      isMobile: Boolean(ua.isMobile), // true or false whether it is a mobile device
+      isMobile: Boolean(req.useragent.isMobile), // true or false whether it is a mobile device
       isThisARecognizedHost: url.isThisARecognizedHost(req.get('host'), serverData.urls)
     }
     data.pageData = pageData
@@ -61,8 +60,7 @@ module.exports = {
 
     // If CSP is to be used, CSP version 3 is needed due to 'strict-dynamic', as this both
     // allows nonces and still allows only the initial scripts to be obliged to have nonces.
-    // Only Chrome, Firefox and Edge were tested to work with CSP v3 for this project
-    if (pageData.notLocalhost && (ua.isFirefox || ua.isChrome || ua.isEdge)) {
+    if (pageData.notLocalhost && isCSP3compatible(req.useragent)) {
       const nonce = crypto.randomBytes(16).toString('base64')
       data.nonce = nonce
       const CSPstr = this.getCSPstr(nonce)
@@ -154,4 +152,28 @@ module.exports = {
     return CSPstr0 + nonceStr + CSPstr1
   }
 
+}
+
+// check if the requester/browser can handle Conten Security Policy version 3
+// this project when uses CSP, needs CSP version 3
+function isCSP3compatible (useragent) {
+  var version = parseFloat(useragent.version.split('.')[0])
+
+  // these tests were made using different browsers with lambdatest.com
+  // and these conditions successfully passed CSP3
+  if (useragent.isChrome && version >= 67) {
+    return true
+  }
+  if (useragent.isFirefox && version >= 62) {
+    return true
+  }
+  if (useragent.isEdge && version >= 79) {
+    return true
+  }
+
+  if (useragent.source.includes('cspvalidator')) {
+    return true
+  }
+
+  return false
 }
