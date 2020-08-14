@@ -218,7 +218,7 @@
     "working_time_message" : "It was considered for calculations an average working time of 36 hours per week and 11 months per year",
     "hours_to_afford_car" : "Hours per year you need to work to afford your car",
     "months_to_afford_car" : "Months per year you need to work to afford your car",
-    "total_costs_per_year" : "Total costs per year for automobile",
+    "total_costs_per_year" : "Total costs per year for the car",
     "days_car_paid" : "For how many days, after the 1st of January, the car is paid",
     "parcel" : "Parcel",
     "error_invalid_insu_value" : "Invalid insurance amount",
