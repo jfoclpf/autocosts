@@ -64,14 +64,17 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
 
   // object to be output as result
   var averageCalculatedData
+  var numberOfUsers = userIds.length
 
-  if (userIds.length !== 0 && countryData.length !== 0) {
+  if (numberOfUsers !== 0 && countryData.length !== 0) {
     // array with unique users, having one element per different user
     var temp_i = [] // eslint-disable-line camelcase
     // array having the several inputs from the same user
     var temp_j = [] // eslint-disable-line camelcase
 
-    for (var i = 0; i < userIds.length; i++) {
+    var Bar = commons.getProgressBar(numberOfUsers)
+    for (var i = 0; i < numberOfUsers; i++) {
+      Bar.tick(1, { info: `${countryInfo.code} ${i + 1}/${numberOfUsers}` })
       for (var j = 0, n = 0; j < countryData.length; j++) {
         if (countryData[j].uuid_client && (countryData[j].uuid_client === userIds[i].uuid_client)) {
           // checks if the entry is ok

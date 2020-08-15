@@ -35,11 +35,6 @@ var AVG_DB_TEMPLATE, DB_TABLE_KEY
 
 console.log('Updating statistics database...')
 
-const BarBigTick = 3
-// if debug is enabled disable the progress bar
-
-var Bar = commons.getProgressBar(commons.getNumberOfCountries() + (USE_MONEY_API ? 6 : 4) * BarBigTick, debug.enabled)
-
 // checks for internet connection
 isOnline().then(function (online) {
   if (!online) {
@@ -131,7 +126,7 @@ isOnline().then(function (online) {
           fx.rates = result.rates
           fx.base = result.base
 
-          Bar.tick(BarBigTick, { info: 'Loaded exchange rates API' })
+          console.log('Loaded exchange rates API')
           next()
         } else {
           console.error('Error loading money API')
@@ -154,7 +149,7 @@ isOnline().then(function (online) {
           debug(('User ' + DB_INFO.user + ' connected successfully to database ' +
             DB_INFO.database + ' at ' + DB_INFO.host).green)
           debug(DB_INFO)
-          Bar.tick(BarBigTick, { info: 'Created sql connection' })
+          console.log('Created sql connection')
           next()
         }
       })
@@ -175,7 +170,7 @@ isOnline().then(function (online) {
           }
           debug(countries)
           // countries[i]: {Country: 'UK', currency: 'GBP', distance_std: 2, fuel_efficiency_std: 3, fuel_price_volume_std: 1 }
-          Bar.tick(BarBigTick, { info: 'Loaded countries standards' })
+          console.log('Loaded countries standards')
           next()
         }
       })
@@ -198,7 +193,7 @@ isOnline().then(function (online) {
               uniqueUsers.push(results[i])
             }
             debug(uniqueUsers)
-            Bar.tick(BarBigTick, { info: 'Loaded unique users' })
+            console.log('Loaded unique users')
             next()
           }
         }
@@ -221,7 +216,7 @@ isOnline().then(function (online) {
             AllUserInputDb.push(results[i])
           }
           debug(AllUserInputDb)
-          Bar.tick(BarBigTick, { info: 'Loaded all users' })
+          console.log('Loaded all users')
           next()
         }
       })
@@ -241,13 +236,12 @@ isOnline().then(function (online) {
         queryInsertNorm = getInsertDataQueryHeader('monthly_costs_normalized')
       }
 
+      console.log('Calculating statistics')
       // builds the query to insert all the vaules for each country
       // sql query:... VALUES (PT, value1, value2,...),(BR, value1, value2,...),etc.
       for (let i = 0; i < numberOfCountries; i++) {
         const countryCode = countries[i].Country
         const currency = countries[i].currency
-
-        Bar.tick({ info: 'Calculating statistics for ' + countryCode })
 
         const countryUsers = [] // array with unique users for selected countries[i]
         const countryData = [] // array with everything for selected countries[i]
@@ -501,7 +495,7 @@ function insertCalculatedDataIntoTable (query, table, callback) {
       callback(Error(err))
     } else {
       debug('All new data successfully added into table: ', table)
-      Bar.tick(BarBigTick, { info: 'New stats data successfully added' })
+      console.log('New stats data successfully added on ' + table)
       callback()
     }
   })
@@ -551,6 +545,7 @@ function consoleLogTheFinalAverages (countries) {
   for (let i = 0; i < countries.length; i++) {
     const totalCostsStr = !isNaN(countries[i].totalCosts) ? countries[i].totalCosts.toFixed(0) : ''
 
+    // don't touch these white spaces, they are fine tuned for a nice verbose
     console.log('\n' + ('        ' + countries[i].Country).slice(-5) + '  ' +
             ' | ' + ('          ' + totalCostsStr).slice(-9) + ' ' + countries[i].currency +
             ' | ' + ('            ' + countries[i].validUsers).slice(-11) +
