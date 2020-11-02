@@ -15,7 +15,7 @@ const debug = require('debug')('build:compressImages')
 // own module
 const commons = require(path.join(__dirname, '..', 'commons'))
 
-var directories = commons.getDirectories()
+const directories = commons.getDirectories()
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 debug('bin/: ', directories.server.bin)
@@ -23,7 +23,7 @@ debug('bin/: ', directories.server.bin)
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
-var Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
+const Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
 async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
@@ -39,16 +39,16 @@ async.parallel([compressJPG, compressPNG], function (err, results) {
 function compressJPG (callback) {
   debug(('\n## Compressing JPG files \n').mainOptionStep)
 
-  var walker = walk.walk(directories.server.bin)
+  const walker = walk.walk(directories.server.bin)
 
   walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+    const filename = path.join(root, fileStats.name)
 
     if (filename.includes('.jpg')) {
       const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      var params = [filename,
+      const params = [filename,
         '-sampling-factor', '4:2:0',
         '-strip', '-quality', '85',
         '-interlace', 'Plane',
@@ -80,16 +80,16 @@ function compressJPG (callback) {
 function compressPNG (callback) {
   debug(('\n## Compressing PNG files \n').mainOptionStep)
 
-  var walker = walk.walk(directories.server.bin)
+  const walker = walk.walk(directories.server.bin)
 
   walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+    const filename = path.join(root, fileStats.name)
 
     if (filename.includes('.png')) {
       const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      var params = [filename,
+      const params = [filename,
         '-strip',
         filename + '.min']
 
@@ -116,7 +116,7 @@ function compressPNG (callback) {
 }
 
 function getNuberOfTotalFiles () {
-  var numberOfTotalFiles = find.fileSync(/\.jpg$/, directories.server.bin).length
+  let numberOfTotalFiles = find.fileSync(/\.jpg$/, directories.server.bin).length
   numberOfTotalFiles += find.fileSync(/\.png$/, directories.server.bin).length
 
   return numberOfTotalFiles

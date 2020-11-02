@@ -15,14 +15,14 @@ module.exports = {
   closeServer: closeServer
 }
 
-var httpLocalServer
+let httpLocalServer
 
 // starts http server on localhost on test default port
 // arguments: CLI arguments for the node bin/server.js (optional), onStart, onError
 function startsServerForTests () {
   debug('Starting http server...')
 
-  var args, onStart, onError
+  let args, onStart, onError
   if (arguments.length === 3) {
     args = arguments[0]
     onStart = arguments[1]
@@ -57,9 +57,9 @@ function startsServerForTests () {
       console.error(`child stderr:\n${data}`)
     })
 
-    var SERVER_STARTED = false
-    var STATSDATA_COLLECTED = false
-    var isSetDatabase = args.includes('--database')
+    let SERVER_STARTED = false
+    let STATSDATA_COLLECTED = false
+    const isSetDatabase = args.includes('--database')
 
     httpLocalServer.on('message', message => {
       debug('message from child:', message)

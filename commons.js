@@ -1,10 +1,10 @@
 /* Common information that will be used by other scripts and code */
 
 // Default Country when any possible method to get country isn't available
-var defaultCountry = 'UK' // when no other method finds the country of user, use this by default
-var defaultPortProd = 3028 // default HTTP Port where the app listens - prod version
-var defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
-var defaultPortTest = 3026 // default HTTP Port where the app listens - prod version
+const defaultCountry = 'UK' // when no other method finds the country of user, use this by default
+const defaultPortProd = 3028 // default HTTP Port where the app listens - prod version
+const defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
+const defaultPortTest = 3026 // default HTTP Port where the app listens - prod version
 
 module.exports = {
 
@@ -89,10 +89,10 @@ module.exports = {
 /***************************************************************************************************/
 /***************************************************************************************************/
 
-var RELEASE // release, "dev", "test" or "prod"
-var ROOT_DIR // root directory of the project
-var SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER
-var optionDefinitions // for the commandLineArgs
+let RELEASE // release, "dev", "test" or "prod"
+let ROOT_DIR // root directory of the project
+let SWITCHES, DIRECTORIES, SETTINGS, FILENAMES, EVENTEMITTER
+let optionDefinitions // for the commandLineArgs
 
 const path = require('path')
 const fs = require('fs')
@@ -128,12 +128,12 @@ function _init () {
   ]
 
   // populates optionDefinitions of commandLineArgs according to SWITCHES
-  for (var service in SWITCHES) {
+  for (const service in SWITCHES) {
     optionDefinitions.push({ name: service, type: Boolean })
   }
 
   // get set commandLineArgsObject from command line arguments
-  var commandLineArgsObject
+  let commandLineArgsObject
   try {
     commandLineArgsObject = commandLineArgs(optionDefinitions)
     // this "commandLineArgsObject" is just filled with the options that were inserted in the command line
@@ -166,7 +166,7 @@ function _init () {
   }
 
   // set HTTP port
-  var HTTPport
+  let HTTPport
   if (commandLineArgsObject.port) {
     HTTPport = commandLineArgsObject.port
   } else {
@@ -248,7 +248,7 @@ function _init () {
   checkForInternet()
 
   // reads data from JSON file with credentials for each service (in directory credentials/)
-  var credentialsFileName
+  let credentialsFileName
   if (RELEASE === 'prod') {
     credentialsFileName = FILENAMES.server.credentialsFullPath.prod
   } else if (RELEASE === 'dev') {
@@ -263,23 +263,23 @@ function _init () {
 
   // fills missing information, for each service corresponding property: "url", "token", "secretKey", etc.
   // gets the information from the credentials JSON file
-  for (service in SETTINGS) {
-    var serviceObj = SETTINGS[service]
+  for (const service in SETTINGS) {
+    const serviceObj = SETTINGS[service]
     if (serviceObj.enabled) {
       if (!fs.existsSync(credentialsFileName)) {
         throw getNoServiceErrMsg(serviceObj, credentialsFileName)
       }
-      var credentialsData = JSON.parse(fs.readFileSync(credentialsFileName))
+      const credentialsData = JSON.parse(fs.readFileSync(credentialsFileName))
 
       if (serviceObj.propType === 'string') {
-        var dataStr = credentialsData[serviceObj.name][serviceObj.propName]
+        const dataStr = credentialsData[serviceObj.name][serviceObj.propName]
         // check if string is valid (no just whitespaces or asterisks)
         if (!isValidCredentialString(dataStr)) {
           throw getNoServiceErrMsg(serviceObj, credentialsFileName)
         }
         serviceObj[serviceObj.propName] = dataStr
       } else if (serviceObj.propType === 'object') { // if service data is an object (normally applies to database)
-        var dataObj = credentialsData[serviceObj.name]
+        const dataObj = credentialsData[serviceObj.name]
         if (!isValidCredentialString(dataObj)) {
           throw getNoServiceErrMsg(serviceObj, credentialsFileName)
         }
@@ -314,21 +314,21 @@ function setDIRECTORIES () {
     namely see: docs/nodeJS-directory-structure.md */
 
   // Source directory - the directory where the source code is stored
-  var srcDir = path.join(ROOT_DIR, 'src')
+  const srcDir = path.join(ROOT_DIR, 'src')
 
   // Bin directory - the directory to where the source code is deployed after running the bash script ./build.sh
-  var binDir = path.join(ROOT_DIR, 'bin')
+  const binDir = path.join(ROOT_DIR, 'bin')
 
   // Build directory - the directory to where the building scripts are stored
-  var buildDir = path.join(ROOT_DIR, 'build')
+  const buildDir = path.join(ROOT_DIR, 'build')
 
   // directory where test scripts and files are stored
-  var testDir = path.join(ROOT_DIR, 'test')
+  const testDir = path.join(ROOT_DIR, 'test')
 
   // credentials directory where json credential files are stored for each service
-  var credentialsDir = path.join(ROOT_DIR, 'credentials')
+  const credentialsDir = path.join(ROOT_DIR, 'credentials')
 
-  var serverDirs = {
+  const serverDirs = {
     root: ROOT_DIR,
     src: srcDir,
     bin: binDir,
@@ -340,7 +340,7 @@ function setDIRECTORIES () {
   /* ################################# */
 
   // these paths are relative, and they refer to the paths which are seen by the browser
-  var clientDirs = {
+  const clientDirs = {
     client: 'client', // directory with respect to src/ dir, where the client JS browser files will be stored
     css: 'css', // directory with respect to src/ dir, where the CSS  files will be stored
     tables: 'tables' // where the JPG tables with car costs for each country
@@ -350,7 +350,7 @@ function setDIRECTORIES () {
 
   // these paths are relative and refer to the project's code parent folder,
   // i.e., the parent directory of these paths is either src/ or bin/
-  var projectDirs = {
+  const projectDirs = {
     countries: 'countries',
     css: 'css',
     tables: 'tables',
@@ -361,10 +361,10 @@ function setDIRECTORIES () {
     server: 'server'
   }
 
-  var srcProjectDirs = {}
-  var binProjectDirs = {}
+  const srcProjectDirs = {}
+  const binProjectDirs = {}
 
-  for (var prop in projectDirs) {
+  for (const prop in projectDirs) {
     srcProjectDirs[prop] = path.join(srcDir, projectDirs[prop])
     binProjectDirs[prop] = path.join(binDir, projectDirs[prop])
   }
@@ -389,8 +389,8 @@ function setFILENAMES () {
   }
 
   // for release "prod" and "test" use /bin directories
-  var countriesDir = RELEASE === 'dev' ? DIRECTORIES.src.countries : DIRECTORIES.bin.countries
-  var clientDir = RELEASE === 'dev' ? DIRECTORIES.src.client : DIRECTORIES.bin.client
+  const countriesDir = RELEASE === 'dev' ? DIRECTORIES.src.countries : DIRECTORIES.bin.countries
+  const clientDir = RELEASE === 'dev' ? DIRECTORIES.src.client : DIRECTORIES.bin.client
 
   // Default file names for JSON files with credentials for each external service
   FILENAMES = {
@@ -452,7 +452,7 @@ function setFILENAMES () {
 // get parent directory of project directory tree
 // tries to get according to engine, NodeJS or PhantomJS
 function setROOT_DIR () { // eslint-disable-line camelcase
-  var rootDir
+  let rootDir
 
   if ((typeof process !== 'undefined') &&
         (process.release.name.search(/node|io.js/) !== -1)) { // node
@@ -478,7 +478,7 @@ function setROOT_DIR () { // eslint-disable-line camelcase
 // true for CDN; false for Local files
 function setCdnOrLocalFiles (isCDN) {
   for (const key in FILENAMES.client) {
-    var obj = FILENAMES.client[key]
+    const obj = FILENAMES.client[key]
     // it is a client filename with different values for cdn and local
     if (obj.local && obj.cdn) {
       obj.uri = isCDN ? obj.cdn : obj.local
@@ -494,9 +494,9 @@ function setCdnOrLocalFiles (isCDN) {
 // are selected. These options require Internet and thus enables/disables them according to Internet connection
 function checkForInternet () {
   // bin/server.js services demanding Internet
-  var servicesDemandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
+  const servicesDemandingInternet = ['uber', 'cdn', 'social', 'database', 'googleCaptcha', 'googleAnalytics']
 
-  var activatedServiceDemandingInternet = []
+  const activatedServiceDemandingInternet = []
   for (let i = 0; i < servicesDemandingInternet.length; i++) {
     if (SWITCHES[servicesDemandingInternet[i]]) {
       activatedServiceDemandingInternet.push(servicesDemandingInternet[i])
@@ -514,7 +514,7 @@ function checkForInternet () {
   debugInternet('Activated services requiring Internet:', activatedServiceDemandingInternet)
 
   // check for Internet connection every 3 seconds and updates if status changes
-  var internetStatus = 'offline'
+  let internetStatus = 'offline'
   const checkInternetConnection = () => {
     isOnline({ timeout: 3000 }).then(function (online) {
       debugInternet(online ? 'online' : 'offline')
@@ -574,8 +574,8 @@ function getCountriesObj () {
     setFILENAMES()
   }
 
-  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
-  var availableCountries = countriesInfo.availableCountries
+  const countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
+  const availableCountries = countriesInfo.availableCountries
   return availableCountries
 }
 
@@ -584,8 +584,8 @@ function getNumberOfCountries () {
     setFILENAMES()
   }
 
-  var countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
-  var numberOfCountries = Object.keys(countriesInfo.availableCountries).length
+  const countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
+  const numberOfCountries = Object.keys(countriesInfo.availableCountries).length
   return numberOfCountries
 }
 
@@ -616,7 +616,7 @@ function downloadGoogleAnalyticsJSFIle () {
 // gets Array with unique non-repeated values
 // ex: [2,2,3,4,4] returns [2,3,4]
 function getUniqueArray (Arr) {
-  var newArr = (Object.values(Arr))
+  const newArr = (Object.values(Arr))
     .filter(function (x, i, a) {
       return a.indexOf(x) === i
     })
@@ -626,7 +626,7 @@ function getUniqueArray (Arr) {
 
 // get Key by Value, ex: var hash = {foo: 1, bar: 2}; getKeyByValue(hash, 2); => 'bar'
 function getKeyByValue (object, value) {
-  var key = Object.keys(object)
+  const key = Object.keys(object)
     .find(function (key) {
       return object[key] === value
     })
@@ -637,7 +637,7 @@ function getKeyByValue (object, value) {
 // from the countries Object "available_CT" get a string of CC separated by commas
 // for example: "PT, BR, US, UK, etc."
 function getCClistOnStr (availableCT) {
-  var str = ''
+  let str = ''
   for (const CC in availableCT) {
     str += CC + ', '
   }
@@ -647,12 +647,12 @@ function getCClistOnStr (availableCT) {
 }
 
 function getArgvHelpMsg () {
-  var filename = path.basename(process.mainModule.filename)
+  const filename = path.basename(process.mainModule.filename)
 
   // credentials Directory seen from Root directory
-  var credDirRelativePath = path.relative(DIRECTORIES.server.root, DIRECTORIES.server.credentials)
+  const credDirRelativePath = path.relative(DIRECTORIES.server.root, DIRECTORIES.server.credentials)
 
-  var messg = '\n\n' +
+  const messg = '\n\n' +
         'Usage: node ' + filename + ' [options]\n' +
         'Ex:    node ' + filename + ' -r prod --uber --database\n' +
         '\n' +
@@ -678,7 +678,7 @@ function getArgvHelpMsg () {
 }
 
 function getNoServiceErrMsg (serviceObj, fileName) {
-  var messg = '\nConsidering you enabled the ' + serviceObj.name +
+  const messg = '\nConsidering you enabled the ' + serviceObj.name +
     " services and you're using the release '" + RELEASE + "', " +
     'you have to either:\n' +
     '  - insert within the file ' + colors.green.bold(path.relative(ROOT_DIR, fileName)) + ' a valid ' +
@@ -689,7 +689,7 @@ function getNoServiceErrMsg (serviceObj, fileName) {
 }
 
 function getDataBaseErrMsg (scriptFullPath, serviceObj) {
-  var messg = '\nThis building script ' + path.relative(ROOT_DIR, scriptFullPath) +
+  const messg = '\nThis building script ' + path.relative(ROOT_DIR, scriptFullPath) +
     ' needs the Database credentials to run, therefore:\n' +
     '- enable the Database option (--database) and provide also its credentials on ' +
     path.relative(ROOT_DIR, FILENAMES.server.credentialsFullPath[RELEASE]) + ', or\n' +
@@ -699,7 +699,7 @@ function getDataBaseErrMsg (scriptFullPath, serviceObj) {
 }
 
 function getConsoleColors () {
-  var colorsTheme = {
+  const colorsTheme = {
     mainOption: ['yellow', 'bold'],
     mainOptionStep: ['blue', 'bold'],
     silly: 'rainbow',
@@ -725,9 +725,9 @@ function getUrlsObject (countriesInfo) {
     countriesInfo = JSON.parse(fs.readFileSync(FILENAMES.project.countriesInfoFile, 'utf8'))
   }
 
-  var domainsCountries = countriesInfo.domainsCountries
+  const domainsCountries = countriesInfo.domainsCountries
 
-  var domainsObj = {}
+  const domainsObj = {}
   domainsObj.__url_selector = 'https://github.com/jfoclpf/autocosts/wiki/URL-selector'
   domainsObj.__domainName_policy = 'https://github.com/jfoclpf/autocosts/wiki/Domain-name-policy'
 
@@ -738,16 +738,16 @@ function getUrlsObject (countriesInfo) {
 
   // for every domain, count how many domain names
   // ex: 'autocustos.pt': 1, 'autocosts.info': 19
-  var countsOfCanonicalHostname = {}
-  var arr = Object.values(domainsCountries)
-  for (var i = 0; i < arr.length; i++) {
+  const countsOfCanonicalHostname = {}
+  const arr = Object.values(domainsCountries)
+  for (let i = 0; i < arr.length; i++) {
     countsOfCanonicalHostname[arr[i]] = 1 + (countsOfCanonicalHostname[arr[i]] || 0)
   }
   domainsObj.countsOfCanonicalHostname = countsOfCanonicalHostname
 
   // object with the url path after host/domain '/ar' for AR or '' for PT
   // because the url for PT is merely autocustos.pt without path
-  var canonicalPathname = {}
+  const canonicalPathname = {}
   for (const CC in domainsCountries) {
     // check if domain is a ccTLD, ex: autocustos.pt is and autocustos.info is not
     const uppperExtension = domainsCountries[CC].split('.').pop().toUpperCase() // 'PT' in autocustos.pt
@@ -759,7 +759,7 @@ function getUrlsObject (countriesInfo) {
   }
   domainsObj.canonicalPathname = canonicalPathname
 
-  var canonicalStatsUrl = {}
+  const canonicalStatsUrl = {}
   for (const CC in domainsCountries) { // PT: autocustos.pt, CA: autocosts.info, etc.
     canonicalStatsUrl[CC] = domainsCountries[CC] + canonicalPathname[CC] + '/stats'
   }
@@ -775,7 +775,7 @@ function isEmptyOrInvalidObj (obj) {
 
 // detects whether an Object is empty
 function isEmpty (obj) {
-  for (var prop in obj) {
+  for (const prop in obj) {
     if (obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
       return false
     }
@@ -790,9 +790,9 @@ function isValidCredentialString (data) {
     // check if string is valid (no just whitespaces or asterisks)
     return data && data.replace(/(\s|\*)/g, '').length
   } else if (typeof data === 'object') {
-    var flattenedObj = flat.flatten(data)
-    for (var key in flattenedObj) {
-      var str = flattenedObj[key]
+    const flattenedObj = flat.flatten(data)
+    for (const key in flattenedObj) {
+      const str = flattenedObj[key]
       // first character. When property of obj starts with '_' it's comment, thus ignore
       if (key.charAt(0) !== '_') {
         if (!str || !str.replace(/(\s|\*)/g, '').length) {
@@ -808,7 +808,7 @@ function isValidCredentialString (data) {
 
 // extract hostname/domain from url
 function extractHostname (url) {
-  var hostname
+  let hostname
   // find & remove protocol (http, ftp, etc.) and get hostname
 
   if (url.indexOf('://') > -1) {
@@ -843,7 +843,7 @@ function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
 }
 
 function getProgressBar (totalNumberOfTicks, muted) {
-  var Bar
+  let Bar
   if (!muted) {
     const ProgressBar = require('progress')
     Bar = new ProgressBar('[:bar] :percent :info', { total: totalNumberOfTicks, width: 80 })

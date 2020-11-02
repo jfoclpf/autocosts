@@ -17,10 +17,10 @@ const debug = require('debug')('build:setCountrySpecsDB')
 const commons = require(path.join(__dirname, '..', 'commons'))
 
 // database variables
-var db, DB_INFO
+let db, DB_INFO
 
 // Object
-var availableCountries
+let availableCountries
 
 commons.init()
 // Main directories got from commons
@@ -29,7 +29,7 @@ const settings = commons.getSettings()
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
-var Bar = commons.getProgressBar(commons.getNumberOfCountries() + 5, debug.enabled)
+const Bar = commons.getProgressBar(commons.getNumberOfCountries() + 5, debug.enabled)
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -50,7 +50,7 @@ isOnline().then(function (online) {
 
   // getting country information from
   debug('\nGet Countries info from: ' + fileNames.project.countriesInfoFile)
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
+  const countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries
 
   // sorts array of countries
@@ -97,7 +97,7 @@ function createTable (next) {
   debug('Creating table if nonexistent: ' + DB_INFO.database + '->' + DB_INFO.db_tables.country_specs.mainOption +
                     ' ' + 'before populating it with country specs')
 
-  var queryCreate = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.country_specs +
+  const queryCreate = 'CREATE TABLE IF NOT EXISTS ' + DB_INFO.db_tables.country_specs +
       ' ( ' +
         'Country VARCHAR(2), ' +
         'currency VARCHAR(3), ' +
@@ -121,9 +121,9 @@ function createTable (next) {
 function createTableKey (next) {
   debug('Creating table keys')
 
-  var querySetKey = 'CREATE UNIQUE INDEX `Country` ON ' + DB_INFO.db_tables.country_specs + '(`Country`);'
+  const querySetKey = 'CREATE UNIQUE INDEX `Country` ON ' + DB_INFO.db_tables.country_specs + '(`Country`);'
 
-  var dbQuery = querySetKey
+  const dbQuery = querySetKey
   db.query(dbQuery, function (err, results, fields) {
     if (err) {
       debug('Keys were already present')
@@ -137,7 +137,7 @@ function createTableKey (next) {
 
 // main function of async.series([dbConnects, createTable, createTableKey, populatesTable, dbEnd])
 function populatesTable (next) {
-  var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
+  const countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
   async.each(countryCodesArray, queryForCC, function (err, results) {
     if (err) {
@@ -157,9 +157,9 @@ function populatesTable (next) {
 }
 
 function queryForCC (CC, callback) {
-  var WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
+  const WORDS = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
 
-  var queryCC = 'REPLACE INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
+  const queryCC = 'REPLACE INTO ' + DB_INFO.db_tables.country_specs + ' ( ' +
     'Country, ' +
     'currency, ' +
     'distance_std, ' +

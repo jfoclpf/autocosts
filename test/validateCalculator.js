@@ -25,10 +25,10 @@ validateData.initialize()
 calculator.initialize()
 
 // file which is zip compressed on the repo, and it's used for testing the core calculator
-var userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
-var userInsertionsFile = path.join(__dirname, 'users_insertions.json')
+const userInsertionsZipFile = path.join(__dirname, 'users_insertions.json.zip')
+const userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 
-var countrySpecs = {}
+const countrySpecs = {}
 
 console.log('Testing core calculator function with thousands of inputs...')
 debug('Inserting thousands of user inputs from ' +
@@ -38,7 +38,7 @@ debug('Inserting thousands of user inputs from ' +
 async.series([
   // read country_specs info from file
   function (callback) {
-    var _countrySpecs = JSON.parse(
+    const _countrySpecs = JSON.parse(
       fs.readFileSync(path.join(__dirname, 'country_specs.json'), 'utf8'),
       commons.parseJsonProperty)
 
@@ -68,10 +68,10 @@ async.series([
         return
       }
 
-      var usersInput = JSON.parse(data, commons.parseJsonProperty)
-      var numberofInputs = usersInput.length
+      const usersInput = JSON.parse(data, commons.parseJsonProperty)
+      const numberofInputs = usersInput.length
 
-      var Bar = new ProgressBar('[:bar] :percent',
+      const Bar = new ProgressBar('[:bar] :percent',
         { total: numberofInputs, width: 80 }
       )
 

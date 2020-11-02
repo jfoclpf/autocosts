@@ -12,7 +12,7 @@ validateData.initialize()
 calculator.initialize()
 
 // statistics outlier removal constants
-var statsConstants = {
+const statsConstants = {
   MIN_TIME_TO_FILL_FORM: 90, // minimum time to fill form shall be 90 seconds, before which is considered spam-bot
 
   // speed
@@ -63,19 +63,19 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
 // userIds.length is smaller than countryData.length, because some users fill in more than one time
 
   // object to be output as result
-  var averageCalculatedData
-  var numberOfUsers = userIds.length
+  let averageCalculatedData
+  const numberOfUsers = userIds.length
 
   if (numberOfUsers !== 0 && countryData.length !== 0) {
     // array with unique users, having one element per different user
-    var temp_i = [] // eslint-disable-line camelcase
+    const temp_i = [] // eslint-disable-line camelcase
     // array having the several inputs from the same user
-    var temp_j = [] // eslint-disable-line camelcase
+    let temp_j = [] // eslint-disable-line camelcase
 
-    var Bar = commons.getProgressBar(numberOfUsers)
-    for (var i = 0; i < numberOfUsers; i++) {
+    const Bar = commons.getProgressBar(numberOfUsers)
+    for (let i = 0; i < numberOfUsers; i++) {
       Bar.tick(1, { info: `${countryInfo.code} ${i + 1}/${numberOfUsers}` })
-      for (var j = 0, n = 0; j < countryData.length; j++) {
+      for (let j = 0, n = 0; j < countryData.length; j++) {
         if (countryData[j].uuid_client && (countryData[j].uuid_client === userIds[i].uuid_client)) {
           // checks if the entry is ok
           // and if it is an input spam/bot
@@ -138,9 +138,9 @@ function calculateStatisticsForADefinedCountry (userIds, countryData, countryInf
 // https://github.com/jfoclpf/autocosts/wiki/Calculate-Costs-core-function#output
 // this function should be able to feed itself, that is, the returned object must be valid as a function parameter
 function getAverageCosts (calculatedDataArray) {
-  var i, key, financialEffortCounter, drivingDistanceCounter, timeSpentInDrivingCounter
+  let i, key, financialEffortCounter, drivingDistanceCounter, timeSpentInDrivingCounter
 
-  var length = calculatedDataArray.length
+  const length = calculatedDataArray.length
 
   if (length <= 0) {
     return null
@@ -148,7 +148,7 @@ function getAverageCosts (calculatedDataArray) {
   // from here length must be >=1
 
   // object to be returned by this function
-  var averageCalculatedData = calculator.CreateCalculatedDataObj()
+  const averageCalculatedData = calculator.CreateCalculatedDataObj()
 
   // If the length is greater than 1, finds the average of variables whose function is linear, such as Costs
   // Costs are linear functions because they are of the type f(x,y,z)=a*x+b*y+c*z, and therefore
@@ -157,7 +157,7 @@ function getAverageCosts (calculatedDataArray) {
   // we just sum all the entries of the array, and divide by the number of items (length of the array)
 
   // the sum of all items, for dividing afterwards by its length, to get the average
-  var calculatedSum = calculator.CreateCalculatedDataObj()
+  const calculatedSum = calculator.CreateCalculatedDataObj()
 
   // initialize cost items to zero, for the sum to be made
   for (key of Object.keys(calculatedSum.costs.perMonth.items)) {
@@ -324,8 +324,8 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
     return false
   }
 
-  var monthlyCosts = calculatedData.costs.perMonth.items
-  var currency = userData.currency
+  const monthlyCosts = calculatedData.costs.perMonth.items
+  const currency = userData.currency
 
   for (const monthlyItem in monthlyCosts) {
     if (!isFinite(monthlyCosts[monthlyItem])) {
@@ -361,7 +361,7 @@ function isCalculatedDataOk (calculatedData, userData, fx) {
 
   // distance per month
   if (calculatedData.driving_distance_calculated) {
-    var distancePerMonthKm = conversions.convertDistanceToKm(
+    const distancePerMonthKm = conversions.convertDistanceToKm(
       calculatedData.distance_per_month,
       calculatedData.drivingDistance.standardUnit)
     if (distancePerMonthKm > statsConstants.MAX_KM_DRIVEN_PER_MONTH) {

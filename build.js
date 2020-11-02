@@ -13,7 +13,7 @@ const commons = require(path.join(__dirname, 'commons'))
 // basic command line settings
 // the order is important, since when several options are present, the order is mantained
 // Therefore keep this order
-var optionDefinitions = [
+const optionDefinitions = [
   /* With these options it may run just locally */
   { name: 'copy', alias: 'c', type: Boolean },
   { name: 'compressImgs', alias: 'i', type: Boolean },
@@ -31,7 +31,7 @@ var optionDefinitions = [
 ]
 
 // get set options from command line arguments
-var options
+let options
 try {
   options = commandLineArgs(optionDefinitions)
   // this "option" object is just filled with the options that were inserted in the command line
@@ -57,7 +57,7 @@ if (options.All) {
   options.genTables = true
 }
 
-var release = options.release
+let release = options.release
 // check that release was correctly chosen
 if (release !== 'dev' && release !== 'prod' && release !== 'test') {
   release = 'dev'
@@ -66,7 +66,7 @@ if (release !== 'dev' && release !== 'prod' && release !== 'test') {
 const debug = require('debug')(release + ':build')
 
 console.log(("Release: '" + release + "'").mainOption)
-var RELEASE = release // set Global variable
+const RELEASE = release // set Global variable
 
 commons.setRelease(RELEASE)
 // these calls must be called after setRelease()
@@ -78,8 +78,8 @@ colors.setTheme(commons.getConsoleColors())
 
 // makes sure the build.js script is called from this own directory
 // (problems regarding the PhantomJS script which messes with relative paths)
-var runDir = process.cwd() // directory from where the script is called
-var diffDir = path.relative(runDir, directories.server.root)
+const runDir = process.cwd() // directory from where the script is called
+const diffDir = path.relative(runDir, directories.server.root)
 if (diffDir !== '' && diffDir !== '.') {
   console.error('You must call this building script from within the directory where this file is located: ' + directories.server.root)
   console.error('Do first ' + ('cd ' + path.relative(runDir, directories.server.root)).blue + ' and then call this script again.')
@@ -156,10 +156,10 @@ function copy () {
 
   console.log('Copying npm packages files to bin/')
 
-  var copiedNpmPackages = []
+  const copiedNpmPackages = []
 
   // copies one file, from an npm package, to the bin directory
-  var copyFile = function (npmPackage, // oficial name of the npm package from which the file is to be copied from
+  const copyFile = function (npmPackage, // oficial name of the npm package from which the file is to be copied from
     fileRelativePath, // file path with respect to the main directory of the npm package (node_modules/<package>/)
     destFilePath) { // file's path to where it is copied, relative to the project bin/ directory
     // trick to get the npm module main directory
@@ -206,9 +206,9 @@ function copy () {
   copyFile('smart-app-banner', path.join('dist', 'smart-app-banner.css'), path.join('css', 'smart-app-banner.css'))
 
   // get array of unique elements
-  var npmPackages = Array.from(new Set(copiedNpmPackages))
+  const npmPackages = Array.from(new Set(copiedNpmPackages))
   process.stdout.write('Copied: '.green)
-  var len = npmPackages.length
+  const len = npmPackages.length
   for (let i = 0; i < len; i++) {
     // prints '[a, b, c]'
     process.stdout.write((i === 0 ? '[' : '') + npmPackages[i] + (i !== len - 1 ? ', ' : ']'))
@@ -222,31 +222,31 @@ function concatCSSFiles (mainCallback) {
 
   // CSS files to be concatenated,
   // the ones which are needed for initial main page loading
-  var files1Arr = [
+  const files1Arr = [
     'style.css', 'responsive.css', 'fonts.css'
   ]
   // name given to the merged file
-  var files1MergedName = 'mergedInit.css'
+  const files1MergedName = 'mergedInit.css'
 
   // CSS files to be concatenated,
   // the ones which are deferred from initial loading
   // loaded through JS on client/main.js
-  var files2Arr = [
+  const files2Arr = [
     'colors.css', 'results.css', 'smart-app-banner.css'
   ]
   // name given to the merged file
-  var files2MergedName = 'mergedDeferred.css'
+  const files2MergedName = 'mergedDeferred.css'
 
   /*************************************************************/
 
-  var CSS_DIR = directories.bin.css
+  const CSS_DIR = directories.bin.css
 
   // joins the CSS dir
-  var files1ArrFullPath = []
+  const files1ArrFullPath = []
   for (let i = 0; i < files1Arr.length; i++) {
     files1ArrFullPath[i] = path.join(CSS_DIR, files1Arr[i])
   }
-  var files2ArrFullPath = []
+  const files2ArrFullPath = []
   for (let i = 0; i < files2Arr.length; i++) {
     files2ArrFullPath[i] = path.join(CSS_DIR, files2Arr[i])
   }
@@ -337,9 +337,9 @@ function genTables () {
 }
 
 function getArgvHelpMsg () {
-  var filename = path.basename(process.mainModule.filename)
+  const filename = path.basename(process.mainModule.filename)
 
-  var messg = '\n' +
+  const messg = '\n' +
                 'Example: \n' +
                 'node ' + filename + ' -cim \n' +
                 'node ' + filename + ' -A -r prod \n' +

@@ -13,7 +13,7 @@ const debug = require('debug')('build:getAvgFromDB')
 const commons = require(path.join(__dirname, '..', 'commons'))
 const release = commons.getRelease()
 const USE_MONEY_API = release !== 'test'
-var fx = USE_MONEY_API ? require('money') : null // currency conversion API; needs to be "var" because it will change
+const fx = USE_MONEY_API ? require('money') : null // currency conversion API; needs to be "var" because it will change
 
 commons.init()
 
@@ -27,11 +27,11 @@ console.log('Running script ' + path.relative(directories.server.root, __filenam
 const statsFunctions = require(fileNames.build.statsFunctions)
 const calculator = require(fileNames.project['calculator.js'])
 
-var db // database Connection Object
+let db // database Connection Object
 const DB_INFO = settings.database.credentials
 
 // Average Costs table database template
-var AVG_DB_TEMPLATE, DB_TABLE_KEY
+let AVG_DB_TEMPLATE, DB_TABLE_KEY
 
 console.log('Updating statistics database...')
 
@@ -82,15 +82,13 @@ isOnline().then(function (online) {
     throw commons.getDataBaseErrMsg(__filename, settings.database)
   }
 
-  var countries = [] // array of objects with countries information
-  var uniqueUsers = [] // array of objects having uniqueUsers IDs and respective countries
-  var AllUserInputDb = [] // array of objects with all the data from the inputs users database
-  var queryInsert // SQL string to where all the average costs will be inserted
+  const countries = [] // array of objects with countries information
+  const uniqueUsers = [] // array of objects having uniqueUsers IDs and respective countries
+  let AllUserInputDb = [] // array of objects with all the data from the inputs users database
+  let queryInsert // SQL string to where all the average costs will be inserted
 
-  if (USE_MONEY_API) {
-    // SQL query to where all the average Normalized (in EUR) Costs will be inserted
-    var queryInsertNorm
-  }
+  // SQL query to where all the average Normalized (in EUR) Costs will be inserted
+  let queryInsertNorm // used if USE_MONEY_API === true
 
   // method that forces several methods to run synchronously
   async.series([
@@ -163,7 +161,7 @@ isOnline().then(function (online) {
           next(Error(err))
         } else {
           // copy info to global array countries
-          for (var i = 0; i < results.length; i++) {
+          for (let i = 0; i < results.length; i++) {
             if (results[i].Country) {
               countries.push(results[i])
             }
@@ -189,7 +187,7 @@ isOnline().then(function (online) {
           } else {
             // copy info to global array uniqueUsers
             // array of objects having uniqueUsers IDs and respective countries
-            for (var i = 0; i < results.length; i++) {
+            for (let i = 0; i < results.length; i++) {
               uniqueUsers.push(results[i])
             }
             debug(uniqueUsers)
@@ -212,7 +210,7 @@ isOnline().then(function (online) {
         } else {
           // copy results to global array
           AllUserInputDb = []
-          for (var i = 0; i < results.length; i++) {
+          for (let i = 0; i < results.length; i++) {
             AllUserInputDb.push(results[i])
           }
           debug(AllUserInputDb)
@@ -225,9 +223,9 @@ isOnline().then(function (online) {
     /* ========================================================================= */
     // Calculates statistical average costs for each country and builds SQL query
     function (next) {
-      var numberOfCountries = countries.length
-      var numberOfUniqueUsers = uniqueUsers.length
-      var numberOfTotalUserInputs = AllUserInputDb.length
+      const numberOfCountries = countries.length
+      const numberOfUniqueUsers = uniqueUsers.length
+      const numberOfTotalUserInputs = AllUserInputDb.length
 
       // queries header
       queryInsert = getInsertDataQueryHeader('monthly_costs_statistics')
@@ -360,7 +358,7 @@ isOnline().then(function (online) {
 
 // for each country, get the header of the insert data query
 function getInsertDataQueryHeader (tableParameter) {
-  var table
+  let table
 
   if (tableParameter === 'monthly_costs_statistics') {
     table = DB_INFO.db_tables.monthly_costs_statistics
@@ -370,10 +368,10 @@ function getInsertDataQueryHeader (tableParameter) {
     throw Error('wrong table' + tableParameter)
   }
 
-  var query = 'REPLACE INTO ' + table + ' '
+  let query = 'REPLACE INTO ' + table + ' '
 
   // builds sql query Header based on database table template
-  var queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false) // false removes quotes from strings
+  const queriesHeader = sqlStringFromArray(Object.keys(AVG_DB_TEMPLATE), false) // false removes quotes from strings
   debug(queriesHeader)
 
   query += queriesHeader + 'VALUES '
@@ -386,23 +384,20 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
     throw Error('wrong table' + tableParameter)
   }
 
-  // mysql query string to be returned
-  var query
-
-  var countryCode = country.Country
-  var currency = country.currency
+  const countryCode = country.Country
+  const currency = country.currency
 
   // string with current date DD/MM/YYYY
-  var date = new Date()
-  var dateString = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString()
+  const date = new Date()
+  const dateString = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString()
 
-  var flattenStatisticsResults = flatten(statisticsResults, { delimiter: '_' })
+  const flattenStatisticsResults = flatten(statisticsResults, { delimiter: '_' })
   delete flattenStatisticsResults.countryCode
   delete flattenStatisticsResults.currency
   delete flattenStatisticsResults.validUsers
 
   // currency conversion to EUR
-  var currencyConversionToEUR = USE_MONEY_API ? fx(1).from('EUR').to(currency) : null
+  const currencyConversionToEUR = USE_MONEY_API ? fx(1).from('EUR').to(currency) : null
 
   // converts all costs to EUR, the costs are in object costs,
   // which after being flattened every property starts with "costs_"
@@ -430,7 +425,7 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
   // concatenate arrays
   queryInsertCountryArray = queryInsertCountryArray.concat(Object.values(flattenStatisticsResults))
 
-  query = sqlStringFromArray(queryInsertCountryArray)
+  const query = sqlStringFromArray(queryInsertCountryArray)
 
   return query
 }
@@ -469,7 +464,7 @@ function createDatabaseTable (table, callback) {
 function createDatabaseTableKey (table, callback) {
   debug('Creating key \'' + DB_TABLE_KEY + '\' on table: ', table)
 
-  var querySetKey = 'CREATE UNIQUE INDEX `' + DB_TABLE_KEY +
+  const querySetKey = 'CREATE UNIQUE INDEX `' + DB_TABLE_KEY +
     '` ON ' + table + '(`' + DB_TABLE_KEY + '`);'
 
   db.query(querySetKey, function (err, results, fields) {
@@ -503,9 +498,9 @@ function insertCalculatedDataIntoTable (query, table, callback) {
 
 // from an array ["a", "b", undefined, true, 3, false] returns string "('a', 'b', NULL, 1, 3, 0)"
 function sqlStringFromArray (inputArray, addQuotesInStringsBool = true) {
-  var str = '('
+  let str = '('
 
-  var length = inputArray.length
+  const length = inputArray.length
   for (let i = 0; i < length; i++) {
     let item = inputArray[i]
     let isStr = typeof item === 'string' && addQuotesInStringsBool
@@ -530,8 +525,8 @@ function consoleLogTheFinalAverages (countries) {
     return parseFloat(b.valid_users) - parseFloat(a.valid_users)
   })
 
-  var totalValidUsers = 0
-  var totalUsers = 0
+  let totalValidUsers = 0
+  let totalUsers = 0
 
   for (let i = 0; i < countries.length; i++) {
     totalValidUsers += countries[i].validUsers
@@ -559,7 +554,7 @@ function consoleLogTheFinalAverages (countries) {
 // adds after a breakline, the correspondig line number
 // from "abc\ndef\nghi" => "1: abc\n 2: def\n 3: ghi"
 function addLinesToStr (str) {
-  var arr = str.split('\n')
+  const arr = str.split('\n')
   for (let i = 0; i < arr.length; i++) {
     arr[i] = (i + 1).toString().padStart(4, ' ') + ':  ' + arr[i] + '\n'
   }

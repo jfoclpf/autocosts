@@ -60,8 +60,8 @@ function checkPagePerformance (callback) {
   function checkResults (results, callback) {
     const audits = results.lhr.audits
 
-    var total = 0
-    var count = 0
+    let total = 0
+    let count = 0
     for (const key in audits) {
       if (audits[key].score) {
         total += audits[key].score

@@ -23,22 +23,22 @@ const commons = require(path.join(__dirname, '..', 'commons'))
 colors.setTheme(commons.getConsoleColors())
 
 // database variables
-var db, DB_INFO
+let db, DB_INFO
 
 // Global objects
-var availableCountries, domainsCountries
+let availableCountries, domainsCountries
 
 commons.init()
 // Main directories got from commons
 const directories = commons.getDirectories()
 const fileNames = commons.getFileNames()
 const rootDir = commons.getROOT_DIR() // eslint-disable-line
-var settings = commons.getSettings()
+const settings = commons.getSettings()
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // progress bar
-var Bar
+let Bar
 
 // checks for internet connection
 isOnline().then(function (online) {
@@ -56,7 +56,7 @@ isOnline().then(function (online) {
 
   // getting country information from
   debug('Get Countries info from: ' + fileNames.project.countriesInfoFile)
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
+  const countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
   availableCountries = countriesInfo.availableCountries // global
   domainsCountries = countriesInfo.domainsCountries
 
@@ -64,7 +64,7 @@ isOnline().then(function (online) {
   availableCountries = sortObj(availableCountries)
   delete availableCountries.XX
 
-  var numberOfCountries = Object.keys(availableCountries).length
+  const numberOfCountries = Object.keys(availableCountries).length
   Bar = commons.getProgressBar((numberOfCountries * 2 + 2) + 1, debug.enabled)
 
   async.series([dbConnect, createTables, dbEnd, rasterTables],
@@ -104,7 +104,7 @@ function createTables (next) {
   Bar.tick({ info: 'Creating html files' })
 
   debug('Creating html tables on ', directories.bin.tables)
-  var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
+  const countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
   // async.each runs tasks in parallel
   async.each(countryCodesArray, createTable, function (err) {
@@ -120,10 +120,10 @@ function createTables (next) {
 
 // creates for each country two html files
 function createTable (CC, callback) {
-  var countryName = availableCountries[CC]
-  var words = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
+  const countryName = availableCountries[CC]
+  const words = JSON.parse(fs.readFileSync(path.join(directories.src.countries, CC + '.json'), 'utf8'))
 
-  var dbQuery = 'SELECT * FROM ' + DB_INFO.db_tables.monthly_costs_statistics + ' WHERE countryCode=\'' + CC + '\''
+  const dbQuery = 'SELECT * FROM ' + DB_INFO.db_tables.monthly_costs_statistics + ' WHERE countryCode=\'' + CC + '\''
   db.query(dbQuery, function (err, results, fields) {
     if (err) {
       const errMsg = 'Error inserting query for ' + CC + '. ' + err.message
@@ -131,27 +131,27 @@ function createTable (CC, callback) {
       return // this MUST be here, see https://caolan.github.io/async/
     }
 
-    var statsData = results[0]
+    const statsData = results[0]
     debug(statsData)
 
-    var fileNameOfTemplate = path.join(directories.src.tables, 'template.hbs')
-    var templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8')
+    const fileNameOfTemplate = path.join(directories.src.tables, 'template.hbs')
+    const templateRawData = fs.readFileSync(fileNameOfTemplate, 'utf8')
 
     // external files to be used by the template; that is, register Partials
-    var partialsDir = path.join(directories.bin.views, 'common', 'svgIcons')
-    var filenames = fs.readdirSync(partialsDir)
+    const partialsDir = path.join(directories.bin.views, 'common', 'svgIcons')
+    const filenames = fs.readdirSync(partialsDir)
     filenames.forEach(function (filename) {
-      var matches = /^([^.]+).hbs$/.exec(filename)
+      const matches = /^([^.]+).hbs$/.exec(filename)
       if (!matches) {
         return
       }
-      var name = matches[1]
-      var template = fs.readFileSync(path.join(partialsDir, filename), 'utf8')
+      const name = matches[1]
+      const template = fs.readFileSync(path.join(partialsDir, filename), 'utf8')
       handlebars.registerPartial(name, template)
     })
 
     // to convert long numbers to decimal, ex: 1.2222222 to "1.2"
-    var toFixed = function (num, n) {
+    const toFixed = function (num, n) {
       if (num && !isNaN(num)) {
         return num.toFixed(n)
       } else {
@@ -160,9 +160,9 @@ function createTable (CC, callback) {
     }
     handlebars.registerHelper('toFixed', toFixed)
 
-    var hbsTemplate = handlebars.compile(templateRawData)
+    const hbsTemplate = handlebars.compile(templateRawData)
 
-    var data = {
+    const data = {
       countryCode: CC,
       countryName: countryName,
       availableCountries: availableCountries,
@@ -172,14 +172,14 @@ function createTable (CC, callback) {
       domain: domainsCountries[CC]
     }
 
-    var dataJpg = Object.assign({}, data) // clone object
+    const dataJpg = Object.assign({}, data) // clone object
 
     // check tables/template.hbs
     dataJpg.isJpgImage = true
 
-    var resultForJpgImage = hbsTemplate(dataJpg)
+    const resultForJpgImage = hbsTemplate(dataJpg)
 
-    var htmlFilePathToRenderInJpg = path.join(directories.bin.tables, CC + 'jpg.htm')
+    const htmlFilePathToRenderInJpg = path.join(directories.bin.tables, CC + 'jpg.htm')
 
     fs.writeFile(htmlFilePathToRenderInJpg, resultForJpgImage, 'utf8', function (err) {
       if (err) {
@@ -214,7 +214,7 @@ function rasterTables (next) {
 
   Bar.tick({ info: 'Rastering tables' })
 
-  var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
+  const countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
 
   async.each(countryCodesArray, rasterTable, function (err, results) {
     if (err) {

@@ -27,12 +27,12 @@ const directories = commons.getDirectories()
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 
 // ['/worldstats', '/list', '/pt', '/us', '/au', etc.]
-var PathnamesToValidateArr = getPathnamesToValidate()
+const PathnamesToValidateArr = getPathnamesToValidate()
 
-var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
+const Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
-var wasAtLeastOnceCheckedByW3C = false
-var W3CServerAtLeastFailedOnce = false
+let wasAtLeastOnceCheckedByW3C = false
+let W3CServerAtLeastFailedOnce = false
 
 async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
@@ -88,13 +88,13 @@ function startsHttpServer (callback) {
 
 // returns ['/worldstats', '/list', '/pt', '/us', '/au', etc.]
 function getPathnamesToValidate () {
-  var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
-  var availableCountries = countriesInfo.availableCountries
+  const countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
+  const availableCountries = countriesInfo.availableCountries
 
-  var countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
-  var numberOfCountries = countryCodesArray.length
+  const countryCodesArray = Object.keys(availableCountries) // ['PT', 'US', 'AU', etc.]
+  const numberOfCountries = countryCodesArray.length
 
-  var pathnames = ['/worldstats', '/list', '/domains']
+  const pathnames = ['/worldstats', '/list', '/domains']
   for (let i = 0; i < numberOfCountries; i++) {
     pathnames.push('/' + countryCodesArray[i].toLowerCase())
   }
@@ -120,7 +120,7 @@ function validateHtmlOnAllPages (next) {
 // pathname is for example '/pt' or '/worldstats'
 // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#url-parts-terminology
 function validatePage (pathname, key, callback) {
-  var url = 'http://localhost:' + settings.HTTPport + pathname
+  const url = 'http://localhost:' + settings.HTTPport + pathname
   request({ uri: url }, function (err, response, body) {
     if (err) {
       callback(Error(err.message + ', error on url: ' + url))
@@ -171,7 +171,7 @@ function validatePage (pathname, key, callback) {
 // adds after a breakline, the correspondig line number
 // from "abc\ndef\nghi" => "1: abc\n 2: def\n 3: ghi"
 function addLinesToStr (str) {
-  var arr = str.split('\n')
+  const arr = str.split('\n')
   for (let i = 0; i < arr.length; i++) {
     arr[i] = (i + 1).toString().padStart(4, ' ') + ':  ' + arr[i] + '\n'
   }

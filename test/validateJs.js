@@ -27,7 +27,7 @@ const DirectoriesToCheckJs = [
   directories.server.test
 ]
 
-var Bar = commons.getProgressBar(getNumberOfTotalProgressBarTicks() + 1, debug.enabled)
+const Bar = commons.getProgressBar(getNumberOfTotalProgressBarTicks() + 1, debug.enabled)
 
 // main script
 async.parallel([
@@ -54,21 +54,21 @@ function (err, results) {
 
 // check JS files for JS syntax errors (jshint) and for StandardJS syntax rules (standardJS)
 function checkJsCodeSyntax (callback) {
-  var directoriesToCheck = DirectoriesToCheckJs
+  const directoriesToCheck = DirectoriesToCheckJs
 
   // just console log the directories to be checked
   debug('Checking .js files syntax with jshint (https://jshint.com/) in the directories: ')
-  var barMessage = 'Checking for js syntax on '
-  var len = directoriesToCheck.length
+  let barMessage = 'Checking for js syntax on '
+  const len = directoriesToCheck.length
   for (let i = 0; i < len; i++) {
     barMessage += path.relative(directories.server.root, directoriesToCheck[i])
     barMessage += i !== len - 1 ? ', ' : '.'
   }
   debug(barMessage)
 
-  var numberOfTotalErrorsOrWanings = 0
+  let numberOfTotalErrorsOrWanings = 0
 
-  var JShintOpt = {
+  const JShintOpt = {
     '-W041': true,
     multistr: true,
     asi: true,
@@ -78,14 +78,14 @@ function checkJsCodeSyntax (callback) {
     esversion: 6
   }
 
-  var walking = function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+  const walking = function (root, fileStats, next) {
+    const filename = path.join(root, fileStats.name)
 
     // gets file extension and avoids exceptions
     if (getFileExtension(filename) === 'js' &&
            !filename.includes('vfs_fonts') &&
            !filename.includes('js_timer.js')) {
-      var code = fs.readFileSync(filename, 'utf-8')
+      const code = fs.readFileSync(filename, 'utf-8')
 
       jshint(code, JShintOpt, {})
 
@@ -105,7 +105,7 @@ function checkJsCodeSyntax (callback) {
 
   async.each(directoriesToCheck,
     function (direcotry, callback) {
-      var walker = walk.walk(direcotry)
+      const walker = walk.walk(direcotry)
       walker.on('file', walking)
       walker.on('end', callback)
     },
@@ -133,28 +133,28 @@ function checkJsCodeSyntax (callback) {
 
 // check JS files for StandardJS syntax rules (standardJS)
 function checkJsCodeStandard (callback) {
-  var directoriesToCheck = DirectoriesToCheckJs
+  const directoriesToCheck = DirectoriesToCheckJs
 
   // just console log the directories to be checked
   debug('Checking for .js files standardJS rules (https://standardjs.com/) in the directories: ')
-  var barMessage = 'Checking for js syntax on '
-  var len = directoriesToCheck.length
+  let barMessage = 'Checking for js syntax on '
+  const len = directoriesToCheck.length
   for (let i = 0; i < len; i++) {
     barMessage += path.relative(directories.server.root, directoriesToCheck[i]).mainOption
     barMessage += i !== len - 1 ? ', ' : '.'
   }
   debug(barMessage)
 
-  var numberOfTotalErrorsOrWanings = 0
+  let numberOfTotalErrorsOrWanings = 0
 
-  var walking = function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+  const walking = function (root, fileStats, next) {
+    const filename = path.join(root, fileStats.name)
 
     // gets file extension and avoids exceptions
     if (getFileExtension(filename) === 'js' &&
            !filename.includes('vfs_fonts') &&
            !filename.includes('js_timer.js')) {
-      var code = fs.readFileSync(filename, 'utf-8')
+      const code = fs.readFileSync(filename, 'utf-8')
 
       standard.lintText(code,
         {
@@ -185,7 +185,7 @@ function checkJsCodeStandard (callback) {
 
   async.each(directoriesToCheck,
     function (directory, callback) {
-      var walker = walk.walk(directory)
+      const walker = walk.walk(directory)
       walker.on('file', walking)
       walker.on('end', callback)
     },
@@ -212,7 +212,7 @@ function checkJsCodeStandard (callback) {
 }
 
 function getNumberOfTotalProgressBarTicks () {
-  var totalNumberOfFiles = 0
+  let totalNumberOfFiles = 0
 
   for (let i = 0; i < DirectoriesToCheckJs.length; i++) {
     // all *.js files except vfs_fonts.js and js_timer.js

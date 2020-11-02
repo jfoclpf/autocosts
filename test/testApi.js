@@ -5,7 +5,7 @@ console.log('\nValidating main API')
 const autocosts = require(path.join('..', 'api'))
 
 // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#userdata-class
-var userDataTest1 = {
+const userDataTest1 = {
   countryCode: 'US',
   currency: 'USD',
 
@@ -170,7 +170,7 @@ var userDataTest1 = {
   }
 }
 
-var userDataTest2 = {
+const userDataTest2 = {
   countryCode: 'US',
   currency: 'USD',
 
@@ -274,8 +274,8 @@ var userDataTest2 = {
 }
 
 try {
-  var results1 = autocosts.calculate(userDataTest1)
-  var results2 = autocosts.calculate(userDataTest2)
+  const results1 = autocosts.calculate(userDataTest1)
+  const results2 = autocosts.calculate(userDataTest2)
   if (results1.costs.perMonth.total && results2.costs.perMonth.total) {
     console.log('Test on API run successfully', '\n')
     process.exit(0)

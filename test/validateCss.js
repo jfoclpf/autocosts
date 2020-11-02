@@ -25,10 +25,10 @@ console.log('Running script ' + path.relative(directories.server.root, __filenam
 console.log('Validating CSS files using W3 css online validator...')
 
 // ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
-var PathnamesToValidateArr = getPathnamesToValidate()
+const PathnamesToValidateArr = getPathnamesToValidate()
 debug(PathnamesToValidateArr)
 
-var Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
+const Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
 async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
   // done after execution of above funcitons
@@ -67,7 +67,7 @@ function startsHttpServer (callback) {
 
 // returns ['/css/colors.css', '/css/fonts.css', '/css/style.css', etc.]
 function getPathnamesToValidate () {
-  var cssFilesArr = find.fileSync(/\.css$/, directories.src.css)
+  const cssFilesArr = find.fileSync(/\.css$/, directories.src.css)
 
   for (let i = 0; i < cssFilesArr.length; i++) {
     cssFilesArr[i] = path.relative(directories.server.src, cssFilesArr[i])
@@ -94,7 +94,7 @@ function validateCssOnAllPaths (next) {
 // pathname is for example '/css/style.css'
 // see https://github.com/jfoclpf/autocosts/blob/master/contributing.md#url-parts-terminology
 function validatePathname (pathname, callback) {
-  var url = 'http://localhost:' + settings.HTTPport + pathname
+  const url = 'http://localhost:' + settings.HTTPport + pathname
   debug(url)
 
   request({ uri: url }, function (err, response, body) {
@@ -146,7 +146,7 @@ function validatePathname (pathname, callback) {
 // adds after a breakline, the correspondig line number
 // from "abc\ndef\nghi" => "1: abc\n 2: def\n 3: ghi"
 function addLinesToStr (str) {
-  var arr = str.split('\n')
+  const arr = str.split('\n')
   for (let i = 0; i < arr.length; i++) {
     arr[i] = (i + 1).toString().padStart(4, ' ') + ':  ' + arr[i] + '\n'
   }

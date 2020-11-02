@@ -3,9 +3,9 @@ which converts table costs HTML files into correspondent table costs jpg images 
 
 /* global phantom */
 
-var fs = require('fs')
-var system = require('system')
-var args = system.args
+const fs = require('fs')
+const system = require('system')
+const args = system.args
 
 /*
   args[1] => the full path of the html file to be rasterized
@@ -29,10 +29,10 @@ if (args[2].split('.').pop() !== 'jpg') {
   phantom.exit(1)
 }
 
-var htmlFileToBeRendered = args[1]
-var jpgRenderedFile = args[2]
+const htmlFileToBeRendered = args[1]
+const jpgRenderedFile = args[2]
 
-var page = require('webpage').create()
+const page = require('webpage').create()
 page.settings.localToRemoteUrlAccessEnabled = true
 
 /* //for debug, triggered when the html file  gets css external files
@@ -48,5 +48,5 @@ page.onLoadFinished = function () {
   phantom.exit()
 }
 
-var content = fs.read(htmlFileToBeRendered)
+const content = fs.read(htmlFileToBeRendered)
 page.content = content
