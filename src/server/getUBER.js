@@ -12,10 +12,10 @@ const url = require(path.join(__dirname, 'url'))
 const debug = require('debug')('app:uber')
 
 module.exports = function (req, res, serverData) {
-  var CC = req.params.cc.toUpperCase()
+  const CC = req.params.cc.toUpperCase()
 
-  var p1 = readCCFileAsync(path.join(serverData.directories.index, serverData.directories.project.countries, CC + '.json'))
-  var p2 = makeUberRequest(req, serverData)
+  const p1 = readCCFileAsync(path.join(serverData.directories.index, serverData.directories.project.countries, CC + '.json'))
+  const p2 = makeUberRequest(req, serverData)
 
   res.set('Content-Type', 'application/json')
 
@@ -30,7 +30,7 @@ module.exports = function (req, res, serverData) {
     const UBERproducts = values[1].products
 
     // creates a new array with UBER products that have the same currency
-    var UBERprod = []; var i
+    const UBERprod = []; let i
     for (i = 0; i < UBERproducts.length; i++) {
       if (UBERproducts[i].price_details.currency_code === currencyCode) {
         UBERprod.push(UBERproducts[i])
@@ -44,8 +44,8 @@ module.exports = function (req, res, serverData) {
     }
     // for every relevant UBER car gets the cheapest
 
-    var minPrice = UBERprod[0].price_details.cost_per_distance
-    var minProduct = UBERprod[0]
+    let minPrice = UBERprod[0].price_details.cost_per_distance
+    let minProduct = UBERprod[0]
     for (i = 0; i < UBERprod.length; i++) {
       if (UBERprod[i].price_details.cost_per_distance < minPrice) {
         minPrice = UBERprod[i].price_details.cost_per_distance
@@ -53,7 +53,7 @@ module.exports = function (req, res, serverData) {
       }
     }
 
-    var objResult = {
+    const objResult = {
       cost_per_distance: minProduct.price_details.cost_per_distance,
       cost_per_minute: minProduct.price_details.cost_per_minute,
       currency_code: minProduct.price_details.currency_code,
@@ -66,8 +66,8 @@ module.exports = function (req, res, serverData) {
 
 /* JShint still doesn't fully support ES7 async await */
 /* jshint ignore:start */
-var readCCFileAsync = async function (path) {
-  var resPromise = function () {
+const readCCFileAsync = async function (path) {
+  const resPromise = function () {
     return new Promise(function (resolve, reject) {
       fs.readFile(path, 'utf8', // async read file
         function (err, data) {
@@ -82,13 +82,13 @@ var readCCFileAsync = async function (path) {
     })
   }
 
-  var result = await resPromise()
+  const result = await resPromise()
 
   return result
 }
 
-var makeUberRequest = async function (req, serverData) {
-  var debugOption // put 0 for PROD; 1 for Lisbon, 2 for London
+const makeUberRequest = async function (req, serverData) {
+  let debugOption // put 0 for PROD; 1 for Lisbon, 2 for London
   if (url.isThisLocalhost(req)) {
     debugOption = 1 + (Math.random() >= 0.5) // random, it gives either 1 or 2
   } else {
@@ -97,7 +97,7 @@ var makeUberRequest = async function (req, serverData) {
   debug('debugOption: ', debugOption)
 
   // geo coordinates
-  var lat, long
+  let lat, long
 
   // debugOption=1;
   if (debugOption === 1) { // Lisbon coordinates
@@ -110,21 +110,21 @@ var makeUberRequest = async function (req, serverData) {
     long = -0.127758
   } else { // PROD or .dev
     // tries to get IP from user
-    var geo = geoIP.lookup(req.ip)
+    const geo = geoIP.lookup(req.ip)
     lat = geo.ll[0]
     long = geo.ll[1]
   }
   debug('lat: ' + lat + '; long: ' + long)
 
   // get uber token
-  var uberToken = serverData.settings.uber.token
+  const uberToken = serverData.settings.uber.token
   debug('uber_token', uberToken)
-  var uberApiUrl = 'https://api.uber.com/v1.2/products?latitude=' +
+  const uberApiUrl = 'https://api.uber.com/v1.2/products?latitude=' +
                         lat + '&longitude=' + long + '&server_token=' + uberToken
   debug('uber_API_url', uberApiUrl)
 
   // HTTP Header request
-  var options = {
+  const options = {
     url: uberApiUrl,
     headers: {
       'Accept-Language': 'en_US',
@@ -133,7 +133,7 @@ var makeUberRequest = async function (req, serverData) {
   }
 
   // make the HTTP request to UBER API
-  var resPromise = function () {
+  const resPromise = function () {
     return new Promise(function (resolve, reject) {
       request(options, function (error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -146,7 +146,7 @@ var makeUberRequest = async function (req, serverData) {
     })
   }
 
-  var result = await resPromise()
+  const result = await resPromise()
   return result
 }
 /* jshint ignore:end */
