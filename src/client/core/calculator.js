@@ -6,6 +6,9 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 // This file is used both by the browser and by node/commonsJS, the latter being called by getAvgFromDB.js
 
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
+
 // check for node.js
 if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}

@@ -1,4 +1,6 @@
 /* globals $ autocosts */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 $(document).ready(function () {
   var globalVariables = document.getElementById('global_variables')

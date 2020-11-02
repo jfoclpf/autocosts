@@ -9,6 +9,8 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* global autocosts, $, ga */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, switches, servicesAvailabilityObj) {
   var convertDataModule, validateDataModule, commonsModule

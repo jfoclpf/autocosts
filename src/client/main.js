@@ -8,7 +8,10 @@
 /* MAIN MODULE */
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 /* This is the first JS file to be loaded, right after jquery, see views/main.hbs */
+
 /* global $, ga */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 var autocosts = (function () {
   var mainVariables = {

@@ -10,6 +10,8 @@
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 /* global autocosts, $ */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.showResultsModule = (function (thisModule, translatedStrings, switches, language, uberApiObj, currentFullUrl) {
   // modules dependencies

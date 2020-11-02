@@ -11,6 +11,8 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* global autocosts, $, ga, grecaptcha */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies

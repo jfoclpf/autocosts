@@ -11,6 +11,8 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* global autocosts, $, Chart */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.showResultsModule = autocosts.showResultsModule || {}
 autocosts.showResultsModule.chartsModule = (function (translatedStrings, switches) {

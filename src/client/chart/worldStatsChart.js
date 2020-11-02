@@ -2,6 +2,8 @@
 // see node file server/worldStats.js
 
 /* globals $, Chart */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 (function () {
   var EURsymbol = '\u20AC'

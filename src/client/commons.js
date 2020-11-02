@@ -8,6 +8,9 @@
 // COMMONS mainly on client/browser/front-end side
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
+
 // check for node
 if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}

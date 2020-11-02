@@ -3,6 +3,8 @@
 // see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules
 
 /* globals autocosts, $, pdfMake, Image */ // eslint-disable-line no-redeclare
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.showResultsModule = autocosts.showResultsModule || {}
 autocosts.showResultsModule.pdfModule = (function (translatedStrings, switches, selectedCountry) {

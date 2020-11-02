@@ -3,6 +3,8 @@
 /* see our module template: https://github.com/jfoclpf/autocosts/blob/master/contributing.md#modules */
 
 /* global autocosts, $, ga */
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 autocosts.initializeModule = (function (thisModule, serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths) {
   var getFilesModule, commonsModule
