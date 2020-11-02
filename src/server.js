@@ -11,7 +11,7 @@ const path = require('path')
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
 const events = require('events')
-var eventEmitter = new events.EventEmitter()
+const eventEmitter = new events.EventEmitter()
 commons.init(eventEmitter)
 
 const express = require('express')
@@ -36,14 +36,14 @@ const preprocess = require(path.join(__dirname, 'server', 'preprocess'))
 
 const release = commons.getRelease() // release shall be 'dev', 'test' or 'prod', it's 'dev' by default
 
-var directories = commons.getDirectories()
+let directories = commons.getDirectories()
 directories.index = __dirname // directory where this script server.js is located
-var fileNames = commons.getFileNames()
-var settings = commons.getSettings()
+let fileNames = commons.getFileNames()
+let settings = commons.getSettings()
 
 // fixed unchangeable global data which is constant for all HTTP requests independently of the country
-var countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
-var serverData = {
+const countriesInfo = JSON.parse(fs.readFileSync(fileNames.project.countriesInfoFile, 'utf8'))
+const serverData = {
   release: release, // Release: "dev" or "prod"
   settings: settings, // Settings set in commons.js
   directories: directories, // {ROOT_DIR, SRC_DIR, BIN_DIR, COUNTRIES_DIR, COUNTRY_LIST_FILE, TABLES_DIR}
@@ -57,8 +57,8 @@ var serverData = {
 }
 debug(util.inspect(serverData, { showHidden: false, depth: null }))
 
-var SWITCHES = settings.switches // Global switches with the available services; for more information see commons.js
-var WORDS = {} // Object of Objects with all the words for each country
+let SWITCHES = settings.switches // Global switches with the available services; for more information see commons.js
+const WORDS = {} // Object of Objects with all the words for each country
 
 // processes and builds data (WORDS) here on server side, for fast delivery
 preprocess(serverData, WORDS, eventEmitter)
@@ -86,12 +86,12 @@ eventEmitter.on('onlineStatus', function (isOnline) {
 
 console.log('\n\nRunning script at ', __dirname)
 
-var app = express()
+const app = express()
 app.enable('case sensitive routing')
 app.enable('trust proxy')
 
 // rendering engine for dynamically loaded HTML/JS files
-var hbs = exphbs.create({
+const hbs = exphbs.create({
   extname: '.hbs',
   partialsDir: [
     path.join(__dirname, 'views', 'common'),
@@ -214,7 +214,7 @@ if (SWITCHES.database) {
 
     const ccParams = req.params.cc
     const ccHost = url.isDomainAccTLD(req.get('host'))
-    var cc
+    let cc
 
     if (!ccParams && ccHost) { // for example autocustos.pt/stats
       cc = ccHost
@@ -238,7 +238,7 @@ if (SWITCHES.database) {
   app.get(['/:cc/stats.jpg', '/stats.jpg'], function (req, res, next) {
     const ccParams = req.params.cc
     const ccHost = url.isDomainAccTLD(req.get('host'))
-    var cc
+    let cc
 
     if (!ccParams && ccHost) { // for example autocustos.pt/stats
       cc = ccHost

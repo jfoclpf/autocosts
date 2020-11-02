@@ -5,27 +5,27 @@ const request = require('request')
 const debug = require('debug')('app:captchaValidate')
 
 module.exports = function (req, res, serverData) {
-  var captchaResponse = req.body['g-recaptcha-response']
+  const captchaResponse = req.body['g-recaptcha-response']
   if (!captchaResponse) {
     res.send('not-ok-1')
     return
   }
 
   // get IP from user
-  var ip = req.headers['x-forwarded-for'].split(',').pop() ||
+  const ip = req.headers['x-forwarded-for'].split(',').pop() ||
              req.connection.remoteAddress ||
              req.socket.remoteAddress ||
              req.connection.socket.remoteAddress
 
-  var secretKey = serverData.settings.googleCaptcha.secretKey
+  const secretKey = serverData.settings.googleCaptcha.secretKey
 
   // loads the Google info with corresponding response
   // @ forces the ignoring of warnings in case the info is not loaded
-  var ApiUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' +
+  const ApiUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' +
         secretKey + '&response=' + captchaResponse + '&remoteip=' + ip
 
   // HTTP Header request
-  var options = {
+  const options = {
     url: ApiUrl,
     headers: {
       'Content-Type': 'application/json; charset=utf-8'
@@ -34,7 +34,7 @@ module.exports = function (req, res, serverData) {
 
   request(options, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      var responseKeys = JSON.parse(body)
+      const responseKeys = JSON.parse(body)
       if (Number(responseKeys.success) !== 1) {
         res.send('not-ok-2')
       } else {

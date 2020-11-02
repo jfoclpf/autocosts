@@ -3,10 +3,10 @@ const url = require(path.join(__dirname, 'url'))
 // const commons = require(path.join(__dirname, '..', '..', 'commons'))
 
 module.exports = function (req, res, next, serverData, WORDS) {
-  var CC = req.params.cc.toUpperCase() // ISO 2 letter Country Code
+  const CC = req.params.cc.toUpperCase() // ISO 2 letter Country Code
 
   if (url.isCCinCountriesList(CC, serverData.availableCountries) || CC === 'XX') {
-    var data = {}
+    const data = {}
     data.CC = CC
 
     data.words = JSON.parse(JSON.stringify(WORDS[CC])) // clone object

@@ -5,7 +5,7 @@ const debug = require('debug')('app:preprocess')
 
 // processes and builds the WORDS/Strings objects on server side, for fast delivery
 module.exports = function preprocess (serverData, WORDS, eventEmitter) {
-  var directories = serverData.directories
+  const directories = serverData.directories
 
   // creates Object of objects WORDS. An object with strings for each Country
   for (const CC in serverData.availableCountries) {
@@ -45,11 +45,11 @@ module.exports = function preprocess (serverData, WORDS, eventEmitter) {
 // having only uppercase on the firt letters of the words bigger than 4 characters
 function getAdaptedTitle (words) {
   // lower case all string
-  var title = words.web_page_title.toLowerCase()
+  let title = words.web_page_title.toLowerCase()
   // get an array of words stripped by space
-  var wordsOfTitle = title.split(' ')
+  const wordsOfTitle = title.split(' ')
   // if a word has a size bigger than 4 char or it is the 1st word of the sentence, uppercase 1st letter of the word
-  for (var i = 0; i < wordsOfTitle.length; i++) {
+  for (let i = 0; i < wordsOfTitle.length; i++) {
     if (wordsOfTitle[i].length > 4 || i === 0) {
       wordsOfTitle[i] = wordsOfTitle[i].charAt(0).toUpperCase() + wordsOfTitle[i].slice(1) // uppercase of first letter of word
     }
@@ -59,7 +59,7 @@ function getAdaptedTitle (words) {
 
   // add "find the true costs of owning a car"
   if (words.sub_title2) {
-    var title2 = words.sub_title2
+    let title2 = words.sub_title2
     title2 = title2.charAt(0).toUpperCase() + title2.slice(1) // uppercase of first letter of sentence
 
     // slice(-1) gets last character of string
@@ -77,7 +77,7 @@ function getAdaptedTitle (words) {
 // use the file from the country which founded the language (ex: Spanish was founded by Spain)
 // if that is not either available, use English version
 function fillBlanks (serverData, WORDS) {
-  for (var CC in serverData.availableCountries) {
+  for (const CC in serverData.availableCountries) {
     const languageDefault = {
       es: 'ES',
       en: 'UK',
@@ -107,18 +107,18 @@ function getMetaDescription (initialText) {
 // Ex: "calculadora dos custos do automóvel" returns "calculadora, custos, automóvel"
 function getKeywords (words) {
   // lower case all strings
-  var title = words.web_page_title.toLowerCase()
-  var fixedCosts = words.fixed_costs.toLowerCase()
-  var runningCosts = words.running_costs.toLowerCase()
+  const title = words.web_page_title.toLowerCase()
+  const fixedCosts = words.fixed_costs.toLowerCase()
+  const runningCosts = words.running_costs.toLowerCase()
 
   // get an array of words stripped by space
-  var wordsOfTitle = title.split(' ')
+  const wordsOfTitle = title.split(' ')
 
   // if a word has a size bigger than 3, adds to keywords
-  var keywords = []
-  var word
+  const keywords = []
+  let word
 
-  for (var i = 0; i < wordsOfTitle.length; i++) {
+  for (let i = 0; i < wordsOfTitle.length; i++) {
     word = wordsOfTitle[i]
     if (word.length > 3) {
       keywords.push(word)
@@ -128,7 +128,7 @@ function getKeywords (words) {
   keywords.push(fixedCosts)
   keywords.push(runningCosts)
 
-  var keywordsString = keywords.join(',')
+  const keywordsString = keywords.join(',')
 
   return keywordsString
 }
@@ -154,12 +154,12 @@ function getSubTitleArr (position, words, statsData) {
     return ''
   }
 
-  var errMsg = 'Error in handlebars function getSubTitleArr'
+  const errMsg = 'Error in handlebars function getSubTitleArr'
 
-  var subTitle1a = words.sub_title1a ? words.sub_title1a.trim() : ''
-  var subTitle1b = words.sub_title1b ? words.sub_title1b.trim() : ''
+  const subTitle1a = words.sub_title1a ? words.sub_title1a.trim() : ''
+  let subTitle1b = words.sub_title1b ? words.sub_title1b.trim() : ''
 
-  var checkSanityOfStr = function (str, parseStr) {
+  const checkSanityOfStr = function (str, parseStr) {
     if (!str || !str.includes(parseStr)) {
       debug(errMsg + '; \'' + parseStr + '\' undefined or does not contain ' + parseStr)
       return false
@@ -238,7 +238,7 @@ function getSocialMediaDescription (words, statsData) {
 
 // gets an entry from the statistical database
 function getProcessedStatsDataEntry (words, statsData, entry, toFixed, isBold = false, ignoreSmallNumbers = false) {
-  var currencySymbol = words.curr_symbol
+  const currencySymbol = words.curr_symbol
 
   const val = statsData[entry]
 

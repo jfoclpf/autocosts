@@ -5,24 +5,24 @@ const url = require(path.join(__dirname, 'url'))
 const debug = require('debug')('app:domains')
 
 module.exports = function (req, res, serverData, WORDS) {
-  var data = {}
+  const data = {}
   data.WORDS = JSON.parse(JSON.stringify(WORDS)) // clone object
   delete data.WORDS.XX
 
-  var storedDomains = JSON.parse(JSON.stringify(serverData.urls)) // clone object
-  var domainsCountries = storedDomains.canonicalHostname
+  const storedDomains = JSON.parse(JSON.stringify(serverData.urls)) // clone object
+  const domainsCountries = storedDomains.canonicalHostname
   delete domainsCountries.XX
   debug(domainsCountries)
 
-  var domains = {}
+  const domains = {}
   // array serverData.urls.uniqueArrayOfCanonicalHostname has unique elements, i.e. an array without repeated elements
-  for (var i = 0; i < serverData.urls.uniqueArrayOfCanonicalHostname.length; i++) {
-    var domain = serverData.urls.uniqueArrayOfCanonicalHostname[i]
+  for (let i = 0; i < serverData.urls.uniqueArrayOfCanonicalHostname.length; i++) {
+    const domain = serverData.urls.uniqueArrayOfCanonicalHostname[i]
     domains[domain] = {} // creates an empty entry
 
     // get the domains that exist for a particular domain
     // i.e. which countries have, for example the "autocosts.info" as associated domain
-    var domainsCC = getCCforDomain(domainsCountries, domain)
+    const domainsCC = getCCforDomain(domainsCountries, domain)
 
     domains[domain].nbrItems = domainsCC.length
 
@@ -33,18 +33,18 @@ module.exports = function (req, res, serverData, WORDS) {
     }
 
     domains[domain].countries = {} // creates an empty entry
-    for (var j = 0; j < domainsCC.length; j++) {
-      var CC = domainsCC[j]
-      var country = serverData.availableCountries[CC]
+    for (let j = 0; j < domainsCC.length; j++) {
+      const CC = domainsCC[j]
+      const country = serverData.availableCountries[CC]
 
       // the "first" detects the first element to render correctly the table in handlebars
       // regarding the first line <td rowspan="x">
-      var first = (j === 0)
+      const first = (j === 0)
 
       req.params.cc = CC
-      var urlHref = url.getValidURL(req, storedDomains)
+      const urlHref = url.getValidURL(req, storedDomains)
 
-      var Obj = {
+      const Obj = {
         country: country,
         first: first,
         urlHref: urlHref
@@ -62,8 +62,8 @@ module.exports = function (req, res, serverData, WORDS) {
 
 // get array of countries codes (CC) having a specific domain
 function getCCforDomain (domainsCountries, domain) {
-  var domainsCC = []
-  for (var CC in domainsCountries) {
+  const domainsCC = []
+  for (const CC in domainsCountries) {
     if (domainsCountries[CC] === domain) {
       domainsCC.push(CC)
     }

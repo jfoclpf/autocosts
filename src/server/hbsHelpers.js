@@ -25,7 +25,7 @@ module.exports = {
 
   // splits string  WORDS.in_months_possession, which in English is "in [nbrMonths] of possession"
   get_in_months_of_possession: function (position) {
-    var str = this.in_months_of_possession
+    const str = this.in_months_of_possession
     return str.split('[nbrMonths]')[position - 1]
   },
 
@@ -138,9 +138,9 @@ module.exports = {
   },
 
   createParagraphs: function (text) {
-    var parArr = paragraphBuilder.toArray(text, 180)
-    var output = ''
-    for (var i = 0; i < parArr.length; i++) {
+    const parArr = paragraphBuilder.toArray(text, 180)
+    let output = ''
+    for (let i = 0; i < parArr.length; i++) {
       output += '<p>' + parArr[i] + '</p>'
     }
     return output

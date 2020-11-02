@@ -2,8 +2,8 @@ const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
 
 module.exports = function (req, res, serverData, words) {
-  var CC = req.params.cc.toUpperCase()
-  var data = {}
+  const CC = req.params.cc.toUpperCase()
+  const data = {}
 
   data.isCostsTable = true
 
@@ -21,7 +21,7 @@ module.exports = function (req, res, serverData, words) {
   data.availableCountries = serverData.availableCountries
 
   // information depending on this request from the client
-  var pageData = {
+  const pageData = {
     /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
     url: {
       href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"

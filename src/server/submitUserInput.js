@@ -6,18 +6,18 @@ const sqlFormatter = require('sql-formatter')
 const async = require('async')
 
 module.exports = function (req, res, serverData) {
-  var DBInfo = serverData.settings.database.credentials
+  const DBInfo = serverData.settings.database.credentials
 
   // object got from POST
-  var databaseObj = req.body.databaseObj
+  const databaseObj = req.body.databaseObj
 
   debug(databaseObj)
   debug('\nInserting user data into ' +
                 'database table ' + DBInfo.database + '->' + DBInfo.db_tables.users_insertions)
 
   // builds sql query to insert user data
-  var queryInsert = 'INSERT INTO ' + DBInfo.db_tables.users_insertions + ' ('
-  var databaseKeys = Object.keys(databaseObj)
+  let queryInsert = 'INSERT INTO ' + DBInfo.db_tables.users_insertions + ' ('
+  const databaseKeys = Object.keys(databaseObj)
   for (let i = 0; i < databaseKeys.length; i++) {
     queryInsert += databaseKeys[i] + (i !== databaseKeys.length - 1 ? ', ' : ')')
   }
@@ -27,7 +27,7 @@ module.exports = function (req, res, serverData) {
   }
   debug(sqlFormatter.format(queryInsert))
 
-  var db = mysql.createConnection(DBInfo)
+  const db = mysql.createConnection(DBInfo)
 
   async.series([
     function (next) {

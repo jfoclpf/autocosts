@@ -10,16 +10,16 @@ const fileNames = commons.getFileNames()
 
 const MIN_VALID_USERS = 20 // minimum number of valid users to show the country on world chart
 
-var statsData // chartjs content of World statistics
-var statsLabels // Labels used for stats chart
-var chartTable // HTML table data relating to the chart
-var dateOfCalculation // date when the chart data was calculated
-var averageNormalizedCosts
+let statsData // chartjs content of World statistics
+let statsLabels // Labels used for stats chart
+let chartTable // HTML table data relating to the chart
+let dateOfCalculation // date when the chart data was calculated
+let averageNormalizedCosts
 
 module.exports = {
 
   req: function (req, res, serverData, wordsOfUK) {
-    var data = {}
+    const data = {}
 
     data.isStats = true
     data.isGetCC = false
@@ -39,7 +39,7 @@ module.exports = {
     const isThisARecognizedHost = url.isThisARecognizedHost(req.get('host'), serverData.urls)
 
     // information depending on this request from the client
-    var pageData = {
+    const pageData = {
       /* check https://github.com/jfoclpf/autocosts/wiki/URL-parts-terminology */
       url: {
         href: url.getHref(req), // full url, ex: "https://autocosts.info/PT"
@@ -54,7 +54,7 @@ module.exports = {
     data.pageData = pageData
 
     // creates urls for statistics for each country, ex: autocustos.pt/stats or autocustos.info/br/stats
-    var statsUrls = {}
+    let statsUrls = {}
     delete serverData.urls.canonicalStatsUrl.XX
     if (isThisARecognizedHost) {
       statsUrls = serverData.urls.canonicalStatsUrl
@@ -82,20 +82,20 @@ module.exports = {
     // get statsFunctions.js Object Constructors/Templates
     const calculator = require(fileNames.project['calculator.js'])
 
-    var dbInfo = serverData.settings.database.credentials
+    const dbInfo = serverData.settings.database.credentials
     debug(' ===== dbInfo ===== \n', dbInfo)
 
     // get current date in a formated string
-    var date = new Date()
+    const date = new Date()
     dateOfCalculation = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
 
-    var costs = {} // object of arrays, each property is a cost item array
-    var labels = []
-    var table = {} // table with useful information for each country stats (total users, valid users, etc.)
-    var db
+    const costs = {} // object of arrays, each property is a cost item array
+    const labels = []
+    const table = {} // table with useful information for each country stats (total users, valid users, etc.)
+    let db
     // to send to other scripts via eventEmitter.emit
-    var statisticsToEmit = {}
-    var normalizedStatisticsToEmit = {}
+    const statisticsToEmit = {}
+    const normalizedStatisticsToEmit = {}
 
     async.series([
       // creates database connection and connects
@@ -126,7 +126,7 @@ module.exports = {
 
       // Get the normalised costs
       function (next) {
-        var i, n, cc
+        let i, n, cc
         db.query('SELECT * FROM ' + dbInfo.db_tables.monthly_costs_normalized,
           function (err, normalizedStatistics, fields) {
             debug('Got normalizedStatistics from DB, processing it...')
@@ -161,8 +161,8 @@ module.exports = {
 
             // generates an array with the the costs items strings. that is:
             // ['depreciation', 'insurance', 'credit', 'inspection', etc. ]
-            var costsStrings = []
-            var monthlyCosts = calculator.CreateCalculatedDataObj().costs.perMonth.items
+            const costsStrings = []
+            const monthlyCosts = calculator.CreateCalculatedDataObj().costs.perMonth.items
             for (const key of Object.keys(monthlyCosts)) {
               costsStrings.push(key)
             }
@@ -231,8 +231,8 @@ module.exports = {
             }
             // got normalized statistical results;
             // convert array to object to send to emitter
-            for (var i = 0; i < statistics.length; i++) {
-              var cc = statistics[i].countryCode
+            for (let i = 0; i < statistics.length; i++) {
+              const cc = statistics[i].countryCode
               statisticsToEmit[cc] = Object.assign({}, statistics[i]) // clone object
               statisticsToEmit[cc].currencySymbol = WORDS[cc].curr_symbol
             }

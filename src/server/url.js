@@ -13,7 +13,7 @@ module.exports = {
   root: function (req, res, serverData) {
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
     // If yes, do not forward (render the page)
-    var cc = isDomainAccTLD(req.get('host')) // returns cc or false
+    const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
       debug('isSingleDomain', cc)
       return { wasRedirected: false, cc: cc } // it does not redirect, thus wasRedirected is false
@@ -57,10 +57,10 @@ module.exports = {
   // to be used from app.get('/:CC')
   // returns true if it redirects
   getCC: function (req, res, serverData) {
-    var urlHref = getProtocol(req) + '//' + req.get('host') + req.originalUrl
+    const urlHref = getProtocol(req) + '//' + req.get('host') + req.originalUrl
     debug('Entry URL: ' + urlHref)
 
-    var url2redirect
+    let url2redirect
 
     if (!isCCinCountriesList(req.params.cc, serverData.availableCountries) && !isCCXX(req.params.cc)) {
       // If the cc characters in the domain.ext/cc are NOT recognized
@@ -186,10 +186,10 @@ module.exports = {
 // makes a permanent redirect to a page of another country
 function redirect302 (req, res, serverData) {
   // get country by locale or HTTP header from browser
-  var geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
+  const geoCC = getGeoCC(req, serverData.availableCountries, serverData.settings.defaultCountry)
 
   req.params.cc = geoCC
-  var url2redirect = getValidURL(req, serverData.urls)
+  const url2redirect = getValidURL(req, serverData.urls)
 
   res.redirect(302, url2redirect)
   debug('redirecting 302 to ' + url2redirect)
@@ -212,8 +212,8 @@ function isCCinCountriesList (CC, availableCountries) {
     return false
   }
 
-  var CCupper = CC.toUpperCase()
-  var CClower = CC.toLowerCase()
+  const CCupper = CC.toUpperCase()
+  const CClower = CC.toLowerCase()
 
   return availableCountries.hasOwnProperty(CCupper) || availableCountries.hasOwnProperty(CClower) // eslint-disable-line no-prototype-builtins
 }
@@ -223,13 +223,13 @@ function getGeoCC (req, availableCountries, defaultCountry) {
   // try to get country by IP
   if (!isThisLocalhost(req)) {
     // tries to get IP from user
-    var ip = req.headers['x-forwarded-for'].split(',').pop() ||
+    const ip = req.headers['x-forwarded-for'].split(',').pop() ||
                  req.connection.remoteAddress ||
                  req.socket.remoteAddress ||
                  req.connection.socket.remoteAddress
 
-    var geo = GEO_IP.lookup(ip)
-    var geoCC = geo.country
+    const geo = GEO_IP.lookup(ip)
+    let geoCC = geo.country
 
     debug('geoCC: ' + geoCC)
 
@@ -243,8 +243,8 @@ function getGeoCC (req, availableCountries, defaultCountry) {
 
   // try to get country from HTTP accept-language info
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language
-  var acceptLanguage = req.headers['accept-language']
-  var CC_HTTP = getCountryfromHTTP(acceptLanguage)
+  const acceptLanguage = req.headers['accept-language']
+  let CC_HTTP = getCountryfromHTTP(acceptLanguage)
   if (CC_HTTP) {
     debug('CC_HTTP: ' + CC_HTTP)
     if (isCCinCountriesList(CC_HTTP, availableCountries)) {
@@ -263,8 +263,8 @@ function getGeoCC (req, availableCountries, defaultCountry) {
 // example: autocustos.info/pt is not valid because for PT autocustos.pt is valid
 // example: autocosts.info/ar is not valid because for AR only autocostos.info/AR is valid
 function isDomainCCcombValid (host, _cc, urls) {
-  var CC = _cc.toUpperCase()
-  var cc = _cc.toLowerCase()
+  const CC = _cc.toUpperCase()
+  const cc = _cc.toLowerCase()
   // host is string with domain, exemple: 'autocosts.info'
   return host.toLowerCase() + '/' + cc === urls.canonicalHostname[CC] + urls.canonicalPathname[CC]
 }
@@ -276,10 +276,10 @@ function isDomainCCcombValid (host, _cc, urls) {
 function getValidURL (req, urls) {
   debug('getValidURL')
 
-  var CC = req.params.cc.toUpperCase()
-  var cc = req.params.cc.toLowerCase()
+  const CC = req.params.cc.toUpperCase()
+  const cc = req.params.cc.toLowerCase()
 
-  var URL
+  let URL
   if (isThisLocalhost(req) || isCCXX(CC)) {
     URL = nodeUrl.format({ protocol: getProtocol(req), host: req.get('host'), pathname: cc })
   } else if (isDevDomain(req)) { // autocosts.dev
@@ -322,7 +322,7 @@ function _getProtocol (req) {
 function isThisATest (req) {
   debug('isThisATest')
 
-  var cc = req.params.cc
+  const cc = req.params.cc
   if (cc) {
     return isDevDomain(req) || isThisLocalhost(req) || isCCXX(cc)
   } else {
@@ -356,10 +356,10 @@ function isThisLegacyDomain (host, urls) {
 
 // www.example.com returns true and example.com returns false
 function isSubdomain (req) {
-  var host = req.get('host')
+  const host = req.get('host')
 
-  var hostRoot = host.split(':')[0]
-  var hostDim = (hostRoot.split('.')).length
+  const hostRoot = host.split(':')[0]
+  const hostDim = (hostRoot.split('.')).length
   if (hostDim > 2) {
     return true
   }
@@ -373,7 +373,7 @@ function isSubdomain (req) {
 // returns the associated Country Code (CC) or false
 function isSingleDomain (host, urls) {
   if (host) {
-    for (var canonicalHost in urls.countsOfCanonicalHostname) {
+    for (const canonicalHost in urls.countsOfCanonicalHostname) {
       if (host.indexOf(canonicalHost) > -1 && urls.countsOfCanonicalHostname[canonicalHost] === 1) {
         return getKeyByValue(urls.canonicalHostname, canonicalHost).toLowerCase()
       }
@@ -385,7 +385,7 @@ function isSingleDomain (host, urls) {
 // check if domain is a country code top level domain (ccTLD)
 // for exemple autocustos.pt returns 'pt' and for autocustos.info returns false
 function isDomainAccTLD (host) {
-  var upperExtension = getDomainExtension(host).toUpperCase() // ex: 'PT'
+  const upperExtension = getDomainExtension(host).toUpperCase() // ex: 'PT'
   if (isoCountries.hasOwnProperty(upperExtension)) { // eslint-disable-line no-prototype-builtins
     return upperExtension.toLowerCase()
   } else {
@@ -399,9 +399,9 @@ function getDomainExtension (host) {
 
 // tells of TLD of host is .dev or .work
 function isDevDomain (req) {
-  var host = req.get('host')
-  var hostSplit = host.split('.')
-  var tlde = hostSplit[hostSplit.length - 1] // top level domain extension, ex: ".info"
+  const host = req.get('host')
+  const hostSplit = host.split('.')
+  const tlde = hostSplit[hostSplit.length - 1] // top level domain extension, ex: ".info"
 
   if (tlde.toLowerCase() === 'dev' || tlde.toLowerCase() === 'work') {
     return true
@@ -412,8 +412,8 @@ function isDevDomain (req) {
 function isThisLocalhost (req) {
   debug('isThisLocalhost')
 
-  var ip = req.ip
-  var host = req.get('host')
+  const ip = req.ip
+  const host = req.get('host')
   debug('ip:', ip, '; host:', host)
 
   return ip === '127.0.0.1' || ip === '::ffff:127.0.0.1' || ip === '::1'
@@ -430,7 +430,7 @@ function isCCXX (CC) {
 // acceptLanguage may be "pt"  or "pt-PT" or
 // "pt-PT,pt;q=0.9,en;q=0.8,en-GB;q=0.7,de-DE;q=0.6,de;q=0.5,fr-FR;q=0.4,fr;q=0.3,es;q=0.2"
 function getCountryfromHTTP (acceptLanguage) {
-  var CC // Country Code
+  let CC // Country Code
 
   if (!acceptLanguage) {
     return null
@@ -446,8 +446,8 @@ function getCountryfromHTTP (acceptLanguage) {
     // ex: "pt-PT,pt;q=0.9,en;q=0.8,en-GB;q=0.7,de-DE;q=0.6,de;q=0.5,fr-FR;q=0.4,fr;q=0.3,es;q=0.2"
     // gets the first two capial letters that fit into 2-letter ISO country code
 
-    var substr
-    for (var i = 0; i + 2 < acceptLanguage.length; i++) {
+    let substr
+    for (let i = 0; i + 2 < acceptLanguage.length; i++) {
       substr = acceptLanguage.substring(i, i + 2)
       if (isoCountries.hasOwnProperty(substr)) { // eslint-disable-line no-prototype-builtins
         return substr

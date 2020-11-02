@@ -4,12 +4,12 @@ const commons = require(path.join(__dirname, '..', '..', 'commons'))
 const debug = require('debug')('app:sitemap') // run "DEBUG=app:sitemap node server.js"
 
 module.exports = function (req, res, serverData) {
-  var data = {}
+  const data = {}
 
-  var urls = serverData.urls
-  var languagesCountries = serverData.languagesCountries
+  const urls = serverData.urls
+  const languagesCountries = serverData.languagesCountries
 
-  var sitemapData = {}
+  const sitemapData = {}
   for (const CC in urls.canonicalHostname) {
     sitemapData[CC] = {}
     sitemapData[CC].host = urls.canonicalHostname[CC]
@@ -23,7 +23,7 @@ module.exports = function (req, res, serverData) {
   data.sitemapData2 = JSON.parse(JSON.stringify(sitemapData)) // clone object
 
   // function that gets an Object associating a language with a country/domain
-  var twoLetterLang = getUniqueLangObj(serverData)
+  const twoLetterLang = getUniqueLangObj(serverData)
   data.twoLetterLang = twoLetterLang
   debug('\n\ntwoLetterLang:'); debug(twoLetterLang)
 
@@ -41,27 +41,27 @@ module.exports = function (req, res, serverData) {
 
 // function that gets an Object associating a language with a country/domain
 function getUniqueLangObj (serverData) {
-  var languagesCountries = JSON.parse(JSON.stringify(serverData.languagesCountries)) // clone object
+  const languagesCountries = JSON.parse(JSON.stringify(serverData.languagesCountries)) // clone object
   delete languagesCountries.XX
 
   // gets an array of unique, Languages => [en, en-ES, es, pt-BR, pt-PT, it, etc.]
-  var uniqueLangsTemp = commons.getUniqueArray(languagesCountries) // get unique Array from Object
+  const uniqueLangsTemp = commons.getUniqueArray(languagesCountries) // get unique Array from Object
 
   // gets just the 2 letters of language code, i.e. the 2 first letters
   // therefore gest a unique array, of non-specific-country, Languages
   //= > [en, es, pt, it, hu, etc.]
-  var i
+  let i
   for (i = 0; i < uniqueLangsTemp.length; i++) {
     if (uniqueLangsTemp[i].length > 2) {
       uniqueLangsTemp[i] = uniqueLangsTemp[i].substr(0, 2)
     }
   }
-  var uniqueLangs = commons.getUniqueArray(uniqueLangsTemp) // removes duplicates
+  const uniqueLangs = commons.getUniqueArray(uniqueLangsTemp) // removes duplicates
 
   // creates Object associating a Language to a single Country and domain
-  var twoLetterLang = {}
+  const twoLetterLang = {}
   for (i = 0; i < uniqueLangs.length; i++) {
-    var langCode = uniqueLangs[i]
+    const langCode = uniqueLangs[i]
     // because there are many countries whose language is English
     // it choses UK as default country for English
     if (langCode === 'en') {
@@ -70,7 +70,7 @@ function getUniqueLangObj (serverData) {
       twoLetterLang.UK.domain = serverData.urls.canonicalHostname.UK
       twoLetterLang.UK.canonicalPathname = serverData.urls.canonicalPathname.UK
     } else {
-      var CC = commons.getKeyByValue(languagesCountries, langCode)
+      const CC = commons.getKeyByValue(languagesCountries, langCode)
       if (CC) {
         twoLetterLang[CC] = {}
         twoLetterLang[CC].langCode = langCode
