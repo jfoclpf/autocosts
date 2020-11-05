@@ -343,17 +343,17 @@ isOnline().then(function (online) {
         }
         console.error(Error(err))
         console.error('Error while calculating statistics'.error)
-        process.exitCode = 1
+        process.exit(1)
       })
     } else {
       consoleLogTheFinalAverages(countries)
       console.log('All the statistics have been computed successfully and updated into database'.green)
-      process.exitCode = 0
+      process.exit(0)
     }
   })
 }).catch(function (err) {
   console.log(Error(err))
-  process.exitCode = 1
+  process.exit(1)
 })
 
 // for each country, get the header of the insert data query
