@@ -119,7 +119,7 @@
     "snyk": "^1.424.4",
     "sql-formatter": "2.3.3",
     "standard": "16.0.1",
-    "uglify-js": "3.11.4",
+    "uglify-js": "3.11.5",
     "uglifycss": "0.0.29",
     "util": "0.12.3",
     "w3c-css": "2.0.2",
