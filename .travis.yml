@@ -11,3 +11,7 @@ node_js:
 
 env:
 - NODE_ENV=test
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then npm install -g node-gyp; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo npm install -g node-gyp; fi
