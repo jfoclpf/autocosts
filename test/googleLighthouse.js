@@ -29,12 +29,10 @@ async.series([checkForInternet, startsHttpServer, checkPagePerformance],
 
     if (err) {
       console.error(Error(err))
-      process.exitCode = 1
+      process.exit(1)
     } else {
-      console.log('Google Lighthouse ran successfully'.green)
-      process.exitCode = 0
+      process.exit(0)
     }
-    console.log('\n')
   }
 )
 
@@ -43,7 +41,7 @@ function checkPagePerformance (callback) {
     console.log('Lunching Chrome Launcher, please wait...')
     return chromeLauncher.launch({ chromeFlags: opts.chromeFlags }).then(chrome => {
       opts.port = chrome.port
-      console.log('Lunching and running Light House, please wait...')
+      console.log('Launching and running Light House, please wait...')
       return lighthouse(url, opts, config).then(results => {
         // use results.lhr for the JS-consumable output
         // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
@@ -54,6 +52,13 @@ function checkPagePerformance (callback) {
           return results.lhr
         })
       })
+    }).catch(err => {
+      console.error(err)
+      console.error('ERROR launching Chromium'.yellow)
+      console.error('You must have Chromium on your machine to make this performance test. Install Chromium!'.yellow)
+      console.error('On Ubuntu/Debian run: sudo apt install chromium-browser'.yellow)
+      console.error('Skipping this performance test'.yellow)
+      callback()
     })
   }
 
@@ -81,6 +86,7 @@ function checkPagePerformance (callback) {
           debug('\n\n')
         }
       }
+      console.log('Google Lighthouse ran successfully'.green)
       callback()
     } else {
       for (const key in audits) {
