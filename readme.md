@@ -6,6 +6,7 @@ autocosts &ndash; car costs calculator
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm][npm_img]][npm_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
 
 
 
