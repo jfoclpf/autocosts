@@ -76,7 +76,7 @@
     "command-line-args": "5.1.1",
     "compression": "^1.7.4",
     "concat-files": "^0.1.1",
-    "debug": "^4.3.1",
+    "debug": "^4.3.2",
     "express": "4.x",
     "express-handlebars": "^5.3.2",
     "express-useragent": "^1.0.15",
