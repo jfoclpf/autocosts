@@ -1,3 +1,9 @@
+/* This server script is used to obtain the costs statistics for each country right after the server is
+   started. When the server is started, this script is run fething the costs statistics from the monthly
+   costs database; after the statistics are fetched from the database, this script triggers an event
+   informing the main server that the statistics are ready to be used. Thus, the statistics data are
+   transferred from the database into memory right after the server is started, for fast delivery */
+
 const path = require('path')
 const url = require(path.join(__dirname, 'url')) // own project module
 const mysql = require('mysql') // module to get info from database
