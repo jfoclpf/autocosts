@@ -3,7 +3,7 @@
     "fuel_efficiency_std_option" : 2,
     "distance_std_option" : 1,
     "fuel_price_volume_std" : 1,
-    "curr_code" : "VEF",
+    "curr_code" : "VES",
     "curr_name" : "Bolívar",
     "curr_name_plural" : "Bolívares",
     "curr_name_big_plural" : "BOLÍVARES",
@@ -281,4 +281,3 @@
     "std_time_in_driving" : "",
     "std_days_month" : ""
 }
-
