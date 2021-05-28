@@ -1,4 +1,4 @@
 /* global self */
 self.addEventListener('fetch', function (event) {
-  console.log('start server worker')
+  console.log('start service worker')
 })
