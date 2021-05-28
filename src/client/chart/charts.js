@@ -200,14 +200,18 @@ autocosts.showResultsModule.chartsModule = (function (translatedStrings, switche
     }]
 
     var options = {
+      datasets: {
+        bar: {
+          categoryPercentage: 0.9,
+          barPercentage: 0.95
+        }
+      },
       maintainAspectRatio: false,
       legend: {
         display: false
       },
       scales: {
         xAxes: [{
-          categoryPercentage: 0.9,
-          barPercentage: 0.95,
           ticks: {
             display: false
           }
