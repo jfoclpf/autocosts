@@ -64,6 +64,7 @@ function startsServerForTests () {
     httpLocalServer.on('message', message => {
       debug('message from child:', message)
       if (message.includes('SERVER_STARTED')) {
+        debug('Server started')
         if (!isSetDatabase) {
           onStart()
           return
