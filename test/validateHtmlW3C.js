@@ -80,7 +80,7 @@ function startsHttpServer (callback) {
     ['--database'], // we need this option to test url /worldstats
     function () {
       Bar.tick({ info: 'server started' })
-      setTimeout(callback, 1000) // gve some time for server to start
+      setTimeout(callback, 1000) // altough this is already a callback, give some more time for server to start
     }, function (err) {
       callback(Error(err))
     })
