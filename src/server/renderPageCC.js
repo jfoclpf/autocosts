@@ -157,6 +157,10 @@ module.exports = {
 // check if the requester/browser can handle Conten Security Policy version 3
 // this project when uses CSP, needs CSP version 3
 function isCSP3compatible (useragent) {
+  if (!useragent || !useragent.version) {
+    return false
+  }
+
   const version = parseFloat(useragent.version.split('.')[0])
 
   // these tests were made using different browsers with lambdatest.com
