@@ -229,7 +229,7 @@ function getGeoCC (req, availableCountries, defaultCountry) {
                  req.connection.socket.remoteAddress
 
     const geo = GEO_IP.lookup(ip)
-    let geoCC = geo.country
+    let geoCC = (geo && geo.country) ? geo.country : 'US'
 
     debug('geoCC: ' + geoCC)
 
