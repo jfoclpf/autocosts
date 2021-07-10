@@ -28,7 +28,7 @@ autocosts &ndash; car costs calculator
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
-<img src="/src/img/screenshot.png">
+![screenshot](https://github.com/jfoclpf/autocosts/raw/master/src/img/screenshot.png)
 
 ## Try it on your machine
 1. Clone the project<br>
