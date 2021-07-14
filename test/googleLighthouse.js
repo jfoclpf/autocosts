@@ -86,7 +86,7 @@ function checkPagePerformance (callback) {
           debug('\n\n')
         }
       }
-      console.log('Google Lighthouse ran successfully'.green)
+      console.log('Google Lighthouse ran OK'.green)
       callback()
     } else {
       for (const key in audits) {

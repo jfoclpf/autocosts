@@ -85,7 +85,7 @@ function validateCssOnAllPaths (next) {
     if (err) {
       next(Error('Error validating css on pages: ' + err))
     } else {
-      debug('All css pages validated successfully'.green)
+      debug('All css pages validated OK'.green)
       next()
     }
   })

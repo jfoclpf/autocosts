@@ -50,7 +50,7 @@ function startsServerForTests () {
         debug('Exited with error')
         onError(Error('Exited the server with error.\nProbably the PORT number is already in use'))
       } else {
-        debug('Exited the server successfully')
+        debug('Exited the server OK')
       }
     })
     httpLocalServer.stderr.on('data', (data) => {

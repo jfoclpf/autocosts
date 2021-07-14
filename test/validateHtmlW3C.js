@@ -141,12 +141,12 @@ function validatePage (pathname, key, callback) {
           console.log(`Error on ${url}\n`.error, result)
           console.log(addLinesToStr(body))
           console.log(`Error on ${url}\n`.error, result)
-          callback(Error('Found html error'))
+          callback(Error('Found html error on ' + url))
         } else if (result.toLowerCase().includes('warning')) {
           console.log(`Warning on ${url}\n`.error, result)
           console.log(addLinesToStr(body))
           console.log(`Warning on ${url}\n`.error, result)
-          callback(Error('Found html warning'))
+          callback(Error('Found html warning on ' + url))
         } else {
           debug(pathname)
           Bar.tick({ info: pathname })

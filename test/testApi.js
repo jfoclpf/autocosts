@@ -277,7 +277,7 @@ try {
   const results1 = autocosts.calculate(userDataTest1)
   const results2 = autocosts.calculate(userDataTest2)
   if (results1.costs.perMonth.total && results2.costs.perMonth.total) {
-    console.log('Test on API run successfully', '\n')
+    console.log('Test on API run OK', '\n')
     process.exit(0)
   } else {
     console.error('An error occured')
