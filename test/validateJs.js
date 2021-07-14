@@ -46,7 +46,7 @@ function (err, results) {
     }
     Bar.tick({ info: '' })
     Bar.terminate()
-    console.log('All js files validated correctly'.green)
+    console.log('All js files validated OK'.green)
     process.exitCode = 0
   }
   console.log('\n')

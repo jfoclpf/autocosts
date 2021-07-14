@@ -43,7 +43,7 @@ async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
       console.log(Error(err))
       process.exitCode = 1
     } else {
-      console.log('All html/hbs pages validated correctly'.green)
+      console.log('All html/hbs pages validated OK'.green)
       process.exitCode = 0
     }
     console.log('\n')
