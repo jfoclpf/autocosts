@@ -11,8 +11,8 @@ autocosts &ndash; car costs calculator
 
 
 
-[travis_img]: https://travis-ci.org/jfoclpf/autocosts.svg?branch=master
-[travis_url]: https://travis-ci.org/jfoclpf/autocosts
+[travis_img]: https://travis-ci.com/jfoclpf/autocosts.svg?branch=master
+[travis_url]: https://travis-ci.com/jfoclpf/autocosts
 
 [npm_img]: https://img.shields.io/npm/v/autocosts.svg?colorB=0E7FBF
 [npm_url]: https://www.npmjs.com/package/autocosts
