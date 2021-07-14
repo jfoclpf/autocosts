@@ -1,5 +1,5 @@
 // value from 0 to 1 below which an error is triggered
-const THRESHOLD_AVG_SCORE = 0.95
+const THRESHOLD_AVG_SCORE = 0.90
 const PATH_TO_BE_TESTED = '/br'
 
 const path = require('path')
