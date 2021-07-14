@@ -31,9 +31,6 @@ const PathnamesToValidateArr = getPathnamesToValidate()
 
 const Bar = commons.getProgressBar(PathnamesToValidateArr.length + 3, debug.enabled)
 
-let wasAtLeastOnceCheckedByW3C = false
-let w3CServerAtLeastFailedOnce = false
-
 async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
   // done after execution of above funcitons
   function (err, results) {
@@ -45,14 +42,8 @@ async.series([checkForInternet, startsHttpServer, validateHtmlOnAllPages],
     if (err) {
       console.log(Error(err))
       process.exitCode = 1
-    } else if (wasAtLeastOnceCheckedByW3C && !w3CServerAtLeastFailedOnce) {
-      console.log('All html/hbs pages validated correctly'.green)
-      process.exitCode = 0
-    } else if (wasAtLeastOnceCheckedByW3C && w3CServerAtLeastFailedOnce) {
-      console.log('It was not possible to validate some files because the W3C server was unavailable, move on'.yellow)
-      process.exitCode = 0
     } else {
-      console.log('It was not possible to validate any file because the W3C server was unavailable, move on'.yellow)
+      console.log('All html/hbs pages validated correctly'.green)
       process.exitCode = 0
     }
     console.log('\n')
@@ -107,16 +98,37 @@ function getPathnamesToValidate () {
 
 // validates html code of pages using validator.w3.org/nu
 function validateHtmlOnAllPages (next) {
-  // maximum of 3 requests on the same time to avoid overloading the W3C checker,
+  // maximum of 10 requests on the same time to avoid overloading the W3C checker,
   // and thus avoid rejection of request with 504 error
-  async.eachOfLimit(PathnamesToValidateArr, 3, validatePage, function (err) {
-    if (err) {
-      next(Error('Error validating html on pages: ' + err.message))
-    } else {
-      debug('All html pages validated')
-      next()
-    }
-  })
+  async.eachOfLimit(PathnamesToValidateArr, 10,
+    (pathname, key, callback) => {
+      // try calling validatePage for the same page 10 times with exponential backoff
+      // (i.e. intervals of 100, 200, 400, 800, 1600, ... milliseconds)
+      async.retry({
+        times: 10,
+        interval: function (retryCount) {
+          return 50 * Math.pow(2, retryCount)
+        }
+      },
+      (callback) => {
+        validatePage(pathname, key, callback)
+      },
+      function (err, result) {
+        if (err) {
+          callback(Error(`Error validating html on page ${pathname}\n\n${err}`))
+        } else {
+          callback()
+        }
+      })
+    },
+    function (err) {
+      if (err) {
+        next(Error(err))
+      } else {
+        debug('All html pages validated OK')
+        next()
+      }
+    })
 }
 
 // pathname is for example '/pt' or '/worldstats'
@@ -136,36 +148,21 @@ function validatePage (pathname, key, callback) {
 
     validator(options)
       .then((result) => {
-        wasAtLeastOnceCheckedByW3C = true
         if (result.toLowerCase().includes('error')) {
-          console.log(`Error on ${url}\n`.error, result)
-          console.log(addLinesToStr(body))
-          console.log(`Error on ${url}\n`.error, result)
-          callback(Error('Found html error on ' + url))
+          debug(`html error on ${url}, may be false alarm`)
+          callback(Error(`\n\nFound html error on ${url}\n\n${result}\n\n${addLinesToStr(body)}`))
         } else if (result.toLowerCase().includes('warning')) {
-          console.log(`Warning on ${url}\n`.error, result)
-          console.log(addLinesToStr(body))
-          console.log(`Warning on ${url}\n`.error, result)
-          callback(Error('Found html warning on ' + url))
+          debug(`html warning on ${url}, may be false alarm`)
+          callback(Error(`\n\nFound html warning on ${url}\n\n${result}\n\n${addLinesToStr(body)}`))
         } else {
           debug(pathname)
           Bar.tick({ info: pathname })
-          setTimeout(callback, 1000)
-          // callback()
+          callback()
         }
       })
       .catch((err) => {
-        w3CServerAtLeastFailedOnce = true
-        // sometimes the W3C is unavailable, but we should not return an error in such conditions
-        // https://github.com/zrrrzzt/html-validator/issues/162
-        if (err) {
-          const errMsg = 'W3C server unavailable, skipping ' + pathname
-          debug(errMsg, err)
-          Bar.tick({ info: errMsg })
-          callback() // OK
-        } else {
-          callback(Error(err))
-        }
+        debug(`error on ${url}, may be false alarm`)
+        callback(Error(`\n\nError on ${url}: ${err}`))
       })
   })
 }
