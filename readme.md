@@ -34,7 +34,7 @@ This calculator allows users to find the true cost of owning a car. It will norm
 1. Clone the project<br>
 `git clone https://github.com/jfoclpf/autocosts.git`
 2. Enter the newly created directory and install dependencies<br>
-`cd autocosts/ && npm i --production`
+`cd autocosts && npm i --production`
 3. Start the server<br>
 `npm start`
 
