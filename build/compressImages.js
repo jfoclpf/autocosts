@@ -32,7 +32,7 @@ async.parallel([compressJPG, compressPNG], function (err, results) {
   }
   Bar.tick({ info: '' })
   Bar.terminate()
-  console.log('All images compressed successfully'.green)
+  console.log('All images compressed OK'.green)
   process.exit(0) // exit successfully
 })
 

@@ -37,7 +37,7 @@ async.parallel([processJSfiles, processCSSFiles, processHTMLfiles, processJSONfi
       console.log(Error(('\nError minifying file.\n' + err.message).error), err)
       process.exit(1) // exit with error immediately
     } else {
-      console.log('\nAll files minified successfully'.green)
+      console.log('\nAll files minified OK'.green)
       process.exitCode = 0 // exit successfully
     }
     Bar.tick({ info: '' })
