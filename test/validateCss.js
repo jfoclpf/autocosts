@@ -1,6 +1,9 @@
 /*
   script that runs a http server on localhost and then css-validates
   using W3 css validator all the css files served
+  Since the W3C server is not fully reliable in terms of connection
+  this script retries several times the request for the same page to be sure
+  the error is not due to the connection with the W3C server
 */
 
 const path = require('path')
@@ -41,7 +44,7 @@ async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
     } else {
       Bar.tick({ info: '' })
       Bar.terminate()
-      console.log('All css files validated correctly'.green)
+      console.log('All css files validated OK'.green)
       process.exit(0)
     }
   })
@@ -81,14 +84,35 @@ function getPathnamesToValidate () {
 
 // validates css code using validator.w3.org/nu
 function validateCssOnAllPaths (next) {
-  async.eachSeries(PathnamesToValidateArr, validatePathname, function (err) {
-    if (err) {
-      next(Error('Error validating css on pages: ' + err))
-    } else {
-      debug('All css pages validated OK'.green)
-      next()
-    }
-  })
+  async.eachSeries(PathnamesToValidateArr,
+    (pathname, callback) => {
+      // try calling validatePathname for the same page 10 times with exponential backoff
+      // (i.e. intervals of 100, 200, 400, 800, 1600, ... milliseconds)
+      async.retry({
+        times: 10,
+        interval: function (retryCount) {
+          return 50 * Math.pow(2, retryCount)
+        }
+      },
+      (subCallback) => {
+        validatePathname(pathname, subCallback)
+      },
+      function (err, result) {
+        if (err) {
+          callback(Error(`Error validating CSS on page ${pathname}\n\n${err}`))
+        } else {
+          callback()
+        }
+      })
+    },
+    function (err) {
+      if (err) {
+        next(Error(`Error validating css on some pages.\n\n${err}`))
+      } else {
+        debug('All css pages validated OK'.green)
+        next()
+      }
+    })
 }
 
 // pathname is for example '/css/style.css'
@@ -111,34 +135,23 @@ function validatePathname (pathname, callback) {
     }
 
     debug('validating...')
-    validator.validate(options)
-      .on('error', function (err) {
-        debug('Error: ' + err)
-        callback(Error(err))
-      })
-      .on('validation-error', function (data) {
-        debug('on validation-error')
-        console.log(`Error on ${url}\n`.error)
-        console.log(addLinesToStr(body))
-        console.log(`Error on ${url}\n`.error)
-        console.log(prettyjson.render(data))
-        callback(Error('Found css error'))
-      })
-      .on('validation-warning', function (data) {
-        debug('on validation-warning')
-        console.log(`Warning on ${url}\n`.error)
-        console.log(addLinesToStr(body))
-        console.log(`Warning on ${url}\n`.error)
-        console.log(prettyjson.render(data))
-        callback(Error('Found css warning'))
-      })
-      .on('end', function () {
-        debug('on end')
+    validator.validate(options, function (err, data) {
+      if (err) {
+        debug(`Error: ${err}, may be a false alarm`)
+        callback(Error(`Error on ${url}`))
+      } else if (data.errors && data.errors.length) {
+        debug('CSS validation-error, may be a false alarm')
+        callback(Error(`CSS error on ${url}\n\n${addLinesToStr(body)}\n\n${prettyjson.render(data.errors)}`))
+      } else if (data.warnings && data.warnings.length) {
+        debug('CSS validation-error, may be a false alarm')
+        callback(Error(`CSS warnings on ${url}\n\n${addLinesToStr(body)}\n\n${prettyjson.render(data.warnings)}`))
+      } else {
         Bar.tick({ info: pathname })
-        // since is a public service we should wait 2 s between requests
+        // since is a public service we should wait 1 s between requests
         // https://www.npmjs.com/package/w3c-css#public-css-validator
-        setTimeout(callback, 2000)
-      })
+        setTimeout(callback, 1000)
+      }
+    })
   })
 }
 
