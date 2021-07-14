@@ -1,6 +1,9 @@
 /*
   script that runs a http server on localhost and then html-validates
   using W3C html validator all the html pages served
+  Since the W3C server is not fully reliable in terms of connection
+  this script retries several times the request for the same page to be sure
+  the error is not due to the connection with the W3C server
 */
 
 console.log('Validating html/hbs pages using official W3C server...')
