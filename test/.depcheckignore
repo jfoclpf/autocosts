@@ -1,0 +1,5 @@
+# files to be ignored when checking npm dependencies via depcheck
+# check https://www.npmjs.com/package/depcheck and file .depcheckrc.yml
+
+build/rasterTables.js
+bin/*

@@ -5,12 +5,13 @@
   "main": "api.js",
   "scripts": {
     "start": "node bin/server.js --print --pdf -r prod",
-    "test": "standard && node test/test.js",
+    "test": "standard && npx depcheck && node test/test.js",
     "coverage": "nyc npm run test",
     "postinstall": "node build.js -c -r prod",
     "npmPublish": "npm version patch && npm publish && git push",
     "refreshProdStats": "node build.js -dt -r prod",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "depcheck": "npx depcheck"
   },
   "repository": {
     "type": "git",
@@ -66,7 +67,6 @@
     ]
   },
   "dependencies": {
-    "ajv": "^6.12.6",
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
@@ -89,7 +89,6 @@
     "jquery-sidebar": "^3.3.2",
     "mysql": "2.18.1",
     "paragraph-builder": "1.0.15",
-    "path": "^0.12.7",
     "pdfmake": "^0.1.69",
     "progress": "^2.0.3",
     "request": "^2.88.2",
@@ -98,7 +97,8 @@
     "striptags": "^3.1.1"
   },
   "devDependencies": {
-    "csslint": "^1.0.5",
+    "chrome-launcher": "^0.13.4",
+    "depcheck": "^1.4.2",
     "extract-zip": "2.0.1",
     "html-minifier": "^4.0.0",
     "html-validate": "^3.5.0",
@@ -106,9 +106,7 @@
     "imagemagick": "^0.1.3",
     "jshint": "2.12.0",
     "jsonminify": "^0.4.1",
-    "libxmljs": "^0.19.7",
     "lighthouse": "^7.5.0",
-    "mocha": "^8.4.0",
     "money": "^0.2.0",
     "nyc": "^15.1.0",
     "phantomjs-prebuilt": "^2.1.16",
@@ -118,10 +116,8 @@
     "standard": "^16.0.1",
     "uglify-js": "^3.11.5",
     "uglifycss": "^0.0.29",
-    "util": "^0.12.3",
     "w3c-css": "^2.0.2",
-    "walk": "^2.3.14",
-    "webpage": "^0.3.0"
+    "walk": "^2.3.14"
   },
   "snyk": true
 }
