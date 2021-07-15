@@ -5,7 +5,7 @@
   "main": "api.js",
   "scripts": {
     "start": "node bin/server.js --print --pdf -r prod",
-    "test": "standard && npx depcheck && node test/test.js",
+    "test": "node build.js -ci && node build/compressImages.js #standard && npx depcheck && node test/test.js",
     "coverage": "nyc npm run test",
     "postinstall": "node build.js -c -r prod",
     "npmPublish": "npm version patch && npm publish && git push",
