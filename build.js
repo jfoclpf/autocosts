@@ -344,12 +344,12 @@ function getArgvHelpMsg () {
                 'node ' + filename + ' -cim \n' +
                 'node ' + filename + ' -A -r prod \n' +
                 '\n' +
-                '#With these options it may run just locally\n' +
+                '# With these options it may run just locally\n' +
                 '-c  --copy          makes a [c]lean copy from src/ to bin/                need to be done on the 1st time \n' +
                 '-i  --compressImgs  compress [i]mages, jpg and png files in bin/          with ImageMagick \n' +
                 '-m  --minify        [m]inify js, json, css and html files in bin/         with npm: minifier, html-minifier, uglifycss and json-minify \n' +
                 '\n\n' +
-                "#With these options it needs internet connection to a server's Database\n" +
+                "# With these options it needs internet connection to a server's Database\n" +
                 '-r  --release       selects Database [r]elease ("dev", "test" or "prod")  Database credentials in directory credentials/\n' +
                 "-s  --specDB        creates a Database with countries' [s]pecifications   connection to a Database\n" +
                 "-d  --refreshDB     refreshes the statistical costs [d]atabase            connection to the countries' specifcations Database \n" +
