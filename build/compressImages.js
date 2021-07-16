@@ -17,6 +17,7 @@ const find = require('find')
 const async = require('async')
 const walk = require('walk')
 const im = require('imagemagick')
+const imagemagickCli = require('imagemagick-cli')
 const colors = require('colors')
 const debug = require('debug')('build:compressImages')
 
@@ -33,7 +34,7 @@ colors.setTheme(commons.getConsoleColors())
 
 const Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
-async.parallel([compressJPG, compressPNG], function (err, results) {
+async.parallel([/* compressJPG, */compressPNG], function (err, results) {
   if (err) {
     console.log(Error(`An error was found:\n\n${err}`))
     process.exitCode = 1 // exit with error
@@ -98,7 +99,7 @@ function compressPNG (callback) {
       const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      const params = [filename,
+      /* const params = [filename,
         '-strip',
         filename + '.min']
 
@@ -112,7 +113,22 @@ function compressPNG (callback) {
           Bar.tick({ info: filePathRelative })
           next()
         }
-      })
+      }) */
+      imagemagickCli
+        .exec(`convert ${filename} -strip ${filename + '.min'}`)
+        .then(({ stdout, stderr }) => {
+          if (stderr) {
+            callback(Error('Error compressing ' + filename + '. ' + stderr))
+          } else {
+            // removes original and renames
+            fs.unlinkSync(filename)
+            fs.renameSync(filename + '.min', filename)
+            Bar.tick({ info: filePathRelative })
+            next()
+          }
+        }).catch(err => {
+          callback(Error('Error compressing ' + filename + '. ' + err))
+        })
     } else {
       next()
     }
