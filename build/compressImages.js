@@ -25,7 +25,7 @@ colors.setTheme(commons.getConsoleColors())
 
 const Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
-async.parallel([compressJPG, compressPNG], function (err, results) {
+async.parallel([compressJPG /*, compressPNG */], function (err, results) {
   if (err) {
     console.log(Error('An error was found: '.error + err.message))
     process.exit(1) // exit with error
