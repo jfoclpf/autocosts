@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install imagemagick
+      run: sudo apt-get install imagemagick
     - run: npm ci
     - run: npm test
     
@@ -45,6 +47,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install imagemagick
+      run: brew install imagemagick
     - run: npm ci
     - run: npm test
 
