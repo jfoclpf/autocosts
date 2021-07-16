@@ -10,13 +10,50 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  ubuntu:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [12.x, 14.x, 16.x]
         
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+    
+  macos:
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: macos-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+
+  windows:
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: windows-latest
     env:
       NODE_ENV: test
 
