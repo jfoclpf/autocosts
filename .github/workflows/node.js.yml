@@ -70,6 +70,6 @@ jobs:
         cache: 'npm'
     - name: Install imagemagick
       run: choco install imagemagick.app
-    - run: where convert
+    - run: magick -version
     - run: npm ci
     - run: npm test
