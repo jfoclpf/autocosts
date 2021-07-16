@@ -1,7 +1,6 @@
 autocosts &ndash; car costs calculator
 =========
 [![Build Status][travis_img]][travis_url]
-[![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jfoclpf/autocosts?targetFile=package.json)
 [![Dependency Status][dependency status_img]][dependency status_url]
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm][npm_img]][npm_url]
