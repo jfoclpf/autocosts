@@ -2,6 +2,14 @@
 Optimal compression settings were defined by Google from the Page Speed Insights documentation */
 
 console.log('Compressing JPG and PNG images...')
+const os = require('os')
+if (os.type()) {
+  const osType = os.type().trim().toLowerCase()
+  if (process.env.NODE_ENV === 'test' && (osType.includes('windows') || osType.includes('darwin'))) {
+    console.log(`skipping image compressing for test suite, this test system ${osType()} does not easily support it`)
+    process.exit(0)
+  }
+}
 
 const fs = require('fs')
 const path = require('path')
@@ -9,7 +17,6 @@ const find = require('find')
 const async = require('async')
 const walk = require('walk')
 const im = require('imagemagick')
-const imagemagickCli = require('imagemagick-cli')
 const colors = require('colors')
 const debug = require('debug')('build:compressImages')
 
@@ -26,7 +33,7 @@ colors.setTheme(commons.getConsoleColors())
 
 const Bar = commons.getProgressBar(getNuberOfTotalFiles() + 1, debug.enabled)
 
-async.parallel([compressJPG/*, compressPNG */], function (err, results) {
+async.parallel([compressJPG, compressPNG], function (err, results) {
   if (err) {
     console.log(Error(`An error was found:\n\n${err}`))
     process.exitCode = 1 // exit with error
@@ -50,7 +57,7 @@ function compressJPG (callback) {
       const filePathRelative = path.relative(directories.server.root, filename)
       debug(filePathRelative.verbose.bold)
 
-      /* const params = [filename,
+      const params = [filename,
         '-sampling-factor', '4:2:0',
         '-strip', '-quality', '85',
         '-interlace', 'Plane',
@@ -67,24 +74,7 @@ function compressJPG (callback) {
           Bar.tick({ info: filePathRelative })
           next()
         }
-      }) */
-
-      imagemagickCli
-        .exec(`convert ${filename} -sampling-factor 4:2:0 -strip -quality 85 -interlace Plane -colorspace RGB ${filename + '.min'}`)
-        .then(({ stdout, stderr }) => {
-          if (stderr) {
-            callback(Error(`\nError compressing ${filename}.\n\n'${stderr}`))
-          } else {
-            // console.log(`Output: ${stdout}`)
-            // removes original and renames
-            fs.unlinkSync(filename)
-            fs.renameSync(filename + '.min', filename)
-            Bar.tick({ info: filePathRelative })
-            next()
-          }
-        }).catch((err) => {
-          callback(Error(`\nError compressing ${filename}.\n\n'${err}`))
-        })
+      })
     } else {
       next()
     }
