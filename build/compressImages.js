@@ -2,14 +2,14 @@
 Optimal compression settings were defined by Google from the Page Speed Insights documentation */
 
 console.log('Compressing JPG and PNG images...')
-const os = require('os')
+/* const os = require('os')
 if (os.type()) {
   const osType = os.type().trim().toLowerCase()
-  if (process.env.NODE_ENV === 'test' && (osType.includes('windows') /* || osType.includes('darwin') */)) {
-    console.log(`skipping image compressing for test suite, this test system ${osType} does not easily support it`)
+  if (process.env.NODE_ENV === 'test' && osType.includes('windows')) {
+    console.log('skipping image compressing for test suite on windows, since windows does not easily support imagemagick')
     process.exit(0)
   }
-}
+} */
 
 const fs = require('fs')
 const path = require('path')
