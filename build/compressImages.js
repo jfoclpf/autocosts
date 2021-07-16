@@ -6,7 +6,7 @@ const os = require('os')
 if (os.type()) {
   const osType = os.type().trim().toLowerCase()
   if (process.env.NODE_ENV === 'test' && (osType.includes('windows') || osType.includes('darwin'))) {
-    console.log(`skipping image compressing for test suite, this test system ${osType()} does not easily support it`)
+    console.log(`skipping image compressing for test suite, this test system ${osType} does not easily support it`)
     process.exit(0)
   }
 }
