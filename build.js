@@ -141,7 +141,8 @@ async.series([
 
 ])// async.series
 
-// copy files from src/ to bin/
+// copies all files from src/ to bin/
+// copyies also files from npm packages to bin/, according to the object "npmFilesToImport" in package.json
 function copy () {
   debug('\n' + ('# --' + optionDefinitions[0].name).mainOption)
   console.log('Making a clean copy from src/ to bin/')
@@ -156,7 +157,21 @@ function copy () {
 
   console.log('Copying npm packages files to bin/')
 
+  // copying files from npm packages, according to the object "npmFilesToImport" in package.json
   const copiedNpmPackages = []
+
+  const packageJsonFile = path.join(directories.server.root, 'package.json')
+  const rawdata = fs.readFileSync(packageJsonFile, 'utf8')
+
+  let npmFilesToImport
+  try {
+    npmFilesToImport = JSON.parse(rawdata).npmFilesToImport
+  } catch (err) {
+    console.log(err)
+    console.log(colors.red('\n package.json has syntax errors\n'))
+    console.log(rawdata)
+    process.exit(1)
+  }
 
   // copies one file, from an npm package, to the bin directory
   const copyFile = function (npmPackage, // oficial name of the npm package from which the file is to be copied from
@@ -176,34 +191,52 @@ function copy () {
     copiedNpmPackages.push(npmPackage)
   }
 
-  // jquery
-  // https://www.npmjs.com/package/jquery
-  copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('client', 'jquery', 'jquery.min.js'))
+  const throwJsonError = function (msg) {
+    if (msg) {
+      console.log(colors.red(msg), '\n')
+    }
+    console.log(colors.red(`JSON file "${packageJsonFile}" has good syntax but fails template, see readme on https://www.npmjs.com/package/cordova-import-npm`))
+    process.exit(1)
+  }
 
-  // jquery-color
-  // https://www.npmjs.com/package/jquery-color/v/3.0.0-alpha.1
-  copyFile('jquery-color', path.join('dist', 'jquery.color.min.js'), path.join('client', 'jquery', 'jquery.color.min.js'))
+  for (const npmPackage in npmFilesToImport) {
+    const npmFiles = npmFilesToImport[npmPackage]
 
-  // jquery-sidebar
-  // https://www.npmjs.com/package/jquery-sidebar
-  copyFile('jquery-sidebar', path.join('src', 'jquery.sidebar.min.js'), path.join('client', 'jquery', 'jquery.sidebar.min.js'))
+    if (!Array.isArray(npmFiles) && typeof npmFiles === 'object') {
+      // in case just one file is copied for the npm package
+      if (!(Array.isArray(npmFiles.from) || typeof npmFiles.from === 'string')) {
+        throwJsonError(`Path "${npmFiles.from}" related to package ${npmPackage} must be string or array`)
+      }
+      if (!(Array.isArray(npmFiles.to) || typeof npmFiles.to === 'string')) {
+        throwJsonError(`Path "${npmFiles.to}" related to package ${npmPackage} must be string or array`)
+      }
 
-  // pdfmake
-  // https://www.npmjs.com/package/pdfmake
-  copyFile('pdfmake', path.join('build', 'pdfmake.min.js'), path.join('client', 'pdf', 'pdfmake.min.js'))
-  copyFile('pdfmake', path.join('build', 'vfs_fonts.js'), path.join('client', 'pdf', 'vfs_fonts.js'))
-  // these two need to be here, sometimes devTools fetches sourcemaps directly from the root of the url path
-  copyFile('pdfmake', path.join('build', 'pdfmake.min.js.map'), path.join('client', 'pdf', 'pdfmake.min.js.map'))
-  copyFile('pdfmake', path.join('build', 'pdfmake.min.js.map'), path.join('public', 'pdfmake.min.js.map'))
+      copyFile(npmPackage,
+        Array.isArray(npmFiles.from) ? path.join.apply(this, npmFiles.from) : npmFiles.from,
+        Array.isArray(npmFiles.to) ? path.join.apply(this, npmFiles.to) : npmFiles.to
+      )
+    } else if (Array.isArray(npmFiles)) {
+      // in case several files are copied for the npm package
+      for (let i = 0; i < npmFiles.length; i++) {
+        const npmFilesI = npmFiles[i]
 
-  // chart.js
-  // https://www.npmjs.com/package/chart.js
-  copyFile('chart.js', path.join('dist', 'Chart.min.js'), path.join('client', 'chart', 'chartjs.min.js'))
+        if (!(Array.isArray(npmFilesI.from) || typeof npmFilesI.from === 'string')) {
+          throwJsonError(`Path "${npmFilesI.from}" related to package ${npmPackage} must be string or array`)
+        }
+        if (!(Array.isArray(npmFilesI.to) || typeof npmFilesI.to === 'string')) {
+          throwJsonError(`Path "${npmFilesI.to}" related to package ${npmPackage} must be string or array`)
+        }
 
-  // smart-app-banner
-  // https://www.npmjs.com/package/smart-app-banner
-  copyFile('smart-app-banner', path.join('dist', 'smart-app-banner.js'), path.join('client', 'smart-app-banner.js'))
-  copyFile('smart-app-banner', path.join('dist', 'smart-app-banner.css'), path.join('css', 'smart-app-banner.css'))
+        copyFile(npmPackage,
+          Array.isArray(npmFilesI.from) ? path.join.apply(this, npmFilesI.from) : npmFilesI.from,
+          Array.isArray(npmFilesI.to) ? path.join.apply(this, npmFilesI.to) : npmFilesI.to
+        )
+      }
+    } else {
+      console.log(colors.red(`JSON file "${packageJsonFile}" has good syntax but fails "npmFilesToImport" object template`))
+      process.exit(1)
+    }
+  }
 
   // get array of unique elements
   const npmPackages = Array.from(new Set(copiedNpmPackages))

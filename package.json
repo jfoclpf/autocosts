@@ -66,6 +66,52 @@
       "bin/client/smart-app-banner.js"
     ]
   },
+  "npmFilesToImport" : {
+    "jquery" : {
+      "from" : ["dist", "jquery.min.js"],
+      "to" : ["client", "jquery", "jquery.min.js"]
+    },
+    "jquery-color" : {
+      "from" : ["dist", "jquery.color.min.js"],
+      "to" : ["client", "jquery", "jquery.color.min.js"]
+    },
+    "jquery-sidebar" : {
+      "from" : ["src", "jquery.sidebar.min.js"],
+      "to" : ["client", "jquery", "jquery.sidebar.min.js"]
+    },
+    "pdfmake" : [
+      {
+        "from" : ["build", "pdfmake.min.js"],
+        "to" : ["client", "pdf", "pdfmake.min.js"]
+      },
+      {
+        "from" : ["build", "vfs_fonts.js"],
+        "to" : ["client", "pdf", "vfs_fonts.js"]
+      },
+      {
+        "from" : ["build", "pdfmake.min.js.map"],
+        "to" : ["client", "pdf", "pdfmake.min.js.map"]
+      },
+      {
+        "from" : ["build", "pdfmake.min.js.map"],
+        "to" : ["public", "pdfmake.min.js.map"]
+      }
+    ],
+    "chart.js" : {
+      "from" : ["dist", "Chart.min.js"],
+      "to" : ["client", "chart", "chartjs.min.js"]
+    },
+    "smart-app-banner" : [
+      {
+        "from" : ["dist", "smart-app-banner.js"],
+        "to" : ["client", "smart-app-banner.js"]
+      },
+      {
+        "from" : ["dist", "smart-app-banner.css"],
+        "to" : ["css", "smart-app-banner.css"]
+      }
+    ]
+  },
   "dependencies": {
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
