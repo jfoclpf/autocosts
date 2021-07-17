@@ -23,7 +23,7 @@ module.exports = {
   },
 
   getSettings: function () {
-    if (isEmptyOrInvalidObj(SETTINGS)) {
+    if (isObjectEmptyOrInvalid(SETTINGS)) {
       _init()
     }
     return SETTINGS
@@ -45,14 +45,14 @@ module.exports = {
   },
 
   getDirectories: function () {
-    if (isEmptyOrInvalidObj(DIRECTORIES)) {
+    if (isObjectEmptyOrInvalid(DIRECTORIES)) {
       setDIRECTORIES()
     }
     return DIRECTORIES
   },
 
   getFileNames: function () {
-    if (isEmptyOrInvalidObj(FILENAMES)) {
+    if (isObjectEmptyOrInvalid(FILENAMES)) {
       setFILENAMES()
     }
     return FILENAMES
@@ -384,7 +384,7 @@ function setFILENAMES () {
     _init()
   }
 
-  if (isEmptyOrInvalidObj(DIRECTORIES)) {
+  if (isObjectEmptyOrInvalid(DIRECTORIES)) {
     setDIRECTORIES()
   }
 
@@ -570,7 +570,7 @@ function checkForInternet () {
 }
 
 function getCountriesObj () {
-  if (isEmptyOrInvalidObj(FILENAMES)) {
+  if (isObjectEmptyOrInvalid(FILENAMES)) {
     setFILENAMES()
   }
 
@@ -580,7 +580,7 @@ function getCountriesObj () {
 }
 
 function getNumberOfCountries () {
-  if (isEmptyOrInvalidObj(FILENAMES)) {
+  if (isObjectEmptyOrInvalid(FILENAMES)) {
     setFILENAMES()
   }
 
@@ -590,7 +590,7 @@ function getNumberOfCountries () {
 }
 
 function downloadGoogleAnalyticsJSFIle () {
-  if (isEmptyOrInvalidObj(FILENAMES)) {
+  if (isObjectEmptyOrInvalid(FILENAMES)) {
     setFILENAMES()
   }
 
@@ -769,12 +769,12 @@ function getUrlsObject (countriesInfo) {
 }
 
 // returns true when an object is empty = {} or invalid
-function isEmptyOrInvalidObj (obj) {
-  return typeof obj === 'undefined' || !obj || isEmpty(obj)
+function isObjectEmptyOrInvalid (obj) {
+  return typeof obj === 'undefined' || !obj || isEmptyObject(obj)
 }
 
 // detects whether an Object is empty
-function isEmpty (obj) {
+function isEmptyObject (obj) {
   for (const prop in obj) {
     if (obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
       return false
