@@ -7,12 +7,6 @@ autocosts &ndash; car costs calculator
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
 
-
-
-
-[travis_img]: https://travis-ci.com/jfoclpf/autocosts.svg?branch=master
-[travis_url]: https://travis-ci.com/jfoclpf/autocosts
-
 [npm_img]: https://img.shields.io/npm/v/autocosts.svg?colorB=0E7FBF
 [npm_url]: https://www.npmjs.com/package/autocosts
 
