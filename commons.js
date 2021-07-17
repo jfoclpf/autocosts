@@ -82,7 +82,9 @@ module.exports = {
 
   getProgressBar: getProgressBar,
 
-  parseJsonProperty: parseJsonProperty
+  parseJsonProperty: parseJsonProperty,
+
+  isEmptyObject: isEmptyObject
 }
 
 /***************************************************************************************************/
