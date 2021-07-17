@@ -18,6 +18,7 @@ commons.setRelease('test')
 const directories = commons.getDirectories()
 
 // no need here to set release to test because it was done with "commons.setRelease('test')"
+commons.runNodeScriptSync(path.join(directories.server.root, 'test/dependenciesChecker.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateCalculator.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateJs.js'))
 commons.runNodeScriptSync(path.join(directories.server.root, 'test/validateHtml.js'))

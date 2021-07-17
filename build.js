@@ -73,6 +73,8 @@ commons.setRelease(RELEASE)
 const directories = commons.getDirectories()
 const filenames = commons.getFileNames()
 
+const packageJsonFile = path.join(directories.server.root, 'package.json')
+
 // from require('colors');
 colors.setTheme(commons.getConsoleColors())
 
@@ -159,8 +161,6 @@ function copy () {
 
   // copying files from npm packages, according to the object "npmFilesToImport" in package.json
   const copiedNpmPackages = []
-
-  const packageJsonFile = path.join(directories.server.root, 'package.json')
   const rawdata = fs.readFileSync(packageJsonFile, 'utf8')
 
   let npmFilesToImport

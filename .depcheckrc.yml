@@ -1,2 +1,0 @@
-ignore-path: "test/.depcheckignore"
-ignores: ["jquery","jquery-color","jquery-sidebar","pdfmake","chart.js","smart-app-banner"]
