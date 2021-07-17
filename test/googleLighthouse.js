@@ -29,9 +29,10 @@ async.series([checkForInternet, startsHttpServer, checkPagePerformance],
 
     if (err) {
       console.error(Error(err))
-      process.exit(1)
+      process.exitCode = 1
     } else {
-      process.exit(0)
+      console.log('Google Lighthouse ran OK'.green)
+      process.exitCode = 0
     }
   }
 )
@@ -86,7 +87,6 @@ function checkPagePerformance (callback) {
           debug('\n\n')
         }
       }
-      console.log('Google Lighthouse ran OK'.green)
       callback()
     } else {
       for (const key in audits) {

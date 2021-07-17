@@ -40,12 +40,12 @@ async.series([copyCssFilesToBin, startsHttpServer, validateCssOnAllPaths],
 
     if (err) {
       console.log('Error : ', Error(err))
-      process.exit(1)
+      process.exitCode = 1
     } else {
       Bar.tick({ info: '' })
       Bar.terminate()
       console.log('All css files validated OK'.green)
-      process.exit(0)
+      process.exitCode = 0
     }
   })
 

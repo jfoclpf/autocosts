@@ -278,12 +278,12 @@ try {
   const results2 = autocosts.calculate(userDataTest2)
   if (results1.costs.perMonth.total && results2.costs.perMonth.total) {
     console.log('Test on API run OK', '\n')
-    process.exit(0)
+    process.exitCode = 0
   } else {
     console.error('An error occured')
-    process.exit(1)
+    process.exitCode = 1
   }
 } catch (err) {
   console.error('An error occured', err)
-  process.exit(1)
+  process.exitCode = 1
 }
