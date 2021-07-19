@@ -32,10 +32,10 @@ jobs:
         cd "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\"
         dir
         copy magick.exe convert.exe
-        where magick.exe
-        where convert.exe
+        magick.exe -version
+        convert.exe -version
         setx PATH "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\;%PATH%"
-        where magick.exe
-        where convert.exe
+        cd ..
+        convert.exe -version
     - run: npm ci
     - run: npm test
