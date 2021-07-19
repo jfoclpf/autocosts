@@ -62,7 +62,7 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
       process.exitCode = 1
     } else {
       console.log(colors.green('All html/hbs pages validated OK\n'))
-      setTimeout(() => { process.exit(0) }, 2000)
+      process.exitCode = 0
     }
   }
 )
