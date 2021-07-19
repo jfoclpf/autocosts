@@ -28,7 +28,7 @@ jobs:
     - name: Install imagemagick
       run: choco install imagemagick.app
     - run: | 
-        dir C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\
+        dir "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\"
         &where convert.exe
         setx PATH "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\;%PATH%"
         &where convert.exe
