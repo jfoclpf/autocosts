@@ -26,7 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install imagemagick
-      run: choco install imagemagick --version=6.9.8.6
+      run: choco install imagemagick
     - run: | 
         dir "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\"
         &where convert.exe
