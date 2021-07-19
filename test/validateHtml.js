@@ -61,8 +61,8 @@ async.series([startsHttpServer, validateHtmlOnAllPages],
       console.error(Error(err))
       process.exitCode = 1
     } else {
-      console.log('All html/hbs pages validated OK\n'.green)
-      process.exitCode = 0
+      console.log(colors.green('All html/hbs pages validated OK\n'))
+      setTimeout(() => { process.exit(0) }, 2000)
     }
   }
 )
@@ -127,9 +127,9 @@ function validatePage (pathname, key, callback) {
 
     const report = htmlvalidate.validateString(body)
     if (!report.valid) {
-      console.log('\n\nERROR COUNT: ', report.results[0].errorCount)
-      console.log(util.inspect(report.results[0].messages, false, null, true /* enable colors */))
-      console.log(addLinesToStr(body))
+      console.error('\n\nERROR COUNT: ', report.results[0].errorCount)
+      console.error(util.inspect(report.results[0].messages, false, null, true /* enable colors */))
+      console.error(addLinesToStr(body))
       callback(Error(('Package html-validate found ' + report.results[0].errorCount + ' HTML errors on ' + pathname).error))
     } else {
       debug(pathname)
