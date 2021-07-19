@@ -25,17 +25,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Install imagemagick
-      run: choco install imagemagick
-    - name: Rename imagemagick executable
-      run: | 
-        cd "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\"
-        dir
-        copy magick.exe convert.exe
-        magick.exe -version
-        convert.exe -version
-        setx PATH "C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\;%PATH%"
-        cd ..
-        convert.exe -version
     - run: npm ci
     - run: npm test
