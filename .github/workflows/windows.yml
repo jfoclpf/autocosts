@@ -25,7 +25,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Install imagemagick
-      run: choco install imagemagick.app
     - run: npm ci
     - run: npm test
