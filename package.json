@@ -202,7 +202,7 @@
     "jquery-sidebar": "^3.3.2",
     "mysql": "2.18.1",
     "paragraph-builder": "1.0.15",
-    "pdfmake": "^0.2.0",
+    "pdfmake": "^0.2.2",
     "progress": "^2.0.3",
     "request": "^2.88.2",
     "smart-app-banner": "^2.0.0",
