@@ -316,5 +316,6 @@ app.listen(settings.HTTPport, function () {
   // https://medium.com/@NorbertdeLangen/communicating-between-nodejs-processes-4e68be42b917
   if (process.send) {
     process.send('SERVER_STARTED:' + settings.HTTPport)
+    process.send('ready') // very important, trigger to PM2 that app is ready
   }
 })
