@@ -8,8 +8,8 @@
     "test": "standard && node test/test.js",
     "coverage": "nyc npm run test",
     "postinstall": "node build.js -c -r prod",
-    "npmPublish": "npm version patch && npm publish && git push",
-    "refreshProdStats": "node build.js -dt -r prod",
+    "npm-publish": "npm version patch && npm publish && git push",
+    "refresh-stats:prod": "node build.js -dt -r prod",
     "snyk-protect": "snyk protect",
     "depcheck": "npx depcheck"
   },
