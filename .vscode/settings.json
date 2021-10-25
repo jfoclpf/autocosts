@@ -1,0 +1,4 @@
+{
+    "npm.enableRunFromFolder": true,
+    "npm.exclude": "**/app/**"
+}
