@@ -10,6 +10,7 @@
     "postinstall": "node build.js -c -r prod",
     "npm-publish": "npm version patch && npm publish && git push",
     "refresh-stats:prod": "node build.js -dt -r prod",
+    "build-start-offline": "node build.js -cim && node bin/server.js --print --pdf",
     "snyk-protect": "snyk protect",
     "depcheck": "npx depcheck"
   },
@@ -181,7 +182,6 @@
   },
   "dependencies": {
     "async": "^3.2.1",
-    "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "colors": "^1.4.0",
     "command-line-args": "^5.2.0",
