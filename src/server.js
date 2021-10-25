@@ -302,7 +302,7 @@ if (process.env.NODE_ENV === 'test') {
   process.exit(0)
 }
 
-app.listen(settings.HTTPport, function () {
+const server = app.listen(settings.HTTPport, function () {
   console.log('Listening on port ' + settings.HTTPport)
   console.log('To stop server press ' + colors.red.bold('CTRL+C') + '\n')
   console.log('*******************************************************************************')
@@ -319,3 +319,25 @@ app.listen(settings.HTTPport, function () {
     process.send('ready') // very important, trigger to PM2 that app is ready
   }
 })
+
+// gracefully exiting upon CTRL-C or when PM2 stops the process
+process.on('SIGINT', gracefulShutdown)
+process.on('SIGTERM', gracefulShutdown)
+function gracefulShutdown (signal) {
+  if (signal) {
+    console.log(`Received signal ${signal}`)
+  }
+  console.log('Gracefully closing http server')
+
+  try {
+    server.close(function (err) {
+      if (!err) {
+        console.log('http server closed successfully. Exiting!')
+      }
+      process.exit(err ? 1 : 0)
+    })
+  } catch (err) {
+    console.error('There was an error')
+    setTimeout(() => process.exit(1), 500)
+  }
+}
