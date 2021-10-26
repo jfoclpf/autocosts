@@ -3,7 +3,7 @@ autocosts &ndash; car costs calculator
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
-[![Dependency Status][dependency status_img]][dependency status_url]
+[![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jfoclpf/autocosts?targetFile=package.json)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm][npm_img]][npm_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
@@ -17,9 +17,6 @@ autocosts &ndash; car costs calculator
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
-
-[dependency status_img]: https://david-dm.org/jfoclpf/autocosts.svg
-[dependency status_url]: https://david-dm.org/jfoclpf/autocosts
 
 This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
