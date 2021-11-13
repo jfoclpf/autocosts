@@ -1,5 +1,7 @@
 /* functions which deal with the user POST submission */
 
+/* jslint node: true */
+
 'use strict'
 
 const mysql = require('mysql') // module to get info from database

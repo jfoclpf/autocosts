@@ -1,5 +1,7 @@
 // server side code to render url /domains
 
+/* jslint node: true */
+
 'use strict'
 
 const path = require('path')

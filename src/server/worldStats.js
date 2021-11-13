@@ -4,6 +4,8 @@
    informing the main server that the statistics are ready to be used. Thus, the statistics data are
    transferred from the database into memory right after the server is started, for fast delivery */
 
+/* jslint node: true */
+
 'use strict'
 
 const path = require('path')

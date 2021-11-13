@@ -1,5 +1,7 @@
 /* Handlebars Helper Functions */
 
+/* jslint node: true */
+
 'use strict'
 
 const paragraphBuilder = require('paragraph-builder')
