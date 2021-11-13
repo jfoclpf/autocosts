@@ -515,10 +515,10 @@ function checkForInternet () {
 
   debugInternet('Activated services requiring Internet:', activatedServiceDemandingInternet)
 
-  // check for Internet connection every 3 seconds and updates if status changes
+  // check for Internet connection every 10 seconds and updates if status changes
   let internetStatus = 'offline'
   const checkInternetConnection = () => {
-    isOnline({ timeout: 3000 }).then(function (online) {
+    isOnline({ timeout: 10000 }).then(function (online) {
       debugInternet(online ? 'online' : 'offline')
 
       if (!online && internetStatus === 'online') {
@@ -565,7 +565,7 @@ function checkForInternet () {
         }
       }
 
-      setTimeout(checkInternetConnection, 3000)
+      setTimeout(checkInternetConnection, 10000)
     })
   }
   checkInternetConnection()
