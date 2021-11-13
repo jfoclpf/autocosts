@@ -4,6 +4,8 @@ UBER service in that region from which the user is accessing the site.
 To manage tokens, visit: https://developer.uber.com/dashboard
 user:info@autocosts.info | pass: V************* */
 
+'use strict'
+
 const fs = require('fs')
 const path = require('path')
 const geoIP = require('geoip-lite')

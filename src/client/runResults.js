@@ -14,6 +14,8 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
+'use strict'
+
 autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
   var showResultsModule, calculatorModule, userFormModule, convertDataModule

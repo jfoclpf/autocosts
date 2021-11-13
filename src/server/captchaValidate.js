@@ -1,6 +1,8 @@
 /* server side script that handles with the POST request made by the client/browser
 regarding the Google reCapactha v2 https://developers.google.com/recaptcha/docs/display */
 
+'use strict'
+
 const request = require('request')
 const debug = require('debug')('app:captchaValidate')
 

@@ -1,5 +1,7 @@
 /* functions which deal with the user POST submission */
 
+'use strict'
+
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app:submitUserInput')
 const sqlFormatter = require('sql-formatter')

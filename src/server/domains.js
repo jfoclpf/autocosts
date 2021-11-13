@@ -1,5 +1,7 @@
 // server side code to render url /domains
 
+'use strict'
+
 const path = require('path')
 const url = require(path.join(__dirname, 'url'))
 const debug = require('debug')('app:domains')

@@ -1,3 +1,5 @@
+'use strict'
+
 const path = require('path')
 
 const url = require(path.join(__dirname, 'url'))

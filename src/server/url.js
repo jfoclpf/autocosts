@@ -3,6 +3,8 @@ The server side code shall thus forward the page if the entry URL is not correct
 according to the domain name vs. country code combinatorial rules.
 Check the actual policy: https://github.com/jfoclpf/autocosts/wiki/URL-selector */
 
+'use strict'
+
 const GEO_IP = require('geoip-lite')
 const debug = require('debug')('app:url')
 const nodeUrl = require('url')
