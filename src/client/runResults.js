@@ -88,11 +88,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
 
     if (source === 'g-recaptcha') {
       // when the google recaptcha process is concluded
-
-      if (!runButton.isCaptcha()) {
-        console.error('Called Run() from source "g-recaptcha" and run button does not comply')
-      }
-
       runButton.set('loading-g-recaptcha')
 
       // make a POST command to server to check if the user is human
@@ -135,10 +130,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
       // see above function useGreCapctha() for the conditions on startup
       // or after google recaptcha has been called once
 
-      if (!runButton.isNormal()) {
-        console.error('Called Run() from source "normal" and run button does not comply')
-      }
-
       var bIsDev = serverInfo.release === 'dev'
       var bSubmitToDatabase = serverInfo.switches.database &&
         serverInfo.selectedCountry !== 'XX' &&
@@ -176,8 +167,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
         case 'loading-g-recaptcha':
           if (isCaptcha()) {
             $btnCaptcha.hide()
-          } else {
-            console.error('Run Button set to "loading-g-recaptcha" but g-recaptcha is not active')
           }
           break
         default:
