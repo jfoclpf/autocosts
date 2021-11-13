@@ -2,7 +2,7 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-$(document).ready(function () {
+$(function () {
   var globalVariables = document.getElementById('global_variables')
   var countryCode = globalVariables.dataset.country
   console.log('Loaded stats page for: ' + countryCode)
