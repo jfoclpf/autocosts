@@ -4,6 +4,9 @@ UBER service in that region from which the user is accessing the site.
 To manage tokens, visit: https://developer.uber.com/dashboard
 user:info@autocosts.info | pass: V************* */
 
+/* jslint node: true */
+/* jslint esversion: 8 */
+
 'use strict'
 
 const fs = require('fs')
@@ -66,9 +69,7 @@ module.exports = function (req, res, serverData) {
   })
 }
 
-/* JShint still doesn't fully support ES7 async await */
-/* jshint ignore:start */
-const readCCFileAsync = async function (path) {
+async function readCCFileAsync (path) {
   const resPromise = function () {
     return new Promise(function (resolve, reject) {
       fs.readFile(path, 'utf8', // async read file
@@ -89,7 +90,7 @@ const readCCFileAsync = async function (path) {
   return result
 }
 
-const makeUberRequest = async function (req, serverData) {
+async function makeUberRequest (req, serverData) {
   let debugOption // put 0 for PROD; 1 for Lisbon, 2 for London
   if (url.isThisLocalhost(req)) {
     debugOption = 1 + (Math.random() >= 0.5) // random, it gives either 1 or 2
@@ -151,4 +152,3 @@ const makeUberRequest = async function (req, serverData) {
   const result = await resPromise()
   return result
 }
-/* jshint ignore:end */
