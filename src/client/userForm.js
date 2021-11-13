@@ -12,8 +12,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 autocosts.userFormModule = (function (thisModule, DOMForm, translatedStrings, switches, servicesAvailabilityObj) {
   var convertDataModule, validateDataModule, commonsModule
 

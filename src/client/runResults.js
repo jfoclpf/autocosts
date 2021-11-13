@@ -14,8 +14,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
   var showResultsModule, calculatorModule, userFormModule, convertDataModule
@@ -81,9 +79,16 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
   // creates the grecaptcha after the API Google function was loaded
   // runs when grecaptcha was solved
   function Run (source) {
-    // if human is already confirmed by previous Google Captcha, doesn't request Google Captcha API again
-    // In XX version or localhost doesn't use google captcha
+    // shows results immediately
+    const bWasCalculationOk = calculateCostsAndShowResults()
+
+    // now let's check if user is human, to add entry into database
+    // databaseObj is created right now to check precisely the time the user took to fill the form
+    const databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
+
     if (source === 'g-recaptcha') {
+      // when the google recaptcha process is concluded
+
       if (!runButton.isCaptcha()) {
         console.error('Called Run() from source "g-recaptcha" and run button does not comply')
       }
@@ -102,33 +107,38 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
           if (result === 'ok') {
             // Google Recaptcha
             userInfo.isHumanConfirmed = true
+            console.log('You seem to be a Human')
 
-            if (calculateCostsAndShowResults() && serverInfo.selectedCountry !== 'XX') {
+            if (bWasCalculationOk && serverInfo.selectedCountry !== 'XX') {
               // if not a test triggers event for Google Analytics
               if (serverInfo.switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics) {
                 ga('send', 'event', 'form_part', 'run_OK')
               }
               // submits data to database if no XX version
               if (serverInfo.switches.database) {
-                var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
                 submitDataToDB(databaseObj)
               }
             }
           } else {
-            // when the Google file was not accessible
-            calculateCostsAndShowResults()
+            // when the Google recaptcha was not OK, show results anyway but don't insert data into DB
+            console.warn('Google recaptcha did not return OK', result)
           }
 
           runButton.set('show-normal')
         })
+        .fail(function (jqXHR, textStatus) {
+          console.warn('Failed loading /captchaValidate', textStatus)
+          runButton.set('show-normal')
+        })
     } else if (source === 'normal') {
-      // here normally a human is already confirmed, for example when the same user runs the calculator twice
+      // here Google Recaptcha service is NOT used,
+      // see above function useGreCapctha() for the conditions on startup
+      // or after google recaptcha has been called once
 
       if (!runButton.isNormal()) {
         console.error('Called Run() from source "normal" and run button does not comply')
       }
 
-      var bWasCalculationOk = calculateCostsAndShowResults()
       var bIsDev = serverInfo.release === 'dev'
       var bSubmitToDatabase = serverInfo.switches.database &&
         serverInfo.selectedCountry !== 'XX' &&
@@ -137,7 +147,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
 
       // console.log(bWasCalculationOk, bSubmitToDatabase, bIsDev)
       if (bWasCalculationOk && bSubmitToDatabase) {
-        var databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
         submitDataToDB(databaseObj)
       }
 

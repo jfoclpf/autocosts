@@ -13,8 +13,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 autocosts.showResultsModule = (function (thisModule, translatedStrings, switches, language, uberApiObj, currentFullUrl) {
   // modules dependencies
   var chartsModule, pdfModule, commonsModule,

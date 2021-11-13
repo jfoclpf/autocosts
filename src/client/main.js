@@ -13,8 +13,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 var autocosts = (function () {
   var mainVariables = {
     main: {

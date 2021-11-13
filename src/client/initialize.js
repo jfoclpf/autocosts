@@ -6,8 +6,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 autocosts.initializeModule = (function (thisModule, serverInfo, translatedStrings, userInfo, statistics, servicesAvailabilityObj, paths) {
   var getFilesModule, commonsModule
 

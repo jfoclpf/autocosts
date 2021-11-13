@@ -11,8 +11,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 // check for node
 if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
   var autocosts = {}

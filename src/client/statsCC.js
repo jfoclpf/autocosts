@@ -2,8 +2,6 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-'use strict'
-
 $(function () {
   var globalVariables = document.getElementById('global_variables')
   var countryCode = globalVariables.dataset.country
