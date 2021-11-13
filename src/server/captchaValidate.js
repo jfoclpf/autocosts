@@ -5,6 +5,8 @@ regarding the Google reCapactha v2 https://developers.google.com/recaptcha/docs/
 
 'use strict'
 
+const apiRequestUrl = 'https://www.google.com/recaptcha/api/siteverify'
+
 const request = require('request')
 const debug = require('debug')('app:captchaValidate')
 
@@ -31,13 +33,13 @@ module.exports = function (req, res, serverData) {
 
   // loads the Google info with corresponding response
   // @ forces the ignoring of warnings in case the info is not loaded
-  const ApiUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' +
-        secretKey + '&response=' + captchaResponse + '&remoteip=' + ip
-  debug('url for the request: ' + ApiUrl)
+  const apiRequestCompleteUrl =
+    `${apiRequestUrl}?secret=${secretKey}&response=${captchaResponse}&remoteip=${ip}`
+  debug('full url for the request: ' + apiRequestCompleteUrl)
 
   // HTTP Header request
   const options = {
-    url: ApiUrl,
+    url: apiRequestCompleteUrl,
     headers: {
       'Content-Type': 'application/json; charset=utf-8'
     }
