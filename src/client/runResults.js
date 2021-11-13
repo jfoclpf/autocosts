@@ -82,15 +82,13 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
     // shows results immediately
     const bWasCalculationOk = calculateCostsAndShowResults()
 
-    // now let's check if user is human, to add entry into database
+    // now let's check if user is Human, to add entry into database
     // databaseObj is created right now to check precisely the time the user took to fill the form
     const databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
 
     if (source === 'g-recaptcha') {
       // when the google recaptcha process is concluded
-      runButton.set('loading-g-recaptcha')
-
-      // make a POST command to server to check if the user is human
+      // make now a POST command to server to check if the user is Human
       $.ajax({
         type: 'POST',
         url: 'captchaValidate',
@@ -164,11 +162,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
           $btnNormal.show().attr('disabled', false)
           $btnCaptcha.hide().attr('disabled', true)
           break
-        case 'loading-g-recaptcha':
-          if (isCaptcha()) {
-            $btnCaptcha.hide()
-          }
-          break
         default:
           console.error('Bad paramter flag on runButton.set(flag), unknown \'flag\': ' + flag)
       }
@@ -187,14 +180,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
       return 'none' // neither button is both enabled and visible; they may be both invisible
     }
 
-    function isNormal () {
-      return checkSanity() && $btnNormal.is(':visible')
-    }
-
-    function isCaptcha () {
-      return checkSanity() && $btnCaptcha.is(':visible')
-    }
-
     function checkSanity () {
       var errMsg = 'runButton sanity between $btnNormal and $btnCaptcha'
       if ($btnNormal.is(':disabled') && $btnCaptcha.is(':disabled')) {
@@ -208,9 +193,7 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
 
     return {
       set: set,
-      getButton: getButton,
-      isNormal: isNormal,
-      isCaptcha: isCaptcha
+      getButton: getButton
     }
   })()
 
