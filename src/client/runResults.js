@@ -17,17 +17,19 @@
 autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesAvailabilityObj, userInfo) {
   // modules dependencies
   var showResultsModule, calculatorModule, userFormModule, convertDataModule
-  // subModule of this module
-  var runButton
 
-  // ids in the HTML document
-  var normalRunButtonId = 'calculate_costs_btn'
-  var captchaRunButtonId = 'calculate_costs_btn_g_captcha'
+  // There are two buttons Run, but only one appears in the form
+  // The code alternates between one of these buttons
+  const $btnNormal = $('#calculate_costs_btn') // normal button
+  const $btnCaptcha = $('#calculate_costs_btn_g_captcha') // button for Google Recaptcha
 
   function initialize () {
     loadModuleDependencies()
-    loadRunButtonHandler()
     recaptchaCallback()
+
+    $btnNormal.on('click', function () {
+      Run('normal')
+    })
   }
 
   function loadModuleDependencies () {
@@ -35,13 +37,6 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
     calculatorModule = autocosts.calculatorModule
     userFormModule = autocosts.userFormModule
     convertDataModule = autocosts.convertDataModule
-  }
-
-  function loadRunButtonHandler () {
-    // run button
-    $('#calculate_costs_btn').on('click', function () {
-      Run('normal')
-    })
   }
 
   // Returns boolean whether to use or not Google Captcha
@@ -60,24 +55,22 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
 
     if (useGreCapctha()) {
       console.log('Using Google ReCapctha!')
-      runButton.set('show-g-recaptcha')
+      setRunButton('show-g-recaptcha')
 
-      grecaptcha.render(captchaRunButtonId, {
+      grecaptcha.render($btnCaptcha.prop('id'), {
         sitekey: '6LeWQBsUAAAAANQOQFEID9dGTVlS40ooY3_IIcoh',
-        callback: recaptchaSolved
+        callback: function () {
+          console.log('User finished filling Google Recaptcha on client side')
+          Run('g-recaptcha')
+        }
       })
     } else {
-      runButton.set('show-normal')
+      setRunButton('show-normal')
     }
   }
 
-  function recaptchaSolved () {
-    console.log('recaptchaSolved()')
-    Run('g-recaptcha')
-  }
-
-  // creates the grecaptcha after the API Google function was loaded
-  // runs when grecaptcha was solved
+  // when the user clicks one of the the buttons Run. There are two buttons Run, but only one appears in form.
+  // One button Run is for Google Recaptcha and another has no Recaptcha (normal button)
   function Run (source) {
     // shows results immediately
     const bWasCalculationOk = calculateCostsAndShowResults()
@@ -87,18 +80,17 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
     const databaseObj = convertDataModule.createDatabaseObjectFromForm(DOMForm)
 
     if (source === 'g-recaptcha') {
-      // when the google recaptcha process is concluded
+      // when the google recaptcha process is concluded on frontend
       // make now a POST command to server to check if the user is Human
       $.ajax({
         type: 'POST',
-        url: 'captchaValidate',
+        url: '/captchaValidate',
         data: '&g-recaptcha-response=' + grecaptcha.getResponse()
       })
         .done(function (result) {
           console.log('recaptcha-result: ', result)
 
           if (result === 'ok') {
-            // Google Recaptcha
             userInfo.isHumanConfirmed = true
             console.log('You seem to be a Human')
 
@@ -107,29 +99,30 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
               if (serverInfo.switches.googleAnalytics && servicesAvailabilityObj.googleAnalytics) {
                 ga('send', 'event', 'form_part', 'run_OK')
               }
-              // submits data to database if no XX version
               if (serverInfo.switches.database) {
                 submitDataToDB(databaseObj)
               }
             }
           } else {
-            // when the Google recaptcha was not OK, show results anyway but don't insert data into DB
+            // when the Google recaptcha was not OK, don't send entry to database
             console.warn('Google recaptcha did not return OK', result)
           }
 
-          runButton.set('show-normal')
+          // next time user fills the form (in this session) don't use recaptcha
+          setRunButton('show-normal')
         })
         .fail(function (jqXHR, textStatus) {
           console.warn('Failed loading /captchaValidate', textStatus)
-          runButton.set('show-normal')
+          setRunButton('show-normal')
         })
     } else if (source === 'normal') {
       // here Google Recaptcha service is NOT used,
       // see above function useGreCapctha() for the conditions on startup
-      // or after google recaptcha has been called once
+      // or after Google Recaptcha has been called once before during the session
 
       var bIsDev = serverInfo.release === 'dev'
-      var bSubmitToDatabase = serverInfo.switches.database &&
+      var bSubmitToDatabase =
+        serverInfo.switches.database &&
         serverInfo.selectedCountry !== 'XX' &&
         (userInfo.isHumanConfirmed || bIsDev) &&
         (serverInfo.booleans.notLocalhost || bIsDev)
@@ -139,63 +132,38 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
         submitDataToDB(databaseObj)
       }
 
-      runButton.set('show-normal')
+      setRunButton('show-normal')
     } else {
-      console.error('Bad paramter source on Run(source)')
+      console.error('Bad paramter source on function Run: ', source)
     }
   }
 
-  // Submodule relating to Run Button, alternating between Normal button and Google Recaptcha button
-  // see buttons html elements on file form.hbs, last lines
-  runButton = (function () {
-    var $btnNormal = $('#' + normalRunButtonId)
-    var $btnCaptcha = $('#' + captchaRunButtonId)
+  // There are two buttons Run, but only one appears in the form
+  // One button Run is for Google Recaptcha and another has no Recaptcha (normal button)
+  // flag: 'show-g-recaptcha' or 'show-normal'
+  function setRunButton (flag) {
+    console.log('Run button set to: ' + flag)
 
-    function set (flag) {
-      console.log('Run button set to: ' + flag)
-      switch (flag) {
-        case 'show-g-recaptcha':
-          $btnCaptcha.show().attr('disabled', false)
-          $btnNormal.hide().attr('disabled', true)
-          break
-        case 'show-normal':
-          $btnNormal.show().attr('disabled', false)
-          $btnCaptcha.hide().attr('disabled', true)
-          break
-        default:
-          console.error('Bad paramter flag on runButton.set(flag), unknown \'flag\': ' + flag)
-      }
+    if (
+      ($btnNormal.is(':disabled') && $btnCaptcha.is(':disabled')) ||
+      ($btnNormal.is(':visible') && $btnCaptcha.is(':visible'))
+    ) {
+      console.error('runButton sanity between $btnNormal and $btnCaptcha')
     }
 
-    function getButton () {
-      checkSanity()
-
-      if ($btnNormal.is(':enabled') && $btnNormal.is(':visible')) {
-        return 'normal'
-      }
-      if ($btnCaptcha.is(':enabled') && $btnCaptcha.is(':visible')) {
-        return 'g-recaptcha'
-      }
-
-      return 'none' // neither button is both enabled and visible; they may be both invisible
+    switch (flag) {
+      case 'show-g-recaptcha':
+        $btnCaptcha.show().attr('disabled', false)
+        $btnNormal.hide().attr('disabled', true)
+        break
+      case 'show-normal':
+        $btnNormal.show().attr('disabled', false)
+        $btnCaptcha.hide().attr('disabled', true)
+        break
+      default:
+        console.error("Bad paramter flag on runButton.set(flag), unknown 'flag': " + flag)
     }
-
-    function checkSanity () {
-      var errMsg = 'runButton sanity between $btnNormal and $btnCaptcha'
-      if ($btnNormal.is(':disabled') && $btnCaptcha.is(':disabled')) {
-        throw errMsg
-      }
-      if ($btnNormal.is(':visible') && $btnCaptcha.is(':visible')) {
-        throw errMsg
-      }
-      return true
-    }
-
-    return {
-      set: set,
-      getButton: getButton
-    }
-  })()
+  }
 
   // function that is run when user clicks "run/calculate"
   function calculateCostsAndShowResults () {
@@ -228,7 +196,7 @@ autocosts.runResultsModule = (function (DOMForm, serverInfo, mainObjs, servicesA
 
   function submitDataToDB (databaseObj) {
     $.ajax({
-      url: 'submitUserInput',
+      url: '/submitUserInput',
       type: 'POST',
       data: {
         databaseObj: databaseObj
