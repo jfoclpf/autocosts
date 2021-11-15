@@ -284,17 +284,22 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
 
     /* Google Analytics */
     if (navigator.userAgent.indexOf('Speed Insights') === -1 && !commonsModule.isThisAtest() && serverInfo.switches.googleAnalytics) {
-      $.getScript(paths.jsFiles.google.analytics, function () {
-        window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date()
-        // change according to your site
-        ga('create', serverInfo.googleAnalyticsTrackingId, 'auto')
-        ga('set', 'displayFeaturesTask', null)
-        ga('send', 'pageview')
+      $.getScript(paths.jsFiles.google.analytics)
+        .done(function () {
+          window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date()
+          // change according to your site
+          ga('create', serverInfo.googleAnalyticsTrackingId, 'auto')
+          ga('set', 'displayFeaturesTask', null)
+          ga('send', 'pageview')
 
-        // detects whether Google Analytics has loaded
-        // tries every second
-        checkGoogleAnalytics(1000)
-      })
+          // detects whether Google Analytics has loaded
+          // tries every second
+          checkGoogleAnalytics(1000)
+        })
+        .fail(function (jqxhr, settings, exception) {
+          console.error('Error loading Google Analytics')
+          servicesAvailabilityObj.googleAnalytics = false
+        })
     }
   }
 
