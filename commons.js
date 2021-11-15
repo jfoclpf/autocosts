@@ -605,13 +605,16 @@ function downloadGoogleAnalyticsJSFIle () {
   https.get(FILENAMES.client.Ganalytics, function (response) {
     response.pipe(file)
     console.log(`Downloaded Google Analytics Javascript file from ${FILENAMES.client.Ganalytics} to ${gAnalyticsJSFile}`)
-    fs.chmod(gAnalyticsJSFile, 0o766, (err) => {
+    fs.chmod(gAnalyticsJSFile, 0o777, (err) => {
       if (err) {
         console.error(`Can't change the permissions of file ${file}`)
       } else {
         debug(`The permissions for file ${gAnalyticsJSFile} have been changed!`)
       }
     })
+  }).on('error', (e) => {
+    SWITCHES.googleAnalytics = false
+    console.error("Can't download Google Analytics JS file at " + FILENAMES.client.Ganalytics, e)
   })
 }
 
