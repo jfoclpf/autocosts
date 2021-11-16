@@ -364,14 +364,16 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       addLiElm('depreciation', translatedStrings.error_depreciation_new_car)
     } else {
       addLiElm('depreciation',
-        translatedStrings.aq_value, currencyShow(form.depreciation.acquisitionCost))
+        translatedStrings.aq_value, currencyShow(form.depreciation.dateOfAcquisition.valueOfTheVehicle))
       addLiElm('depreciation',
-        translatedStrings.final_value, currencyShow(form.depreciation.presentValue))
+        translatedStrings.final_value, currencyShow(form.depreciation.dateOfUserInput.valueOfTheVehicle))
       addLiElm('depreciation',
         translatedStrings.period_own, calculatedData.details.ageOfCarInMonths + ' ' + translatedStrings.months)
       addLiElm('depreciation',
-        '(' + currencyShow(form.depreciation.acquisitionCost) + '-' + currencyShow(form.depreciation.presentValue) + ')/' +
-          calculatedData.details.ageOfCarInMonths + ' ' + translatedStrings.months)
+        '(' + currencyShow(form.depreciation.dateOfAcquisition.valueOfTheVehicle) + '-' +
+          currencyShow(form.depreciation.dateOfUserInput.valueOfTheVehicle) + ')/' +
+          calculatedData.details.ageOfCarInMonths + ' ' + translatedStrings.months
+      )
     }
 
     // Insurance
