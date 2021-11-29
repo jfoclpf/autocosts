@@ -1,4 +1,5 @@
 {
     "npm.enableRunFromFolder": true,
-    "npm.exclude": "**/app/**"
+    "npm.exclude": "**/app/**",
+    "editor.tabSize": 2
 }
