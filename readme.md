@@ -27,7 +27,7 @@ It will normally give them a good estimate of what they really need to spend on 
 ## Try it on your machine
 1. Clone the project<br>
 `git clone https://github.com/jfoclpf/autocosts.git`
-2. Enter the newly created directory and install dependencies<br>
+2. Enter in the newly created directory and install dependencies<br>
 `cd autocosts && npm i --production`
 3. Start the server<br>
 `npm start`
