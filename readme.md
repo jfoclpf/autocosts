@@ -18,14 +18,16 @@ autocosts &ndash; car costs calculator
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
 
-This calculator allows users to find the true cost of owning a car. It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
+This calculator allows users to find the true cost of owning a car in more than 30 countries. 
+
+It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
 ![screenshot](https://github.com/jfoclpf/autocosts/raw/master/src/img/screenshot.png)
 
 ## Try it on your machine
 1. Clone the project<br>
 `git clone https://github.com/jfoclpf/autocosts.git`
-2. Enter the newly created directory and install dependencies<br>
+2. Enter in the newly created directory and install dependencies<br>
 `cd autocosts && npm i --production`
 3. Start the server<br>
 `npm start`
@@ -208,7 +210,7 @@ var userData = {
   washing: {
     amountPerPeriod: 110,
     period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
-  },
+  }
 }
 
 var results = autocosts.calculate(userData)
