@@ -208,7 +208,7 @@ var userData = {
   washing: {
     amountPerPeriod: 110,
     period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
-  },
+  }
 }
 
 var results = autocosts.calculate(userData)
