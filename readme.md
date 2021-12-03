@@ -113,7 +113,6 @@ const autocosts = require('autocosts')
 var userData = {
   countryCode: 'US',
   currency: 'USD',
-
   depreciation: {
     dateOfAcquisition: {
       month: 5,
@@ -126,12 +125,10 @@ var userData = {
       valueOfTheVehicle: 5000
     }
   },
-
   insurance: {
     amountPerPeriod: 200,
     period: 'month'
   },
-
   credit: {
     creditBool: true,
     yesCredit: {
@@ -141,16 +138,13 @@ var userData = {
       residualValue: 0
     }
   },
-
   inspection: {
     averageInspectionCost: 120,
     numberOfInspections: 15
   },
-
   roadTaxes: {
     amountPerYear: 120
   },
-
   // Form Part 2
   fuel: {
     typeOfCalculation: 'distance', // type string: "money" or "distance"
@@ -177,19 +171,15 @@ var userData = {
       fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
     }
   },
-
   maintenance: {
     amountPerYear: 700
   },
-
   repairsImprovements: {
     amountPerYear: 200
   },
-
   parking: {
     amountPerMonth: 14
   },
-
   tolls: {
     calculationBasedOnDay: true, // true or false
     yesBasedOnDay: {
@@ -201,12 +191,10 @@ var userData = {
       period: null // type string: "month", "twoMonths",  "trimester", "semester", "year"
     }
   },
-
   fines: {
     amountPerPeriod: 40,
     period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
   },
-
   washing: {
     amountPerPeriod: 110,
     period: 'year' // type string: "month", "twoMonths",  "trimester", "semester", "year"
@@ -264,14 +252,16 @@ The financial effort of the user and alternative costs considering public transp
 
 The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses Apache Cordova to convert JavaScript built code into APP built files (for example APK files in Android)
 
-## Contributing, data structure, flowcharts and coding rules
+## About
+
+### Contributing, data structure, flowcharts and coding rules
 
 See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md)
 
-## License
+### License
 
 <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a>
 
-## Privacy
+### Privacy
 
 This calculator is and shall always be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
