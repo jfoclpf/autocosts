@@ -6,6 +6,10 @@
   "scripts": {
     "start": "node bin/server.js --print --pdf -r prod",
     "test": "standard && node test/test.js",
+    "build:simple": "node build.js -c",
+    "build:full": "node build.js -cim",
+    "build:full-with-db": "node build.js -cimst",
+    "build:help": "node build.js -h",
     "coverage": "nyc npm run test",
     "postinstall": "node build.js -c -r prod",
     "npm-publish": "npm version patch && npm publish && git push",
