@@ -256,7 +256,7 @@ The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Andro
 
 ### Contributing, data structure, flowcharts and coding rules
 
-See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md)
+See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md) and the [wiki pages](https://github.com/jfoclpf/autocosts/wiki)
 
 ### License
 
