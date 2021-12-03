@@ -154,8 +154,8 @@ Example for USA<br>
 <tr><td>weeks</td><td> weeks </td><td></td></tr>
 <tr><td>month</td><td> month </td><td></td></tr>
 <tr><td>months</td><td> months </td><td></td></tr>
-<tr><td>two_months</td><td> two months </td><td></td></tr>
-<tr><td>dist_each_two_months</td><td> miles for every two months </td><td></td></tr>
+<tr><td>twoMonths</td><td> two months </td><td></td></tr>
+<tr><td>dist_each_twoMonths</td><td> miles for every two months </td><td></td></tr>
 <tr><td>trimester</td><td> trimester </td><td></td></tr>
 <tr><td>semester</td><td> semester </td><td></td></tr>
 <tr><td>year</td><td> year </td><td></td></tr>

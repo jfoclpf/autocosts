@@ -455,7 +455,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
               addLiElm('fuel',
                 form.fuel.distanceBased.noCarToJob.distancePerPeriod + ' ' +
                   form.fuel.distanceBased.noCarToJob.distanceStandardUnit + ' ' +
-                  translatedStrings.word_per + ' ' + translatedStrings.dist_each_two_months)
+                  translatedStrings.word_per + ' ' + translatedStrings.dist_each_twoMonths)
               break
             case 'trimester':
               addLiElm('fuel',
@@ -518,7 +518,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
                                translatedStrings.word_per + ' ' + translatedStrings.month)
             break
           case 'twoMonths':
-            addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.dist_each_two_months)
+            addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.dist_each_twoMonths)
             break
           case 'trimester':
             addLiElm('fuel', form.fuel.currencyBased.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
@@ -562,7 +562,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
           break
         case 'twoMonths':
           addLiElm('tolls', form.tolls.noBasedOnDay.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-            translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
+            translatedStrings.words_per_each + ' ' + translatedStrings.twoMonths)
           break
         case 'trimester':
           addLiElm('tolls',
@@ -598,7 +598,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       case 'twoMonths':
         addLiElm('fines',
           form.fines.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-            translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
+            translatedStrings.words_per_each + ' ' + translatedStrings.twoMonths)
         break
       case 'trimester':
         addLiElm('fines',
@@ -629,7 +629,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
       case 'twoMonths':
         addLiElm('washing',
           form.washing.amountPerPeriod + ' ' + translatedStrings.curr_name_plural + ' ' +
-                         translatedStrings.words_per_each + ' ' + translatedStrings.two_months)
+                         translatedStrings.words_per_each + ' ' + translatedStrings.twoMonths)
         break
       case 'trimester':
         addLiElm('washing',

@@ -51,7 +51,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     }
 
     // language HTML select dropdowns for Time Periods
-    var selectTimeList = ['month', 'two_months', 'trimester', 'semester', 'year']
+    var selectTimeList = ['month', 'twoMonths', 'trimester', 'semester', 'year']
     $('select.time_period').each(function () {
       var $dropdown = $(this)
       for (var i = 0; i < selectTimeList.length; i++) {
