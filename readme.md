@@ -264,6 +264,10 @@ The financial effort of the user and alternative costs considering public transp
 
 The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Android APP can be found in Play Store</a>. It uses Apache Cordova to convert JavaScript built code into APP built files (for example APK files in Android)
 
+## Contributing, data structure, flowcharts and coding rules
+
+See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md)
+
 ## License
 
 <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a>
