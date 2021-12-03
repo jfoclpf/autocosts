@@ -35,7 +35,6 @@ async.series([startsHttpServer, validateFrontend],
   }
 )
 
-// they are all strings because the input type is text in front end
 const userDataForTest = {
   countryCode: 'US',
   currency: 'USD',
@@ -92,7 +91,7 @@ const userDataForTest = {
         distanceStandardUnit: null // type string: "km", "mil" or "mil(10km)"
       },
       fuelEfficiency: 25, // fuel efficiency of the vehicle
-      fuelEfficiencyStandard: 'mpg(US)', // type string; "ltr/100km", "mpg(US)", etc.
+      fuelEfficiencyStandard: 'km/ltr', // type string; "ltr/100km", "mpg(US)", etc.
       fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
       fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
     }
@@ -138,6 +137,7 @@ function validateFrontend (callback) {
       // click Main [Calculate button] on entry page
       await clickButtonById('calculateButton')
 
+      // depreciation
       const d = userDataForTest.depreciation
       await setElementValue('acquisitionMonth', d.dateOfAcquisition.month)
       await setElementValue('acquisitionYear', d.dateOfAcquisition.year)
@@ -146,43 +146,77 @@ function validateFrontend (callback) {
 
       await clickVisibleOrangeBtn()
 
+      // insurance
       const insurance = userDataForTest.insurance
       await setElementValue('insuranceValue', insurance.amountPerPeriod)
+      const insurancePeriodBtn = await driver.findElement(
+        By.css(`input[name="insurancePaymentPeriod"][value="${insurance.period}"]`)
+      )
+      await insurancePeriodBtn.click()
 
       await clickVisibleOrangeBtn()
 
+      // credit
+      const credit = userDataForTest.credit
+      if (credit.creditBool) {
+        await clickButtonById('cred_auto_true')
+        const yesCredit = credit.yesCredit
+        await setElementValue('borrowedAmount', yesCredit.borrowedAmount)
+        await setElementValue('numberInstallments', yesCredit.numberInstallments)
+        await setElementValue('amountInstallment', yesCredit.amountInstallment)
+        await setElementValue('residualValue', yesCredit.residualValue)
+      }
+
       await clickVisibleOrangeBtn()
 
+      // inspection
       const inspection = userDataForTest.inspection
       await setElementValue('numberInspections', inspection.numberOfInspections)
       await setElementValue('averageInspectionCost', inspection.averageInspectionCost)
 
       await clickVisibleOrangeBtn()
 
+      // road taxes
       const roadTaxes = userDataForTest.roadTaxes
       await setElementValue('roadTaxes', roadTaxes.amountPerYear)
 
       await clickVisibleOrangeBtn()
 
+      // fuel
       const fuel = userDataForTest.fuel
       if (fuel.typeOfCalculation === 'money') {
         await clickButtonById('radio_fuel_euros')
+
         await setElementValue('fuel_currency_value', fuel.currencyBased.amountPerPeriod)
         await setElementValue('fuel_currency_time_period', fuel.currencyBased.period, 'select')
       } else if (fuel.typeOfCalculation === 'distance') {
         await clickButtonById('radio_fuel_km')
+        const distanceBased = fuel.distanceBased
+
         if (fuel.distanceBased.considerCarToJob) {
           await clickButtonById('car_job_form2_yes')
-          const carToJob = fuel.distanceBased.carToJob
+          const carToJob = distanceBased.carToJob
+
           await setElementValue('car_to_work_number_days_week', carToJob.daysPerWeek)
           await setElementValue('car_to_work_distance_home_work', carToJob.distanceBetweenHomeAndJob)
           await setElementValue('car_to_work_distance_weekend', carToJob.distanceDuringWeekends)
         } else {
           await clickButtonById('car_job_form2_no')
+          const noCarToJob = distanceBased.noCarToJob
+
+          await setElementValue('no_car_to_work_distance', noCarToJob.distancePerPeriod)
+          await setElementValue('distance_standard_onfuel', noCarToJob.period, 'select')
+          await setElementValue('no_car_to_work_time_period', noCarToJob.distanceStandardUnit, 'select')
         }
+
+        await setElementValue('fuel_efficiency', distanceBased.fuelEfficiency)
+        await setElementValue('fuel_efficiency_standard_onfuel', distanceBased.fuelEfficiencyStandard, 'select')
+        await setElementValue('fuel_price', distanceBased.fuelPrice)
       } else {
         throw Error('Invalid option in fuel: ' + fuel.typeOfCalculation)
       }
+
+      await clickVisibleOrangeBtn()
 
       callback()
     } catch (err) {
@@ -213,14 +247,17 @@ function setElementValue (id, value, eleType) {
   return new Promise((resolve, reject) => {
     (async () => {
       try {
-        driver.wait(until.elementLocated(By.id(id)), 5000)
+        await driver.wait(until.elementLocated(By.id(id)), 5000)
         const ele = await driver.findElement(By.id(id))
         await driver.wait(until.elementIsVisible(ele), 5000)
         if (!eleType || eleType === 'input') {
           await ele.clear()
           await ele.sendKeys('value', value)
         } else if (eleType === 'select') {
-          await ele.sendKeys(value)
+          const option = await driver.findElement(
+            By.css(`#${id}>option[value='${value}']`)
+          )
+          await option.click()
         }
         resolve(ele)
       } catch (err) {
@@ -277,4 +314,15 @@ function startsHttpServer (callback) {
     }, function (err) {
       callback(Error(err))
     })
+}
+
+// gracefully exiting upon CTRL-C
+process.on('SIGINT', gracefulShutdown)
+process.on('SIGTERM', gracefulShutdown)
+function gracefulShutdown (signal) {
+  if (signal) {
+    console.log(`Received signal ${signal}`)
+  }
+  console.log('Closing http server')
+  testServer.closeServer()
 }
