@@ -1,4 +1,5 @@
-// Local server used for tests
+// Local server used for tests, that is,
+// it runs a server at localhost from which other node scripts can fetch and test
 
 const path = require('path')
 const { fork } = require('child_process')
