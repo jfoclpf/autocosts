@@ -1,4 +1,4 @@
-autocosts &ndash; the free and open source Car Costs Calculator
+autocosts &ndash; the fully free and open source Car Costs Calculator
 =========
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
@@ -256,7 +256,7 @@ The <a href="https://play.google.com/store/apps/details?id=info.autocosts">Andro
 
 ### Contributing, data structure, flowcharts and coding rules
 
-See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md)
+See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing.md) and the [wiki pages](https://github.com/jfoclpf/autocosts/wiki)
 
 ### License
 
