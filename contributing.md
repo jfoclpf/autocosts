@@ -64,7 +64,7 @@ year
 | **mpg(imp)** | miles per imperial gallon
 | **mpg(US)** | miles per USA gallon
 | **L/mil(10km)** | litres per nordic mile
-| **mil(10km)/ltr** | nordic miles per litre
+| **mil(10km)/L** | nordic miles per litre
 | **km/gal(US)** | kilometres per USA gallon
 
 

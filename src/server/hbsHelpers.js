@@ -76,6 +76,8 @@ module.exports = {
       case 5:
         return 'L/mil(10km)'
       case 6:
+        return 'mil(10km)/L'
+      case 7:
         return 'km/gal(US)'
       default:
         return 'error'

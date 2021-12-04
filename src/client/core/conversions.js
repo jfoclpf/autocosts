@@ -43,7 +43,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
       'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
       'mpg(US)': [4, 'US mpg'],
       'L/mil(10km)': [5, 'ltr/mil(10km)', 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
-      'mil(10km)/ltr': [6, 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
+      'mil(10km)/L': [6, 'mil(10km)/ltr', 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
       'km/gal(US)': [7, 'km/USGalon']
     }
   }
@@ -77,8 +77,8 @@ autocosts.calculatorModule.conversionsModule = (function () {
         return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(US) -> L/100km
       case 'L/mil(10km)':
         return conversionConstants.KM_TO_MIL * fuelEfficiency // l/mil -> L/100km (1 mil = 10km)
-      case 'mil(10km)/ltr':
-        return 1 / (conversionConstants.KM_TO_MIL * fuelEfficiency) // mil/l -> L/100km
+      case 'mil(10km)/L':
+        return 1 / (conversionConstants.KM_TO_MIL * fuelEfficiency) // mil(10km)/L -> L/100km
       case 'km/gal(US)':
         return (100 * conversionConstants.GALLON_US_TO_LITER) / fuelEfficiency // km/gal(US) -> L/100km (1 mil = 10km)
       default:
