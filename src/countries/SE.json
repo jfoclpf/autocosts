@@ -11,7 +11,7 @@
     "invert_currency" : "1",
     "std_dist" : "mil",
     "std_dist_full" : "mil",
-    "std_fuel_calc" : "l/mil(10km)",
+    "std_fuel_calc" : "L/mil(10km)",
     "std_volume_short" : "litres",
     "word_per" : "per",
     "words_per_each" : "per varje",

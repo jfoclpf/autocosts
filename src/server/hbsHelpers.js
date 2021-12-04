@@ -74,7 +74,7 @@ module.exports = {
       case 4:
         return 'mpg(US)'
       case 5:
-        return 'l/mil'
+        return 'L/mil(10km)'
       case 6:
         return 'km/gal(US)'
       default:

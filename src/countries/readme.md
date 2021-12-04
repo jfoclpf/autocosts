@@ -31,7 +31,7 @@ The <b>value</b> of the key <b>fuel_efficiency_std_option</b> shall be the numbe
 <tr><td>2 </td><td> km/L    </td><td> kilometres per litre</td></tr>
 <tr><td>3 </td><td> mpg(imp) </td><td> miles per imperial gallon</td></tr>
 <tr><td>4 </td><td> mpg(US) </td><td> miles per US gallon</td></tr>
-<tr><td>5 </td><td> l/mil </td><td> litres per 10 kilometers </td></tr>
+<tr><td>5 </td><td> L/mil(10km) </td><td> litres per 10 kilometers </td></tr>
 <tr><td>6 </td><td> km/gal(US) </td><td> km per US gallon </td></tr>
 </table>
 

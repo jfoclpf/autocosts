@@ -126,7 +126,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
           'km/L': [2, 'km/l', 'km/ltr'],
           'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
           'mpg(US)': [4, 'US mpg'],
-          'ltr/mil(10km)': [5, 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
+          'L/mil(10km)': [5, 'ltr/mil(10km)', 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
           'mil(10km)/ltr': [6, 'nordicMile/l', 'mil/l', 'mil/ltr', 'mil(10km)/l', '10km/l', '10km/ltr'],
           'km/gal(US)': [7, 'km/USGalon']
         }
