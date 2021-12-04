@@ -122,7 +122,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
           kWh: [4, 'KWH']
         },
         fuelEfficiency: {
-          'l/100km': [1, 'ltr/100km'],
+          'L/100km': [1, 'l/100km', 'ltr/100km'],
           'km/l': [2, 'km/ltr'],
           'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
           'mpg(US)': [4, 'US mpg'],

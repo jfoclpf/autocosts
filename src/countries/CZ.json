@@ -11,7 +11,7 @@
     "invert_currency" : "1",
     "std_dist" : "km",
     "std_dist_full" : "kilometr",
-    "std_fuel_calc" : "l/100km",
+    "std_fuel_calc" : "L/100km",
     "std_volume_short" : "l",
     "word_per" : "za",
     "words_per_each" : "za každý",

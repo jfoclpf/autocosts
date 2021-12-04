@@ -11,7 +11,7 @@
       "3":	"gal(US)"
     },
     "fuelEfficiency": {
-      "1": "ltr/100km",
+      "1": "L/100km",
       "2": "km/ltr",
       "3": "mpg(imp)",
       "4": "mpg(US)",

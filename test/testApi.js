@@ -67,7 +67,7 @@ const userDataTest1 = {
         distanceStandardUnit: null // type string: "km", "mil" or "mil(10km)"
       },
       fuelEfficiency: 25, // fuel efficiency of the vehicle
-      fuelEfficiencyStandard: 'mpg(US)', // type string; "ltr/100km", "mpg(US)", etc.
+      fuelEfficiencyStandard: 'mpg(US)', // type string; "L/100km", "mpg(US)", etc.
       fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
       fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
     }
@@ -232,7 +232,7 @@ const userDataTest2 = {
         distanceStandardUnit: null // type string: "km", "mil" or "mil(10km)"
       },
       fuelEfficiency: 25, // fuel efficiency of the vehicle
-      fuelEfficiencyStandard: 'mpg(US)', // type string; "ltr/100km", "mpg(US)", etc.
+      fuelEfficiencyStandard: 'mpg(US)', // type string; "L/100km", "mpg(US)", etc.
       fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
       fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
     }

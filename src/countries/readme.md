@@ -27,7 +27,7 @@ The <b>value</b> of the key <b>fuel_efficiency_std_option</b> shall be the numbe
 
 <table>
 <tr><th>key value </th><th>standard </th><th> description</th></tr>
-<tr><td>1 </td><td> l/100km </td><td> litres per 100 kilometres</td></tr>
+<tr><td>1 </td><td> L/100km </td><td> litres per 100 kilometres</td></tr>
 <tr><td>2 </td><td> km/l    </td><td> kilometres per litre</td></tr>
 <tr><td>3 </td><td> mpg(imp) </td><td> miles per imperial gallon</td></tr>
 <tr><td>4 </td><td> mpg(US) </td><td> miles per US gallon</td></tr>
@@ -500,7 +500,7 @@ Keep in mind your chosen standard currency as well as your volume and fuel effic
 <tr><td>std_jorney_2work</td><td>  </td><td>(standard distance, km or miles) made from home to work (just one way)</td></tr>
 <tr><td>std_jorney_weekend</td><td>  </td><td>(standard distance, km or miles) during the other days, for example weekends</td></tr>
 <tr><td>std_km_per_month</td><td>  </td><td>(standard distance, km or miles) made per month</td></tr>
-<tr><td>std_car_fuel_efficiency</td><td>  </td><td>(standard fuel efficiency, km/l l/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard</td></tr>
+<tr><td>std_car_fuel_efficiency</td><td>  </td><td>(standard fuel efficiency, km/l L/100km mpg(US) or mpg(imp)) fuel efficiency in the chosen standard</td></tr>
 <tr><td>std_fuel_price</td><td>  </td><td>price paid for fuel on chosen currency</td></tr>
 <tr><td>std_maintenance_per_year</td><td>  </td><td>amount paid for maintenance per year</td></tr>
 <tr><td>std_repairs</td><td>  </td><td>repairs and improvements paid per year on average</td></tr>

@@ -38,7 +38,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
       kWh: [4, 'KWH']
     },
     fuelEfficiency: {
-      'l/100km': [1, 'ltr/100km'],
+      'L/100km': [1, 'l/100km', 'ltr/100km'],
       'km/l': [2, 'km/ltr'],
       'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
       'mpg(US)': [4, 'US mpg'],
@@ -58,7 +58,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     throw Error('Uknown value "' + value + '" for concept "' + concept + '". Check the variable dictionary.\n')
   }
 
-  // converts chosen fuel consumption to l/100km
+  // converts chosen fuel consumption to L/100km
   function convertFuelEfficiencyToL100km (fuelEfficiency, fuelEfficiencyOption) {
     fuelEfficiency = parseFloat(fuelEfficiency)
 
@@ -67,20 +67,20 @@ autocosts.calculatorModule.conversionsModule = (function () {
     }
 
     switch (mapUnit('fuelEfficiency', fuelEfficiencyOption)) {
-      case 'l/100km':
+      case 'L/100km':
         return fuelEfficiency
       case 'km/l':
-        return 100 / fuelEfficiency // km/l -> l/100km
+        return 100 / fuelEfficiency // km/l -> L/100km
       case 'mpg(imp)':
-        return (100 * conversionConstants.GALLON_IMP_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(imp) -> l/100km
+        return (100 * conversionConstants.GALLON_IMP_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(imp) -> L/100km
       case 'mpg(US)':
-        return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(US) -> l/100km
+        return (100 * conversionConstants.GALLON_US_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(US) -> L/100km
       case 'ltr/mil(10km)':
-        return conversionConstants.KM_TO_MIL * fuelEfficiency // l/mil -> l/100km (1 mil = 10km)
+        return conversionConstants.KM_TO_MIL * fuelEfficiency // l/mil -> L/100km (1 mil = 10km)
       case 'mil(10km)/ltr':
-        return 1 / (conversionConstants.KM_TO_MIL * fuelEfficiency) // mil/l -> l/100km
+        return 1 / (conversionConstants.KM_TO_MIL * fuelEfficiency) // mil/l -> L/100km
       case 'km/gal(US)':
-        return (100 * conversionConstants.GALLON_US_TO_LITER) / fuelEfficiency // km/gal(US) -> l/100km (1 mil = 10km)
+        return (100 * conversionConstants.GALLON_US_TO_LITER) / fuelEfficiency // km/gal(US) -> L/100km (1 mil = 10km)
       default:
         throw Error('Error on convertFuelEfficiencyToL100km, fuelEfficiencyOption ' + fuelEfficiencyOption + ' unknown')
     }

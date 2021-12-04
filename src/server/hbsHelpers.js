@@ -66,7 +66,7 @@ module.exports = {
   getFuelEfficiencyOptStr: function () {
     switch (this.fuel_efficiency_std_option) {
       case 1:
-        return 'l/100km'
+        return 'L/100km'
       case 2:
         return 'km/l'
       case 3:
