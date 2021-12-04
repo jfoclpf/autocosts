@@ -47,7 +47,7 @@ var autocosts = (function () {
       switches: undefined, // GLOBAL switches Object, got from server configuration
       selectedCountry: undefined, // Current Country Code
       countryListObj: undefined, // List of countries in a Javascript Object
-      countriesStandards: undefined, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
+      countriesStandards: undefined, // fuel efficiency standards (km/L, mpg, etc.), distance standards (km, mi, etc.)
       domainListObj: undefined, // List of domains in a Javascript Object
       language: undefined, // Current Language Code according to ISO_639-1 codes
       translatedStrings: undefined, // Object with country's language text strings

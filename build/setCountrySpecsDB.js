@@ -1,6 +1,6 @@
 /* script that populates a country database with specifications for each country
    namely the standard distance (km, miles, etc.), fuel amount (ltr, gal, etc.) and
-   fuel efficiency (L/100km, km/l, mpg(imp), etc.) */
+   fuel efficiency (L/100km, km/L, mpg(imp), etc.) */
 
 console.log('Populating the \'countries specs database\' with information from the countries files')
 

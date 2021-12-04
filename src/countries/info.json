@@ -12,7 +12,7 @@
     },
     "fuelEfficiency": {
       "1": "L/100km",
-      "2": "km/ltr",
+      "2": "km/L",
       "3": "mpg(imp)",
       "4": "mpg(US)",
       "5": "ltr/mil(10km)",

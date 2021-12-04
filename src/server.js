@@ -53,7 +53,7 @@ const serverData = {
   fileNames: fileNames, // Object with the fileNames, on the server and client
   availableCountries: sortObj(countriesInfo.availableCountries), // Array of alphabetically sorted available Countries
   languagesCountries: countriesInfo.languagesCountries, // Array of Language Codes
-  countriesStandards: countriesInfo.standards, // fuel efficiency standards (km/l, mpg, etc.), distance standards (km, mi, etc.)
+  countriesStandards: countriesInfo.standards, // fuel efficiency standards (km/L, mpg, etc.), distance standards (km, mi, etc.)
   urls: commons.getUrlsObject(countriesInfo), // Object with Domains Infomation
   CClistOnString: commons.getCClistOnStr(countriesInfo.availableCountries), // a string with all the CC
   isOnline: undefined // if the server has access to Internet connection (to use database, uber, etc.)

@@ -60,7 +60,7 @@ year
 | Coding | meaning
 | ----------| ------------
 | **L/100km** | litres per 100 kilometres
-| **km/ltr** | kilometre per litre
+| **km/L** | kilometre per litre
 | **mpg(imp)** | miles per imperial gallon
 | **mpg(US)** | miles per USA gallon
 | **ltr/mil(10km)** | litres per nordic mile
@@ -377,7 +377,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) returns an o
   standardUnits: {
     speed, // km/h, mi/h, mil(10km)/h
     distance, // km, mi, mil(10km)
-    fuelEfficiency, // L/100km, km/ltr, etc.
+    fuelEfficiency, // L/100km, km/L, etc.
     fuelPriceVolume // ltr, gal(UK) or gal(US)
   }
 }

@@ -68,7 +68,7 @@ module.exports = {
       case 1:
         return 'L/100km'
       case 2:
-        return 'km/l'
+        return 'km/L'
       case 3:
         return 'mpg(imp)'
       case 4:

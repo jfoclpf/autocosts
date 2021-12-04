@@ -39,7 +39,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     },
     fuelEfficiency: {
       'L/100km': [1, 'l/100km', 'ltr/100km'],
-      'km/l': [2, 'km/ltr'],
+      'km/L': [2, 'km/l', 'km/ltr'],
       'mpg(imp)': [3, 'mpg(imp.)', 'mpg(UK)'],
       'mpg(US)': [4, 'US mpg'],
       'ltr/mil(10km)': [5, 'l/nordicMile', 'l/mil', 'ltr/mil', 'l/mil(10km)', 'l/10km', 'ltr/10km'],
@@ -69,8 +69,8 @@ autocosts.calculatorModule.conversionsModule = (function () {
     switch (mapUnit('fuelEfficiency', fuelEfficiencyOption)) {
       case 'L/100km':
         return fuelEfficiency
-      case 'km/l':
-        return 100 / fuelEfficiency // km/l -> L/100km
+      case 'km/L':
+        return 100 / fuelEfficiency // km/L -> L/100km
       case 'mpg(imp)':
         return (100 * conversionConstants.GALLON_IMP_TO_LITER) / (conversionConstants.KM_TO_MILES * fuelEfficiency) // mpg(imp) -> L/100km
       case 'mpg(US)':

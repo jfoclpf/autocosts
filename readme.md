@@ -55,7 +55,7 @@ Autocosts uses `nodejs`, `expressjs` and `handlebarsjs` to supply a server appli
 
 The project is optimized for a web-based version, and for an APP developped in Apache Cordova. The 2 last letters on the URI stands for the 2-letter ISO country code, and not for the language, since for example United Kingdom and Australia have the same language but different realities concerning the taxes, the terms applied to automobile costs and the units for fuel efficiency. The translations/language files apply therefore only to the selected country.
 
-The project already considers all the units and fuel efficiency cases, different in many countries. The variations for fuel efficiency are `L/100km`, `km/l`, `mpg(US)`, `mpg(imp)` and for distance are `km`, `miles` and `mil` (Nordic mile=10km). More information can be found in the directory [`src/countries/`](src/countries/).
+The project already considers all the units and fuel efficiency cases, different in many countries. The variations for fuel efficiency are `L/100km`, `km/L`, `mpg(US)`, `mpg(imp)` and for distance are `km`, `miles` and `mil` (Nordic mile=10km). More information can be found in the directory [`src/countries/`](src/countries/).
 
 For more information regarding how the costs are calculated, you can check the [`src/client/core/`](src/client/core/) which is based on the <a href="https://en.wikipedia.org/wiki/Car_costs">12 items that form the car costs</a> for any given country. Namely they are:
 
