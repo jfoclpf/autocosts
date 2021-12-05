@@ -213,7 +213,7 @@ autocosts.calculatorModule = (function (thisModule) {
         speed: u, // type string: km/h, mi/h, mil(10km)/h
         distance: u, // type string: km, mi, mil(10km)
         fuelEfficiency: u, // type string: L/100km, km/L, etc.
-        fuelPriceVolume: u // type string: L, gal(UK) or gal(US)
+        fuelPriceVolume: u // type string: L, gal(imp) or gal(US)
       }
     }
   }
@@ -261,7 +261,7 @@ autocosts.calculatorModule = (function (thisModule) {
     calculatedData.standardUnits.fuelEfficiency = conversionsModule.mapUnit('fuelEfficiency',
       inputData.fuel.distanceBased.fuelEfficiencyStandard)
 
-    // standard fuelPriceVolume: type string: L, gal(UK) or gal(US)
+    // standard fuelPriceVolume: type string: L, gal(imp) or gal(US)
     calculatedData.standardUnits.fuelPriceVolume = conversionsModule.mapUnit('fuelPriceVolume',
       inputData.fuel.distanceBased.fuelPriceVolumeStandard)
   }

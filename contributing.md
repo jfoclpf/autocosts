@@ -52,7 +52,7 @@ year
 | Coding | meaning
 | ----------| ------------
 | **L** | metric litre
-| **gal(UK)** | imperial gallon
+| **gal(imp)** | imperial gallon
 | **gal(US)** | USA gallon
 
 #### Fuel Efficiency
@@ -139,7 +139,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) which receiv
       fuelEfficiency,
       fuelEfficiencyStandard, // type string, "L/100km", "mpg(US)", etc.
       fuelPrice, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / L
-      fuelPriceVolumeStandard // type string: 'L', 'gal(UK)', 'gal(US)'
+      fuelPriceVolumeStandard // type string: 'L', 'gal(imp)', 'gal(US)'
     }
   },
 
@@ -378,7 +378,7 @@ The core function [`calculateCosts`](src/client/core/calculator.js) returns an o
     speed, // km/h, mi/h, mil(10km)/h
     distance, // km, mi, mil(10km)
     fuelEfficiency, // L/100km, km/L, etc.
-    fuelPriceVolume // L, gal(UK) or gal(US)
+    fuelPriceVolume // L, gal(imp) or gal(US)
   }
 }
 ```

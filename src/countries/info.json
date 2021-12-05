@@ -7,7 +7,7 @@
     },
     "fuelPrice": {
       "1":	"L",
-      "2":	"gal(UK)",
+      "2":	"gal(imp)",
       "3":	"gal(US)"
     },
     "fuelEfficiency": {
