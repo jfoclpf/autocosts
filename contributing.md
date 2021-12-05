@@ -52,7 +52,7 @@ year
 | Coding | meaning | note
 | ----------| ------------| --------
 | **L** | metric litre | [SI symbol](https://www.nist.gov/pml/weights-and-measures/si-units-volume) and from [IEEE abbreviation list](https://www.ewh.ieee.org/soc/ias/pub-dept/abbreviation.pdf)
-| **gal(UK)** | imperial gallon | `gal` is the standard abbreviation of gallon according to [IEEE](https://www.ewh.ieee.org/soc/ias/pub-dept/abbreviation.pdf)
+| **gal(imp)** | imperial gallon | `gal` is the standard abbreviation of gallon according to [IEEE](https://www.ewh.ieee.org/soc/ias/pub-dept/abbreviation.pdf)
 | **gal(US)** | USA gallon | `gal` is the standard abbreviation of gallon according to [IEEE](https://www.ewh.ieee.org/soc/ias/pub-dept/abbreviation.pdf)
 
 #### Fuel Efficiency
