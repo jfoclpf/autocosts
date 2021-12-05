@@ -109,8 +109,8 @@ autocosts.convertDataModule = (function (thisModule) {
           },
           fuelEfficiency: f.fuel_efficiency.value, // fuel efficiency of the vehicle
           fuelEfficiencyStandard: f.fuel_efficiency_standard_onfuel.value, // type string; "L/100km", "mpg(US)", etc.
-          fuelPrice: f.fuel_price.value, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
-          fuelPriceVolumeStandard: commonsModule.getStandard('fuelPriceVolume') // type string: 'ltr', 'gal(UK)', 'gal(US)'
+          fuelPrice: f.fuel_price.value, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / L
+          fuelPriceVolumeStandard: commonsModule.getStandard('fuelPriceVolume') // type string: 'L', 'gal(UK)', 'gal(US)'
         }
       },
 

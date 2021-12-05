@@ -12,7 +12,7 @@
     "std_dist" : "km",
     "std_dist_full" : "kilometri",
     "std_fuel_calc" : "L/100km",
-    "std_volume_short" : "ltr",
+    "std_volume_short" : "L",
     "word_per" : "pe",
     "words_per_each" : "la fiecare",
     "word_times" : "ori",

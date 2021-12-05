@@ -167,8 +167,8 @@ var userData = {
       },
       fuelEfficiency: 25, // fuel efficiency of the vehicle
       fuelEfficiencyStandard: 'mpg(US)', // type string; "L/100km", "mpg(US)", etc.
-      fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / ltr
-      fuelPriceVolumeStandard: 'gal(US)' // type string: 'ltr', 'gal(UK)', 'gal(US)'
+      fuelPrice: 2.5, // type number; currency per unit of volume standard. Ex: 1.4, that is 1.4 EUR / L
+      fuelPriceVolumeStandard: 'gal(US)' // type string: 'L', 'gal(UK)', 'gal(US)'
     }
   },
   maintenance: {

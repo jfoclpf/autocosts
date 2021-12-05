@@ -11,7 +11,7 @@
     "std_dist" : "km",
     "std_dist_full" : "Kilometer",
     "std_fuel_calc" : "L/100km",
-    "std_volume_short" : "ltr",
+    "std_volume_short" : "L",
     "word_per" : "pro",
     "words_per_each" : "für jede",
     "word_times" : "mal",

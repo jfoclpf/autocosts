@@ -116,7 +116,7 @@ autocosts.commonsModule = (function (thisModule, serverInfo) {
           'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
         },
         fuelPriceVolume: {
-          ltr: [1, 'l', 'ltr', 'litre', 'Litre', 'liter', 'Liter'],
+          L: [1, 'l', 'ltr', 'litre', 'Litre', 'liter', 'Liter'],
           'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
           'gal(US)': [3, 'US gallon', 'US gal'],
           kWh: [4, 'KWH']

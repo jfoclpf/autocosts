@@ -11,7 +11,7 @@
     "std_dist" : "mi",
     "std_dist_full" : "miles",
     "std_fuel_calc" : "mpg(imp)",
-    "std_volume_short" : "ltr",
+    "std_volume_short" : "L",
     "word_per" : "per",
     "words_per_each" : "per each",
     "word_times" : "times",

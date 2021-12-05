@@ -32,7 +32,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
       'mil(10km)': [3, 'nordicMile', 'nordic mile', 'mil(10km)', 'scandinavian mile']
     },
     fuelPriceVolume: {
-      ltr: [1, 'l', 'litre', 'Litre', 'liter', 'Liter'],
+      L: [1, 'l', 'ltr', 'litre', 'Litre', 'liter', 'Liter'],
       'gal(imp)': [2, 'imp gallon', 'imperial gallon', 'imperial gal', 'gal(UK)'],
       'gal(US)': [3, 'US gallon', 'US gal'],
       kWh: [4, 'KWH']
@@ -95,7 +95,7 @@ autocosts.calculatorModule.conversionsModule = (function () {
     }
 
     switch (mapUnit('fuelPriceVolume', fuelPriceVolumeUnit)) {
-      case 'ltr':
+      case 'L':
         return fuelPrice // CURRENCY_unit/litre to CURRENCY_unit/litre
       case 'gal(imp)':
         return fuelPrice / conversionConstants.GALLON_IMP_TO_LITER // currency/(imp gallon) -> currency/litre
