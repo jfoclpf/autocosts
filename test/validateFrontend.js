@@ -7,9 +7,9 @@ const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const extractZip = require('extract-zip')
-const { Builder, By, /* Key , */ until } = require('selenium-webdriver')
+const { Builder, By, until } = require('selenium-webdriver')
 
-const NumberOfTestedUserInputs = 1
+const NumberOfTestedUserInputs = 3
 const userDataArray = []
 
 // this should be here on the beginning to set global environments
@@ -155,8 +155,8 @@ function validateFrontend (callback) {
           const noCarToJob = distanceBased.noCarToJob
 
           await setElementValue('no_car_to_work_distance', noCarToJob.distancePerPeriod)
-          await setElementValue('distance_standard_onfuel', noCarToJob.period, 'select')
-          await setElementValue('no_car_to_work_time_period', noCarToJob.distanceStandardUnit, 'select')
+          await setElementValue('distance_standard_onfuel', noCarToJob.distanceStandardUnit, 'select')
+          await setElementValue('no_car_to_work_time_period', noCarToJob.period, 'select')
         }
 
         await setElementValue('fuel_efficiency', distanceBased.fuelEfficiency)
@@ -318,10 +318,14 @@ function extractZipWithUserInsertions (callback) {
 
   try {
     (async () => {
-      console.log('Extracting ' + userInsertionsZipFile)
+      console.log(
+        'Extracting ' + path.relative(directories.server.root, userInsertionsZipFile)
+      )
       await extractZip(userInsertionsZipFile, { dir: __dirname })
 
-      console.log('Reading JSON ' + userInsertionsZipFile)
+      console.log(
+        'Reading JSON ' + path.relative(directories.server.root, userInsertionsFile)
+      )
       // here the file was unzip successfully, the zip extractor removes the extension .zip
       const usersInput = JSON.parse(
         fs.readFileSync(userInsertionsFile, 'utf8'),
@@ -396,7 +400,7 @@ function startsHttpServer (callback) {
 // remove unziped file with user insertions
 function deleteUnzippedFile (callback) {
   if (fs.existsSync(userInsertionsFile)) {
-    console.log('deleting ' + userInsertionsFile)
+    console.log('deleting ' + path.relative(directories.server.root, userInsertionsFile))
     fs.unlinkSync(userInsertionsFile)
   }
   if (typeof callback === 'function') {
