@@ -1007,12 +1007,12 @@
                     {{{extra_data_time_question3}}}
                 </label>
                 <div class="input_value">
-                    <input type="number" min="0" step="Any"
+                    <input type="number" min="0" data-valueGreaterThanMin="true" step="Any"
                            id="min_drive_per_day" class="input_70" name="min_drive_per_day">
                     <span class="minutes_day">
                         {{{minutes}}} {{{word_per}}} {{{day}}}, {{{during}}}
                     </span>
-                    <input type="number" min="0" max="31" step="1" class="input_integer input_40"
+                    <input type="number" min="1" max="31" step="1" class="input_integer input_40"
                            id="days_drive_per_month" name="days_drive_per_month">
                     <span class="days_per_month">
                         {{{days}}} {{{word_per}}} {{{month}}}

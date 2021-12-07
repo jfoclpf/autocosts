@@ -239,13 +239,13 @@ autocosts.validateDataModule = (function () {
     }
 
     if (userData.credit.creditBool) {
-      if (!isNonNegativeNumber(userData.credit.yesCredit.borrowedAmount)) {
+      if (!isPositiveNumber(userData.credit.yesCredit.borrowedAmount)) {
         return false
       }
       if (!isInteger(userData.credit.yesCredit.numberInstallments) || userData.credit.yesCredit.numberInstallments < 0) {
         return false
       }
-      if (!isNonNegativeNumber(userData.credit.yesCredit.amountInstallment)) {
+      if (!isPositiveNumber(userData.credit.yesCredit.amountInstallment)) {
         return false
       }
       if (!isNonNegativeNumber(userData.credit.yesCredit.residualValue)) {
@@ -301,10 +301,10 @@ autocosts.validateDataModule = (function () {
 
     switch (fuel.typeOfCalculation) {
       case 'distance': /* fuel calculations made considering distance travelled by month */
-        if (!isNonNegativeNumber(fuel.distanceBased.fuelEfficiency)) {
+        if (!isPositiveNumber(fuel.distanceBased.fuelEfficiency)) {
           return false
         }
-        if (!isNumber(fuel.distanceBased.fuelPrice) || fuel.distanceBased.fuelPrice <= 0) {
+        if (!isPositiveNumber(fuel.distanceBased.fuelPrice)) {
           return false
         }
         if (typeof fuel.distanceBased.fuelEfficiencyStandard !== 'string' || !fuel.distanceBased.fuelEfficiencyStandard) {
@@ -322,14 +322,14 @@ autocosts.validateDataModule = (function () {
             return false
           }
 
-          if (!isNonNegativeNumber(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)) {
+          if (!isPositiveNumber(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)) {
             return false
           }
           if (!isNonNegativeNumber(fuel.distanceBased.carToJob.distanceDuringWeekends)) {
             return false
           }
         } else {
-          if (!isNonNegativeNumber(fuel.distanceBased.noCarToJob.distancePerPeriod)) {
+          if (!isPositiveNumber(fuel.distanceBased.noCarToJob.distancePerPeriod)) {
             return false
           }
           if (!isTimePeriodOk(fuel.distanceBased.noCarToJob.period)) {
@@ -493,37 +493,37 @@ autocosts.validateDataModule = (function () {
 
     switch (income.incomePeriod) {
       case 'year':
-        if (!isNumber(income.year.amount) || income.year.amount <= 0) {
+        if (!isPositiveNumber(income.year.amount)) {
           return false
         }
         break
       case 'month':
-        if (!isNumber(income.month.amountPerMonth) || income.month.amountPerMonth <= 0) {
+        if (!isPositiveNumber(income.month.amountPerMonth)) {
           return false
         }
-        if (!isNumber(income.month.monthsPerYear) || income.month.monthsPerYear <= 0 ||
+        if (!isPositiveNumber(income.month.monthsPerYear) ||
           income.month.monthsPerYear > maxNumberOfIncomeMonthsPerYear) {
           return false
         }
         break
       case 'week':
-        if (!isNumber(income.week.amountPerWeek) || income.week.amountPerWeek <= 0) {
+        if (!isPositiveNumber(income.week.amountPerWeek)) {
           return false
         }
-        if (!isNumber(income.week.weeksPerYear) || income.week.weeksPerYear <= 0 ||
+        if (!isPositiveNumber(income.week.weeksPerYear) ||
           income.week.weeksPerYear > maxNumberOfWeeksPerYear) {
           return false
         }
         break
       case 'hour':
-        if (!isNumber(income.hour.amountPerHour) || income.hour.amountPerHour <= 0) {
+        if (!isPositiveNumber(income.hour.amountPerHour)) {
           return false
         }
-        if (!isNumber(income.hour.hoursPerWeek) || income.hour.hoursPerWeek <= 0 ||
+        if (!isPositiveNumber(income.hour.hoursPerWeek) ||
           income.hour.hoursPerWeek > maxNumberOfHoursPerWeek) {
           return false
         }
-        if (!isNumber(income.hour.weeksPerYear) || income.hour.weeksPerYear <= 0 ||
+        if (!isPositiveNumber(income.hour.weeksPerYear) ||
           income.hour.weeksPerYear > maxNumberOfWeeksPerYear) {
           return false
         }
@@ -558,8 +558,9 @@ autocosts.validateDataModule = (function () {
         return false
       }
 
-      if (!isNumber(workingTime.monthsPerYear) ||
-        workingTime.monthsPerYear < minMonthsPerYear || workingTime.monthsPerYear > maxMonthsPerYear) {
+      if (!isInteger(workingTime.monthsPerYear) ||
+        workingTime.monthsPerYear < minMonthsPerYear ||
+        workingTime.monthsPerYear > maxMonthsPerYear) {
         return false
       }
     }
@@ -591,7 +592,7 @@ autocosts.validateDataModule = (function () {
         if (!isNumber(distance.carToJob.daysPerWeek) || distance.carToJob.daysPerWeek <= 0 || distance.carToJob.daysPerWeek > 7) {
           return false
         }
-        if (!isNonNegativeNumber(distance.carToJob.distanceBetweenHomeAndJob)) {
+        if (!isPositiveNumber(distance.carToJob.distanceBetweenHomeAndJob)) {
           return false
         }
         if (!isNonNegativeNumber(distance.carToJob.distanceDuringWeekends)) {
@@ -639,18 +640,18 @@ autocosts.validateDataModule = (function () {
     }
 
     if (distanceBasedOnDrivingToJob) {
-      if (!isNonNegativeNumber(timeSpentInDriving.carToJob.minutesBetweenHomeAndJob)) {
+      if (!isPositiveNumber(timeSpentInDriving.carToJob.minutesBetweenHomeAndJob)) {
         return false
       }
       if (!isNonNegativeNumber(timeSpentInDriving.carToJob.minutesDuringWeekend)) {
         return false
       }
     } else {
-      if (!isNonNegativeNumber(timeSpentInDriving.noCarToJob.minutesPerDay)) {
+      if (!isPositiveNumber(timeSpentInDriving.noCarToJob.minutesPerDay)) {
         return false
       }
       var daysDrivePerMonth = timeSpentInDriving.noCarToJob.daysPerMonth
-      if (!isInteger(daysDrivePerMonth) || daysDrivePerMonth < 0 || daysDrivePerMonth > 31) {
+      if (!isInteger(daysDrivePerMonth) || daysDrivePerMonth <= 0 || daysDrivePerMonth > 31) {
         return false
       }
     }
@@ -682,6 +683,11 @@ autocosts.validateDataModule = (function () {
   // check if number is valid and greater or equal zero
   function isNonNegativeNumber (n) {
     return isNumber(n) && n >= 0
+  }
+
+  // check if number is valid and positive
+  function isPositiveNumber (n) {
+    return isNumber(n) && n > 0
   }
 
   // this function is very important and checks if number is a FINITE VALID NUMBER
