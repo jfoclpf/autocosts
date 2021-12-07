@@ -116,7 +116,7 @@
     "credit_instalment" : "Monthly average value",
     "inspection" : "Vehicle inspection",
     "inspection_short" : "Inspection",
-    "inspection_nbmr_times" : "How many times have you taken your car for vehicle inspection?",
+    "inspection_nbmr_times" : "How many times have you taken your car for (periodic) official vehicle safety and/or emission inspections?",
     "inspection_price" : "Average cost per each vehicle inspection",
     "each_one_during" : "each one during",
     "times_costing" : "times costing",
