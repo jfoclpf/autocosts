@@ -262,7 +262,7 @@ function validateFrontend (callback) {
     } catch (err) {
       console.error(err)
       console.dir(data, { depth: null, colors: true })
-      // await driver.quit()
+      await driver.quit()
       reject(Error(err))
     }
 
