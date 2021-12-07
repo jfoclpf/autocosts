@@ -321,7 +321,6 @@ autocosts.validateDataModule = (function () {
           if (!isInteger(daysPerWeek) || daysPerWeek <= 0 || daysPerWeek > 7) {
             return false
           }
-          isNonNegativeNumber()
 
           if (!isNonNegativeNumber(fuel.distanceBased.carToJob.distanceBetweenHomeAndJob)) {
             return false
