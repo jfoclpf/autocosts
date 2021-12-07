@@ -134,6 +134,10 @@ function _init () {
     optionDefinitions.push({ name: service, type: Boolean })
   }
 
+  if (RELEASE === 'test') {
+    optionDefinitions.push({ name: 'browserForTest', type: String })
+  }
+
   // get set commandLineArgsObject from command line arguments
   let commandLineArgsObject
   try {
@@ -244,7 +248,8 @@ function _init () {
       propType: 'string',
       ApiId: ''
     },
-    defaultCountry: defaultCountry
+    defaultCountry: defaultCountry,
+    commandLineArgsObject: commandLineArgsObject
   }
 
   checkForInternet()
