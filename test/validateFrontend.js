@@ -7,18 +7,21 @@ const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const extractZip = require('extract-zip')
+const firefox = require('selenium-webdriver/firefox')
 const { Builder, By, until } = require('selenium-webdriver')
 
-const NumberOfTestedUserInputs = 3
-const userDataArray = []
+const NumberOfTestedUserInputs = 5
+const DataArray = [] // array of objects, each with userData and respective caluclatedData
 
 // this should be here on the beginning to set global environments
 const commons = require(path.join(__dirname, '..', 'commons'))
 commons.setRelease('test')
-
 const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
+
+const browserForTest = settings.commandLineArgsObject.browserForTest
+console.log('\n', `Testing with ${browserForTest} engine`.cyan, '\n')
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 console.log('Validating User Front-end with selenyum webdriver...')
@@ -60,10 +63,10 @@ function validateFrontend (callback) {
   }
 
   const promisesArray = DataArray.map(data =>
-      new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       validateUserData(data, resolve, reject)
-      })
-    )
+    })
+  )
 
   Promise.all(promisesArray)
     .then(() => {
@@ -75,15 +78,31 @@ function validateFrontend (callback) {
       callback(Error(err))
     })
 
-  async function validateUserData (userDataForTest, resolve, reject) {
+  async function validateUserData (data, resolve, reject) {
+    const userDataForTest = data.userData
+    const calculatedData = data.calculatedData
+
     const url = `http://localhost:${settings.HTTPport}/${userDataForTest.countryCode}`
-    const driver = await new Builder().forBrowser('firefox').build()
+    // const driver = await new Builder().forBrowser('firefox').build()
+
+    const screen = {
+      width: 1920,
+      height: 1080
+    }
+
+    const driver = await new Builder()
+      .forBrowser('firefox')
+      .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+      .build()
 
     try {
       await driver.get(url)
 
       // click Main [Calculate button] on entry page
-      await clickButtonById('calculateButton')
+      await driver.wait(until.elementLocated(By.id('calculateButton')), 10000)
+      const eleMainButton = await driver.findElement(By.id('calculateButton'))
+      await driver.wait(until.elementIsVisible(eleMainButton), 10000)
+      await eleMainButton.click()
 
       // depreciation
       const d = userDataForTest.depreciation
@@ -218,11 +237,31 @@ function validateFrontend (callback) {
 
       await clickVisibleOrangeBtn()
 
+      await clickButtonById('calculate_costs_btn')
+
+      // now results are shown, confirm results
+      // compare total costs with core calculator module
+      await driver.wait(until.elementLocated(By.className('periodic_costs_total_costs')), 5000)
+      const eleTotalCosts = await driver.findElement(By.className('periodic_costs_total_costs'))
+      const totalCosts = Number(
+        (await eleTotalCosts.getText())
+          .replace(/[^0-9.-]+/g, '') // remove currency symbols
+      )
+
+      // in browser results, the float is toFixed(2), we do now the same to compare
+      const calculatedCostsPerMonth = Number(calculatedData.costs.perMonth.total.toFixed(2))
+
+      if (totalCosts !== calculatedCostsPerMonth) {
+        throw Error(
+          `Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`
+        )
+      }
+
       await driver.quit()
       resolve()
     } catch (err) {
       console.error(err)
-      console.error(userDataForTest)
+      console.dir(data, { depth: null, colors: true })
       // await driver.quit()
       reject(Error(err))
     }
@@ -230,8 +269,11 @@ function validateFrontend (callback) {
     function clickButtonById (id) {
       return new Promise((resolve, reject) => {
         (async () => {
+          info(`/${userDataForTest.countryCode} click on #${id}`)
           try {
             const btn = await driver.findElement(By.id(id))
+            await driver.executeScript('arguments[0].scrollIntoView(true);', btn)
+            await driver.sleep(500)
             await btn.click()
             resolve()
           } catch (err) {
@@ -245,6 +287,7 @@ function validateFrontend (callback) {
     function setElementValue (id, value, eleType) {
       return new Promise((resolve, reject) => {
         (async () => {
+          info(`/${userDataForTest.countryCode} set #${id} with ${value}`)
           try {
             await driver.wait(until.elementLocated(By.id(id)), 5000)
             const ele = await driver.findElement(By.id(id))
@@ -272,6 +315,7 @@ function validateFrontend (callback) {
     function clickVisibleOrangeBtn () {
       return new Promise((resolve, reject) => {
         (async () => {
+          info(`/${userDataForTest.countryCode} click orange button`)
           const btnsOrange = await driver.findElements(By.className('btn-orange'))
 
           const btnsOrangePromises = []
@@ -330,6 +374,14 @@ function extractZipWithUserInsertions (callback) {
       const usersInput = JSON.parse(
         fs.readFileSync(userInsertionsFile, 'utf8'),
         commons.parseJsonProperty
+      ).filter(el =>
+        el.country && (
+          // select only countries with English language, easier to debug the frontend
+          el.country === 'AU' ||
+          el.country === 'US' ||
+          el.country === 'CA' ||
+          el.country === 'IE'
+        )
       )
       console.log(`Extracted ${usersInput.length} user inputs`)
 
@@ -341,6 +393,13 @@ function extractZipWithUserInsertions (callback) {
           usersInput[Math.floor(Math.random() * usersInput.length)]
         )
       }
+
+      // override insertion date for the date of today
+      // because the calculator on the browser always considers the insertion date as today
+      // important for the calculation of depreciation
+      selectedInputs.forEach(userInput => {
+        userInput.insertion_date = new Date().toISOString().slice(0, 10) // today
+      })
 
       for (let i = 0; i < selectedInputs.length; i++) {
         let countryInfo, userData, calculatedData
@@ -362,7 +421,11 @@ function extractZipWithUserInsertions (callback) {
             const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
 
             if (isUserDataEntryOk) {
-              userDataArray.push(userData)
+              calculatedData = calculator.calculateCosts(userData)
+              DataArray.push({
+                userData: userData,
+                calculatedData: calculatedData
+              })
             }
           }
         } catch (error) {
