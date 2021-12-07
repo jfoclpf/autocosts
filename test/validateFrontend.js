@@ -56,14 +56,15 @@ function (err, results) {
 })
 
 function validateFrontend (callback) {
-  const promisesArray = []
-  userDataArray.forEach(userData => {
-    promisesArray.push(
+  const info = function (info) {
+    process.stdout.write(info.padEnd(150) + '\x1b[0G')
+  }
+
+  const promisesArray = DataArray.map(data =>
       new Promise((resolve, reject) => {
-        validateUserData(userData, resolve, reject)
+      validateUserData(data, resolve, reject)
       })
     )
-  })
 
   Promise.all(promisesArray)
     .then(() => {
