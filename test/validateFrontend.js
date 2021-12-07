@@ -40,12 +40,11 @@ const userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 async.series([
   extractZipWithUserInsertions,
   startsHttpServer,
-  validateFrontend,
-  deleteUnzippedFile
+  validateFrontend
 ],
 // done after execution of above funcitons
 function (err, results) {
-  testServer.closeServer()
+  gracefulShutdown()
   if (err) {
     console.error(Error(err))
     process.exitCode = 1
@@ -398,18 +397,7 @@ function startsHttpServer (callback) {
     })
 }
 
-// remove unziped file with user insertions
-function deleteUnzippedFile (callback) {
-  if (fs.existsSync(userInsertionsFile)) {
-    console.log('deleting ' + path.relative(directories.server.root, userInsertionsFile))
-    fs.unlinkSync(userInsertionsFile)
-  }
-  if (typeof callback === 'function') {
-    callback()
-  }
-}
-
-// gracefully exiting upon CTRL-C
+// gracefully exiting upon CTRL-C or when the program finishes with success
 process.on('SIGINT', gracefulShutdown)
 process.on('SIGTERM', gracefulShutdown)
 function gracefulShutdown (signal) {
@@ -418,5 +406,10 @@ function gracefulShutdown (signal) {
   }
   console.log('Closing http server')
   testServer.closeServer()
-  deleteUnzippedFile()
+
+  // deleted unzipped file with user insertions, for storage saving
+  if (fs.existsSync(userInsertionsFile)) {
+    console.log('deleting ' + path.relative(directories.server.root, userInsertionsFile))
+    fs.unlinkSync(userInsertionsFile)
+  }
 }
