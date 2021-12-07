@@ -304,7 +304,7 @@ autocosts.validateDataModule = (function () {
         if (!isNonNegativeNumber(fuel.distanceBased.fuelEfficiency)) {
           return false
         }
-        if (!isNumber(fuel.distanceBased.fuelPrice) || fuel.distanceBased.fuelPrice < 0) {
+        if (!isNumber(fuel.distanceBased.fuelPrice) || fuel.distanceBased.fuelPrice <= 0) {
           return false
         }
         if (typeof fuel.distanceBased.fuelEfficiencyStandard !== 'string' || !fuel.distanceBased.fuelEfficiencyStandard) {
