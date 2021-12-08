@@ -7,8 +7,11 @@ const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const extractZip = require('extract-zip')
-const firefox = require('selenium-webdriver/firefox')
+
 const { Builder, By, until } = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
+const firefox = require('selenium-webdriver/firefox')
+const edge = require('selenium-webdriver/edge')
 
 const NumberOfTestedUserInputs = 5
 const DataArray = [] // array of objects, each with userData and respective caluclatedData
@@ -20,7 +23,14 @@ const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
+const supportedBrowsers = ['firefox', 'chrome', 'edge']
+
 const browserForTest = settings.commandLineArgsObject.browserForTest
+if (!supportedBrowsers.includes(browserForTest)) {
+  console.error('Wrong browser for testing: ' + browserForTest.red)
+  console.error(`Supported browsers are ${supportedBrowsers.join(', ')}`)
+  process.exit(1)
+}
 console.log('\n', `Testing with ${browserForTest} engine`.cyan, '\n')
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
@@ -69,8 +79,21 @@ function validateFrontend (callback) {
   )
 
   Promise.all(promisesArray)
-    .then(() => {
-      console.log('All tests run with success')
+    .then((driverArray) => {
+      console.log(`All frontend ${driverArray.length} tests run with success`.green)
+
+      // closing drivers, only when all drivers are finished
+      driverArray.forEach(driver => {
+        (async (_driver) => {
+          try {
+            await _driver.sleep(1000)
+            await _driver.quit()
+          } catch (err) {
+            // does nothing, no problem if error happens on quiting
+            // it may happen with chrome
+          }
+        })(driver)
+      })
       callback()
     })
     .catch(err => {
@@ -83,17 +106,29 @@ function validateFrontend (callback) {
     const calculatedData = data.calculatedData
 
     const url = `http://localhost:${settings.HTTPport}/${userDataForTest.countryCode}`
-    // const driver = await new Builder().forBrowser('firefox').build()
 
     const screen = {
       width: 1920,
       height: 1080
     }
 
-    const driver = await new Builder()
-      .forBrowser('firefox')
-      .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
-      .build()
+    let driver
+    switch (browserForTest) {
+      case 'firefox':
+        driver = await new Builder()
+          .forBrowser('firefox')
+          .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+          .build()
+        break
+      case 'chrome':
+        driver = await new Builder()
+          .forBrowser('chrome')
+          .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+          .build()
+        break
+      default:
+        throw Error('Wrong browser: ' + browserForTest)
+    }
 
     try {
       await driver.get(url)
@@ -257,8 +292,7 @@ function validateFrontend (callback) {
         )
       }
 
-      await driver.quit()
-      resolve()
+      resolve(driver)
     } catch (err) {
       console.error(err)
       console.dir(data, { depth: null, colors: true })
