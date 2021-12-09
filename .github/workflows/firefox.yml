@@ -23,8 +23,8 @@ jobs:
         cache: 'npm'
     - name: Install Webdriver manager
       run: sudo npm i -g webdriver-manager
-    - name: Show PATH dir where I can write
-      run: echo $PATH
-    - run: ls -alF ~/
+    - name: Install browser engines
+      run: sudo webdriver-manager update --out_dir /usr/local/bin
+    - run: ls -alF /usr/local/bin
     - name: Install package
       run: npm ci
