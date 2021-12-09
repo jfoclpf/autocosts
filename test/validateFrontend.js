@@ -485,7 +485,6 @@ function startsHttpServer (callback) {
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
 
   testServer.startsServerForTests(
-    ['--database'], // we need this option to test url /worldstats
     function () {
       callback()
       console.log('Webserver for frontend tests (autocosts) started with success')
