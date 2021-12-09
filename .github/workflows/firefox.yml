@@ -26,5 +26,9 @@ jobs:
     - name: Install browser engines
       run: sudo webdriver-manager update --out_dir /usr/local/bin
     - run: ls -alF /usr/local/bin
+    - run: sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
+    - run: sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
+    - run: sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
+    - run: ls -alF /usr/local/bin
     - name: Install package
       run: npm ci
