@@ -11,7 +11,7 @@ const extractZip = require('extract-zip')
 const { Builder, By, until } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const firefox = require('selenium-webdriver/firefox')
-const edge = require('selenium-webdriver/edge')
+// const edge = require('selenium-webdriver/edge')
 
 const NumberOfTestedUserInputs = 5
 const DataArray = [] // array of objects, each with userData and respective caluclatedData
@@ -62,7 +62,7 @@ function (err, results) {
     console.error(Error(err))
     process.exitCode = 1
   } else {
-    console.log('Frontend test ran OK'.green)
+    console.log('\nFrontend test ran OK\n')
     process.exitCode = 0
   }
 })
