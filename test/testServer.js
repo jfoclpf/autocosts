@@ -46,7 +46,7 @@ function startsServerForTests () {
     }
     httpLocalServer = fork(index, args, options)
     httpLocalServer.on('exit', (code, signal) => {
-      debug('Exited the fork for httpLocalServer')
+      debug('Exited the fork for httpLocalServer with ' + signal)
       if (code === 1) { // error
         debug('Exited with error')
         onError(Error('Exited the server with error.\nProbably the PORT number is already in use'))
