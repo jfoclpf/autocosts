@@ -25,6 +25,6 @@ jobs:
       run: sudo npm i -g webdriver-manager
     - name: Show PATH dir where I can write
       run: echo $PATH
-    - run: ls -l ~/.local/bin
+    - run: ls -alF ~/
     - name: Install package
       run: npm ci
