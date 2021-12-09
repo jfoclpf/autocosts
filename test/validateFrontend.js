@@ -483,7 +483,9 @@ function extractZipWithUserInsertions (callback) {
 function startsHttpServer (callback) {
   console.log('Building a clean copy and minifying html')
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+  console.log('Clean copy built')
 
+  console.log('Starting server')
   testServer.startsServerForTests(
     function () {
       callback()
