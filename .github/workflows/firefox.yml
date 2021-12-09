@@ -24,7 +24,7 @@ jobs:
     - name: Install Webdriver manager
       run: sudo npm i -g webdriver-manager
     - name: Show PATH dir where I can write
-      run: ( sh -fc 'IFS=:; for p in $PATH""; do [ -w "${p:-.}" ] && printf "%s\n" "$p"; done' )
+      run: echo $PATH
     - run: ls -l ~/.local/bin
     - name: Install package
       run: npm ci
