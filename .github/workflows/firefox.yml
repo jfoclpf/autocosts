@@ -24,11 +24,14 @@ jobs:
     - name: Install Webdriver manager
       run: sudo npm i -g webdriver-manager
     - name: Install browser engines
-      run: sudo webdriver-manager update --out_dir /usr/local/bin
-    - run: ls -alF /usr/local/bin
-    - run: sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
-    - run: sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
-    - run: sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
-    - run: ls -alF /usr/local/bin
+      run: | 
+        sudo webdriver-manager update --out_dir /usr/local/bin
+        ls -alF /usr/local/bin
+        sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
+        sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
+        sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
+        ls -alF /usr/local/bin
     - name: Install package
       run: npm ci
+    - name: Test Frontend with Firefox
+      run: npm run test:firefox
