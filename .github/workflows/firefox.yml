@@ -30,7 +30,7 @@ jobs:
         sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
         sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
         sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
-        ls -alF /usr/local/bin
+        ls -alF /usr/local/bin/geckodriver /usr/local/bin/chromedriver
     - name: Install package
       run: npm ci
     - name: Test Frontend with Firefox
