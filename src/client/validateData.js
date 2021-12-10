@@ -410,7 +410,7 @@ autocosts.validateDataModule = (function () {
         return false
       }
       var tollsDaysPerMonth = tolls.yesBasedOnDay.daysPerMonth
-      if (!isInteger(tollsDaysPerMonth) || tollsDaysPerMonth < 0 || tollsDaysPerMonth > 31) {
+      if (!isInteger(tollsDaysPerMonth) || tollsDaysPerMonth <= 0 || tollsDaysPerMonth > 31) {
         return false
       }
     } else {
