@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require('path')
 const async = require('async')
 const extractZip = require('extract-zip')
+const { spawn } = require('child_process')
 
 const { Builder, By, until } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
@@ -26,7 +27,11 @@ const directories = commons.getDirectories()
 const supportedBrowsers = ['firefox', 'chrome', 'edge']
 
 const browserForTest = settings.commandLineArgsObject.browserForTest
-if (!supportedBrowsers.includes(browserForTest)) {
+if (!browserForTest) {
+  console.log('Please select a browser to test with option --browserForTest')
+  console.log(`Supported browsers are ${supportedBrowsers.join(', ')}`)
+  process.exit(1)
+} if (!supportedBrowsers.includes(browserForTest)) {
   console.error('Wrong browser for testing: ' + browserForTest.red)
   console.error(`Supported browsers are ${supportedBrowsers.join(', ')}`)
   process.exit(1)
@@ -66,6 +71,132 @@ function (err, results) {
     process.exitCode = 0
   }
 })
+
+/*************************************************************************************/
+
+// unzip JSON file with user insertions to test Frontend with browser
+function extractZipWithUserInsertions (callback) {
+  const countrySpecs = {}
+
+  const _countrySpecs = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'country_specs.json'), 'utf8'),
+    commons.parseJsonProperty
+  )
+
+  // build a more code friendly Object
+  for (const item of Object.keys(_countrySpecs)) {
+    countrySpecs[_countrySpecs[item].Country] = _countrySpecs[item]
+  }
+
+  try {
+    (async () => {
+      console.log(
+        'Extracting ' + path.relative(directories.server.root, userInsertionsZipFile)
+      )
+      await extractZip(userInsertionsZipFile, { dir: __dirname })
+
+      console.log(
+        'Reading JSON ' + path.relative(directories.server.root, userInsertionsFile)
+      )
+      // here the file was unzip successfully, the zip extractor removes the extension .zip
+      const usersInput = JSON.parse(
+        fs.readFileSync(userInsertionsFile, 'utf8'),
+        commons.parseJsonProperty
+      ).filter(el =>
+        el.country && (
+          // select only countries with English language, easier to debug the frontend
+          el.country === 'AU' ||
+          el.country === 'US' ||
+          el.country === 'CA' ||
+          el.country === 'IE'
+        )
+      )
+      console.log(`Extracted ${usersInput.length} user inputs`)
+
+      console.log(`Randomly picking up ${NumberOfTestedUserInputs} of those`)
+      // selects few random user inputs
+      const selectedInputs = []
+      for (let i = 0; i < NumberOfTestedUserInputs; i++) {
+        selectedInputs.push(
+          usersInput[Math.floor(Math.random() * usersInput.length)]
+        )
+      }
+
+      // override insertion date for the date of today
+      // because the calculator on the browser always considers the insertion date as today
+      // important for the calculation of depreciation
+      selectedInputs.forEach(userInput => {
+        userInput.insertion_date = new Date().toISOString().slice(0, 10) // today
+      })
+
+      for (let i = 0; i < selectedInputs.length; i++) {
+        let countryInfo, userData, calculatedData
+
+        try {
+          const CC = selectedInputs[i].country // ISO Country Code
+
+          if (CC) {
+            countryInfo = {
+              code: CC,
+              currency: countrySpecs[CC].currency,
+              distance_std: countrySpecs[CC].distance_std,
+              fuel_efficiency_std: countrySpecs[CC].fuel_efficiency_std,
+              fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
+            }
+
+            userData = convertData.createUserDataObjectFromDatabase(selectedInputs[i], countryInfo)
+            validateData.setUserData(userData)
+            const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
+
+            if (isUserDataEntryOk) {
+              calculatedData = calculator.calculateCosts(userData)
+              DataArray.push({
+                userData: userData,
+                calculatedData: calculatedData
+              })
+            }
+          }
+        } catch (error) {
+          console.error('\n\nError on i:' + i, '\n',
+            '\n\ncountryObject: ', countryInfo,
+            '\n\nselectedInputs: ', selectedInputs[i],
+            '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
+            '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
+
+          callback(Error(error))
+        }
+      }
+      callback()
+    })()
+  } catch (errOnUnzip) {
+    callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
+  }
+}
+
+// starts http server on localhost on test default port
+function startsHttpServer (callback) {
+  console.log('Building a clean copy and minifying html')
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+  console.log('Clean copy built')
+
+  console.log('Starting server')
+  /* testServer.startsServerForTests(
+    function () {
+      callback()
+      console.log('Webserver for frontend tests (autocosts) started with success')
+    }, function (err) {
+      callback(Error(err))
+    })
+  */
+
+  const pr = spawn('node', [path.join(directories.server.root, 'bin', 'server.js'), '-r', 'test'])
+  pr.stdout.on('data', function (msg) {
+    if (msg.toString().includes('Listening')) {
+      console.log('Server started')
+      callback()
+    }
+  })
+}
 
 function validateFrontend (callback) {
   const info = function (info) {
@@ -378,121 +509,6 @@ function validateFrontend (callback) {
       })
     }
   }
-}
-
-// unzip JSON file with user insertions to test Frontend with browser
-function extractZipWithUserInsertions (callback) {
-  const countrySpecs = {}
-
-  const _countrySpecs = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'country_specs.json'), 'utf8'),
-    commons.parseJsonProperty
-  )
-
-  // build a more code friendly Object
-  for (const item of Object.keys(_countrySpecs)) {
-    countrySpecs[_countrySpecs[item].Country] = _countrySpecs[item]
-  }
-
-  try {
-    (async () => {
-      console.log(
-        'Extracting ' + path.relative(directories.server.root, userInsertionsZipFile)
-      )
-      await extractZip(userInsertionsZipFile, { dir: __dirname })
-
-      console.log(
-        'Reading JSON ' + path.relative(directories.server.root, userInsertionsFile)
-      )
-      // here the file was unzip successfully, the zip extractor removes the extension .zip
-      const usersInput = JSON.parse(
-        fs.readFileSync(userInsertionsFile, 'utf8'),
-        commons.parseJsonProperty
-      ).filter(el =>
-        el.country && (
-          // select only countries with English language, easier to debug the frontend
-          el.country === 'AU' ||
-          el.country === 'US' ||
-          el.country === 'CA' ||
-          el.country === 'IE'
-        )
-      )
-      console.log(`Extracted ${usersInput.length} user inputs`)
-
-      console.log(`Randomly picking up ${NumberOfTestedUserInputs} of those`)
-      // selects few random user inputs
-      const selectedInputs = []
-      for (let i = 0; i < NumberOfTestedUserInputs; i++) {
-        selectedInputs.push(
-          usersInput[Math.floor(Math.random() * usersInput.length)]
-        )
-      }
-
-      // override insertion date for the date of today
-      // because the calculator on the browser always considers the insertion date as today
-      // important for the calculation of depreciation
-      selectedInputs.forEach(userInput => {
-        userInput.insertion_date = new Date().toISOString().slice(0, 10) // today
-      })
-
-      for (let i = 0; i < selectedInputs.length; i++) {
-        let countryInfo, userData, calculatedData
-
-        try {
-          const CC = selectedInputs[i].country // ISO Country Code
-
-          if (CC) {
-            countryInfo = {
-              code: CC,
-              currency: countrySpecs[CC].currency,
-              distance_std: countrySpecs[CC].distance_std,
-              fuel_efficiency_std: countrySpecs[CC].fuel_efficiency_std,
-              fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
-            }
-
-            userData = convertData.createUserDataObjectFromDatabase(selectedInputs[i], countryInfo)
-            validateData.setUserData(userData)
-            const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
-
-            if (isUserDataEntryOk) {
-              calculatedData = calculator.calculateCosts(userData)
-              DataArray.push({
-                userData: userData,
-                calculatedData: calculatedData
-              })
-            }
-          }
-        } catch (error) {
-          console.error('\n\nError on i:' + i, '\n',
-            '\n\ncountryObject: ', countryInfo,
-            '\n\nselectedInputs: ', selectedInputs[i],
-            '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
-            '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
-
-          callback(Error(error))
-        }
-      }
-      callback()
-    })()
-  } catch (errOnUnzip) {
-    callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
-  }
-}
-
-// starts http server on localhost on test default port
-function startsHttpServer (callback) {
-  console.log('Building a clean copy and minifying html')
-  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
-  console.log('Clean copy built')
-
-  console.log('Starting server')
-  testServer.startsServerForTests(
-    function () {
-      callback()
-      console.log('Webserver for frontend tests (autocosts) started with success')
-    }, function (err) {
-      callback(Error(err))
-    })
 }
 
 // gracefully exiting upon CTRL-C or when the program finishes with success
