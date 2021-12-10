@@ -1,5 +1,7 @@
 // uses selenyum webdriver to validate front-end
+// Some important links
 // https://www.selenium.dev/selenium/docs/api/javascript/index.html
+// https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 
 /* jslint esversion: 8 */
 
@@ -11,7 +13,6 @@ const extractZip = require('extract-zip')
 const { Builder, By, until } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const firefox = require('selenium-webdriver/firefox')
-// const edge = require('selenium-webdriver/edge')
 
 const NumberOfTestedUserInputs = 5
 const DataArray = [] // array of objects, each with userData and respective caluclatedData
@@ -23,7 +24,7 @@ const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
-const supportedBrowsers = ['firefox', 'chrome', 'edge']
+const supportedBrowsers = ['firefox', 'chrome']
 
 const browserForTest = settings.commandLineArgsObject.browserForTest
 if (!browserForTest) {
