@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test-firefox:
+  test-chrome:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
