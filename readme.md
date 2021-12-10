@@ -5,7 +5,6 @@ autocosts &ndash; the fully free and open source Car Costs Calculator
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml)
-<br>
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm][npm_img]][npm_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
