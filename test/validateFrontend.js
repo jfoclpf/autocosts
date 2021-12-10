@@ -1,7 +1,5 @@
 // uses selenyum webdriver to validate front-end
 // https://www.selenium.dev/selenium/docs/api/javascript/index.html
-// For this script to work, server must already be opened at localhost
-// Therefore this is run with `npm run test:firefox` for example
 
 /* jslint esversion: 8 */
 
@@ -42,6 +40,9 @@ console.log('\n', `Testing with ${browserForTest} engine`.cyan, '\n')
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 console.log('Validating User Front-end with selenyum webdriver...')
 
+// http server that is run locally on localhost, to serve the website's files
+const testServer = require('./testServer')
+
 const convertData = require(fileNames.project['convertData.js'])
 const validateData = require(fileNames.project['validateData.js'])
 const calculator = require(fileNames.project['calculator.js'])
@@ -55,7 +56,7 @@ const userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 
 async.series([
   extractZipWithUserInsertions,
-  // startsHttpServer,
+  startsHttpServer,
   validateFrontend
 ],
 // done after execution of above funcitons
@@ -169,6 +170,22 @@ function extractZipWithUserInsertions (callback) {
   } catch (errOnUnzip) {
     callback(Error('Error unziping file ' + userInsertionsZipFile + '. ' + errOnUnzip.message))
   }
+}
+
+// starts http server on localhost on test default port
+function startsHttpServer (callback) {
+  console.log('Building a clean copy and minifying html')
+  commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-c'], 'ignore')
+  console.log('Clean copy built')
+
+  console.log('Starting server')
+  testServer.startsServerForTests(
+    function () {
+      callback()
+      console.log('Webserver for frontend tests (autocosts) started with success')
+    }, function (err) {
+      callback(Error(err))
+    })
 }
 
 function validateFrontend (callback) {
@@ -492,6 +509,7 @@ function gracefulShutdown (signal) {
     console.log(`Received signal ${signal}`)
   }
   console.log('Closing http server')
+  testServer.closeServer()
 
   // deleted unzipped file with user insertions, for storage saving
   if (fs.existsSync(userInsertionsFile)) {

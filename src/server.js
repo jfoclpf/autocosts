@@ -299,12 +299,6 @@ app.use(function (req, res) {
   res.redirect('/')
 })
 
-// NODE_ENV is different from release; NODE_ENV is set to 'test' on Travis test module
-if (process.env.NODE_ENV === 'test') {
-  console.log('Does not start http server, exiting...\n')
-  process.exit(0)
-}
-
 const server = app.listen(settings.HTTPport, function () {
   console.log('Listening on port ' + settings.HTTPport)
   console.log('To stop server press ' + colors.red.bold('CTRL+C') + '\n')
