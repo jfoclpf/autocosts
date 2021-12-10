@@ -4,7 +4,7 @@
 const defaultCountry = 'UK' // when no other method finds the country of user, use this by default
 const defaultPortProd = 3028 // default HTTP Port where the app listens - prod version
 const defaultPortDev = 3027 // default HTTP Port where the app listens - dev version
-const defaultPortTest = 3026 // default HTTP Port where the app listens - prod version
+const defaultPortTest = 3026 // default HTTP Port where the app listens - test version
 
 module.exports = {
 
@@ -256,14 +256,14 @@ function _init () {
 
   // reads data from JSON file with credentials for each service (in directory credentials/)
   let credentialsFileName
-  if (RELEASE === 'prod') {
-    credentialsFileName = FILENAMES.server.credentialsFullPath.prod
-  } else if (RELEASE === 'dev') {
-    credentialsFileName = FILENAMES.server.credentialsFullPath.dev
-  } else if (RELEASE === 'test') {
-    credentialsFileName = FILENAMES.server.credentialsFullPath.test
-  } else {
-    throw Error('Unkown Release ' + RELEASE)
+  switch (RELEASE) {
+    case 'prod':
+    case 'dev':
+    case 'test':
+      credentialsFileName = FILENAMES.server.credentialsFullPath[RELEASE]
+      break
+    default:
+      throw Error('Unkown Release ' + RELEASE)
   }
 
   debug(credentialsFileName)
@@ -426,7 +426,7 @@ function setFILENAMES () {
         test: 'testCredentials.json'
       },
       credentialsFullPath: {
-        prod: '',
+        prod: '', // it will be filled by this script right under
         dev: '',
         test: ''
       }
@@ -452,7 +452,7 @@ function setFILENAMES () {
   // fills credentialsFullPath subObject
   for (const file in FILENAMES.server.credentials) {
     FILENAMES.server.credentialsFullPath[file] =
-            path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file])
+      path.join(DIRECTORIES.server.credentials, FILENAMES.server.credentials[file])
   }
 }
 
