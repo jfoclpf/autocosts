@@ -1,0 +1,37 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Chrome
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test-firefox:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+        cache: 'npm'
+    - name: Install Webdriver manager
+      run: sudo npm i -g webdriver-manager
+    - name: Install browser engines
+      run: | 
+        sudo webdriver-manager update --out_dir /usr/local/bin
+        ls -alF /usr/local/bin
+        sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
+        sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
+        sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
+        ls -alF /usr/local/bin/geckodriver /usr/local/bin/chromedriver
+    - name: Install package
+      run: npm ci
+    - name: Test Frontend with Firefox
+      run: npm run test:chrome
