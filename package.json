@@ -8,7 +8,6 @@
     "test": "standard && node test/test.js",
     "test:firefox": "node test/validateFrontend.js --browserForTest firefox",
     "test:chrome": "node test/validateFrontend.js --browserForTest chrome",
-    "test:edge": "node test/validateFrontend.js --browserForTest edge",
     "build:simple": "node build.js -c",
     "build:full": "node build.js -cim",
     "build:full-with-db": "node build.js -cimst",
