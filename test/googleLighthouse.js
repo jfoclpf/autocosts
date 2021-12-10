@@ -133,7 +133,6 @@ function startsHttpServer (callback) {
   commons.runNodeScriptSync(path.join(directories.server.root, 'build.js'), ['-cimt'], 'ignore')
 
   testServer.startsServerForTests(
-    ['--database'], // we need this option to test url /worldstats
     function () {
       callback()
     }, function (err) {
