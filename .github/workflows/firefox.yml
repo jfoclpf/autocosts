@@ -34,4 +34,4 @@ jobs:
     - name: Install package
       run: npm ci
     - name: Test Frontend with Firefox
-      run: DEBUG=test:testServer node test/validateFrontend.js --browserForTest firefox
+      run: npm run test:firefox
