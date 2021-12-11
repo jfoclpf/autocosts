@@ -135,7 +135,7 @@ function _init () {
   }
 
   if (RELEASE === 'test') {
-    optionDefinitions.push({ name: 'browserForTest', type: String })
+    optionDefinitions.push({ name: 'frontendTest', type: String })
   }
 
   // get set commandLineArgsObject from command line arguments

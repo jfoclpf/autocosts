@@ -24,19 +24,22 @@ const settings = commons.getSettings()
 const fileNames = commons.getFileNames()
 const directories = commons.getDirectories()
 
-const supportedBrowsers = ['firefox', 'chrome']
+const supportedOptions = ['firefox', 'chrome', 'allUserInputs'] // for frontendTest
 
-const browserForTest = settings.commandLineArgsObject.browserForTest
-if (!browserForTest) {
-  console.log('Please select a browser to test with option --browserForTest')
-  console.log(`Supported browsers are ${supportedBrowsers.join(', ')}`)
+const frontendTest = settings.commandLineArgsObject.frontendTest
+if (!frontendTest) {
+  console.log('Please select an option to test with option --frontendTest')
+  console.log(`Supported options are ${supportedOptions.join(', ')}`)
   process.exit(1)
-} if (!supportedBrowsers.includes(browserForTest)) {
-  console.error('Wrong browser for testing: ' + browserForTest.red)
-  console.error(`Supported browsers are ${supportedBrowsers.join(', ')}`)
+} if (!supportedOptions.includes(frontendTest)) {
+  console.error('Wrong options: ' + frontendTest.red)
+  console.error(`Supported options are ${supportedOptions.join(', ')}`)
   process.exit(1)
 }
-console.log('\n', `Testing with ${browserForTest} engine`.cyan, '\n')
+console.log(`Options selected is ${frontendTest.cyan}`)
+if (frontendTest === 'firefox' || frontendTest === 'chrome') {
+  console.log('\n', `Tesing ${NumberOfTestedUserInputs} random user inputs asynchronously with ${frontendTest} browser engine`.cyan, `\n`)
+}
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
 console.log('Validating User Front-end with selenyum webdriver...')
@@ -58,7 +61,7 @@ const userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 async.series([
   extractZipWithUserInsertions,
   startsHttpServer,
-  validateFrontend
+  validateWithSameUserInputs
 ],
 // done after execution of above funcitons
 function (err, results) {
@@ -67,7 +70,7 @@ function (err, results) {
     console.error(Error(err))
     process.exitCode = 1
   } else {
-    console.log('\nFrontend test ran OK\n')
+    console.log('\nFrontend test ran OK\n'.green)
     process.exitCode = 0
   }
 })
@@ -189,14 +192,37 @@ function startsHttpServer (callback) {
     })
 }
 
-function validateFrontend (callback) {
-  const info = function (info) {
-    process.stdout.write(info.padEnd(150) + '\x1b[0G')
+// Validate front end with some (NumberOfTestedUserInputs) user inputs run async
+function validateWithSameUserInputs (callback) {
+  // screen size of headless browser
+  const screen = {
+    width: 1920,
+    height: 1080
   }
 
   const promisesArray = DataArray.map(data =>
     new Promise((resolve, reject) => {
-      validateUserData(data, resolve, reject)
+      (async (_resolve, _reject) => {
+        let driver
+        switch (frontendTest) {
+          case 'firefox':
+            driver = await new Builder()
+              .forBrowser('firefox')
+              .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+              .build()
+            break
+          case 'chrome':
+            driver = await new Builder()
+              .forBrowser('chrome')
+              .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+              .build()
+            break
+          default:
+            throw Error('Wrong browser: ' + frontendTest)
+        }
+
+        validateUserData(driver, data, _resolve, _reject)
+      })(resolve, reject)
     })
   )
 
@@ -222,283 +248,265 @@ function validateFrontend (callback) {
       console.error(err)
       callback(Error(err))
     })
+}
 
-  async function validateUserData (data, resolve, reject) {
-    const userDataForTest = data.userData
-    const calculatedData = data.calculatedData
+async function validateUserData (driver, data, resolve, reject) {
+  // log function to run on the same line of stdout
+  const info = function (info) {
+    process.stdout.write(info.padEnd(150) + '\x1b[0G')
+  }
 
-    const url = `http://localhost:${settings.HTTPport}/${userDataForTest.countryCode}`
+  const userDataForTest = data.userData
+  const calculatedData = data.calculatedData
 
-    const screen = {
-      width: 1920,
-      height: 1080
+  const url = `http://localhost:${settings.HTTPport}/${userDataForTest.countryCode}`
+
+  try {
+    await driver.get(url)
+
+    // click Main [Calculate button] on entry page
+    await driver.wait(until.elementLocated(By.id('calculateButton')), 10000)
+    const eleMainButton = await driver.findElement(By.id('calculateButton'))
+    await driver.wait(until.elementIsVisible(eleMainButton), 10000)
+    await eleMainButton.click()
+
+    // depreciation
+    const d = userDataForTest.depreciation
+    await setElementValue('acquisitionMonth', d.dateOfAcquisition.month)
+    await setElementValue('acquisitionYear', d.dateOfAcquisition.year)
+    await setElementValue('commercialValueAtAcquisition', d.dateOfAcquisition.valueOfTheVehicle)
+    await setElementValue('commercialValueAtNow', d.dateOfUserInput.valueOfTheVehicle)
+
+    await clickVisibleOrangeBtn()
+
+    // insurance
+    const insurance = userDataForTest.insurance
+    await setElementValue('insuranceValue', insurance.amountPerPeriod)
+    const insurancePeriodBtn = await driver.findElement(
+      By.css(`input[name="insurancePaymentPeriod"][value="${insurance.period}"]`)
+    )
+    await insurancePeriodBtn.click()
+
+    await clickVisibleOrangeBtn()
+
+    // credit
+    const credit = userDataForTest.credit
+    if (credit.creditBool) {
+      await clickButtonById('cred_auto_true')
+      const yesCredit = credit.yesCredit
+      await setElementValue('borrowedAmount', yesCredit.borrowedAmount)
+      await setElementValue('numberInstallments', yesCredit.numberInstallments)
+      await setElementValue('amountInstallment', yesCredit.amountInstallment)
+      await setElementValue('residualValue', yesCredit.residualValue)
     }
 
-    let driver
-    switch (browserForTest) {
-      case 'firefox':
-        driver = await new Builder()
-          .forBrowser('firefox')
-          .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
-          .build()
-        break
-      case 'chrome':
-        driver = await new Builder()
-          .forBrowser('chrome')
-          .setChromeOptions(new chrome.Options().headless().windowSize(screen))
-          .build()
-        break
-      default:
-        throw Error('Wrong browser: ' + browserForTest)
+    await clickVisibleOrangeBtn()
+
+    // inspection
+    const inspection = userDataForTest.inspection
+    await setElementValue('numberInspections', inspection.numberOfInspections)
+    if (inspection.numberOfInspections > 0) {
+      await setElementValue('averageInspectionCost', inspection.averageInspectionCost)
     }
 
-    try {
-      await driver.get(url)
+    await clickVisibleOrangeBtn()
 
-      // click Main [Calculate button] on entry page
-      await driver.wait(until.elementLocated(By.id('calculateButton')), 10000)
-      const eleMainButton = await driver.findElement(By.id('calculateButton'))
-      await driver.wait(until.elementIsVisible(eleMainButton), 10000)
-      await eleMainButton.click()
+    // road taxes
+    const roadTaxes = userDataForTest.roadTaxes
+    await setElementValue('roadTaxes', roadTaxes.amountPerYear)
 
-      // depreciation
-      const d = userDataForTest.depreciation
-      await setElementValue('acquisitionMonth', d.dateOfAcquisition.month)
-      await setElementValue('acquisitionYear', d.dateOfAcquisition.year)
-      await setElementValue('commercialValueAtAcquisition', d.dateOfAcquisition.valueOfTheVehicle)
-      await setElementValue('commercialValueAtNow', d.dateOfUserInput.valueOfTheVehicle)
+    await clickVisibleOrangeBtn()
 
-      await clickVisibleOrangeBtn()
+    // fuel
+    const fuel = userDataForTest.fuel
+    if (fuel.typeOfCalculation === 'money') {
+      await clickButtonById('radio_fuel_euros')
 
-      // insurance
-      const insurance = userDataForTest.insurance
-      await setElementValue('insuranceValue', insurance.amountPerPeriod)
-      const insurancePeriodBtn = await driver.findElement(
-        By.css(`input[name="insurancePaymentPeriod"][value="${insurance.period}"]`)
+      await setElementValue('fuel_currency_value', fuel.currencyBased.amountPerPeriod)
+      await setElementValue('fuel_currency_time_period', fuel.currencyBased.period, 'select')
+    } else if (fuel.typeOfCalculation === 'distance') {
+      await clickButtonById('radio_fuel_km')
+      const distanceBased = fuel.distanceBased
+
+      if (fuel.distanceBased.considerCarToJob) {
+        await clickButtonById('car_job_form2_yes')
+        const carToJob = distanceBased.carToJob
+
+        await setElementValue('car_to_work_number_days_week', carToJob.daysPerWeek)
+        await setElementValue('car_to_work_distance_home_work', carToJob.distanceBetweenHomeAndJob)
+        await setElementValue('car_to_work_distance_weekend', carToJob.distanceDuringWeekends)
+      } else {
+        await clickButtonById('car_job_form2_no')
+        const noCarToJob = distanceBased.noCarToJob
+
+        await setElementValue('no_car_to_work_distance', noCarToJob.distancePerPeriod)
+        await setElementValue('distance_standard_onfuel', noCarToJob.distanceStandardUnit, 'select')
+        await setElementValue('no_car_to_work_time_period', noCarToJob.period, 'select')
+      }
+
+      await setElementValue('fuel_efficiency', distanceBased.fuelEfficiency)
+      await setElementValue('fuel_efficiency_standard_onfuel', distanceBased.fuelEfficiencyStandard, 'select')
+      await setElementValue('fuel_price', distanceBased.fuelPrice)
+    } else {
+      throw Error('Invalid option in fuel: ' + fuel.typeOfCalculation)
+    }
+
+    await clickVisibleOrangeBtn()
+
+    // maintenance
+    const maintenance = userDataForTest.maintenance
+    await setElementValue('maintenance', maintenance.amountPerYear)
+
+    await clickVisibleOrangeBtn()
+
+    // repairs and improvements
+    const repairsImprovements = userDataForTest.repairsImprovements
+    await setElementValue('repairs', repairsImprovements.amountPerYear)
+
+    await clickVisibleOrangeBtn()
+
+    // parking
+    const parking = userDataForTest.parking
+    await setElementValue('parking', parking.amountPerMonth)
+
+    await clickVisibleOrangeBtn()
+
+    // tolls
+    const tolls = userDataForTest.tolls
+    if (tolls.calculationBasedOnDay) {
+      await clickButtonById('tolls_daily_true')
+
+      const yesBasedOnDay = tolls.yesBasedOnDay
+      await setElementValue('daily_expense_tolls', yesBasedOnDay.amountPerDay)
+      await setElementValue('number_days_tolls', yesBasedOnDay.daysPerMonth)
+    } else {
+      await clickButtonById('tolls_daily_false')
+
+      const noBasedOnDay = tolls.noBasedOnDay
+      await setElementValue('no_daily_tolls_value', noBasedOnDay.amountPerPeriod)
+      await setElementValue('tolls_period_select', noBasedOnDay.period, 'select')
+    }
+
+    await clickVisibleOrangeBtn()
+
+    // fines
+    const fines = userDataForTest.fines
+    await setElementValue('tickets_value', fines.amountPerPeriod)
+    await setElementValue('tickets_period_select', fines.period, 'select')
+
+    await clickVisibleOrangeBtn()
+
+    // washing
+    const washing = userDataForTest.washing
+    await setElementValue('washing_value', washing.amountPerPeriod)
+    await setElementValue('washing_period_select', washing.period, 'select')
+
+    await clickVisibleOrangeBtn()
+
+    await clickButtonById('calculate_costs_btn')
+
+    // now results are shown, confirm results
+    // compare total costs with core calculator module
+    await driver.wait(until.elementLocated(By.className('periodic_costs_total_costs')), 5000)
+    const eleTotalCosts = await driver.findElement(By.className('periodic_costs_total_costs'))
+    const totalCosts = Number(
+      (await eleTotalCosts.getText())
+        .replace(/[^0-9.-]+/g, '') // remove currency symbols
+    )
+
+    // in browser results, the float is toFixed(2), we do now the same to compare
+    const calculatedCostsPerMonth = Number(calculatedData.costs.perMonth.total.toFixed(2))
+
+    if (totalCosts !== calculatedCostsPerMonth) {
+      throw Error(
+        `Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`
       )
-      await insurancePeriodBtn.click()
+    }
 
-      await clickVisibleOrangeBtn()
+    resolve(driver)
+  } catch (err) {
+    console.error(err)
+    console.dir(data, { depth: null, colors: true })
+    await driver.quit()
+    reject(Error(err))
+  }
 
-      // credit
-      const credit = userDataForTest.credit
-      if (credit.creditBool) {
-        await clickButtonById('cred_auto_true')
-        const yesCredit = credit.yesCredit
-        await setElementValue('borrowedAmount', yesCredit.borrowedAmount)
-        await setElementValue('numberInstallments', yesCredit.numberInstallments)
-        await setElementValue('amountInstallment', yesCredit.amountInstallment)
-        await setElementValue('residualValue', yesCredit.residualValue)
-      }
-
-      await clickVisibleOrangeBtn()
-
-      // inspection
-      const inspection = userDataForTest.inspection
-      await setElementValue('numberInspections', inspection.numberOfInspections)
-      if (inspection.numberOfInspections > 0) {
-        await setElementValue('averageInspectionCost', inspection.averageInspectionCost)
-      }
-
-      await clickVisibleOrangeBtn()
-
-      // road taxes
-      const roadTaxes = userDataForTest.roadTaxes
-      await setElementValue('roadTaxes', roadTaxes.amountPerYear)
-
-      await clickVisibleOrangeBtn()
-
-      // fuel
-      const fuel = userDataForTest.fuel
-      if (fuel.typeOfCalculation === 'money') {
-        await clickButtonById('radio_fuel_euros')
-
-        await setElementValue('fuel_currency_value', fuel.currencyBased.amountPerPeriod)
-        await setElementValue('fuel_currency_time_period', fuel.currencyBased.period, 'select')
-      } else if (fuel.typeOfCalculation === 'distance') {
-        await clickButtonById('radio_fuel_km')
-        const distanceBased = fuel.distanceBased
-
-        if (fuel.distanceBased.considerCarToJob) {
-          await clickButtonById('car_job_form2_yes')
-          const carToJob = distanceBased.carToJob
-
-          await setElementValue('car_to_work_number_days_week', carToJob.daysPerWeek)
-          await setElementValue('car_to_work_distance_home_work', carToJob.distanceBetweenHomeAndJob)
-          await setElementValue('car_to_work_distance_weekend', carToJob.distanceDuringWeekends)
-        } else {
-          await clickButtonById('car_job_form2_no')
-          const noCarToJob = distanceBased.noCarToJob
-
-          await setElementValue('no_car_to_work_distance', noCarToJob.distancePerPeriod)
-          await setElementValue('distance_standard_onfuel', noCarToJob.distanceStandardUnit, 'select')
-          await setElementValue('no_car_to_work_time_period', noCarToJob.period, 'select')
+  function clickButtonById (id) {
+    return new Promise((resolve, reject) => {
+      (async () => {
+        info(`/${userDataForTest.countryCode} click on #${id}`)
+        try {
+          const btn = await driver.findElement(By.id(id))
+          await driver.executeScript('arguments[0].scrollIntoView(true);', btn)
+          await driver.sleep(500)
+          await btn.click()
+          resolve()
+        } catch (err) {
+          console.error(err, '\nElement with id: ' + id)
+          reject(Error(err))
         }
+      })()
+    })
+  }
 
-        await setElementValue('fuel_efficiency', distanceBased.fuelEfficiency)
-        await setElementValue('fuel_efficiency_standard_onfuel', distanceBased.fuelEfficiencyStandard, 'select')
-        await setElementValue('fuel_price', distanceBased.fuelPrice)
-      } else {
-        throw Error('Invalid option in fuel: ' + fuel.typeOfCalculation)
-      }
-
-      await clickVisibleOrangeBtn()
-
-      // maintenance
-      const maintenance = userDataForTest.maintenance
-      await setElementValue('maintenance', maintenance.amountPerYear)
-
-      await clickVisibleOrangeBtn()
-
-      // repairs and improvements
-      const repairsImprovements = userDataForTest.repairsImprovements
-      await setElementValue('repairs', repairsImprovements.amountPerYear)
-
-      await clickVisibleOrangeBtn()
-
-      // parking
-      const parking = userDataForTest.parking
-      await setElementValue('parking', parking.amountPerMonth)
-
-      await clickVisibleOrangeBtn()
-
-      // tolls
-      const tolls = userDataForTest.tolls
-      if (tolls.calculationBasedOnDay) {
-        await clickButtonById('tolls_daily_true')
-
-        const yesBasedOnDay = tolls.yesBasedOnDay
-        await setElementValue('daily_expense_tolls', yesBasedOnDay.amountPerDay)
-        await setElementValue('number_days_tolls', yesBasedOnDay.daysPerMonth)
-      } else {
-        await clickButtonById('tolls_daily_false')
-
-        const noBasedOnDay = tolls.noBasedOnDay
-        await setElementValue('no_daily_tolls_value', noBasedOnDay.amountPerPeriod)
-        await setElementValue('tolls_period_select', noBasedOnDay.period, 'select')
-      }
-
-      await clickVisibleOrangeBtn()
-
-      // fines
-      const fines = userDataForTest.fines
-      await setElementValue('tickets_value', fines.amountPerPeriod)
-      await setElementValue('tickets_period_select', fines.period, 'select')
-
-      await clickVisibleOrangeBtn()
-
-      // washing
-      const washing = userDataForTest.washing
-      await setElementValue('washing_value', washing.amountPerPeriod)
-      await setElementValue('washing_period_select', washing.period, 'select')
-
-      await clickVisibleOrangeBtn()
-
-      await clickButtonById('calculate_costs_btn')
-
-      // now results are shown, confirm results
-      // compare total costs with core calculator module
-      await driver.wait(until.elementLocated(By.className('periodic_costs_total_costs')), 5000)
-      const eleTotalCosts = await driver.findElement(By.className('periodic_costs_total_costs'))
-      const totalCosts = Number(
-        (await eleTotalCosts.getText())
-          .replace(/[^0-9.-]+/g, '') // remove currency symbols
-      )
-
-      // in browser results, the float is toFixed(2), we do now the same to compare
-      const calculatedCostsPerMonth = Number(calculatedData.costs.perMonth.total.toFixed(2))
-
-      if (totalCosts !== calculatedCostsPerMonth) {
-        throw Error(
-          `Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`
-        )
-      }
-
-      resolve(driver)
-    } catch (err) {
-      console.error(err)
-      console.dir(data, { depth: null, colors: true })
-      await driver.quit()
-      reject(Error(err))
-    }
-
-    function clickButtonById (id) {
-      return new Promise((resolve, reject) => {
-        (async () => {
-          info(`/${userDataForTest.countryCode} click on #${id}`)
-          try {
-            const btn = await driver.findElement(By.id(id))
-            await driver.executeScript('arguments[0].scrollIntoView(true);', btn)
-            await driver.sleep(500)
-            await btn.click()
-            resolve()
-          } catch (err) {
-            console.error(err, '\nElement with id: ' + id)
-            reject(Error(err))
+  function setElementValue (id, value, eleType) {
+    return new Promise((resolve, reject) => {
+      (async () => {
+        info(`/${userDataForTest.countryCode} set #${id} with ${value}`)
+        try {
+          await driver.wait(until.elementLocated(By.id(id)), 5000)
+          const ele = await driver.findElement(By.id(id))
+          await driver.wait(until.elementIsVisible(ele), 5000)
+          if (!eleType || eleType === 'input') {
+            await ele.clear()
+            await ele.sendKeys('value', value)
+          } else if (eleType === 'select') {
+            const option = await driver.findElement(
+              By.css(`#${id}>option[value='${value}']`)
+            )
+            await option.click()
           }
-        })()
-      })
-    }
+          resolve(ele)
+        } catch (err) {
+          console.error(err, `\nElement with id: ${id} and value: ${value}`)
+          reject(Error(err))
+        }
+      })()
+    })
+  }
 
-    function setElementValue (id, value, eleType) {
-      return new Promise((resolve, reject) => {
-        (async () => {
-          info(`/${userDataForTest.countryCode} set #${id} with ${value}`)
-          try {
-            await driver.wait(until.elementLocated(By.id(id)), 5000)
-            const ele = await driver.findElement(By.id(id))
-            await driver.wait(until.elementIsVisible(ele), 5000)
-            if (!eleType || eleType === 'input') {
-              await ele.clear()
-              await ele.sendKeys('value', value)
-            } else if (eleType === 'select') {
-              const option = await driver.findElement(
-                By.css(`#${id}>option[value='${value}']`)
-              )
-              await option.click()
-            }
-            resolve(ele)
-          } catch (err) {
-            console.error(err, `\nElement with id: ${id} and value: ${value}`)
-            reject(Error(err))
-          }
-        })()
-      })
-    }
+  // check for all orange buttons and then wait 0.4 second for them to appear
+  // and then clicks the one that is displayed/appears
+  function clickVisibleOrangeBtn () {
+    return new Promise((resolve, reject) => {
+      (async () => {
+        info(`/${userDataForTest.countryCode} click orange button`)
+        const btnsOrange = await driver.findElements(By.className('btn-orange'))
 
-    // check for all orange buttons and then wait 0.4 second for them to appear
-    // and then clicks the one that is displayed/appears
-    function clickVisibleOrangeBtn () {
-      return new Promise((resolve, reject) => {
-        (async () => {
-          info(`/${userDataForTest.countryCode} click orange button`)
-          const btnsOrange = await driver.findElements(By.className('btn-orange'))
+        const btnsOrangePromises = []
 
-          const btnsOrangePromises = []
-
-          btnsOrange.forEach(function (btnOrange) {
-            btnsOrangePromises.push(
-              new Promise((resolve, reject) => {
-                (async function (_btnOrange, _resolve, _reject) {
-                  try {
-                    await driver.wait(until.elementIsVisible(_btnOrange), 400)
-                  } catch (e) {
-                  } finally {
-                    if (await _btnOrange.isDisplayed()) {
-                      await _btnOrange.click()
-                    }
-                    _resolve()
+        btnsOrange.forEach(function (btnOrange) {
+          btnsOrangePromises.push(
+            new Promise((resolve, reject) => {
+              (async function (_btnOrange, _resolve, _reject) {
+                try {
+                  await driver.wait(until.elementIsVisible(_btnOrange), 400)
+                } catch (e) {
+                } finally {
+                  if (await _btnOrange.isDisplayed()) {
+                    await _btnOrange.click()
                   }
-                })(btnOrange, resolve, reject)
-              }))
-          })
+                  _resolve()
+                }
+              })(btnOrange, resolve, reject)
+            }))
+        })
 
-          Promise.all(btnsOrangePromises).then(() => {
-            resolve()
-          })
-        })()
-      })
-    }
+        Promise.all(btnsOrangePromises).then(() => {
+          resolve()
+        })
+      })()
+    })
   }
 }
 
