@@ -3,6 +3,11 @@
 // https://www.selenium.dev/selenium/docs/api/javascript/index.html
 // https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 
+/* This script allows one CLI option --frontendTest which can be a browser ('firefox' or 'chrome')
+   or 'allUserInputs'. In case it is a browser, the script will asynchronously run some randomly
+   picked up valid user inputs and test them using that browser engine. In the case the option is
+   'allUserInputs' the script will test with chrome all valid user inputs synchronously (takes time) */
+
 /* jslint esversion: 8 */
 
 const fs = require('fs')
@@ -14,6 +19,10 @@ const { Builder, By, until } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const firefox = require('selenium-webdriver/firefox')
 
+// When --frontendTest is set to 'allUserInputs', this
+// is the max number of user inputs that are run in parallel
+// When --frontendTest is set to 'firefox' or 'chrome'', this
+// the total number of user inputs that is tested for that browser engine
 const NumberOfTestedUserInputs = 5
 const DataArray = [] // array of objects, each with userData and respective caluclatedData
 
@@ -38,7 +47,11 @@ if (!frontendTest) {
 }
 console.log(`Options selected is ${frontendTest.cyan}`)
 if (frontendTest === 'firefox' || frontendTest === 'chrome') {
-  console.log('\n', `Tesing ${NumberOfTestedUserInputs} random user inputs asynchronously with ${frontendTest} browser engine`.cyan, `\n`)
+  console.log('\n', `Tesing ${NumberOfTestedUserInputs} random user inputs asynchronously with ${frontendTest} browser engine`.cyan, '\n')
+} else if (frontendTest === 'allUserInputs') {
+  console.log('\n', 'Tesing all stored valid user inputs with browser engine'.cyan, '\n')
+} else {
+  throw Error('wrong option for --frontendTest ' + frontendTest)
 }
 
 console.log('Running script ' + path.relative(directories.server.root, __filename))
@@ -61,7 +74,7 @@ const userInsertionsFile = path.join(__dirname, 'users_insertions.json')
 async.series([
   extractZipWithUserInsertions,
   startsHttpServer,
-  validateWithSameUserInputs
+  frontendTest === 'allUserInputs' ? validateAllUserInputs : validateSomeUserInputs
 ],
 // done after execution of above funcitons
 function (err, results) {
@@ -101,42 +114,56 @@ function extractZipWithUserInsertions (callback) {
       console.log(
         'Reading JSON ' + path.relative(directories.server.root, userInsertionsFile)
       )
-      // here the file was unzip successfully, the zip extractor removes the extension .zip
-      const usersInput = JSON.parse(
+      // here the file was unzipped successfully, the zip extractor removes the extension .zip
+      let usersInput = JSON.parse(
         fs.readFileSync(userInsertionsFile, 'utf8'),
         commons.parseJsonProperty
-      ).filter(el =>
-        el.country && (
-          // select only countries with English language, easier to debug the frontend
-          el.country === 'AU' ||
-          el.country === 'US' ||
-          el.country === 'CA' ||
-          el.country === 'IE'
-        )
       )
-      console.log(`Extracted ${usersInput.length} user inputs`)
 
-      console.log(`Randomly picking up ${NumberOfTestedUserInputs} of those`)
-      // selects few random user inputs
-      const selectedInputs = []
-      for (let i = 0; i < NumberOfTestedUserInputs; i++) {
-        selectedInputs.push(
-          usersInput[Math.floor(Math.random() * usersInput.length)]
+      // If frontendTest CLI option is a browser (firefox, chrome),
+      // limit the scope of user inputs to countries with English
+      // and randomly pick up only few elements from user inputs
+      if (frontendTest !== 'allUserInputs') {
+        usersInput = usersInput.filter(el =>
+          el.country && (
+            // select only countries with English language, easier to debug the frontend
+            el.country === 'AU' ||
+            el.country === 'US' ||
+            el.country === 'CA' ||
+            el.country === 'IE'
+          )
         )
+        console.log(`Extracted ${usersInput.length} user inputs`)
+
+        console.log(`Randomly picking up ${NumberOfTestedUserInputs} of those`)
+        // selects few random user inputs
+        const selectedInputs = []
+        for (let i = 0; i < NumberOfTestedUserInputs; i++) {
+          selectedInputs.push(
+            usersInput[Math.floor(Math.random() * usersInput.length)]
+          )
+        }
+
+        usersInput = selectedInputs
       }
 
       // override insertion date for the date of today
       // because the calculator on the browser always considers the insertion date as today
       // important for the calculation of depreciation
-      selectedInputs.forEach(userInput => {
+      usersInput.forEach(userInput => {
         userInput.insertion_date = new Date().toISOString().slice(0, 10) // today
       })
 
-      for (let i = 0; i < selectedInputs.length; i++) {
+      const Bar = commons.getProgressBar(usersInput.length)
+
+      for (let i = 0; i < usersInput.length; i++) {
+        if (frontendTest === 'allUserInputs') {
+          Bar.tick({ info: i + 1 })
+        }
         let countryInfo, userData, calculatedData
 
         try {
-          const CC = selectedInputs[i].country // ISO Country Code
+          const CC = usersInput[i].country // ISO Country Code
 
           if (CC) {
             countryInfo = {
@@ -147,7 +174,7 @@ function extractZipWithUserInsertions (callback) {
               fuel_price_volume_std: countrySpecs[CC].fuel_price_volume_std
             }
 
-            userData = convertData.createUserDataObjectFromDatabase(selectedInputs[i], countryInfo)
+            userData = convertData.createUserDataObjectFromDatabase(usersInput[i], countryInfo)
             validateData.setUserData(userData)
             const isUserDataEntryOk = validateData.isUserDataFormPart1_Ok() && validateData.isUserDataFormPart2_Ok()
 
@@ -162,12 +189,15 @@ function extractZipWithUserInsertions (callback) {
         } catch (error) {
           console.error('\n\nError on i:' + i, '\n',
             '\n\ncountryObject: ', countryInfo,
-            '\n\nselectedInputs: ', selectedInputs[i],
+            '\n\nusersInput: ', usersInput[i],
             '\n\nuserData: ', JSON.stringify(userData, undefined, 2),
             '\n\ncalculatedData: ', JSON.stringify(calculatedData, undefined, 2))
 
           callback(Error(error))
         }
+      }
+      if (frontendTest === 'allUserInputs') {
+        Bar.terminate()
       }
       callback()
     })()
@@ -185,15 +215,15 @@ function startsHttpServer (callback) {
   console.log('Starting server')
   testServer.startsServerForTests(
     function () {
-      callback()
       console.log('Webserver for frontend tests (autocosts) started with success')
+      callback()
     }, function (err) {
       callback(Error(err))
     })
 }
 
 // Validate front end with some (NumberOfTestedUserInputs) user inputs run async
-function validateWithSameUserInputs (callback) {
+function validateSomeUserInputs (callback) {
   // screen size of headless browser
   const screen = {
     width: 1920,
@@ -221,7 +251,7 @@ function validateWithSameUserInputs (callback) {
             throw Error('Wrong browser: ' + frontendTest)
         }
 
-        validateUserData(driver, data, _resolve, _reject)
+        validateUserData(driver, data, _resolve, _reject, true)
       })(resolve, reject)
     })
   )
@@ -250,10 +280,53 @@ function validateWithSameUserInputs (callback) {
     })
 }
 
-async function validateUserData (driver, data, resolve, reject) {
+function validateAllUserInputs (mainCallback) {
+  // screen size of headless browser
+  const screen = {
+    width: 1920,
+    height: 1080
+  }
+
+  console.log(`Testing frontend with ${DataArray.length} validated user inputs`)
+  const Bar = commons.getProgressBar(2 * DataArray.length + 1)
+  Bar.tick({ info: '' })
+
+  async.eachOfLimit(DataArray, NumberOfTestedUserInputs, (data, index, callback) => {
+    (async (_data, _index) => {
+      Bar.tick({ info: `start:${index}/${DataArray.length}` })
+      const driver = await new Builder()
+        .forBrowser('firefox')
+        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+        .build()
+
+      validateUserData(driver, _data,
+        async () => {
+          Bar.tick({ info: `ended:${index}/${DataArray.length}` })
+          await driver.sleep(1000)
+          await driver.quit()
+          callback()
+        },
+        (err) => {
+          callback(Error(err))
+        })
+    })(data, index)
+  },
+  (err) => {
+    Bar.terminate()
+    if (err) {
+      mainCallback(Error(err))
+    } else {
+      mainCallback()
+    }
+  })
+}
+
+async function validateUserData (driver, data, resolve, reject, bLog) {
   // log function to run on the same line of stdout
   const info = function (info) {
-    process.stdout.write(info.padEnd(150) + '\x1b[0G')
+    if (bLog) {
+      process.stdout.write(info.padEnd(150) + '\x1b[0G')
+    }
   }
 
   const userDataForTest = data.userData
