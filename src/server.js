@@ -243,10 +243,10 @@ if (SWITCHES.database) {
   // since it requests files from the drive, limit the requests
   const getLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 20 // limit each IP to 20 requests per windowMs
+    max: 50, // limit each IP to 50 requests per windowMs
+    message: 'Too many images requested from this IP, please try again later'
   })
-  app.use(/.*\/stats.jpg/, getLimiter)
-  app.get(['/:cc/stats.jpg', '/stats.jpg'], function (req, res, next) {
+  app.get(['/:cc/stats.jpg', '/stats.jpg'], getLimiter, function (req, res, next) {
     const ccParams = req.params.cc
     const ccHost = url.isDomainAccTLD(req.get('host')) // returns cc if true
     let cc
