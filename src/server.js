@@ -217,7 +217,7 @@ if (SWITCHES.database) {
     debug(`Route: app.get('/${req.params.cc}/stats')`)
 
     const ccParams = req.params.cc
-    const ccHost = url.isDomainAccTLD(req.get('host'))
+    const ccHost = url.isDomainAccTLD(req.get('host')) // returns cc if true
     let cc
 
     if (!ccParams && ccHost) { // for example autocustos.pt/stats
@@ -231,11 +231,12 @@ if (SWITCHES.database) {
 
     if (!url.isCCinCountriesList(cc, serverData.availableCountries) || cc.toLowerCase() !== cc) {
       next()
-    } else {
-      const WORDS_CC = WORDS[cc.toUpperCase()]
-      req.params.cc = cc
-      statsCC(req, res, serverData, WORDS_CC)
+      return
     }
+
+    const WORDS_CC = WORDS[cc.toUpperCase()]
+    req.params.cc = cc
+    statsCC(req, res, serverData, WORDS_CC)
   })
 
   // Tables with costs for each country
@@ -244,10 +245,10 @@ if (SWITCHES.database) {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 20 // limit each IP to 20 requests per windowMs
   })
-  app.use(['/:cc/stats.jpg', '/stats.jpg'], getLimiter)
+  app.use(/.*\/stats.jpg/, getLimiter)
   app.get(['/:cc/stats.jpg', '/stats.jpg'], function (req, res, next) {
     const ccParams = req.params.cc
-    const ccHost = url.isDomainAccTLD(req.get('host'))
+    const ccHost = url.isDomainAccTLD(req.get('host')) // returns cc if true
     let cc
 
     if (!ccParams && ccHost) { // for example autocustos.pt/stats
@@ -259,7 +260,14 @@ if (SWITCHES.database) {
       return
     }
 
-    res.sendFile(path.join(__dirname, 'tables', cc.toUpperCase() + '.jpg'))
+    // Is cc a valid cc? If not, return false. Also upercase it
+    const CC = url.sanitizeCC(cc, serverData.availableCountries)
+    if (!CC) {
+      next()
+      return
+    }
+
+    res.sendFile(path.join(__dirname, 'tables', CC + '.jpg'))
   })
 }
 

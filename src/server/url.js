@@ -372,6 +372,16 @@ function getDomainExtension (host) {
   return host.split('.').pop() // ex: 'pt'
 }
 
+// if cc is supported, returns CC uppercase; otherwise returns false
+function sanitizeCC (cc, availableCountries) {
+  const CC = cc.toUpperCase()
+  if (Object.keys(availableCountries).includes(CC)) {
+    return CC
+  } else {
+    return false
+  }
+}
+
 // tells of TLD of host is .dev or .work
 function isDevDomain (req) {
   const host = req.get('host')
