@@ -148,14 +148,14 @@ module.exports = {
 
   isThisATest: isThisATest,
   isThisARecognizedHost: isThisARecognizedHost,
-  getProtocol: _getProtocol,
+  getProtocol: getProtocol,
   isThisLocalhost: isThisLocalhost,
   getValidURL: getValidURL,
   isCCinCountriesList: isCCinCountriesList,
   isCCXX: isCCXX,
   getNameOfDomain: getNameOfDomain,
   isDomainAccTLD: isDomainAccTLD,
-  isCCsupported: isCCsupported
+  sanitizeCC: sanitizeCC
 }
 
 // 302 redirects are temporary
@@ -289,10 +289,6 @@ function getProtocol (req) {
     return 'https:'
   }
   return 'http:'
-}
-
-function _getProtocol (req) {
-  return getProtocol(req)
 }
 
 // Everything which is not run on full production (using accepted domains, ex: autocosts.info) is a test
