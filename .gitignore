@@ -1,9 +1,30 @@
+# Apache Cordova app files are not for this project
 app/
+
+# Credentials
 credentials/prodCredentials.json
 credentials/devCredentials.json
+
+# Generated build/bin files from src/
 bin/*
+
+# Node Modules
 node_modules/
+
+# Bash Script used to upload files to author's server
 rsync2server.sh
+
+# PM2 files to run on author's sever
 pm2*.json
+
+# Some Google secret that may be generated
 src/public/google*.html
+
 .nyc_output/
+
+# All logs
+**/*.log
+
+# unzipped version of test/users_insertions.json.zip 
+# it is unzipped during some tests, but deleted at the end of such tests
+test/users_insertions.json
