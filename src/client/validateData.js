@@ -242,7 +242,7 @@ autocosts.validateDataModule = (function () {
       if (!isPositiveNumber(userData.credit.yesCredit.borrowedAmount)) {
         return false
       }
-      if (!isInteger(userData.credit.yesCredit.numberInstallments) || userData.credit.yesCredit.numberInstallments < 0) {
+      if (!isInteger(userData.credit.yesCredit.numberInstallments) || userData.credit.yesCredit.numberInstallments <= 0) {
         return false
       }
       if (!isPositiveNumber(userData.credit.yesCredit.amountInstallment)) {
