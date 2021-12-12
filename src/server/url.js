@@ -123,45 +123,9 @@ module.exports = {
     }
   },
 
-  isThisATest: function (req) {
-    return isThisATest(req)
-  },
-
-  isThisARecognizedHost: function (host, urls) {
-    return isThisARecognizedHost(host, urls)
-  },
-
-  getProtocol: function (req) {
-    return _getProtocol(req)
-  },
-
-  isThisLocalhost: function (req) {
-    return isThisLocalhost(req)
-  },
-
-  getValidURL: function (req, domainsCountries) { // returns full URL
-    return getValidURL(req, domainsCountries)
-  },
-
-  isCCinCountriesList: function (cc, availableCountries) {
-    return isCCinCountriesList(cc, availableCountries)
-  },
-
-  isCCXX: function (cc) {
-    return isCCXX(cc)
-  },
-
   // full current url
   getCurrentUrl: function (req) {
     return req.protocol + '://' + req.get('host') + req.originalUrl
-  },
-
-  getNameOfDomain: function (host) {
-    return getNameOfDomain(host)
-  },
-
-  isDomainAccTLD: function (host) {
-    return isDomainAccTLD(host)
   },
 
   // for example: "https://autocosts.info/worldstats"
@@ -180,7 +144,18 @@ module.exports = {
       protocol: getProtocol(req),
       host: req.get('host')
     })
-  }
+  },
+
+  isThisATest: isThisATest,
+  isThisARecognizedHost: isThisARecognizedHost,
+  getProtocol: _getProtocol,
+  isThisLocalhost: isThisLocalhost,
+  getValidURL: getValidURL,
+  isCCinCountriesList: isCCinCountriesList,
+  isCCXX: isCCXX,
+  getNameOfDomain: getNameOfDomain,
+  isDomainAccTLD: isDomainAccTLD,
+  isCCsupported: isCCsupported
 }
 
 // 302 redirects are temporary
