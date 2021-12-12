@@ -49,7 +49,8 @@ console.log(`Options selected is ${frontendTest.cyan}`)
 if (frontendTest === 'firefox' || frontendTest === 'chrome') {
   console.log('\n', `Tesing ${NumberOfTestedUserInputs} random user inputs asynchronously with ${frontendTest} browser engine`.cyan, '\n')
 } else if (frontendTest === 'allUserInputs') {
-  console.log('\n', 'Tesing all stored valid user inputs with browser engine'.cyan, '\n')
+  console.log('\n', 'Tesing all stored valid user inputs with browser engine'.cyan)
+  console.log('\n', 'This may take some DAYS to process'.cyan, '\n')
 } else {
   throw Error('wrong option for --frontendTest ' + frontendTest)
 }
