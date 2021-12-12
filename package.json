@@ -198,6 +198,7 @@
     "debug": "^4.3.2",
     "express": "4.x",
     "express-handlebars": "^5.3.4",
+    "express-rate-limit": "^5.5.1",
     "express-useragent": "^1.0.15",
     "find": "^0.3.0",
     "flat": "^5.0.2",

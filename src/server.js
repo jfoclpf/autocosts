@@ -21,6 +21,7 @@ commons.init(eventEmitter)
 const express = require('express')
 const exphbs = require('express-handlebars')
 const useragent = require('express-useragent')
+const rateLimit = require('express-rate-limit')
 const compression = require('compression')
 const sortObj = require('sort-object') // to sort JS objects
 const colors = require('colors') // does not alter string prototype
@@ -237,7 +238,13 @@ if (SWITCHES.database) {
     }
   })
 
-  // tables with costs for each country
+  // Tables with costs for each country
+  // since it requests files from the drive, limit the requests
+  const getLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20 // limit each IP to 20 requests per windowMs
+  })
+  app.use(['/:cc/stats.jpg', '/stats.jpg'], getLimiter)
   app.get(['/:cc/stats.jpg', '/stats.jpg'], function (req, res, next) {
     const ccParams = req.params.cc
     const ccHost = url.isDomainAccTLD(req.get('host'))
