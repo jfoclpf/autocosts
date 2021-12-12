@@ -14,7 +14,7 @@ node_modules/
 # Bash Script used to upload files to author's server
 rsync2server.sh
 
-# PM2 files to run on author's sever
+# PM2 files to run on author's server
 pm2*.json
 
 # Some Google secret that may be generated
