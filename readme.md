@@ -1,11 +1,12 @@
-autocosts &ndash; the fully free and open source Car Costs Calculator
-=========
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/alerts/)
+[![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg)](https://snyk.io/test/github/jfoclpf/autocosts)
 [![npm][npm_img]][npm_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
@@ -18,6 +19,9 @@ autocosts &ndash; the fully free and open source Car Costs Calculator
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
+
+autocosts &ndash; the Car Costs Calculator
+=========
 
 This calculator allows users to find the true cost of owning a car in more than 30 countries. 
 
