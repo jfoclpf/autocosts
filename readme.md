@@ -1,5 +1,3 @@
-autocosts &ndash; the Car Costs Calculator
-=========
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
@@ -21,6 +19,9 @@ autocosts &ndash; the Car Costs Calculator
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
+
+autocosts &ndash; the Car Costs Calculator
+=========
 
 This calculator allows users to find the true cost of owning a car in more than 30 countries. 
 
