@@ -3,12 +3,14 @@
 // https://www.selenium.dev/selenium/docs/api/javascript/index.html
 // https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 
-/* This script allows one CLI option --frontendTest which can be a browser ('firefox' or 'chrome')
+/*
+   This script allows one CLI option --frontendTest which can be a browser ('firefox' or 'chrome')
    or 'allUserInputs'. In case it is a browser, the script will asynchronously run some randomly
    picked up valid user inputs and test them using that browser engine. In the case the option is
    'allUserInputs' the script will test with chrome all valid user inputs synchronously.
    Since this script with option --allUserInputs may take several days, you may run it as daemon:
-   $ nohup npm run test:fullFrontend 0<&- &> fullFrontend.log & */
+   $ nohup npm run test:fullFrontend 0<&- &> fullFrontend.log &
+*/
 
 /* jslint esversion: 8 */
 
