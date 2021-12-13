@@ -9,8 +9,10 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-// check for node.js
-if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
+// Check if current script is being run by NodeJS
+if (typeof process === 'object' && String(process) === '[object process]') {
+  // In node initialize main object to avoid error. Object is set to {},
+  // but no problem because in Node, different modules don't share the same global scope
   var autocosts = {}
 }
 
@@ -1307,7 +1309,7 @@ autocosts.calculatorModule = (function (thisModule) {
   return thisModule
 })(autocosts.calculatorModule || {})
 
-// check for node.js
-if (typeof window === 'undefined') {
+// Check if current script is being run by NodeJS
+if (typeof process === 'object' && String(process) === '[object process]') {
   module.exports = autocosts.calculatorModule
 }

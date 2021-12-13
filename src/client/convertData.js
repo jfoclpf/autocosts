@@ -13,8 +13,10 @@
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
 
-// check for node
-if (!autocosts && typeof window === 'undefined') { // eslint-disable-line
+// Check if current script is being run by NodeJS
+if (typeof process === 'object' && String(process) === '[object process]') {
+  // In node initialize main object to avoid error. Object is set to {},
+  // but no problem because in Node, different modules don't share the same global scope
   var autocosts = {}
 }
 
@@ -773,7 +775,7 @@ autocosts.convertDataModule = (function (thisModule) {
   return thisModule
 })(autocosts.convertDataModule || {})
 
-// check for node
-if (typeof window === 'undefined') {
+// Check if current script is being run by NodeJS
+if (typeof process === 'object' && String(process) === '[object process]') {
   module.exports = autocosts.convertDataModule
 }
