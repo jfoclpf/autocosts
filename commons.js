@@ -835,16 +835,16 @@ function extractHostname (url) {
   return hostname
 }
 
-function runNodeScriptSync (scriptPath, args, stdio = 'inherit') {
-  const { execSync } = require('child_process')
+function runNodeScriptSync (scriptPath, argvParam, stdio = 'inherit') {
+  const { spawnSync } = require('child_process')
 
-  args = args || []
-  args.unshift(scriptPath) // adds element at beginning
-  args.push('-r', RELEASE)
+  const argv = argvParam || []
+  argv.unshift(scriptPath) // adds element at beginning
+  argv.push('-r', RELEASE)
 
-  debug('Running: node ' + args.join(' '))
+  debug('Running: node ' + argv.join(' '))
   try {
-    execSync('node ' + args.join(' '), { stdio: [stdio, stdio, 'inherit'] })
+    spawnSync('node', argv, { stdio: [stdio, stdio, 'inherit'] })
   } catch (err) {
     const errMsg = 'Error executing script: ' + path.relative(__dirname, scriptPath).error
     console.error(Error(errMsg + '\n' + err))
