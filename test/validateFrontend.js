@@ -296,7 +296,7 @@ function validateAllUserInputs (mainCallback) {
 
   async.eachOfLimit(DataArray, NumberOfTestedUserInputs, (data, index, callback) => {
     (async () => {
-      console.log(`start:${index}/${DataArray.length}`)
+      console.log(`start: ${index + 1}/${DataArray.length}`)
       const driver = await new Builder()
         .forBrowser('firefox')
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
@@ -304,7 +304,7 @@ function validateAllUserInputs (mainCallback) {
 
       validateUserData(driver, data,
         async () => {
-          console.log(`ended:${index}/${DataArray.length}`)
+          console.log(`ended: ${index + 1}/${DataArray.length}`)
           await driver.sleep(1000)
           await driver.quit()
           callback()
