@@ -6,7 +6,9 @@
 /* This script allows one CLI option --frontendTest which can be a browser ('firefox' or 'chrome')
    or 'allUserInputs'. In case it is a browser, the script will asynchronously run some randomly
    picked up valid user inputs and test them using that browser engine. In the case the option is
-   'allUserInputs' the script will test with chrome all valid user inputs synchronously (takes time) */
+   'allUserInputs' the script will test with chrome all valid user inputs synchronously.
+   Since this script with option --allUserInputs may take several days, you may run it as daemon:
+   $ nohup npm run test:fullFrontend 0<&- &> fullFrontend.log & */
 
 /* jslint esversion: 8 */
 
@@ -84,7 +86,7 @@ function (err, results) {
     console.error(Error(err))
     process.exitCode = 1
   } else {
-    console.log('\nFrontend test ran OK\n'.green)
+    console.log(`\nFrontend test with ${frontendTest} ran OK\n`.green)
     process.exitCode = 0
   }
 })
@@ -263,15 +265,15 @@ function validateSomeUserInputs (callback) {
 
       // closing drivers, only when all drivers are finished
       driverArray.forEach(driver => {
-        (async (_driver) => {
+        (async () => {
           try {
-            await _driver.sleep(1000)
-            await _driver.quit()
+            await driver.sleep(1000)
+            await driver.quit()
           } catch (err) {
             // does nothing, no problem if error happens on quiting
             // it may happen with chrome
           }
-        })(driver)
+        })()
       })
       callback()
     })
@@ -289,31 +291,29 @@ function validateAllUserInputs (mainCallback) {
   }
 
   console.log(`Testing frontend with ${DataArray.length} validated user inputs`)
-  const Bar = commons.getProgressBar(2 * DataArray.length + 1)
-  Bar.tick({ info: '' })
 
   async.eachOfLimit(DataArray, NumberOfTestedUserInputs, (data, index, callback) => {
-    (async (_data, _index) => {
-      Bar.tick({ info: `start:${index}/${DataArray.length}` })
+    (async () => {
+      console.log(`start:${index}/${DataArray.length}`)
       const driver = await new Builder()
         .forBrowser('firefox')
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
         .build()
 
-      validateUserData(driver, _data,
+      validateUserData(driver, data,
         async () => {
-          Bar.tick({ info: `ended:${index}/${DataArray.length}` })
+          console.log(`ended:${index}/${DataArray.length}`)
           await driver.sleep(1000)
           await driver.quit()
           callback()
         },
         (err) => {
+          console.error('Error on index ' + index)
           callback(Error(err))
         })
-    })(data, index)
+    })()
   },
   (err) => {
-    Bar.terminate()
     if (err) {
       mainCallback(Error(err))
     } else {
@@ -492,12 +492,12 @@ async function validateUserData (driver, data, resolve, reject, bLog) {
     const calculatedCostsPerMonth = Number(calculatedData.costs.perMonth.total.toFixed(2))
 
     if (totalCosts !== calculatedCostsPerMonth) {
-      throw Error(
-        `Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`
+      reject(
+        Error(`Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`)
       )
+    } else {
+      resolve(driver)
     }
-
-    resolve(driver)
   } catch (err) {
     console.error(err)
     console.dir(data, { depth: null, colors: true })
