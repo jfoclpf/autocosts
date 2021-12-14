@@ -51,7 +51,7 @@ autocosts.validateDataModule = (function () {
     }
   }
 
-  function isUserDataFormOk () { // eslint-disable-line
+  function isUserDataFormOk () {
     isUserData()
 
     if (!isUserDataFormPart1_Ok()) {
@@ -86,7 +86,12 @@ autocosts.validateDataModule = (function () {
     }
 
     if (!isCarFinanceOk()) {
-      consoleError('CarFinance not Ok')
+      consoleError('Car Finance not Ok')
+      return false
+    }
+
+    if (!isInspectionOk()) {
+      consoleError('Inspection not Ok')
       return false
     }
 
@@ -258,7 +263,7 @@ autocosts.validateDataModule = (function () {
     return true
   }
 
-  function isInspectionOk () { // eslint-disable-line no-unused-vars
+  function isInspectionOk () {
     if (!isObjectDefined(userData.inspection)) {
       return false
     }
@@ -269,7 +274,7 @@ autocosts.validateDataModule = (function () {
       return false
     }
 
-    if (numberOfInspections !== 0 && !isNonNegativeNumber(userData.inspection.averageInspectionCost)) {
+    if (numberOfInspections > 0 && !isNonNegativeNumber(userData.inspection.averageInspectionCost)) {
       return false
     }
 
@@ -717,6 +722,7 @@ autocosts.validateDataModule = (function () {
   return {
     initialize: initialize,
     setUserData: setUserData,
+    isUserDataFormOk: isUserDataFormOk,
     isUserDataFormPart1_Ok: isUserDataFormPart1_Ok,
     isUserDataFormPart2_Ok: isUserDataFormPart2_Ok,
     isUserDataFormPart3_Ok: isUserDataFormPart3_Ok
