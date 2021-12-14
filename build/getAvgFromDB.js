@@ -7,7 +7,6 @@ const isOnline = require('is-online')
 const request = require('request') // to make HTTP requests
 const flatten = require('flat')
 const sqlFormatter = require('sql-formatter')
-const colors = require('colors') // eslint-disable-line
 const debug = require('debug')('build:getAvgFromDB')
 
 const commons = require(path.join(__dirname, '..', 'commons'))

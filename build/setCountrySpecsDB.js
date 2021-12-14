@@ -11,7 +11,6 @@ const async = require('async') // module to allow to execute the queries in seri
 const mysql = require('mysql') // module to get info from database
 const sortObj = require('sort-object') // to sort JS objects
 const isOnline = require('is-online')
-const colors = require('colors') // eslint-disable-line
 const debug = require('debug')('build:setCountrySpecsDB')
 
 const commons = require(path.join(__dirname, '..', 'commons'))
