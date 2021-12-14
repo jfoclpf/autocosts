@@ -185,7 +185,7 @@ autocosts.showResultsModule = (function (thisModule, translatedStrings, switches
     if (switches.social /* && !commonsModule.isThisAtest() */) {
       var descriptionText = translatedStrings.initial_text
         .split('.').slice(0, 2).join('.') // gets only the first 2 sentences of the text
-        .replace(/<(?:.|\n)*?>/gm, '') // removes html tags such as <b></b>
+        .replace(/<\/?[^>]+(>|$)/gm, '') // removes html tags such as <b></b>
 
       $('.share-buttons .facebook a')
         .attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(currentFullUrl))

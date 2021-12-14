@@ -103,7 +103,7 @@ function fillBlanks (serverData, WORDS) {
 function getMetaDescription (initialText) {
   return initialText
     .split('.').splice(0, 3).join('.') // gets the first 3 sentences
-    .replace(/<(?:.|\n)*?>/gm, '') + // removes html tags such as <b></b>
+    .replace(/<\/?[^>]+(>|$)/gm, '') + // removes html tags such as <b></b>
         '.'
 }
 
