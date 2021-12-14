@@ -451,11 +451,11 @@ function createDatabaseTable (table, callback) {
   createTableQuery += sqlStringFromArray(arrayOfEntries, false)
   debug(sqlFormatter.format(createTableQuery))
 
-  db.query(createTableQuery, function (err, results, fields) {
+  db.query(createTableQuery, function (err, results) {
     if (err) {
       callback(Error(err))
     } else {
-      debug('Table created if nonexistent: ' + table)
+      debug('Table created if nonexistent: ' + table, results)
       callback()
     }
   })
