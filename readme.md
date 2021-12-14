@@ -7,15 +7,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/alerts/)
 [![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg)](https://snyk.io/test/github/jfoclpf/autocosts)
-[![npm][npm_img]][npm_url]
-[![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
-
-[npm_img]: https://img.shields.io/npm/v/autocosts.svg?colorB=0E7FBF
-[npm_url]: https://www.npmjs.com/package/autocosts
-
-[npm_module_downloads_img]: https://img.shields.io/npm/dt/autocosts.svg
-[npm_module_downloads_url]: https://www.npmjs.com/package/autocosts
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
