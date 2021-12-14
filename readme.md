@@ -12,12 +12,12 @@
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
 
-autocosts &ndash; the Car Costs Calculator
-=========
+# autocosts
+**The fully free and open source full-stack Car Costs Calculator for more than 30 countries**
 
-This calculator allows users to find the true cost of owning a car in more than 30 countries. 
+This calculator gives users a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. 
 
-It will normally give them a good estimate of what they really need to spend on car ownership. As car payments and expenses come due throughout the year, it's often difficult to really get a good understanding of total spending on a car. This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
+This calculator also provides to the user, optionally, the car's full Financial Effort considering the user's income, further providing also optionally the equivalent public transport costs (bus, train, UBER, etc.), considering the user doesn't own a car.
 
 ![screenshot](https://github.com/jfoclpf/autocosts/raw/master/src/img/screenshot.png)
 
