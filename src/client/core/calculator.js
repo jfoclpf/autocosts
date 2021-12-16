@@ -114,7 +114,7 @@ autocosts.calculatorModule = (function (thisModule) {
       speeds: {
         averageKineticSpeed: u,
         averageConsumerSpeed: u // see for more details
-        // https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+        // https://github.com/jfoclpf/autocosts/wiki/Kinetic-speed-vs.-Consumer-speed
       },
 
       publicTransports: {
@@ -960,7 +960,7 @@ autocosts.calculatorModule = (function (thisModule) {
     }
 
     /* For more details on the Consumer Speed concept, check:
-        https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs */
+        https://github.com/jfoclpf/autocosts/wiki/Kinetic-speed-vs.-Consumer-speed */
     var averageKineticSpeed,
       averageConsumerSpeed
 

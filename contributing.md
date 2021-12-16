@@ -282,7 +282,8 @@ The core function [`calculateCosts`](src/client/core/calculator.js) returns an o
 
   speeds: {
     averageKineticSpeed,
-    averageConsumerSpeed       //see for more details https://en.wikipedia.org/wiki/Effects_of_the_car_on_societies#Private_or_internal_costs
+    averageConsumerSpeed       //see for more details 
+    // https://github.com/jfoclpf/autocosts/wiki/Kinetic-speed-vs.-Consumer-speed
   },
 
   publicTransports: {
