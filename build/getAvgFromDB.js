@@ -452,7 +452,7 @@ function createDatabaseTable (table, callback) {
 
   db.query(createTableQuery, function (err, results) {
     if (err) {
-      callback(Error(err))
+      callback(err)
     } else {
       debug('Table created if nonexistent: ' + table, results)
       callback()
