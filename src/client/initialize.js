@@ -311,7 +311,9 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     function guid () {
       return (S4() + '-' + S4() + '-' + S4())
     }
-    userInfo.uniqueUserId = guid()
+    // this function is not used for cryptography, but for storing an unique
+    // user ID in database, thus ignore alert from LGTM
+    userInfo.uniqueUserId = guid() // lgtm[js/insecure-randomness]
   }
 
   // allows images to be rendered after the document is loaded
