@@ -43,7 +43,7 @@ module.exports = {
   },
 
   striOutHTML: function (str) {
-    return str.replace(/<(?:.|\n)*?>/gm, '')
+    return str.replace(/<\/?[^>]+(>|$)/gm, '')
   },
 
   // return, for example, "pt_PT" or "en_US"
