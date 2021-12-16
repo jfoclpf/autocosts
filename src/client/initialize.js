@@ -253,7 +253,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
     // adjusts the size of select according to content
     resizeSelectToContent('#country_select')
     // upon windows resize, resize the select
-    $(window).resize(function () {
+    $(window).on('resize', function () {
       resizeSelectToContent('#country_select')
     })
 
