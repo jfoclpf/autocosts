@@ -186,7 +186,7 @@ autocosts.initializeModule = (function (thisModule, serverInfo, translatedString
       var arrowWidth = 5
       // create test element
       var text = $this.find('option:selected').text()
-      var $test = $('<span>').html(text).css({
+      var $test = $('<span>').text(text).css({
         'font-size': $this.css('font-size'), // ensures same size text
         visibility: 'hidden', // prevents FOUC */
         'white-space': 'nowrap'
