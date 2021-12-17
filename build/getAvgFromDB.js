@@ -430,10 +430,14 @@ function getQueryWithValuesForCountry (tableParameter, statisticsResults, countr
 }
 
 function createTableAndKeyToInsertData (query, table, callback) {
-  createDatabaseTable(table, function () {
-    createDatabaseTableKey(table, function () {
-      insertCalculatedDataIntoTable(query, table, callback)
-    })
+  createDatabaseTable(table, function (err) {
+    if (err) {
+      callback(Error(err))
+    } else {
+      createDatabaseTableKey(table, function () {
+        insertCalculatedDataIntoTable(query, table, callback)
+      })
+    }
   })
 }
 
@@ -452,7 +456,7 @@ function createDatabaseTable (table, callback) {
 
   db.query(createTableQuery, function (err, results) {
     if (err) {
-      callback(err)
+      callback(Error(err))
     } else {
       debug('Table created if nonexistent: ' + table, results)
       callback()
@@ -482,13 +486,13 @@ function createDatabaseTableKey (table, callback) {
 function insertCalculatedDataIntoTable (query, table, callback) {
   debug('Inserting new calculated data into table: ', table)
 
-  db.query(query, function (err, results, fields) {
+  db.query(query, function (err, results) {
     if (err) {
       console.error(('\n\n SQL ERROR: ' + err.sqlMessage + '\n\n').error)
       console.error(addLinesToStr(sqlFormatter.format(err.sql)))
       callback(Error(err))
     } else {
-      debug('All new data successfully added into table: ', table)
+      debug('All new data successfully added into table: ', table, results)
       console.log('New stats data successfully added on ' + table)
       callback()
     }
