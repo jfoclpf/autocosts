@@ -28,4 +28,4 @@ jobs:
     - name: Install imagemagick
       run: brew install imagemagick
     - run: npm ci
-    - run: npm test
+    - run: npm run test:macos
