@@ -344,6 +344,13 @@ async function validateUserData (driver, data, resolve, reject, bLog) {
   try {
     await driver.get(url)
 
+    // wait for the page to fully load
+    await driver.wait(() => {
+      return driver.executeScript('return document.readyState').then((readyState) => {
+        return readyState === 'complete'
+      })
+    })
+
     // click Main [Calculate button] on entry page
     await driver.wait(until.elementLocated(By.id('calculateButton')), 10000)
     const eleMainButton = await driver.findElement(By.id('calculateButton'))
