@@ -21,21 +21,8 @@ jobs:
       with:
         node-version: '16.x'
         cache: 'npm'
-    - name: Install Webdriver manager
-      run: sudo npm i -g webdriver-manager
-    - name: Install browser engines
-      run: | 
-        sudo webdriver-manager update --out_dir /usr/local/bin
-        ls -alF /usr/local/bin
-        echo "========================================================"
-        sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
-        sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
-        sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
-        ls -alF /usr/local/bin/geckodriver /usr/local/bin/chromedriver
     - name: Which browser engines paths?
-      run: |
-        which geckodriver
-        which chromedriver
+      run: which chromedriver
     - name: Install package
       run: npm ci
     - name: Test Frontend with Chrome
