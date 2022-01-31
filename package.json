@@ -192,7 +192,7 @@
     ]
   },
   "dependencies": {
-    "async": "^3.2.1",
+    "async": "^3.2.3",
     "chart.js": "^2.9.4",
     "colors": "^1.4.0",
     "command-line-args": "^5.2.0",
