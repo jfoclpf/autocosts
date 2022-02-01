@@ -206,7 +206,7 @@
     "find": "^0.3.0",
     "flat": "^5.0.2",
     "fs-extra": "^9.0.1",
-    "geoip-lite": "^1.4.2",
+    "geoip-lite": "^1.4.3",
     "handlebars": "^4.7.7",
     "is-online": "^9.0.1",
     "jquery": "^3.5.1",
