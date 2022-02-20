@@ -195,7 +195,7 @@
     "async": "^3.2.1",
     "chart.js": "^2.9.4",
     "colors": "^1.4.0",
-    "command-line-args": "^5.2.0",
+    "command-line-args": "^5.2.1",
     "compression": "^1.7.4",
     "concat-files": "^0.1.1",
     "debug": "^4.3.2",
