@@ -7,7 +7,9 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/alerts/)
 [![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg)](https://snyk.io/test/github/jfoclpf/autocosts)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
+<br>
+[![Donate with librepay](https://img.shields.io/liberapay/receives/joaopimentel1980.svg?logo=liberapay)](https://en.liberapay.com/joaopimentel1980)
+[![Donate with librepay](https://img.shields.io/badge/donate-Donate-yellow?logo=liberapay)](https://en.liberapay.com/joaopimentel1980/donate)
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
