@@ -261,6 +261,6 @@ See [contributing](https://github.com/jfoclpf/autocosts/blob/master/contributing
 
 <a href="http://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a>
 
-### Privacy
+## Privacy
 
 This calculator is and shall always be completely anonymous, as it doesn't request nor permanently store, any name, email, cookies, IP address nor any other personal information.
