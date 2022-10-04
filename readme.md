@@ -23,7 +23,7 @@ This calculator also provides to the user, optionally, the car's full Financial 
 
 ![screenshot](https://github.com/jfoclpf/autocosts/raw/master/src/img/screenshot.png)
 
-## Try it on your machine
+## Run it on your machine
 1. Clone the project<br>
 `git clone https://github.com/jfoclpf/autocosts.git`
 2. Enter in the newly created directory and install dependencies<br>
