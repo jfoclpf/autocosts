@@ -836,6 +836,7 @@ function extractHostname (url) {
 }
 
 function runNodeScriptSync (scriptPath, argvParam, stdio = 'inherit') {
+  console.log('\nRunning: ' + colors.cyan(path.relative(__dirname, scriptPath)))
   const { spawnSync } = require('child_process')
 
   const argv = argvParam || []
