@@ -17,6 +17,7 @@
 const fs = require('fs')
 const path = require('path')
 const async = require('async')
+const util = require('util')
 const extractZip = require('extract-zip')
 
 const { Builder, By, until } = require('selenium-webdriver')
@@ -243,21 +244,23 @@ function validateSomeUserInputs (callback) {
     new Promise((resolve, reject) => {
       (async (_resolve, _reject) => {
         let driver
-        switch (frontendTest) {
-          case 'firefox':
-            driver = await new Builder()
-              .forBrowser('firefox')
-              .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
-              .build()
-            break
-          case 'chrome':
-            driver = await new Builder()
-              .forBrowser('chrome')
-              .setChromeOptions(new chrome.Options().headless().windowSize(screen))
-              .build()
-            break
-          default:
-            throw Error('Wrong browser: ' + frontendTest)
+        if (frontendTest === 'firefox') {
+          driver = await new Builder()
+            .forBrowser('firefox')
+            .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+            .build()
+        } else if (frontendTest === 'chrome') {
+          process.env.LANGUAGE = 'US'
+          const chromeOptions = new chrome.Options()
+            .headless()
+            .addArguments('lang=en-US')
+            .windowSize(screen)
+          driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(chromeOptions)
+            .build()
+        } else {
+          throw Error('Wrong browser: ' + frontendTest)
         }
 
         validateUserData(driver, data, _resolve, _reject, true)
@@ -504,11 +507,47 @@ async function validateUserData (driver, data, resolve, reject, bLog) {
     // in browser results, the float is toFixed(2), we do now the same to compare
     const calculatedCostsPerMonth = Number(calculatedData.costs.perMonth.total.toFixed(2))
 
+    // ERROR, help debug error
     if (totalCosts !== calculatedCostsPerMonth) {
-      reject(
-        Error(`Total costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}`)
-      )
-    } else {
+      console.error(`\n\n\nTotal costs don't match: ${totalCosts} differs from ${calculatedCostsPerMonth}\n\n`)
+      console.error('\n\n\nUser Data for Test: ', util.inspect(userDataForTest, { showHidden: false, depth: null, colors: true }))
+      console.error('\n\n\nCalculated Costs: ', calculatedData.costs, '\n\n\n')
+
+      const getCostItemFromBrowser = async (itemClassname) => {
+        await driver.wait(until.elementLocated(By.className(itemClassname)), 5000)
+        const eleTotalCosts = await driver.findElement(By.className(itemClassname))
+        const result = Number(
+          (await eleTotalCosts.getText())
+            .replace(/[^0-9.-]+/g, '') // remove currency symbols
+        )
+        return new Promise(resolve => resolve(result))
+      }
+
+      const calculatedCostsItems = calculatedData.costs.perMonth.items
+      console.error('Cost Item | From Browser | Calculated Data');
+      [
+        ['depreciation', 'periodic_costs_depreciation'],
+        ['insurance', 'periodic_costs_insurance'],
+        ['credit', 'periodic_costs_credit'],
+        ['inspection', 'periodic_costs_inspection'],
+        ['roadTaxes', 'periodic_costs_roadTaxes'],
+        ['maintenance', 'periodic_costs_halfOfMaintenance'],
+        ['fuel', 'periodic_costs_fuel'],
+        ['repairsImprovements', 'periodic_costs_repairsImprovements'],
+        ['parking', 'periodic_costs_parkingn'],
+        ['tolls', 'periodic_costs_tolls'],
+        ['fines', 'periodic_costs_fines'],
+        ['washing', 'periodic_costs_washing']
+      ].forEach(async el => {
+        let costItemFromBrowser = await getCostItemFromBrowser(el[1])
+        if (el[0] === 'maintenance') costItemFromBrowser = costItemFromBrowser * 2
+        console.error(el[0] + ' | ' + costItemFromBrowser + ' | ' + calculatedCostsItems[el[0]].toFixed(1))
+      })
+
+      setTimeout(() => {
+        reject(Error('Totals don\'t match'))
+      }, 6000)
+    } else { // OK
       resolve(driver)
     }
   } catch (err) {
