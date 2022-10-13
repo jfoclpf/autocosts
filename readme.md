@@ -95,13 +95,35 @@ Autocosts also allows the final report to be printed into a PDF report. It makes
 
 The credentials for the above services are in the JSON files stored in [`credentials/`](/credentials/)
 
+## Extra requirements for Dev
+
+To development and fully build the app one further needs:
+
+ - `ImageMagick` (to compress images) and 
+ - `Webdriver Manager` npm package to emulate Chrome and Firefox in the test suite
+
+On Ubuntu/Debian one can run to install and configure them:
+
+```
+sudo apt install imagemagick -y
+sudo npm i -g webdriver-manager
+sudo webdriver-manager update --out_dir /usr/local/bin
+ls -alF /usr/local/bin
+sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
+sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
+sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
+ls -alF /usr/local/bin/geckodriver /usr/local/bin/chromedriver
+```
+
 ## API
 
-Install the api
+The API works normally as any other npm API without the need to install any extra software.
+
+Just install the API
 
 `npm i autocosts`
 
-Now use the autocosts api
+Now use the autocosts API
 
 ```js
 const autocosts = require('autocosts')
