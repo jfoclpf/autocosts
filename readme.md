@@ -108,11 +108,9 @@ On Ubuntu/Debian one can run to install and configure them:
 sudo apt install imagemagick -y
 sudo npm i -g webdriver-manager
 sudo webdriver-manager update --out_dir /usr/local/bin
-ls -alF /usr/local/bin
 sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
 sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
 sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
-ls -alF /usr/local/bin/geckodriver /usr/local/bin/chromedriver
 ```
 
 ## API
