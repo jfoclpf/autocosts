@@ -16,7 +16,7 @@ module.exports = {
   // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
     const urls = serverData.urls // to get hostnames
-    
+
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
     const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
