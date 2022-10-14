@@ -16,11 +16,10 @@ module.exports = {
   // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
-    // If yes, do not forward (render the page)
     const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
-      debug('isSingleDomain', cc)
-      return { wasRedirected: false, cc: cc } // it does not redirect, thus wasRedirected is false
+      debug('Host is ccTLD', cc)
+      redirect301(res, getProtocol(req) + '//' + urls.canonicalHostname[cc]) // ex: redirect autocustos.pt -> autocosts.info/pt
     } else {
       // see: https://github.com/jfoclpf/autocosts/wiki/URL-selector#procedure
       // A) If name (ex: autocosti) of domain (ex: autocosti.info) is recognized (belongs to a known host)
