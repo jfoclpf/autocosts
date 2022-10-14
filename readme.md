@@ -265,13 +265,12 @@ sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
 sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
 ```
 
-### CLI
-#### Build
+### Build
 
 To custom build the app resources into the `bin/` directory, use the `build.js` node script at the root of the project. For more information run `node build.js --help`.
 You have already standard configurations accessible in `package.json` which you can list by executing `npm run`.
 
-#### Running
+### Running
 
 After having built the app, to custom run it use the `bin/server.js` node script. For more information run `node bin/server.js --help`.
 See also standard server configurations by executing `npm run`.
