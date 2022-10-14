@@ -15,6 +15,8 @@ module.exports = {
 
   // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
+    const urls = serverData.urls // to get hostnames
+
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
     const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
@@ -30,8 +32,6 @@ module.exports = {
       // Thus autocustos.info forwards according to locale
       // C) Forwards according to locale in any other situation
 
-      // get name of domain without extension, e.x.: 'autocosti' in 'www.autocosti.info'
-      const urls = serverData.urls
       const nameOfDomainReq = getNameOfDomain(req.get('host')) // ex: 'autocosti' or 'autocustos'
       // check if nameReq exists and associated with only one country
       let countNameOfDomain = 0 // ex: the number of times the name of domain 'autocustos' appears
