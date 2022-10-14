@@ -21,7 +21,9 @@ module.exports = {
     const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
       debug('Host is ccTLD', cc)
-      redirect301(res, getProtocol(req) + '//' + urls.canonicalHostname[cc]) // ex: redirect autocustos.pt -> autocosts.info/pt
+      const urlRedirect = `${getProtocol(req)}//${urls.canonicalHostname[cc.toUpperCase()]}/${cc}` // ex: redirect autocustos.pt -> autocosts.info/pt
+      redirect301(res, urlRedirect)
+      return { wasRedirected: true, CC: cc } // it redirects, thus wasRedirected is true
     } else {
       // see: https://github.com/jfoclpf/autocosts/wiki/URL-selector#procedure
       // A) If name (ex: autocosti) of domain (ex: autocosti.info) is recognized (belongs to a known host)
