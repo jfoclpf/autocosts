@@ -1,12 +1,9 @@
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/chrome.yml)
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/firefox.yml)
+[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml)
+[![CodeQL Security Check](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/context:javascript)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/alerts/)
-[![Known Vulnerabilities](https://snyk.io/test/github/jfoclpf/autocosts/badge.svg)](https://snyk.io/test/github/jfoclpf/autocosts)
 <br>
 [![Donate with librepay](https://img.shields.io/liberapay/receives/joaopimentel1980.svg?logo=liberapay)](https://en.liberapay.com/joaopimentel1980)
 [![Donate with librepay](https://img.shields.io/badge/donate-Donate-yellow?logo=liberapay)](https://en.liberapay.com/joaopimentel1980/donate)
@@ -94,24 +91,6 @@ Autocosts also allows the final report to be printed into a PDF report. It makes
 ### Credentials file
 
 The credentials for the above services are in the JSON files stored in [`credentials/`](/credentials/)
-
-## Extra requirements for Dev
-
-To development and fully build the app one further needs:
-
- - `ImageMagick` (to compress images) and 
- - `Webdriver Manager` npm package to emulate Chrome and Firefox in the test suite
-
-On Ubuntu/Debian one can run to install and configure them:
-
-```
-sudo apt install imagemagick -y
-sudo npm i -g webdriver-manager
-sudo webdriver-manager update --out_dir /usr/local/bin
-sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
-sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
-sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
-```
 
 ## API
 
@@ -266,6 +245,35 @@ The object `results` will be the following:
 
 The financial effort of the user and alternative costs considering public transports, uber and taxis included, are also optionally calculated. See [the standard `userData` object](/contributing.md#userdata-class) for more information.
 
+## Development
+
+### Extra SW requirements
+
+To development and fully build the app one further needs:
+
+ - `ImageMagick` (to compress images) and 
+ - `Webdriver Manager` npm package to emulate Chrome and Firefox in the test suite
+
+On Ubuntu/Debian one can run to install and configure them:
+
+```
+sudo apt install imagemagick -y
+sudo npm i -g webdriver-manager
+sudo webdriver-manager update --out_dir /usr/local/bin
+sudo rm /usr/local/bin/*.zip /usr/local/bin/*.tar.gz
+sudo mv /usr/local/bin/chromedriver* /usr/local/bin/chromedriver
+sudo mv /usr/local/bin/geckodriver* /usr/local/bin/geckodriver
+```
+
+### Build
+
+To custom build the app resources into the `bin/` directory, use the `build.js` node script at the root of the project. For more information run `node build.js --help`.
+You have already standard configurations accessible in `package.json` which you can list by executing `npm run`.
+
+### Running
+
+After having built the app, to custom run it use the `bin/server.js` node script. For more information run `node bin/server.js --help`.
+See also standard server configurations by executing `npm run`.
 
 ## Android APP
 

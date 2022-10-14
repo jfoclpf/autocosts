@@ -15,12 +15,15 @@ module.exports = {
 
   // to be used from app.get('/'), that is, when no path is provided
   root: function (req, res, serverData) {
+    const urls = serverData.urls // to get hostnames
+
     // Is this domain/host a ccTLD? For ex. autocustos.pt?
-    // If yes, do not forward (render the page)
     const cc = isDomainAccTLD(req.get('host')) // returns cc or false
     if (cc && isCCinCountriesList(cc, serverData.availableCountries)) {
-      debug('isSingleDomain', cc)
-      return { wasRedirected: false, cc: cc } // it does not redirect, thus wasRedirected is false
+      debug('Host is ccTLD', cc)
+      const urlRedirect = `${getProtocol(req)}//${urls.canonicalHostname[cc.toUpperCase()]}/${cc}` // ex: redirect autocustos.pt -> autocosts.info/pt
+      redirect301(res, urlRedirect)
+      return { wasRedirected: true, CC: cc } // it redirects, thus wasRedirected is true
     } else {
       // see: https://github.com/jfoclpf/autocosts/wiki/URL-selector#procedure
       // A) If name (ex: autocosti) of domain (ex: autocosti.info) is recognized (belongs to a known host)
@@ -31,8 +34,6 @@ module.exports = {
       // Thus autocustos.info forwards according to locale
       // C) Forwards according to locale in any other situation
 
-      // get name of domain without extension, e.x.: 'autocosti' in 'www.autocosti.info'
-      const urls = serverData.urls
       const nameOfDomainReq = getNameOfDomain(req.get('host')) // ex: 'autocosti' or 'autocustos'
       // check if nameReq exists and associated with only one country
       let countNameOfDomain = 0 // ex: the number of times the name of domain 'autocustos' appears
