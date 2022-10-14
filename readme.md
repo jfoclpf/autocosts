@@ -3,8 +3,6 @@
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/context:javascript)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/jfoclpf/autocosts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jfoclpf/autocosts/alerts/)
 <br>
 [![Donate with librepay](https://img.shields.io/liberapay/receives/joaopimentel1980.svg?logo=liberapay)](https://en.liberapay.com/joaopimentel1980)
 [![Donate with librepay](https://img.shields.io/badge/donate-Donate-yellow?logo=liberapay)](https://en.liberapay.com/joaopimentel1980/donate)
