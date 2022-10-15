@@ -1,0 +1,16 @@
+{
+  "apps" : [{
+    "name"        : "autocosts.dev",
+    "script"      : "bin/server.js",
+    "args"        : "--print --pdf --social --uber --googleCaptcha --googleAnalytics --database",
+    "watch"       : false,
+    "instances"   : 1,
+    "wait_ready"  : true,
+    "listen_timeout" : 50000,
+    "exec_mode"   : "cluster",
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "log_date_format": "DD-MM-YYYY"
+  }]
+}
