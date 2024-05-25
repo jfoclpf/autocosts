@@ -24,7 +24,7 @@ This calculator also provides to the user, optionally, the car's full Financial 
 1. Clone the project<br>
 `git clone https://github.com/jfoclpf/autocosts.git`
 2. Enter in the newly created directory and install dependencies<br>
-`cd autocosts && npm i --production`
+`cd autocosts && npm ci --production`
 3. Start the server<br>
 `npm start`
 
