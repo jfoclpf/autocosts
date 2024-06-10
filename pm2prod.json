@@ -4,7 +4,7 @@
     "script"      : "bin/server.js",
     "cwd"         : "/var/www/autocosts.prod/",
     "node_args"   : "--use_strict",
-    "args"        : "-r prod --print --pdf --social --googleCaptcha --googleAnalytics --database",
+    "args"        : "-r prod --print --pdf --social --googleCaptcha --database",
     "exec_mode"   : "cluster",
     "instances"   : 4,
     "wait_ready"  : true,
