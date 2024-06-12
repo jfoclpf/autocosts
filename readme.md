@@ -1,4 +1,3 @@
-[![CodeQL Security Check](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 
