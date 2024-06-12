@@ -4,12 +4,16 @@
 [![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml)
 [![CodeQL Security Check](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
+[![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
 <br>
 [![Donate with librepay](https://img.shields.io/liberapay/receives/joaopimentel1980.svg?logo=liberapay)](https://en.liberapay.com/joaopimentel1980)
 [![Donate with librepay](https://img.shields.io/badge/donate-Donate-yellow?logo=liberapay)](https://en.liberapay.com/joaopimentel1980/donate)
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
+
+[npm_module_downloads_img]: https://img.shields.io/npm/dt/autocosts.svg
+[npm_module_downloads_url]: https://www.npmjs.com/package/autocosts
 
 # autocosts
 **The fully free and open source full-stack Car Costs Calculator for more than 30 countries**
