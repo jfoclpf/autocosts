@@ -245,17 +245,17 @@ function validateSomeUserInputs (callback) {
       (async (_resolve, _reject) => {
         let driver
         if (frontendTest === 'firefox') {
-          driver = await new Builder()
+          driver = (await new Builder())
             .forBrowser('firefox')
             .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
             .build()
         } else if (frontendTest === 'chrome') {
           process.env.LANGUAGE = 'US'
-          const chromeOptions = new chrome.Options()
+          const chromeOptions = (new chrome.Options())
             .headless()
             .addArguments('lang=en-US')
             .windowSize(screen)
-          driver = await new Builder()
+          driver = (await new Builder())
             .forBrowser('chrome')
             .setChromeOptions(chromeOptions)
             .build()
