@@ -199,7 +199,7 @@
     "compression": "^1.7.4",
     "concat-files": "^0.1.1",
     "debug": "^4.3.2",
-    "express": "4.17.3",
+    "express": "4.19.2",
     "express-handlebars": "^5.3.4",
     "express-rate-limit": "^5.5.1",
     "express-useragent": "^1.0.15",
