@@ -1,7 +1,3 @@
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/ubuntu.yml)
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/macos.yml)
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/windows.yml)
-[![Node.js CI](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/browser.yml)
 [![CodeQL Security Check](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml/badge.svg)](https://github.com/jfoclpf/autocosts/actions/workflows/codeql.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
 [![npm module downloads][npm_module_downloads_img]][npm_module_downloads_url]
